@@ -47,7 +47,7 @@
                                                 <table width="100%" cellspacing="0" cellpadding="0">
                                                     <tr>
                                                         <td class="header header--left" style="padding: 20px 10px;" align="left">
-                                                            <a href="/" ><img class="header__logo" src="/img/logo-dark.png" alt="Firefox" style="display: block; border: 0;" width="158" height="59"></a>
+                                                            <a href="/" ><img class="header__logo" src="{{ env('APP_URL', "https://uktraveltest.prodevs.io/") }}img/logo-dark.png" alt="UktravelTest" style="display: block; border: 0;" width="158" height="59"></a>
                                                         </td>
                                                     </tr>
                                                 </table>
