@@ -91,13 +91,14 @@ class HomeController extends Controller
 
         $transaction_ref = uniqid('booking_') . rand(10000, 999999);
 
+        if (isset($request_data['ref'])) {
+            $user = User::where('referal_code', $request_data['ref'])->first();
 
-        $user = User::where('referal_code', $request_data['ref'])->first();
+            if ($user) {
+                $request_data['referral_code'] = $request_data['ref'];
+                $request_data['user_id'] = $user->id;
 
-        if ($user) {
-            $request_data['referral_code'] = $request_data['ref'];
-            $request_data['user_id'] = $user->id;
-
+            }
         }
 
         unset($request_data['ref']);
@@ -130,7 +131,7 @@ class HomeController extends Controller
             "tx_ref" => $transaction_ref,
             "amount" => $setting->value,
             "currency" => "NGN",
-            "redirect_url" => env('APP_URL', "http://uktraveltest.test/")."payment/confirmation",
+            "redirect_url" => env('APP_URL', "http://uktraveltest.test/") . "payment/confirmation",
             "customer" => [
                 'email' => $booking->email,
                 'phonenumber' => $booking->phone_no,
@@ -216,7 +217,7 @@ class HomeController extends Controller
                     $message = "
             Hi " . $request->first_name . ",
             
-            Thank you for booking with us, Here is your code ".$code.". You are to use this code in your travel form. 
+            Thank you for booking with us, Here is your code " . $code . ". You are to use this code in your travel form. 
                   
                   <br/><br/>
                   Thank you.
