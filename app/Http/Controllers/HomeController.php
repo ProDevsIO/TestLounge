@@ -176,11 +176,11 @@ class HomeController extends Controller
         curl_close($ch);
 
         $data = json_decode($response);
-dd($data);
+
 
         if (isset($data->data->status) && $data->data->status == "successful") {
             $booking = Booking::where('transaction_ref', $txRef)->first();
-
+            dd($booking);
             if ($booking->status != 1) {
                 if ($booking->user_id) {
                     $user = User::where('id', $booking->user_id)->first();
@@ -227,8 +227,9 @@ dd($data);
 
                 }
 
-
             }
+
+
             return redirect()->to('/booking/success?b=' . $txRef);
         }
 
