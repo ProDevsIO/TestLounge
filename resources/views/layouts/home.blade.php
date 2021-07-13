@@ -25,6 +25,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600,700%7CRaleway:700' rel='stylesheet' type='text/css'>
     <script src="js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <link rel="stylesheet" href="/js/phone_lib/css/intlTelInput.css">
+    @yield('style')
 </head>
 <body>
 {{--<div class="loader">--}}
@@ -33,13 +34,15 @@
         {{--<div class="double-bounce2"></div>--}}
     {{--</div>--}}
 {{--</div>--}}
-
+<?php
+    $ignore = ["booking","booking_success","booking_failed"];
+?>
 <div class="nav-container">
     <nav class="top-bar
-       @if(\Illuminate\Support\Facades\Route::current()->getName() != "booking")
-    overlay-bar
-    @endif
+       @if(!in_array(\Illuminate\Support\Facades\Route::current()->getName(),$ignore))
+            overlay-bar
 
+@endif
 ">
 
 
@@ -51,8 +54,14 @@
                         <span class="alt-font"><i class="icon icon_mail"></i> info@uktraveltest.co.uk</span>
 
                         <div class="pull-right">
-                            <a href="login.html" class="btn btn-primary btn-white btn-xs">Login</a>
-                            <a href="#" class="language"><img alt="English" src="img/english.png"></a>
+                            @if(!in_array(\Illuminate\Support\Facades\Route::current()->getName(),$ignore))
+                                <a href="/login" class="btn btn-primary btn-white btn-xs">Login</a>
+                                <a href="/register/agent" class="btn btn-primary btn-white btn-xs">Register as an Agent</a>
+                            @else
+                                <a href="/login" class="btn btn-primary btn-xs">Login</a>
+                                <a href="/register/agent" class="btn btn-primary btn-xs">Register as an Agent</a>
+                                @endif
+                            <a href="#" class="language"><img alt="English" src="/img/english.png"></a>
                         </div>
                     </div>
                 </div>
@@ -62,8 +71,8 @@
             <div class="row nav-menu">
                 <div class="col-sm-3 col-md-2 columns">
                     <a href="{{ url('/') }}">
-                        <img class="logo logo-light" alt="Logo" src="img/logo-light.png">
-                        <img class="logo logo-dark" alt="Logo" src="img/logo-dark.png">
+                        <img class="logo logo-light" alt="Logo" src="/img/logo-light.png">
+                        <img class="logo logo-dark" alt="Logo" src="/img/logo-dark.png">
                     </a>
                 </div>
 
@@ -71,28 +80,19 @@
                     <ul class="menu">
                         <li ><a href="{{ url('/') }}">Home</a>
                         </li>
-                        <li class="has-dropdown"><a href="#">About</a></li>
+                        <li><a href="#">About</a></li>
                         <li class="has-dropdown"><a  href="#">Covid19 Testing</a>
                             <div class="subnav subnav-halfwidth">
-                                <div class="col-sm-6">
-                                    <h6 class="alt-font">Article Lists</h6>
+                                <div class="col-sm-12">
                                     <ul class="subnav">
-                                        <li><a href="blog-masonry.html">Masonry</a></li>
-                                        <li><a href="blog-masonry-sidebar.html">Masonry Sidebar</a></li>
-                                        <li><a href="blog.html">Blog Large List</a></li>
-                                        <li><a href="blog-large-image.html">Blog Image List</a></li>
+                                        <li><a href="#">...</a></li>
+                                        <li><a href="#">...</a></li>
+                                        <li><a href="#">...</a></li>
+                                        <li><a href="#">...</a></li>
+
                                     </ul>
                                 </div>
 
-                                <div class="col-sm-6">
-                                    <h6 class="alt-font">Article Singles</h6>
-                                    <ul class="subnav">
-                                        <li><a href="blog-single.html">Article Basic</a></li>
-                                        <li><a href="blog-single-2.html">Article Basic 2</a></li>
-                                        <li><a href="blog-single-sidebar.html">Article Sidebar</a></li>
-                                        <li><a href="blog-single-media.html">Article Media</a></li>
-                                    </ul>
-                                </div>
                             </div>
                         </li>
                         <li><a href="#">FAQ</a>
@@ -146,9 +146,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <span class="text-white">© 2014 Pivot Inc.</span>
-                    <span class="text-white"><a href="#">hello@pivot.net</a></span>
-                    <span class="text-white">+614 3827 492</span>
+                    <span class="text-white">© {{ date('Y') }} UKTravelTest.<br/> Built with ❤ by <a href="https://prodevs.io" target="_blank">ProDevs</a></span>
+                    <span class="text-white"><a href="#">info@uktraveltest.com</a></span>
                     <span class="text-white">300 Collins St. Melbourne 3000</span>
                 </div>
             </div><!--end for row-->
@@ -157,7 +156,7 @@
         <div class="contact-action">
             <div class="align-vertical">
                 <i class="icon text-white icon_mail"></i>
-                <a href="contact.html" class="text-white"><span class="text-white">Get in touch with us <i class="icon arrow_right"></i></span></a>
+                <a href="#" class="text-white"><span class="text-white">Get in touch with us <i class="icon arrow_right"></i></span></a>
             </div>
         </div>
     </footer>

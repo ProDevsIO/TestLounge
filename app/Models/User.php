@@ -8,8 +8,9 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 /**
  * Class User
  * 
@@ -27,8 +28,10 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class User extends Model
+class User extends Authenticatable
 {
+    use HasFactory, Notifiable;
+
 	protected $table = 'users';
 
 	protected $hidden = [
@@ -41,11 +44,23 @@ class User extends Model
 		'email',
 		'password',
 		'referal_code',
-		'type'
+        'verified',
+		'type','wallet_balance'
 	];
+
 
 	public function bookings()
 	{
 		return $this->hasMany(Booking::class);
 	}
+
+    public function cbookings()
+    {
+        return $this->hasMany(Booking::class)->where('status','1');
+    }
+
+    public function pbookings()
+    {
+        return $this->hasMany(Booking::class)->where('status','!=','1');
+    }
 }

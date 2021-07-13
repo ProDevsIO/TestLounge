@@ -280,7 +280,7 @@ return [
         */
 
         'except' => [
-            'migrations',
+            'migrations','users'
         ],
 
         /*

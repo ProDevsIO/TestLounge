@@ -39,7 +39,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $method_of_transportation
  * @property string|null $transport_no
  * @property int|null $country_code_id
- * @property int|null $phone_no
+ * @property string|null $phone_no
  * @property string|null $email
  * @property int|null $consent
  * @property string|null $referral_code
@@ -47,6 +47,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $mode_of_payment
  * @property int|null $vendor_id
  * @property string|null $booking_code
+ * @property string|null $transaction_ref
+ * @property int|null $status
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
@@ -67,11 +69,11 @@ class Booking extends Model
 		'country_travelling_from_id' => 'int',
 		'method_of_transportation' => 'int',
 		'country_code_id' => 'int',
-		'phone_no' => 'int',
 		'consent' => 'int',
 		'user_id' => 'int',
 		'mode_of_payment' => 'int',
-		'vendor_id' => 'int'
+		'vendor_id' => 'int',
+		'status' => 'int'
 	];
 
 	protected $dates = [
@@ -115,7 +117,9 @@ class Booking extends Model
 		'user_id',
 		'mode_of_payment',
 		'vendor_id',
-		'booking_code'
+		'booking_code',
+		'transaction_ref',
+		'status'
 	];
 
 	public function country()
@@ -127,4 +131,9 @@ class Booking extends Model
 	{
 		return $this->belongsTo(User::class);
 	}
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class,'vendor_id');
+    }
 }
