@@ -148,7 +148,7 @@ class HomeController extends Controller
 
     }
 
-//https://uktraveltest.test/payment/confirmation?status=cancelled&tx_ref=booking_60ec3dbd9464a655449
+//https://uktraveltest.test/payment/confirmation?status=cancelled&tx_ref=booking_60ed2341abc31588840
     public function payment_confirmation(Request $request)
     {
 
@@ -175,12 +175,11 @@ class HomeController extends Controller
 
         curl_close($ch);
 
-        $data = json_decode($response);
+        $data_response = json_decode($response);
 
 
-        if (isset($data->data->status) && $data->data->status == "successful") {
+        if (isset($data_response->data->status) && $data_response->data->status == "successful") {
             $booking = Booking::where('transaction_ref', $txRef)->first();
-            dd($booking);
             if ($booking->status != 1) {
                 if ($booking->user_id) {
                     $user = User::where('id', $booking->user_id)->first();
