@@ -7,7 +7,7 @@
     <meta name="author" content="ProDevs Outsourcing Ltd">
 
     <!--favicon icon-->
-    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
 
     <title>UkTravelTest</title>
 

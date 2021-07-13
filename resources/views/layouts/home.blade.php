@@ -25,6 +25,8 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600,700%7CRaleway:700' rel='stylesheet' type='text/css'>
     <script src="js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <link rel="stylesheet" href="/js/phone_lib/css/intlTelInput.css">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+
     @yield('style')
 </head>
 <body>

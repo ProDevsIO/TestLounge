@@ -9,7 +9,8 @@
     <!--favicon icon-->
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
-    <title>Admin</title>
+    <title>UK Travel Test | Admin</title>
+    <link rel="icon" type="image/png" href="/img/favicon.png">
 
     <!--web fonts-->
     <link href="//fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet">
