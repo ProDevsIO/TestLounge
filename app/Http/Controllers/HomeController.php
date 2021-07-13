@@ -113,7 +113,7 @@ class HomeController extends Controller
             Hi " . $request->first_name . ",
             
             Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
-            <a href='" . env('APP_URL', "http://uktraveltest.test/") . "make/payment/" . $transaction_ref . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "make/payment/" . $transaction_ref . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Make Payment
                   </a>
                   
@@ -131,7 +131,7 @@ class HomeController extends Controller
             "tx_ref" => $transaction_ref,
             "amount" => $setting->value,
             "currency" => "NGN",
-            "redirect_url" => env('APP_URL', "http://uktraveltest.test/") . "payment/confirmation",
+            "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
             "customer" => [
                 'email' => $booking->email,
                 'phonenumber' => $booking->phone_no,
@@ -307,7 +307,7 @@ class HomeController extends Controller
             Hi " . $request->first_name . ",
             
             Thank you for registering as an agent. To continue your registration,<br/><br/>Kindly click the button below<br/><br/>
-            <a href='" . env('APP_URL', "http://uktraveltest.test/") . "continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Continue Registration
                   </a>
                   
@@ -337,7 +337,7 @@ class HomeController extends Controller
             Hi " . $user->first_name . ",
             
             Thank you for registering as an agent. To continue your registration, <br/><br/>Kindly click the button below<br/> <br/>
-            <a href='" . env('APP_URL', "http://uktraveltest.test/") . "continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Continue Registration
                   </a>
                   
