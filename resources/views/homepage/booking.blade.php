@@ -36,10 +36,18 @@
                         <div class="bs-stepper" id="stepperForm">
                             <div class="bs-stepper-header" role="tablist">
                                 <!-- your steps here -->
+                                <div class="step" data-target="#products-part">
+                                    <button type="button" class="step-trigger" role="tab" aria-controls="products-part"
+                                            id="products-part-trigger">
+                                        <span class="bs-stepper-circle">1</span>
+                                        <span class="bs-stepper-label">Product</span>
+                                    </button>
+                                </div>
+                                <div class="line"></div>
                                 <div class="step" data-target="#logins-part">
                                     <button type="button" class="step-trigger" role="tab" aria-controls="logins-part"
                                             id="logins-part-trigger">
-                                        <span class="bs-stepper-circle">1</span>
+                                        <span class="bs-stepper-circle">2</span>
                                         <span class="bs-stepper-label">Basic Information</span>
                                     </button>
                                 </div>
@@ -47,7 +55,7 @@
                                 <div class="step" data-target="#information-part">
                                     <button type="button" class="step-trigger" role="tab"
                                             aria-controls="information-part" id="information-part-trigger">
-                                        <span class="bs-stepper-circle">2</span>
+                                        <span class="bs-stepper-circle">3</span>
                                         <span class="bs-stepper-label">Address Information</span>
                                     </button>
                                 </div>
@@ -56,8 +64,8 @@
                                 <div class="step" data-target="#travel-part">
                                     <button type="button" class="step-trigger" role="tab" aria-controls="travel-part"
                                             id="travel-part-trigger">
-                                        <span class="bs-stepper-circle">3</span>
-                                        <span class="bs-stepper-label">Travel information</span>
+                                        <span class="bs-stepper-circle">4</span>
+                                        <span class="bs-stepper-label">Travel information/Payments</span>
                                     </button>
                                 </div>
 
@@ -66,6 +74,26 @@
                             <div class="bs-stepper-content" style="margin-top: 20px">
                                 <form class="needs-validation" method="post" action="/post/booking">
                                     <!-- your steps content here -->
+                                    <div id="products-part" class="content bs-stepper-pane" role="tabpanel"
+                                         aria-labelledby="logins-part-trigger">
+
+                                        <div class="col-md-12">
+                                            <label>Test type <span class="show_required"> *</span></label>
+                                            <select class="form-control" id="product_id_" name="product_id" required>
+                                                <option value="">Make a selection</option>
+                                                @foreach($products as $product)
+                                                    <option value="{{ $product->id }}" @if(isset($_GET['product_id']) && $_GET['product_id'] == $product->id)
+                                                        selected
+                                                        @endif>{{ $product->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <br/>
+
+
+                                        <button class="btn btn-primary pull-right" style="margin-top: 30px" onclick="stepperForm.next()">Next
+                                        </button>
+                                    </div>
                                     <div id="logins-part" class="content bs-stepper-pane" role="tabpanel"
                                          aria-labelledby="logins-part-trigger">
                                         <div class="col-md-6 ">
@@ -149,6 +177,9 @@
                                         </div>
 
                                         <button class="btn btn-primary pull-right" onclick="stepperForm.next()">Next
+                                        </button>
+                                        <button class="btn btn-primary pull-right"
+                                                onclick="stepperForm.previous()">Previous
                                         </button>
                                     </div>
                                     <div id="information-part" class="content bs-stepper-pane" role="tabpanel"
@@ -343,16 +374,32 @@
                                         @if(isset($_GET['ref']))
                                             <input type="hidden" name="ref" value="{{ $_GET['ref'] }}">
                                         @endif
-                                        <button type="submit" class="btn btn-primary pull-right"
-                                                style="margin-top: 20px">Make Payment
+
+                                        <div class="col-md-12">
+                                            <label>Select Vendor <span class="show_required"> *</span></label>
+                                            <select class="form-control" id="vendor_id" name="vendor_id" onchange="checkPrice()" required>
+                                                <option value="">Make a selection</option>
+                                                @foreach($vendors as $vendor)
+                                                    <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <br/>
+
+                                        <h3 class="pull-left price_li" style="padding: 0px 20px;color: red;margin-top: 30px;"></h3>
+
+                                        <button type="button" disabled class="sub_btn_u btn btn-primary pull-right" style="margin-top: 20px;color: #fff;">Make Payment  </button>
+
+
+                                        <button type="submit" class="sub_btn btn btn-primary pull-right" style="display: none;margin-top: 20px">Make Payment
                                         </button>
 
-                                        <button class="btn btn-primary pull-right" style="margin-top: 20px"
+                                            <button class="btn btn-primary pull-right" style="margin-top: 20px"
                                                 onclick="stepperForm.previous()">Previous
                                         </button>
 
-
                                     </div>
+
                                     @csrf
                                 </form>
                             </div>
@@ -363,7 +410,7 @@
 
 
                 <!--end of container-->
-
+            </div>
         </section>
     </div>
 
@@ -372,6 +419,19 @@
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
     <script>
+
+        function checkPrice(){
+            var vendor_id = $("#vendor_id").val();
+            var product_id = $("#product_id_").val();
+            var url = '/check/price/'+ vendor_id + "/" + product_id;
+            console.log(url);
+            $.get(url,function(data){
+                $(".sub_btn").toggle();
+                $(".sub_btn_u").toggle();
+                $(".price_li").html("Cost: N" + (parseInt(data.price)).toLocaleString());
+            });
+        }
+
         var input = document.querySelector("#phone");
         window.intlTelInput(input, {
             initialCountry: "gb",
@@ -432,6 +492,7 @@
             if ((stepperPan.getAttribute('id') === 'logins-part' && (!form1 && !form1_select)) ||
                 (stepperPan.getAttribute('id') === 'information-part' && (!form2 && !form2_select))) {
                 event.preventDefault()
+
                 form.classList.add('was-validated')
             }
         });

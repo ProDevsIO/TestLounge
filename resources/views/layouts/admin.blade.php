@@ -68,7 +68,7 @@
     <!--header rightside links-->
     <ul class="header-links hide-arrow navbar">
 
-        @if(auth()->user()->referal_code)
+        @if(auth()->user()->referal_code && auth()->user()->vendor_id == 0)
             <li class="nav-item dropdown ">
                 <a href="javascript:;" data-toggle="modal" data-target="#referralModal">Referral
                     Code: {{ url('/booking?ref='.auth()->user()->referal_code) }}</a>
@@ -173,6 +173,13 @@
                             <span>Vendors</span>
                         </a>
                     </li>
+
+                        <li>
+                            <a href="{{ url('/products') }}">
+                                <i class="icon-basket-loaded"></i>
+                                <span>Products</span>
+                            </a>
+                        </li>
 
                     <li>
                         <a href="{{ url('/users') }}">

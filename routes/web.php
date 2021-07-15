@@ -25,9 +25,15 @@ Route::get('/login', [\App\Http\Controllers\HomeController::class,"login"]);
 Route::get('/register/agent', [\App\Http\Controllers\HomeController::class,"register_agent"]);
 
 Route::get('/payment/confirmation', [\App\Http\Controllers\HomeController::class,"payment_confirmation"]);
-Route::post('/login', [\App\Http\Controllers\HomeController::class,"post_login"]);
+Route::get('/about', [\App\Http\Controllers\HomeController::class,"about"])->name('about');
+Route::get('/covid/testing', [\App\Http\Controllers\HomeController::class,"products"])->name('products_covid');
+Route::get('/check/price/{vendor_id}/{product_id}', [\App\Http\Controllers\HomeController::class,"check_price"])->name('check_price');
+
+Route::post('/login', [\App\Http\Controllers\HomeController::class,"post_login"])->name('login');
 
 Route::post('/register', [\App\Http\Controllers\HomeController::class,"register"]);
+
+
 
 Route::post('/post/booking', [\App\Http\Controllers\HomeController::class,"post_booking"]);
 Route::get('/booking/success', [\App\Http\Controllers\HomeController::class,"booking_success"])->name('booking_success');
@@ -47,10 +53,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/view/booking/{id}', [\App\Http\Controllers\DashboardController::class,"view_booking"]);
     Route::get('/vendors', [\App\Http\Controllers\DashboardController::class,"vendors"]);
     Route::get('/users', [\App\Http\Controllers\DashboardController::class,"users"]);
+    Route::get('/products', [\App\Http\Controllers\DashboardController::class,"products"]);
+    Route::post('/edit/product', [\App\Http\Controllers\DashboardController::class,"edit_product"]);
+    Route::post('/add/product', [\App\Http\Controllers\DashboardController::class,"add_product"]);
+    Route::get('/delete/product/{id}', [\App\Http\Controllers\DashboardController::class,"delete_product"]);
+    Route::get('/product/vendor/{id}/{price}', [\App\Http\Controllers\DashboardController::class,"product_vendor"]);
+
+
     Route::post('/add/vendor', [\App\Http\Controllers\DashboardController::class,"add_vendor"]);
     Route::get('/admin/make/{id}', [\App\Http\Controllers\DashboardController::class,"admin_make"]);
     Route::get('/agent/make/{id}', [\App\Http\Controllers\DashboardController::class,"agent_make"]);
     Route::get('/settings', [\App\Http\Controllers\DashboardController::class,"settings"]);
+    Route::get('/user/bank', [\App\Http\Controllers\DashboardController::class,"user_bank"]);
+
+
+    Route::post('/add/bank', [\App\Http\Controllers\DashboardController::class,"add_bank"]);
     Route::post('/settings', [\App\Http\Controllers\DashboardController::class,"p_settings"]);
 
 

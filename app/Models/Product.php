@@ -11,40 +11,38 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Vendor
+ * Class Product
  * 
  * @property int $id
  * @property string|null $name
+ * @property string|null $description
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Collection|BookingProduct[] $booking_products
  * @property Collection|Booking[] $bookings
- * @property Collection|Product[] $products
+ * @property Collection|Vendor[] $vendors
  *
  * @package App\Models
  */
-class Vendor extends Model
+class Product extends Model
 {
-	protected $table = 'vendors';
+	protected $table = 'products';
 
 	protected $fillable = [
-		'name','email'
+		'name',
+		'description'
 	];
-
-	public function booking_products()
-	{
-		return $this->hasMany(BookingProduct::class);
-	}
 
 	public function bookings()
 	{
-		return $this->hasMany(Booking::class);
+		return $this->belongsToMany(Booking::class, 'booking_products')
+					->withPivot('id', 'vendor_id', 'vendor_product_id', 'price')
+					->withTimestamps();
 	}
 
-	public function products()
+	public function vendors()
 	{
-		return $this->belongsToMany(Product::class, 'vendor_products')
+		return $this->belongsToMany(Vendor::class, 'vendor_products')
 					->withPivot('id', 'price')
 					->withTimestamps();
 	}

@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 @section('style')
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/vendor_/jquery-toast-plugin/jquery.toast.min.css">
+
+    @livewireStyles
 @endsection
 @section('content')
 
@@ -37,10 +40,30 @@
                                                 </td>
                                                 <td>{{ $vendor->name }}</td>
                                                 <td>{{ $vendor->bookings->count() }}</td>
-                                                <td><a href="{{ url('complete/booking?vendor_id='.$vendor->id) }}"
+                                                <td>
+                                                    <a href="{{ url('complete/booking?vendor_id='.$vendor->id) }}"
                                                        class="btn btn-info">View Bookings</a>
+                                                    <a href="javascript:;"
+                                                       data-toggle="modal" data-target="#viewProductModal{{ $vendor->id }}" class="btn btn-danger">View Products</a>
                                                 </td>
                                             </tr>
+
+                                            <div class="modal fade" id="viewProductModal{{ $vendor->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">View Products</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            @livewire('add-product-vendor',['vendor_id' => $vendor->id])
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
 
                                         </tbody>
@@ -92,9 +115,38 @@
 @section('script')
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendor/data-tables/dataTables.bootstrap4.min.js"></script>
+    <script src="/vendor_/jquery-toast-plugin/jquery.toast.min.js"></script>
+
     <script>
         $(document).ready(function () {
             $('#data_table').DataTable();
         });
+
+        resetToastPosition = function () {
+            $('.jq-toast-wrap').removeClass('bottom-left bottom-right top-left top-right mid-center'); // to remove previous position class
+            $(".jq-toast-wrap").css({
+                "top": "",
+                "left": "",
+                "bottom": "",
+                "right": ""
+            }); //to remove previous position style
+        }
+
+        window.addEventListener('toastMessage', event => {
+            resetToastPosition();
+            $.toast({
+                heading: event.detail.heading,
+                text: event.detail.message,
+                showHideTransition: 'slide',
+                icon: event.detail.type,
+                loaderBg: '#f96868',
+                position: 'top-right'
+            })
+        });
+
     </script>
+
+
+
+    @livewireScripts
 @endsection

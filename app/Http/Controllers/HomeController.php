@@ -3,21 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Mail\BookingCreation;
+use App\Mail\VendorReceipt;
 use App\Models\Booking;
+use App\Models\BookingProduct;
 use App\Models\Country;
+use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Vendor;
+use App\Models\VendorProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use PDF;
 
 class HomeController extends Controller
 {
     public function booking()
     {
         $countries = Country::all();
-        return view('homepage.booking')->with(compact('countries'));
+        $products = Product::all();
+        $vendors = Vendor::all();
+
+        return view('homepage.booking')->with(compact('countries', 'products', 'vendors'));
     }
 
     public function login()
@@ -84,6 +93,7 @@ class HomeController extends Controller
             'transport_no' => 'required',
             'consent' => 'required'
         ]);
+        $sub_account = [];
 
         $request_data = $request->all();
 
@@ -97,7 +107,9 @@ class HomeController extends Controller
             if ($user) {
                 $request_data['referral_code'] = $request_data['ref'];
                 $request_data['user_id'] = $user->id;
-
+                if ($user->flutterwave_key) {
+                    $sub_account[] = $user->id;
+                }
             }
         }
 
@@ -106,7 +118,15 @@ class HomeController extends Controller
         $request_data['transaction_ref'] = $transaction_ref;
 
         $booking = Booking::create($request_data);
+        $vendor_products = VendorProduct::where('vendor_id', $request->vendor_id)->where('product_id', $request->product_id)->first();
 
+        $booking_product = BookingProduct::create([
+            'booking_id' => $booking->id,
+            'product_id' => $request->product_id,
+            'vendor_id' => $request->vendor_id,
+            'vendor_product_id' => $vendor_products->id,
+            'price' => $vendor_products->price
+        ]);
         //send an email
         try {
             $message = "
@@ -125,11 +145,10 @@ class HomeController extends Controller
 
         }
 
-        $setting = Setting::where('name', 'amount')->first();
         //redirect to payment page
         $data = [
             "tx_ref" => $transaction_ref,
-            "amount" => $setting->value,
+            "amount" => $booking_product->price,
             "currency" => "NGN",
             "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
             "customer" => [
@@ -141,6 +160,10 @@ class HomeController extends Controller
                 "title" => "UK Covid Testing Booking"
             ]
         ];
+
+        if (!empty($sub_account)) {
+            $data['subaccounts'] = $sub_account;
+        }
 
         $redirect_url = $this->processFL($data);
 
@@ -185,13 +208,19 @@ class HomeController extends Controller
                     $user = User::where('id', $booking->user_id)->first();
 
                     $pecentage = Setting::where('id', '2')->first();
-                    $cost_booking = Setting::where('id', '1')->first();
-                    $amount_credit = ($cost_booking->value * ($pecentage->value / 100));
+
+                    $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
+
+                    $cost_booking = $booking_product->price;
+
+                    $amount_credit = ($cost_booking * ($pecentage->value / 100));
+
+
                     Transaction::create([
                         'amount' => $amount_credit,
                         'booking_id' => $booking->id,
                         'user_id' => $user->id,
-                        'cost_config' => $cost_booking->value,
+                        'cost_config' => $cost_booking,
                         'pecentage_config' => $pecentage->value
                     ]);
 
@@ -225,6 +254,19 @@ class HomeController extends Controller
                 } catch (\Exception $e) {
 
                 }
+
+                //send the receipt to the vendor
+
+                if ($booking_product) {
+//                    try {
+
+                    Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from " . optional($booking_product->vendor)->name, optional($booking_product->vendor)->email));
+
+//                    } catch (\Exception $e) {
+//
+//                    }
+                }
+
 
             }
 
@@ -380,6 +422,24 @@ class HomeController extends Controller
             session()->flash('alert-success', "Kindly login into your account");
             return redirect()->to('/login');
         }
+    }
+
+    public function about()
+    {
+        return view('homepage.about');
+    }
+
+    public function products()
+    {
+        $products = Product::all();
+        return view('homepage.products')->with(compact('products'));
+    }
+
+    public function check_price($vendor_id, $product_id)
+    {
+        $vendor_product = VendorProduct::where('vendor_id', $vendor_id)->where('product_id', $product_id)->first();
+
+        return $vendor_product;
     }
 
 

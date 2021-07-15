@@ -23,7 +23,7 @@
     <link rel="stylesheet" type="text/css" href="/css/ie9.css" />
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600,700%7CRaleway:700' rel='stylesheet' type='text/css'>
-    <script src="js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <link rel="stylesheet" href="/js/phone_lib/css/intlTelInput.css">
     <link rel="icon" type="image/png" href="/img/favicon.png">
 
@@ -37,7 +37,7 @@
     {{--</div>--}}
 {{--</div>--}}
 <?php
-    $ignore = ["booking","booking_success","booking_failed"];
+    $ignore = ["booking","booking_success","booking_failed",'about','products_covid'];
 ?>
 <div class="nav-container">
     <nav class="top-bar
@@ -82,24 +82,25 @@
                     <ul class="menu">
                         <li ><a href="{{ url('/') }}">Home</a>
                         </li>
-                        <li><a href="#">About</a></li>
-                        <li class="has-dropdown"><a  href="#">Covid19 Testing</a>
+                        <li><a href="{{ url('/about') }}">About</a></li>
+                        <li class="has-dropdown"><a  href="#">COVID TESTING</a>
                             <div class="subnav subnav-halfwidth">
                                 <div class="col-sm-12">
                                     <ul class="subnav">
-                                        <li><a href="#">...</a></li>
-                                        <li><a href="#">...</a></li>
-                                        <li><a href="#">...</a></li>
-                                        <li><a href="#">...</a></li>
-
+                                        @php
+                                        $products = \App\Models\Product::orderby('name','asc')->get();
+                                        @endphp
+                                        @foreach($products as $product)
+                                        <li><a href="/covid/testing">{{ $product->name }}</a></li>
+                                        @endforeach
                                     </ul>
                                 </div>
 
                             </div>
                         </li>
-                        <li><a href="#">FAQ</a>
+                        <li><a href="/#faq">FAQ</a>
                         </li>
-                        <li><a href="#">Contact</a>
+                        <li><a href="mailto:info@uktraveltests.com">Contact</a>
                         </li>
                     </ul>
 
@@ -148,9 +149,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <span class="text-white">© {{ date('Y') }} UKTravelTest.<br/> Built with ❤ by <a href="https://prodevs.io" target="_blank">ProDevs</a></span>
-                    <span class="text-white"><a href="#">info@uktraveltest.com</a></span>
-                    <span class="text-white">300 Collins St. Melbourne 3000</span>
+                    <span class="text-white">© {{ date('Y') }} UKTravelTests.<br/> Built with ❤ by <a href="https://prodevs.io" target="_blank">ProDevs</a></span>
+                    <span class="text-white"><a href="#">info@uktraveltests.com</a></span>
+                    <span class="text-white">London, UK</span>
                 </div>
             </div><!--end for row-->
         </div><!--end of container-->

@@ -45,7 +45,8 @@ class User extends Authenticatable
 		'password',
 		'referal_code',
         'verified',
-		'type','wallet_balance'
+		'type','wallet_balance','vendor_id', 'account_bank',
+        'account_no','flutterwave_key'
 	];
 
 
@@ -62,5 +63,10 @@ class User extends Authenticatable
     public function pbookings()
     {
         return $this->hasMany(Booking::class)->where('status','!=','1');
+    }
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class,'vendor_id');
     }
 }

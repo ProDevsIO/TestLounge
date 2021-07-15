@@ -7,7 +7,11 @@
 
     <div class="content-wrapper">
         <div class="container-fluid">
-
+            @if(auth()->user()->referal_code && !auth()->user()->flutterwave_key)
+<div class="alert alert-danger">
+    Kindly setup your bank account before you start referring. If not your account wouldn't be credited.<a href="/user/bank" class="btn btn-danger">Add Bank</a>
+</div>
+                @endif
             <!--states start-->
             <div class="row">
                 <div class="col-xl-3 col-sm-6">

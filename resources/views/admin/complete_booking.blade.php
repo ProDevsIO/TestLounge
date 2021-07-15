@@ -29,33 +29,65 @@
                     <div class="card mb-4 bg-primary" title="Completed bookings">
                         <div class="card-body">
                             <h3>Filter</h3>
-                            <form>
-                                <label>Start Date</label>
-                                <input type="date" name="start" class="form-control"
-                                       value="{{ (isset($_GET['start']) ? $_GET['start'] : "")  }}" required/>
-                                <label>End Date</label>
-                                <input type="date" name="end" class="form-control"
-                                       value="{{ (isset($_GET['end']) ? $_GET['start'] : "")  }}" required/>
-@if(auth()->user()->type == 1)
-                                <label>Vendors</label>
-                                <select name="vendor_id" class="form-control">
-                                    <option value="">Select a Vendor</option>
-                                    @foreach($vendors as $vendor)
-                                        <option value="{{ $vendor->id }}" {{ ((isset($_GET['vendor_id']) && ($_GET['vendor_id'] == $vendor->id) ) ? "selected" : "")  }} >{{ $vendor->name }}</option>
-                                    @endforeach
-                                </select>
 
-                                <label>Referral</label>
-                                <select name="user_id" class="form-control">
-                                    <option value="">Select a Referal</option>
-                                    @foreach($users as $user)
-                                        <option value="{{ $user->id }}" {{ ((isset($_GET['user_id']) && ($_GET['user_id'] == $user->id) ) ? "selected" : "")  }} >{{ $user->first_name }} {{ $user->last_name }}</option>
-                                    @endforeach
-                                </select>
-                                @endif
-                                <input type="submit" class="btn btn-danger pull-right mt-2">
-                                @csrf
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Start Date</label>
+                                        <input type="date" name="start" class="form-control"
+                                               value="{{ (isset($_GET['start']) ? $_GET['start'] : "")  }}" required/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>End Date</label>
+                                        <input type="date" name="end" class="form-control"
+                                               value="{{ (isset($_GET['end']) ? $_GET['start'] : "")  }}" required/>
+                                    </div>
+                                    @if(auth()->user()->type == 1)
+                                        <div class="col-md-6">
+                                            <label>Vendors</label>
+                                            <select name="vendor_id" class="form-control">
+                                                <option value="">Select a Vendor</option>
+                                                @foreach($vendors as $vendor)
+                                                    <option value="{{ $vendor->id }}" {{ ((isset($_GET['vendor_id']) && ($_GET['vendor_id'] == $vendor->id) ) ? "selected" : "")  }} >{{ $vendor->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Referral</label>
+                                            <select name="user_id" class="form-control">
+                                                <option value="">Select a Referal</option>
+                                                @foreach($users as $user)
+                                                    <option value="{{ $user->id }}" {{ ((isset($_GET['user_id']) && ($_GET['user_id'] == $user->id) ) ? "selected" : "")  }} >{{ $user->first_name }} {{ $user->last_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Products</label>
+                                            <select name="product_id" class="form-control">
+                                                <option value="">Select a Product</option>
+                                                @foreach($products as $product)
+                                                    <option value="{{ $product->id }}" {{ ((isset($_GET['product_id']) && ($_GET['product_id'] == $product->id) ) ? "selected" : "")  }} >{{ $product->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endif
+
+                                    @if(auth()->user()->vendor_id != 0)
+                                        <div class="col-md-12">
+                                            <label>Products</label>
+                                            <select name="product_id" class="form-control">
+                                                <option value="">Select a Product</option>
+                                                @foreach($products as $product)
+                                                    <option value="{{ $product->id }}" {{ ((isset($_GET['product_id']) && ($_GET['product_id'] == $product->id) ) ? "selected" : "")  }} >{{ $product->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @endif
+                                    <input type="submit" class="btn btn-danger pull-right mt-2" value="Search">
+                                    @csrf
+                                </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
@@ -80,8 +112,13 @@
                                         <th scope="col">Email</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Mode of Payment</th>
-                                        <th scope="col">Vendor</th>
-                                        <th scope="col">Action</th>
+                                        @if(auth()->user()->type == "1")
+                                            <th scope="col">Vendor</th>
+                                            <th scope="col">Action</th>
+                                        @endif
+                                        @if(auth()->user()->vendor_id != "0")
+                                            <th scope="col">Action</th>
+                                        @endif
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -108,6 +145,12 @@
                                                 <td>
                                                     {{ ($booking->vendor) ? $booking->vendor->name : "none" }}
                                                 </td>
+                                                <td><a href="{{ url('/view/booking/'.$booking->id) }}"
+                                                       class="btn btn-info">View</a>
+                                                </td>
+                                            @endif
+
+                                            @if(auth()->user()->vendor_id != "0")
                                                 <td><a href="{{ url('/view/booking/'.$booking->id) }}"
                                                        class="btn btn-info">View</a>
                                                 </td>

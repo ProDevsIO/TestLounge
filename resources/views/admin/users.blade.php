@@ -47,6 +47,7 @@
                                         <th scope="col">Email</th>
                                         <th scope="col">Pending Booking</th>
                                         <th scope="col">Completed Bookings</th>
+                                        <th scope="col">Vendor</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                     </thead>
@@ -60,6 +61,7 @@
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->pbookings->count() }}</td>
                                             <td>{{ $user->cbookings->count() }}</td>
+                                            <td>{{ ($user->vendor) ? $user->vendor->name : "Not a Vendor" }}</td>
                                             <td>
                                                 <div class="btn-group" role="group">
                                                     <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

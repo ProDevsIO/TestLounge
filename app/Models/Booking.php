@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -54,6 +55,8 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property Country|null $country
  * @property User|null $user
+ * @property Vendor|null $vendor
+ * @property Collection|Product[] $products
  *
  * @package App\Models
  */
@@ -132,8 +135,15 @@ class Booking extends Model
 		return $this->belongsTo(User::class);
 	}
 
-    public function vendor()
-    {
-        return $this->belongsTo(Vendor::class,'vendor_id');
-    }
+	public function vendor()
+	{
+		return $this->belongsTo(Vendor::class);
+	}
+
+	public function products()
+	{
+		return $this->belongsToMany(Product::class, 'booking_products')
+					->withPivot('id', 'vendor_id', 'vendor_product_id', 'price')
+					->withTimestamps();
+	}
 }

@@ -12,7 +12,8 @@
                 <div class="row">
                     <div class="col-sm-12 text-center">
                         <img alt="logo" class="logo" src="/img/logo-light.png">
-                        <h1 class="text-white space-bottom-medium">Are you traveling to the UK? And you want to make your UK Covid Testing Booking?</h1>
+                        <h1 class="text-white space-bottom-medium">Are you traveling to the UK? And you want to make
+                            your UK Covid Testing Booking? Search no further! You're on the right platform.</h1>
                         <a target="_blank" href="#" class="btn btn-primary btn-white">Learn more</a>
                         <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a>
                     </div>
@@ -24,220 +25,210 @@
             <div class="container">
                 <div class="row clearfix">
                     <div class="col-sm-6 col-xs-12 pull-left">
-                        <h3 class="text-white">Covid19 Tests for International Arrivals – Day 2 and 8 Amber Country </h3>
+                        <h5 class="text-white">There are various tests that passengers must pass before traveling to or
+                            from the UK, depending on whether they are entering or leaving the country.CLICK THE BUTTON
+                            to see the travel guidelines for the Green, Amber, and Red countries. </h5>
                     </div>
 
                     <div class="col-sm-4 col-xs-12 pull-right text-right">
-                        <a href="/booking" class="btn btn-primary btn-white">Self-Test Available Here</a>
+                        <a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" target="_blank" class="btn btn-primary btn-white">See Travel Guide</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="feature-selector">
-
+        <section class="pure-text-centered">
             <div class="container">
-                <ul class="selector-content">
-                    <li class="clearfix active">
-                        <div class="row">
-                            <div class="col-sm-12 text-center">
-                                <h1>Are you planning a trip to the United Kingdom? Here's what you should know;</h1>
-                            </div>
-                        </div><!--end of row-->
+                <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
+                        <span class="sub alt-font">popular question</span>
+                        <h1><strong>HOW DO I GET TESTED?</strong></h1>
+                        <p class="lead" style="text-align: justify">
+                        <p style="text-align: justify">You must book and pay for all of our tests on our website; You
+                            can schedule a test ahead of time. We will send a confirmation email with your Passenger
+                            Locator Number and a receipt to you.
+                        <p>
+                        <p style="text-align: justify"> We shall then dispatch a courier to deliver your swab for all
+                            PCR tests. Then, using the instructions supplied, activate your kit and return it to our
+                            laboratory for testing. The results will be emailed to you within 24 hours of receiving them
+                            at the lab. You will obtain a certificate certifying your mark for the Fit to Fly and Test
+                            to Release tests, which you will either need to carry with you to the airport or which will
+                            allow you to terminate your quarantine.</p>
+                        <p style="text-align: justify"> If you are returning from a Green country, you must do a Day 2
+                            exam, and if you are returning from an Amber country, you must conduct a Day 2 and 8 Test.
+                            For Amber Countries, Test to Release (Day 5) is an option that may help you to shorten your
+                            10-day quarantine. To ensure delivery on the correct day, book this separately from your Day
+                            2 and 8 tests.</p>
+                        <p style="text-align: justify">Before your appointment, read the section FAQ SECTION to make
+                            sure you have everything you'll need.</p>
+                        <br/>
+                        <p><a target="_blank" href="#" class="btn btn-primary">FAQs</a>
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h3><b>Who is eligible to travel?</b></h3><br/>
-                                <p>
-                                    All visitors to the United Kingdom, including British nationals, must show proof of a negative Covid test within 72 hours of arrival.</p>
-                                <p>
-                                    Residents of the United Kingdom traveling from the "red list," including South Africa, India, Namibia, and the United Arab Emirates, are allowed to enter the country but must quarantine and undergo testing upon arrival.
-                                </p>
-                            </div>
+                            <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></p>
+                        </p>
+                    </div>
+                </div><!--end of row-->
 
-                            <div class="col-sm-6">
-                                <h3><b>What are the constraints?</b></h3><br/>
-                                <p>
-                                    Before entering the UK, all visitors must provide a negative test within the last 72 hours and fill out a Passenger Locator Form.</p>
-                                <p>   In England, Scotland, Wales, and Northern Ireland, a traffic light-based transport system (red, amber, and green) is presently in operation.</p>
-                                <p>    Non-UK residents from countries on the red list are now denied access to the United Kingdom.
-                                </p>
-                            </div>
-                        </div><!--end of row-->
-                    </li><!--end of individual feature content-->
-
-                    {{--<li class="clearfix">--}}
-                        {{--<div class="row">--}}
-                            {{--<div class="col-sm-12 text-center">--}}
-                                {{--<h1>Many appealing ways to present information</h1>--}}
-                            {{--</div>--}}
-                        {{--</div><!--end of row-->--}}
-
-                        {{--<div class="row">--}}
-                            {{--<div class="col-sm-6">--}}
-                                {{--<p class="lead">--}}
-                                    {{--Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem.--}}
-                                {{--</p>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="col-sm-6">--}}
-                                {{--<p class="lead">--}}
-                                    {{--Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem.--}}
-                                {{--</p>--}}
-                            {{--</div>--}}
-                        {{--</div><!--end of row-->--}}
-                    {{--</li><!--end of individual feature content-->--}}
-
-                    {{--<li class="clearfix">--}}
-                        {{--<div class="row">--}}
-                            {{--<div class="col-sm-12 text-center">--}}
-                                {{--<h1>Several appealing ways to present information</h1>--}}
-                            {{--</div>--}}
-                        {{--</div><!--end of row-->--}}
-
-                        {{--<div class="row">--}}
-                            {{--<div class="col-sm-6">--}}
-                                {{--<p class="lead">--}}
-                                    {{--Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem.--}}
-                                {{--</p>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="col-sm-6">--}}
-                                {{--<p class="lead">--}}
-                                    {{--Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem.--}}
-                                {{--</p>--}}
-                            {{--</div>--}}
-                        {{--</div><!--end of row-->--}}
-                    {{--</li><!--end of individual feature content-->--}}
-
-                    {{--<li class="clearfix">--}}
-                        {{--<div class="row">--}}
-                            {{--<div class="col-sm-12 text-center">--}}
-                                {{--<h1>Numerous appealing ways to present information</h1>--}}
-                            {{--</div>--}}
-                        {{--</div><!--end of row-->--}}
-
-                        {{--<div class="row">--}}
-                            {{--<div class="col-sm-6">--}}
-                                {{--<p class="lead">--}}
-                                    {{--Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem.--}}
-                                {{--</p>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="col-sm-6">--}}
-                                {{--<p class="lead">--}}
-                                    {{--Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem.--}}
-                                {{--</p>--}}
-                            {{--</div>--}}
-                        {{--</div><!--end of row-->--}}
-                    {{--</li><!--end of individual feature content-->--}}
+            </div><!--end of container-->
+        </section>
 
 
-                </ul>
+        <section class="accordion-section" id="#faq">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-sm-12 col-md-12">
+                        <h1><strong>FAQs</strong></h1>
+
+                        <ul class="accordion">
+                            <li class="active">
+                                <div class="title"><span>Why Should I Take The Test?</span></div>
+                                <div class="text">
+                                    <p>
+                                        All visitors to the United Kingdom, including British nationals, must show proof
+                                        of a negative Covid test within 72 hours of arrival.</p>
+                                    <p> Residents of the United Kingdom traveling from the "red list," including South
+                                        Africa, India, Namibia, and the United Arab Emirates, are allowed to enter the
+                                        country but must quarantine and undergo testing upon arrival.
+                                    </p>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="title"><span>What Are The Constraints?</span></div>
+                                <div class="text">
+                                    <p>
+                                        Before entering the UK, all visitors must provide a negative test within the
+                                        last 72 hours and fill out a Passenger Locator Form.</p>
+                                    <p> In England, Scotland, Wales, and Northern Ireland, a traffic light-based
+                                        transport system (red, amber, and green) is presently in operation.</p>
+                                    <p> Non-UK residents from countries on the red list are now denied access to the
+                                        United Kingdom.</p>
+                                    <p> Residents returning from destinations on the red list, such as South Africa and
+                                        India, must stay in a hotel for ten days.</p>
+                                    <p> These passengers must purchase a "quarantine package" before arriving in the UK
+                                        - which covers their stay in hotel quarantine, food, and drink while there
+                                        (Personal expenses).
+
+                                    </p>
+
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="title"><span>WHAT ARE THE THINGS I MUST DO IF I’M COMING FROM AN AMBER COUNTRY?</span>
+                                </div>
+                                <div class="text">
+                                    <p>
+                                        These are the things you must do if you have spent more than ten days in an
+                                        amber country or territory before arriving in the United Kingdom.</p>
+                                    <p> Before Visiting the United Kingdom</p>
+                                    <p>It would help if you accomplish the following before visiting the United
+                                        Kingdom:</p>
+                                    <ul>
+
+
+                                        <li>- Take a COVID-19 test to see if you're at risk.</li>
+                                        <li>- Book and pay for COVID-19 travel tests on days 2 and 8 after arriving in the
+                                            United Kingdom.
+                                        </li>
+                                        <li>- Fill out a passenger location form.</li>
+                                    </ul>
+
+                                    </p>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="title"><span>When you arrive in the UK, you must:</span></div>
+                                <div class="text">
+
+                                    <p> For ten days, quarantine at home or wherever you are staying.</p>
+                                    <ul>
+                                        <li>- On or before Day 2 and on or after Day 8, take a COVID-19 test</li>
+                                        <li> - Read up on quarantine and COVID-19 testing.</li>
+                                        <li> - The day two and day eight tests are not required for children under the
+                                            age of four.
+                                        </li>
+                                        <li> - If you pay for a private COVID-19 exam under the Test to Release scheme,
+                                            you could be able to get out of quarantine sooner.
+                                        </li>
+                                    </ul><br/>
+                                    <p> The amber list isn't all-inclusive. You should not presume that a country or
+                                        territory is on the green or red list if it is not on this list.
+
+                                    </p>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="title">
+                                    <span>WHAT ARE THE THINGS I MUST DO IF I’M COMING FROM A RED COUNTRY?</span></div>
+                                <div class="text">
+
+                                    <p> These are the things you must do if you visited a nation or territory on the red
+                                        list in the 10 days leading up to your arrival in England.</p>
+                                    <p> If you have spent the previous 10 days in a country or territory on the red
+                                        list, you will be allowed to enter the UK only if you are a British or Irish
+                                        national or have residency rights in the UK.</p>
+                                    <p> Even if you have been fully vaccinated, you must observe these regulations.</p>
+
+                                    <b>Before Departure for England</b>
+                                    <p>It would help if you did the following before going to England:
+                                    <ul>
+                                        <li> - COVID-19 Test</li>
+                                        <li> - Book a hotel package that includes two COVID-19 examinations.</li>
+                                        <li> - You should fill out a passenger locator form</li>
+                                    </ul></p>
+                                    <b>When you get to England</b><br/>
+                                    It would be best if you did the following when you arrive in England:
+                                    <ul>
+                                        <li>- 2 COVID-19 tests during quarantine in a managed hotel</li>
+                                    </ul>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="title">
+                                    <span>WHAT ARE THE THINGS I MUST DO IF I’M COMING FROM A GREEN COUNTRY?</span></div>
+                                <div class="text">
+
+                                   <p> This section explains what you'll need to do if you're coming to England from one of the countries or territories on the green list. In the past 10 days, you must have only visited or traveled through a green list nation or the United Kingdom, Ireland, the Channel Islands, or the Isle of Man.
+                                   </p>
+                                    <p>Even if you have been fully vaccinated, you must observe these regulations</p>
+
+                                   <b> Before Going to England</b><br/>
+                                   <p> It would help if you did the following before visiting England:</p>
+                                  <ul>
+                                   <li>-	Take a COVID-19 test to see if you're at risk.</li>
+                                     <li> -	Make a reservation and pay for a Day 2 COVID-19 test – to be taken once in England.</li>
+                                    <li>  -	Fill out a passenger locator form.</li>
+                                  </ul><br/>
+                                    <b>When you arrive in England</b><br/>
+                                    <ul>
+                                  <li> -	On or before the second day after your arrival, you must take a COVID-19 test.</li>
+                                        <li>  -	This test is not required for children under the age of four.</li>
+                                        <li>  -	Unless the test result is positive, you do not need to quarantine.</li>
+                                        <li>  -	If NHS Test & Trace informs you that you traveled to England with someone who tested positive for COVID-19, you must quarantine.</li>
+                                    </ul><br/>
+                                 <p>   If you've visited one of the countries or territories on the red list, or If you visited or passed through a nation or territory on the red list in the ten days leading up to your arrival in England, you must adhere to the red list requirements.</p>
+                                  <p>  If you have been in or through an amber list nation or territory in the ten days leading up to your arrival in England and have not visited a red list country, you must observe the amber list guidelines.</p>
+                                   <p> A country or territory can be changed from the green list to the amber or red list if conditions change.</p>
+                                    <p>If a country or territory on the green list is on the verge of being demoted to amber, it will be added to the green watch list.</p>
+                                   <p> A country or territory may be shifted between lists without warning if situations change suddenly.</p>
+
+                                </div>
+                            </li>
+                        </ul><!--end of accordion-->
+                    </div>
+
+                </div><!--end of row-->
             </div>
         </section>
 
-        <div class="text-center">
-           <p style="color: red"> More content is coming in... Platform is still Under Construction<br/></p>
-        </div>
 
-        {{--<section class="video-inline">--}}
-            {{--<div class="container">--}}
-                {{--<div class="row">--}}
-                    {{--<div class="col-md-6 col-sm-12">--}}
-                        {{--<h1 class="space-bottom-medium">Pivot is an effortlessly simple startup template with usable features.</h1>--}}
-                        {{--<p class="lead space-bottom-medium">--}}
-                            {{--Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.--}}
-                        {{--</p>--}}
-                        {{--<a href="#" class="btn btn-primary">See Features</a>--}}
-                        {{--<a href="#" class="btn btn-primary btn-text-only">Learn More</a>--}}
-                    {{--</div>--}}
 
-                    {{--<div class="col-md-6 col-sm-12">--}}
-                        {{--<div class="inline-video-wrapper">--}}
-                            {{--<video controls="">--}}
-                                {{--<source src="video/video.webm" type="video/webm">--}}
-                                {{--<source src="video/video.mp4" type="video/mp4">--}}
-                                {{--<source src="video/video.ogv" type="video/ogg">--}}
-                            {{--</video>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div><!--end of row-->--}}
-            {{--</div><!--end of container-->--}}
-        {{--</section>--}}
 
-        {{--<section class="no-pad clearfix">--}}
-
-            {{--<div class="col-md-6 col-sm-12 no-pad">--}}
-
-                {{--<div class="feature-box">--}}
-
-                    {{--<div class="background-image-holder overlay">--}}
-                        {{--<img class="background-image" alt="Background Image" src="img/hero1.jpg">--}}
-                    {{--</div>--}}
-
-                    {{--<div class="inner">--}}
-                        {{--<span class="alt-font text-white">Pivot Stands Out</span>--}}
-                        {{--<h1 class="text-white">Here is a large, attention seeking feature box</h1>--}}
-                        {{--<p class="text-white">--}}
-                            {{--Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.--}}
-                        {{--</p>--}}
-                        {{--<a href="#" class="btn btn-primary btn-white">Tell Me More</a>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-            {{--</div>--}}
-
-            {{--<div class="col-md-6 col-sm-12 no-pad">--}}
-
-                {{--<div class="feature-box">--}}
-
-                    {{--<div class="background-image-holder overlay">--}}
-                        {{--<img class="background-image" alt="Background Image" src="img/box2.jpg">--}}
-                    {{--</div>--}}
-
-                    {{--<div class="inner">--}}
-                        {{--<span class="alt-font text-white">Pivot Stands Out</span>--}}
-                        {{--<h1 class="text-white">Here is a large, attention seeking feature box</h1>--}}
-                        {{--<p class="text-white">--}}
-                            {{--Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.--}}
-                        {{--</p>--}}
-                        {{--<a href="#" class="btn btn-primary btn-white">Tell Me More</a>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-
-        {{--</section>--}}
-
-        {{--<section class="clients-2">--}}
-            {{--<div class="container">--}}
-                {{--<div class="row">--}}
-                    {{--<div class="col-md-2 col-sm-4">--}}
-                        {{--<img alt="Client Logo" src="img/client1.png">--}}
-                    {{--</div>--}}
-
-                    {{--<div class="col-md-2 col-sm-4">--}}
-                        {{--<img alt="Client Logo" src="img/client2.png">--}}
-                    {{--</div>--}}
-
-                    {{--<div class="col-md-2 col-sm-4">--}}
-                        {{--<img alt="Client Logo" src="img/client3.png">--}}
-                    {{--</div>--}}
-
-                    {{--<div class="col-md-2 col-sm-4">--}}
-                        {{--<img alt="Client Logo" src="img/client4.png">--}}
-                    {{--</div>--}}
-
-                    {{--<div class="col-md-2 col-sm-4">--}}
-                        {{--<img alt="Client Logo" src="img/client5.png">--}}
-                    {{--</div>--}}
-
-                    {{--<div class="col-md-2 col-sm-4">--}}
-                        {{--<img alt="Client Logo" src="img/client6.png">--}}
-                    {{--</div>--}}
-                {{--</div><!--end of row-->--}}
-            {{--</div><!--end of container-->--}}
-        {{--</section>--}}
     </div>
 
 
