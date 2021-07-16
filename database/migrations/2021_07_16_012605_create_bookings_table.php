@@ -59,7 +59,7 @@ class CreateBookingsTable extends Migration
             $table->integer('user_id')->nullable()->index('user_id_fk_idx');
             $table->integer('mode_of_payment')->nullable()->comment('1 = Online
 2 = Payment Code');
-            $table->integer('vendor_id')->nullable();
+            $table->integer('vendor_id')->nullable()->index('vendors_if_k_idx');
             $table->string('booking_code', 45)->nullable();
             $table->string('transaction_ref', 500)->nullable();
             $table->integer('status')->nullable()->default(0);

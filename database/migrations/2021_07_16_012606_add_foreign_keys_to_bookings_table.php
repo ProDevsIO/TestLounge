@@ -19,6 +19,7 @@ class AddForeignKeysToBookingsTable extends Migration
             $table->foreign('home_country_id', 'home_country_fk_')->references('id')->on('countries')->onUpdate('CASCADE')->onDelete('NO ACTION');
             $table->foreign('isolation_country_id', 'isolation_country_fk_')->references('id')->on('countries')->onUpdate('CASCADE')->onDelete('NO ACTION');
             $table->foreign('user_id', 'user_id_fk')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('NO ACTION');
+            $table->foreign('vendor_id', 'vendors_if_k')->references('id')->on('vendors')->onUpdate('CASCADE')->onDelete('NO ACTION');
         });
     }
 
@@ -35,6 +36,7 @@ class AddForeignKeysToBookingsTable extends Migration
             $table->dropForeign('home_country_fk_');
             $table->dropForeign('isolation_country_fk_');
             $table->dropForeign('user_id_fk');
+            $table->dropForeign('vendors_if_k');
         });
     }
 }

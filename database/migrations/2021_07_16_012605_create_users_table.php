@@ -23,6 +23,12 @@ class CreateUsersTable extends Migration
             $table->string('type', 60)->nullable()->default('0');
             $table->integer('verified')->nullable()->default(0);
             $table->double('wallet_balance')->nullable()->default(0);
+            $table->double('referral_fee')->nullable();
+            $table->integer('vendor_id')->nullable()->default(0);
+            $table->double('percentage_split')->nullable();
+            $table->string('account_no', 45)->nullable();
+            $table->string('account_bank', 45)->nullable();
+            $table->string('flutterwave_key', 45)->nullable();
             $table->timestamps();
         });
     }
