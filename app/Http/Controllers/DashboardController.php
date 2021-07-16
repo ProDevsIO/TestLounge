@@ -102,7 +102,7 @@ class DashboardController extends Controller
             $bookings = Booking::where('status', 1)->orderby('id', 'desc');
         } elseif (auth()->user()->vendor_id != 0) {
             $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
-            $bookings = Booking::whereIn('id', $bookings_vendors)->where('status', 0);
+            $bookings = Booking::whereIn('id', $bookings_vendors)->where('status', 1);
 
         }else {
             $bookings = Booking::where('status', 1)->where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->orderby('id', 'desc');
