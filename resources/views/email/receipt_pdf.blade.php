@@ -307,7 +307,7 @@
 
                                                         <tr class="total">
                                                             <td class="alignright" width="80%">Total</td>
-                                                            <td class="alignright">N {{ number_format($booking_product->price,2) }}</td>
+                                                            <td class="alignright">$ {{ number_format($booking_product->price,2) }}</td>
                                                         </tr>
                                                         </tbody></table>
                                                 </td>

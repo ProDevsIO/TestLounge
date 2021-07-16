@@ -204,12 +204,13 @@ class HomeController extends Controller
         if (isset($data_response->data->status) && $data_response->data->status == "successful") {
             $booking = Booking::where('transaction_ref', $txRef)->first();
             if ($booking->status != 1) {
+                $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
+
                 if ($booking->user_id) {
                     $user = User::where('id', $booking->user_id)->first();
 
                     $pecentage = Setting::where('id', '2')->first();
 
-                    $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
 
                     $cost_booking = $booking_product->price;
 
@@ -233,13 +234,7 @@ class HomeController extends Controller
 
                 $code = "PEXPO" . rand(40000, 1000000);
 
-                $booking->update([
-                    'mode_of_payment' => 1,
-                    'vendor_id' => 1,
-                    'transaction_ref' => $txRef,
-                    'status' => 1,
-                    'booking_code' => $code
-                ]);
+
 
                 try {
                     $message = "
@@ -266,6 +261,14 @@ class HomeController extends Controller
 //
 //                    }
                 }
+
+                $booking->update([
+                    'mode_of_payment' => 1,
+                    'vendor_id' => $request->vendor_id,
+                    'transaction_ref' => $txRef,
+                    'status' => 1,
+                    'booking_code' => $code
+                ]);
 
 
             }

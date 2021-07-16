@@ -22,19 +22,19 @@ class VendorReceipt extends Mailable
     public $product;
     public $vendor;
     public $subject;
-    public $from;
+    public $from_;
 
     public function __construct($booking_product_id = null,$subject = "Booking",$from = null)
     {
         $booking_product = BookingProduct::where('id',$booking_product_id)->first();
 
-        $this->booking_product = $booking_product_id;
-        $this->booking = $booking_product->booking->id;
-        $this->product = $booking_product->product->id;
-        $this->vendor = $booking_product->vendor->id;
+        $this->booking_product = $booking_product;
+        $this->booking = $booking_product->booking;
+        $this->product = $booking_product->product;
+        $this->vendor = $booking_product->vendor;
 
         $this->subject = $subject;
-        $this->from = $from;
+        $this->from_ = $from;
     }
 
     /**
@@ -42,6 +42,7 @@ class VendorReceipt extends Mailable
      *
      * @return $this
      */
+//http://uktraveltest.test/payment/confirmation?status=successful&tx_ref=booking_60f0c955a1a03277427&transaction_id=2349299
     public function build()
     {
         $booking = $this->booking;
@@ -49,12 +50,20 @@ class VendorReceipt extends Mailable
         $vendor = $this->vendor;
         $booking_product = $this->booking_product;
 
-        $pdf = PDF::loadView('email.receipt', compact('booking','booking_product','product','vendor'), [
+        $data = [
+            'booking' => $booking,
+            'booking_product' => $booking_product,
+            'product' => $product,
+            'vendor' => $vendor
+        ];
+
+        $pdf = PDF::loadView('email.receipt', $data, [
             'format' => 'A4'
         ]);
 
+        $this->from_ = $vendor->email;
 
-        return $this->from(($this->from) ? $this->from : 'info@prodevs.io',$this->subject)
+        return $this->from($this->from_,$this->subject)
             ->attachData($pdf->output(),'receipt.pdf')
             ->view('email.receipt')
             ->with(compact('booking','booking_product','product','vendor'));
