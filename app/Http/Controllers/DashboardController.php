@@ -144,10 +144,12 @@ class DashboardController extends Controller
 
     public function view_booking($id)
     {
-        if (auth()->user()->type == 0 || !auth()->user()->vendor_id) {
-            abort(403);
+        if (auth()->user()->type != 1){
+            if(!auth()->user()->vendor_id) {
+                abort(403);
+            }
         }
-        if (auth()->user()->vendor_id) {
+        if (auth()->user()->vendor_id != 0) {
             $check_vendor = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->where('booking_id', $id)->first();
             if (!$check_vendor) {
                 abort(403);

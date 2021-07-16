@@ -140,6 +140,14 @@ class Booking extends Model
 		return $this->belongsTo(Vendor::class);
 	}
 
+	public function homeCountry(){
+        return $this->belongsTo(Country::class,'home_country_id');
+    }
+
+    public function travelingFrom(){
+        return $this->belongsTo(Country::class,'country_travelling_from_id');
+    }
+
 	public function products()
 	{
 		return $this->belongsToMany(Product::class, 'booking_products')
