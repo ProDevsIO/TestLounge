@@ -36,11 +36,11 @@
             <div class="container">
                 <ul class="selector-content">
                     <li class="clearfix active">
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-sm-12 text-center">
                                 <h1>A bit about us</h1>
                             </div>
-                        </div><!--end of row-->
+                        </div> -->
 
                         <div class="row">
                             <div class="col-sm-12">
