@@ -107,7 +107,7 @@
                         <p style="text-align: justify">Before your appointment, read the section FAQ SECTION to make
                             sure you have everything you'll need.</p> -->
                         <br/>
-                        <p><a target="_blank" href="#faq" class="btn btn-primary">FAQs</a>
+                        <p><a href="/#faq" class="btn btn-primary">FAQs</a>
 
                             <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></p>
                         </p>
