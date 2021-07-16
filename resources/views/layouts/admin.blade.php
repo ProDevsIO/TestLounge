@@ -9,7 +9,7 @@
     <!--favicon icon-->
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
-    <title>UK Travel Test | Admin</title>
+    <title>UKTravel Tests | Admin</title>
     <link rel="icon" type="image/png" href="/img/favicon.png">
 
     <!--web fonts-->

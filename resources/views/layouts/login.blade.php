@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="description" content="Login into UK travel test">
+    <meta name="description" content="Login into UK travel tests">
     <meta name="author" content="ProDevs Outsourcing Ltd">
 
     <!--favicon icon-->
     <link rel="icon" type="image/png" href="/img/favicon.png">
 
-    <title>UkTravelTest</title>
+    <title>UKTravel Tests</title>
 
     <!--web fonts-->
     <link href="//fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet">

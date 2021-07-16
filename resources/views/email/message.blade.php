@@ -73,7 +73,7 @@
                                                                                     <table cellspacing="0" cellpadding="0">
                                                                                         <tr>
                                                                                             <td style="font-family: Geneva, Tahoma, Verdana, sans-serif; font-size: 22px; color: #464646;" width="400" align="left">
-                                                                                                <a href="/"  style="text-decoration: none; color: #464646;">Uk Travel Test</a>
+                                                                                                <a href="/"  style="text-decoration: none; color: #464646;">UK Travel Tests</a>
                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>
