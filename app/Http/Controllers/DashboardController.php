@@ -48,7 +48,10 @@ class DashboardController extends Controller
     {
         if (auth()->user()->type == "1") {
             $bookings = Booking::where('status', 0)->orderby('id', 'desc');
-        } else {
+        } elseif (auth()->user()->vendor_id != 0) {
+            $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
+           $bookings = Booking::whereIn('id', $bookings_vendors)->where('status', 0);
+        }else {
             $bookings = Booking::where('status', 0)->where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->orderby('id', 'desc');
 
         }
@@ -97,7 +100,11 @@ class DashboardController extends Controller
     {
         if (auth()->user()->type == "1") {
             $bookings = Booking::where('status', 1)->orderby('id', 'desc');
-        } else {
+        } elseif (auth()->user()->vendor_id != 0) {
+            $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
+            $bookings = Booking::whereIn('id', $bookings_vendors)->where('status', 0);
+
+        }else {
             $bookings = Booking::where('status', 1)->where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->orderby('id', 'desc');
         }
 
