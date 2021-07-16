@@ -9,6 +9,13 @@
         .show_required {
             color: red;
         }
+        @media screen and (max-width: 800px) {
+            .bs-stepper-header {
+                display: block;
+                align-items: center;
+            }
+}
+        }
     </style>
 @endsection
 @section('content')

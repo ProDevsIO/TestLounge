@@ -43,8 +43,20 @@
                     <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
                         <span class="sub alt-font">popular question</span>
                         <h1><strong>HOW DO I GET TESTED?</strong></h1>
+                        <ul style="text-align: justify; font-weight:900;list-style-type: square;">
+                            <li> Book and Pay for your UK travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>.</p></li>
+                            <li>Following Payment, you will immediately receive your Passenger locator Number and Reciept of payment.</li>
+                            <li>This number will be used to Complete your Passenger locator form ( insert link to form).</li>
+                            <li>You may need to show your completed passenger locator form and reciept of payment for your test before you are allowed to board a flight to the UK; please have this handy at the airport.</li>
+                            <li>You will receive your test package on or before the 2nd day of your arrival into the UK. </li>
+                            <li> You will carry out  self test on your 2nd day in the UK by following the directions on the pack ( click to watch video on how to carry out a self test.</li>
+                            <li> You will carry out  self test on your 2nd day in the UK by following the directions on the pack ( click to watch video on how to carry out a self test.</li>
+                            <li>You will visit this site and fill this form ( insert link) to activate your test.</li>
+                            <li>Your result will be ready within 24 hours.</li>
+                            <li>Repeat same for your Mandatory Day 8 and Optional Day 5 tests.</li>
+                        </ul>
                         <p class="lead" style="text-align: justify">
-                        <p style="text-align: justify">You must book and pay for all of our tests on our website; You
+                        <!-- <p style="text-align: justify">You must book and pay for all of our tests on our website; You
                             can schedule a test ahead of time. We will send a confirmation email with your Passenger
                             Locator Number and a receipt to you.
                         <p>
@@ -60,7 +72,7 @@
                             10-day quarantine. To ensure delivery on the correct day, book this separately from your Day
                             2 and 8 tests.</p>
                         <p style="text-align: justify">Before your appointment, read the section FAQ SECTION to make
-                            sure you have everything you'll need.</p>
+                            sure you have everything you'll need.</p> -->
                         <br/>
                         <p><a target="_blank" href="#" class="btn btn-primary">FAQs</a>
 
