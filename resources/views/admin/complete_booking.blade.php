@@ -147,8 +147,7 @@
                                             @if(auth()->user()->referal_code)
                                                 <td> @php
                                                         if($booking->transaction){
-                                                        $total = ($booking->transaction->cost_config * $booking->transaction->pecentage_config)/100;
-                                                        echo "N".number_format($total,2);
+                                                            echo "N".number_format($booking->transaction->amount,2);
                                                         }
                                                     @endphp</td>
                                             @endif
