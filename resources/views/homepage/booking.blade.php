@@ -375,7 +375,7 @@
                                             <input type="hidden" name="ref" value="{{ $_GET['ref'] }}">
                                         @endif
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" style="margin-top:25px;">
                                             <label>Select Vendor <span class="show_required"> *</span></label>
                                             <select class="form-control" id="vendor_id" name="vendor_id" onchange="checkPrice()" required>
                                                 <option value="">Make a selection</option>
