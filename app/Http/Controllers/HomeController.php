@@ -264,7 +264,6 @@ class HomeController extends Controller
 
                 $booking->update([
                     'mode_of_payment' => 1,
-                    'vendor_id' => $request->vendor_id,
                     'transaction_ref' => $txRef,
                     'status' => 1,
                     'booking_code' => $code
