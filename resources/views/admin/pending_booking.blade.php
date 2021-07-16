@@ -157,7 +157,7 @@
                                                 <td><a href="{{ url('/view/booking/'.$booking->id) }}"
                                                        class="btn btn-info">View</a>
                                                 </td>
-                                                <td><a href="{{ url('/payment/confirmation?tx_ref='.$booking->referral_code) }}"
+                                                <td><a href="{{ url('/payment/confirmation?tx_ref='.$booking->transaction_ref) }}"
                                                        class="btn btn-info" target="_blank">Check for Payment</a>
                                                 </td>
                                             @endif
