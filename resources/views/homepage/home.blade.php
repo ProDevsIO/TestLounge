@@ -19,18 +19,44 @@
                 </div><!--end of row-->
             </div><!--end of container-->
         </header>
-
+        <section class="clients-2">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-2 col-sm-4">
+							<img alt="Client Logo" src="img/client1.png">
+						</div>
+						
+						<div class="col-md-2 col-sm-4">
+							<img alt="Client Logo" src="img/client2.png">
+						</div>
+						
+						<div class="col-md-2 col-sm-4">
+							<img alt="Client Logo" src="img/client3.png">
+						</div>
+						
+						<div class="col-md-2 col-sm-4">
+							<img alt="Client Logo" src="img/client4.png">
+						</div>
+						
+						<div class="col-md-2 col-sm-4">
+							<img alt="Client Logo" src="img/client5.png">
+						</div>
+						
+						<div class="col-md-2 col-sm-4">
+							<img alt="Client Logo" src="img/client6.png">
+						</div>
+					</div><!--end of row-->
+				</div><!--end of container-->
+			</section>
         <section class="strip bg-secondary-1">
             <div class="container">
                 <div class="row clearfix">
-                    <div class="col-sm-6 col-xs-12 pull-left">
-                        <h5 class="text-white">There are various tests that passengers must pass before traveling to or
-                            from the UK, depending on whether they are entering or leaving the country.CLICK THE BUTTON
-                            to see the travel guidelines for the Green, Amber, and Red countries. </h5>
+                    <div class="col-xs-12 text-center">
+                        <h5 class="text-white">To view your countries color code please click the button below.  </h5>
                     </div>
 
-                    <div class="col-sm-4 col-xs-12 pull-right text-right">
-                        <a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" target="_blank" class="btn btn-primary btn-white">See Travel Guide</a>
+                    <div class="col-12 col-xs-12 text-center">
+                        <a href="https://calculator.prodevs.io/" target="_blank" class="btn btn-primary btn-white">Travel Calculator</a>
                     </div>
                 </div>
             </div>
@@ -232,8 +258,7 @@
                             </li>
                         </ul><!--end of accordion-->
 
-                        <p style="color: red">To gain more insight, kindly visit this link to access a travel calculator <a href="https://calculator.prodevs.io/" target="_blank">Visit Link</a> </p>
-                    </div>
+                     </div>
 
                 </div><!--end of row-->
             </div>
