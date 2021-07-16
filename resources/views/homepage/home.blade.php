@@ -1,6 +1,14 @@
 @extends('layouts.home')
 
 @section('content')
+@section('style')
+<style>
+    .background-image-holder.parallax-background {
+    height: 140%;
+    top: -33%;
+    }
+</style>
+@endstyle
 
     <div class="main-container">
         <header class="page-header">
