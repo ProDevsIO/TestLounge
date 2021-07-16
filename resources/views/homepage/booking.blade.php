@@ -510,8 +510,7 @@
 
         $(function () {
             $('.date_picker').datetimepicker({
-                minView: 2,
-                pickTime: false
+                format: 'MM/DD/YYYY'
             });
         });
     </script>
