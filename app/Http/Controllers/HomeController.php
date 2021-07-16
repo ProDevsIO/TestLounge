@@ -15,6 +15,7 @@ use App\Models\Vendor;
 use App\Models\VendorProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 
@@ -442,6 +443,10 @@ class HomeController extends Controller
         $vendor_product = VendorProduct::where('vendor_id', $vendor_id)->where('product_id', $product_id)->first();
 
         return $vendor_product;
+    }
+
+    public function webhook_receiver(Request $request){
+        Log::info($request->all());
     }
 
 

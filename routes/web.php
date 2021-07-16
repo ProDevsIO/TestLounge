@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('homepage.home');
 });
 
+Route::get('/webhook/receiver', [\App\Http\Controllers\HomeController::class,"webhook_receiver"]);
+
+
+
 Route::get('/password', function () {
     return \Illuminate\Support\Facades\Hash::make('password');
 });
