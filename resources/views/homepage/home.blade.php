@@ -220,6 +220,8 @@
                                 </div>
                             </li>
                         </ul><!--end of accordion-->
+
+                        <p style="color: red">To gain more insight, kindly visit this link to access a travel calculator <a href="https://calculator.prodevs.io/" target="_blank">Visit Link</a> </p>
                     </div>
 
                 </div><!--end of row-->

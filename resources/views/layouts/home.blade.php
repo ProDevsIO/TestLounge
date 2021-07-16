@@ -159,7 +159,7 @@
         <div class="contact-action">
             <div class="align-vertical">
                 <i class="icon text-white icon_mail"></i>
-                <a href="#" class="text-white"><span class="text-white">Get in touch with us <i class="icon arrow_right"></i></span></a>
+                <a href="mailto:info@uktraveltests.com" class="text-white"><span class="text-white">Get in touch with us <i class="icon arrow_right"></i></span></a>
             </div>
         </div>
     </footer>
