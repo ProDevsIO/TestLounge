@@ -22,6 +22,8 @@
             }
             td[class="left"] {
                 padding: 0px 0 !important;
+            }
+        }
     </style>
 
 </head>

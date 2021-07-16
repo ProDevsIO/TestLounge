@@ -78,12 +78,12 @@
                         <h1><strong>HOW DO I GET TESTED?</strong></h1>
                         <ul style="text-align: justify; font-weight:900;list-style-type: square; font-size:18px;font-family:poppins">
                             <li> Book and Pay for your UK travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>.</p></li>
-                            <li>Following Payment, you will immediately receive your Passenger locator Number and Reciept of payment.</li>
+                            <li>Following Payment, you will immediately receive your Passenger locator Number and receipt of payment.</li>
                             <li>This number will be used to Complete your Passenger locator form ( insert link to form).</li>
-                            <li>You may need to show your completed passenger locator form and reciept of payment for your test before you are allowed to board a flight to the UK; please have this handy at the airport.</li>
+                            <li>You may need to show your completed passenger locator form and receipt of payment for your test before you are allowed to board a flight to the UK; please have this handy at the airport.</li>
                             <li>You will receive your test package on or before the 2nd day of your arrival into the UK. </li>
-                            <li> You will carry out  self test on your 2nd day in the UK by following the directions on the pack ( click to watch video on how to carry out a self test.</li>
-                            <li> You will carry out  self test on your 2nd day in the UK by following the directions on the pack ( click to watch video on how to carry out a self test.</li>
+                            <li> You will carry out  self test on your 2nd day in the UK by following the directions on the pack ( click to watch video on how to carry out a self test).</li>
+                            <li> You will carry out  self test on your 2nd day in the UK by following the directions on the pack ( click to watch video on how to carry out a self test).</li>
                             <li>You will visit this site and fill this form ( insert link) to activate your test.</li>
                             <li>Your result will be ready within 24 hours.</li>
                             <li>Repeat same for your Mandatory Day 8 and Optional Day 5 tests.</li>

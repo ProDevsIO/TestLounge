@@ -509,7 +509,9 @@
 
 
         $(function () {
-            $('.date_picker').datetimepicker();
+            $('.date_picker').datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
         });
     </script>
 @endsection
