@@ -76,6 +76,7 @@
                         {{--</div>--}}
                     {{--</div>--}}
                 @else
+                    @if(!auth()->user()->vendor_id)
                     <div class="col-xl-3 col-sm-6">
                         <div class="card mb-4 bg-success">
                             <div class="card-body">
@@ -92,6 +93,7 @@
                             </div>
                         </div>
                     </div>
+                        @endif
                 @endif
             </div>
 
