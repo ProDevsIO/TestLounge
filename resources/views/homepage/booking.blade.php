@@ -509,7 +509,10 @@
 
 
         $(function () {
-            $('.date_picker').datetimepicker();
+            $('.date_picker').datetimepicker({
+                minView: 2,
+                pickTime: false
+            });
         });
     </script>
 @endsection

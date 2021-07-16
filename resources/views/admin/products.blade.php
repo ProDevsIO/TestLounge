@@ -91,13 +91,14 @@
                                             <td>{{ $product->bookings->count() }}</td>
                                             @if(auth()->user()->type == "1")
                                                 <td>
-                                                    @if($product->bookings->count() == 0)
+
                                                         <a data-toggle="modal"
                                                            data-target="#editModal{{ $product->id }}"
                                                            href="javascript:;"
                                                            class="btn btn-info">Edit</a>
                                                         <a href="{{ url('/view/booking/'.$product->id) }}"
                                                            class="btn btn-info">View Booking</a>
+                                                    @if($product->bookings->count() == 0)
                                                         <a href="#" onclick="delete_product('{{ $product->id }}')"
                                                            class="btn btn-danger">Delete</a>
                                                     @endif

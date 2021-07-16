@@ -7,6 +7,166 @@
     height: 140%;
     top: -33%;
     }
+    .content{
+        width:50vw;
+        margin:auto;
+    }
+    .circle-container{
+        text-align:center;
+        position:absolute;
+        bottom: 270px;
+        display:flex;
+        justify-content:space-around;
+        width:100%;
+        left:0;
+    }
+    .circle{
+        background:#fff;
+        width:150px;
+        height:150px;
+        border-radius:150px;
+        display:flex;
+        align-items:center;
+        justify-content:space-around;
+        color:#000;
+        font-weight:bold;
+        font-size:16px;
+        text-align:center;
+        padding:10px;
+        margin:auto;
+    }
+    .content .tab-1{
+        text-align:center;
+        padding: 50px 15px 70px 21px;
+        background:#1D3A65;
+        color:#fff;
+    }
+    .tab-2{
+        padding:0 10px 30px 10px;
+        background:#BF0102;
+        color:#fff;
+    }
+    .tab-3{
+        padding:0 10px 30px 10px;
+        background:#FBC001;
+    }
+    .tab-4{
+        background:#69AF42;
+        padding:0 10px 30px 10px;
+        color:#fff;
+    }
+    .content .tab{
+        box-shadow: 5px 5px 0 rgba(2, 23, 64, 1);
+    }
+    .tab-container{
+        position:relative;
+    }
+    .triple-container{
+        display:grid;
+        grid-template-columns:repeat(3, 30%);
+        justify-content:space-between;
+        margin-top:15px;
+    }
+    .triple-container .tab2{
+        position:relative;
+        padding-top:100px;
+        margin-bottom:100px;
+    }
+    li{
+        margin-bottom:10px;
+    }
+
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+
+    /* start laptop version */
+    @media screen and (max-width:2450px){
+        .content{
+            width:80vw;
+        }
+    }
+
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+
+    /* tab version */
+    @media screen and (max-width: 1024px) {
+        .content{
+            width:95vw;
+        }
+        .circle-container{
+            bottom:275px;
+        }
+    }
+
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+
+    /* mobile version */
+    @media screen and (max-width: 800px) {
+        .triple-container{
+            display:block;
+            margin-top:100px;
+        }
+        .circle-container{
+            bottom:175px;
+        }
+        .triple-container .tab2{
+            position:relative;
+            padding-top:100px;
+            /* bottom:50px; */
+        }
+    }
+
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+    /* break */
+
+    /* mobile version */
+    @media screen and (max-width: 468px) {
+        .circle-container{
+            bottom: 265px;
+        }
+    }
 </style>
 @endsection
 
@@ -55,7 +215,54 @@
 						</div>
 					</div><!--end of row-->
 				</div><!--end of container-->
-			</section>
+			</section><br/>
+        <div class="content">
+            <div class="header tab-1 tab">
+                As we continue to monitor the global landscape
+            </div>
+            <div class="triple-container">
+                <div class="tab-2 tab tab2">
+                    <div class="circle-container">
+                        <div class="circle tab"><span>Red<br />Countries</span></div>
+                    </div>
+
+                    <ul>
+                        <li>PCR Test 72 hours before depature</li>
+                        <li>Before depature, pay for days 2 & 6 PCR tests post-arrival in Nigeria</li>
+                        <li>Pay for 14 day isolation in a government approved facility
+                            <ul>
+                                <li>Refund for 7 days will be made if negative on day 7</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-3 tab tab2">
+                    <div class="circle-container">
+                        <div class="circle tab"><span>Amber<br />Countries</span></div>
+                    </div>
+
+                    <ul style="color: #fff;">
+                        <li>PCR Test 72 hours before depature</li>
+                        <li>Before depature, pay for days 2 & 6 PCR tests post-arrival in Nigeria</li>
+                        <li>Mandatory isolation at home for 7 days</li>
+                        <li>Monitoring by logistics surveillance & EKOTELEMED</li>
+                    </ul>
+                </div>
+                <div class="tab-4 tab tab2">
+                    <div class="circle-container">
+                        <div class="circle tab"><span>Red<br />Countries</span></div>
+                    </div>
+
+                    <ul>
+                        <li>PCR Test 72 hours before depature</li>
+                        <li>Before depature, pay for days 2 & 6 PCR tests post-arrival in Nigeria</li>
+                        <li>Day 5 test is optional, but day 77 test is mandatory</li>
+                        <li>If negative, on day 5, exit isolation</li>
+                        <li>If not, mandatory isolation at home for 7 days</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <section class="strip bg-secondary-1">
             <div class="container">
                 <div class="row clearfix">
