@@ -109,7 +109,7 @@ class HomeController extends Controller
                 $request_data['referral_code'] = $request_data['ref'];
                 $request_data['user_id'] = $user->id;
                 if ($user->flutterwave_key) {
-                    $sub_account[] = $user->id;
+                    $sub_account[] = $user->flutterwave_key;
                 }
             }
         }
@@ -315,6 +315,22 @@ class HomeController extends Controller
                 "title" => "UK Covid Testing Booking"
             ]
         ];
+
+        $sub_account = [];
+
+        if ($booking->user_id) {
+            $user = User::where('id', $booking->user_id)->first();
+
+            if ($user) {
+                if ($user->flutterwave_key) {
+                    $sub_account[] = $user->flutterwave_key;
+                }
+            }
+        }
+
+        if (!empty($sub_account)) {
+            $data['subaccounts'] = $sub_account;
+        }
 
         $redirect_url = $this->processFL($data);
 
