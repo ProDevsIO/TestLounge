@@ -8,7 +8,7 @@
     top: -33%;
     }
 </style>
-@endstyle
+@endsection
 
     <div class="main-container">
         <header class="page-header">
