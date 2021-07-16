@@ -42,7 +42,7 @@
                     <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
                         <span class="sub alt-font">popular question</span>
                         <h1><strong>HOW DO I GET TESTED?</strong></h1>
-                        <ul style="text-align: justify; font-weight:900;list-style-type: square;">
+                        <ul style="text-align: justify; font-weight:900;list-style-type: square; font-size:18px;">
                             <li> Book and Pay for your UK travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>.</p></li>
                             <li>Following Payment, you will immediately receive your Passenger locator Number and Reciept of payment.</li>
                             <li>This number will be used to Complete your Passenger locator form ( insert link to form).</li>
