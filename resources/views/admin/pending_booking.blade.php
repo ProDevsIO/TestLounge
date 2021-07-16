@@ -146,7 +146,7 @@
                                             @if(auth()->user()->referal_code)
                                                 <td> @php
                                                         if($booking->transaction){
-                                                        echo "N".number_format($booking->transaction,2);
+                                                        echo "N".number_format($booking->transaction->amount,2);
                                                         }
                                                     @endphp</td>
                                             @endif
