@@ -60,7 +60,7 @@
             <div class="container">
                 <div class="row clearfix">
                     <div class="col-xs-12 text-center">
-                        <h5 class="text-white">To view your countries color code please click the button below.  </h5>
+                        <h5 class="text-white">To view a country's color code please click the button below.  </h5>
                     </div>
 
                     <div class="col-12 col-xs-12 text-center">
