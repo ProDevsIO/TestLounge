@@ -1,6 +1,7 @@
 @extends('layouts.home')
 @section('style')
     <link href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha512-aEe/ZxePawj0+G2R+AaIxgrQuKT68I28qh+wgLrcAJOz3rxCP+TwrK5SPN+E5I+1IQjNtcfvb96HDagwrKRdBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .iti {
             width: 100%;
@@ -127,7 +128,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label>Date of Birth <span class="show_required"> *</span></label>
-                                            <input class="form-control" type="date" placeholder="Date of Birth"
+                                            <input class="form-control date_picker" type="text" placeholder="Date of Birth"
                                                    name="dob"
                                                    value="{{ old('dob') }}" required>
                                         </div>
@@ -302,7 +303,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label>Arrival date in the UK: <span class="show_required"> *</span></label>
-                                            <input class="form-control" type="date" placeholder="Arrival Date in Uk"
+                                            <input class="form-control date_picker" type="text" placeholder="Arrival Date in Uk"
                                                    name="arrival_date"
                                                    value="{{ old('arrival_date') }}" required>
                                         </div>
@@ -330,7 +331,7 @@
 
                                         <div class="col-md-12">
                                             <label> Departure Date: <span class="show_required"> *</span></label>
-                                            <input class="form-control" type="date" placeholder="Arrival Date in Uk"
+                                            <input class="form-control date_picker" type="text" placeholder="Arrival Date in Uk"
                                                    name="departure_date"
                                                    value="{{ old('departure_date') }}" required>
                                         </div>
@@ -342,7 +343,7 @@
                                                 <span class="field-description">You can find the current list <a
                                                             href='https://www.gov.uk/guidance/coronavirus-covid-19-travel-corridors'>here</a>:</span>
                                             </label>
-                                            <input class="form-control" type="date" placeholder="Arrival Date in Uk"
+                                            <input class="form-control date_picker" type="text" placeholder="Arrival Date in Uk"
                                                    name="last_day_travel"
                                                    value="{{ old('last_day_travel') }}" required>
                                         </div>
@@ -425,6 +426,8 @@
 
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
 
         function checkPrice(){
@@ -504,5 +507,9 @@
             }
         });
 
+
+        $(function () {
+            $('.date_picker').datetimepicker();
+        });
     </script>
 @endsection
