@@ -12,8 +12,7 @@
                 <div class="row">
                     <div class="col-sm-12 text-center">
                         <img alt="logo" class="logo" src="/img/logo-light.png">
-                        <h1 class="text-white space-bottom-medium">Are you traveling to the UK? And you want to make
-                            your UK Covid Testing Booking? Search no further! You're on the right platform.</h1>
+                        <h1 class="text-white space-bottom-medium text-center">Identifying and Booking a Covid Test at an Accredited UK Laboratory can be quite daunting .The UK Travel Test Platform helps aggregate Accredited and Vetted Test Providers and provides a simplified guide on how to travel to the UK hassle free.</h1>
                         <a target="_blank" href="#" class="btn btn-primary btn-white">Learn more</a>
                         <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a>
                     </div>

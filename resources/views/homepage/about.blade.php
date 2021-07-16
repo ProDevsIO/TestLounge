@@ -45,11 +45,10 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <p class="lead">
-                                    We are a platform that helps aggregate UK Labs and test providers vetted and seen to provide seamless and good customer service to travelers. We provide the latest updates, seek to make your travel updates, and strive to make your travel in and out of the UK more pleasurable.</p>
-                                  <p>  This platform gives you the information you need to confidently book the appropriate test(s) for your travel. Our mission is to demystify the lead on testing. We currently provide Covid19 testing and direct services to African tourists, patients, travelers, and individuals.</p>
-                                <p> Through our partnerships with accredited self-test service providers, we provide access to cutting-edge, accredited self-test services providers.</p>
-                                <p> We can manage your testing programs to suit your business needs thanks to our network of collection agents across the UK</p>
-                                </p>
+                                    <p  style = "font-weight:900;">We are a platform that helps aggregate UK Labs and test providers vetted and seen to provide seamless and good customer service to travelers.</p>
+                                    <p  style = "font-weight:900;">  This platform gives you the information you need to confidently book the appropriate test(s) for your travel.Our mission is to provide clarity on the information needed for travel tests.We currently provide a list of COVID-19 testing providers who help to make the testing process as seamless as possible.</p>
+                                    <p  style = "font-weight:900;"> Through our partnerships with accredited self-test service providers, we provide access to cutting-edge, accredited self-test services providers.</p>
+                                 </p>
                             </div>
 
 

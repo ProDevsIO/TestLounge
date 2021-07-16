@@ -33,7 +33,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h1>All our Covid19 test and their description</h1>
+                        <h1>Test Packages Explained</h1>
                     </div>
                 </div><!--end of row-->
 
