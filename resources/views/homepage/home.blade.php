@@ -218,15 +218,15 @@
 			</section><br/>
         <div class="content">
             <div class="header tab-1 tab">
-                As we continue to monitor the global landscape
+               <h5 class="text-white">As we continue to monitor the global landscape</h5> 
             </div>
             <div class="triple-container">
                 <div class="tab-2 tab tab2">
-                    <div class="circle-container">
+                    <div class="circle-container" style="margin-bottom:40px;">
                         <div class="circle tab"><span>Red<br />Countries</span></div>
                     </div>
 
-                    <ul>
+                    <ul class="text-center" style="font-size:18px;font-family:poppins;margin:top:10px;">
                         <li>PCR Test 72 hours before depature</li>
                         <li>Before depature, pay for days 2 & 6 PCR tests post-arrival in Nigeria</li>
                         <li>Pay for 14 day isolation in a government approved facility
@@ -237,11 +237,11 @@
                     </ul>
                 </div>
                 <div class="tab-3 tab tab2">
-                    <div class="circle-container">
+                    <div class="circle-container" style="margin-bottom:40px;">
                         <div class="circle tab"><span>Amber<br />Countries</span></div>
                     </div>
 
-                    <ul style="color: #fff;">
+                    <ul style="color: #fff;font-size:18px;font-family:poppins;margin:top:30px;" class="text-center">
                         <li>PCR Test 72 hours before depature</li>
                         <li>Before depature, pay for days 2 & 6 PCR tests post-arrival in Nigeria</li>
                         <li>Mandatory isolation at home for 7 days</li>
@@ -249,11 +249,11 @@
                     </ul>
                 </div>
                 <div class="tab-4 tab tab2">
-                    <div class="circle-container">
-                        <div class="circle tab"><span>Red<br />Countries</span></div>
+                    <div class="circle-container" style="margin-bottom:40px;">
+                        <div class="circle tab"><span>Green<br />Countries</span></div>
                     </div>
 
-                    <ul>
+                    <ul class="text-center" style="font-size:18px;font-family:poppins;margin:top:10px;">
                         <li>PCR Test 72 hours before depature</li>
                         <li>Before depature, pay for days 2 & 6 PCR tests post-arrival in Nigeria</li>
                         <li>Day 5 test is optional, but day 77 test is mandatory</li>
