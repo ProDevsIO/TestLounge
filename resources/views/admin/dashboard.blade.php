@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="media-body text-light" title="Pending bookings">
                                     <h4 class="text-uppercase mb-0 weight500">{{ $pending_booking }}</h4>
-                                    <span>P. Bookings</span>
+                                    <span>Unpaid Bookings</span>
                                 </div>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="media-body text-white" title="Completed bookings">
                                     <h4 class="text-uppercase mb-0 weight500">{{ $complete_booking }}</h4>
-                                    <span>C. Bookings</span>
+                                    <span>Paid Bookings</span>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
                                             N{{ number_format(auth()->user()->wallet_balance,0) }}</h4>
-                                        <span>Wallet</span>
+                                        <span>Total Earnings</span>
                                     </div>
                                 </div>
                             </div>
@@ -116,6 +116,9 @@
                                         <th scope="col">Email</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Mode of Payment</th>
+                                        @if(auth()->user()->referal_code)
+                                            <th scope="col">Earnings</th>
+                                        @endif
                                         @if(auth()->user()->type == "1")
                                             <th scope="col">Vendor</th>
                                             <th scope="col">Action</th>
@@ -142,6 +145,14 @@
                                                     Payment Code
                                                 @endif
                                             </td>
+                                            @if(auth()->user()->referal_code)
+                                                <td> @php
+                                                    if($booking->transaction){
+                                                    $total = ($booking->transaction->cost_config * $booking->transaction->pecentage_config)/100;
+                                                    echo "N".number_format($total,2);
+                                                    }
+                                                @endphp</td>
+                                            @endif
                                             @if(auth()->user()->type == "1")
                                                 <td>
                                                     {{ ($booking->vendor) ? $booking->vendor->name : "none" }}

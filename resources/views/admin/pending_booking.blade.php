@@ -111,6 +111,9 @@
                                         <th scope="col">Email</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Mode of Payment</th>
+                                        @if(auth()->user()->referal_code)
+                                            <th scope="col">Earnings</th>
+                                        @endif
                                         @if(auth()->user()->type == "1")
                                             <th scope="col">Vendor</th>
                                             <th scope="col">Action</th>
@@ -140,12 +143,23 @@
                                                     Payment Code
                                                 @endif
                                             </td>
+                                            @if(auth()->user()->referal_code)
+                                                <td> @php
+                                                        if($booking->transaction){
+                                                        $total = ($booking->transaction->cost_config * $booking->transaction->pecentage_config)/100;
+                                                        echo "N".number_format($total,2);
+                                                        }
+                                                    @endphp</td>
+                                            @endif
                                             @if(auth()->user()->type == "1")
                                                 <td>
                                                     {{ ($booking->vendor) ? $booking->vendor->name : "none" }}
                                                 </td>
                                                 <td><a href="{{ url('/view/booking/'.$booking->id) }}"
                                                        class="btn btn-info">View</a>
+                                                </td>
+                                                <td><a href="{{ url('/payment/confirmation?tx_ref='.$booking->referral_code) }}"
+                                                       class="btn btn-info" target="_blank">Check for Payment</a>
                                                 </td>
                                             @endif
 
