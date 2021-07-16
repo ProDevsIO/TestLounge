@@ -227,8 +227,8 @@
                     </div>
 
                     <ul class="text-center" style="font-size:18px;font-family:poppins;margin:top:10px;">
-                        <li>PCR Test 72 hours before depature</li>
-                        <li>Before depature, pay for days 2 & 6 PCR tests post-arrival in Nigeria</li>
+                        <li>PCR Test 72 hours before departure</li>
+                        <li>Before departure, pay for days 2 & 6 PCR tests post-arrival in Nigeria</li>
                         <li>Pay for 14 day isolation in a government approved facility
                             <ul>
                                 <li>Refund for 7 days will be made if negative on day 7</li>
@@ -242,8 +242,8 @@
                     </div>
 
                     <ul style="color: #fff;font-size:18px;font-family:poppins;margin:top:30px;" class="text-center">
-                        <li>PCR Test 72 hours before depature</li>
-                        <li>Before depature, pay for days 2 & 6 PCR tests post-arrival in Nigeria</li>
+                        <li>PCR Test 72 hours before departure</li>
+                        <li>Before departure, pay for days 2 & 6 PCR tests post-arrival in Nigeria</li>
                         <li>Mandatory isolation at home for 7 days</li>
                         <li>Monitoring by logistics surveillance & EKOTELEMED</li>
                     </ul>
@@ -254,8 +254,8 @@
                     </div>
 
                     <ul class="text-center" style="font-size:18px;font-family:poppins;margin:top:10px;">
-                        <li>PCR Test 72 hours before depature</li>
-                        <li>Before depature, pay for days 2 & 6 PCR tests post-arrival in Nigeria</li>
+                        <li>PCR Test 72 hours before departure</li>
+                        <li>Before departure, pay for days 2 & 6 PCR tests post-arrival in Nigeria</li>
                         <li>Day 5 test is optional, but day 77 test is mandatory</li>
                         <li>If negative, on day 5, exit isolation</li>
                         <li>If not, mandatory isolation at home for 7 days</li>
