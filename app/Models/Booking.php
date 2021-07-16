@@ -148,6 +148,10 @@ class Booking extends Model
         return $this->belongsTo(Country::class,'country_travelling_from_id');
     }
 
+    public function transaction(){
+	    return $this->hasOne(Transaction::class,'booking_id');
+    }
+
 	public function products()
 	{
 		return $this->belongsToMany(Product::class, 'booking_products')

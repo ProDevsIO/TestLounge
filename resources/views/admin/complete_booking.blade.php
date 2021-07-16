@@ -112,6 +112,9 @@
                                         <th scope="col">Email</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Mode of Payment</th>
+                                        @if(auth()->user()->referal_code)
+                                            <th scope="col">Earnings</th>
+                                        @endif
                                         @if(auth()->user()->type == "1")
                                             <th scope="col">Vendor</th>
                                             <th scope="col">Action</th>
@@ -141,6 +144,13 @@
                                                     Payment Code
                                                 @endif
                                             </td>
+                                            @if(auth()->user()->referal_code)
+                                                <td> @php
+                                                        if($booking->transaction){
+                                                            echo "N".number_format($booking->transaction->amount,2);
+                                                        }
+                                                    @endphp</td>
+                                            @endif
                                             @if(auth()->user()->type == "1")
                                                 <td>
                                                     {{ ($booking->vendor) ? $booking->vendor->name : "none" }}

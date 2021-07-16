@@ -161,8 +161,8 @@
                         </a>
                         <ul class="sub">
 
-                            <li><a href="{{ url('/pending/booking') }}">Pending Bookings</a></li>
-                            <li><a href="{{ url('complete/booking') }}">Completed Bookings</a></li>
+                            <li><a href="{{ url('/pending/booking') }}">Unpaid Bookings</a></li>
+                            <li><a href="{{ url('complete/booking') }}">Paid Bookings</a></li>
 
                         </ul>
                     </li>
