@@ -109,6 +109,7 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Phone</th>
                                         <th scope="col">Email</th>
+                                        <th scope ="col">Date/Time</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Mode of Payment</th>
                                         @if(auth()->user()->referal_code)
@@ -131,6 +132,7 @@
                                             </td>
                                             <td>{{ $booking->phone_no }}</td>
                                             <td>{{ $booking->email }}</td>
+                                            <td> {{ $booking->created_at }} </td>
                                             <td>@if($booking->status == 0)
                                                     <span class="badge badge-warning">Not Paid</span>
                                                 @elseif($booking->status == 1)
