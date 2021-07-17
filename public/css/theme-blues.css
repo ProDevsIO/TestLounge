@@ -456,6 +456,9 @@ nav hr {
 .nav-menu .social-icons {
   float: right;
 }
+#hide{
+  display: none;
+}
 .utility-menu {
   margin-top: 16px;
 }
@@ -1496,9 +1499,10 @@ img.phone-portrait {
 }
 .accordion li.active .text {
   padding: 24px;
-  max-height: 500px;
+  max-height: 1500px;
   border-bottom: 2px solid #dadada;
-  opacity: 1;
+  opacity: 8;
+  color:#06222c
 }
 .text-image-bottom {
   padding-bottom: 0px;
@@ -2808,6 +2812,9 @@ footer.short-2 .contact-action:hover {
 @media only screen and (min-width: 320px) and (max-width: 767px) {
   .top-bar {
     position: absolute;
+  }
+  #hide{
+    display: block;
   }
   .utility-menu {
     display: none;

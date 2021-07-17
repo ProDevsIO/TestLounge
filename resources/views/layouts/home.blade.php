@@ -102,6 +102,8 @@
                         </li>
                         <li><a href="mailto:info@uktraveltests.com">Contact</a>
                         </li>
+                        <li id="hide"><a href="/login">login</a></li>
+                        <li id="hide"><a href="/register/agent">Register as an agent</a></li>
                     </ul>
 
                     <ul class="social-icons text-right">
