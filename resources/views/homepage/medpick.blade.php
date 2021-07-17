@@ -42,7 +42,6 @@
 
                         <div class="row">
                             <form action="https://covid19.medfit.com.ng/consumer/reservation-creator">
-                                @csrf
                                 <div class="col-sm-12"><label for="">To book a test please pick the necessary option below to proceed</label></div>
                                 
                             <div class="col-sm-12" style="margin-top: 30px">

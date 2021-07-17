@@ -6,7 +6,21 @@
      #hide{
         display: none;
     }
-
+    @media screen and (max-width: 600px) {
+        #hide{
+        display: block;
+        }
+    }
+    @media screen and (max-width: 800px) {
+        #hide{
+        display: block;
+        }
+    }
+    @media screen and (max-width: 1024px) {
+        #hide{
+        display: block;
+        }
+    }
      .card {
          margin-bottom: 1.5rem;
          box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,.025);
@@ -73,7 +87,8 @@
 							<img alt="Client Logo" src="img/pexpo.png">
 						</div>
 						
-						<div class="col-md-3 col-sm-4">
+						<div class="col-md-3 col-sm-4" style="margin-top:10px">
+                            
 							<img alt="Client Logo" src="img/allhealth.png">
 						</div>
 						

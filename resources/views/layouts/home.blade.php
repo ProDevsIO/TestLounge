@@ -56,7 +56,7 @@
         <div class="container">
 
             <div class="row utility-menu">
-                <div class="col-sm-12">
+                <div class="col-sm-12 ">
                     <div class="utility-inner clearfix">
                         <span class="alt-font"><i class="icon icon_mail"></i>info@uktraveltest.co.uk</span>
 
