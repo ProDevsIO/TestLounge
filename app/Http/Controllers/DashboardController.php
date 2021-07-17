@@ -63,7 +63,7 @@ class DashboardController extends Controller
 
         if (auth()->user()->type == 1) {
             if ($request->vendor_id) {
-                $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
+                $bookings_vendors = BookingProduct::where('vendor_id', $request->vendor_id)->pluck('booking_id')->toArray();
                 $bookings = $bookings->whereIn('id', $bookings_vendors);
             }
 
@@ -115,7 +115,7 @@ class DashboardController extends Controller
 
         if (auth()->user()->type == 1) {
             if ($request->vendor_id) {
-                $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
+                $bookings_vendors = BookingProduct::where('vendor_id', $request->vendor_id)->pluck('booking_id')->toArray();
                 $bookings = $bookings->whereIn('id', $bookings_vendors);
             }
 
