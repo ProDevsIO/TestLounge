@@ -58,7 +58,7 @@
             <div class="row utility-menu">
                 <div class="col-sm-12">
                     <div class="utility-inner clearfix">
-                        <span class="alt-font"><i class="icon icon_mail"></i> <a href="mailto:info@uktraveltest.co.uk" class="text-white lnk">info@uktraveltest.co.uk</a></span>
+                        <span class="alt-font"><i class="icon icon_mail"></i>info@uktraveltest.co.uk</span>
 
                         <div class="pull-right">
                             @if(!in_array(\Illuminate\Support\Facades\Route::current()->getName(),$ignore))
