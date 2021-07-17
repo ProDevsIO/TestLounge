@@ -3,6 +3,9 @@
 @section('content')
 @section('style')
 <style>
+     #hide{
+        display: none;
+    }
     .accordion li.active .text {
         padding: 24px;
         max-height: 1500px !important;
@@ -141,6 +144,9 @@
 
     /* mobile version */
     @media screen and (max-width: 800px) {
+        #hide{
+            display: block;
+        }
         .triple-container{
             display:block;
             margin-top:100px;
@@ -170,7 +176,9 @@
 
     /* mobile version */
     @media screen and (max-width: 468px) {
-        
+        #hide{
+            display: block;
+        }
         .circle-container{
             bottom: 255px;
         }
