@@ -447,6 +447,11 @@ class HomeController extends Controller
     {
         return view('homepage.about');
     }
+    public function pick()
+    {
+       
+        return view('homepage.medpick');
+    }
 
     public function products()
     {

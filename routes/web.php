@@ -29,6 +29,7 @@ Route::get('/login', [\App\Http\Controllers\HomeController::class,"login"]);
 Route::get('/register/agent', [\App\Http\Controllers\HomeController::class,"register_agent"]);
 
 Route::get('/payment/confirmation', [\App\Http\Controllers\HomeController::class,"payment_confirmation"]);
+Route::get('/pick', [\App\Http\Controllers\HomeController::class,"pick"])->name('pick');
 Route::get('/about', [\App\Http\Controllers\HomeController::class,"about"])->name('about');
 Route::get('/covid/testing', [\App\Http\Controllers\HomeController::class,"products"])->name('products_covid');
 Route::get('/check/price/{vendor_id}/{product_id}', [\App\Http\Controllers\HomeController::class,"check_price"])->name('check_price');

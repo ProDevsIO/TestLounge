@@ -3,8 +3,16 @@
 @section('content')
 @section('style')
 <style>
+    h1, h2, h3, h4, h5 ,h6, p{
+        font-family:poppins !important;
+    }
      #hide{
         display: none;
+    }
+    .clients-2 img {
+    max-height: 100px;
+    height:100px;
+    opacity:1;
     }
     .accordion li.active .text {
         padding: 24px;
@@ -211,33 +219,139 @@
         <section class="clients-2">
 				<div class="container">
 					<div class="row">
-						<div class="col-md-2 col-sm-4">
-							<img alt="Client Logo" src="img/client1.png">
+						<div class="col-md-1 col-sm-4">
+							<!-- <img alt="Client Logo" src="img/client1.png"> -->
 						</div>
 						
-						<div class="col-md-2 col-sm-4">
-							<img alt="Client Logo" src="img/client2.png">
+						<div class="col-md-1 col-sm-4">
+							<!-- <img alt="Client Logo" src="img/client2.png"> -->
 						</div>
 						
-						<div class="col-md-2 col-sm-4">
-							<img alt="Client Logo" src="img/client3.png">
+						<div class="col-md-4 col-sm-6">
+							<img alt="Client Logo" src="img/TestForNowlogo.png">
 						</div>
 						
-						<div class="col-md-2 col-sm-4">
-							<img alt="Client Logo" src="img/client4.png">
+						<div class="col-md-4 col-sm-4">
+							<img alt="Client Logo" src="img/Londonlogo.png">
 						</div>
 						
-						<div class="col-md-2 col-sm-4">
-							<img alt="Client Logo" src="img/client5.png">
+						<div class="col-md-1 col-sm-4">
+							<!-- <img alt="Client Logo" src="img/client5.png"> -->
 						</div>
 						
-						<div class="col-md-2 col-sm-4">
-							<img alt="Client Logo" src="img/client6.png">
+						<div class="col-md-1 col-sm-4">
+							<!-- <img alt="Client Logo" src="img/client6.png"> -->
 						</div>
 					</div><!--end of row-->
 				</div><!--end of container-->
 			</section><br/>
-        <div class="content">
+            <section class="duplicatable-content">
+			
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<h1 style=""><b>As we continue to monitor<br> the global landscape</b></h1>
+						</div>
+					</div><!--end of row-->
+		
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="feature feature-icon-large">
+								<div class="pull-left">
+                                <i class="icon icon-linegraph" style="color:orange;"></i>
+								</div>
+								<div class="pull-right">
+                                <h5  style="color:orange;"><a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:orange"><span>Amber countries (Vaccinated)</span></a></h5>
+									<p>
+                                    <ol style="color:black;font-size:18px;font-family:poppins;list-style-type:square;">
+                                      
+                                            <li>These are travellers arriving from Amber list Countries who have received 2 doses of an NHS administered Covid vaccine 14 days before travel into the UK</li>
+                                            <li>Require a Negative  Covid 19 PCR Test 72 hours pre- dedepature to the UK ( children 10 years and below do not require a pre- depature test)</li>
+                                            <li>Must Complete a Passenger Locator Form pre depature to the UK</li>
+                                        <li>Do not require Quarantine</li>
+                                        <li> Mandatory Day 2 Post UK Arrival Test ( children 4 years and below do not require a Day 2 Test)</li>
+                                        <p>(Book an Amber List (Vaccinated)Travel Test/ Package)</p>
+                                        </ol>
+                                    </p>
+								</div>
+							</div>
+						</div><!--end 6 col-->
+						
+						<div class="col-sm-6">
+							<div class="feature feature-icon-large">
+								<div class="pull-left">
+									<i class="icon icon-linegraph" style="color:orange;"></i>
+								</div>
+								<div class="pull-right">
+                                <h5  style="color:orange;"><a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:orange"><span>Amber Countries (Unvaccinated)</span></a></h5>
+									<p>
+                                    <ol style="color:black;font-size:18px;font-family:poppins;list-style-type:square;">
+									<li> These are travellers arriving from Amber list Countries who have NOT received 2 doses of an NHS administered Covid vaccine 14 days before travel into the UK</li> 
+
+                                    <li>  Must Complete a Passenger Locator Form pre depature to the UK</li>
+
+                                    <li>  Require a Negative  Covid 19 PCR Test 72 hours pre- dedepature to the UK ( children 10 years and below do not require a pre- depature test)</li>
+
+                                    <li>  Require 10days  Qurantine at an address of their choice</li>
+
+                                    <li>   Mandatory Day 2 and Day 8 Post UK Arrival Test ( children 4 years and below do not require any Test)</li>
+
+                                    <li>   Optional Day 5 Test to Release is available for those who want to reduce time of Qurantine from 10 days to 5 days. 
+                                    Following a negative PCR Test to Release Result, the traveller can leave Qurantine immediately.  
+                                    Children of all ages MUST also take this test if an adult living in the same household chooses to take this test</li>
+
+                                    Mandatory Day 8 Test MUST still be done irrespective of a negative Day 5 test
+
+                                    Book an Amber List (Unvaccinated) Travel Test Package
+                                    </ol>	
+                                    </p>
+								</div>
+							</div>
+						</div><!--end 6 col-->
+						
+						<div class="col-sm-6">
+							<div class="feature feature-icon-large">
+								<div class="pull-left">
+                                   <i class="icon icon-linegraph" style="color:green;"></i>
+								</div>
+								<div class="pull-right">
+                                <h5  style="color:green;"><a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:green"><span>Green Countries</span></a></h5>
+									<p>
+                                    <ol class="text-left" style="color:black;font-size:18px;font-family:poppins;margin:top:10px;list-style-type:square;">
+                                        <li>Travellers from Green List Countries</li>
+                                        <li>Require a Negative PCR Test 72 hours before pre depature into the UK</li>
+                                        <li>Do not require Quarantine </li>
+                                        <li>Mandatory Day 2 Post UK Arrival Test </li>
+                                        <p>(Book a Green List Travel Test /Package)</p>
+                                    </ol>
+                                    </p>
+								</div>
+							</div>
+						</div><!--end 6 col-->
+						
+						<div class="col-sm-6">
+							<div class="feature feature-icon-large">
+								<div class="pull-left">
+                                <i class="icon icon-linegraph"  style="color:red;"></i>
+								</div>
+								<div class="pull-right">
+									<h5  style="color:red;"><a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:red"><span>Red Countries</span></a></h5>
+									<p>
+                                        <ol style="color:black;font-size:18px;font-family:poppins;margin:top:10px;list-style-type:square;">
+                                            <li> These are entry requirements for countries on the Red List</li>
+                                            <li>  Must Complete a Passenger Locator Form pre depature to the UK</li>
+                                            <li>10 Full days of Mandatory Qurantine in a Government Approved  Hotel inclusive of 2 PCR Tests on Day 2 and Day 8  ( where date of arrival is day 0)</li>
+                                        </ol>
+                                    </p>
+								</div>
+							</div>
+						</div><!--end 6 col-->
+						
+					</div><!--end of row-->
+				</div>
+			
+			</section>
+        <!-- <div class="content">
             <div class="header tab-1 tab">
                <h5 class="text-white">As we continue to monitor the global landscape</h5> 
             </div>
@@ -283,7 +397,7 @@
                     </ol>
                 </div>
             </div>
-        </div>
+        </div> -->
         <section class="strip bg-secondary-1">
             <div class="container">
                 <div class="row clearfix">
@@ -305,7 +419,7 @@
                         <span class="sub alt-font">popular question</span>
                         <h1><strong>HOW DO I GET TESTED?</strong></h1>
                         <ul style="text-align: justify; font-weight:900;list-style-type: square; font-size:18px;font-family:poppins">
-                            <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is Mandatory for entry into the UK. You can book your test here ( insert booking link that takes to a drop down to select various countries  but only Nigeria will show for now and only Medbury Laboratory when you click on Nigeria)</li>
+                            <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is Mandatory for entry into the UK. You can book your test <a href="/pick"> here </a></li>
                             <li> Book and Pay for your UK travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>. Evidence of booking and payment is Mandatory before you can board a flight to the UK</p></li>
                             <li>Following Payment, you will immediately receive your Passenger locator Number and receipt of payment.</li>
                             <li>This number will be used to Complete your Passenger locator form <a href=" https://provide-journey-contact-details.homeoffice.gov.uk/passengerLocatorFormUserAccountHolderQuestion">Here</a>.You must show evidence that you have completed your Passenger locator form before you will be allowed to board a flight into the UK</li>
