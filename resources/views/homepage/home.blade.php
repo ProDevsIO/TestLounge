@@ -3,6 +3,13 @@
 @section('content')
 @section('style')
 <style>
+    .accordion li.active .text {
+        padding: 24px;
+        max-height: 1500px !important;
+        border-bottom: 2px solid #dadada;
+        opacity: 8 !important;
+        color:#06222c !important;
+    }
     .background-image-holder.parallax-background {
     height: 140%;
     top: -33%;
