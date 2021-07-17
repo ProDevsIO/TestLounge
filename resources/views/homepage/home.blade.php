@@ -284,16 +284,27 @@
                         <span class="sub alt-font">popular question</span>
                         <h1><strong>HOW DO I GET TESTED?</strong></h1>
                         <ul style="text-align: justify; font-weight:900;list-style-type: square; font-size:18px;font-family:poppins">
-                            <li> Book and Pay for your UK travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>.</p></li>
+                            <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is Mandatory for entry into the UK. You can book your test here ( insert booking link that takes to a drop down to select various countries  but only Nigeria will show for now and only Medbury Laboratory when you click on Nigeria)</li>
+                            <li> Book and Pay for your UK travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>. Evidence of booking and payment is Mandatory before you can board a flight to the UK</p></li>
                             <li>Following Payment, you will immediately receive your Passenger locator Number and receipt of payment.</li>
-                            <li>This number will be used to Complete your Passenger locator form <a href=" https://provide-journey-contact-details.homeoffice.gov.uk/passengerLocatorFormUserAccountHolderQuestion">Here</a>.</li>
-                            <li>You may need to show your completed passenger locator form and receipt of payment for your test before you are allowed to board a flight to the UK; please have this handy at the airport.</li>
-                            <li>You will receive your test package on or before the 2nd day of your arrival into the UK. </li>
-                            <li> You will carry out  self test on your 2nd day in the UK by following the directions on the pack ( click to watch video on how to carry out a self test) <a href="https://youtu.be/8lo6g-TYZ-c">Watch</a>.</li>
-                            <li>You will visit this site and fill this form <a href="https://www.gov.uk/guidance/coronavirus-covid-19-getting-tested">Here</a> to activate your test.</li>
-                            <li>Your result will be ready within 24 hours.</li>
-                            <li>Repeat same for your Mandatory Day 8 and Optional Day 5 tests.</li>
+                            <li>This number will be used to Complete your Passenger locator form <a href=" https://provide-journey-contact-details.homeoffice.gov.uk/passengerLocatorFormUserAccountHolderQuestion">Here</a>.You must show evidence that you have completed your Passenger locator form before you will be allowed to board a flight into the UK</li>
+                            <li>You may also need to show your reciept of payment for your UK test before you are allowed to board a flight to the UK; <br>
+                                Please have these documents handy at the airport ; both electronic and printed copies are accepted by airlines</li>
+                            <li>Following your arrival into the UK, you will receive the  test packages you booked for on or before the 2nd day of your  arrival.</li>
+                            <li>You must carry out a self test on your 1st or 2nd day of arrival into the UK . The directions on how to carry out a self test, how to activate your test and where to send your test samples to are all written  on the pack  you will receive.( click to watch video on how to carry out a self test) <a href="https://youtu.be/8lo6g-TYZ-c">Watch</a>.</li>
+                            <li> Following your self test, you will drop your sample at the designated points nearest to you as directed on the test pack you will recieve </li>
+                            <li> You will also be expected to "Activate" your test by visiting the website that will be indicated on the pack you will receive and by following the simple instructions on this website. This is required to analyse your test and send your results </li>
+                           <li> If you have  purchased a Fit to Fly Test or Package, for your exit out of the UK to another country, check the country guidelines for when you are expected to carry out your PCR test before flying. </li>
                         </ul>
+                        <p class="lead" style="text-align: justify;font-family:poppins;font-weight:300;">
+                            You can also get more information about travel requirements for other countries <a href="https://calculator.prodevs.io/" style="color:#428bca; text-decoration:none;font-size:18px;"> here </a>. <br>
+                            Follow the guidelines above on how to carry out a self test and activate your tests <br>
+
+                            All test Results are available 24 hours from reciept of samples in the Laboratory <br><br>
+
+                            * Disclaimer : <br>
+                            Country guidelines change from time to time and the information provided here is a guide. Please ensure to confirm country and airline regulations with relevant authorities at your destination . UKTravelTests will not take any responsibility for challenges that arise as a result of information provided here
+                        </p>
                         <p class="lead" style="text-align: justify">
                         <!-- <p style="text-align: justify">You must book and pay for all of our tests on our website; You
                             can schedule a test ahead of time. We will send a confirmation email with your Passenger
