@@ -91,7 +91,7 @@
 					</div><!--end of row-->
 				</div><!--end of container-->
 			</section><br/>
-        <section class="duplicatable-content">
+        <section class="duplicatable-content" style="margin-bottom: 30px">
 
             <div class="container">
                 <div class="row">
@@ -102,12 +102,9 @@
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="feature feature-icon-large">
-                            <div class="pull-left">
-                                <i class="icon icon-linegraph" style="color:orange;"></i>
-                            </div>
-                            <div class="pull-right">
-                                <h5 style="color:orange;"><a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:orange"><span>Amber countries (Vaccinated)</span></a></h5>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 style="color:orange;"><i class="icon icon-linegraph" style="color:orange; font-size: 30px"></i> <a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:orange"><span>Amber countries (Vaccinated)</span></a></h5>
                                 <p>
                                 </p><ol style=";font-size:18px;;list-style-type:square;">
 
@@ -124,14 +121,11 @@
                     </div><!--end 6 col-->
 
                     <div class="col-sm-6">
-                        <div class="feature feature-icon-large">
-                            <div class="pull-left">
-                                <i class="icon icon-linegraph" style="color:orange;"></i>
-                            </div>
-                            <div class="pull-right">
-                                <h5 style="color:orange;"><a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:orange"><span>Amber Countries (Unvaccinated)</span></a></h5>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 style="color:orange;"><i class="icon icon-linegraph" style="color:orange; font-size: 30px"></i> <a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:orange"><span>Amber Countries (Unvaccinated) </span></a></h5>
                                 <p>
-                                </p><ol style=";font-size:18px;;list-style-type:square;">
+                                </p><ol style="font-size:18px;list-style-type:square;">
                                     <li> These are travellers arriving from Amber list Countries who have NOT received 2 doses of an NHS administered Covid vaccine 14 days before travel into the UK</li>
 
                                     <li>  Must Complete a Passenger Locator Form pre depature to the UK</li>
@@ -155,13 +149,11 @@
                         </div>
                     </div><!--end 6 col-->
 
-                    <div class="col-sm-6">
-                        <div class="feature feature-icon-large">
-                            <div class="pull-left">
-                                <i class="icon icon-linegraph" style="color:green;"></i>
-                            </div>
-                            <div class="pull-right">
-                                <h5 style="color:green;"><a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:green"><span>Green Countries</span></a></h5>
+                    <div class="col-sm-6 " style="margin-top: 30px">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <h5 style="color:green"><i class="icon icon-linegraph" style="color:green;font-size: 30px"></i><a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:green"><span>Green Countries</span></a></h5>
                                 <p>
                                 </p><ol class="text-left" style=";font-size:18px;;margin:top:10px;list-style-type:square;">
                                     <li>Travellers from Green List Countries</li>
@@ -175,13 +167,10 @@
                         </div>
                     </div><!--end 6 col-->
 
-                    <div class="col-sm-6">
-                        <div class="feature feature-icon-large">
-                            <div class="pull-left">
-                                <i class="icon icon-linegraph" style="color:red;"></i>
-                            </div>
-                            <div class="pull-right">
-                                <h5 style="color:red;"><a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:red"><span>Red Countries</span></a></h5>
+                    <div class="col-sm-6 mt-4" style="margin-top: 30px">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 style="color:red;"><i class="icon icon-linegraph" style="color:red;font-size: 30px"></i><a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:red"><span>Red Countries</span></a></h5>
                                 <p>
                                 </p><ol style=";font-size:18px;;margin:top:10px;list-style-type:square;">
                                     <li> These are entry requirements for countries on the Red List</li>
