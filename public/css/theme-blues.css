@@ -162,11 +162,11 @@ strong {
   font-weight: 600;
 }
 p {
-  font-size: 14px;
+  font-size: 18px;
   line-height: 24px;
 }
 p.lead {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 30px;
   font-weight: normal;
 }
@@ -785,7 +785,7 @@ header .btn:last-child {
   border-bottom: none;
 }
 .page-header h1 {
-  font-size: 40px;
+  font-size: 32px;
   margin-bottom: 24px;
 }
 .page-header p.lead {
@@ -1502,7 +1502,6 @@ img.phone-portrait {
   max-height: 1500px;
   border-bottom: 2px solid #dadada;
   opacity: 8;
-  color:#06222c
 }
 .text-image-bottom {
   padding-bottom: 0px;
@@ -2959,8 +2958,8 @@ footer.short-2 .contact-action:hover {
     display: none;
   }
   .page-header h1 {
-    font-size: 32px;
-    line-height: 40px;
+    font-size: 20px;
+    line-height: 25px;
   }
   header.centered-text h1 {
     font-size: 24px;
