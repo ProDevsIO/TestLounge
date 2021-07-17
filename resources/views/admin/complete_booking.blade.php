@@ -165,6 +165,8 @@
                                             @if(auth()->user()->vendor_id != "0")
                                                 <td><a href="{{ url('/view/booking/'.$booking->id) }}"
                                                        class="btn btn-info">View</a>
+                                                    <a href="{{ url('/send/booking/'.$booking->id) }}"
+                                                       class="btn btn-info">Send to Logistics Company</a>
                                                 </td>
                                             @endif
                                         </tr>

@@ -415,6 +415,11 @@ class DashboardController extends Controller
 
     }
 
+    public function send_booking($id){
+        session()->flash("alert-danger","This module is disabled for now. Till we are live");
+        return back();
+    }
+
     public function editFlutterwave()
     {
 
