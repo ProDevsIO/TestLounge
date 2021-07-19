@@ -272,13 +272,13 @@
         <section class="strip bg-secondary-1">
             <div class="container">
                 <div class="row clearfix">
-                    <div class="col-md-6 col-xs-12 text-center">
+                    <!-- <div class="col-md-6 col-xs-12 text-center">
                          <h5 class="text-white">Not sure of which package or color code your.  </h5>
                          <a href="https://calculator.prodevs.io/" target="_blank" class="btn btn-primary btn-white">Book now</a>
                    
-                    </div>
+                    </div> -->
                  
-                    <div class="col-md-6 col-xs-12 text-center">
+                    <div class="col-md-12 col-xs-12 text-center">
                         <h5 class="text-white">To view a country's color code please click the button below.  </h5>
                         <a href="https://calculator.prodevs.io/" target="_blank" class="btn btn-primary btn-white">Travel Calculator</a>
                   
