@@ -1,60 +1,156 @@
 @extends('layouts.home')
 
-@section('style')
-    <style>
-        #hide{
-            display: none;
-        }
-        @media screen and (max-width: 600px) {
-            #hide{
-                display: block;
-            }
-        }
-        @media screen and (max-width: 800px) {
-            #hide{
-                display: block;
-            }
-        }
-        @media screen and (max-width: 1024px) {
-            #hide{
-                display: block;
-            }
-        }
-        .card {
-            margin-bottom: 1.5rem;
-            box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,.025);
-        }
-        .card {
-            position: relative;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 1px solid #e5e9f2;
-            border-radius: .2rem;
-        }
-        .accordion li.active .text {
-            padding: 24px;
-            max-height: 1500px !important;
-            border-bottom: 2px solid #dadada;
-            opacity: 8 !important;
-        }
-        .background-image-holder.parallax-background {
-            height: 140%;
-            top: -33%;
-        }
-        .content{
-            width:80vw;
-            margin:auto;
-        }
-    </style>
-@endsection
-
 @section('content')
+@section('style')
+<style>
+     body {
+        font-size: 14px;
+        font-family: "Inter", sans-serif;
+        padding: 0;
+        margin: 0;
+      }
+      .bg-1 {
+        background: #2e5c99;
+        color: #fff;
+      }
+      .bg-2 {
+        background: #92D050;
+        color: #fff;
+      }
+      .bg-3 {
+        background: #FFC000;
+        color: #fff;
+      }
+      .bg-4 {
+        background: #E60000;
+        color: #fff;
+      }
+      .font-30 {
+        font-size: 30px;
+      }
+      .header{
+        padding:100px;
+        display:grid;
+        grid-template-columns:3fr 1fr;
+    }
+
+    .shadow {
+    position: relative;
+    box-shadow: 0 0 25px 0 rgba(50,50,50,.3) inset;
+    }
+
+    .shadow:after {
+    content: "";
+    position: relative;
+    }
+
+    .curved:after, .curved-2:after {
+    position: relative;
+    z-index: -2;
+    }
+
+    .curved:after {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    right: 12px;
+    bottom: 0;
+    box-shadow: 0 0px 10px 7px rgba(100,100,100,0.5);
+    border-radius: 450px / 15px
+    }
+        table{
+            border-collapse:collapse;
+            /* width:1000px; */
+            /* margin-top:20px; */
+            width:100%;
+        }
+        thead{
+            border-bottom:.5px solid #293459;
+        }
+        th{
+            color:#FD6244;
+            border:2px solid #fff;
+            padding:15px;
+            border-top:none;
+        }
+        /* img{
+            width:10px;
+            margin-left:10px;
+        } */
+        tr{
+            text-align:center;
+        }
+        tr:nth-child(odd){
+            background:#A6C3E0;
+        }
+        tr:nth-child(even){
+            background:#d4e9ff;
+        }
+        td{
+            padding:15px;
+            border:2px solid #fff;
+        }
+        .icon{
+            height:50px;
+            width:auto;
+        }
+        th:last-child, td:last-child{
+            border-right:none;
+        }
+        th:first-child, td:first-child{
+            border-left:none;
+        }
+     #hide{
+        display: none;
+    }
+    @media screen and (max-width: 600px) {
+        #hide{
+        display: block;
+        }
+    }
+    @media screen and (max-width: 800px) {
+        #hide{
+        display: block;
+        }
+    }
+    @media screen and (max-width: 1024px) {
+        #hide{
+        display: block;
+        }
+    }
+     .card {
+         margin-bottom: 1.5rem;
+         box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,.025);
+     }
+     .card {
+         position: relative;
+         display: -ms-flexbox;
+         display: flex;
+         -ms-flex-direction: column;
+         flex-direction: column;
+         min-width: 0;
+         word-wrap: break-word;
+         background-color: #fff;
+         background-clip: border-box;
+         border: 1px solid #e5e9f2;
+         border-radius: .2rem;
+     }
+    .accordion li.active .text {
+        padding: 24px;
+        max-height: 1500px !important;
+        border-bottom: 2px solid #dadada;
+        opacity: 8 !important;
+    }
+    .background-image-holder.parallax-background {
+    height: 140%;
+    top: -33%;
+    }
+    .content{
+        width:80vw;
+        margin:auto;
+    }
+</style>
+@endsection
 
     <div class="main-container">
         <header class="page-header">
@@ -107,111 +203,82 @@
 					</div><!--end of row-->
 				</div><!--end of container-->
 			</section><br/>
-        <section class="duplicatable-content" style="margin-bottom: 30px">
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <h1 style=""><b>As we continue to monitor<br> the global landscape</b></h1>
-                    </div>
-                </div><!--end of row-->
-
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h5 style="color:orange;"><i class="icon icon-linegraph" style="color:orange; font-size: 30px"></i> <a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:orange"><span>Amber countries (Vaccinated)</span></a></h5>
-                                <p>
-                                </p><ol style=";font-size:18px;;list-style-type:square;">
-
-                                    <li>These are travellers arriving from Amber list Countries who have received 2 doses of an NHS administered Covid vaccine 14 days before travel into the UK</li>
-                                    <li>Require a Negative  Covid 19 PCR Test 72 hours pre- departure to the UK ( children 10 years and below do not require a pre- departure test)</li>
-                                    <li>Must Complete a Passenger Locator Form pre departure to the UK</li>
-                                    <li>Do not require Quarantine</li>
-                                    <li> Mandatory Day 2 Post UK Arrival Test ( children 4 years and below do not require a Day 2 Test)</li>
-                                    <p>(Book an Amber List (Vaccinated)Travel Test/ Package)</p>
-                                </ol>
-                                <p></p>
-                            </div>
-                        </div>
-                    </div><!--end 6 col-->
-
-                    <div class="col-sm-6">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h5 style="color:orange;"><i class="icon icon-linegraph" style="color:orange; font-size: 30px"></i> <a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:orange"><span>Amber Countries (Unvaccinated) </span></a></h5>
-                                <p>
-                                </p><ol style="font-size:18px;list-style-type:square;">
-                                    <li> These are travellers arriving from Amber list Countries who have NOT received 2 doses of an NHS administered Covid vaccine 14 days before travel into the UK</li>
-
-                                    <li>  Must Complete a Passenger Locator Form pre departure to the UK</li>
-
-                                    <li>  Require a Negative  Covid 19 PCR Test 72 hours pre- dedeparture to the UK ( children 10 years and below do not require a pre- departure test)</li>
-
-                                    <li>  Require 10days  Qurantine at an address of their choice</li>
-
-                                    <li>   Mandatory Day 2 and Day 8 Post UK Arrival Test ( children 4 years and below do not require any Test)</li>
-
-                                    <li>   Optional Day 5 Test to Release is available for those who want to reduce time of Qurantine from 10 days to 5 days.
-                                        Following a negative PCR Test to Release Result, the traveller can leave Qurantine immediately.
-                                        Children of all ages MUST also take this test if an adult living in the same household chooses to take this test</li>
-
-                                    Mandatory Day 8 Test MUST still be done irrespective of a negative Day 5 test
-
-                                    Book an Amber List (Unvaccinated) Travel Test Package
-                                </ol>
-                                <p></p>
-                            </div>
-                        </div>
-                    </div><!--end 6 col-->
-
-                    <div class="col-sm-6 " style="margin-top: 30px">
-                        <div class="row">
-
-                            <div class="col-md-12">
-                                <h5 style="color:green"><i class="icon icon-linegraph" style="color:green;font-size: 30px"></i><a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:green"><span>Green Countries</span></a></h5>
-                                <p>
-                                </p><ol class="text-left" style=";font-size:18px;;margin:top:10px;list-style-type:square;">
-                                    <li>Travellers from Green List Countries</li>
-                                    <li>Require a Negative PCR Test 72 hours before pre departure into the UK</li>
-                                    <li>Do not require Quarantine </li>
-                                    <li>Mandatory Day 2 Post UK Arrival Test </li>
-                                    <p>(Book a Green List Travel Test /Package)</p>
-                                </ol>
-                                <p></p>
-                            </div>
-                        </div>
-                    </div><!--end 6 col-->
-
-                    <div class="col-sm-6 mt-4" style="margin-top: 30px">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h5 style="color:red;"><i class="icon icon-linegraph" style="color:red;font-size: 30px"></i><a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" style="text-decoration:underline;color:red"><span>Red Countries</span></a></h5>
-                                <p>
-                                </p><ol style=";font-size:18px;;margin:top:10px;list-style-type:square;">
-                                    <li> These are entry requirements for countries on the Red List</li>
-                                    <li>  Must Complete a Passenger Locator Form pre departure to the UK</li>
-                                    <li>10 Full days of Mandatory Qurantine in a Government Approved  Hotel inclusive of 2 PCR Tests on Day 2 and Day 8  ( where date of arrival is day 0)</li>
-                                </ol>
-                                <p></p>
-                            </div>
-                        </div>
-                    </div><!--end 6 col-->
-
-                </div><!--end of row-->
-            </div>
-
-        </section>
+        <div class="container">
+        <div class="header shadow curved bg-1 font-30">
+            <div><h3 style="color:white;font-weight:600px">AT A GLANCE GUIDE FOR ARRIVALS TO THE UK FOLLOWING IMPLEMENTATION OF THE
+        'TRAFFIC LIGHT SYSTEM'</h3></div>
+                <div></div>
+        
+        </div>
+        <br>
+        <table className="font-16">
+            <thead>
+                <th class="bg-1">MEASURE REQUIRED</th>
+                <th class="bg-2">GREEN</th>
+                <th class="bg-3">AMBER</th>
+                <th class="bg-4">RED</th>
+            </thead>
+            <tr>
+                <td width="25%">COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</td>
+                <td width="25%">
+                    <img src="/img/check-mark.svg" class="icon" />
+                </td>
+                <td width="25%">
+                    <img src="/img/check-mark.svg" class="icon" />
+                </td>
+                <td width="25%">
+                    <img src="/img/check-mark.svg" class="icon" />
+                </td>
+            </tr>
+            <tr>
+                <td width="25%">COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</td>
+                <td width="25%">
+                    <img src="/img/check-mark.svg" class="icon" />
+                </td>
+                <td width="25%">
+                    <img src="/img/check-mark.svg" class="icon" />
+                </td>
+                <td width="25%">
+                    <img src="/img/check-mark.svg" class="icon" />
+                </td>
+            </tr>
+            <tr>
+                <td width="25%">COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</td>
+                <td width="25%">
+                    <img src="/img/check-mark.svg" class="icon" />
+                </td>
+                <td width="25%">
+                    <img src="/img/check-mark.svg" class="icon" />
+                </td>
+                <td width="25%">
+                    <img src="/img/check-mark.svg" class="icon" />
+                </td>
+            </tr>
+            <tr>
+                <td width="25%">COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</td>
+                <td width="25%">
+                    <img src="/img/check-mark.svg" class="icon" />
+                </td>
+                <td width="25%">
+                    <img src="/img/close-cross.svg" class="icon" />
+                </td>
+                <td width="25%">
+                    <img src="/img/check-mark.svg" class="icon" />
+                </td>
+            </tr>
+        </table>
+        <br>
+        </div>
         <section class="strip bg-secondary-1">
             <div class="container">
                 <div class="row clearfix">
-                    <!-- <div class="col-md-6 col-xs-12 text-center">
-                         <h5 class="text-white">Not sure of which package or color code your county belongs to please click below to book by country.  </h5>
-                         <a href="/country/book" target="_blank" class="btn btn-primary btn-white">Book by country</a>
+                    <div class="col-md-6 col-xs-12 text-center">
+                         <h5 class="text-white">Not sure of which package or color code your.  </h5>
+                         <a href="https://calculator.prodevs.io/" target="_blank" class="btn btn-primary btn-white">Book now</a>
                    
-                    </div> -->
+                    </div>
                  
-                    <div class="col-md-12 col-xs-12 text-center">
+                    <div class="col-md-6 col-xs-12 text-center">
                         <h5 class="text-white">To view a country's color code please click the button below.  </h5>
                         <a href="https://calculator.prodevs.io/" target="_blank" class="btn btn-primary btn-white">Travel Calculator</a>
                   
