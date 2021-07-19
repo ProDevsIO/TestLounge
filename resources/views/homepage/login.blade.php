@@ -37,6 +37,7 @@
                 </form>
             </div>
             <!--/login form-->
+            <p>I don't have an account? <a href="/register/agent">Register Now</a></p>
         </div>
     </div>
 @endsection

@@ -1,59 +1,60 @@
 @extends('layouts.home')
 
-@section('content')
 @section('style')
-<style>
-     #hide{
-        display: none;
-    }
-    @media screen and (max-width: 600px) {
+    <style>
         #hide{
-        display: block;
+            display: none;
         }
-    }
-    @media screen and (max-width: 800px) {
-        #hide{
-        display: block;
+        @media screen and (max-width: 600px) {
+            #hide{
+                display: block;
+            }
         }
-    }
-    @media screen and (max-width: 1024px) {
-        #hide{
-        display: block;
+        @media screen and (max-width: 800px) {
+            #hide{
+                display: block;
+            }
         }
-    }
-     .card {
-         margin-bottom: 1.5rem;
-         box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,.025);
-     }
-     .card {
-         position: relative;
-         display: -ms-flexbox;
-         display: flex;
-         -ms-flex-direction: column;
-         flex-direction: column;
-         min-width: 0;
-         word-wrap: break-word;
-         background-color: #fff;
-         background-clip: border-box;
-         border: 1px solid #e5e9f2;
-         border-radius: .2rem;
-     }
-    .accordion li.active .text {
-        padding: 24px;
-        max-height: 1500px !important;
-        border-bottom: 2px solid #dadada;
-        opacity: 8 !important;
-    }
-    .background-image-holder.parallax-background {
-    height: 140%;
-    top: -33%;
-    }
-    .content{
-        width:80vw;
-        margin:auto;
-    }
-</style>
+        @media screen and (max-width: 1024px) {
+            #hide{
+                display: block;
+            }
+        }
+        .card {
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,.025);
+        }
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid #e5e9f2;
+            border-radius: .2rem;
+        }
+        .accordion li.active .text {
+            padding: 24px;
+            max-height: 1500px !important;
+            border-bottom: 2px solid #dadada;
+            opacity: 8 !important;
+        }
+        .background-image-holder.parallax-background {
+            height: 140%;
+            top: -33%;
+        }
+        .content{
+            width:80vw;
+            margin:auto;
+        }
+    </style>
 @endsection
+
+@section('content')
 
     <div class="main-container">
         <header class="page-header">

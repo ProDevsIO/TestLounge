@@ -156,7 +156,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <span class="text-white">© {{ date('Y') }} UKTravelTests.<br/> Built with ❤ by <a href="https://prodevs.io" target="_blank">ProDevs</a></span>
+                    <span class="text-white">© {{ date('Y') }} UKTravelTests.
+                        </span>
                     <span class="text-white"><a href="#">info@uktraveltests.com</a></span>
                     <span class="text-white">London, UK</span>
                 </div>
@@ -185,6 +186,9 @@
 <script src="/js/lightbox.min.js"></script>
 <script src="/js/jquery.countdown.min.js"></script>
 <script src="/js/scripts.js"></script>
+<script>
+    console.log('Built with ❤ by ProDevs(https://prodevs.io)');
+</script>
 @yield('script')
 </body>
 </html>

@@ -47,7 +47,7 @@
 
                 </form>
             </div>
-            <!--/login form-->
+            <p>Do you have an account? <a href="/login">Login</a></p>
         </div>
     </div>
 
