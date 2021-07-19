@@ -124,8 +124,8 @@
                                 </p><ol style=";font-size:18px;;list-style-type:square;">
 
                                     <li>These are travellers arriving from Amber list Countries who have received 2 doses of an NHS administered Covid vaccine 14 days before travel into the UK</li>
-                                    <li>Require a Negative  Covid 19 PCR Test 72 hours pre- dedepature to the UK ( children 10 years and below do not require a pre- depature test)</li>
-                                    <li>Must Complete a Passenger Locator Form pre depature to the UK</li>
+                                    <li>Require a Negative  Covid 19 PCR Test 72 hours pre- departure to the UK ( children 10 years and below do not require a pre- departure test)</li>
+                                    <li>Must Complete a Passenger Locator Form pre departure to the UK</li>
                                     <li>Do not require Quarantine</li>
                                     <li> Mandatory Day 2 Post UK Arrival Test ( children 4 years and below do not require a Day 2 Test)</li>
                                     <p>(Book an Amber List (Vaccinated)Travel Test/ Package)</p>
@@ -143,9 +143,9 @@
                                 </p><ol style="font-size:18px;list-style-type:square;">
                                     <li> These are travellers arriving from Amber list Countries who have NOT received 2 doses of an NHS administered Covid vaccine 14 days before travel into the UK</li>
 
-                                    <li>  Must Complete a Passenger Locator Form pre depature to the UK</li>
+                                    <li>  Must Complete a Passenger Locator Form pre departure to the UK</li>
 
-                                    <li>  Require a Negative  Covid 19 PCR Test 72 hours pre- dedepature to the UK ( children 10 years and below do not require a pre- depature test)</li>
+                                    <li>  Require a Negative  Covid 19 PCR Test 72 hours pre- dedeparture to the UK ( children 10 years and below do not require a pre- departure test)</li>
 
                                     <li>  Require 10days  Qurantine at an address of their choice</li>
 
@@ -172,7 +172,7 @@
                                 <p>
                                 </p><ol class="text-left" style=";font-size:18px;;margin:top:10px;list-style-type:square;">
                                     <li>Travellers from Green List Countries</li>
-                                    <li>Require a Negative PCR Test 72 hours before pre depature into the UK</li>
+                                    <li>Require a Negative PCR Test 72 hours before pre departure into the UK</li>
                                     <li>Do not require Quarantine </li>
                                     <li>Mandatory Day 2 Post UK Arrival Test </li>
                                     <p>(Book a Green List Travel Test /Package)</p>
@@ -189,7 +189,7 @@
                                 <p>
                                 </p><ol style=";font-size:18px;;margin:top:10px;list-style-type:square;">
                                     <li> These are entry requirements for countries on the Red List</li>
-                                    <li>  Must Complete a Passenger Locator Form pre depature to the UK</li>
+                                    <li>  Must Complete a Passenger Locator Form pre departure to the UK</li>
                                     <li>10 Full days of Mandatory Qurantine in a Government Approved  Hotel inclusive of 2 PCR Tests on Day 2 and Day 8  ( where date of arrival is day 0)</li>
                                 </ol>
                                 <p></p>
@@ -204,13 +204,17 @@
         <section class="strip bg-secondary-1">
             <div class="container">
                 <div class="row clearfix">
-                    <div class="col-xs-12 text-center">
+                    <!-- <div class="col-md-6 col-xs-12 text-center">
+                         <h5 class="text-white">Not sure of which package or color code your county belongs to please click below to book by country.  </h5>
+                         <a href="/country/book" target="_blank" class="btn btn-primary btn-white">Book by country</a>
+                   
+                    </div> -->
+                 
+                    <div class="col-md-12 col-xs-12 text-center">
                         <h5 class="text-white">To view a country's color code please click the button below.  </h5>
-                    </div>
-
-                    <div class="col-12 col-xs-12 text-center">
                         <a href="https://calculator.prodevs.io/" target="_blank" class="btn btn-primary btn-white">Travel Calculator</a>
-                    </div>
+                  
+</div>
                 </div>
             </div>
         </section>

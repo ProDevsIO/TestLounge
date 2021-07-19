@@ -38,7 +38,7 @@
                         <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Password" required>
                     </div>
                     
-                        <p>Already have an account?<a href="/login">Login</a></p>
+                        <p>Already have an account? <a href="/login"> Login</a></p>
                     
                     <div class="form-group clearfix">
                         <a href="/" class="btn btn-purple btn-pill float-left">Go Home</a>

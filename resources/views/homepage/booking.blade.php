@@ -1,3 +1,4 @@
+
 @extends('layouts.home')
 @section('style')
     <link href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet">
@@ -388,7 +389,7 @@
                                             <select class="form-control" id="vendor_id" name="vendor_id" onchange="checkPrice()" required>
                                                 <option value="">Make a selection</option>
                                                 @foreach($vendors as $vendor)
-                                                    <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
+                                                    <option value="{{ $vendor->id }}">{{ $vendor->name }} </option>
                                                 @endforeach
                                             </select>
                                         </div>

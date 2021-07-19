@@ -28,7 +28,7 @@
                     <div class="form-group mb-4">
                         <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Password">
                     </div>
-                    <p>Dont have an account?<a href="/register/agent">Register</a></p>
+                    <p>Dont have an account? <a href="/register/agent"> Register</a></p>
                     <div class="form-group clearfix">
                         <a href="/" class="btn btn-purple btn-pill float-left">Go Home</a>
                         <button type="submit" class="btn btn-purple btn-pill float-right">LOGIN</button>
