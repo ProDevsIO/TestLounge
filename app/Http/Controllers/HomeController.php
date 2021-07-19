@@ -146,21 +146,108 @@ class HomeController extends Controller
 
         }
 
+        //check by country
+        if($request->home_country_id == 81 ){
+            // naira to ghanian cedis 
+            $convert_amount = $booking_product->price * 0.014;
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $convert_amount,
+                "currency" => "GHS",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        }elseif($request->home_country_id == 156){
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $booking_product->price,
+                "currency" => "NGN",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        }elseif($request->home_country_id == 210){
+            // naira to tanzanian cedis 
+            $convert_amount = $booking_product->price * 5.56;
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $convert_amount,
+                "currency" => "TZS",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        }elseif($request->home_country_id == 110){
+            // naira to kenyan shillings
+            $convert_amount = $booking_product->price * 0.26;
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $convert_amount,
+                "currency" => "KES",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        }elseif($request->home_country_id == 197){
+            // naira to south african rand
+            $convert_amount = $booking_product->price * 28.12;
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $convert_amount,
+                "currency" => "ZAR",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        }else{
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $booking_product->price,
+                "currency" => "NGN",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        }
         //redirect to payment page
-        $data = [
-            "tx_ref" => $transaction_ref,
-            "amount" => $booking_product->price,
-            "currency" => "NGN",
-            "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
-            "customer" => [
-                'email' => $booking->email,
-                'phonenumber' => $booking->phone_no,
-                'name' => $booking->first_name . " " . $booking->last_name
-            ],
-            "customizations" => [
-                "title" => "UK Covid Testing Booking"
-            ]
-        ];
+        
 
         if (!empty($sub_account)) {
             $data['subaccounts'] = $sub_account;
@@ -464,6 +551,82 @@ class HomeController extends Controller
         $vendor_product = VendorProduct::where('vendor_id', $vendor_id)->where('product_id', $product_id)->first();
 
         return $vendor_product;
+    }
+    public function product_to_vendors($product_id, $nationality){
+        //if nationality is nigeria
+        if($nationality == 156){
+            $vendor_products = VendorProduct::where('product_id', $product_id)->get();
+            $product = [];
+            foreach($vendor_products as $vproduct ){
+               
+                $product[] = [
+                        'name' => $vproduct->vendor->name,
+                        'price' => "N ".$vproduct->price,
+                        'vendor_id' => $vproduct->vendor_id
+                ];
+            }
+             //if nationality is ghana
+        }elseif($nationality == 81){
+            $vendor_products = VendorProduct::where('product_id', $product_id)->get();
+            $product = [];
+            foreach($vendor_products as $vproduct ){
+               
+                $product[] = [
+                        'name' => $vproduct->vendor->name,
+                        'price' => "GH ".$vproduct->price * 0.014,
+                        'vendor_id' => $vproduct->vendor_id
+                ];
+            }
+        //if nationality is KENYA
+        }elseif($nationality == 110){
+            $vendor_products = VendorProduct::where('product_id', $product_id)->get();
+            $product = [];
+            foreach($vendor_products as $vproduct ){
+               
+                $product[] = [
+                        'name' => $vproduct->vendor->name,
+                        'price' => "KE ".$vproduct->price * 0.26,
+                        'vendor_id' => $vproduct->vendor_id
+                ];
+            }
+         //if nationality is Tanzania
+        }elseif($nationality == 210){
+            $vendor_products = VendorProduct::where('product_id', $product_id)->get();
+            $product = [];
+            foreach($vendor_products as $vproduct ){
+               
+                $product[] = [
+                        'name' => $vproduct->vendor->name,
+                        'price' => "TZS ".$vproduct->price * 5.56,
+                        'vendor_id' => $vproduct->vendor_id
+                ];
+            }
+         //if nationality is south africa
+        }elseif($nationality == 197){
+            $vendor_products = VendorProduct::where('product_id', $product_id)->get();
+            $product = [];
+            foreach($vendor_products as $vproduct ){
+               
+                $product[] = [
+                        'name' => $vproduct->vendor->name,
+                        'price' => "ZAR ".$vproduct->price * 28.12,
+                        'vendor_id' => $vproduct->vendor_id
+                ];
+            }
+         //if nationality is pounds
+        }else{
+            $vendor_products = VendorProduct::where('product_id', $product_id)->get();
+            $product = [];
+            foreach($vendor_products as $vproduct ){
+                $product[] = [
+                        'name' => $vproduct->vendor->name,
+                        'price' => "£ ".$vproduct->price_pounds,
+                        'vendor_id' => $vproduct->vendor_id
+                ];
+            }
+        }
+        
+        return $product;
     }
 
     public function webhook_receiver(Request $request){

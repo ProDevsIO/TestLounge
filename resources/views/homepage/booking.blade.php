@@ -226,7 +226,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label>Home Country: <span class="show_required"> *</span></label>
-                                            <select class="form-control" name="home_country_id" required>
+                                            <select class="form-control" name="home_country_id" onchange="run()" id="nationality" required>
                                                 <option value="">Make a selection</option>
                                                 @foreach($countries as $country)
                                                     <option value="{{ $country->id }}"
@@ -388,14 +388,14 @@
                                             <label>Select Vendor <span class="show_required"> *</span></label>
                                             <select class="form-control" id="vendor_id" name="vendor_id" onchange="checkPrice()" required>
                                                 <option value="">Make a selection</option>
-                                                @foreach($vendors as $vendor)
+                                                <!-- @foreach($vendors as $vendor)
                                                     <option value="{{ $vendor->id }}">{{ $vendor->name }} </option>
-                                                @endforeach
+                                                @endforeach -->
                                             </select>
                                         </div>
                                         <br/>
 
-                                        <h3 class="pull-left price_li" style="padding: 0px 20px;color: red;margin-top: 30px;"></h3>
+                                        <!-- <h3 class="pull-left price_li" style="padding: 0px 20px;color: red;margin-top: 30px;"></h3> -->
 
                                         <button type="button" disabled class="sub_btn_u btn btn-primary pull-right" style="margin-top: 20px;color: #fff;">Make Payment  </button>
 
@@ -514,5 +514,29 @@
                 format: 'MM/DD/YYYY'
             });
         });
+    </script>
+    <script>
+       function run() {
+            var product_id = document.getElementById("product_id_").value;
+            var nationality = document.getElementById("nationality").value;
+            console.log(nationality);
+            var url = '/product/vendors/'+ product_id + '/' + nationality;
+            
+            $.get(url,function(data){
+                console.log(data);
+                var arrayLength = data.length;
+                for (var i = 0; i < arrayLength; i++) {
+
+                    var option = document.createElement("option");
+                    option.text = data[i].name+ " {" +data[i].price + "}";
+                    option.value =  data[i].vendor_id;
+                    var select = document.getElementById("vendor_id");
+                    select.appendChild(option);
+                
+                }
+           
+            });
+        }
+       
     </script>
 @endsection
