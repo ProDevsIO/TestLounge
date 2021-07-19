@@ -17,7 +17,7 @@
                         <img src="/img/logo-dark.png" srcset="/img/logo-dark.png" style="height: 80px;" alt="Uk Travel test">
                     </a>
                 </h2>
-                <h4 class="text-uppercase- text-purple text-center mb-1">Login into your account</h4>
+                <h4 class="text-uppercase- text-purple text-left mb-1">Login into your account</h4>
                 <p>Are you trying to make a booking? kindly click this <a href="/booking">link</a> to book</p>
                 @include('errors.showerrors')
                 <form action="{{ url('/login') }}" method="post">
@@ -28,8 +28,9 @@
                     <div class="form-group mb-4">
                         <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Password">
                     </div>
-
+                    <p>Dont have an account?<a href="/register/agent">Register</a></p>
                     <div class="form-group clearfix">
+                        <a href="/" class="btn btn-purple btn-pill float-left">Go Home</a>
                         <button type="submit" class="btn btn-purple btn-pill float-right">LOGIN</button>
                     </div>
 

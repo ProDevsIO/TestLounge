@@ -10,13 +10,13 @@
     <div class="rightHalf">
         <div class="position-relative">
             <!--login form-->
-            <div class="login-form">
+            <div class="login-form" style="padding-top:20px;">
                 <h2 class="text-center mb-1">
                     <a href="/">
                         <img src="/img/logo-dark.png" srcset="/img/logo-dark.png" style="height: 80px;" alt="Uk Travel test">
                     </a>
                 </h2>
-                <h4 class="text-uppercase- text-purple text-center mb-1">Register</h4>
+                <h4 class="text-uppercase- text-purple text-left mb-1">Register</h4>
                 <p>Register to create an Account</p>
                 @include('errors.showerrors')
                 <form action="{{ url('/register') }}" method="post">
@@ -37,8 +37,11 @@
                     <div class="form-group mb-4">
                         <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Password" required>
                     </div>
-
+                    
+                        <p>Already have an account?<a href="/login">Login</a></p>
+                    
                     <div class="form-group clearfix">
+                        <a href="/" class="btn btn-purple btn-pill float-left">Go Home</a>
                         <button type="submit" class="btn btn-purple btn-pill float-right">Register</button>
                     </div>
 
