@@ -13,17 +13,16 @@
                     <div class="card card-shadow mb-4 ">
                         <div class="card-header border-0">
                             <div class="custom-title-wrap border-0 position-relative pb-2">
-                                <div class="custom-title">Platform Settings</div>
+                                <div class="custom-title">Currency Settings</div>
                             </div>
                         </div>
                         <div class="card-body p-3">
                             @include('errors.showerrors')
                            <form action="{{ url('/settings') }}" method="post">
                                @csrf
-                               <label>Booking Amount</label>
-                               <input type="number" name="amount" class="form-control" value="{{ $amount->value }}"/>
-                               <label>Referral Percentage</label>
-                               <input type="number" name="percentage" class="form-control" value="{{ $percentage->value }}"/>
+                               <label>Pounds ()</label>
+                               <input type="number" name="amount" class="form-control" value="{{ $amount->pounds }}"/>
+                               
                                <br/>
                                <input type="submit" value="Update Settings" class="btn btn-primary"/>
                            </form>

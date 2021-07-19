@@ -1,17 +1,43 @@
 @extends('layouts.login')
+@section('style')
 
+@endsection
 @section('content')
+<style>
+    #backbutton{
+        margin-bottom:190px;
+    }
+    @media screen and (max-width: 800px) {
+        #backbutton{
+            margin-bottom:90px;
+         }
+    }
+    @media screen and (max-width: 600px) {
+        #backbutton{
+            margin-bottom:70px;
+         }
+    }
+</style>
+
     <div class="leftHalf" style="background-image: url('/img/travel.jpeg')">
-    <div class="login-promo-txt">
-        <h2>Are you travel agent looking to grow your network of travellers</h2>
-    </div>
+        
+        <div class="login-promo-txt" style="height:100%; top:0; width:100%">
+            <div class="container-fluid" id="backbutton"style="width:100%;">
+                <a href="/" class="btn btn-purple btn-pill float-left">Home page</a>
+            <br>
+            </div>
+            <div class="container-fluid"  style="width:70%">
+                <h2>Are you a travel agent looking to grow your network of travelers</h2>
+            </div>
+        </div>
     </div>
 
     <div class="rightHalf">
         <div class="position-relative">
             <!--login form-->
-            <div class="login-form" style="padding-top:20px;">
+            <div class="login-form" style="padding-top:40px;">
                 <h2 class="text-center mb-1">
+                    
                     <a href="/">
                         <img src="/img/logo-dark.png" srcset="/img/logo-dark.png" style="height: 80px;" alt="Uk Travel test">
                     </a>
@@ -41,13 +67,11 @@
                         <p>Already have an account? <a href="/login"> Login</a></p>
                     
                     <div class="form-group clearfix">
-                        <a href="/" class="btn btn-purple btn-pill float-left">Go Home</a>
                         <button type="submit" class="btn btn-purple btn-pill float-right">Register</button>
                     </div>
 
                 </form>
             </div>
-            <p>Do you have an account? <a href="/login">Login</a></p>
         </div>
     </div>
 

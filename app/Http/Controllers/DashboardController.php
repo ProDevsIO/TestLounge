@@ -239,16 +239,23 @@ class DashboardController extends Controller
     {
         $this->validate($request, [
             'amount' => 'required',
-            'percentage' => 'required'
         ]);
 
+       
         Setting::where('id', "1")->update([
-            'value' => $request->amount
+            'pounds' => $request->amount
         ]);
 
-        Setting::where('id', "1")->update([
-            'value' => $request->percentage
-        ]);
+      $v_products =  vendorProduct::all();
+        foreach($v_products as $v_product){
+            $price = 0;
+            $price = $v_product->price_pounds * $request->amount;
+            vendorProduct::where('id',$v_product->id)->update(['price'=>$price]);
+        }
+
+        // Setting::where('id', "1")->update([
+        //     'value' => $request->percentage
+        // ]);
         session()->flash('alert-success', "Settings has been updated successfully");
 
         return back();
@@ -315,7 +322,7 @@ class DashboardController extends Controller
     public function product_vendor($id, $price)
     {
         VendorProduct::where('id', $id)->update([
-            'price' => $price
+            'price_pounds' => $price
         ]);
 
         return "success";

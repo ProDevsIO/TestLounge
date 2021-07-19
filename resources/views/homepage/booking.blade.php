@@ -16,7 +16,7 @@
                 display: block;
                 align-items: center;
             }
-}
+        }
         }
     </style>
 @endsection
