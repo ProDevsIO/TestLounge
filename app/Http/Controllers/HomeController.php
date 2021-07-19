@@ -629,6 +629,11 @@ class HomeController extends Controller
         return $product;
     }
 
+    public function pricing()
+    {
+        return view('homepage.pricing');
+    }
+
     public function webhook_receiver(Request $request){
         Log::info($request->all());
     }
