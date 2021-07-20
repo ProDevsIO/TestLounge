@@ -294,7 +294,7 @@
                         <span class="sub alt-font">popular question</span>
                         <h1><strong>HOW DO I GET TESTED?</strong></h1>
                         <ul style="text-align: justify; list-style-type: square; font-size:18px;">
-                            <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is Mandatory for entry into the UK. You can book your test here ( insert booking link that takes to a drop down to select various countries  but only Nigeria will show for now and only Medbury Laboratory when you click on Nigeria)</li>
+                            <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is Mandatory for entry into the UK. You can book your test <a href="/pick" class="">Here</a> </li>
                            <br/> <li> Book and Pay for your UK travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>. Evidence of booking and payment is Mandatory before you can board a flight to the UK</li>
                             <br/><li>Following Payment, you will immediately receive your Passenger locator Number and receipt of payment.</li>
                             <br/> <li>This number will be used to Complete your Passenger locator form <a href="https://provide-journey-contact-details.homeoffice.gov.uk/passengerLocatorFormUserAccountHolderQuestion" target="_blank">Here</a>.You must show evidence that you have completed your Passenger locator form before you will be allowed to board a flight into the UK</li>

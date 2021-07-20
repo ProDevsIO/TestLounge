@@ -96,6 +96,7 @@
                                                                         </table>
                                                                     </td>
                                                                 </tr>
+                                                                <tr>for more information and guidelines,click <a href="https://www.gov.uk/guidance/coronavirus-covid-19-getting-tested" >Here</a> </tr>
                                                             </table>
                                                         </td>
                                                     </tr>

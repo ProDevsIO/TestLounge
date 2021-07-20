@@ -106,7 +106,7 @@
                         </li>
                         <li><a href="/#faq">FAQ</a>
                         </li>
-                        <li><a href="mailto:info@uktraveltests.com">Contact</a>
+                        <li><a href="/#contact">Contact</a>
                         </li>
                         <li id="hide"><a href="/login">login</a></li>
                         <li id="hide"><a href="/register/agent">Register as an agent</a></li>
@@ -153,14 +153,22 @@
 
 <div class="footer-container">
 
-    <footer class="bg-primary short-2">
+    <footer class="bg-primary short-2" id="contact">
         <div class="container">
             <div class="row">
+                
                 <div class="col-sm-12">
+                <h5 class="text-white">Contact us</h5>
+                <span class="text-white">If you have any questions further questions call us on<br>
+                    Phone number: +447985443559<br>
+                    WhatsApp: +447985443559</span>
+              
+                    <span class="text-white">Email us at <br>
+                    <a href="#">info@uktraveltests.com</a></span>
+                    <span class="text-white">London, UK</span>
+                         
                     <span class="text-white">© {{ date('Y') }} UKTravelTests.
                         </span>
-                    <span class="text-white"><a href="#">info@uktraveltests.com</a></span>
-                    <span class="text-white">London, UK</span>
                 </div>
             </div><!--end for row-->
         </div><!--end of container-->
