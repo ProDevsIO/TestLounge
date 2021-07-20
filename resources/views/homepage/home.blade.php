@@ -445,15 +445,15 @@
                                         national or have residency rights in the UK.</p>
                                     <p style="font-size:18px;"> Even if you have been fully vaccinated, you must observe these regulations.</p>
 
-                                    <b>Before Departure for England</b>
+                                    <p><b>Before Departure for England</b></p><br/>
                                     <p style="font-size:18px;">It would help if you did the following before going to England:
                                     <ul style="font-size:18px;">
                                         <li> - COVID-19 Test</li>
                                         <li> - Book a hotel package that includes two COVID-19 examinations.</li>
                                         <li> - You should fill out a passenger locator form</li>
                                     </ul></p>
-                                    <b>When you get to England</b><br/>
-                                    It would be best if you did the following when you arrive in England:
+                                    <p><b>When you get to England</b></p><br/>
+                                    <p>It would be best if you did the following when you arrive in England:</p>
                                     <ul style="font-size:18px;">
                                         <li>- 2 COVID-19 tests during quarantine in a managed hotel</li>
                                     </ul>
@@ -469,14 +469,14 @@
                                         </p>
                                             <p style="font-size:15px;">Even if you have been fully vaccinated, you must observe these regulations</p>
 
-                                        <b> Before Going to England</b>
+                                        <p> <b> Before Going to England</b></p><br/>
                                         <p style="font-size:15px;"> It would help if you did the following before visiting England:</p>
                                         <ul style="font-size:15px;">
                                         <li>-	Take a COVID-19 test to see if you're at risk.</li>
                                             <li> -	Make a reservation and pay for a Day 2 COVID-19 test – to be taken once in England.</li>
                                             <li>  -	Fill out a passenger locator form.</li>
                                         </ul>
-                                            <b>When you arrive in England</b><br/>
+                                        <p> <b>When you arrive in England</b></p><br/>
                                             <ul style="font-size:15px;">
                                                 <li> -	On or before the second day after your arrival, you must take a COVID-19 test.</li>
                                                 <li>  -	This test is not required for children under the age of four.</li>
