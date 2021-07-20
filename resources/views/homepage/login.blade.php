@@ -31,10 +31,11 @@
     <div class="leftHalf" style="background-image: url('/img/banner.jpg')">
            
         <div class="login-promo-txt" style="height:100%; top:0; width:100%">
-            <div class="container-fluid" id="backbutton"style="width:100%;">
-                    <a href="/" class="btn btn-purple btn-pill float-left">Home page</a>
-                    <br>
-           </div>
+            <div class="container-fluid" id="backbutton"style="width:100%; margin-left: -20px;
+    margin-top: 10px;">
+                <a href="/" class="btn btn-purple btn-pill float-left">Home page</a>
+                <br>
+            </div>
           <div class="container-fluid"  style="width:80%">
             <h2>Are you traveling to the UK? And you want to make your UK Covid Testing Booking?</h2>
             <p>Covid19 Tests for International Arrivals – Day 2 and 8 Amber Country</p>
