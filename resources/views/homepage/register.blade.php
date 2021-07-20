@@ -28,7 +28,7 @@
             <br>
             </div>
             <div class="container-fluid"  style="width:70%">
-                <h2>Are you a travel agent looking to grow your network of travelers</h2>
+                <h2>Are you a travel agent looking to grow your network of travelers?</h2>
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
                         <img src="/img/logo-dark.png" srcset="/img/logo-dark.png" style="height: 80px;" alt="Uk Travel test">
                     </a>
                 </h2>
-                <h4 class="text-uppercase- text-purple text-left mb-1">Register</h4>
+            
                 <p>Register to create an Account</p>
                 @include('errors.showerrors')
                 <form action="{{ url('/register') }}" method="post">
