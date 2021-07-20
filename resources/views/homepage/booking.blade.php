@@ -1,8 +1,10 @@
-
 @extends('layouts.home')
 @section('style')
     <link href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha512-aEe/ZxePawj0+G2R+AaIxgrQuKT68I28qh+wgLrcAJOz3rxCP+TwrK5SPN+E5I+1IQjNtcfvb96HDagwrKRdBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+          integrity="sha512-aEe/ZxePawj0+G2R+AaIxgrQuKT68I28qh+wgLrcAJOz3rxCP+TwrK5SPN+E5I+1IQjNtcfvb96HDagwrKRdBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <style>
         .iti {
             width: 100%;
@@ -11,12 +13,14 @@
         .show_required {
             color: red;
         }
+
         @media screen and (max-width: 800px) {
             .bs-stepper-header {
                 display: block;
                 align-items: center;
             }
         }
+
         }
     </style>
 @endsection
@@ -88,19 +92,22 @@
 
                                         <div class="col-md-12">
                                             <label>Test type <span class="show_required"> *</span></label>
-                                            <select class="form-control" id="product_id_" name="product_id" onchange="run()" required>
+                                            <select class="form-control" id="product_id_" name="product_id"
+                                                    onchange="run()" required>
                                                 <option value="">Make a selection</option>
                                                 @foreach($products as $product)
-                                                    <option value="{{ $product->id }}" @if(isset($_GET['product_id']) && $_GET['product_id'] == $product->id)
-                                                        selected
-                                                        @endif>{{ $product->name }}</option>
+                                                    <option value="{{ $product->id }}"
+                                                            @if(isset($_GET['product_id']) && $_GET['product_id'] == $product->id)
+                                                            selected
+                                                            @endif>{{ $product->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <br/>
 
 
-                                        <button class="btn btn-primary pull-right" style="margin-top: 30px" onclick="stepperForm.next()">Next
+                                        <button class="btn btn-primary pull-right" style="margin-top: 30px"
+                                                onclick="stepperForm.next()">Next
                                         </button>
                                     </div>
                                     <div id="logins-part" class="content bs-stepper-pane" role="tabpanel"
@@ -129,7 +136,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label>Date of Birth <span class="show_required"> *</span></label>
-                                            <input class="form-control date_picker" type="text" placeholder="Date of Birth"
+                                            <input class="form-control date_picker" type="text"
+                                                   placeholder="Date of Birth"
                                                    name="dob"
                                                    value="{{ old('dob') }}" required>
                                         </div>
@@ -226,7 +234,8 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label>Home Country: <span class="show_required"> *</span></label>
-                                            <select class="form-control" name="home_country_id" id="nationality" required>
+                                            <select class="form-control" name="home_country_id" id="nationality"
+                                                    required>
                                                 <option value="">Make a selection</option>
                                                 @foreach($countries as $country)
                                                     <option value="{{ $country->id }}"
@@ -304,7 +313,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label>Arrival date in the UK: <span class="show_required"> *</span></label>
-                                            <input class="form-control date_picker" type="text" placeholder="Arrival Date in Uk"
+                                            <input class="form-control date_picker" type="text"
+                                                   placeholder="Arrival Date in Uk"
                                                    name="arrival_date"
                                                    value="{{ old('arrival_date') }}" required>
                                         </div>
@@ -312,7 +322,8 @@
                                         <div class="col-md-6">
                                             <label>Country travelled from: <span
                                                         class="show_required"> *</span></label>
-                                            <select class="form-control" name="country_travelling_from_id" id="travel_from" onchange="run()" required>
+                                            <select class="form-control" name="country_travelling_from_id"
+                                                    id="travel_from" onchange="run()" required>
                                                 <option value="">Make a selection</option>
                                                 @foreach($countries as $country)
                                                     <option value="{{ $country->id }}"
@@ -332,7 +343,8 @@
 
                                         <div class="col-md-12">
                                             <label> Departure Date: <span class="show_required"> *</span></label>
-                                            <input class="form-control date_picker" type="text" placeholder="Arrival Date in Uk"
+                                            <input class="form-control date_picker" type="text"
+                                                   placeholder="Arrival Date in Uk"
                                                    name="departure_date"
                                                    value="{{ old('departure_date') }}" required>
                                         </div>
@@ -342,9 +354,11 @@
                                                 corridor
                                                 arrangement with the UK: <span class="show_required"> *</span><br/>
                                                 <span class="field-description">You can find the current list <a
-                                                            href='https://www.gov.uk/guidance/coronavirus-covid-19-travel-corridors' target="_blank">here</a>:</span>
+                                                            href='https://www.gov.uk/guidance/coronavirus-covid-19-travel-corridors'
+                                                            target="_blank">here</a>:</span>
                                             </label>
-                                            <input class="form-control date_picker" type="text" placeholder="Arrival Date in Uk"
+                                            <input class="form-control date_picker" type="text"
+                                                   placeholder="Arrival Date in Uk"
                                                    name="last_day_travel"
                                                    value="{{ old('last_day_travel') }}" required>
                                         </div>
@@ -386,7 +400,8 @@
 
                                         <div class="col-md-12" style="margin-top:25px;">
                                             <label>Select Vendor <span class="show_required"> *</span></label>
-                                            <select class="form-control" id="vendor_id" name="vendor_id" onchange="checkPrice()" required>
+                                            <select class="form-control" id="vendor_id" name="vendor_id"
+                                                    onchange="checkPrice()" required>
                                                 <option value="">Make a selection</option>
 
                                             </select>
@@ -395,13 +410,16 @@
 
                                         <!-- <h3 class="pull-left price_li" style="padding: 0px 20px;color: red;margin-top: 30px;"></h3> -->
 
-                                        <button type="button" disabled class="sub_btn_u btn btn-primary pull-right" style="margin-top: 20px;color: #fff;">Make Payment  </button>
-
-
-                                        <button type="submit" class="sub_btn btn btn-primary pull-right" style="display: none;margin-top: 20px">Make Payment
+                                        <button type="button" disabled class="sub_btn_u btn btn-primary pull-right"
+                                                style="margin-top: 20px;color: #fff;">Make Payment
                                         </button>
 
-                                            <button class="btn btn-primary pull-right" style="margin-top: 20px"
+
+                                        <button type="submit" class="sub_btn btn btn-primary pull-right"
+                                                style="display: none;margin-top: 20px">Make Payment
+                                        </button>
+
+                                        <button class="btn btn-primary pull-right" style="margin-top: 20px"
                                                 onclick="stepperForm.previous()">Previous
                                         </button>
 
@@ -425,16 +443,20 @@
 
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+            integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"
+            integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
 
-        function checkPrice(){
+        function checkPrice() {
             var vendor_id = $("#vendor_id").val();
             // var product_id = $("#product_id_").val();
             // var url = '/check/price/'+ vendor_id + "/" + product_id;
             // console.log(url);
-            if((vendor_id != 0 || vendor_id != undefined) && vendor_id){
+            if ((vendor_id != 0 || vendor_id != undefined) && vendor_id) {
                 $(".sub_btn").toggle();
                 $(".sub_btn_u").toggle();
             }
@@ -514,29 +536,34 @@
         });
     </script>
     <script>
-       function run() {
+        function run() {
             var product_id = document.getElementById("product_id_").value;
             var nationality = document.getElementById("travel_from").value;
 
-            var url = '/product/vendors/'+ product_id + '/' + nationality;
+            var url = '/product/vendors/' + product_id + '/' + nationality;
 
+            $("#vendor_id")
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="">Make a selection</option>');
+            
+            $.get(url, function (data) {
+                console.log(data);
+                var arrayLength = data.length;
+                for (var i = 0; i < arrayLength; i++) {
 
-                $.get(url, function (data) {
-                    console.log(data);
-                    var arrayLength = data.length;
-                    for (var i = 0; i < arrayLength; i++) {
+                    var option = document.createElement("option");
+                    option.text = data[i].name + " (" + data[i].price + ")";
+                    option.value = data[i].vendor_id;
+                    var select = document.getElementById("vendor_id");
+                    select.appendChild(option);
 
-                        var option = document.createElement("option");
-                        option.text = data[i].name + " (" + data[i].price + ")";
-                        option.value = data[i].vendor_id;
-                        var select = document.getElementById("vendor_id");
-                        select.appendChild(option);
+                }
 
-                    }
-
-                });
+            });
 
         }
-       
+
     </script>
 @endsection
