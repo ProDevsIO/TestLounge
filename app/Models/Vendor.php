@@ -48,4 +48,9 @@ class Vendor extends Model
 					->withPivot('id', 'price')
 					->withTimestamps();
 	}
+
+	public function product_get($id){
+	    $vendor_product = VendorProduct::where('vendor_id',$this->id)->where('product_id',$id)->first();
+	    return $vendor_product;
+    }
 }

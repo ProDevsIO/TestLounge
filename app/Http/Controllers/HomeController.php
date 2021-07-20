@@ -631,7 +631,9 @@ class HomeController extends Controller
 
     public function pricing()
     {
-        return view('homepage.pricing');
+        $products = Product::all();
+        $vendors = Vendor::all();
+        return view('homepage.pricing')->with(compact('products','vendors'));
     }
 
     public function webhook_receiver(Request $request){

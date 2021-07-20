@@ -42,8 +42,27 @@
                             </div>
                         </div> -->
 
-                        <div class="row">
-                           
+                        <div class="row table-responsive">
+
+                            <table class="table table-striped">
+
+                                <thead>
+                                <th></th>
+                                @foreach($products as $product)
+                                    <th>{{ $product->name }}</th>
+                                    @endforeach
+                                </thead>
+                                <tbody>
+                                @foreach($vendors as $vendor)
+                                <tr>
+                                    <td>{{ $vendor->name }}</td>
+                                    @foreach($products as $product)
+                                        <td>{{ ($vendor->product_get($product)) ? "£".number_format($product->price_pounds): "--"  }}</td>
+                                    @endforeach
+                                </tr>
+                              @endforeach
+                                </tbody>
+                            </table>
 
 
                         </div><!--end of row-->
