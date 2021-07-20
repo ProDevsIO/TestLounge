@@ -114,19 +114,19 @@
 
                     <ul class="social-icons text-right">
                         <li>
-                            <a href="#">
+                            <a href="https://twitter.com/home?lang=en">
                                 <i class="icon social_twitter"></i>
                             </a>
                         </li>
 
                         <li>
-                            <a href="#">
+                            <a href="https://www.facebook.com/UK-Travel-Tests-105975218439195">
                                 <i class="icon social_facebook"></i>
                             </a>
                         </li>
 
                         <li>
-                            <a href="#">
+                            <a href="https://www.instagram.com/uktraveltests1/?hl=en">
                                 <i class="icon social_instagram"></i>
                             </a>
                         </li>
