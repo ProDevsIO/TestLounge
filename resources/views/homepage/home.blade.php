@@ -354,7 +354,7 @@
 
                         <ul class="accordion">
                             <li class="active">
-                                <div class="title"><span>Why Should I Take The Test?</span></div>
+                                <div class="title"><span>WHY SHOULD I TAKE THE TEST?</span></div>
                                 <div class="text">
                                     <p style="font-size:18px;">
                                         All visitors to the United Kingdom, including British nationals, must show proof
@@ -367,7 +367,7 @@
                             </li>
 
                             <li>
-                                <div class="title"><span>What Are The Constraints?</span></div>
+                                <div class="title"><span>WHAT ARE THE CONSTRAINTS?</span></div>
                                 <div class="text">
                                     <p style="font-size:18px;">
                                         Before entering the UK, all visitors must provide a negative test within the
@@ -412,7 +412,7 @@
                             </li>
 
                             <li>
-                                <div class="title"><span>When you arrive in the UK, you must:</span></div>
+                                <div class="title"><span>WHEN YOU ARRIVE IN THE UK, YOU MUST:</span></div>
                                 <div class="text">
 
                                     <p style="font-size:18px;"> For ten days, quarantine at home or wherever you are staying.</p>
