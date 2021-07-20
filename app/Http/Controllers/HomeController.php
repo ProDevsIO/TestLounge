@@ -561,7 +561,7 @@ class HomeController extends Controller
                
                 $product[] = [
                         'name' => $vproduct->vendor->name,
-                        'price' => "N ".$vproduct->price,
+                        'price' => "N".number_format($vproduct->price,0),
                         'vendor_id' => $vproduct->vendor_id
                 ];
             }
@@ -573,7 +573,7 @@ class HomeController extends Controller
                
                 $product[] = [
                         'name' => $vproduct->vendor->name,
-                        'price' => "GH ".$vproduct->price * 0.014,
+                        'price' => "GH". number_format(($vproduct->price * 0.014),0),
                         'vendor_id' => $vproduct->vendor_id
                 ];
             }
@@ -585,7 +585,7 @@ class HomeController extends Controller
                
                 $product[] = [
                         'name' => $vproduct->vendor->name,
-                        'price' => "KE ".$vproduct->price * 0.26,
+                        'price' => "KE ".number_format(($vproduct->price * 0.26),0),
                         'vendor_id' => $vproduct->vendor_id
                 ];
             }
@@ -597,7 +597,7 @@ class HomeController extends Controller
                
                 $product[] = [
                         'name' => $vproduct->vendor->name,
-                        'price' => "TZS ".$vproduct->price * 5.56,
+                        'price' => "TZS".number_format(($vproduct->price * 5.56),0),
                         'vendor_id' => $vproduct->vendor_id
                 ];
             }
@@ -609,7 +609,7 @@ class HomeController extends Controller
                
                 $product[] = [
                         'name' => $vproduct->vendor->name,
-                        'price' => "ZAR ".$vproduct->price * 28.12,
+                        'price' => "ZAR".number_format(($vproduct->price * 28.12),0),
                         'vendor_id' => $vproduct->vendor_id
                 ];
             }
