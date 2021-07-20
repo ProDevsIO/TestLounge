@@ -57,7 +57,7 @@
                                 <tr>
                                     <td>{{ $vendor->name }}</td>
                                     @foreach($products as $product)
-                                        <td>{{ ($vendor->product_get($product)) ? "£".number_format($product->price_pounds): "--"  }}</td>
+                                        <td>{{ ($vendor->product_get($product->id)) ? "£".number_format($vendor->product_get($product->id)->price_pounds) : "--"  }}</td>
                                     @endforeach
                                 </tr>
                               @endforeach
