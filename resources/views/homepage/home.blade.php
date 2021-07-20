@@ -211,62 +211,108 @@
         
         </div>
         <br>
-        <table className="font-16">
-            <thead>
-                <th class="bg-1">MEASURE REQUIRED</th>
-                <th class="bg-2">GREEN</th>
-                <th class="bg-3">AMBER</th>
-                <th class="bg-4">RED</th>
-            </thead>
-            <tr>
-                <td width="25%">COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</td>
-                <td width="25%">
-                    <img src="/img/check-mark.svg" class="icon" />
-                </td>
-                <td width="25%">
-                    <img src="/img/check-mark.svg" class="icon" />
-                </td>
-                <td width="25%">
-                    <img src="/img/check-mark.svg" class="icon" />
-                </td>
-            </tr>
-            <tr>
-                <td width="25%">COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</td>
-                <td width="25%">
-                    <img src="/img/check-mark.svg" class="icon" />
-                </td>
-                <td width="25%">
-                    <img src="/img/check-mark.svg" class="icon" />
-                </td>
-                <td width="25%">
-                    <img src="/img/check-mark.svg" class="icon" />
-                </td>
-            </tr>
-            <tr>
-                <td width="25%">COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</td>
-                <td width="25%">
-                    <img src="/img/check-mark.svg" class="icon" />
-                </td>
-                <td width="25%">
-                    <img src="/img/check-mark.svg" class="icon" />
-                </td>
-                <td width="25%">
-                    <img src="/img/check-mark.svg" class="icon" />
-                </td>
-            </tr>
-            <tr>
-                <td width="25%">COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</td>
-                <td width="25%">
-                    <img src="/img/check-mark.svg" class="icon" />
-                </td>
-                <td width="25%">
+        <div class="table-responsive">
+            <table className="font-16" style="overflow-x:auto !important;">
+                <thead>
+                    <th class="bg-1">MEASURE REQUIRED</th>
+                    <th class="bg-2">GREEN</th>
+                    <th class="bg-3">AMBER(vaccinated)</th>
+                    <th class="bg-3">AMBER(unvaccinated)</th>
+                    <th class="bg-4">RED</th>
+                </thead>
+                <tr>
+                    <td width="25%">COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="25%">PRE-DEPARTURE TEST AT DESTINATION WITHIN 72 HOURS OF TRAVEL</td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="25%">MANDATORY PCR TEST UPON ENTRY TO UK ON/BEFORE DAY 2</td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="25%">MANDATORY ADDITIONAL PCR TESTING</td>
+                    <td width="25%">
                     <img src="/img/close-cross.svg" class="icon" />
-                </td>
-                <td width="25%">
-                    <img src="/img/check-mark.svg" class="icon" />
-                </td>
-            </tr>
-        </table>
+                    </td>
+                    <td width="25%">
+                    <h6>Required on day 8 from 19th july no longer required for fully vaccinated uk residents</h6>    
+                    </td>
+                    <td width="25%">
+                    <h6>Required on day 8 from 19th july no longer required for fully vaccinated uk residents</h6>
+                    </td>
+                    <td width="25%">
+                        <h6>Required on day 8</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="25%">SELF ISOLATION</td>
+                    <td width="25%">
+                    <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                        <h6>For 10 days at a defined address 19th july no longer required for fully vaccinated uk residents</h6>
+                    </td>
+                    <td width="25%">
+                        <h6>For 10 days at a defined address 19th july no longer required for fully vaccinated uk residents</h6>
+                    </td>
+                    <td width="25%">
+                    <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="25%">TEST-TO-RELEASE (OPTIONAL)</td>
+                    <td width="25%">
+                    <h6>Not Required</h6>
+                    </td>
+                    <td width="25%">
+                    <h6>Complete on Day5</h6>
+                    </td>
+                    <td width="25%">
+                        <h6>Complete on Day5</h6>
+                    </td>
+                    <td width="25%">
+                    <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                </tr>
+                
+            </table>
+        </div>
         <br>
         </div>
         <section class="strip bg-secondary-1">
