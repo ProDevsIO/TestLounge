@@ -43,8 +43,7 @@ Route::post('/register', [\App\Http\Controllers\HomeController::class,"register"
 
 
 Route::post('/post/booking', [\App\Http\Controllers\HomeController::class,"post_booking"]);
-Route::get('/agent/activate/{id}', [\App\Http\Controllers\HomeController::class,"agent_activate"]);
-Route::get('/agent/deactivate/{id}', [\App\Http\Controllers\HomeController::class,"agent_deactivate"]);
+
 Route::get('/booking/success', [\App\Http\Controllers\HomeController::class,"booking_success"])->name('booking_success');
 Route::get('/testEmail', [\App\Http\Controllers\HomeController::class,"testEmail"])->name('testEmail');
 Route::get('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"make_payment"])->name('make_payment');
@@ -55,6 +54,7 @@ Route::get('/continue/registration/{referral_code}/{id}', [\App\Http\Controllers
 
 Route::get('/booking',[\App\Http\Controllers\HomeController::class,"booking"])->name('booking');
 Route::middleware('auth')->group(function () {
+
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,"dashboard"]);
     Route::get('/pending/booking', [\App\Http\Controllers\DashboardController::class,"pending_booking"]);
     Route::get('/complete/booking', [\App\Http\Controllers\DashboardController::class,"complete_booking"]);
@@ -68,6 +68,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/delete/product/{id}', [\App\Http\Controllers\DashboardController::class,"delete_product"]);
     Route::get('/product/vendor/{id}/{price}', [\App\Http\Controllers\DashboardController::class,"product_vendor"]);
 
+    Route::get('/agent/activate/{id}', [\App\Http\Controllers\HomeController::class,"agent_activate"]);
+    Route::get('/agent/deactivate/{id}', [\App\Http\Controllers\HomeController::class,"agent_deactivate"]);
+    Route::get('/agent/percent/{id}', [\App\Http\Controllers\HomeController::class, "agent_percent"]);
+    Route::get('/agent/percent/{id}', [\App\Http\Controllers\HomeController::class, "agent_percent"]);
+    Route::post('/update/percent/{id}', [\App\Http\Controllers\HomeController::class, "UpdatePercent"]);
 
     Route::post('/add/vendor', [\App\Http\Controllers\DashboardController::class,"add_vendor"]);
     Route::get('/admin/make/{id}', [\App\Http\Controllers\DashboardController::class,"admin_make"]);

@@ -49,7 +49,7 @@
                                         <th scope="col">Completed Bookings</th>
                                         <th scope="col">Vendor</th>
                                         <th scope="col">Status</th>
-                                        
+                                        <th scope="col">Percentage</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                     </thead>
@@ -69,6 +69,11 @@
                                             @elseif($user->status == 0)
                                                  <td> <span class="badge badge-warning">Not Active</span></td>
                                             @endif
+                                            @if($user->percentage_split == null)
+                                            <td>None</td>
+                                            @else
+                                            <td>{{$user->percentage_split}}%</td>
+                                            @endif
                                             <td>
                                                 <div class="btn-group" role="group">
                                                     <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -87,7 +92,8 @@
                                                         @endif
                                                         
                                                         @if($user->type == 2)
-                                                       
+                                                             <a href="{{ url('/agent/percent/' .$user->id) }}" class="dropdown-item">Percentage</a>
+                        
                                                             @if($user->status == 0)
                                                             
                                                                 <a href="{{ url('/agent/activate/' .$user->id) }}" class="dropdown-item">Activate</a>

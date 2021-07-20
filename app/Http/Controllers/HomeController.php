@@ -557,6 +557,31 @@ class HomeController extends Controller
         ]);
 
         return back();
+    }
+
+    public function agent_percent($id)
+    {
+        $user_id = $id;
+        $user = User::where('id', $id)->first();
+        // dd($user);
+        return view('admin.percent')->with(compact('user'));
+    }
+
+    public function UpdatePercent(Request $request, $id)
+    {
+        // dd($id);
+
+        $this->validate($request, [
+            'amount' => "required", 
+        ]);
+
+        User::where('id', $id)->update([
+            'percentage_split' => $request->amount
+        ]);
+
+        session()->flash('alert-success', "Percentage has been updated successfully");
+
+         return redirect()->to('/users');
 
     }
 
