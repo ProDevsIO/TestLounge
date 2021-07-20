@@ -49,13 +49,22 @@ class HomeController extends Controller
         unset($request_data['_token']);
         if (auth()->attempt($request_data)) {
 
-            if (auth()->user()->type == 0) {
+            //account verified before login
+            if (auth()->user()->type == 2) {
                 if (auth()->user()->verified == 0) {
                     session()->flash('alert-danger', 'Account not verified, Kindly check your email to verify your account.');
                     auth()->logout();
                     return back();
                 }
             }
+
+            //To restrict access as per admin 
+            if (auth()->user()->status == 0) {
+                session()->flash('alert-danger', "Your account is not active.");
+                auth()->logout();
+                return back();
+            }
+
             return redirect()->to('/dashboard');
         }
 
@@ -446,6 +455,7 @@ class HomeController extends Controller
         $request_data['referal_code'] = $referral;
         $request_data['password'] = Hash::make($request_data['password']);
         $request_data['type'] = 2;
+        $request_data['status'] = 0;
 
         $user = User::create($request_data);
 
@@ -538,6 +548,26 @@ class HomeController extends Controller
     {
        
         return view('homepage.medpick');
+    }
+
+    public function agent_activate($id)
+    {
+        User::where('id', $id)->update([
+            'status' => 1
+        ]);
+
+        return back();
+
+    }
+
+    public function agent_deactivate($id)
+    {
+        
+        User::where('id', $id)->update([
+            'status' => 0
+        ]);
+
+        return back();
     }
 
     public function products()

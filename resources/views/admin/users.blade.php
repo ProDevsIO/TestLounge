@@ -48,6 +48,8 @@
                                         <th scope="col">Pending Booking</th>
                                         <th scope="col">Completed Bookings</th>
                                         <th scope="col">Vendor</th>
+                                        <th scope="col">Status</th>
+                                        
                                         <th scope="col">Action</th>
                                     </tr>
                                     </thead>
@@ -62,6 +64,11 @@
                                             <td>{{ $user->pbookings->count() }}</td>
                                             <td>{{ $user->cbookings->count() }}</td>
                                             <td>{{ ($user->vendor) ? $user->vendor->name : "Not a Vendor" }}</td>
+                                            @if($user->status == 1)
+                                                 <td> <span class="badge badge-success">Active</span></td>
+                                            @elseif($user->status == 0)
+                                                 <td> <span class="badge badge-warning">Not Active</span></td>
+                                            @endif
                                             <td>
                                                 <div class="btn-group" role="group">
                                                     <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -77,6 +84,19 @@
                                                             <a href="javascript:;" onclick="makeAdmin('{{ $user->id }}')"
                                                                class="dropdown-item">Make Agent</a>
                                                                 @endif
+                                                        @endif
+                                                        
+                                                        @if($user->type == 2)
+                                                       
+                                                            @if($user->status == 0)
+                                                            
+                                                                <a href="{{ url('/agent/activate/' .$user->id) }}" class="dropdown-item">Activate</a>
+                        
+
+                                                            @elseif($user->status == 1)
+                                                           
+                                                                <a href="{{ url('/agent/deactivate/'.$user->id) }}" class="dropdown-item">Deactivate</a>
+                                                            @endif
                                                         @endif
                                                     </div>
                                                 </div>
@@ -97,7 +117,7 @@
 
         </div>
         <!--footer-->
-    @include('includes.footer ')
+    @include('includes.footer')
     <!--/footer-->
     </div>
 
