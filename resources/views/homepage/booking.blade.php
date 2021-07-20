@@ -88,7 +88,7 @@
 
                                         <div class="col-md-12">
                                             <label>Test type <span class="show_required"> *</span></label>
-                                            <select class="form-control" id="product_id_" name="product_id" required>
+                                            <select class="form-control" id="product_id_" name="product_id" onchange="run()" required>
                                                 <option value="">Make a selection</option>
                                                 @foreach($products as $product)
                                                     <option value="{{ $product->id }}" @if(isset($_GET['product_id']) && $_GET['product_id'] == $product->id)
@@ -226,7 +226,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label>Home Country: <span class="show_required"> *</span></label>
-                                            <select class="form-control" name="home_country_id" onchange="run()" id="nationality" required>
+                                            <select class="form-control" name="home_country_id" id="nationality" required>
                                                 <option value="">Make a selection</option>
                                                 @foreach($countries as $country)
                                                     <option value="{{ $country->id }}"
@@ -312,7 +312,7 @@
                                         <div class="col-md-6">
                                             <label>Country travelled from: <span
                                                         class="show_required"> *</span></label>
-                                            <select class="form-control" name="country_travelling_from_id" required>
+                                            <select class="form-control" name="country_travelling_from_id" id="travel_from" onchange="run()" required>
                                                 <option value="">Make a selection</option>
                                                 @foreach($countries as $country)
                                                     <option value="{{ $country->id }}"
@@ -342,7 +342,7 @@
                                                 corridor
                                                 arrangement with the UK: <span class="show_required"> *</span><br/>
                                                 <span class="field-description">You can find the current list <a
-                                                            href='https://www.gov.uk/guidance/coronavirus-covid-19-travel-corridors'>here</a>:</span>
+                                                            href='https://www.gov.uk/guidance/coronavirus-covid-19-travel-corridors' target="_blank">here</a>:</span>
                                             </label>
                                             <input class="form-control date_picker" type="text" placeholder="Arrival Date in Uk"
                                                    name="last_day_travel"
@@ -388,9 +388,7 @@
                                             <label>Select Vendor <span class="show_required"> *</span></label>
                                             <select class="form-control" id="vendor_id" name="vendor_id" onchange="checkPrice()" required>
                                                 <option value="">Make a selection</option>
-                                                <!-- @foreach($vendors as $vendor)
-                                                    <option value="{{ $vendor->id }}">{{ $vendor->name }} </option>
-                                                @endforeach -->
+
                                             </select>
                                         </div>
                                         <br/>
@@ -433,14 +431,14 @@
 
         function checkPrice(){
             var vendor_id = $("#vendor_id").val();
-            var product_id = $("#product_id_").val();
-            var url = '/check/price/'+ vendor_id + "/" + product_id;
-            console.log(url);
-            $.get(url,function(data){
+            // var product_id = $("#product_id_").val();
+            // var url = '/check/price/'+ vendor_id + "/" + product_id;
+            // console.log(url);
+            if((vendor_id != 0 || vendor_id != undefined) && vendor_id){
                 $(".sub_btn").toggle();
                 $(".sub_btn_u").toggle();
-                $(".price_li").html("Cost: N" + (parseInt(data.price)).toLocaleString());
-            });
+            }
+
         }
 
         var input = document.querySelector("#phone");
@@ -518,24 +516,26 @@
     <script>
        function run() {
             var product_id = document.getElementById("product_id_").value;
-            var nationality = document.getElementById("nationality").value;
-            console.log(nationality);
-            var url = '/product/vendors/'+ product_id + '/' + nationality;
-            
-            $.get(url,function(data){
-                console.log(data);
-                var arrayLength = data.length;
-                for (var i = 0; i < arrayLength; i++) {
+            var nationality = document.getElementById("travel_from").value;
 
-                    var option = document.createElement("option");
-                    option.text = data[i].name+ " {" +data[i].price + "}";
-                    option.value =  data[i].vendor_id;
-                    var select = document.getElementById("vendor_id");
-                    select.appendChild(option);
-                
-                }
-           
-            });
+            var url = '/product/vendors/'+ product_id + '/' + nationality;
+
+
+                $.get(url, function (data) {
+                    console.log(data);
+                    var arrayLength = data.length;
+                    for (var i = 0; i < arrayLength; i++) {
+
+                        var option = document.createElement("option");
+                        option.text = data[i].name + " (" + data[i].price + ")";
+                        option.value = data[i].vendor_id;
+                        var select = document.getElementById("vendor_id");
+                        select.appendChild(option);
+
+                    }
+
+                });
+
         }
        
     </script>

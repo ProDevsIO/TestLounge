@@ -445,7 +445,7 @@ class HomeController extends Controller
 
         $request_data['referal_code'] = $referral;
         $request_data['password'] = Hash::make($request_data['password']);
-
+        $request_data['type'] = 2;
 
         $user = User::create($request_data);
 
