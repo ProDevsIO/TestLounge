@@ -42,8 +42,8 @@
                             </div>
                         </div> -->
 
-                        <div class="row table-responsive">
-
+                        <div class="row">
+                            <div class="col-md-12 table-responsive">
                             <table class="table table-striped">
 
                                 <thead>
@@ -64,7 +64,7 @@
                                 </tbody>
                             </table>
 
-
+                            </div>
                         </div><!--end of row-->
                     </li><!--end of individual feature content-->
                 </ul>

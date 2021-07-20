@@ -547,7 +547,7 @@
                 .remove()
                 .end()
                 .append('<option value="">Make a selection</option>');
-            
+
             $.get(url, function (data) {
                 console.log(data);
                 var arrayLength = data.length;
