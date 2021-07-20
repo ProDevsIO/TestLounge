@@ -305,8 +305,13 @@ class HomeController extends Controller
 
                 if ($booking->user_id) {
                     $user = User::where('id', $booking->user_id)->first();
-
-                    $pecentage = Setting::where('id', '2')->first();
+                    if($user->percentage_split != null){
+                        $pecentage = $user->percentage_split;
+                    }else{
+                        $defaultpercent = Setting::where('id', '2')->first();
+                        $pecentage = $defaultpercent->value;
+                    }
+                   
 
 
                     $cost_booking = $booking_product->price;
@@ -579,6 +584,15 @@ class HomeController extends Controller
             'percentage_split' => $request->amount
         ]);
 
+        $user =  User::where('id', $id)-first();
+
+        //check for flutter wave key
+        if($user->flutterwave_key != null)
+        {
+            //flutterwave subaccount update
+            //this is where the subaccounf or flutterwave should be added
+        }
+
         session()->flash('alert-success', "Percentage has been updated successfully");
 
          return redirect()->to('/users');
@@ -640,7 +654,7 @@ class HomeController extends Controller
                
                 $product[] = [
                         'name' => $vproduct->vendor->name,
-                        'price' => "KE ".number_format(($vproduct->price * 0.26),0),
+                        'price' => "KE".number_format(($vproduct->price * 0.26),0),
                         'vendor_id' => $vproduct->vendor_id
                 ];
             }
@@ -675,7 +689,7 @@ class HomeController extends Controller
             foreach($vendor_products as $vproduct ){
                 $product[] = [
                         'name' => $vproduct->vendor->name,
-                        'price' => "£ ".$vproduct->price_pounds,
+                        'price' => "£".$vproduct->price_pounds,
                         'vendor_id' => $vproduct->vendor_id
                 ];
             }

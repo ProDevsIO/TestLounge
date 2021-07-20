@@ -70,7 +70,7 @@
                                                  <td> <span class="badge badge-warning">Not Active</span></td>
                                             @endif
                                             @if($user->percentage_split == null)
-                                            <td>None</td>
+                                            <td>{{$setting->value}}%</td>
                                             @else
                                             <td>{{$user->percentage_split}}%</td>
                                             @endif

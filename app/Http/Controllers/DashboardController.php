@@ -192,8 +192,9 @@ class DashboardController extends Controller
             abort(403);
         }
         $users = User::get();
+        $setting = Setting::where('id',2)->first();
 
-        return view('admin.users')->with(compact('users'));
+        return view('admin.users')->with(compact('users','setting'));
     }
 
     public function admin_make($id)
