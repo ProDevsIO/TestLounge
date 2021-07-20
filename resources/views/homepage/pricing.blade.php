@@ -47,7 +47,7 @@
                             <table class="table table-striped">
 
                                 <thead>
-                                <th></th>
+                                <th style="width: 200px;"></th>
                                 @foreach($products as $product)
                                     <th>{{ $product->name }}</th>
                                     @endforeach
