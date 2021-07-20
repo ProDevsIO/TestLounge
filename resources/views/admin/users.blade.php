@@ -81,7 +81,7 @@
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                         <a class="dropdown-item" href="{{ url('complete/booking?user_id='.$user->id) }}">View Bookings</a>
-                                                        @if($user->type == 0)
+                                                        @if($user->type == 3)
                                                             <a href="{{ url('complete/booking?vendor_id='.$user->id) }}"
                                                                class="dropdown-item">Make Admin</a>
                                                         @else
