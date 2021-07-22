@@ -313,6 +313,13 @@ You can reduce this time to 5days  following a negative PCR result taken on  Day
                       <img src="/img/check-mark.svg" class="icon" />
                     </td>
                 </tr>
+                <tr>
+                    <td></td>
+                    <td>  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td>  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td>  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td> <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                </tr>
                 
             </table>
         </div>

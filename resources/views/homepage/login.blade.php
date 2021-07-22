@@ -41,8 +41,8 @@
                 <a href="/" class="btn btn-purple btn-pill float-left">Home page</a>
                 <br>
             </div>
-          <div class="container-fluid text-left"  style="width:80%">
-            <h4>Are you a Travel agent , Company travel manager or frequent flier into the UK ? You can join our partnership network which gives you access to discounts and value added services. <a href="/">Learn More</a></h4>
+          <div class="container-fluid text-left"  style="width:80%;fint-family:poppins">
+            <h4>Are you a Travel agent , Company travel manager or frequent flier into the UK ? You can join our partnership network which gives you access to discounts and value added services. <a href="#">Learn More</a></h4>
             
          </div>
         </div>
@@ -59,7 +59,7 @@
                     </a>
                 </h2>
                 <h4 class="text-uppercase- text-purple text-left mb-1">Login into your account</h4>
-                <p>Are you trying to make a booking? kindly click this <a href="/booking">link</a> to book</p>
+                <p>Are you trying to make a booking? Kindly click this <a href="/booking">link</a> to book</p>
                 @include('errors.showerrors')
                 <form action="{{ url('/login') }}" method="post">
                     @csrf
