@@ -100,24 +100,7 @@
         th:first-child, td:first-child{
             border-left:none;
         }
-     #hide{
-        display: none;
-    }
-    @media screen and (max-width: 600px) {
-        #hide{
-        display: block;
-        }
-    }
-    @media screen and (max-width: 800px) {
-        #hide{
-        display: block;
-        }
-    }
-    @media screen and (max-width: 1024px) {
-        #hide{
-        display: block;
-        }
-    }
+     
      .card {
          margin-bottom: 1.5rem;
          box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,.025);
@@ -149,6 +132,9 @@
         width:80vw;
         margin:auto;
     }
+    .header{
+        display:flex ;
+    }
 </style>
 @endsection
 
@@ -162,7 +148,7 @@
                 <div class="row">
                     <div class="col-sm-12 text-center">
                         <img alt="logo" class="logo hidden-xs" src="/img/logo-light.png">
-                        <h1 class="text-white space-bottom-medium text-center">We simplify the process of booking and making payments for Covid 19 UK Travel Tests for both travellers and travel agents. You’ll get up to date information on UK travel requirements and access to accredited test providers in the UK ensuring a  hassle free travel experience.</h1>
+                        <h1 class="text-white space-bottom-medium text-center">We simplify the process of booking and making payments for Covid-19 UK Travel Tests for both travellers and travel agents. You’ll get up to date information on UK travel requirements and access to accredited test providers in the UK ensuring a  hassle free travel experience.</h1>
                         <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a>
                         <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a>
                     </div>
@@ -204,9 +190,8 @@
 				</div><!--end of container-->
 			</section><br/>
         <div class="container">
-        <div class="header shadow curved bg-1 font-30">
-            <div><h3 style="color:white;font-weight:600px">AT A GLANCE GUIDE FOR ARRIVALS TO THE UK FOLLOWING IMPLEMENTATION OF THE
-        'TRAFFIC LIGHT SYSTEM'</h3></div>
+        <div class="header shadow curved bg-1 font-30" style="">
+            <div class="text-center"><h3 style="color:white;font-weight:600px">The Mandatory Covid-19 Tests for the UK follows a "Traffic light system" which determines the required tests based on the  Country you are travelling from.</h3></div>
                 <div></div>
         
         </div>
@@ -214,11 +199,11 @@
         <div class="table-responsive">
             <table className="font-16" style="overflow-x:auto !important;">
                 <thead>
-                    <th class="bg-1">MEASURE REQUIRED</th>
-                    <th class="bg-2">GREEN</th>
-                    <th class="bg-3">AMBER(vaccinated)</th>
-                    <th class="bg-3">AMBER(unvaccinated)</th>
-                    <th class="bg-4">RED</th>
+                    <th class="bg-1 text-center">MEASURE REQUIRED</th>
+                    <th class="bg-2 text-center">GREEN</th>
+                    <th class="bg-3 text-center">AMBER(Vaccinated)</th>
+                    <th class="bg-3 text-center">AMBER(Unvaccinated)</th>
+                    <th class="bg-4 text-center">RED</th>
                 </thead>
                 <tr>
                     <td width="25%"><h6>COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</h6></td>
@@ -266,7 +251,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%"><h6>MANDATORY ADDITIONAL PCR TESTING</h6></td>
+                    <td width="25%"><h6>MANDATORY ADDITIONAL PCR TESTING ON DAY 8 OF ARRIVAL INTO THE UK</h6></td>
                     <td width="25%">
                     <img src="/img/close-cross.svg" class="icon" />
                     </td>
@@ -281,33 +266,49 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%"><h6>SELF ISOLATION</h6></td>
+                    <td width="25%"><h6>Optional Day 5 PCR Test ( Test to Release )</h6></td>
                     <td width="25%">
-                    <h6>This excludes travellers from France</h6>
+                    <img src="/img/close-cross.svg" class="icon" />
                     </td>
                     <td width="25%">
-                        <h6>You can reduce the time required for self isolation to 5 days by taking a Day 5 Test; a negative Day 5 PCR Test allows you to immediately leave self isolation</h6>
+                     <img src="/img/close-cross.svg" class="icon" />   
                     </td>
                     <td width="25%">
-                        <h6> You can reduce the time required for self isolation to 5 days by taking a Day 5 Test; a negative Day 5 PCR Test allows you to immediately leave self isolation</h6>
+                    <h6> You can reduce the time required for self isolation to 5 days by taking a Day 5 Test; a negative Day 5 PCR Test allows you to immediately leave self isolation</h6>
                     </td>
                     <td width="25%">
                     <img src="/img/close-cross.svg" class="icon" />
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%"><h6>TEST-TO-RELEASE (OPTIONAL)</h6></td>
-                    <td width="25%">
-                    <h6>Not Required</h6>
-                    </td>
-                    <td width="25%">
-                    <h6>Complete on Day 5</h6>
-                    </td>
-                    <td width="25%">
-                        <h6>Complete on Day 5</h6>
-                    </td>
+                    <td width="25%"><h6>SELF ISOLATION</h6></td>
                     <td width="25%">
                     <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                      <img src="/img/close-cross.svg" class="icon" />
+                     </td>
+                    <td width="25%">
+                        <h6> 10 days of Isolation at the UK Isolation address provided in your passenger locator form
+You can reduce this time to 5days  following a negative PCR result taken on  Day 5 Test (  See above)</h6>
+                    </td>
+                    <td width="25%">
+                        <h6>10 days of Isolation in a Government approved Qurantine Hotel</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="25%"><h6>FIT TO FlY( PCR Test Taken before travel out of the UK  if required by destination country) </h6></td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="25%">
+                      <img src="/img/check-mark.svg" class="icon" />
                     </td>
                 </tr>
                 
@@ -338,16 +339,16 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
                         <span class="sub alt-font">popular question</span>
-                        <h1><strong>HOW DO I GET TESTED?</strong></h1>
+                        <h1><strong>GUIDELINES FOR UK TRAVEL TESTS</strong></h1>
                         <ul style="text-align: justify; list-style-type: square; font-size:18px;">
-                            <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is Mandatory for entry into the UK. You can book your test <a href="/pick" class="">Here</a> </li>
-                           <br/> <li> Book and Pay for your UK travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>. Evidence of booking and payment is Mandatory before you can board a flight to the UK</li>
+                            <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is <b>MANDATORY</b> for entry into the UK. You can book your test <a href="/pick" class="">Here</a> </li>
+                           <br/> <li> Book and Pay for your UK travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>. Evidence of booking and payment is <b>MANDATORY</b> before you can board a flight to the UK</li>
                             <br/><li>Following Payment, you will immediately receive your Passenger locator Number and receipt of payment.</li>
                             <br/> <li>This number will be used to Complete your Passenger locator form <a href="https://provide-journey-contact-details.homeoffice.gov.uk/passengerLocatorFormUserAccountHolderQuestion" target="_blank">Here</a>.You must show evidence that you have completed your Passenger locator form before you will be allowed to board a flight into the UK</li>
-                            <br/> <li>You may also need to show your reciept of payment for your UK test before you are allowed to board a flight to the UK; <br>
+                            <br/> <li>You may also need to show your receipt of payment for your UK test before you are allowed to board a flight to the UK; <br>
                                 Please have these documents handy at the airport ; both electronic and printed copies are accepted by airlines</li>
                             <br/> <li>Following your arrival into the UK, you will receive the  test packages you booked for on or before the 2nd day of your  arrival.</li>
-                            <br/> <li>You must carry out a self test on your 1st or 2nd day of arrival into the UK . The directions on how to carry out a self test, how to activate your test and where to send your test samples to are all written  on the pack  you will receive.( click to watch video on how to carry out a self test) <a href="https://youtu.be/8lo6g-TYZ-c" target="_blank">Watch</a>.</li>
+                            <br/> <li>You must carry out a self test on your 1st or 2nd day of arrival into the UK . The directions on how to carry out a self test, how to activate your test and where to send your test samples to are all written  on the pack  you will receive.Click to watch video on how to carry out a self test. <a href="https://youtu.be/8lo6g-TYZ-c" target="_blank">Watch</a>.</li>
                             <br/> <li> Following your self test, you will drop your sample at the designated points nearest to you as directed on the test pack you will recieve </li>
                             <br/> <li> You will also be expected to "Activate" your test by visiting the website that will be indicated on the pack you will receive and by following the simple instructions on this website. This is required to analyse your test and send your results </li>
                             <br/> <li> If you have  purchased a Fit to Fly Test or Package, for your exit out of the UK to another country, check the country guidelines for when you are expected to carry out your PCR test before flying. </li>
@@ -356,8 +357,8 @@
                             You can also get more information about travel requirements for other countries <a href="https://calculator.prodevs.io/" target="_blank" style="color:#428bca; text-decoration:none;font-size:18px;"> here </a>. <br>
                             Follow the guidelines above on how to carry out a self test and activate your tests <br>
 
-                            All test Results are available 24 hours from reciept of samples in the Laboratory <br><br></p>
-<div class="alert alert-warning">
+                            All test Results are available 24 hours from receipt of samples in the Laboratory <br><br></p>
+                        <div class="alert alert-warning">
                        <p class="lead" style="text-align: justify;">     * Disclaimer : <br>
                             Country guidelines change from time to time and the information provided here is a guide. Please ensure to confirm country and airline regulations with relevant authorities at your destination . UKTravelTests will not take any responsibility for challenges that arise as a result of information provided here
                        </p></div>

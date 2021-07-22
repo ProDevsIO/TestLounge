@@ -15,6 +15,11 @@
             margin-bottom:50px;
          }
     }
+    @media (max-width: 768px){
+        .leftHalf {
+            min-height: 300px;
+        }
+    }
 </style>
 <!-- <div class="leftHalf" style="background-image: url('/img/travel.jpeg')">
         
@@ -28,7 +33,7 @@
             </div>
         </div>
     </div> -->
-    <div class="leftHalf" style="background-image: url('/img/banner.jpg')">
+    <div class="leftHalf" style="background-image: url('/img/banner.jpg');">
            
         <div class="login-promo-txt" style="height:100%; top:0; width:100%">
             <div class="container-fluid" id="backbutton"style="width:100%; margin-left: -20px;
@@ -36,9 +41,9 @@
                 <a href="/" class="btn btn-purple btn-pill float-left">Home page</a>
                 <br>
             </div>
-          <div class="container-fluid"  style="width:80%">
-            <h2>Are you traveling to the UK? And you want to make your UK Covid Testing Booking?</h2>
-            <p>Covid19 Tests for International Arrivals – Day 2 and 8 Amber Country</p>
+          <div class="container-fluid text-left"  style="width:80%">
+            <h4>Are you a Travel agent , Company travel manager or frequent flier into the UK ? You can join our partnership network which gives you access to discounts and value added services. <a href="/">Learn More</a></h4>
+            
          </div>
         </div>
     </div>
@@ -64,7 +69,7 @@
                     <div class="form-group mb-4">
                         <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Password">
                     </div>
-                    <p>Dont have an account? <a href="/register/agent"> Register Now</a></p>
+                    <p>Don't have an account? <a href="/register/agent"> Register Now</a></p>
                     <div class="form-group clearfix">
                         
                         <button type="submit" class="btn btn-purple btn-pill float-right">LOGIN</button>

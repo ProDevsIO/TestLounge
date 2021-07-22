@@ -32,6 +32,24 @@
         .lnk:hover{
             text-decoration: none;
         }
+        #hide{
+        display: none;
+    }
+    @media screen and (max-width: 600px) {
+        #hide{
+        display: block;
+        }
+    }
+    @media screen and (max-width: 800px) {
+        #hide{
+        display: block;
+        }
+    }
+    @media screen and (max-width: 1024px) {
+        #hide{
+        display: block;
+        }
+    }
     </style>
 </head>
 <body>

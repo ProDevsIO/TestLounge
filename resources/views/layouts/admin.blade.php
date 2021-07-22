@@ -68,12 +68,7 @@
     <!--header rightside links-->
     <ul class="header-links hide-arrow navbar">
 
-        @if(auth()->user()->referal_code && auth()->user()->vendor_id == 0)
-            <li class="nav-item dropdown ">
-                <a href="javascript:;" data-toggle="modal" data-target="#referralModal">Referral
-                    Code: {{ url('/booking?ref='.auth()->user()->referal_code) }}</a>
-            </li>
-        @endif
+       
         <li class="nav-item dropdown ">
             <a class="nav-link dropdown-toggle" id="userNav" href="#" data-toggle="dropdown" aria-haspopup="true"
                aria-expanded="false">

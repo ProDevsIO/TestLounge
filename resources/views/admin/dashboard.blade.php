@@ -1,12 +1,29 @@
 @extends('layouts.admin')
 @section('style')
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        /* .dataTables_length{
+            display:flex;
+        }
+        .dataTables_filter{
+            float:right;
+            margin:0;
+            padding:0;
+        } */
+    </style>
 @endsection
 @section('content')
 
 
     <div class="content-wrapper">
         <div class="container-fluid">
+        @if(auth()->user()->referal_code && auth()->user()->vendor_id == 0)
+        <div class="alert alert-success">
+            <p>This is your dedicated client booking link . Share this with your clients to make bookings and payments which are tied to the bank account you have provided.<a href="javascript:;" data-toggle="modal" data-target="#referralModal">Referral
+                    Code: {{ url('/booking?ref='.auth()->user()->referal_code) }}</a></p>
+                
+        </div>
+        @endif
             @if(auth()->user()->referal_code && !auth()->user()->flutterwave_key)
 <div class="alert alert-danger">
     Kindly setup your bank account before you start referring. If not your account wouldn't be credited.<a href="/user/bank" class="btn btn-danger">Add Bank</a>
@@ -187,6 +204,7 @@
     <script>
         $(document).ready(function () {
             $('#data_table').DataTable({
+                responsive: true,
                 "order": []
             });
         });

@@ -47,14 +47,14 @@
                             <table class="table table-striped">
 
                                 <thead>
-                                <th style="width: 200px;"></th>
+                                <th  class="text-justify" style=""></th>
                                 @foreach($products as $product)
                                     <th>{{ $product->name }}</th>
                                     @endforeach
                                 </thead>
                                 <tbody>
                                 @foreach($vendors as $vendor)
-                                <tr>
+                                <tr class="text-center">
                                     <td>{{ $vendor->name }}</td>
                                     @foreach($products as $product)
                                         <td>{{ ($vendor->product_get($product->id)) ? "£".number_format($vendor->product_get($product->id)->price_pounds) : "--"  }}</td>

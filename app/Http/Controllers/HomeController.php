@@ -143,6 +143,7 @@ class HomeController extends Controller
             Hi " . $request->first_name . ",
             
             Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
+            For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktraveltest.prodevs.io/#popular' >Here</a> <br>
             <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "make/payment/" . $transaction_ref . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Make Payment
                   </a>
@@ -471,13 +472,15 @@ class HomeController extends Controller
             $message = "
             Hi " . $request->first_name . ",
             
-            Thank you for registering as an agent. To continue your registration,<br/><br/>Kindly click the button below<br/><br/>
+            Thank you for your interest to register as an Agent with UKTravel Tests,<br/><br/>Kindly click the button below<br/><br/>
             <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Continue Registration
                   </a>
                   
                   <br/><br/>
                   Thank you.
+                  <br/><br/>
+                UKTravelsTeam
             ";
             Mail::to($request->email)->send(new BookingCreation($message, "Registration"));
         } catch (\Exception $e) {
@@ -563,6 +566,21 @@ class HomeController extends Controller
             'status' => 1
         ]);
 
+         //send an email
+         try {
+            $message = "Congratulations!,<br>
+            Your application to join the Agent network of the UKTravelTests Platform has been approved.<br><br>
+            You can now log in to your portal to complete your profile and set up your account. <br><br>
+            You will find your dedicated customer booking link on your portal <br><br>
+            Thank you for joining the  UKTravelTests network!<br><br>
+
+            UKTravelsTeam
+            ";
+            Mail::to($booking->email)->send(new BookingCreation($message));
+        } catch (\Exception $e) {
+
+        }
+
         return back();
     }
 
@@ -608,6 +626,23 @@ class HomeController extends Controller
             'status' => 0
         ]);
 
+        //send an email
+        try {
+            $message = "Dear Network Partner,<br><br>
+
+            Please be informed that your account has been temporarily deactivated.,<br><br>
+            
+            You will no longer be able to access your Agent portal , you will also not recieve any of the Agent benefits during the time of deactivation.<br><br>
+            
+            Do kindly reach out to the UKtravel Test Desk for more information on how to get back on the network.<br><br>
+
+            UKTravelsTeam
+            ";
+            Mail::to($booking->email)->send(new BookingCreation($message));
+        } catch (\Exception $e) {
+
+        }
+
         return back();
     }
 
@@ -625,7 +660,7 @@ class HomeController extends Controller
     }
     public function product_descript($product_id)
     {
-        $product = Product::where('product_id', $product_id)->first();
+        $product = Product::where('id', $product_id)->first();
         $description = $product->description;
         return $description;
     }

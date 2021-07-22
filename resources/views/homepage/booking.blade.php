@@ -37,9 +37,10 @@
                         <div class="card-body">
                             <h1>Book your test
                             </h1>
-                            <p style="margin-bottom: 25px">Before entering the UK, all visitors must
-                                provide a negative test within the last 72 hours and fill out a Passenger Locator
-                                Form.</p>
+                            <p style="margin-bottom: 25px">To be allowed to board a flight to the UK, Your airline will require a negative PCR Test within 72 hours of your travel date , evidence of booking your UK covid tests and  completion of your Passenger Locator Form
+
+Following your booking , you will immediately recieve a code on screen and via the email provided . 
+This code must be inputted in the Uk Passenger Locator Form</p>
                         </div>
                     </div>
                 </div><!--end of row-->
@@ -92,7 +93,7 @@
 
                                         <div class="col-md-12">
                                             <label>Test type <span class="show_required"> *</span></label>
-                                            <select class="form-control" id="product_id_" name="product_id"
+                                            <select class="form-control" id="product_id_"onchange="descript()" name="product_id"
                                                     onchange="run()" required>
                                                 <option value="">Make a selection</option>
                                                 @foreach($products as $product)
@@ -104,7 +105,10 @@
                                             </select>
                                         </div>
                                         <br/>
+                                        <br>
+                                        <div  class="col-md-12 bg-success" id="descript">
 
+                                        </div>
 
                                         <button class="btn btn-primary pull-right" style="margin-top: 30px"
                                                 onclick="stepperForm.next()">Next
@@ -168,22 +172,30 @@
                                             <label>Vaccination Status: <span class="show_required"> *</span></label>
                                             <select class="form-control" name="vaccination_status" required>
                                                 <option value="">Make a selection</option>
-                                                <option value="1">Has not been vaccinated.</option>
+                                                <option value="1">Not been vaccinated</option>
 
-                                                <option value="2">Has received the first dose, but not the second.
+                                                <option value="2">Received the first dose, but not the second
                                                 </option>
 
-                                                <option value="3">Has received both first and second dose.
+                                                <option value="3">Received both first and second dose
                                                 </option>
                                             </select>
                                         </div>
                                         <div class="col-md-6" style="margin-top: 20px">
-                                            <label>Contact Phone Number: <span
+                                            <label>Contact Phone Number(In country of origin): <span
                                                         class="show_required"> *</span></label><br/>
 
                                             <input style="width: 100%;" class="form-control" id="phone" type="text"
                                                    name="phone_no"
                                                    value="{{ old('phone_no') }}" required/>
+                                        </div>
+                                        <div class="col-md-6" style="margin-top: 20px">
+                                            <label>Contact Phone Number(In the Uk): <span
+                                                        class="show_required"> *</span></label><br/>
+
+                                            <input style="width: 100%;" class="form-control" id="phone" type="text"
+                                                   name="uk_phone_no"
+                                                   value="{{ old('uk_phone_no') }}" required/>
                                         </div>
 
 
@@ -250,9 +262,9 @@
                                             <h3>
                                                 Isolation Address
                                             </h3>
-
+<br>
                                             <p>
-                                                This is the address where you will be during isolation
+                                            Your Test Package will be sent to this address
                                             </p>
                                         </div>
 
@@ -281,14 +293,11 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label>Isolation Country: <span class="show_required"> *</span></label>
-                                            <select class="form-control" name="isolation_country_id" required>
+                                            <select class="form-control" name="isolation_country_id" required readonly>
                                                 <option value="">Make a selection</option>
-                                                @foreach($countries as $country)
-                                                    <option value="{{ $country->id }}"
-                                                            @if(old('home_country_id') == $country->id)
-                                                            selected
-                                                            @endif>{{ $country->name }}</option>
-                                                @endforeach
+                                              
+                                                    <option value="{{ $country->id }}" selected
+                                                            selected >UNITED KINGDOM</option>
                                             </select>
                                         </div>
                                         <button class="btn btn-primary pull-right" style="margin-top: 20px"
@@ -307,7 +316,7 @@
                                         </div>
 
                                         <div class="col-md-12" style="margin-top: 20px">
-                                            <label>Document ID Number: <span class="show_required"> *</span> </label>
+                                            <label>Travel Document ID/Passport Number: <span class="show_required"> *</span> </label>
                                             <input class="form-control" type="text" name="document_id"
                                                    value="{{ old('document_id') }}" required/>
                                         </div>
@@ -342,7 +351,7 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            <label> Departure Date: <span class="show_required"> *</span></label>
+                                            <label> Departure Date(from country of origin): <span class="show_required"> *</span></label>
                                             <input class="form-control date_picker" type="text"
                                                    placeholder="Arrival Date in Uk"
                                                    name="departure_date"
@@ -354,7 +363,7 @@
                                                 corridor
                                                 arrangement with the UK: <span class="show_required"> *</span><br/>
                                                 <span class="field-description">You can find the current list <a
-                                                            href='https://www.gov.uk/guidance/coronavirus-covid-19-travel-corridors'
+                                                            href='#popular'
                                                             target="_blank">here</a>:</span>
                                             </label>
                                             <input class="form-control date_picker" type="text"
@@ -382,7 +391,7 @@
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label>Flight Number / Coach Number / Vessel Name: <span
+                                            <label>Flight Number / Coach Number / Vessel Name / Airline: <span
                                                         class="show_required"> *</span></label>
                                             <input class="form-control" type="text" required name="transport_no"
                                                    value="{{ old('transport_no') }}"/>
@@ -565,17 +574,21 @@
 
         }
 
-function description(){
+function descript(){
     var product_id = document.getElementById("product_id_").value;
-    var url = '/product/descript/' + product_id ;
-    $.get(url, function (data) {
+    var url = '/product/descript/' + product_id;
+        $("#descript")
+                .find('p')
+                .remove()
+                .end();
+        $.get(url, function (data) {
                 console.log(data);
-                  var descript = document.createElement("h1");
-                    descript.text = data[i].name + " (" + data[i].price + ")";
+                  
                     var holder = document.getElementById("descript");
-                    holder.appendChild(option);
-
+                    var newNode = document.createElement('p');
+                    newNode.innerHTML = data;
+                    holder.appendChild(newNode);
             });
-    }
+        }
     </script>
 @endsection
