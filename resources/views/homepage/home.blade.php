@@ -221,7 +221,7 @@
                     <th class="bg-4">RED</th>
                 </thead>
                 <tr>
-                    <td width="25%">COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</td>
+                    <td width="25%"><h6>COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</h6></td>
                     <td width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
@@ -236,7 +236,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%">PRE-DEPARTURE TEST AT DESTINATION WITHIN 72 HOURS OF TRAVEL</td>
+                    <td width="25%"><h6>PRE-DEPARTURE TEST AT DESTINATION WITHIN 72 HOURS OF TRAVEL</h6></td>
                     <td width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
@@ -251,7 +251,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%">MANDATORY PCR TEST UPON ENTRY TO UK ON/BEFORE DAY 2</td>
+                    <td width="25%"><h6>MANDATORY PCR TEST UPON ENTRY TO UK ON/BEFORE DAY 2</h6></td>
                     <td width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
@@ -266,37 +266,37 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%">MANDATORY ADDITIONAL PCR TESTING</td>
+                    <td width="25%"><h6>MANDATORY ADDITIONAL PCR TESTING</h6></td>
                     <td width="25%">
                     <img src="/img/close-cross.svg" class="icon" />
                     </td>
                     <td width="25%">
-                    <h6>Required on day 8 from 19th july no longer required for fully vaccinated uk residents</h6>    
+                     <img src="/img/close-cross.svg" class="icon" />   
                     </td>
                     <td width="25%">
-                    <h6>Required on day 8 from 19th july no longer required for fully vaccinated uk residents</h6>
+                    
                     </td>
                     <td width="25%">
                         <h6>Required on day 8</h6>
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%">SELF ISOLATION</td>
+                    <td width="25%"><h6>SELF ISOLATION</h6></td>
                     <td width="25%">
-                    <img src="/img/close-cross.svg" class="icon" />
+                    <h6>This excludes travellers from France</h6>
                     </td>
                     <td width="25%">
-                        <h6>For 10 days at a defined address 19th july no longer required for fully vaccinated uk residents</h6>
+                        <h6>You can reduce the time required for self isolation to 5 days by taking a Day 5 Test; a negative Day 5 PCR Test allows you to immediately leave self isolation</h6>
                     </td>
                     <td width="25%">
-                        <h6>For 10 days at a defined address 19th july no longer required for fully vaccinated uk residents</h6>
+                        <h6> You can reduce the time required for self isolation to 5 days by taking a Day 5 Test; a negative Day 5 PCR Test allows you to immediately leave self isolation</h6>
                     </td>
                     <td width="25%">
                     <img src="/img/close-cross.svg" class="icon" />
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%">TEST-TO-RELEASE (OPTIONAL)</td>
+                    <td width="25%"><h6>TEST-TO-RELEASE (OPTIONAL)</h6></td>
                     <td width="25%">
                     <h6>Not Required</h6>
                     </td>
