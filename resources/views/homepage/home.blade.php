@@ -301,10 +301,10 @@
                     <h6>Not Required</h6>
                     </td>
                     <td width="25%">
-                    <h6>Complete on Day5</h6>
+                    <h6>Complete on Day 5</h6>
                     </td>
                     <td width="25%">
-                        <h6>Complete on Day5</h6>
+                        <h6>Complete on Day 5</h6>
                     </td>
                     <td width="25%">
                     <img src="/img/close-cross.svg" class="icon" />
