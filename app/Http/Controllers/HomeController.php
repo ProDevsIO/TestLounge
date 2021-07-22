@@ -623,6 +623,12 @@ class HomeController extends Controller
 
         return $vendor_product;
     }
+    public function product_descript($product_id)
+    {
+        $product = Product::where('product_id', $product_id)->first();
+        $description = $product->description;
+        return $description;
+    }
     public function product_to_vendors($product_id, $nationality){
         //if nationality is nigeria
         if($nationality == 156){

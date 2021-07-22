@@ -565,5 +565,17 @@
 
         }
 
+function description(){
+    var product_id = document.getElementById("product_id_").value;
+    var url = '/product/descript/' + product_id ;
+    $.get(url, function (data) {
+                console.log(data);
+                  var descript = document.createElement("h1");
+                    descript.text = data[i].name + " (" + data[i].price + ")";
+                    var holder = document.getElementById("descript");
+                    holder.appendChild(option);
+
+            });
+    }
     </script>
 @endsection

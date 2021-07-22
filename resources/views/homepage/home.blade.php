@@ -274,7 +274,7 @@
                      <img src="/img/close-cross.svg" class="icon" />   
                     </td>
                     <td width="25%">
-                    
+                    <h6>Required on day 8</h6>
                     </td>
                     <td width="25%">
                         <h6>Required on day 8</h6>
