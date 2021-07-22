@@ -191,8 +191,10 @@
 			</section><br/>
         <div class="container">
         <div class="header shadow curved bg-1 font-30" style="">
-            <div class="text-center"><h3 style="color:white;font-weight:600px">The Mandatory Covid-19 Tests for the UK follows a "Traffic light system" which determines the required tests based on the  Country you are travelling from.</h3></div>
-                <div></div>
+            <div class="text-center"><h3 style="color:white;font-weight:600px">The Mandatory Covid-19 Tests for the UK follows a "Traffic light system" which determines the required tests based on the  Country you are travelling from.</h3><br><br> <p>See table below with the list of expected tests for each Category</p></div>
+                <div>
+                    
+                </div>
         
         </div>
         <br>
@@ -266,7 +268,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%"><h6>Optional Day 5 PCR Test ( Test to Release )</h6></td>
+                    <td width="25%"><h6 >OPTIONAL DAY 5 PCR TEST<br>( Test to Release )</h6></td>
                     <td width="25%">
                     <img src="/img/close-cross.svg" class="icon" />
                     </td>
@@ -293,11 +295,11 @@
 You can reduce this time to 5days  following a negative PCR result taken on  Day 5 Test (  See above)</h6>
                     </td>
                     <td width="25%">
-                        <h6>10 days of Isolation in a Government approved Qurantine Hotel</h6>
+                        <h6>10 days of Isolation in a Government approved Quarantine Hotel</h6>
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%"><h6>FIT TO FlY( PCR Test Taken before travel out of the UK  if required by destination country) </h6></td>
+                    <td width="25%"><h6>FIT TO FLY( PCR Test Taken before travel out of the UK  if required by destination country) </h6></td>
                     <td width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
@@ -348,7 +350,7 @@ You can reduce this time to 5days  following a negative PCR result taken on  Day
                             <br/> <li>You may also need to show your receipt of payment for your UK test before you are allowed to board a flight to the UK; <br>
                                 Please have these documents handy at the airport ; both electronic and printed copies are accepted by airlines</li>
                             <br/> <li>Following your arrival into the UK, you will receive the  test packages you booked for on or before the 2nd day of your  arrival.</li>
-                            <br/> <li>You must carry out a self test on your 1st or 2nd day of arrival into the UK . The directions on how to carry out a self test, how to activate your test and where to send your test samples to are all written  on the pack  you will receive.Click to watch video on how to carry out a self test. <a href="https://youtu.be/8lo6g-TYZ-c" target="_blank">Watch</a>.</li>
+                            <br/> <li>You must carry out a self test on your 1st or 2nd day of arrival into the UK . The directions on how to carry out a self test, how to activate your test and where to send your test samples to are all written  on the pack  you will receive. Click to watch video on how to carry out a self test. <a href="https://youtu.be/8lo6g-TYZ-c" target="_blank">Watch</a>.</li>
                             <br/> <li> Following your self test, you will drop your sample at the designated points nearest to you as directed on the test pack you will recieve </li>
                             <br/> <li> You will also be expected to "Activate" your test by visiting the website that will be indicated on the pack you will receive and by following the simple instructions on this website. This is required to analyse your test and send your results </li>
                             <br/> <li> If you have  purchased a Fit to Fly Test or Package, for your exit out of the UK to another country, check the country guidelines for when you are expected to carry out your PCR test before flying. </li>
@@ -360,7 +362,7 @@ You can reduce this time to 5days  following a negative PCR result taken on  Day
                             All test Results are available 24 hours from receipt of samples in the Laboratory <br><br></p>
                         <div class="alert alert-warning">
                        <p class="lead" style="text-align: justify;">     * Disclaimer : <br>
-                            Country guidelines change from time to time and the information provided here is a guide. Please ensure to confirm country and airline regulations with relevant authorities at your destination . UKTravelTests will not take any responsibility for challenges that arise as a result of information provided here
+                            Country guidelines change from time to time and the information provided here is a guide. Please ensure to confirm country and airline regulations with relevant authorities at your destination. UKTravelTests will not take any responsibility for challenges that arise as a result of information provided here
                        </p></div>
                         <p class="lead" style="text-align: justify">
                         <!-- <p style="text-align: justify">You must book and pay for all of our tests on our website; You
