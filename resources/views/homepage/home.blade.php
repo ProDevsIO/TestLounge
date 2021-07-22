@@ -169,24 +169,24 @@
                 </div><!--end of row-->
             </div><!--end of container-->
         </header>
-        <section class="clients-2">
+        <section class="clients-2" style="padding-bottom:20px">
 				<div class="container">
 					<div class="row">
-                        <div class="col-md-3 col-sm-4">
-                            <h2>Our Partners</h2>
+                        <div class="col-md-3 col-sm-4" style="margin-top:40px">
+                            <h1>Our Partners</h1>
                         </div>
 
                         <div class="col-md-3 col-sm-4">
-							<img alt="Client Logo" src="/img/london_test.png">
+							<h1><img alt="Client Logo" src="/img/london_test.png" style="max-width:200px;max-height:200px"></h1>
 						</div>
 						
 						<div class="col-md-3 col-sm-4">
-							<img alt="Client Logo" src="img/pexpo.png">
+							<img alt="Client Logo" src="img/pexpo.png" style="max-width:180px;max-height:200px">
 						</div>
 						
-						<div class="col-md-3 col-sm-4" style="margin-top:10px">
+						<div class="col-md-3 col-sm-4" style="margin-top:30px">
                             
-							<img alt="Client Logo" src="img/allhealth.png">
+							<img alt="Client Logo" src="img/allhealth.png" style="max-width:200px;max-height:200px">
 						</div>
 						
 						{{--<div class="col-md-2 col-sm-4">--}}

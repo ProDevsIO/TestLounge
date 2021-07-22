@@ -450,7 +450,9 @@ class HomeController extends Controller
             'last_name' => 'required',
             'email' => 'required|unique:users',
             'phone_no' => 'required',
+            'company' => 'required',
             'password' => 'required'
+
         ]);
 
         $request_data = $request->all();

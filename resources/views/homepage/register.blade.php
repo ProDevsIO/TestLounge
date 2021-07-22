@@ -34,9 +34,9 @@
     </div>
 
     <div class="rightHalf">
-        <div class="position-relative">
+        <div class="position-relative" >
             <!--login form-->
-            <div class="login-form">
+            <div class="login-form " style="padding-top:20%">
                 <h2 class="text-center mb-1">
                     
                     <a href="/">
@@ -59,7 +59,10 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="email" value="{{ old('email') }}" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                        <input type="email" value="{{ old('email') }}" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" value="{{ old('company') }}" name="company" class="form-control" id="exampleInputEmail1" placeholder="Company" required>
                     </div>
                     <div class="form-group mb-4">
                         <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Password" required>

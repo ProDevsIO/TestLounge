@@ -55,7 +55,7 @@
                             
                             <div class="col-sm-12" style="margin-top: 30px">
                                   <label>Test Center <span class="show_required"> *</span></label>
-                                           <input type="text" class="form-control" value = "Medbury medicals " readonly>
+                                           <input type="text" class="form-control" value = "Medbury Medicals " readonly>
                             </div>
 
                             <button  type="submit" class="btn btn-primary pull-right" style="margin-top: 30px" >Next </button>
