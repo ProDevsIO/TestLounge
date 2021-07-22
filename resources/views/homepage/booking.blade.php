@@ -322,7 +322,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                         </div>
                                         <div class="col-md-6">
                                             <label>Arrival date in the UK: <span class="show_required"> *</span></label>
-                                            <input class="form-control date_picker" type="text"
+                                            <input class="form-control date_picker1" type="text"
                                                    placeholder="Arrival Date in Uk"
                                                    name="arrival_date"
                                                    value="{{ old('arrival_date') }}" required>
@@ -352,7 +352,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
 
                                         <div class="col-md-12">
                                             <label> Departure Date(from country of origin): <span class="show_required"> *</span></label>
-                                            <input class="form-control date_picker" type="text"
+                                            <input class="form-control date_picker1"  type="text"
                                                    placeholder="Arrival Date in Uk"
                                                    name="departure_date"
                                                    value="{{ old('departure_date') }}" required>
@@ -366,7 +366,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                                             href='#popular'
                                                             target="_blank">here</a>:</span>
                                             </label>
-                                            <input class="form-control date_picker" type="text"
+                                            <input class="form-control date_picker"  type="text"
                                                    placeholder="Arrival Date in Uk"
                                                    name="last_day_travel"
                                                    value="{{ old('last_day_travel') }}" required>
@@ -542,6 +542,11 @@ This code must be inputted in the Uk Passenger Locator Form</p>
             $('.date_picker').datetimepicker({
                 format: 'MM/DD/YYYY'
             });
+            $('.date_picker1').datetimepicker({
+                minDate: moment().add(1, 'd').toDate(),
+                format: 'MM/DD/YYYY'
+            });
+           
         });
     </script>
     <script>
