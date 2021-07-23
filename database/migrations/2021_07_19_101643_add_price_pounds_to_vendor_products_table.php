@@ -13,10 +13,14 @@ class AddPricePoundsToVendorProductsTable extends Migration
      */
     public function up()
     {
-        Schema::table('vendor_products', function (Blueprint $table) {
-            //
-            $table->decimal('price_pounds')->default(null)->after('price');
-        });
+        try {
+            Schema::table('vendor_products', function (Blueprint $table) {
+                //
+                $table->decimal('price_pounds')->default(null)->after('price');
+            });
+        }catch (Exception $e){
+
+        }
     }
 
     /**
