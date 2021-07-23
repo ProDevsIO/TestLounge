@@ -335,8 +335,8 @@ You can reduce this time to 5days  following a negative PCR result taken on  Day
                     </div> -->
                  
                     <div class="col-md-12 col-xs-12 text-center">
-                        <h5 class="text-white">To view a country's color code please click the button below.  </h5>
-                        <a href="https://calculator.prodevs.io/" target="_blank" class="btn btn-primary btn-white">Travel Calculator</a>
+                        <h5 class="text-white">If you do not know what category your country of origin belongs to , please click on this link for more information</h5>
+                        <a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" target="_blank" class="btn btn-primary btn-white">Click here</a>
                   
 </div>
                 </div>
