@@ -87,6 +87,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/add/bank', [\App\Http\Controllers\DashboardController::class,"add_bank"]);
     Route::post('/settings', [\App\Http\Controllers\DashboardController::class,"p_settings"]);
 
+    Route::get('/colors', [\App\Http\Controllers\DashboardController::class,"color"]);
+    Route::post('/add/colors', [\App\Http\Controllers\DashboardController::class, "add_color"]);
+    Route::post('/edit/colors/{id}', [\App\Http\Controllers\DashboardController::class, "edit_color"]);
 
 
     Route::get('/logout', [\App\Http\Controllers\DashboardController::class,"logout"]);

@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorProduct;
+use App\Models\Color;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -432,6 +433,46 @@ class DashboardController extends Controller
     {
 
     }
+
+    public function color()
+    {
+        //get all colors
+        $colors = Color::all();
+        //return the colors to view
+        return view('admin.colors')->with(compact('colors'));
+    }
+
+    public function edit_color(Request $request, $id)
+    {
+        
+        $colors = Color::where([
+            'name' => $request->name
+        ])->get();
+
+        if(count($colors) > 0)
+        {
+            session()->flash("alert-danger","Color already exist");
+            return back();
+        }else{
+            Color::where('id', $id)->update([
+                'name' => $request->name
+            ]);
+            session()->flash("alert-success","Color has been updated ");
+            return back();
+        }
+
+
+    }
+
+    public function add_color(Request $request)
+    {
+        Color::create([
+            'name' => $request->name
+        ]);
+        session()->flash("alert-success","New color added");
+        return back();
+    }
+
 
     public function logout()
     {

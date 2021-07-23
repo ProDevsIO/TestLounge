@@ -47,4 +47,9 @@ class Country extends Model
 	{
 		return $this->hasMany(Booking::class, 'isolation_country_id');
 	}
+
+	public function countryColor()
+    {
+        return $this->hasMany(Country::class);
+    }
 }

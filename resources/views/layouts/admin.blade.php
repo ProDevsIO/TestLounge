@@ -162,6 +162,12 @@
                         </ul>
                     </li>
                     @if(auth()->user()->type == "1")
+                    <!-- <li>
+                      <a href="{{ url('/colors') }}">
+                            <i class=" icon-grid"></i>
+                            <span>Color zones</span>
+                        </a>
+                    </li> -->
                     <li>
                         <a href="{{ url('/vendors') }}">
                             <i class=" icon-grid"></i>
