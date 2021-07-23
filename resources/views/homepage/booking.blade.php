@@ -129,7 +129,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                         <div class="container p-2" >
                                          <div  class="col-md-12 bg-success" id="descript" >
 
-                                            </div>
+                                        </div>
                                         </div>
                                         
                                        
@@ -434,12 +434,12 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                         <!-- <h3 class="pull-left price_li" style="padding: 0px 20px;color: red;margin-top: 30px;"></h3> -->
 
                                         <button type="button" disabled class="sub_btn_u btn btn-primary pull-right"
-                                                style="margin-top: 20px;color: #fff;">Make Payment
+                                             style="display: none;margin-top: 20px">Make Payment
                                         </button>
 
 
                                         <button type="submit" class="sub_btn btn btn-primary pull-right"
-                                                style="display: none;margin-top: 20px">Make Payment
+                                        style="margin-top: 20px">Make Payment
                                         </button>
 
                                         <button class="btn btn-primary pull-right" style="margin-top: 20px"
