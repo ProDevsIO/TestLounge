@@ -19,6 +19,22 @@
         .leftHalf {
             min-height: 300px;
         }
+        .rightHalf{
+            padding: 0 5%;
+        }
+    }
+
+
+    @media (min-width: 768px){
+        .leftHalf {
+            min-height: 300px;
+        }
+        .login_information{
+            margin-top: 30%;
+        }
+        .login_information p{
+            font-size: 30px;
+        }
     }
 </style>
 <!-- <div class="leftHalf" style="background-image: url('/img/travel.jpeg')">
@@ -41,8 +57,12 @@
                 <a href="/" class="btn btn-purple btn-pill float-left">Home page</a>
                 <br>
             </div>
-          <div class="container-fluid text-left"  style="width:80%;fint-family:poppins">
-            <h4>Are you a Travel agent , Company travel manager or frequent flier into the UK ? You can join our partnership network which gives you access to discounts and value added services. <a href="#">Learn More</a></h4>
+          <div class="container-fluid text-left"  style="width:80%; padding: 5px;">
+              <div class="login_information">
+                     <p style="text-align: justify"><b>Are you a Travel agent , Company travel manager or frequent flier into the UK ?
+                You can join our partnership network which gives you access to discounts and value
+                    added services. <a href="#">Learn More</a></b></p>
+              </div>
             
          </div>
         </div>
@@ -58,8 +78,8 @@
                         <img src="/img/logo-dark.png" srcset="/img/logo-dark.png" style="height: 80px;" alt="Uk Travel test">
                     </a>
                 </h2>
-                <h4 class="text-uppercase- text-purple text-left mb-1">Login into your account</h4>
-                <p>Are you trying to make a booking? Kindly click this <a href="/booking">link</a> to book</p>
+                <h4 class="text-uppercase- text-purple mb-1 text-center">Login into your account</h4>
+                <p class="text-center">Are you trying to make a booking? Kindly click this <a href="/booking">link</a> to book</p>
                 @include('errors.showerrors')
                 <form action="{{ url('/login') }}" method="post">
                     @csrf
@@ -69,7 +89,7 @@
                     <div class="form-group mb-4">
                         <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Password">
                     </div>
-                    <p>Don't have an account? <a href="/register/agent"> Register Now</a></p>
+                    <p class="text-center">Don't have an account? <a href="/register/agent"> Register Now</a></p>
                     <div class="form-group clearfix">
                         
                         <button type="submit" class="btn btn-purple btn-pill float-right">LOGIN</button>

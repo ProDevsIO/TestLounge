@@ -7,6 +7,9 @@
     #backbutton{
         margin-bottom:190px;
     }
+    .login_information p{
+        font-weight: bolder;
+    }
     @media screen and (max-width: 800px) {
         #backbutton{
             margin-bottom:90px;
@@ -16,6 +19,18 @@
         #backbutton{
             margin-bottom:70px;
          }
+        .rightHalf{
+            padding: 0 5%;
+        }
+    }
+
+    @media (min-width: 768px){
+        .login_information{
+            margin-top: 30%;
+        }
+        .login_information p{
+            font-size: 30px;
+        }
     }
 </style>
 
@@ -27,8 +42,11 @@
                 <a href="/" class="btn btn-purple btn-pill float-left">Home page</a>
             <br>
             </div>
-            <div class="container-fluid"  style="width:70%">
-                <h2>Are you a travel agent looking to grow your network of travelers?</h2>
+            <div class="container-fluid"  style="width:70%;padding: 5px;">
+                <div class="login_information">
+                    <p style="text-align: justify;"><b>Are you a travel agent looking to grow your network of travelers?</b></p>
+                </div>
+
             </div>
         </div>
     </div>
@@ -44,7 +62,7 @@
                     </a>
                 </h2>
             
-                <p>Register to create an Account</p>
+                <p class="text-center">Register to create an Account</p>
                 @include('errors.showerrors')
                 <form action="{{ url('/register') }}" method="post">
                     @csrf

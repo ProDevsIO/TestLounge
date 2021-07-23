@@ -13,6 +13,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorProduct;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -182,7 +183,7 @@ class HomeController extends Controller
         ];
     
         //redirect to payment page
-        
+
 
         if (!empty($sub_account)) {
             $data['subaccounts'] = $sub_account;
@@ -231,13 +232,12 @@ class HomeController extends Controller
 
                 if ($booking->user_id) {
                     $user = User::where('id', $booking->user_id)->first();
-                    if($user->percentage_split != null){
+                    if ($user->percentage_split != null) {
                         $pecentage = $user->percentage_split;
-                    }else{
+                    } else {
                         $defaultpercent = Setting::where('id', '2')->first();
                         $pecentage = $defaultpercent->value;
                     }
-                   
 
 
                     $cost_booking = $booking_product->price;
@@ -260,8 +260,11 @@ class HomeController extends Controller
                     ]);
                 }
 
-                $code = "PEXPO" . rand(40000, 1000000);
-
+                if ($booking->vendor_id == 1) {
+                    $code = "PEXPO" . rand(40000, 1000000);
+                } else if ($booking->vendor_id == 2) {
+                    $code = $this->sendData($booking);
+                }
 
 
                 try {
@@ -277,7 +280,6 @@ class HomeController extends Controller
                 } catch (\Exception $e) {
 
                 }
-
                 //send the receipt to the vendor
 
                 if ($booking_product) {
@@ -305,6 +307,51 @@ class HomeController extends Controller
         }
 
         return redirect()->to('/booking/failed?b=' . $txRef);
+    }
+
+
+    function sendData($booking)
+    {
+
+        $data_send = ['first_name' => $booking->first_name,
+            'last_name' => $booking->last_name,
+            'dob' => [
+                'day' => Carbon::parse($booking->dob)->day,
+                'month' => Carbon::parse($booking->dob)->month,
+                'year' => Carbon::parse($booking->dob)->year,
+            ],
+            'sex' => $booking->sex,
+            'vaccination_status' => $booking->vaccination_status,
+            'ethnicity' => "Black",
+            "nhs_number" => $booking->nhs_number,
+            "document_id" => $booking->document_id,
+            "uk_post_code" => $booking->post_code,
+            "uk_address" => $booking->address_1,
+            "uk_city" => $booking->home_town,
+            "departure_date" => Carbon::parse($booking->departure_date)->toDateString(),
+            "country_travelled_from" => $booking->travelingFrom->name,
+            "city_travelled_from" => $booking->city_from,
+            "type_of_transport" => "Airline",
+            "coach_number" => $booking->transport_no,
+            "email" => $booking->email,
+            "phone" => $booking->phone_no
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, "https://renwicktech.co.uk/api/v1/sterling/booking");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,
+            http_build_query($data_send));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        $data_response = json_decode($response);
+
+        return $data_response->reference_number;
     }
 
     public function booking_success(Request $request)
@@ -479,9 +526,10 @@ class HomeController extends Controller
     {
         return view('homepage.about');
     }
+
     public function pick()
     {
-       
+
         return view('homepage.medpick');
     }
 
@@ -491,8 +539,8 @@ class HomeController extends Controller
             'status' => 1
         ]);
 
-         //send an email
-         try {
+        //send an email
+        try {
             $message = "Congratulations!,<br>
             Your application to join the Agent network of the UKTravelTests Platform has been approved.<br><br>
             You can now log in to your portal to complete your profile and set up your account. <br><br>
@@ -522,31 +570,30 @@ class HomeController extends Controller
         // dd($id);
 
         $this->validate($request, [
-            'amount' => "required", 
+            'amount' => "required",
         ]);
 
         User::where('id', $id)->update([
             'percentage_split' => $request->amount
         ]);
 
-        $user =  User::where('id', $id)-first();
+        $user = User::where('id', $id) - first();
 
         //check for flutter wave key
-        if($user->flutterwave_key != null)
-        {
+        if ($user->flutterwave_key != null) {
             //flutterwave subaccount update
             //this is where the subaccounf or flutterwave should be added
         }
 
         session()->flash('alert-success', "Percentage has been updated successfully");
 
-         return redirect()->to('/users');
+        return redirect()->to('/users');
 
     }
 
     public function agent_deactivate($id)
     {
-        
+
         User::where('id', $id)->update([
             'status' => 0
         ]);
@@ -591,86 +638,89 @@ class HomeController extends Controller
         }
         return $product;
     }
+
     public function product_descript($product_id)
     {
         $product = Product::where('id', $product_id)->first();
         $description = $product->description;
         return $description;
     }
-    public function product_to_vendors($product_id, $nationality){
+
+    public function product_to_vendors($product_id, $nationality)
+    {
         //if nationality is nigeria
-        if($nationality == 156){
+        if ($nationality == 156) {
             $vendor_products = VendorProduct::where('product_id', $product_id)->get();
             $product = [];
-            foreach($vendor_products as $vproduct ){
-               
+            foreach ($vendor_products as $vproduct) {
+
                 $product[] = [
-                        'name' => $vproduct->vendor->name,
-                        'price' => "N".number_format($vproduct->price,0),
-                        'vendor_id' => $vproduct->vendor_id
+                    'name' => $vproduct->vendor->name,
+                    'price' => "N" . number_format($vproduct->price, 0),
+                    'vendor_id' => $vproduct->vendor_id
                 ];
             }
-             //if nationality is ghana
-        }elseif($nationality == 81){
+            //if nationality is ghana
+        } elseif ($nationality == 81) {
             $vendor_products = VendorProduct::where('product_id', $product_id)->get();
             $product = [];
-            foreach($vendor_products as $vproduct ){
-               
+            foreach ($vendor_products as $vproduct) {
+
                 $product[] = [
-                        'name' => $vproduct->vendor->name,
-                        'price' => "GH". number_format(($vproduct->price * 0.014),0),
-                        'vendor_id' => $vproduct->vendor_id
+                    'name' => $vproduct->vendor->name,
+                    'price' => "GH" . number_format(($vproduct->price * 0.014), 0),
+                    'vendor_id' => $vproduct->vendor_id
                 ];
             }
-        //if nationality is KENYA
-        }elseif($nationality == 110){
+            //if nationality is KENYA
+        } elseif ($nationality == 110) {
             $vendor_products = VendorProduct::where('product_id', $product_id)->get();
             $product = [];
-            foreach($vendor_products as $vproduct ){
-               
+            foreach ($vendor_products as $vproduct) {
+
                 $product[] = [
-                        'name' => $vproduct->vendor->name,
-                        'price' => "KE".number_format(($vproduct->price * 0.26),0),
-                        'vendor_id' => $vproduct->vendor_id
+                    'name' => $vproduct->vendor->name,
+                    'price' => "KE" . number_format(($vproduct->price * 0.26), 0),
+                    'vendor_id' => $vproduct->vendor_id
                 ];
             }
-         //if nationality is Tanzania
-        }elseif($nationality == 210){
+            //if nationality is Tanzania
+        } elseif ($nationality == 210) {
             $vendor_products = VendorProduct::where('product_id', $product_id)->get();
             $product = [];
-            foreach($vendor_products as $vproduct ){
-               
+            foreach ($vendor_products as $vproduct) {
+
                 $product[] = [
-                        'name' => $vproduct->vendor->name,
-                        'price' => "TZS".number_format(($vproduct->price * 5.56),0),
-                        'vendor_id' => $vproduct->vendor_id
+                    'name' => $vproduct->vendor->name,
+                    'price' => "TZS" . number_format(($vproduct->price * 5.56), 0),
+                    'vendor_id' => $vproduct->vendor_id
                 ];
             }
-         //if nationality is south africa
-        }elseif($nationality == 197){
+            //if nationality is south africa
+        } elseif ($nationality == 197) {
             $vendor_products = VendorProduct::where('product_id', $product_id)->get();
             $product = [];
-            foreach($vendor_products as $vproduct ){
-               
+            foreach ($vendor_products as $vproduct) {
+
                 $product[] = [
-                        'name' => $vproduct->vendor->name,
-                        'price' => "ZAR".number_format(($vproduct->price * 28.12),0),
-                        'vendor_id' => $vproduct->vendor_id
+                    'name' => $vproduct->vendor->name,
+                    'price' => "ZAR" . number_format(($vproduct->price * 28.12), 0),
+                    'vendor_id' => $vproduct->vendor_id
                 ];
             }
-         //if nationality is pounds
-        }else{
+            //if nationality is pounds
+        } else {
             $vendor_products = VendorProduct::where('product_id', $product_id)->get();
             $product = [];
-            foreach($vendor_products as $vproduct ){
+            foreach ($vendor_products as $vproduct) {
                 $product[] = [
-                        'name' => $vproduct->vendor->name,
-                        'price' => "£".$vproduct->price_pounds,
-                        'vendor_id' => $vproduct->vendor_id
+                    'name' => $vproduct->vendor->name,
+                    'price' => "£" . $vproduct->price_pounds,
+                    'vendor_id' => $vproduct->vendor_id
                 ];
             }
         }
-        
+
         return $product;
     }
 
@@ -678,10 +728,11 @@ class HomeController extends Controller
     {
         $products = Product::all();
         $vendors = Vendor::all();
-        return view('homepage.pricing')->with(compact('products','vendors'));
+        return view('homepage.pricing')->with(compact('products', 'vendors'));
     }
 
-    public function webhook_receiver(Request $request){
+    public function webhook_receiver(Request $request)
+    {
         Log::info($request->all());
     }
 
