@@ -25,7 +25,10 @@
                 align-items: center;
             }
         }
-
+    #descript{
+        margin-top: 20px;
+        width: 90%;
+    }
     
     </style>
 @endsection
@@ -123,8 +126,8 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                         <br/>
                                         <br>
 
-                                        <div class="container">
-                                         <div  class="col-md-12 bg-success" id="descript">
+                                        <div class="container p-2" >
+                                         <div  class="col-md-12 bg-success" id="descript" >
 
                                             </div>
                                         </div>
