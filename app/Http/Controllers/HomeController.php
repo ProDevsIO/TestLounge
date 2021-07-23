@@ -166,8 +166,27 @@ class HomeController extends Controller
         } catch (\Exception $e) {
     
         }
-           
-        $data = [
+
+
+        if($request->home_country_id == 81 ){
+            // naira to ghanian cedis
+            $convert_amount = $price * 0.014;
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $convert_amount,
+                "currency" => "GHS",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        }elseif($request->home_country_id == 156){
+            $data = [
                 "tx_ref" => $transaction_ref,
                 "amount" => $price,
                 "currency" => "NGN",
@@ -180,7 +199,74 @@ class HomeController extends Controller
                 "customizations" => [
                     "title" => "UK Covid Testing Booking"
                 ]
-        ];
+            ];
+        }elseif($request->home_country_id == 210){
+            // naira to tanzanian cedis
+            $convert_amount = $price * 5.56;
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $convert_amount,
+                "currency" => "TZS",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        }elseif($request->home_country_id == 110){
+            // naira to kenyan shillings
+            $convert_amount = $price * 0.26;
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $convert_amount,
+                "currency" => "KES",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        }elseif($request->home_country_id == 197){
+            // naira to south african rand
+            $convert_amount = $price * 28.12;
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $convert_amount,
+                "currency" => "ZAR",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        }else {
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $price,
+                "currency" => "NGN",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        }
     
         //redirect to payment page
 
