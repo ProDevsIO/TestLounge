@@ -105,10 +105,11 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                                     @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-md-12">
+                                        
+                                        <div class="col-md-12" id="test" style="margin-top:20px;">
                                             <label>Test type <span class="show_required"> *</span></label>
                                             <select class="form-control choices-multiple-remove-button" id="product_id_" onchange="descript()" name="product_id[]"
-                                                 required multiple>
+                                                 required>
                                                 
                                                 <!-- @foreach($products as $product)
                                                     <option value="{{ $product->id }}"
@@ -477,11 +478,27 @@ This code must be inputted in the Uk Passenger Locator Form</p>
            
             var url = '/check/price/'+ vendor_id;
             console.log(url);
-            $("#product_id_")
-                .find('option')
+            $("#test")
+                .find('select')
                 .remove()
                 .end()
-          
+                $("#test")
+                .find('div')
+                .remove()
+                .end()
+                var select = document.createElement("select");
+                    select.id = "product_id_";
+                    select.className = "form-control choices-multiple-remove-button";
+                    select.setAttribute("multiple", "multiple");
+                    select.setAttribute("onchange", "descript()");
+                    select.setAttribute("name", "product_id[]");
+                    var div = document.getElementById("test");
+                    div.appendChild(select);
+
+            //   $("#product_id_")
+            //     .find('option')
+            //     .remove()
+            //     .end()
 
             $.get(url, function (data) {
                 
@@ -496,13 +513,16 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                     select.appendChild(option);
 
                 }
+
                 var multipleCancelButton = new Choices('.choices-multiple-remove-button', {
                 removeItemButton: true,
                 maxItemCount:5,
                 searchResultLimit:5,
                 renderChoiceLimit:5
                 });
+                
             });
+            
 
         }
 

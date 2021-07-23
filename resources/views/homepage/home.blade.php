@@ -292,7 +292,7 @@
                      </td>
                     <td width="25%">
                         <h6> 10 days of Isolation at the UK Isolation address provided in your passenger locator form.
-You can reduce this time to 5days  following a negative PCR result taken on  Day 5 Test (  See above)</h6>
+                            You can reduce this time to 5days  following a negative PCR result taken on  Day 5 Test (  See above)</h6>
                     </td>
                     <td width="25%">
                         <h6>10 days of Isolation in a Government approved Quarantine Hotel</h6>
