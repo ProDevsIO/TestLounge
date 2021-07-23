@@ -312,6 +312,49 @@ class HomeController extends Controller
 
     function sendData($booking)
     {
+        //ethnicity
+        if($booking->ethnicity == 0)
+        {
+            $ethnic = "white";
+        }
+        elseif($booking->ethnicity == 1)
+        {
+            $ethnic = "Mixed/Muti Ethnic group";
+        }
+        elseif($booking->ethnicity == 2)
+        {
+            $ethnic = "Asain/Asian British";
+        }
+        elseif($booking->ethnicity == 3)
+        {
+            $ethnic = "Black";
+        }
+        elseif($booking->ethnicity == 4)
+        {
+            $ethnic = "Others";
+        }
+
+        //transportation means
+        if($booking->method_of_transportation == 1)
+        {
+            $transport = "Airline";
+        }
+        elseif($booking->method_of_transportation == 2)
+        {
+            $transport = "Vessel";
+        }
+        elseif($booking->method_of_transportation == 3)
+        {
+            $transport = "Train";
+        }
+        elseif($booking->method_of_transportation == 4)
+        {
+            $transport = "Road Vehicle";
+        }
+        elseif($booking->method_of_transportation == 5)
+        {
+            $transport = "Others";
+        }
 
         $data_send = ['first_name' => $booking->first_name,
             'last_name' => $booking->last_name,
@@ -322,7 +365,7 @@ class HomeController extends Controller
             ],
             'sex' => $booking->sex,
             'vaccination_status' => $booking->vaccination_status,
-            'ethnicity' => "Black",
+            'ethnicity' => $ethnic,
             "nhs_number" => $booking->nhs_number,
             "document_id" => $booking->document_id,
             "uk_post_code" => $booking->post_code,
@@ -331,7 +374,7 @@ class HomeController extends Controller
             "departure_date" => Carbon::parse($booking->departure_date)->toDateString(),
             "country_travelled_from" => $booking->travelingFrom->name,
             "city_travelled_from" => $booking->city_from,
-            "type_of_transport" => "Airline",
+            "type_of_transport" => $transport,
             "coach_number" => $booking->transport_no,
             "email" => $booking->email,
             "phone" => $booking->phone_no
