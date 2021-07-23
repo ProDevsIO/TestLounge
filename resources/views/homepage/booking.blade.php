@@ -42,7 +42,7 @@
                         <div class="card-body">
                             <h1>Book your test
                             </h1>
-                            <p style="margin-bottom: 25px">To be allowed to board a flight to the UK, Your airline will require a negative PCR Test within 72 hours of your travel date , evidence of booking your UK covid tests and  completion of your Passenger Locator Form
+                            <p style="margin-bottom: 25px">To be allowed to board a flight to the UK, Your airline will require a negative PCR Test within 72 hours of your travel date , evidence of booking your UK covid tests and  completion of your Passenger Locator Form.
 
 Following your booking , you will immediately recieve a code on screen and via the email provided . 
 This code must be inputted in the Uk Passenger Locator Form</p>
@@ -469,14 +469,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
             integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        $(document).ready(function(){
-            var multipleCancelButton = new Choices('.choices-multiple-remove-button', {
-            removeItemButton: true,
-            maxItemCount:5,
-            searchResultLimit:5,
-            renderChoiceLimit:5
-            });
-        });
+       
               
         function checkPrice() {
             
