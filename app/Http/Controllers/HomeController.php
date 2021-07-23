@@ -123,61 +123,52 @@ class HomeController extends Controller
             }
         }
 
-        unset($request_data['ref']);
+         unset($request_data['ref']);
 
-        $request_data['transaction_ref'] = $transaction_ref;
+         $request_data['transaction_ref'] = $transaction_ref;
+         
+    
+         $booking = Booking::create($request_data);
 
-        $booking = Booking::create($request_data);
-        $vendor_products = VendorProduct::where('vendor_id', $request->vendor_id)->where('product_id', $request->product_id)->first();
+         $price = 0;
+       
+        foreach($request->product_id as $r_product){
+           
+             $vendor_products = VendorProduct::where('vendor_id', $request->vendor_id)->where('product_id', $r_product)->first();
+             
+             $booking_product = BookingProduct::create([
+                 'booking_id' => $booking->id,
+                 'product_id' => $r_product,
+                 'vendor_id' => $request->vendor_id,
+                 'vendor_product_id' => $vendor_products->id,
+                 'price' => $vendor_products->price
+             ]);
+            
+             $price = $price + $vendor_products->price;        
+        }
 
-        $booking_product = BookingProduct::create([
-            'booking_id' => $booking->id,
-            'product_id' => $request->product_id,
-            'vendor_id' => $request->vendor_id,
-            'vendor_product_id' => $vendor_products->id,
-            'price' => $vendor_products->price
-        ]);
         //send an email
         try {
-            $message = "
-            Hi " . $request->first_name . ",
-            
-            Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
-            For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktraveltest.prodevs.io/#popular' >Here</a> <br>
-            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "make/payment/" . $transaction_ref . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
-                   Make Payment
-                  </a>
-                  
-                  <br/><br/>
-                  Thank you.
-            ";
-            Mail::to($booking->email)->send(new BookingCreation($message));
+                $message = "
+                Hi " . $request->first_name . ",
+                
+                Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
+                For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktraveltest.prodevs.io/#popular' >Here</a> <br>
+                <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "make/payment/" . $transaction_ref . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                       Make Payment
+                      </a>
+                      
+                      <br/><br/>
+                      Thank you.
+                ";
+                Mail::to($booking->email)->send(new BookingCreation($message));
         } catch (\Exception $e) {
-
+    
         }
-
-        //check by country
-        if($request->home_country_id == 81 ){
-            // naira to ghanian cedis 
-            $convert_amount = $booking_product->price * 0.014;
-            $data = [
+           
+        $data = [
                 "tx_ref" => $transaction_ref,
-                "amount" => $convert_amount,
-                "currency" => "GHS",
-                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
-                "customer" => [
-                    'email' => $booking->email,
-                    'phonenumber' => $booking->phone_no,
-                    'name' => $booking->first_name . " " . $booking->last_name
-                ],
-                "customizations" => [
-                    "title" => "UK Covid Testing Booking"
-                ]
-            ];
-        }elseif($request->home_country_id == 156){
-            $data = [
-                "tx_ref" => $transaction_ref,
-                "amount" => $booking_product->price,
+                "amount" => $price,
                 "currency" => "NGN",
                 "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
                 "customer" => [
@@ -188,74 +179,8 @@ class HomeController extends Controller
                 "customizations" => [
                     "title" => "UK Covid Testing Booking"
                 ]
-            ];
-        }elseif($request->home_country_id == 210){
-            // naira to tanzanian cedis 
-            $convert_amount = $booking_product->price * 5.56;
-            $data = [
-                "tx_ref" => $transaction_ref,
-                "amount" => $convert_amount,
-                "currency" => "TZS",
-                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
-                "customer" => [
-                    'email' => $booking->email,
-                    'phonenumber' => $booking->phone_no,
-                    'name' => $booking->first_name . " " . $booking->last_name
-                ],
-                "customizations" => [
-                    "title" => "UK Covid Testing Booking"
-                ]
-            ];
-        }elseif($request->home_country_id == 110){
-            // naira to kenyan shillings
-            $convert_amount = $booking_product->price * 0.26;
-            $data = [
-                "tx_ref" => $transaction_ref,
-                "amount" => $convert_amount,
-                "currency" => "KES",
-                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
-                "customer" => [
-                    'email' => $booking->email,
-                    'phonenumber' => $booking->phone_no,
-                    'name' => $booking->first_name . " " . $booking->last_name
-                ],
-                "customizations" => [
-                    "title" => "UK Covid Testing Booking"
-                ]
-            ];
-        }elseif($request->home_country_id == 197){
-            // naira to south african rand
-            $convert_amount = $booking_product->price * 28.12;
-            $data = [
-                "tx_ref" => $transaction_ref,
-                "amount" => $convert_amount,
-                "currency" => "ZAR",
-                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
-                "customer" => [
-                    'email' => $booking->email,
-                    'phonenumber' => $booking->phone_no,
-                    'name' => $booking->first_name . " " . $booking->last_name
-                ],
-                "customizations" => [
-                    "title" => "UK Covid Testing Booking"
-                ]
-            ];
-        }else{
-            $data = [
-                "tx_ref" => $transaction_ref,
-                "amount" => $booking_product->price,
-                "currency" => "NGN",
-                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
-                "customer" => [
-                    'email' => $booking->email,
-                    'phonenumber' => $booking->phone_no,
-                    'name' => $booking->first_name . " " . $booking->last_name
-                ],
-                "customizations" => [
-                    "title" => "UK Covid Testing Booking"
-                ]
-            ];
-        }
+        ];
+    
         //redirect to payment page
         
 
@@ -652,11 +577,19 @@ class HomeController extends Controller
         return view('homepage.products')->with(compact('products'));
     }
 
-    public function check_price($vendor_id, $product_id)
+    public function check_price($vendor_id)
     {
-        $vendor_product = VendorProduct::where('vendor_id', $vendor_id)->where('product_id', $product_id)->first();
-
-        return $vendor_product;
+        $vendor_products = VendorProduct::where('vendor_id', $vendor_id)->get();
+        $product =[];
+        foreach($vendor_products as $vproduct ){
+               
+            $product[] = [
+                    'name' => $vproduct->product->name,
+                    'price' => "£".number_format($vproduct->price_pounds, 0),
+                    'product_id' => $vproduct->product_id
+            ];
+        }
+        return $product;
     }
     public function product_descript($product_id)
     {

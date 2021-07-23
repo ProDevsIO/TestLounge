@@ -14,6 +14,11 @@
             color: red;
         }
 
+        .choices__input {
+            width: 100%;
+            margin-bottom: 0px;
+        }
+
         @media screen and (max-width: 800px) {
             .bs-stepper-header {
                 display: block;
@@ -21,7 +26,7 @@
             }
         }
 
-        }
+    
     </style>
 @endsection
 @section('content')
@@ -90,26 +95,40 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                     <!-- your steps content here -->
                                     <div id="products-part" class="content bs-stepper-pane" role="tabpanel"
                                          aria-labelledby="logins-part-trigger">
-
+                                         <div class="col-md-12" style="margin-top:25px;">
+                                            <label>Select Vendor <span class="show_required"> *</span></label>
+                                            <select class="form-control" id="vendor_id" name="vendor_id"
+                                                    onchange="checkPrice()" required>
+                                                <option value="">Make a selection</option>
+                                                    @foreach($vendors as $vendor)
+                                                        <option value="{{$vendor->id}}">{{$vendor->name}}</option>
+                                                    @endforeach
+                                            </select>
+                                        </div>
                                         <div class="col-md-12">
                                             <label>Test type <span class="show_required"> *</span></label>
-                                            <select class="form-control" id="product_id_"onchange="descript()" name="product_id"
-                                                    onchange="run()" required>
-                                                <option value="">Make a selection</option>
-                                                @foreach($products as $product)
+                                            <select class="form-control choices-multiple-remove-button" id="product_id_" onchange="descript()" name="product_id[]"
+                                                 required multiple>
+                                                
+                                                <!-- @foreach($products as $product)
                                                     <option value="{{ $product->id }}"
                                                             @if(isset($_GET['product_id']) && $_GET['product_id'] == $product->id)
                                                             selected
                                                             @endif>{{ $product->name }}</option>
-                                                @endforeach
+                                                @endforeach -->
                                             </select>
+                                            <!-- <select name="" class="form-control" multiple="multiple" id="pre"></select> -->
                                         </div>
                                         <br/>
                                         <br>
-                                        <div  class="col-md-12 bg-success" id="descript">
 
+                                        <div class="container">
+                                         <div  class="col-md-12 bg-success" id="descript">
+
+                                            </div>
                                         </div>
-
+                                        
+                                       
                                         <button class="btn btn-primary pull-right" style="margin-top: 30px"
                                                 onclick="stepperForm.next()">Next
                                         </button>
@@ -182,14 +201,6 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                             </select>
                                         </div>
                                         <div class="col-md-6" style="margin-top: 20px">
-                                            <label>Contact Phone Number(In country of origin): <span
-                                                        class="show_required"> *</span></label><br/>
-
-                                            <input style="width: 100%;" class="form-control" id="phone" type="text"
-                                                   name="phone_no"
-                                                   value="{{ old('phone_no') }}" required/>
-                                        </div>
-                                        <div class="col-md-6" style="margin-top: 20px">
                                             <label>Contact Phone Number(In the Uk): <span
                                                         class="show_required"> *</span></label><br/>
 
@@ -197,14 +208,20 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                                    name="uk_phone_no"
                                                    value="{{ old('uk_phone_no') }}" required/>
                                         </div>
-
-
                                         <div class="col-md-6" style="margin-top: 20px">
+                                            <label>Contact Phone Number(In country of origin): <span
+                                                        class="show_required"> *</span></label><br/>
+
+                                            <input style="width: 100%;" class="form-control" id="phone2" type="text"
+                                                   name="phone_no"
+                                                   value="{{ old('phone_no') }}" required/>
+                                        </div>
+
+                                        <div class="col-md-12" style="margin-top: 20px">
                                             <label>Contact Email: <span class="show_required"> *</span></label>
                                             <input class="form-control" type="text" name="email"
                                                    value="{{ old('email') }}" required/>
                                         </div>
-
                                         <button class="btn btn-primary pull-right" onclick="stepperForm.next()">Next
                                         </button>
                                         <button class="btn btn-primary pull-right"
@@ -407,14 +424,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                             <input type="hidden" name="ref" value="{{ $_GET['ref'] }}">
                                         @endif
 
-                                        <div class="col-md-12" style="margin-top:25px;">
-                                            <label>Select Vendor <span class="show_required"> *</span></label>
-                                            <select class="form-control" id="vendor_id" name="vendor_id"
-                                                    onchange="checkPrice()" required>
-                                                <option value="">Make a selection</option>
-
-                                            </select>
-                                        </div>
+                                        
                                         <br/>
 
                                         <!-- <h3 class="pull-left price_li" style="padding: 0px 20px;color: red;margin-top: 30px;"></h3> -->
@@ -459,16 +469,47 @@ This code must be inputted in the Uk Passenger Locator Form</p>
             integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-
+        $(document).ready(function(){
+            var multipleCancelButton = new Choices('.choices-multiple-remove-button', {
+            removeItemButton: true,
+            maxItemCount:5,
+            searchResultLimit:5,
+            renderChoiceLimit:5
+            });
+        });
+              
         function checkPrice() {
+            
             var vendor_id = $("#vendor_id").val();
-            // var product_id = $("#product_id_").val();
-            // var url = '/check/price/'+ vendor_id + "/" + product_id;
-            // console.log(url);
-            if ((vendor_id != 0 || vendor_id != undefined) && vendor_id) {
-                $(".sub_btn").toggle();
-                $(".sub_btn_u").toggle();
-            }
+           
+            var url = '/check/price/'+ vendor_id;
+            console.log(url);
+            $("#product_id_")
+                .find('option')
+                .remove()
+                .end()
+          
+
+            $.get(url, function (data) {
+                
+                console.log(data);
+                var arrayLength = data.length;
+                for (var i = 0; i < arrayLength; i++) {
+
+                    var option = document.createElement("option");
+                    option.text = data[i].name + " (" + data[i].price + ")";
+                    option.value = data[i].product_id;
+                    var select = document.getElementById("product_id_");
+                    select.appendChild(option);
+
+                }
+                var multipleCancelButton = new Choices('.choices-multiple-remove-button', {
+                removeItemButton: true,
+                maxItemCount:5,
+                searchResultLimit:5,
+                renderChoiceLimit:5
+                });
+            });
 
         }
 
@@ -477,6 +518,13 @@ This code must be inputted in the Uk Passenger Locator Form</p>
             initialCountry: "gb",
             utilsScript: "/js/phone_lib/js/utils.js",
         });
+
+        var input2 = document.querySelector("#phone2");
+        window.intlTelInput(input2, {
+            initialCountry: "gb",
+            utilsScript: "/js/phone_lib/js/utils.js",
+        });
+
         $(document).ready(function () {
             var stepper = new Stepper($('.bs-stepper')[0])
         })
@@ -550,37 +598,46 @@ This code must be inputted in the Uk Passenger Locator Form</p>
         });
     </script>
     <script>
-        function run() {
-            var product_id = document.getElementById("product_id_").value;
-            var nationality = document.getElementById("travel_from").value;
+        $(function() {
+            $('.selectpicker').selectpicker({
+            includeSelectAllOption: true
+           });
+        });
+       
 
-            var url = '/product/vendors/' + product_id + '/' + nationality;
+        // function run() {
+        //     var product_id = document.getElementById("product_id_").value;
+        //     var nationality = document.getElementById("travel_from").value;
+        //     console.log(product_id);
 
-            $("#vendor_id")
-                .find('option')
-                .remove()
-                .end()
-                .append('<option value="">Make a selection</option>');
+        //     var url = '/product/vendors/' + product_id + '/' + nationality;
 
-            $.get(url, function (data) {
-                console.log(data);
-                var arrayLength = data.length;
-                for (var i = 0; i < arrayLength; i++) {
+        //     $("#vendor_id")
+        //         .find('option')
+        //         .remove()
+        //         .end()
+        //         .append('<option value="">Make a selection</option>');
 
-                    var option = document.createElement("option");
-                    option.text = data[i].name + " (" + data[i].price + ")";
-                    option.value = data[i].vendor_id;
-                    var select = document.getElementById("vendor_id");
-                    select.appendChild(option);
+        //     $.get(url, function (data) {
+        //         console.log(data);
+        //         var arrayLength = data.length;
+        //         for (var i = 0; i < arrayLength; i++) {
 
-                }
+        //             var option = document.createElement("option");
+        //             option.text = data[i].name + " (" + data[i].price + ")";
+        //             option.value = data[i].vendor_id;
+        //             var select = document.getElementById("vendor_id");
+        //             select.appendChild(option);
 
-            });
+        //         }
 
-        }
+        //     });
+
+        // }
 
 function descript(){
-    var product_id = document.getElementById("product_id_").value;
+    var product_id = $("#product_id_").val();
+    console.log(product_id);
     var url = '/product/descript/' + product_id;
         $("#descript")
                 .find('p')

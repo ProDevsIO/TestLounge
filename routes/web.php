@@ -33,7 +33,7 @@ Route::get('/pick', [\App\Http\Controllers\HomeController::class,"pick"])->name(
 Route::get('/pricing', [\App\Http\Controllers\HomeController::class,"pricing"])->name('pricing');
 Route::get('/about', [\App\Http\Controllers\HomeController::class,"about"])->name('about');
 Route::get('/covid/testing', [\App\Http\Controllers\HomeController::class,"products"])->name('products_covid');
-Route::get('/check/price/{vendor_id}/{product_id}', [\App\Http\Controllers\HomeController::class,"check_price"])->name('check_price');
+Route::get('/check/price/{vendor_id}', [\App\Http\Controllers\HomeController::class,"check_price"])->name('check_price');
 Route::get('/product/descript/{product_id}', [\App\Http\Controllers\HomeController::class,"product_descript"]);
 Route::get('/product/vendors/{product_id}/{nationality}',  [\App\Http\Controllers\HomeController::class,"product_to_vendors"]);
 

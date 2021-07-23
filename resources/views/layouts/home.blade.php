@@ -19,6 +19,8 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="/css/theme-blues.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="/css/custom.css" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <!--[if gte IE 9]>
     <link rel="stylesheet" type="text/css" href="/css/ie9.css" />
     <![endif]-->
