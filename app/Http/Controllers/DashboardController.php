@@ -285,7 +285,7 @@ class DashboardController extends Controller
         if (auth()->user()->type == 0) {
             abort(403);
         }
-        $users = User::get();
+        $users = User::order('created_at','desc')->get();
         $setting = Setting::where('id', 2)->first();
 
         return view('admin.users')->with(compact('users', 'setting'));
