@@ -96,7 +96,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
 
                             </div>
                             <div class="bs-stepper-content" style="margin-top: 20px">
-                                <form class="needs-validation" method="post" action="/post/booking">
+                                <form class="needs-validation" method="post" action="/post/booking" autocomplete="off">
                                     <!-- your steps content here -->
                                     <div id="products-part" class="content bs-stepper-pane" role="tabpanel"
                                          aria-labelledby="logins-part-trigger">
