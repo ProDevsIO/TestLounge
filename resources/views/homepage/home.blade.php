@@ -349,7 +349,7 @@
                     <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
                         <span class="sub alt-font">popular question</span>
                         <h1><strong>GUIDELINES FOR UK TRAVEL TESTS</strong></h1>
-                        <ul style="text-align: justify; list-style-type: square; font-size:18px;">
+                        <ul style="text-align: justify; list-style-type: square; font-size:18px;padding: 0px 20px;">
                             <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is <b>MANDATORY</b> for entry into the UK. You can book your test <a href="/pick" class="">Here</a> </li>
                            <br/> <li> Book and Pay for your UK travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>. Evidence of booking and payment is <b>MANDATORY</b> before you can board a flight to the UK</li>
                             <br/><li>Following Payment, you will immediately receive your Passenger locator Number and receipt of payment.</li>
