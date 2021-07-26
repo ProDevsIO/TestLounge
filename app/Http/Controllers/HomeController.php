@@ -696,7 +696,7 @@ class HomeController extends Controller
             'percentage_split' => $request->amount
         ]);
 
-        $user = User::where('id', $id) - first();
+        $user = User::where('id', $id)->first();
 
         //check for flutter wave key
         if ($user->flutterwave_key != null) {
