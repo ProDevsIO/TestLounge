@@ -134,7 +134,7 @@
 
                     <ul class="social-icons text-right">
                         <li>
-                            <a target="_blank" href="https://twitter.com/home?lang=en">
+                            <a target="_blank" href="https://twitter.com/tests_uk">
                                 <i class="icon social_twitter"></i>
                             </a>
                         </li>
