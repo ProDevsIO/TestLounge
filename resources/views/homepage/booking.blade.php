@@ -31,6 +31,8 @@
     }
     
     </style>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('content')
 
@@ -98,30 +100,27 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                     <!-- your steps content here -->
                                     <div id="products-part" class="content bs-stepper-pane" role="tabpanel"
                                          aria-labelledby="logins-part-trigger">
-                                         <div class="col-md-12" style="margin-top:25px;">
-                                            <label>Select Vendor <span class="show_required"> *</span></label>
-                                            <select class="form-control" id="vendor_id" name="vendor_id"
-                                                    onchange="checkPrice()" required>
+
+                                        <div class="col-md-12">
+                                            <label>Country travelled from: <span
+                                                        class="show_required"> *</span></label>
+                                            <select class="form-control select2" name="country_travelling_from_id"
+                                                    id="travel_from" onchange="run()" required>
                                                 <option value="">Make a selection</option>
-                                                    @foreach($vendors as $vendor)
-                                                        <option value="{{$vendor->id}}">{{$vendor->name}}</option>
-                                                    @endforeach
+                                                @foreach($countries as $country)
+                                                    <option value="{{ $country->id }}"
+                                                            @if(old('country_travelling_from_id') == $country->id)
+                                                            selected
+                                                            @endif>{{ $country->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         
                                         <div class="col-md-12" id="test" style="margin-top:20px;">
                                             <label>Test type <span class="show_required"> *</span></label>
-                                            <select class="form-control choices-multiple-remove-button" id="product_id_" onchange="descript()" name="product_id[]"
+                                            <select class="form-control choices-multiple-remove-button" id="product_id_" name="product_id[]"
                                                  required>
-                                                
-                                                <!-- @foreach($products as $product)
-                                                    <option value="{{ $product->id }}"
-                                                            @if(isset($_GET['product_id']) && $_GET['product_id'] == $product->id)
-                                                            selected
-                                                            @endif>{{ $product->name }}</option>
-                                                @endforeach -->
                                             </select>
-                                            <!-- <select name="" class="form-control" multiple="multiple" id="pre"></select> -->
                                         </div>
                                         <br/>
                                         <br>
@@ -267,7 +266,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                         </div>
                                         <div class="col-md-12">
                                             <label>Home Country: <span class="show_required"> *</span></label>
-                                            <select class="form-control" name="home_country_id" id="nationality"
+                                            <select style="width: 100%;" class="form-control select2" name="home_country_id" id="nationality"
                                                     required>
                                                 <option value="">Make a selection</option>
                                                 @foreach($countries as $country)
@@ -314,7 +313,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                         </div>
                                         <div class="col-md-12">
                                             <label>Isolation Country: <span class="show_required"> *</span></label>
-                                            <select class="form-control" name="isolation_country_id" required readonly>
+                                            <select style="width: 100%;" class="form-control select2" name="isolation_country_id" required readonly>
                                                 <option value="">Make a selection</option>
                                               
                                                     <option value="{{ $country->id }}" selected
@@ -341,7 +340,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                             <input class="form-control" type="text" name="document_id"
                                                    value="{{ old('document_id') }}" required/>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label>Arrival date in the UK: <span class="show_required"> *</span></label>
                                             <input class="form-control date_picker1" type="text"
                                                    placeholder="Arrival Date in Uk"
@@ -349,20 +348,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                                    value="{{ old('arrival_date') }}" required>
                                         </div>
 
-                                        <div class="col-md-6">
-                                            <label>Country travelled from: <span
-                                                        class="show_required"> *</span></label>
-                                            <select class="form-control" name="country_travelling_from_id"
-                                                    id="travel_from" onchange="run()" required>
-                                                <option value="">Make a selection</option>
-                                                @foreach($countries as $country)
-                                                    <option value="{{ $country->id }}"
-                                                            @if(old('country_travelling_from_id') == $country->id)
-                                                            selected
-                                                            @endif>{{ $country->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+
 
                                         <div class="col-md-12" style="margin-top: 20px">
                                             <label>City you are departing from: <span
@@ -465,6 +451,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
 @endsection
 
 @section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
             integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
@@ -472,8 +459,9 @@ This code must be inputted in the Uk Passenger Locator Form</p>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"
             integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
-       
+
               
         function checkPrice() {
             
@@ -612,44 +600,66 @@ This code must be inputted in the Uk Passenger Locator Form</p>
             });
            
         });
+
+        $(document).ready(function() {
+            $('.select2').select2({
+                closeOnSelect: true
+            });
+        });
+
+
+        function run() {
+            var nationality = document.getElementById("travel_from").value;
+
+            var url = '/check/'+ nationality + '/price';
+
+            $("#test")
+                .find('select')
+                .remove()
+                .end()
+            $("#test")
+                .find('div')
+                .remove()
+                .end()
+
+            var select = document.createElement("select");
+            select.id = "product_id_";
+            select.className = "form-control choices-multiple-remove-button";
+            select.setAttribute("multiple", "multiple");
+            select.setAttribute("onchange", "descript()");
+            select.setAttribute("name", "product_id[]");
+            var div = document.getElementById("test");
+            div.appendChild(select);
+
+
+            $.get(url, function (data) {
+                console.log(data);
+                var arrayLength = data.length;
+                for (var i = 0; i < arrayLength; i++) {
+
+                    var option = document.createElement("option");
+                    option.text = data[i].name + " (" + data[i].price + ")";
+                    option.value = data[i].product_id;
+                    var select = document.getElementById("product_id_");
+                    select.appendChild(option);
+
+                }
+
+                var multipleCancelButton = new Choices('.choices-multiple-remove-button', {
+                    removeItemButton: true,
+                    maxItemCount:5,
+                    searchResultLimit:5,
+                    renderChoiceLimit:5
+                });
+
+            });
+
+
+        }
     </script>
     <script>
-        $(function() {
-            $('.selectpicker').selectpicker({
-            includeSelectAllOption: true
-           });
-        });
+
        
-
-        // function run() {
-        //     var product_id = document.getElementById("product_id_").value;
-        //     var nationality = document.getElementById("travel_from").value;
-        //     console.log(product_id);
-
-        //     var url = '/product/vendors/' + product_id + '/' + nationality;
-
-        //     $("#vendor_id")
-        //         .find('option')
-        //         .remove()
-        //         .end()
-        //         .append('<option value="">Make a selection</option>');
-
-        //     $.get(url, function (data) {
-        //         console.log(data);
-        //         var arrayLength = data.length;
-        //         for (var i = 0; i < arrayLength; i++) {
-
-        //             var option = document.createElement("option");
-        //             option.text = data[i].name + " (" + data[i].price + ")";
-        //             option.value = data[i].vendor_id;
-        //             var select = document.getElementById("vendor_id");
-        //             select.appendChild(option);
-
-        //         }
-
-        //     });
-
-        // }
 
 function descript(){
     var product_id = $("#product_id_").val();
@@ -661,12 +671,16 @@ function descript(){
                 .end();
         $.get(url, function (data) {
                 console.log(data);
-                  
+
                     var holder = document.getElementById("descript");
                     var newNode = document.createElement('p');
                     newNode.innerHTML = data;
                     holder.appendChild(newNode);
+                    $("#descript p").addClass('alert alert-success')
             });
         }
+
+
     </script>
+
 @endsection

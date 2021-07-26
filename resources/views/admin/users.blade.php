@@ -47,7 +47,7 @@
                                         <th scope="col">Email</th>
                                         <th scope="col">Pending Booking</th>
                                         <th scope="col">Completed Bookings</th>
-                                        <th scope="col">Vendor</th>
+                                        <th scope="col">User Type</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Percentage</th>
                                         <th scope="col">Action</th>
@@ -63,50 +63,62 @@
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->pbookings->count() }}</td>
                                             <td>{{ $user->cbookings->count() }}</td>
-                                            <td>{{ ($user->vendor) ? $user->vendor->name : "Not a Vendor" }}</td>
+                                            <td>@if($user->type == 1)
+                                                    Admin
+                                                @elseif($user->type == 2)
+                                                    Agent
+                                                @else
+                                                    Vendor
+                                                @endif
+
+                                            </td>
+
+
                                             @if($user->status == 1)
-                                                 <td> <span class="badge badge-success">Active</span></td>
+                                                <td><span class="badge badge-success">Active</span></td>
                                             @elseif($user->status == 0)
-                                                 <td> <span class="badge badge-warning">Not Active</span></td>
+                                                <td><span class="badge badge-warning">Not Active</span></td>
                                             @endif
                                             @if($user->percentage_split == null)
-                                            <td>{{$setting->value}}%</td>
+                                                <td>{{$setting->value}}%</td>
                                             @else
-                                            <td>{{$user->percentage_split}}%</td>
+                                                <td>{{$user->percentage_split}}%</td>
                                             @endif
                                             <td>
                                                 <div class="btn-group" role="group">
-                                                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                            class="btn btn-secondary dropdown-toggle"
+                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
                                                         Action
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <a class="dropdown-item" href="{{ url('complete/booking?user_id='.$user->id) }}">View Bookings</a>
-                                                        @if($user->type == 3)
-                                                            <a href="{{ url('complete/booking?vendor_id='.$user->id) }}"
-                                                               class="dropdown-item">Make Admin</a>
-                                                        @else
-                                                            @if(auth()->user()->id != $user->id)
-                                                            <a href="javascript:;" onclick="makeAdmin('{{ $user->id }}')"
-                                                               class="dropdown-item">Make Agent</a>
-                                                                @endif
-                                                        @endif
-                                                        
+                                                        <a class="dropdown-item"
+                                                           href="{{ url('complete/booking?user_id='.$user->id) }}">View
+                                                            Bookings</a>
                                                         @if($user->type == 2)
-                                                             <a href="{{ url('/agent/percent/' .$user->id) }}" class="dropdown-item">Percentage</a>
-                        
+                                                            <a href="javascript:;" onclick="makeAdmin('{{ $user->id }}')"
+                                                               class="dropdown-item">Make Admin</a>
+                                                        @endif
+
+                                                        @if($user->type == 2)
+                                                            <a href="{{ url('/agent/percent/' .$user->id) }}"
+                                                               class="dropdown-item">Change Percentage</a>
+
                                                             @if($user->status == 0)
-                                                            
-                                                                <a href="{{ url('/agent/activate/' .$user->id) }}" class="dropdown-item">Activate</a>
-                        
+
+                                                                <a href="javascript:;" onclick="confirmation('{{ url('/agent/activate/' .$user->id) }}')"
+                                                                   class="dropdown-item">Activate</a>
+
 
                                                             @elseif($user->status == 1)
-                                                           
-                                                                <a href="{{ url('/agent/deactivate/'.$user->id) }}" class="dropdown-item">Deactivate</a>
+
+                                                                <a href="javascript:;" onclick="confirmation('{{ url('/agent/deactivate/'.$user->id) }}')"
+                                                                   class="dropdown-item">Deactivate</a>
                                                             @endif
                                                         @endif
                                                     </div>
                                                 </div>
-
 
 
                                             </td>
@@ -139,18 +151,27 @@
             });
         });
 
-        function makeAdmin(id){
+        function makeAdmin(id) {
             var d = confirm("Are you sure, you want to make this user an Admin?");
 
-            if(d){
+            if (d) {
                 window.location = "/admin/make/".id;
             }
         }
-        function makeAgent(id){
+
+        function makeAgent(id) {
             var d = confirm("Are you sure, you want to make this user an Agent?");
 
-            if(d){
+            if (d) {
                 window.location = "/agent/make/".id;
+            }
+        }
+
+        function confirmation(url){
+            var d = confirm("Are you sure, you want to perform this action?");
+
+            if (d) {
+                window.location = url;
             }
         }
     </script>

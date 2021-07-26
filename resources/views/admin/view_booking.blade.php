@@ -94,6 +94,17 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <div class="row f12 mt-3">
+                                <div class="col-6">Products</div>
+                                <div class="col-6">
+                                    <ul>
+                                    @foreach($booking_products as $booking_product)
+<li>{{ $booking_product->product->name }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

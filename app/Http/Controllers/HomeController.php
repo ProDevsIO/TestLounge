@@ -61,7 +61,7 @@ class HomeController extends Controller
 
             //To restrict access as per admin 
             if (auth()->user()->status == 0) {
-                session()->flash('alert-danger', "Your account is not active.");
+                session()->flash('alert-danger', "Your profile is currently under review and will be activate shortly by our Admin. To Facilitate this process, Kindly contact INFO@UKTRAVELTESTS.CO.UK");
                 auth()->logout();
                 return back();
             }
@@ -104,6 +104,14 @@ class HomeController extends Controller
             'transport_no' => 'required',
             'consent' => 'required'
         ]);
+
+        $request->vendor_id = 3;
+
+        if (empty($request->product_id)) {
+            session()->flash('alert-danger', "Kindly select a product");
+            return back()->withInput();
+        }
+
         $sub_account = [];
 
         $request_data = $request->all();
@@ -124,33 +132,34 @@ class HomeController extends Controller
             }
         }
 
-         unset($request_data['ref']);
+        unset($request_data['ref']);
 
-         $request_data['transaction_ref'] = $transaction_ref;
-         
-    
-         $booking = Booking::create($request_data);
+        $request_data['transaction_ref'] = $transaction_ref;
 
-         $price = 0;
-       
-        foreach($request->product_id as $r_product){
-           
-             $vendor_products = VendorProduct::where('vendor_id', $request->vendor_id)->where('product_id', $r_product)->first();
-             
-             $booking_product = BookingProduct::create([
-                 'booking_id' => $booking->id,
-                 'product_id' => $r_product,
-                 'vendor_id' => $request->vendor_id,
-                 'vendor_product_id' => $vendor_products->id,
-                 'price' => $vendor_products->price
-             ]);
-            
-             $price = $price + $vendor_products->price;        
+
+        $booking = Booking::create($request_data);
+
+        $price = 0;
+
+        foreach ($request->product_id as $r_product) {
+
+            $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $r_product)->first();
+
+            BookingProduct::create([
+                'booking_id' => $booking->id,
+                'product_id' => $r_product,
+                'vendor_id' => $request->vendor_id,
+                'vendor_product_id' => $vendor_products->id,
+                'price' => $vendor_products->price
+            ]);
+
+            $price = $price + $vendor_products->price;
         }
+
 
         //send an email
         try {
-                $message = "
+            $message = "
                 Hi " . $request->first_name . ",
                 
                 Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
@@ -162,13 +171,13 @@ class HomeController extends Controller
                       <br/><br/>
                       Thank you.
                 ";
-                Mail::to($booking->email)->send(new BookingCreation($message));
+            Mail::to($booking->email)->send(new BookingCreation($message));
         } catch (\Exception $e) {
-    
+
         }
 
 
-        if($request->home_country_id == 81 ){
+        if ($request->home_country_id == 81) {
             // naira to ghanian cedis
             $convert_amount = $price * 0.014;
             $data = [
@@ -185,7 +194,7 @@ class HomeController extends Controller
                     "title" => "UK Covid Testing Booking"
                 ]
             ];
-        }elseif($request->home_country_id == 156){
+        } elseif ($request->home_country_id == 156) {
             $data = [
                 "tx_ref" => $transaction_ref,
                 "amount" => $price,
@@ -200,7 +209,7 @@ class HomeController extends Controller
                     "title" => "UK Covid Testing Booking"
                 ]
             ];
-        }elseif($request->home_country_id == 210){
+        } elseif ($request->home_country_id == 210) {
             // naira to tanzanian cedis
             $convert_amount = $price * 5.56;
             $data = [
@@ -217,7 +226,7 @@ class HomeController extends Controller
                     "title" => "UK Covid Testing Booking"
                 ]
             ];
-        }elseif($request->home_country_id == 110){
+        } elseif ($request->home_country_id == 110) {
             // naira to kenyan shillings
             $convert_amount = $price * 0.26;
             $data = [
@@ -234,9 +243,9 @@ class HomeController extends Controller
                     "title" => "UK Covid Testing Booking"
                 ]
             ];
-        }elseif($request->home_country_id == 197){
+        } elseif ($request->home_country_id == 197) {
             // naira to south african rand
-            $convert_amount = $price * 28.12;
+            $convert_amount = $price * 0.036;
             $data = [
                 "tx_ref" => $transaction_ref,
                 "amount" => $convert_amount,
@@ -251,7 +260,7 @@ class HomeController extends Controller
                     "title" => "UK Covid Testing Booking"
                 ]
             ];
-        }else {
+        } else {
             $data = [
                 "tx_ref" => $transaction_ref,
                 "amount" => $price,
@@ -267,13 +276,12 @@ class HomeController extends Controller
                 ]
             ];
         }
-    
+
         //redirect to payment page
-
-
         if (!empty($sub_account)) {
             $data['subaccounts'] = $sub_account;
         }
+
 
         $redirect_url = $this->processFL($data);
 
@@ -281,7 +289,6 @@ class HomeController extends Controller
 
     }
 
-//https://uktraveltest.test/payment/confirmation?status=cancelled&tx_ref=booking_60ed2341abc31588840
     public function payment_confirmation(Request $request)
     {
 
@@ -328,7 +335,7 @@ class HomeController extends Controller
 
                     $cost_booking = $booking_product->price;
 
-                    $amount_credit = ($cost_booking * ($pecentage->value / 100));
+                    $amount_credit = ($cost_booking * ($pecentage / 100));
 
 
                     Transaction::create([
@@ -336,7 +343,7 @@ class HomeController extends Controller
                         'booking_id' => $booking->id,
                         'user_id' => $user->id,
                         'cost_config' => $cost_booking,
-                        'pecentage_config' => $pecentage->value
+                        'pecentage_config' => $pecentage
                     ]);
 
                     $total_amount = $user->wallet_balance + $amount_credit;
@@ -346,11 +353,11 @@ class HomeController extends Controller
                     ]);
                 }
 
-                if ($booking->vendor_id == 1) {
-                    $code = "PEXPO" . rand(40000, 1000000);
-                } else if ($booking->vendor_id == 2) {
-                    $code = $this->sendData($booking);
-                }
+//                if ($booking->vendor_id == 1) {
+                $code = "UKTRA" . rand(40000, 1000000);
+//                } else if ($booking->vendor_id == 2) {
+//                    $code = $this->sendData($booking);
+//                }
 
 
                 try {
@@ -369,16 +376,17 @@ class HomeController extends Controller
                 //send the receipt to the vendor
 
                 if ($booking_product) {
-//                    try {
+                    try {
 
-                    Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from " . optional($booking_product->vendor)->name, optional($booking_product->vendor)->email));
+                        Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from " . optional($booking_product->vendor)->name, optional($booking_product->vendor)->email));
 
-//                    } catch (\Exception $e) {
-//
-//                    }
+                    } catch (\Exception $e) {
+
+                    }
                 }
 
                 $booking->update([
+                    'vendor_id' => 3,
                     'mode_of_payment' => 1,
                     'transaction_ref' => $txRef,
                     'status' => 1,
@@ -399,46 +407,28 @@ class HomeController extends Controller
     function sendData($booking)
     {
         //ethnicity
-        if($booking->ethnicity == 0)
-        {
+        if ($booking->ethnicity == 0) {
             $ethnic = "white";
-        }
-        elseif($booking->ethnicity == 1)
-        {
+        } elseif ($booking->ethnicity == 1) {
             $ethnic = "Mixed/Muti Ethnic group";
-        }
-        elseif($booking->ethnicity == 2)
-        {
+        } elseif ($booking->ethnicity == 2) {
             $ethnic = "Asain/Asian British";
-        }
-        elseif($booking->ethnicity == 3)
-        {
+        } elseif ($booking->ethnicity == 3) {
             $ethnic = "Black";
-        }
-        elseif($booking->ethnicity == 4)
-        {
+        } elseif ($booking->ethnicity == 4) {
             $ethnic = "Others";
         }
 
         //transportation means
-        if($booking->method_of_transportation == 1)
-        {
+        if ($booking->method_of_transportation == 1) {
             $transport = "Airline";
-        }
-        elseif($booking->method_of_transportation == 2)
-        {
+        } elseif ($booking->method_of_transportation == 2) {
             $transport = "Vessel";
-        }
-        elseif($booking->method_of_transportation == 3)
-        {
+        } elseif ($booking->method_of_transportation == 3) {
             $transport = "Train";
-        }
-        elseif($booking->method_of_transportation == 4)
-        {
+        } elseif ($booking->method_of_transportation == 4) {
             $transport = "Road Vehicle";
-        }
-        elseif($booking->method_of_transportation == 5)
-        {
+        } elseif ($booking->method_of_transportation == 5) {
             $transport = "Others";
         }
 
@@ -667,7 +657,7 @@ class HomeController extends Controller
         User::where('id', $id)->update([
             'status' => 1
         ]);
-
+        $user = User::where('id', $id)->first();
         //send an email
         try {
             $message = "Congratulations!,<br>
@@ -678,7 +668,7 @@ class HomeController extends Controller
 
             UKTravelsTeam
             ";
-            Mail::to($booking->email)->send(new BookingCreation($message));
+            Mail::to($user->email)->send(new BookingCreation($message));
         } catch (\Exception $e) {
 
         }
@@ -726,7 +716,7 @@ class HomeController extends Controller
         User::where('id', $id)->update([
             'status' => 0
         ]);
-
+        $user = User::where('id', $id)->first();
         //send an email
         try {
             $message = "Dear Network Partner,<br><br>
@@ -739,7 +729,7 @@ class HomeController extends Controller
 
             UKTravelsTeam
             ";
-            Mail::to($booking->email)->send(new BookingCreation($message));
+            Mail::to($user->email)->send(new BookingCreation($message));
         } catch (\Exception $e) {
 
         }
@@ -756,13 +746,44 @@ class HomeController extends Controller
     public function check_price($vendor_id)
     {
         $vendor_products = VendorProduct::where('vendor_id', $vendor_id)->get();
-        $product =[];
-        foreach($vendor_products as $vproduct ){
-               
+        $product = [];
+        foreach ($vendor_products as $vproduct) {
+
             $product[] = [
-                    'name' => $vproduct->product->name,
-                    'price' => "£".number_format($vproduct->price_pounds, 0),
-                    'product_id' => $vproduct->product_id
+                'name' => $vproduct->product->name,
+                'price' => "£" . number_format($vproduct->price_pounds, 0),
+                'product_id' => $vproduct->product_id
+            ];
+        }
+        return $product;
+    }
+
+    public function check_product_price($nationality)
+    {
+        $vendor_products = VendorProduct::where('vendor_id', 3)->get();
+        $product = [];
+        foreach ($vendor_products as $vproduct) {
+            $price = "£" . number_format($vproduct->price_pounds, 0);
+
+            if ($nationality == 81) {
+                // naira to ghanian cedis
+                $price = "GH₵" . number_format($vproduct->price * 0.014, 0);
+            } elseif ($nationality == 156) {
+                $price = "₦" . number_format($vproduct->price, 0);
+            } elseif ($nationality == 210) {
+                // naira to tanzanian cedis
+                $price = "TZS" . number_format($vproduct->price * 5.64, 0);
+            } elseif ($nationality == 110) {
+                $price = "KES" . number_format($vproduct->price * 0.26, 0);
+            } elseif ($nationality == 197) {
+                // naira to south african rand
+                $price = "ZAR" . number_format($vproduct->price * 0.036, 0);
+            }
+
+            $product[] = [
+                'name' => $vproduct->product->name,
+                'price' => $price,
+                'product_id' => $vproduct->product_id
             ];
         }
         return $product;
@@ -833,7 +854,7 @@ class HomeController extends Controller
 
                 $product[] = [
                     'name' => $vproduct->vendor->name,
-                    'price' => "ZAR" . number_format(($vproduct->price * 28.12), 0),
+                    'price' => "ZAR" . number_format(($vproduct->price * 0.036), 0),
                     'vendor_id' => $vproduct->vendor_id
                 ];
             }
@@ -856,7 +877,7 @@ class HomeController extends Controller
     public function pricing()
     {
         $products = Product::all();
-        $vendors = Vendor::all();
+        $vendors = Vendor::where('id', '3')->get();
         return view('homepage.pricing')->with(compact('products', 'vendors'));
     }
 
@@ -865,5 +886,73 @@ class HomeController extends Controller
         Log::info($request->all());
     }
 
+    public function forgot_password()
+    {
+        return view('homepage.forgot_password');
+    }
+
+    public function reset_password(Request $request)
+    {
+        $people = User::where("email", $request->email)->first();
+        $type = "client";
+        if (!$people) {
+            session()->flash("alert-danger", "Email doesn't exist");
+            return back();
+        }
+
+        try {
+
+            $message = "Dear " . $people->first_name . ",<br><br>
+
+            Kindly click this link to reset your password : <a href='" .env('APP_URL') . 'reset/password/' . encrypt_decrypt('encrypt', $people->id) . "/" . encrypt_decrypt("encrypt", $people->email)."'>Reset Password</a>,<br><br>
+          
+            UKTravelsTeam
+            ";
+            Mail::to($people->email)->send(new BookingCreation($message, "Password Reset"));
+        } catch (\Exception $e) {
+
+        }
+
+        session()->flash("alert-success", "Reset password link has been sent to your email");
+        return back();
+    }
+
+    public function c_password($id, $email)
+    {
+        $email = encrypt_decrypt("decrypt", $email);
+        $people = User::where("email", $email)->first();
+        if (!$people) {
+            session()->flash("alert-danger", "Email doesn't exist");
+            return redirect()->to('/forgot/password');
+        }
+        return view('homepage.change_password')->with(compact('email'));
+
+    }
+
+    public function change_password(Request $request)
+    {
+        $this->validate($request, [
+            'password' => "required|confirmed"
+        ]);
+        $email = $request->id;
+
+
+        $password = Hash::make($request->password);
+
+        $people = User::where("email", $email)->first();
+
+
+        if (!$people) {
+            session()->flash("alert-danger", "Email doesn't exist");
+            return redirect()->to('/forgot/password');
+        } else {
+            $people->update([
+                'password' => $password
+            ]);
+        }
+
+        session()->flash('alert-success', "Password has been changed successfully.Kindly Login");
+        return redirect()->to('/login');
+    }
 
 }

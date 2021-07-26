@@ -26,6 +26,15 @@ Route::get('/password', function () {
 });
 
 Route::get('/login', [\App\Http\Controllers\HomeController::class,"login"]);
+Route::get('/forgot/password', [\App\Http\Controllers\HomeController::class,"forgot_password"]);
+Route::post('/reset_password', [\App\Http\Controllers\HomeController::class,"reset_password"]);
+Route::get('/reset/password/{id}/{email}', [\App\Http\Controllers\HomeController::class,"c_password"]);
+Route::post('/change/password', [\App\Http\Controllers\HomeController::class,"change_password"]);
+
+
+
+
+
 Route::get('/register/agent', [\App\Http\Controllers\HomeController::class,"register_agent"]);
 
 Route::get('/payment/confirmation', [\App\Http\Controllers\HomeController::class,"payment_confirmation"]);
@@ -34,11 +43,13 @@ Route::get('/pricing', [\App\Http\Controllers\HomeController::class,"pricing"])-
 Route::get('/about', [\App\Http\Controllers\HomeController::class,"about"])->name('about');
 Route::get('/covid/testing', [\App\Http\Controllers\HomeController::class,"products"])->name('products_covid');
 Route::get('/check/price/{vendor_id}', [\App\Http\Controllers\HomeController::class,"check_price"])->name('check_price');
+
+Route::get('/check/{nationality}/price', [\App\Http\Controllers\HomeController::class,"check_product_price"])->name('check_product_price');
+
 Route::get('/product/descript/{product_id}', [\App\Http\Controllers\HomeController::class,"product_descript"]);
 Route::get('/product/vendors/{product_id}/{nationality}',  [\App\Http\Controllers\HomeController::class,"product_to_vendors"]);
 
 Route::post('/login', [\App\Http\Controllers\HomeController::class,"post_login"])->name('login');
-
 Route::post('/register', [\App\Http\Controllers\HomeController::class,"register"]);
 
 

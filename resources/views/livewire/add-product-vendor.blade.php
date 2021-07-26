@@ -8,8 +8,8 @@
             @endif
         @endforeach
     </select>
-    <label>Price</label>
-    <input type="number" wire:model="price" class="form-control">
+    <label>Price in Pounds</label>
+    <input type="number" wire:model="price" class="form-control" placeholder="£40">
     </select>
     <br/>
     <div wire:loading wire:target="add_product" class="pull-right">
@@ -27,7 +27,7 @@
             @foreach($vendor_products as $vendor_product)
                 <li>
                     {{ optional($vendor_product->product)->name }}:
-                    N{{ number_format($vendor_product->price,2) }} ||
+                    £{{ number_format($vendor_product->price_pounds,2) }} - (N {{number_format($vendor_product->price,2) }}) ||     ----
                     <a href="javascript:;" onclick="change_product('{{ $vendor_product->id }}')"><i
                                     class="fa fa-edit"></i></a>
                         <a href="javascript:;" onclick="closeProduct('{{ $vendor_product->id }}')"><i

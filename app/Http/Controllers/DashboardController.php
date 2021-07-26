@@ -51,8 +51,8 @@ class DashboardController extends Controller
             $bookings = Booking::where('status', 0)->orderby('id', 'desc');
         } elseif (auth()->user()->vendor_id != 0) {
             $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
-           $bookings = Booking::whereIn('id', $bookings_vendors)->where('status', 0);
-        }else {
+            $bookings = Booking::whereIn('id', $bookings_vendors)->where('status', 0);
+        } else {
             $bookings = Booking::where('status', 0)->where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->orderby('id', 'desc');
 
         }
@@ -105,7 +105,7 @@ class DashboardController extends Controller
             $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
             $bookings = Booking::whereIn('id', $bookings_vendors)->where('status', 1);
 
-        }else {
+        } else {
             $bookings = Booking::where('status', 1)->where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->orderby('id', 'desc');
         }
 
@@ -147,13 +147,105 @@ class DashboardController extends Controller
         $vendors = Vendor::all();
         $users = User::where('type', "!=", '1')->get();
         $products = Product::all();
+
+
+        if ($request->export) {
+            $fileName = 'exports.csv';
+
+            $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $columns = array('Name', 'Email', 'PhoneNo', 'Sex', 'DOB', 'Ethnicity', 'Vaccination Status', 'Products', 'Home Address', "Isolation Address", "Document Id", "Arrival Date", "Country From", "Departure Date", "Mode of Transportation", "Flight Number");
+
+            $callback = function () use ($bookings, $columns) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+
+                foreach ($bookings as $booking) {
+
+                    if ($booking->ethnicity == "1") {
+                        $row['Ethnicity'] = "White";
+                    } elseif ($booking->ethnicity == "2") {
+                        $row['Ethnicity'] = "Mixed/Multiple Ethnic groups";
+                    } elseif ($booking->ethnicity == "3") {
+                        $row['Ethnicity'] = "Asian / Asian British";
+                    } elseif ($booking->ethnicity == "4") {
+                        $row['Ethnicity'] = "Black / African / Caribbean / Black British";
+                    } elseif ($booking->ethnicity == "5") {
+                        $row['Ethnicity'] = "Other Ethnic Group";
+                    }
+
+                    if ($booking->vaccination_status == "1") {
+                        $row['Vaccination Status'] = "Has not been vaccinated";
+                    } elseif ($booking->vaccination_status == "2") {
+                        $row['Vaccination Status'] = "Has received the first dose, but not the second";
+                    } elseif ($booking->vaccination_status == "3") {
+                        $row['Vaccination Status'] = "Has received both first and second dose";
+                    }
+                    $p = [];
+                    foreach ($booking->products as $product) {
+                        $p[] = $product->name;
+                    }
+
+                    $row['Name'] = $booking->first_name . " " . $booking->last_name;
+                    $row['Email'] = $booking->email;
+                    $row['PhoneNo'] = $booking->phone_no;
+                    $row['Sex'] = ($booking->sex == 1) ? "Male" : "Female";
+                    $row['DOB'] = $booking->dob;
+                    $row['Products'] = implode(',', $p);
+                    $row['Home Address'] = "Address1: {$booking->address_1}\n
+                                        Address2: {$booking->address_2}\n
+                                        Home City: {$booking->home_town}\n
+                                        Home PostCode: {$booking->post_code}\n
+                                        Home Country: {$booking->homeCountry->name}\n";
+
+                    $row['Isolation Address'] = "Address1: {$booking->isolation_address }\n
+                                        Address2: {$booking->isolation_addres2}\n
+                                        Home City: {$booking->isolation_town}\n
+                                        Home PostCode: {$booking->isolation_postal_code }\n
+                                        Home Country: {$booking->country->name}\n";
+
+                    $row['Document Id'] = $booking->document_id;
+
+                    $row['Arrival Date'] = $booking->arrival_date;
+
+                    $row['Country From'] = $booking->travelingFrom->name;
+                    $row['Departure Date'] = $booking->departure_date;
+                    if ($booking->method_of_transportation == "1") {
+                        $row['Mode of Transportation'] = "Airplane";
+                    } elseif ($booking->method_of_transportation == "2") {
+                        $row['Mode of Transportation'] = "Vessel";
+                    } elseif ($booking->method_of_transportation == "3") {
+                        $row['Mode of Transportation'] = "Train";
+                    } elseif ($booking->method_of_transportation == "4") {
+                        $row['Mode of Transportation'] = "Road Vehicle";
+                    } elseif ($booking->method_of_transportation == "5") {
+                        $row['Mode of Transportation'] = "Other";
+                    }
+                    $row['Flight Number'] = $booking->transport_no;
+
+                    fputcsv($file, array($row['Name'], $row['Email'], $row['PhoneNo'], $row['Sex'], $row['DOB'],$row['Ethnicity'],$row['Vaccination Status'],$row['Products'],$row['Home Address'],$row['Isolation Address'],$row['Document Id'],$row['Arrival Date'],$row['Country From'],$row['Departure Date'],$row['Mode of Transportation'],$row['Flight Number']));
+                }
+
+                fclose($file);
+            };
+
+            return response()->stream($callback, 200, $headers);
+        }
+
         return view('admin.complete_booking')->with(compact('bookings', 'products', 'vendors', 'users'));
     }
 
     public function view_booking($id)
     {
-        if (auth()->user()->type != 1){
-            if(!auth()->user()->vendor_id) {
+        if (auth()->user()->type != 1) {
+            if (!auth()->user()->vendor_id) {
                 abort(403);
             }
         }
@@ -165,7 +257,8 @@ class DashboardController extends Controller
         }
 
         $booking = Booking::where('id', $id)->first();
-        return view('admin.view_booking')->with(compact('booking'));
+        $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
+        return view('admin.view_booking')->with(compact('booking', 'booking_products'));
     }
 
     public function vendors()
@@ -193,9 +286,9 @@ class DashboardController extends Controller
             abort(403);
         }
         $users = User::get();
-        $setting = Setting::where('id',2)->first();
+        $setting = Setting::where('id', 2)->first();
 
-        return view('admin.users')->with(compact('users','setting'));
+        return view('admin.users')->with(compact('users', 'setting'));
     }
 
     public function admin_make($id)
@@ -243,21 +336,21 @@ class DashboardController extends Controller
             'amount' => 'required',
         ]);
 
-       
+
         Setting::where('id', "1")->update([
             'pounds' => $request->amount
         ]);
 
-      $v_products =  vendorProduct::all();
-        foreach($v_products as $v_product){
-            $price = 0;
+        $v_products = vendorProduct::all();
+        foreach ($v_products as $v_product) {
             $price = $v_product->price_pounds * $request->amount;
-            vendorProduct::where('id',$v_product->id)->update(['price'=>$price]);
+            vendorProduct::where('id', $v_product->id)->update(['price' => $price]);
         }
 
         // Setting::where('id', "1")->update([
         //     'value' => $request->percentage
         // ]);
+
         session()->flash('alert-success', "Settings has been updated successfully");
 
         return back();
@@ -381,13 +474,13 @@ class DashboardController extends Controller
             'business_mobile' => auth()->user()->phone_no,
             'country' => "NG",
             "split_type" => "percentage",
-            "split_value" => (auth()->user()->percentage_split) ? (100 - auth()->user()->percentage_split)/100 : (100 - $settings->value)/100
+            "split_value" => (auth()->user()->percentage_split) ? (100 - auth()->user()->percentage_split) / 100 : (100 - $settings->value) / 100
         ];
 
         if (!auth()->user()->flutterwave_key) {
             $data = $this->addFlutterwave($flutterwave_data);
 
-            if(!$data->data){
+            if (!$data->data) {
                 session()->flash("alert-danger", $data->message);
                 return back();
 
@@ -424,8 +517,9 @@ class DashboardController extends Controller
 
     }
 
-    public function send_booking($id){
-        session()->flash("alert-danger","This module is disabled for now. Till we are live");
+    public function send_booking($id)
+    {
+        session()->flash("alert-danger", "This module is disabled for now. Till we are live");
         return back();
     }
 
@@ -444,20 +538,19 @@ class DashboardController extends Controller
 
     public function edit_color(Request $request, $id)
     {
-        
+
         $colors = Color::where([
             'name' => $request->name
         ])->get();
 
-        if(count($colors) > 0)
-        {
-            session()->flash("alert-danger","Color already exist");
+        if (count($colors) > 0) {
+            session()->flash("alert-danger", "Color already exist");
             return back();
-        }else{
+        } else {
             Color::where('id', $id)->update([
                 'name' => $request->name
             ]);
-            session()->flash("alert-success","Color has been updated ");
+            session()->flash("alert-success", "Color has been updated ");
             return back();
         }
 
@@ -469,7 +562,7 @@ class DashboardController extends Controller
         Color::create([
             'name' => $request->name
         ]);
-        session()->flash("alert-success","New color added");
+        session()->flash("alert-success", "New color added");
         return back();
     }
 

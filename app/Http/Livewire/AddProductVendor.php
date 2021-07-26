@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\BookingProduct;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\VendorProduct;
 use Illuminate\Http\Request;
 use Livewire\Component;
@@ -27,18 +28,21 @@ class AddProductVendor extends Component
 
     public function add_product()
     {
-        if (!$this->product_id && !$this->price) {
+        if (!$this->product_id || !$this->price) {
             $this->dispatchBrowserEvent(
                 'toastMessage', ['type' => 'error', 'heading' => "Error", 'message' => 'Enter a price or Select a Product']);
 
             return;
         }
 
+
         $vendore_product_ = VendorProduct::where('product_id', $this->product_id)->where('vendor_id', $this->vendor_id)->first();
 
+        $pounds_value = Setting::first();
         if (!$vendore_product_) {
             VendorProduct::create([
-                'price' => $this->price,
+                'price_pounds' => $this->price,
+                'price' => $this->price * $pounds_value->pounds,
                 'product_id' => $this->product_id,
                 'vendor_id' => $this->vendor_id
             ]);

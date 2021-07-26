@@ -91,10 +91,9 @@
                     </div>
                     <p class="text-center">Don't have an account? <a href="/register/agent"> Register Now</a></p>
                     <div class="form-group clearfix">
-                        
                         <button type="submit" class="btn btn-purple btn-pill float-right">LOGIN</button>
                     </div>
-
+                    <a href="/forgot/password">Forgot password?</a>
                 </form>
             </div>
             <!--/login form-->
