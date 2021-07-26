@@ -21,9 +21,7 @@ Route::get('/webhook/receiver', [\App\Http\Controllers\HomeController::class,"we
 
 
 
-Route::get('/password', function () {
-    return \Illuminate\Support\Facades\Hash::make('password');
-});
+Route::get('/password',[\App\Http\Controllers\HomeController::class,"testing"]);
 
 Route::get('/login', [\App\Http\Controllers\HomeController::class,"login"]);
 Route::get('/forgot/password', [\App\Http\Controllers\HomeController::class,"forgot_password"]);
