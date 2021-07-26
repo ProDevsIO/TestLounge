@@ -54,7 +54,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                         </div>
                     </div>
                 </div><!--end of row-->
-
+@include('errors.showerrors')
                 <div class="photo-form-wrapper clearfix">
                     <div style="margin: auto;padding: 10px;">
                         <div class="bs-stepper" id="stepperForm">
