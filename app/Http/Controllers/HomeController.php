@@ -61,7 +61,7 @@ class HomeController extends Controller
 
             //To restrict access as per admin 
             if (auth()->user()->status == 0) {
-                session()->flash('alert-danger', "Your profile is currently under review and will be activate shortly by our Admin. To Facilitate this process, Kindly contact INFO@UKTRAVELTESTS.CO.UK");
+                session()->flash('alert-danger', "Your profile is currently under review and will be activated shortly by our Admin. To Facilitate this process, Kindly contact INFO@UKTRAVELTESTS.CO.UK");
                 auth()->logout();
                 return back();
             }
