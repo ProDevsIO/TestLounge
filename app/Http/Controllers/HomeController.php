@@ -139,8 +139,8 @@ class HomeController extends Controller
         $booking = Booking::create($request_data);
 
         $price = 0;
-        $request->product_id[] = $request->product_id;
-        foreach ($request->product_id as $r_product) {
+        $product_id[] = $request->product_id;
+        foreach ($product_id as $r_product) {
 
             $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $r_product)->first();
 
