@@ -25,14 +25,15 @@
                 align-items: center;
             }
         }
-    #descript{
-        margin-top: 20px;
-        width: 90%;
-    }
-    
+
+        #descript {
+            margin-top: 20px;
+            width: 90%;
+        }
+
     </style>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
 @endsection
 @section('content')
 
@@ -47,14 +48,17 @@
                         <div class="card-body">
                             <h1>Book your test
                             </h1>
-                            <p style="margin-bottom: 25px">To be allowed to board a flight to the UK, Your airline will require a negative PCR Test within 72 hours of your travel date , evidence of booking your UK covid tests and  completion of your Passenger Locator Form.
+                            <p style="margin-bottom: 25px">To be allowed to board a flight to the UK, Your airline will
+                                require a negative PCR Test within 72 hours of your travel date , evidence of booking
+                                your UK covid tests and completion of your Passenger Locator Form.
 
-Following your booking , you will immediately recieve a code on screen and via the email provided . 
-This code must be inputted in the Uk Passenger Locator Form</p>
+                                Following your booking , you will immediately recieve a code on screen and via the email
+                                provided .
+                                This code must be inputted in the Uk Passenger Locator Form</p>
                         </div>
                     </div>
                 </div><!--end of row-->
-@include('errors.showerrors')
+                @include('errors.showerrors')
                 <div class="photo-form-wrapper clearfix">
                     <div style="margin: auto;padding: 10px;">
                         <div class="bs-stepper" id="stepperForm">
@@ -115,23 +119,24 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        
+
                                         <div class="col-md-12" id="test" style="margin-top:20px;">
-                                            <label>Test type <span class="show_required"> *</span></label>
-                                            <select class="form-control choices-multiple-remove-button" id="product_id_" name="product_id[]"
-                                                 required>
+                                            <label>Select Test types <span class="show_required"> *</span></label>
+                                            <select class="form-control test_type"
+                                                    name="product_id"
+                                                    required>
                                             </select>
                                         </div>
                                         <br/>
                                         <br>
 
-                                        <div class="container p-2" >
-                                         <div  class="col-md-12 bg-success" id="descript" >
+                                        <div class="container p-2">
+                                            <div class="col-md-12 bg-success" id="descript">
 
+                                            </div>
                                         </div>
-                                        </div>
-                                        
-                                       
+
+
                                         <button class="btn btn-primary pull-right" style="margin-top: 30px"
                                                 onclick="stepperForm.next()">Next
                                         </button>
@@ -156,8 +161,14 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                             <label>Sex <span class="show_required"> *</span></label>
                                             <select class="form-control" name="sex" required>
                                                 <option value="">Make a selection</option>
-                                                <option value="1">Male</option>
-                                                <option value="2">Female</option>
+                                                <option value="1" @if(old('sex') == "1")
+                                                selected
+                                                        @endif>Male
+                                                </option>
+                                                <option value="2" @if(old('sex') == "2")
+                                                selected
+                                                        @endif>Female
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
@@ -171,14 +182,27 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                             <label>Ethnicity <span class="show_required"> *</span></label>
                                             <select class="form-control" name="ethnicity" required>
                                                 <option value="">Make a selection</option>
-                                                <option value="1">White</option>
-                                                <option value="2">Mixed/Multiple Ethnic groups
+                                                <option value="1" @if(old('ethnicity') == "1")
+                                                selected
+                                                        @endif>White
                                                 </option>
-                                                <option value="3">Asian/Asian British</option>
-                                                <option value="4">
+                                                <option value="2" @if(old('ethnicity') == "2")
+                                                selected
+                                                        @endif>Mixed/Multiple Ethnic groups
+                                                </option>
+                                                <option value="3" @if(old('ethnicity') == "3")
+                                                selected
+                                                        @endif>Asian/Asian British
+                                                </option>
+                                                <option value="4" @if(old('ethnicity') == "4")
+                                                selected
+                                                        @endif>
                                                     Black/African/Caribbean/Black British
                                                 </option>
-                                                <option value="5">Other Ethnic group</option>
+                                                <option value="5" @if(old('ethnicity') == "5")
+                                                selected
+                                                        @endif>Other Ethnic group
+                                                </option>
 
                                             </select>
                                         </div>
@@ -266,7 +290,8 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                         </div>
                                         <div class="col-md-12">
                                             <label>Home Country: <span class="show_required"> *</span></label>
-                                            <select style="width: 100%;" class="form-control select2" name="home_country_id" id="nationality"
+                                            <select style="width: 100%;" class="form-control select2"
+                                                    name="home_country_id" id="nationality"
                                                     required>
                                                 <option value="">Make a selection</option>
                                                 @foreach($countries as $country)
@@ -282,9 +307,9 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                             <h3>
                                                 Isolation Address
                                             </h3>
-<br>
+                                            <br>
                                             <p>
-                                            Your Test Package will be sent to this address
+                                                Your Test Package will be sent to this address
                                             </p>
                                         </div>
 
@@ -313,11 +338,13 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                         </div>
                                         <div class="col-md-12">
                                             <label>Isolation Country: <span class="show_required"> *</span></label>
-                                            <select style="width: 100%;" class="form-control select2" name="isolation_country_id" required readonly>
+                                            <select style="width: 100%;" class="form-control select2"
+                                                    name="isolation_country_id" required readonly>
                                                 <option value="">Make a selection</option>
-                                              
-                                                    <option value="{{ $country->id }}" selected
-                                                            selected >UNITED KINGDOM</option>
+
+                                                <option value="{{ $country->id }}" selected
+                                                        selected>UNITED KINGDOM
+                                                </option>
                                             </select>
                                         </div>
                                         <button class="btn btn-primary pull-right" style="margin-top: 20px"
@@ -336,7 +363,8 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                         </div>
 
                                         <div class="col-md-12" style="margin-top: 20px">
-                                            <label>Travel Document ID/Passport Number: <span class="show_required"> *</span> </label>
+                                            <label>Travel Document ID/Passport Number: <span
+                                                        class="show_required"> *</span> </label>
                                             <input class="form-control" type="text" name="document_id"
                                                    value="{{ old('document_id') }}" required/>
                                         </div>
@@ -349,7 +377,6 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                         </div>
 
 
-
                                         <div class="col-md-12" style="margin-top: 20px">
                                             <label>City you are departing from: <span
                                                         class="show_required"> *</span></label>
@@ -359,7 +386,7 @@ This code must be inputted in the Uk Passenger Locator Form</p>
 
                                         <div class="col-md-12">
                                             <label> Departure Date(from country of origin): <span class="show_required"> *</span></label>
-                                            <input class="form-control date_picker1"  type="text"
+                                            <input class="form-control date_picker1" type="text"
                                                    placeholder="Arrival Date in Uk"
                                                    name="departure_date"
                                                    value="{{ old('departure_date') }}" required>
@@ -370,10 +397,10 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                                 corridor
                                                 arrangement with the UK: <span class="show_required"> *</span><br/>
                                                 <span class="field-description">You can find the current list <a
-                                                            href='#popular'
+                                                            href='https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england'
                                                             target="_blank">here</a>:</span>
                                             </label>
-                                            <input class="form-control date_picker"  type="text"
+                                            <input class="form-control date_picker" type="text"
                                                    placeholder="Arrival Date in Uk"
                                                    name="last_day_travel"
                                                    value="{{ old('last_day_travel') }}" required>
@@ -385,15 +412,30 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                                         class="show_required"> *</span></label>
                                             <select class="form-control" name="method_of_transportation" required>
                                                 <option value="">Make a selection</option>
-                                                <option value="1">Airplane</option>
+                                                <option value="1" @if(old('method_of_transportation') == "1")
+                                                selected
+                                                        @endif>Airplane
+                                                </option>
 
-                                                <option value="2">Vessel</option>
+                                                <option value="2" @if(old('method_of_transportation') == "2")
+                                                selected
+                                                        @endif>Vessel
+                                                </option>
 
-                                                <option value="3">Train</option>
+                                                <option value="3" @if(old('method_of_transportation') == "3")
+                                                selected
+                                                        @endif>Train
+                                                </option>
 
-                                                <option value="4">Road Vehicle</option>
+                                                <option value="4" @if(old('method_of_transportation') == "4")
+                                                selected
+                                                        @endif>Road Vehicle
+                                                </option>
 
-                                                <option value="5">Other</option>
+                                                <option value="5" @if(old('method_of_transportation') == "5")
+                                                selected
+                                                        @endif>Other
+                                                </option>
                                             </select>
                                         </div>
 
@@ -414,18 +456,13 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                                             <input type="hidden" name="ref" value="{{ $_GET['ref'] }}">
                                         @endif
 
-                                        
+
                                         <br/>
 
                                         <!-- <h3 class="pull-left price_li" style="padding: 0px 20px;color: red;margin-top: 30px;"></h3> -->
 
-                                        <button type="button" disabled class="sub_btn_u btn btn-primary pull-right"
-                                             style="display: none;margin-top: 20px">Make Payment
-                                        </button>
-
-
                                         <button type="submit" class="sub_btn btn btn-primary pull-right"
-                                        style="margin-top: 20px">Make Payment
+                                                style="margin-top: 20px">Make Payment
                                         </button>
 
                                         <button class="btn btn-primary pull-right" style="margin-top: 20px"
@@ -461,62 +498,6 @@ This code must be inputted in the Uk Passenger Locator Form</p>
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
-
-              
-        function checkPrice() {
-            
-            var vendor_id = $("#vendor_id").val();
-           
-            var url = '/check/price/'+ vendor_id;
-            console.log(url);
-            $("#test")
-                .find('select')
-                .remove()
-                .end()
-                $("#test")
-                .find('div')
-                .remove()
-                .end()
-                var select = document.createElement("select");
-                    select.id = "product_id_";
-                    select.className = "form-control choices-multiple-remove-button";
-                    select.setAttribute("multiple", "multiple");
-                    select.setAttribute("onchange", "descript()");
-                    select.setAttribute("name", "product_id[]");
-                    var div = document.getElementById("test");
-                    div.appendChild(select);
-
-            //   $("#product_id_")
-            //     .find('option')
-            //     .remove()
-            //     .end()
-
-            $.get(url, function (data) {
-                
-                console.log(data);
-                var arrayLength = data.length;
-                for (var i = 0; i < arrayLength; i++) {
-
-                    var option = document.createElement("option");
-                    option.text = data[i].name + " (" + data[i].price + ")";
-                    option.value = data[i].product_id;
-                    var select = document.getElementById("product_id_");
-                    select.appendChild(option);
-
-                }
-
-                var multipleCancelButton = new Choices('.choices-multiple-remove-button', {
-                removeItemButton: true,
-                maxItemCount:5,
-                searchResultLimit:5,
-                renderChoiceLimit:5
-                });
-                
-            });
-            
-
-        }
-
         var input = document.querySelector("#phone");
         window.intlTelInput(input, {
             initialCountry: "gb",
@@ -550,9 +531,9 @@ This code must be inputted in the Uk Passenger Locator Form</p>
         })
 
         stepperFormEl.addEventListener('show.bs-stepper', function (event) {
-            form.classList.remove('was-validated')
-            var nextStep = event.detail.indexStep
-            var currentStep = nextStep
+            form.classList.remove('was-validated');
+            var nextStep = event.detail.indexStep;
+            var currentStep = nextStep;
 
             if (currentStep > 0) {
                 currentStep--
@@ -560,33 +541,47 @@ This code must be inputted in the Uk Passenger Locator Form</p>
 
             var stepperPan = stepperPanList[currentStep];
 
+
             var form1 = $("#logins-part input").filter(function () {
                 if (this.id != "nhs") {
                     return $.trim($(this).val()).length == 0
                 }
             }).length == 0;
 
+
             var form1_select = $("#logins-part select").filter(function () {
                 return $.trim($(this).val()).length == 0
             }).length == 0;
 
             var form2 = $("#information-part input").filter(function () {
+                if (this.id == "address2" || this.id == "isolation_address2") {
 
-                if (this.id != "address2" || this.id != "isolation_address2") {
+                } else {
                     return $.trim($(this).val()).length == 0
                 }
             }).length == 0;
+
 
             var form2_select = $("#information-part select").filter(function () {
                 return $.trim($(this).val()).length == 0
             }).length == 0;
 
-            if ((stepperPan.getAttribute('id') === 'logins-part' && (!form1 && !form1_select)) ||
-                (stepperPan.getAttribute('id') === 'information-part' && (!form2 && !form2_select))) {
-                event.preventDefault()
+            var form3_select = $("#products-part select").filter(function () {
+                return $.trim($(this).val()).length == 0
+            }).length == 0;
 
-                form.classList.add('was-validated')
-            }
+
+                if ((stepperPan.getAttribute('id') === 'logins-part' && (!form1)) ||
+                    (stepperPan.getAttribute('id') === 'logins-part' && (!form1_select)) ||
+                    (stepperPan.getAttribute('id') === 'information-part' && (!form2)) ||
+                    (stepperPan.getAttribute('id') === 'information-part' && (!form2_select)) ||
+                    (stepperPan.getAttribute('id') === 'products-part' && (!form3_select))
+                ) {
+                    event.preventDefault()
+
+                    form.classList.add('was-validated')
+                }
+
         });
 
 
@@ -598,10 +593,10 @@ This code must be inputted in the Uk Passenger Locator Form</p>
                 minDate: moment().add(1, 'd').toDate(),
                 format: 'MM/DD/YYYY'
             });
-           
+
         });
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.select2').select2({
                 closeOnSelect: true
             });
@@ -611,45 +606,16 @@ This code must be inputted in the Uk Passenger Locator Form</p>
         function run() {
             var nationality = document.getElementById("travel_from").value;
 
-            var url = '/check/'+ nationality + '/price';
-
-            $("#test")
-                .find('select')
-                .remove()
-                .end()
-            $("#test")
-                .find('div')
-                .remove()
-                .end()
-
-            var select = document.createElement("select");
-            select.id = "product_id_";
-            select.className = "form-control choices-multiple-remove-button";
-            select.setAttribute("multiple", "multiple");
-            select.setAttribute("onchange", "descript()");
-            select.setAttribute("name", "product_id[]");
-            var div = document.getElementById("test");
-            div.appendChild(select);
-
+            var url = '/check/' + nationality + '/price';
 
             $.get(url, function (data) {
-                console.log(data);
-                var arrayLength = data.length;
-                for (var i = 0; i < arrayLength; i++) {
+                var $el = $(".test_type");
+                $el.empty(); // remove old options
+                $el.append($("<option value=''>Select a Product</option>"));
 
-                    var option = document.createElement("option");
-                    option.text = data[i].name + " (" + data[i].price + ")";
-                    option.value = data[i].product_id;
-                    var select = document.getElementById("product_id_");
-                    select.appendChild(option);
-
-                }
-
-                var multipleCancelButton = new Choices('.choices-multiple-remove-button', {
-                    removeItemButton: true,
-                    maxItemCount:5,
-                    searchResultLimit:5,
-                    renderChoiceLimit:5
+                $.each(data, function (key, value) {
+                    $el.append($("<option></option>")
+                        .attr("value", value.product_id).text(value.name+"("+ value.price +")"));
                 });
 
             });
@@ -659,24 +625,21 @@ This code must be inputted in the Uk Passenger Locator Form</p>
     </script>
     <script>
 
-       
 
-function descript(){
-    var product_id = $("#product_id_").val();
-    console.log(product_id);
-    var url = '/product/descript/' + product_id;
-        $("#descript")
+        function descript() {
+            var product_id = $("#product_id_").val();
+            var url = '/product/descript/' + product_id;
+            $("#descript")
                 .find('p')
                 .remove()
                 .end();
-        $.get(url, function (data) {
-                console.log(data);
+            $.get(url, function (data) {
 
-                    var holder = document.getElementById("descript");
-                    var newNode = document.createElement('p');
-                    newNode.innerHTML = data;
-                    holder.appendChild(newNode);
-                    $("#descript p").addClass('alert alert-success')
+                var holder = document.getElementById("descript");
+                var newNode = document.createElement('p');
+                newNode.innerHTML = data;
+                holder.appendChild(newNode);
+                $("#descript p").addClass('alert alert-success')
             });
         }
 

@@ -136,7 +136,6 @@ class HomeController extends Controller
 
         $request_data['transaction_ref'] = $transaction_ref;
 
-
         $booking = Booking::create($request_data);
 
         $price = 0;
