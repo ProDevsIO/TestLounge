@@ -124,6 +124,7 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
+                        @include('errors.showerrors')
                             <div class="table-responsive">
                                 <table class="table table-hover table-custom" id="data_table">
                                     <thead>
@@ -179,9 +180,20 @@
                                                 <td>
                                                     {{ ($booking->user) ? $booking->user->first_name." ".$booking->user->last_name : "none" }}
                                                 </td>
-                                                <td><a href="{{ url('/view/booking/'.$booking->id) }}"
-                                                       class="btn btn-info">View</a>
-                                                </td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <button id="btnGroupDrop1" type="button"
+                                                                class="btn btn-primary dropdown-toggle"
+                                                                data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                            Action
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                            <a href="{{ url('/view/booking/'.$booking->id) }}" class="dropdown-item">View</a>
+                                                            <a href="{{ url('/booking/delete/'.$booking->id) }}" class="dropdown-item">Delete</a>
+                                                         </div>
+                                                    </div>        
+                                                
                                             @endif
                                         </tr>
                                     @endforeach

@@ -203,7 +203,7 @@
                 <thead>
                     <th class="bg-1 text-center">MEASURE REQUIRED</th>
                     <th class="bg-2 text-center">GREEN</th>
-                    <th class="bg-3 text-center">AMBER(Vaccinated) <span style="font-size:30px;">**</span></th>
+                    <th class="bg-3 text-center">AMBER(Vaccinated) **</th>
                     <th class="bg-3 text-center">AMBER(Unvaccinated)</th>
                     <th class="bg-4 text-center">RED</th>
                 </thead>
@@ -318,7 +318,7 @@
                     <td>  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td>  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td>  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td> <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td> <a class="btn btn-primary btn-filled">Not available</a></td>
                 </tr>
                 
             </table>

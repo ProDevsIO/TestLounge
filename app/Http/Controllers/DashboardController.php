@@ -279,6 +279,23 @@ class DashboardController extends Controller
         session()->flash('alert-success', "Vendor successfully created.");
         return back();
     }
+        //deleting an agent 
+    public function delete_user($users_id)
+    {
+        User::where('id', $users_id)->delete();
+
+        session()->flash('alert-success', "Agent deleted successfully.");
+        return back();
+    }
+
+    public function delete_booking($id)
+    {
+   
+        BookingProduct::where('booking_id', $id)->delete();
+        Booking::where('id', $id)->delete();
+        session()->flash('alert-success', "Booking deleted successfully.");
+        return back();
+    }
 
     public function users()
     {

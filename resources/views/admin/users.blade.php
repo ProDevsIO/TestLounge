@@ -101,9 +101,16 @@
                                                            href="{{ url('complete/booking?user_id='.$user->id) }}">View
                                                             Bookings</a>
 
+                                                            
                                                         @if($user->type == 2)
                                                             <a href="javascript:;" onclick="makeAdmin('{{ $user->id }}')"
                                                                class="dropdown-item">Make Admin</a>
+
+                                                            <!-- deleting an agent -->  
+                                                            @if(auth()->user()->type == 1)
+                                                                 <a href="javascript:;" onclick="confirmation('{{ url('/users/delete/' .$user->id) }}')"
+                                                                   class="dropdown-item">Delete</a>
+                                                            @endif
                                                         @endif
 
                                                         @if($user->type == 2)

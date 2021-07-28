@@ -102,6 +102,7 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
+                        @include('errors.showerrors')
                             <div class="table-responsive">
                                 <table class="table table-hover table-custom" id="data_table">
                                     <thead>
@@ -160,17 +161,28 @@
                                                 <td>
                                                     {{ ($booking->user) ? $booking->user->first_name." ".$booking->user->last_name : "none" }}
                                                 </td>
-                                                <td><a href="{{ url('/view/booking/'.$booking->id) }}"
-                                                       class="btn btn-info">View</a>
+                                               
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <button id="btnGroupDrop1" type="button"
+                                                                class="btn btn-primary dropdown-toggle"
+                                                                data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                            Action
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                            <a href="{{ url('/view/booking/'.$booking->id) }}" class="dropdown-item">View</a>
+                                                            <a href="{{ url('/booking/delete/'.$booking->id) }}" class="dropdown-item">Delete</a>
+                                                            <a href="{{ url('/payment/confirmation?tx_ref='.$booking->transaction_ref) }}" class="dropdown-item" target="_blank">Check for Payment</a>
+                                                        </div>
+                                                    </div>
                                                 </td>
-                                                <td><a href="{{ url('/payment/confirmation?tx_ref='.$booking->transaction_ref) }}"
-                                                       class="btn btn-info" target="_blank">Check for Payment</a>
-                                                </td>
+                                              
                                             @endif
 
                                             @if(auth()->user()->vendor_id != "0")
                                                 <td><a href="{{ url('/view/booking/'.$booking->id) }}"
-                                                       class="btn btn-info">View</a>
+                                                       class="btn btn-sm btn-info">View</a>
                                                 </td>
                                             @endif
                                         </tr>
