@@ -57,7 +57,7 @@
 
                                 Following your booking , you will immediately recieve a code on screen and via the email
                                 provided .
-                                This code must be inputted in the Uk Passenger Locator Form</p>
+                                This code must be inputted in the UK Passenger Locator Form</p>
                         </div>
                     </div>
                 </div><!--end of row-->
@@ -232,7 +232,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6" style="margin-top: 20px">
-                                            <label>Contact Phone Number(In the Uk): <span
+                                            <label>Contact Phone Number(In the UK): <span
                                                         class="show_required"> *</span></label><br/>
 
                                             <input style="width: 100%;" class="form-control" id="phone" type="text"
@@ -375,7 +375,7 @@
                                         <div class="col-md-12">
                                             <label>Arrival date in the UK: <span class="show_required"> *</span></label>
                                             <input class="form-control date_picker1" type="text"
-                                                   placeholder="Arrival Date in Uk"
+                                                   placeholder="Arrival Date in UK"
                                                    name="arrival_date"
                                                    value="{{ old('arrival_date') }}" required>
                                         </div>
@@ -391,7 +391,7 @@
                                         <div class="col-md-12">
                                             <label> Departure Date(from country of origin): <span class="show_required"> *</span></label>
                                             <input class="form-control date_picker1" type="text"
-                                                   placeholder="Arrival Date in Uk"
+                                                   placeholder="Arrival Date in UK"
                                                    name="departure_date"
                                                    value="{{ old('departure_date') }}" required>
                                         </div>
@@ -405,7 +405,7 @@
                                                             target="_blank">here</a>:</span>
                                             </label>
                                             <input class="form-control date_picker" type="text"
-                                                   placeholder="Arrival Date in Uk"
+                                                   placeholder="Arrival Date in UK"
                                                    name="last_day_travel"
                                                    value="{{ old('last_day_travel') }}" required>
                                         </div>

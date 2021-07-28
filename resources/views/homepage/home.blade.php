@@ -191,7 +191,7 @@
 			</section><br/>
         <div class="container">
         <div class="header shadow curved bg-1 font-30" style="">
-            <div class="text-center"><h3 style="color:white;font-weight:600px">The Mandatory Covid-19 Tests for the UK follows a "Traffic light system" which determines the required tests based on the  Country you are travelling from.</h3><br><br> <p>See table below with the list of expected tests for each Category</p></div>
+            <div class="text-center"><h3 style="color:white;font-weight:600px">The Mandatory Covid-19 Tests for the UK follows a "traffic light system" which determines the required tests based on the  Country you are travelling from.</h3><br><br> <p>See table below with the list of expected tests for each Category</p></div>
                 <div>
                     
                 </div>
@@ -203,7 +203,7 @@
                 <thead>
                     <th class="bg-1 text-center">MEASURE REQUIRED</th>
                     <th class="bg-2 text-center">GREEN</th>
-                    <th class="bg-3 text-center">AMBER(Vaccinated)</th>
+                    <th class="bg-3 text-center">AMBER(Vaccinated) <span style="font-size:30px;">**</span></th>
                     <th class="bg-3 text-center">AMBER(Unvaccinated)</th>
                     <th class="bg-4 text-center">RED</th>
                 </thead>
@@ -323,7 +323,7 @@
                 
             </table>
             <div class="alert alert-danger">
-                Please note that Only Travellers who have been vaccinated by the UK NHS and have completed all doses at least 2weeks before travel are considered eligible. Passengers from France MUST undergo Quarantine , Day 2 and 8 tests irrespective of Vaccination Status
+               <span style="font-size:30px;color:white;">**</span> Please note that Only Travellers <b>who have specifically been vaccinated by the UK NHS and have completed all doses at least 2weeks before travel are considered eligible</b>. Passengers from France MUST undergo Quarantine , Day 2 and 8 tests irrespective of Vaccination Status
             </div>
         </div>
         <br>
@@ -350,7 +350,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
-                        <span class="sub alt-font">popular question</span>
+                        <span class="sub alt-font">popular questions</span>
                         <h1><strong>GUIDELINES FOR UK TRAVEL TESTS</strong></h1>
                         <ul style="text-align: justify; list-style-type: square; font-size:18px;padding: 0px 20px;">
                             <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is <b>MANDATORY</b> for entry into the UK. You can book your test <a href="/pick" class="">Here</a> </li>
