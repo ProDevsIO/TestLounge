@@ -28,9 +28,11 @@ class HomeController extends Controller
         $products = Product::all();
         $vendors = Vendor::all();
         $user = "";
+
         if($request->ref){
             $user = User::where('referal_code',$request->ref)->first();
         }
+
 
         return view('homepage.booking')->with(compact('countries', 'products', 'vendors','user'));
     }
@@ -182,7 +184,7 @@ class HomeController extends Controller
         }
 
 
-        if ($request->home_country_id == 81) {
+        if ($request->country_travelling_from_id == 81) {
             // naira to ghanian cedis
             $convert_amount = $price * 0.014;
             $data = [
@@ -199,7 +201,7 @@ class HomeController extends Controller
                     "title" => "UK Covid Testing Booking"
                 ]
             ];
-        } elseif ($request->home_country_id == 156) {
+        } elseif ($request->country_travelling_from_id == 156) {
             $data = [
                 "tx_ref" => $transaction_ref,
                 "amount" => $price,
@@ -214,7 +216,7 @@ class HomeController extends Controller
                     "title" => "UK Covid Testing Booking"
                 ]
             ];
-        } elseif ($request->home_country_id == 210) {
+        } elseif ($request->country_travelling_from_id == 210) {
             // naira to tanzanian cedis
             $convert_amount = $price * 5.56;
             $data = [
@@ -231,7 +233,7 @@ class HomeController extends Controller
                     "title" => "UK Covid Testing Booking"
                 ]
             ];
-        } elseif ($request->home_country_id == 110) {
+        } elseif ($request->country_travelling_from_id == 110) {
             // naira to kenyan shillings
             $convert_amount = $price * 0.26;
             $data = [
@@ -248,7 +250,7 @@ class HomeController extends Controller
                     "title" => "UK Covid Testing Booking"
                 ]
             ];
-        } elseif ($request->home_country_id == 197) {
+        } elseif ($request->country_travelling_from_id == 197) {
             // naira to south african rand
             $convert_amount = $price * 0.036;
             $data = [
@@ -286,6 +288,10 @@ class HomeController extends Controller
         if (!empty($sub_account)) {
             $data['subaccounts'] = ["id" => $sub_account ];
         }
+
+         BookingProduct::where('booking_id',$booking->id)->update([
+            'charged_amount' => $data['amount'],'currency' => $data['currency']
+        ]);
 
 
         $redirect_url = $this->processFL($data);
@@ -363,19 +369,19 @@ class HomeController extends Controller
 
 
 
-                try {
-                    $message = "
-            Hi " . $request->first_name . ",
-            
-            Thank you for booking with us, Here is your code " . $code . ". You are to use this code in your travel form. 
-                  
-                  <br/><br/>
-                  Thank you.
-            ";
-                    Mail::to($booking->email)->send(new BookingCreation($message));
-                } catch (\Exception $e) {
-
-                }
+//                try {
+//                    $message = "
+//            Hi " . $request->first_name . ",
+//
+//            Thank you for booking with us, Here is your code " . $code . ". You are to use this code in your travel form.
+//
+//                  <br/><br/>
+//                  Thank you.
+//            ";
+//                    Mail::to($booking->email)->send(new BookingCreation($message));
+//                } catch (\Exception $e) {
+//
+//                }
                 //send the receipt to the vendor
 
                 if ($booking_product) {
@@ -590,24 +596,34 @@ class HomeController extends Controller
 
     public function testEmail()
     {
-        dd(Hash::make('william'));
-        $user = User::where('email', "williamnwogbo@gmail.com")->first();
+//        dd(Hash::make('william'));
+        $booking = Booking::where('id',51)->first();
+        $booking_product = BookingProduct::where('booking_id',$booking->id)->first();
+        $code= "sdsbdjksds";
 
-        $referral = $user->referal_code;
+        if ($booking_product) {
 
-        $message = "
-            Hi " . $user->first_name . ",
-            
-            Thank you for registering as an agent. To continue your registration, <br/><br/>Kindly click the button below<br/> <br/>
-            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
-                   Continue Registration
-                  </a>
-                  
-                  <br/><br/>
-                  Thank you.
-            ";
 
-        Mail::to($user->email)->send(new BookingCreation($message, "Registration"));
+                Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from " . optional($booking_product->vendor)->name, optional($booking_product->vendor)->email,$code));
+
+
+        }
+
+//        $referral = $user->referal_code;
+//
+//        $message = "
+//            Hi " . $user->first_name . ",
+//
+//            Thank you for registering as an agent. To continue your registration, <br/><br/>Kindly click the button below<br/> <br/>
+//            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+//                   Continue Registration
+//                  </a>
+//
+//                  <br/><br/>
+//                  Thank you.
+//            ";
+
+//        Mail::to($user->email)->send(new BookingCreation($message, "Registration"));
     }
 
     public function randomStr($length = 16)

@@ -48,8 +48,8 @@
                         <div class="card-body">
                             <h1>Book your test
                             </h1>
-                            @if(isset($_GET['ref']))
-<div style="margin-top: -10px;"><span class="badge badge-warning" >Company: {{ ($user->company_name) ?$user->company_name : $user->first_name." ".$user->last_name }}</span>
+                            @if(isset($_GET['ref']) && isset($user))
+<div style="margin-top: -10px;"><span class="badge badge-warning" >Company: {{ (isset($user->company)) ?$user->company : $user->first_name." ".$user->last_name }}</span>
 </div>  <br/>       @endif
                             <p style="margin-bottom: 25px">To be allowed to board a flight to the UK, Your airline will
                                 require a negative PCR Test within 72 hours of your travel date , evidence of booking
@@ -111,8 +111,8 @@
                                         <div class="col-md-12">
                                             <label>Country travelled from: <span
                                                         class="show_required"> *</span></label>
-                                            <select class="form-control select2" name="country_travelling_from_id"
-                                                    id="travel_from" onchange="run()" required>
+                                            <select class="form-control select2 country_id__" name="country_travelling_from" autocomplete="off"
+                                                    id="travel_from" onchange="run()" onselect="selectCountry()">
                                                 <option value="">Make a selection</option>
                                                 @foreach($countries as $country)
                                                     <option value="{{ $country->id }}"
@@ -122,12 +122,13 @@
                                                 @endforeach
                                             </select>
                                         </div>
-
+<input type="hidden" name="product_id" class="test_type_"/>
+                                        <input type="hidden" name="country_travelling_from_id" class="country_id_"/>
                                         <div class="col-md-12" id="test" style="margin-top:20px;">
                                             <label>Select Test types <span class="show_required"> *</span></label>
-                                            <select class="form-control test_type"
-                                                    name="product_id"
-                                                    required>
+                                            <select class="form-control test_type" autocomplete="off" onchange="test_type_select()"
+                                                    name="product_id_"
+                                                    >
                                             </select>
                                         </div>
                                         <br/>
@@ -626,6 +627,20 @@
 
         }
 
+        function test_type_select(){
+            var d = $(".test_type").val();
+            $(".test_type_").val(d);
+        }
+
+        $('.country_id__').on('select2:select', function (e) {
+            var data = e.params.data;
+            // console.log(data);
+            $(".country_id_").val(data.id);
+        });
+        // function selectCountry(){
+        //     var c = $(".country_id__").val();
+        //     $(".country_id_").val(c);
+        // }
     </script>
     <script>
 

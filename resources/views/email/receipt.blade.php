@@ -91,9 +91,11 @@
             color: #999;
             padding: 20px;
         }
+
         .footer a {
             color: #999;
         }
+
         .footer p, .footer a, .footer unsubscribe, .footer td {
             font-size: 12px;
         }
@@ -131,6 +133,7 @@
             margin-bottom: 10px;
             font-weight: normal;
         }
+
         p li, ul li, ol li {
             margin-left: 5px;
             list-style-position: inside;
@@ -198,18 +201,22 @@
             text-align: center;
             border-radius: 3px 3px 0 0;
         }
+
         .alert a {
             color: #fff;
             text-decoration: none;
             font-weight: 500;
             font-size: 16px;
         }
+
         .alert.alert-warning {
             background: #f8ac59;
         }
+
         .alert.alert-bad {
             background: #ed5565;
         }
+
         .alert.alert-good {
             background: #1ab394;
         }
@@ -223,15 +230,19 @@
             text-align: left;
             width: 80%;
         }
+
         .invoice td {
             padding: 5px 0;
         }
+
         .invoice .invoice-items {
             width: 100%;
         }
+
         .invoice .invoice-items td {
             border-top: #eee 1px solid;
         }
+
         .invoice .invoice-items .total td {
             border-top: 2px solid #333;
             border-bottom: 2px solid #333;
@@ -278,12 +289,14 @@
 <body style="background: #e1e1e1;font-family:Arial, Helvetica, sans-serif; font-size:1em;">
 
 <table class="body-wrap">
-    <tbody><tr>
+    <tbody>
+    <tr>
         <td></td>
         <td class="container" width="600">
             <div class="content">
                 <table class="main" width="100%" cellpadding="0" cellspacing="0">
-                    <tbody><tr>
+                    <tbody>
+                    <tr>
                         <td class="content-wrap aligncenter">
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tbody>
@@ -294,11 +307,14 @@
                                 </tr>
                                 <tr>
                                     <td class="content-block">
-                                        <p>
+                                        <p style="text-align: left;line-height: 25px">
                                             Hi {{ $booking->first_name }} {{ $booking->last_name }}<br/>
-                                            Thank you for choosing to book with us. Your booking reference is {{ $code }}<br/>
-                                            Please make a note of this Reference Number as you will need it for your passenger locator form, and you would also need to present it at the airport.
-<br/>
+                                            Thank you for choosing to book with us. Your booking reference
+                                            is {{ $code }}<br/>
+                                            Please make a note of this Reference Number as you will need it for your
+                                            passenger locator form, and you would also need to present it at the
+                                            airport.
+                                            <br/>
                                         </p>
 
                                     </td>
@@ -308,72 +324,103 @@
                                         <table class="invoice">
                                             <tbody>
                                             <tr>
-                                                <td>{{ $booking->first_name }} {{ $booking->last_name }} <br>Invoice #{{ str_pad($booking->id,5,"0",STR_PAD_LEFT) }}<br>{{ Carbon\Carbon::parse($booking->created_at)->toDateString() }}</td>
+                                                <td>{{ $booking->first_name }} {{ $booking->last_name }} <br>Invoice
+                                                    #{{ str_pad($booking->id,5,"0",STR_PAD_LEFT) }}
+                                                    <br>{{ Carbon\Carbon::parse($booking->created_at)->toDateString() }}
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>
                                                     <table class="invoice-items" cellpadding="0" cellspacing="0">
-                                                        <tbody><tr>
+                                                        <tbody>
+                                                        <tr>
                                                             <td>{{ $product->name }} 1</td>
-                                                            <td class="alignright">N {{ number_format($booking_product->price,2) }}</td>
+                                                            <td class="alignright">
+                                                                {{ $booking_product->currency }} {{ number_format($booking_product->charged_amount,2) }}</td>
                                                         </tr>
 
                                                         <tr class="total">
                                                             <td class="alignright" width="80%">Total</td>
-                                                            <td class="alignright">N {{ number_format($booking_product->price,2) }}</td>
+                                                            <td class="alignright">
+                                                                {{ $booking_product->currency }} {{ number_format($booking_product->charged_amount,2) }}</td>
                                                         </tr>
-                                                        </tbody></table>
+                                                        </tbody>
+                                                    </table>
                                                 </td>
-                                                <td>
-                                                   Email: {{ $booking->email }}
-                                                </td>
-                                                <td>
-                                                    Phone Number: {{ $booking->phone_no }}
-                                                </td>
-                                                <td>
-                                                    Arrival Flight to the UK: {{ $booking->transport_no }}
-                                                </td>
-                                                <td>
-                                                    Arrival Date to UK: {{ $booking->arrival_date }}
-                                                </td>
-                                                <td>
-                                                    Booking Reference: {{ $booking->transaction_ref }}
-                                                </td>
-                                                <td>
-                                                    Address in the UK: {{ $booking->isolation_address }},{{ $booking->isolation_town }},{{ $booking->isolation_postal_code }}
-                                                </td>
-
                                             </tr>
-                                            </tbody></table>
+                                            </tbody>
+                                        </table>
                                     </td>
                                 </tr>
-
                                 <tr>
-                                    <td class="content-block">
-                                      Vendor: {{ $booking_product->vendor->name }}. {{ $booking_product->vendor->address }}
+                                    <td style="text-align: left;line-height: 25px;">
+                                        Email: {{ $booking->email }}
                                     </td>
-                                    <td class="content-block">
-                                        Now that you have made your booking, you can read more about the next steps <a href="{{ env("APP_URL"."next_steps") }}">here</a>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;line-height: 25px;">
+                                        Phone Number: {{ $booking->phone_no }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;line-height: 25px;">
+                                        Arrival Flight to the UK: {{ $booking->transport_no }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;line-height: 25px;">
+                                        Arrival Date to UK: {{ $booking->arrival_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;line-height: 25px;">
+                                        Booking Reference: {{ $booking->transaction_ref }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;line-height: 25px;">
+                                        Address in the UK: {{ $booking->isolation_address }}
+                                        ,{{ $booking->isolation_town }},{{ $booking->isolation_postal_code }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-block" style="text-align: left;line-height: 25px;">
+                                        Vendor: {{ $booking_product->vendor->name }}
+                                        . {{ $booking_product->vendor->address }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-block" style="text-align: left;line-height: 25px;">
+                                        Now that you have made your booking, you can read more about the next steps <a
+                                                href="{{ url(env("APP_URL")."next_steps") }}">here</a>
 
                                         UK Travel Tests
                                     </td>
                                 </tr>
-                                </tbody></table>
+                                </tbody>
+                            </table>
                         </td>
                     </tr>
-                    </tbody></table>
+                    </tbody>
+                </table>
                 <div class="footer">
                     <table width="100%">
-                        <tbody><tr>
-                            <td class="aligncenter content-block">Questions? Email <a href="mailto:">{{ $booking_product->vendor->email }}</a></td>
+                        <tbody>
+                        <tr>
+                            <td class="aligncenter content-block">Questions? Email <a
+                                        href="mailto:">{{ $booking_product->vendor->email }}</a></td>
                         </tr>
-                        <tr>for more information and guidelines,click <a href="https://www.gov.uk/guidance/coronavirus-covid-19-getting-tested" >Here</a> </tr>
-                                                          
-                        </tbody></table>
-                </div></div>
+                        <tr>for more information and guidelines,click <a
+                                    href="https://www.gov.uk/guidance/coronavirus-covid-19-getting-tested">Here</a></tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </td>
         <td></td>
     </tr>
-    </tbody></table>
+    </tbody>
+</table>
 </body>
 </html>

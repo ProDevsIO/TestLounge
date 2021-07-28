@@ -45,10 +45,10 @@ class BookingProduct extends Model
 		'product_id',
 		'vendor_id',
 		'vendor_product_id',
-		'price'
+		'price','charged_amount','currency'
 	];
 
-	public function booking()
+    public function booking()
 	{
 		return $this->belongsTo(Booking::class);
 	}

@@ -57,7 +57,8 @@ class VendorReceipt extends Mailable
             'booking' => $booking,
             'booking_product' => $booking_product,
             'product' => $product,
-            'vendor' => $vendor
+            'vendor' => $vendor,
+            'code' => $code
         ];
 
         $pdf = PDF::loadView('email.receipt', $data, [
