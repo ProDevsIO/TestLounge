@@ -123,6 +123,7 @@
                                         @endif
                                         @if(auth()->user()->type == "1")
                                             <th scope="col">Vendor</th>
+                                            <th scope="col">Referral</th>
                                             <th scope="col">Action</th>
                                         @endif
                                         @if(auth()->user()->vendor_id != "0")
@@ -134,7 +135,7 @@
                                     @foreach($bookings as $booking)
                                         <tr>
                                             <td>
-                                                {{ $booking->first_name }} {{ $booking->first_name }}
+                                                {{ $booking->first_name }} {{ $booking->last_name }}
                                             </td>
                                             <td>{{ $booking->phone_no }}</td>
                                             <td>{{ $booking->email }}</td>
@@ -161,6 +162,9 @@
                                             @if(auth()->user()->type == "1")
                                                 <td>
                                                     {{ ($booking->vendor) ? $booking->vendor->name : "none" }}
+                                                </td>
+                                                <td>
+                                                    {{ ($booking->user) ? $booking->user->first_name." ".$booking->user->last_name : "none" }}
                                                 </td>
                                                 <td><a href="{{ url('/view/booking/'.$booking->id) }}"
                                                        class="btn btn-info">View</a>

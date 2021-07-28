@@ -23,8 +23,9 @@ class VendorReceipt extends Mailable
     public $vendor;
     public $subject;
     public $from_;
+    public $code;
 
-    public function __construct($booking_product_id = null,$subject = "Booking",$from = null)
+    public function __construct($booking_product_id = null,$subject = "Booking",$from = null,$code)
     {
         $booking_product = BookingProduct::where('id',$booking_product_id)->first();
 
@@ -35,6 +36,7 @@ class VendorReceipt extends Mailable
 
         $this->subject = $subject;
         $this->from_ = $from;
+        $this->code = $code;
     }
 
     /**
@@ -49,6 +51,7 @@ class VendorReceipt extends Mailable
         $product = $this->product;
         $vendor = $this->vendor;
         $booking_product = $this->booking_product;
+        $code = $this->code;
 
         $data = [
             'booking' => $booking,
@@ -66,7 +69,7 @@ class VendorReceipt extends Mailable
         return $this->from($this->from_,$this->subject)
             ->attachData($pdf->output(),'receipt.pdf')
             ->view('email.receipt')
-            ->with(compact('booking','booking_product','product','vendor'));
+            ->with(compact('booking','booking_product','product','vendor','code'));
 
     }
 }

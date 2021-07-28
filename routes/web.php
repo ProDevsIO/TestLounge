@@ -24,6 +24,9 @@ Route::get('/webhook/receiver', [\App\Http\Controllers\HomeController::class,"we
 Route::get('/password',[\App\Http\Controllers\HomeController::class,"testing"]);
 
 Route::get('/login', [\App\Http\Controllers\HomeController::class,"login"]);
+Route::get('/country_bank/{country}', [\App\Http\Controllers\HomeController::class,"country_bank"]);
+Route::get('/account/name/{bank}/{no}', [\App\Http\Controllers\HomeController::class,"account_name"]);
+
 Route::get('/forgot/password', [\App\Http\Controllers\HomeController::class,"forgot_password"]);
 Route::post('/reset_password', [\App\Http\Controllers\HomeController::class,"reset_password"]);
 Route::get('/reset/password/{id}/{email}', [\App\Http\Controllers\HomeController::class,"c_password"]);
@@ -34,6 +37,8 @@ Route::post('/change/password', [\App\Http\Controllers\HomeController::class,"ch
 
 
 Route::get('/register/agent', [\App\Http\Controllers\HomeController::class,"register_agent"]);
+Route::get('/next_steps', [\App\Http\Controllers\HomeController::class,"next_steps"])->name('next_steps');
+
 
 Route::get('/payment/confirmation', [\App\Http\Controllers\HomeController::class,"payment_confirmation"]);
 Route::get('/pick', [\App\Http\Controllers\HomeController::class,"pick"])->name('pick');
@@ -94,6 +99,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::post('/add/bank', [\App\Http\Controllers\DashboardController::class,"add_bank"]);
+    Route::post('/change/referral_code/{id}', [\App\Http\Controllers\DashboardController::class,"change_referral_code"]);
+
     Route::post('/settings', [\App\Http\Controllers\DashboardController::class,"p_settings"]);
 
     Route::get('/colors', [\App\Http\Controllers\DashboardController::class,"color"]);

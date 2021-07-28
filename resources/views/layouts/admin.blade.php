@@ -161,6 +161,14 @@
 
                         </ul>
                     </li>
+                    @if(auth()->user()->type == "2")
+                   <li>
+                      <a href="{{ url('/user/bank') }}">
+                            <i class="icon-calculator"></i>
+                            <span>Payment Settings</span>
+                        </a>
+                    </li>
+                    @endif
                     @if(auth()->user()->type == "1")
                     <!-- <li>
                       <a href="{{ url('/colors') }}">

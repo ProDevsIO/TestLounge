@@ -139,6 +139,7 @@
                                         @endif
                                         @if(auth()->user()->type == "1")
                                             <th scope="col">Vendor</th>
+                                            <th scope="col">Referral</th>
                                             <th scope="col">Action</th>
                                         @endif
                                     </tr>
@@ -174,6 +175,9 @@
                                             @if(auth()->user()->type == "1")
                                                 <td>
                                                     {{ ($booking->vendor) ? $booking->vendor->name : "none" }}
+                                                </td>
+                                                <td>
+                                                    {{ ($booking->user) ? $booking->user->first_name." ".$booking->user->last_name : "none" }}
                                                 </td>
                                                 <td><a href="{{ url('/view/booking/'.$booking->id) }}"
                                                        class="btn btn-info">View</a>

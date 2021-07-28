@@ -294,8 +294,20 @@
                                 </tr>
                                 <tr>
                                     <td class="content-block">
+                                        <p>
+                                            Hi {{ $booking->first_name }} {{ $booking->last_name }}<br/>
+                                            Thank you for choosing to book with us. Your booking reference is {{ $code }}<br/>
+                                            Please make a note of this Reference Number as you will need it for your passenger locator form, and you would also need to present it at the airport.
+<br/>
+                                        </p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-block">
                                         <table class="invoice">
-                                            <tbody><tr>
+                                            <tbody>
+                                            <tr>
                                                 <td>{{ $booking->first_name }} {{ $booking->last_name }} <br>Invoice #{{ str_pad($booking->id,5,"0",STR_PAD_LEFT) }}<br>{{ Carbon\Carbon::parse($booking->created_at)->toDateString() }}</td>
                                             </tr>
                                             <tr>
@@ -312,6 +324,25 @@
                                                         </tr>
                                                         </tbody></table>
                                                 </td>
+                                                <td>
+                                                   Email: {{ $booking->email }}
+                                                </td>
+                                                <td>
+                                                    Phone Number: {{ $booking->phone_no }}
+                                                </td>
+                                                <td>
+                                                    Arrival Flight to the UK: {{ $booking->transport_no }}
+                                                </td>
+                                                <td>
+                                                    Arrival Date to UK: {{ $booking->arrival_date }}
+                                                </td>
+                                                <td>
+                                                    Booking Reference: {{ $booking->transaction_ref }}
+                                                </td>
+                                                <td>
+                                                    Address in the UK: {{ $booking->isolation_address }},{{ $booking->isolation_town }},{{ $booking->isolation_postal_code }}
+                                                </td>
+
                                             </tr>
                                             </tbody></table>
                                     </td>
@@ -319,7 +350,12 @@
 
                                 <tr>
                                     <td class="content-block">
-                                        {{ $booking_product->vendor->name }}. {{ $booking_product->vendor->address }}
+                                      Vendor: {{ $booking_product->vendor->name }}. {{ $booking_product->vendor->address }}
+                                    </td>
+                                    <td class="content-block">
+                                        Now that you have made your booking, you can read more about the next steps <a href="{{ env("APP_URL"."next_steps") }}">here</a>
+
+                                        UK Travel Tests
                                     </td>
                                 </tr>
                                 </tbody></table>

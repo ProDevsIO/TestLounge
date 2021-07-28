@@ -22,13 +22,17 @@ use PDF;
 
 class HomeController extends Controller
 {
-    public function booking()
+    public function booking(Request $request)
     {
         $countries = Country::all();
         $products = Product::all();
         $vendors = Vendor::all();
+        $user = "";
+        if($request->ref){
+            $user = User::where('referal_code',$request->ref)->first();
+        }
 
-        return view('homepage.booking')->with(compact('countries', 'products', 'vendors'));
+        return view('homepage.booking')->with(compact('countries', 'products', 'vendors','user'));
     }
 
     public function login()
@@ -106,6 +110,8 @@ class HomeController extends Controller
         ]);
 
         $request->vendor_id = 3;
+
+
 
         if (empty($request->product_id)) {
             session()->flash('alert-danger', "Kindly select a product");
@@ -278,7 +284,7 @@ class HomeController extends Controller
 
         //redirect to payment page
         if (!empty($sub_account)) {
-            $data['subaccounts'] = $sub_account;
+            $data['subaccounts'] = ["id" => $sub_account ];
         }
 
 
@@ -352,11 +358,9 @@ class HomeController extends Controller
                     ]);
                 }
 
-//                if ($booking->vendor_id == 1) {
-                $code = "UKTRA" . rand(40000, 1000000);
-//                } else if ($booking->vendor_id == 2) {
-//                    $code = $this->sendData($booking);
-//                }
+
+                $code = "RUKHT" . rand(1000000, 9999999);
+
 
 
                 try {
@@ -377,7 +381,7 @@ class HomeController extends Controller
                 if ($booking_product) {
                     try {
 
-                        Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from " . optional($booking_product->vendor)->name, optional($booking_product->vendor)->email));
+                        Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from " . optional($booking_product->vendor)->name, optional($booking_product->vendor)->email,$code));
 
                     } catch (\Exception $e) {
 
@@ -903,7 +907,7 @@ class HomeController extends Controller
 
             $message = "Dear " . $people->first_name . ",<br><br>
 
-            Kindly click this link to reset your password : <a href='" .env('APP_URL') . 'reset/password/' . encrypt_decrypt('encrypt', $people->id) . "/" . encrypt_decrypt("encrypt", $people->email)."'>Reset Password</a>,<br><br>
+            Kindly click this link to reset your password : <a href='" . env('APP_URL') . 'reset/password/' . encrypt_decrypt('encrypt', $people->id) . "/" . encrypt_decrypt("encrypt", $people->email) . "'>Reset Password</a>,<br><br>
           
             UKTravelsTeam
             ";
@@ -954,7 +958,8 @@ class HomeController extends Controller
         return redirect()->to('/login');
     }
 
-    public function testing(){
+    public function testing()
+    {
         $booking = Booking::first();
         $message = "
                 Hi,
@@ -971,4 +976,27 @@ class HomeController extends Controller
         Mail::to($booking->email)->send(new BookingCreation($message));
     }
 
+
+    public function country_bank($country)
+    {
+        $banks = $this->bank($country);
+
+        usort($banks, function ($a, $b) {
+            return $b->name < $a->name;
+        });
+
+        return $banks;
+
+    }
+
+    public function account_name($bank, $account_no)
+    {
+        $account_name = $this->account_name_($bank, $account_no);
+        return (isset($account_name->data->account_name) ? $account_name->data->account_name : "");
+
+    }
+
+    public function next_steps(){
+        return view('homepage.next_steps');
+    }
 }

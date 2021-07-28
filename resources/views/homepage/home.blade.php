@@ -322,6 +322,9 @@
                 </tr>
                 
             </table>
+            <div class="alert alert-danger">
+                Please note that Only Travellers who have been vaccinated by the UK NHS and have completed all doses at least 2weeks before travel are considered eligible. Passengers from France MUST undergo Quarantine , Day 2 and 8 tests irrespective of Vaccination Status
+            </div>
         </div>
         <br>
         </div>

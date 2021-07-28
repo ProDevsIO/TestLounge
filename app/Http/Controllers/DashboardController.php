@@ -230,7 +230,7 @@ class DashboardController extends Controller
                     }
                     $row['Flight Number'] = $booking->transport_no;
 
-                    fputcsv($file, array($row['Name'], $row['Email'], $row['PhoneNo'], $row['Sex'], $row['DOB'],$row['Ethnicity'],$row['Vaccination Status'],$row['Products'],$row['Home Address'],$row['Isolation Address'],$row['Document Id'],$row['Arrival Date'],$row['Country From'],$row['Departure Date'],$row['Mode of Transportation'],$row['Flight Number']));
+                    fputcsv($file, array($row['Name'], $row['Email'], $row['PhoneNo'], $row['Sex'], $row['DOB'], $row['Ethnicity'], $row['Vaccination Status'], $row['Products'], $row['Home Address'], $row['Isolation Address'], $row['Document Id'], $row['Arrival Date'], $row['Country From'], $row['Departure Date'], $row['Mode of Transportation'], $row['Flight Number']));
                 }
 
                 fclose($file);
@@ -285,7 +285,7 @@ class DashboardController extends Controller
         if (auth()->user()->type == 0) {
             abort(403);
         }
-        $users = User::orderby('created_at','desc')->get();
+        $users = User::orderby('created_at', 'desc')->get();
         $setting = Setting::where('id', 2)->first();
 
         return view('admin.users')->with(compact('users', 'setting'));
@@ -425,43 +425,41 @@ class DashboardController extends Controller
 
     public function user_bank()
     {
-        $banks = $this->bank();
+        $countries = ["NG" => "Nigeria", "GH" => "Ghana", "KE" => "Kenya", "UG" => "Uganda", "ZA" => "South Africa", "TZ" => "Tanzania"];
 
-        usort($banks, function ($a, $b) {
-            return $b->name < $a->name;
-        });
+//        $banks = $this->bank();
+//
+//        usort($banks, function ($a, $b) {
+//            return $b->name < $a->name;
+//        });
 
-        return view('admin.user_bank')->with(compact('banks'));
+
+        return view('admin.user_bank')->with(compact('countries'));
     }
 
-    function bank()
-    {
-        $ch = curl_init();
-        $headr = array();
-        $headr[] = 'Content-type: application/json';
-        $headr[] = 'Authorization: Bearer ' . env('RAVE_SECRET_KEY', "FLWSECK_TEST-516babb36b12f7f60ae0a118dcc9482a-X");
-        curl_setopt($ch, CURLOPT_URL, "https://api.flutterwave.com/v3/banks/NG");
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $server_output = curl_exec($ch);
-
-        curl_close($ch);
-        $server_output = json_decode($server_output);
-
-        return $server_output->data;
-    }
 
     public function add_bank(Request $request)
     {
+
         $this->validate($request, [
             'account_bank',
             'account_no'
         ]);
+
+        $banks = json_decode($request->bank_array);
+        $banks_ = [];
+        foreach ($banks as $bank){
+            $banks_[$bank->code] = $bank->name;
+        }
+
         $data_save = [
             'account_bank' => $request->account_bank,
             'account_no' => $request->account_no,
+            'country' => $request->country,
+            'account_name' => $request->account_name,
+            'bank' => (isset($banks_[$request->account_bank]) ? $banks_[$request->account_bank] : "")
         ];
+
 
         $settings = Setting::where('id', 2)->first();
         //update flutterwave
@@ -479,15 +477,19 @@ class DashboardController extends Controller
 
         if (!auth()->user()->flutterwave_key) {
             $data = $this->addFlutterwave($flutterwave_data);
+        } else {
+            $data = $this->editFlutterwave($flutterwave_data, auth()->user()->flutterwave_id);
 
-            if (!$data->data) {
-                session()->flash("alert-danger", $data->message);
-                return back();
-
-            }
-
-            $data_save['flutterwave_key'] = $data->data->subaccount_id;
         }
+        if (!$data->data) {
+            session()->flash("alert-danger", $data->message);
+            return back();
+
+        }
+
+        $data_save['flutterwave_key'] = $data->data->subaccount_id;
+        $data_save['flutterwave_id'] = $data->data->id;
+
 
         User::where('id', auth()->user()->id)->update($data_save);
         session()->flash("alert-success", "Bank has been added successfully");
@@ -517,16 +519,34 @@ class DashboardController extends Controller
 
     }
 
+    public function editFlutterwave($data, $flutterwave_id)
+    {
+        $ch = curl_init();
+        $headr = array();
+        $headr[] = 'Content-type: application/json';
+        $headr[] = 'Authorization: Bearer ' . env('RAVE_SECRET_KEY', "FLWSECK_TEST-516babb36b12f7f60ae0a118dcc9482a-X");
+        curl_setopt($ch, CURLOPT_URL, "https://api.flutterwave.com/v3/subaccounts/" . $flutterwave_id);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec($ch);
+
+        curl_close($ch);
+        $server_output = json_decode($server_output);
+
+        return $server_output;
+
+    }
+
     public function send_booking($id)
     {
         session()->flash("alert-danger", "This module is disabled for now. Till we are live");
         return back();
     }
 
-    public function editFlutterwave()
-    {
 
-    }
 
     public function color()
     {
@@ -572,5 +592,25 @@ class DashboardController extends Controller
         session()->flush();
         auth()->logout();
         return redirect()->to('/');
+    }
+
+    public function change_referral_code(Request $request ,$id){
+        $this->validate($request,[
+           'referal_code' => "required"
+        ]);
+
+        $user = User::where('referal_code',$request->referal_code)->where('id','!=',$id)->first();
+
+        if($user){
+            session()->flash("alert-info","Name already exist. Kindly use another name");
+            return back();
+        }
+
+        User::where('id',$id)->update([
+             'referal_code' => $request->referal_code
+        ]);
+
+        session()->flash('alert-success',"Referral code changed successfully");
+        return back();
     }
 }

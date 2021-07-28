@@ -50,6 +50,7 @@
                                         <th scope="col">User Type</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Percentage</th>
+                                        <th scope="col">Referral Code</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                     </thead>
@@ -85,6 +86,9 @@
                                                 <td>{{$user->percentage_split}}%</td>
                                             @endif
                                             <td>
+                                                <a href="{{ url(env("APP_URL")."booking?ref=".$user->referal_code) }}" target="_blank">{{ $user->referal_code }}</a>
+                                            </td>
+                                            <td>
                                                 <div class="btn-group" role="group">
                                                     <button id="btnGroupDrop1" type="button"
                                                             class="btn btn-secondary dropdown-toggle"
@@ -96,6 +100,7 @@
                                                         <a class="dropdown-item"
                                                            href="{{ url('complete/booking?user_id='.$user->id) }}">View
                                                             Bookings</a>
+
                                                         @if($user->type == 2)
                                                             <a href="javascript:;" onclick="makeAdmin('{{ $user->id }}')"
                                                                class="dropdown-item">Make Admin</a>
@@ -104,6 +109,8 @@
                                                         @if($user->type == 2)
                                                             <a href="{{ url('/agent/percent/' .$user->id) }}"
                                                                class="dropdown-item">Change Percentage</a>
+                                                            <a href="javascript:;" data-toggle="modal" data-target="#changeReferral{{ $user->id }}"
+                                                               class="dropdown-item">Change Referral Code</a>
 
                                                             @if($user->status == 0)
 
@@ -123,6 +130,29 @@
 
                                             </td>
                                         </tr>
+                                        <div class="modal fade" id="changeReferral{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <form action="{{ url('/change/referral_code/'.$user->id) }}" method="post">
+                                                   @csrf
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Change Referral Code</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <label>Referral Code</label>
+                                                        <input type="text" name="referal_code" class="form-control" value="{{ $user->referal_code }}">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endforeach
 
                                     </tbody>

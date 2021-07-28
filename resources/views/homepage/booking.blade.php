@@ -32,7 +32,7 @@
         }
 
     </style>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.css" integrity="sha512-DJ1SGx61zfspL2OycyUiXuLtxNqA3GxsXNinUX3AnvnwxbZ+YQxBARtX8G/zHvWRG9aFZz+C7HxcWMB0+heo3w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
 @endsection
 @section('content')
@@ -48,6 +48,9 @@
                         <div class="card-body">
                             <h1>Book your test
                             </h1>
+                            @if($_GET['ref'])
+<div style="margin-top: -10px;"><span class="badge badge-warning" >Company: {{ ($user->company_name) ?$user->company_name : $user->first_name." ".$user->last_name }}</span>
+</div>  <br/>       @endif
                             <p style="margin-bottom: 25px">To be allowed to board a flight to the UK, Your airline will
                                 require a negative PCR Test within 72 hours of your travel date , evidence of booking
                                 your UK covid tests and completion of your Passenger Locator Form.
@@ -496,7 +499,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"
             integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js" integrity="sha512-ljeReA8Eplz6P7m1hwWa+XdPmhawNmo9I0/qyZANCCFvZ845anQE+35TuZl9+velym0TKanM2DXVLxSJLLpQWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         var input = document.querySelector("#phone");
         window.intlTelInput(input, {
@@ -622,6 +625,7 @@
 
 
         }
+
     </script>
     <script>
 
