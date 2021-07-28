@@ -48,7 +48,7 @@
                         <div class="card-body">
                             <h1>Book your test
                             </h1>
-                            @if($_GET['ref'])
+                            @if(isset($_GET['ref']))
 <div style="margin-top: -10px;"><span class="badge badge-warning" >Company: {{ ($user->company_name) ?$user->company_name : $user->first_name." ".$user->last_name }}</span>
 </div>  <br/>       @endif
                             <p style="margin-bottom: 25px">To be allowed to board a flight to the UK, Your airline will
