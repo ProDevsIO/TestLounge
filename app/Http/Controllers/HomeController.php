@@ -354,7 +354,7 @@ class HomeController extends Controller
             'sex' => ($booking->sex == 1) ? "Male" : "Female",
             'ethnicity' => $ethnic,
             "email" => $booking->email,
-            'vaccine_type' => $booking->vaccination_type,
+            'vaccine_type' => ($booking->vaccination_type) ? $booking->vaccination_type : "n/a",
             "mobile" => $booking->phone_no,
             "arrival_in_uk" => Carbon::parse($booking->arrival_date)->toDateString(),
             "country_from" => $booking->travelingFrom->name,
@@ -370,7 +370,7 @@ class HomeController extends Controller
             "countries_travelled" => "Nigeria"
         ];
 
-        if ($booking->vaccination_type != "n/a") {
+        if ($booking->vaccination_type && $booking->vaccination_type != "n/a") {
             $data_send["test_kit_properties"]["vaccination_date"] = Carbon::parse($booking->vaccination_date)->toDateString();
         }
 
