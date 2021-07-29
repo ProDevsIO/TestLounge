@@ -13,6 +13,7 @@ class CreateBookingsTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::create('bookings', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('first_name', 200)->nullable();
@@ -65,6 +66,9 @@ class CreateBookingsTable extends Migration
             $table->integer('status')->nullable()->default(0);
             $table->timestamps();
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

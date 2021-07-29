@@ -13,12 +13,15 @@ class Colors extends Migration
      */
     public function up()
     {
-        //
+        try {
         Schema::create('colors', function (Blueprint $table) {
             $table->integer('id', true);
             $table->text('name')->nullable();
             $table->timestamps();
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

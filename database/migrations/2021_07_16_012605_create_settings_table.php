@@ -13,12 +13,16 @@ class CreateSettingsTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::create('settings', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('name', 500)->nullable();
             $table->string('value', 45)->nullable();
             $table->timestamps();
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

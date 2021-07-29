@@ -13,10 +13,15 @@ class AddStatusToUserTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::table('users', function (Blueprint $table) {
             //
             $table->integer('status')->default(1)->after('vendor_id');
         });
+
+        }catch (Exception $e){
+
+        }
     }
 
     /**

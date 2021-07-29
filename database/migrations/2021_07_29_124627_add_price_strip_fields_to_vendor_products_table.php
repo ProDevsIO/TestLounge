@@ -13,10 +13,14 @@ class AddPriceStripFieldsToVendorProductsTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::table('vendor_products', function (Blueprint $table) {
             //
             $table->string('price_stripe')->nullable()->after('price_pounds');
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

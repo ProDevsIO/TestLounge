@@ -13,6 +13,7 @@ class CreateVendorProductsTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::create('vendor_products', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('price', 45)->nullable();
@@ -20,6 +21,9 @@ class CreateVendorProductsTable extends Migration
             $table->integer('vendor_id')->nullable()->index('product_vendor_id_idx');
             $table->timestamps();
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

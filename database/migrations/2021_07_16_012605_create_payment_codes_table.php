@@ -13,12 +13,16 @@ class CreatePaymentCodesTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::create('payment_codes', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('code', 45)->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

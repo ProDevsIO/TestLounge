@@ -13,10 +13,14 @@ class AddExtraFieldsToBookingsTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::table('bookings', function (Blueprint $table) {
             $table->text('vaccination_type')->nullable()->after('vaccination_status');
             $table->dateTime('vaccination_date')->nullable()->after('vaccination_status');
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

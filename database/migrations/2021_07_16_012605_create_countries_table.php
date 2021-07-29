@@ -13,6 +13,7 @@ class CreateCountriesTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::create('countries', function (Blueprint $table) {
             $table->integer('id', true);
             $table->char('iso', 2);
@@ -22,6 +23,9 @@ class CreateCountriesTable extends Migration
             $table->smallInteger('numcode')->nullable();
             $table->integer('phonecode');
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

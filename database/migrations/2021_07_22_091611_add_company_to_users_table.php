@@ -13,10 +13,14 @@ class AddCompanyToUsersTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::table('users', function (Blueprint $table) {
             //
             $table->text('company')->nullable()->after('password');
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

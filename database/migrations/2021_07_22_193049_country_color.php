@@ -13,13 +13,16 @@ class CountryColor extends Migration
      */
     public function up()
     {
-        //
+        try {
         Schema::create('countrycolor', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('country_id')->nullable();
             $table->integer('color_id')->nullable();
             $table->timestamps();
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

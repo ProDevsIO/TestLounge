@@ -13,6 +13,7 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::create('transactions', function (Blueprint $table) {
             $table->integer('id', true);
             $table->double('amount')->nullable();
@@ -22,6 +23,9 @@ class CreateTransactionsTable extends Migration
             $table->double('pecentage_config')->nullable();
             $table->timestamps();
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

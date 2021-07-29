@@ -13,6 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::create('users', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('first_name', 500)->nullable();
@@ -31,6 +32,9 @@ class CreateUsersTable extends Migration
             $table->string('flutterwave_key', 45)->nullable();
             $table->timestamps();
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**
