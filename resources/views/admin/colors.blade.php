@@ -41,13 +41,14 @@
                             @csrf
                             <label>Country</label>
                             <select name="country" class="form-control" id="">
-                                <option value="">select</option>
+                                <option value="">Select a country</option>
                                 @foreach($countries as $country)
                                     <option value="{{$country->id}}">{{$country->nicename}}</option>
                                 @endforeach
                             </select>
                             <label>Color</label>
                             <select name="color" class="form-control" id="">
+                            <option value="">Select a color</option>
                                 @foreach($colors as $color)
                                     <option value="{{$color->id}}">{{$color->name}}</option>
                                 @endforeach
