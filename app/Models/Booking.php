@@ -21,6 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $ethnicity
  * @property string|null $nhs_number
  * @property int|null $vaccination_status
+ * @property string|null $vaccination_type
+ * @property Carbon|null $vaccination_date
  * @property string|null $document_id
  * @property string|null $address_1
  * @property string|null $address_2
@@ -94,6 +96,8 @@ class Booking extends Model
 		'ethnicity',
 		'nhs_number',
 		'vaccination_status',
+		'vaccination_type',
+		'vaccination_date',
 		'document_id',
 		'address_1',
 		'address_2',

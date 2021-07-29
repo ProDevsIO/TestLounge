@@ -302,13 +302,14 @@ class HomeController extends Controller
 
     public function payment_confirmation(Request $request)
     {
-
+       
+       
         if (env('APP_ENV', "LIVE") == "LIVE") {
             $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
         } else {
             $url = "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/verify";
         }
-
+     
         $request_data = $request->all();
 
         $txRef = $request->tx_ref;
@@ -327,9 +328,10 @@ class HomeController extends Controller
         curl_close($ch);
 
         $data_response = json_decode($response);
-
+       
 
         if (isset($data_response->data->status) && $data_response->data->status == "successful") {
+            
             $booking = Booking::where('transaction_ref', $txRef)->first();
             if ($booking->status != 1) {
                 $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
@@ -365,7 +367,12 @@ class HomeController extends Controller
                 }
 
 
-                $code = "RUKHT" . rand(1000000, 9999999);
+                //api call via function sendData()
+                    $test =$this->sendData($booking);
+                    dd($test);
+                // $code = "RUKHT" . rand(1000000, 9999999);
+            
+               
 
 
 
@@ -417,17 +424,18 @@ class HomeController extends Controller
 
     function sendData($booking)
     {
+       
         //ethnicity
         if ($booking->ethnicity == 0) {
-            $ethnic = "white";
+            $ethnic = "white\_other";
         } elseif ($booking->ethnicity == 1) {
-            $ethnic = "Mixed/Muti Ethnic group";
+            $ethnic = "Mixed\Muti Ethnic group";
         } elseif ($booking->ethnicity == 2) {
-            $ethnic = "Asain/Asian British";
+            $ethnic = "Asain\Asian British";
         } elseif ($booking->ethnicity == 3) {
-            $ethnic = "Black";
+            $ethnic = "Black\_other";
         } elseif ($booking->ethnicity == 4) {
-            $ethnic = "Others";
+            $ethnic = "Other\_mixed";
         }
 
         //transportation means
@@ -443,33 +451,36 @@ class HomeController extends Controller
             $transport = "Others";
         }
 
-        $data_send = ['first_name' => $booking->first_name,
+        $data_send["test_kit_properties"] =  [
+            'first_name' => $booking->first_name,
             'last_name' => $booking->last_name,
-            'dob' => [
-                'day' => Carbon::parse($booking->dob)->day,
-                'month' => Carbon::parse($booking->dob)->month,
-                'year' => Carbon::parse($booking->dob)->year,
-            ],
+            'birth_date' => Carbon::parse($booking->dob)->toDateString(),
             'sex' => $booking->sex,
-            'vaccination_status' => $booking->vaccination_status,
             'ethnicity' => $ethnic,
-            "nhs_number" => $booking->nhs_number,
-            "document_id" => $booking->document_id,
-            "uk_post_code" => $booking->post_code,
-            "uk_address" => $booking->address_1,
-            "uk_city" => $booking->home_town,
-            "departure_date" => Carbon::parse($booking->departure_date)->toDateString(),
-            "country_travelled_from" => $booking->travelingFrom->name,
-            "city_travelled_from" => $booking->city_from,
-            "type_of_transport" => $transport,
-            "coach_number" => $booking->transport_no,
             "email" => $booking->email,
-            "phone" => $booking->phone_no
+            'vaccination_type' => $booking->vaccination_type,
+            "mobile" => $booking->phone_no,
+            "arrival_in_uk" =>  Carbon::parse($booking->arrival_date)->toDateString(),
+            "vaccination_date" =>  Carbon::parse($booking->vaccination_date)->toDateString(),
+            "nhs_number" => $booking->nhs_number,
+            "departure_from_abroad_date" => Carbon::parse($booking->departure_date)->toDateString(),
+            'vaccination_status' => $booking->vaccination_status,
+            "country_from" => $booking->travelingFrom->name,
+            "flight_number" => $booking->transport_no,
+            "passport"=> $booking->document_id,
+            
+           
         ];
-
+        $data_send["shipping_address_attributes"] = 
+        [
+            "line_1" => $booking->address_1,
+            "city" => $booking->home_town,
+            "postcode" =>  $booking->post_code
+        ];
+        
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, "https://renwicktech.co.uk/api/v1/sterling/booking");
+        curl_setopt($ch, CURLOPT_URL, "https://portal.ukhealthtesting.com/api/partner_orders");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,
             http_build_query($data_send));
@@ -480,8 +491,8 @@ class HomeController extends Controller
         curl_close($ch);
 
         $data_response = json_decode($response);
-
-        return $data_response->reference_number;
+        return $response;
+        return $data_response->reference;
     }
 
     public function booking_success(Request $request)

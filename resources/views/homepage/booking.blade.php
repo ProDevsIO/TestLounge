@@ -129,6 +129,7 @@
                                             <select class="form-control test_type" autocomplete="off" onchange="test_type_select()"
                                                     name="product_id_"
                                                     >
+                                                    
                                             </select>
                                         </div>
                                         <br/>
@@ -230,6 +231,20 @@
                                                 <option value="3">Received both first and second dose
                                                 </option>
                                             </select>
+                                            <label>Vaccination Type: <span class="show_required"> *</span></label>
+                                            <select class="form-control" name="vaccination_type">
+                                                <option value="">Make a selection</option>
+                                               <option value="Janssen vaccine">Janssen Vaccine</option>
+                                               <option value="Pfizer">Pfizer</option>
+                                               <option value="Moderna">Moderna</option>
+                                               <option value="Oxford/AZ">Oxford/AZ</option>
+                                               <option value="Other">Other</option>
+                                            </select>
+                                            <label>Vaccination Date: <span class="show_required"> *</span></label>
+                                            <input class="form-control date_picker" type="text"
+                                                   placeholder="Date of Birth"
+                                                   name="vaccination_date"
+                                                   value="{{ old('vaccination_date') }}">
                                         </div>
                                         <div class="col-md-6" style="margin-top: 20px">
                                             <label>Contact Phone Number(In the UK): <span
