@@ -441,10 +441,11 @@ class DashboardController extends Controller
         return back();
     }
 
-    public function product_vendor($id, $price)
+    public function product_vendor($id, $price, $priceStripe)
     {
         VendorProduct::where('id', $id)->update([
-            'price_pounds' => $price
+            'price_pounds' => $price,
+            'price_stripe' => $priceStripe
         ]);
 
         return "success";
@@ -580,7 +581,8 @@ class DashboardController extends Controller
         //get all colors
         $colors = Color::all();
         //get all countries
-        $countries = Country::all();
+        $country_id_exclude = CountryColor::pluck('country_id')->toArray();;
+        $countries = Country::whereNotIn('id',$country_id_exclude)->get();
         $countryzone = CountryColor::all();
         
         return view('admin.colors')->with(compact('colors', 'countries', 'countryzone'));
@@ -588,27 +590,19 @@ class DashboardController extends Controller
 
     public function edit_color(Request $request, $id)
     {
-        $exist = CountryColor::where('country_id', $request->country)->first();
-
-        if($exist->count() >0){
-            session()->flash("alert-success", "Sorry , this country has already been added.");
-            return back();
-        }
-        else{
             CountryColor::where('id', $id)->update([
-                'country_id' => $request->country,
                 'color_id' => $request->color
             ]);
             session()->flash("alert-success", "Color Zone has been updated ");
             return back();
-        }
+  
     }
 
     public function add_color(Request $request)
     {
         $exist = CountryColor::where('country_id', $request->country)->first();
-        
-        if($exist->count() >0){
+       
+        if($exist != null){
             session()->flash("alert-success", "Sorry , this country has already been added.");
             return back();
         }

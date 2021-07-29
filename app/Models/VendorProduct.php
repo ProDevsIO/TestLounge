@@ -36,7 +36,9 @@ class VendorProduct extends Model
 	];
 
 	protected $fillable = [
-		'price','price_pounds',
+		'price',
+		'price_pounds',
+		'price_stripe',
 		'product_id',
 		'vendor_id'
 	];

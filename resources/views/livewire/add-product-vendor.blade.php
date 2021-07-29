@@ -10,6 +10,8 @@
     </select>
     <label>Price in Pounds</label>
     <input type="number" wire:model="price" class="form-control" placeholder="£40">
+    <label>Price Stripe</label>
+    <input type="text" wire:model="price_stripe" class="form-control" placeholder="£40">
     </select>
     <br/>
     <div wire:loading wire:target="add_product" class="pull-right">
@@ -36,6 +38,8 @@
                 <div class="vendor_product_{{ $vendor_product->id }}" style="display: none">
                     <label>Price</label>
                     <input type="number" class="form-control" id="price{{ $vendor_product->id }}">
+                    <label>Price Stripe</label>
+                    <input type="text" class="form-control" id="priceStripe{{ $vendor_product->id }}">
 <br/>
                     <input type="submit" class="btn btn-primary pull-right" value="update" onclick="productUpdate('{{ $vendor_product->id }}')">
                 </div>
@@ -53,8 +57,9 @@
 
     function productUpdate(id) {
         var d = $("#price" + id).val();
+        var s = $("#priceStripe" + id).val();
 
-        $.get("/product/vendor/" + id + "/" + d, function (data, status) {
+        $.get("/product/vendor/" + id + "/" + d + "/" + s, function (data, status) {
             $(".vendor_product_"+id).toggle();
             Livewire.emit('productVendor');
 

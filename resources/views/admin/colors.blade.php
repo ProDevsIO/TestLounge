@@ -125,16 +125,6 @@
                                                         </div>
                                                         <div class="modal-body">
 
-                                                           <label>Country</label>
-                                                           <select name="country" class="form-control"  id="">
-                                                           @foreach($countries as $country)
-                                                                <option value="{{$country->id}}"
-                                                                @if($country->id == $zone->country_id)
-                                                                    selected
-                                                                @endif > {{$country->nicename}}</option>
-                                                               @endforeach
-                                                           </select>
-
                                                            <label>Color</label>
                                                            <select name="color" class="form-control"  id="">
                                                            @foreach($colors as $color)

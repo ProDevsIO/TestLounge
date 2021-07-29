@@ -83,7 +83,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/edit/product', [\App\Http\Controllers\DashboardController::class,"edit_product"]);
     Route::post('/add/product', [\App\Http\Controllers\DashboardController::class,"add_product"]);
     Route::get('/delete/product/{id}', [\App\Http\Controllers\DashboardController::class,"delete_product"]);
-    Route::get('/product/vendor/{id}/{price}', [\App\Http\Controllers\DashboardController::class,"product_vendor"]);
+    Route::get('/product/vendor/{id}/{price}/{pricestripe}', [\App\Http\Controllers\DashboardController::class,"product_vendor"]);
 
     Route::get('/agent/activate/{id}', [\App\Http\Controllers\HomeController::class,"agent_activate"]);
     Route::get('/agent/deactivate/{id}', [\App\Http\Controllers\HomeController::class,"agent_deactivate"]);

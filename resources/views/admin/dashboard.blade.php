@@ -161,9 +161,9 @@
                                                 @endif</td>
                                             <td>
                                                 @if($booking->mode_of_payment == 1)
-                                                    Online
+                                                    Flutterwave
                                                 @elseif($booking->mode_of_payment == 2)
-                                                    Payment Code
+                                                    Stripe
                                                 @endif
                                             </td>
                                             @if(auth()->user()->referal_code)
