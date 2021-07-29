@@ -398,7 +398,6 @@ class HomeController extends Controller
         curl_close($ch);
 
         $data_response = json_decode($response);
-        dd($data_response);
 
         return $data_response->reference;
     }
@@ -948,19 +947,19 @@ class HomeController extends Controller
                 'currency' => "GBP"
             ]);
 
-//            try {
+            try {
                 $code = $this->sendData($booking);
-//            } catch (\Exception $e) {
-//
-//                $booking->update([
-//                    'vendor_id' => 3,
-//                    'mode_of_payment' => 2,
-//                    'transaction_ref' =>  $txRef,
-//                    'status' => 1
-//                ]);
-//
-//                return redirect()->to('/booking/code/failed?b=' . $txRef);
-//            }
+            } catch (\Exception $e) {
+
+                $booking->update([
+                    'vendor_id' => 3,
+                    'mode_of_payment' => 2,
+                    'transaction_ref' =>  $txRef,
+                    'status' => 1
+                ]);
+
+                return redirect()->to('/booking/code/failed?b=' . $txRef);
+            }
 
             if ($booking_product) {
                 try {
@@ -990,7 +989,7 @@ class HomeController extends Controller
             return redirect()->to('/');
         }
         $txRef = "stripe_" . rand(10000000, 99929302399);
-        $booking_id = encrypt_decrypt('descrypt', $request->b);
+        $booking_id = encrypt_decrypt('decrypt', $request->b);
         $booking = Booking::where('id', $booking_id)->first();
         $booking->update([
             'transaction_ref' => $txRef
