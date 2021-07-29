@@ -57,7 +57,7 @@
         }
 
         @media screen and (max-width: 600px) {
-            .radio{
+            .radio {
                 width: 100%
             }
         }
@@ -518,17 +518,24 @@
                                                 <div class='radio' data-value="stripe" style="margin-top: 10px"><img
                                                             src="{{ url('/img/stripe.png') }}"
                                                             height="60px"></div>
-                                                <div class='radio' data-value="flutterwave" style="margin-top: 10px"><img
+                                                <div class='radio' data-value="flutterwave" style="margin-top: 10px">
+                                                    <img
                                                             src="{{ url('/img/Flutterwave.png') }}"
                                                             height="60px"></div>
                                                 <br>
                                             </div>
+                                            <div class="alert alert-warning">
+                                                * Flutterwave is preferred for Nigerian cardholders
+                                            </div>
                                         </div>
                                         <div class="col-md-12">
                                             <label>Consent to Test: <span class="show_required"> *</span></label><br/>
-                                            <p class="field-description" style="font-size: 15px;">I consent to this test being done, or if this test is for a child, I confirm I am a legal guardian of the child and consent to this test being done.</p>
+                                            <p class="field-description" style="font-size: 15px;">I consent to this test
+                                                being done, or if this test is for a child, I confirm I am a legal
+                                                guardian of the child and consent to this test being done.</p>
 
-                                            <input style="width:20px" class="pull-left" required type="checkbox" name="consent" value="1"
+                                            <input style="width:20px" class="pull-left" required type="checkbox"
+                                                   name="consent" value="1"
                                             />
                                         </div>
                                         @if(isset($_GET['ref']))
@@ -625,8 +632,8 @@
 
 
             var form1 = $("#logins-part input").filter(function () {
-                if (this.id == "nhs"  || this.id == "vaccination_date") {
-                }else{
+                if (this.id == "nhs" || this.id == "vaccination_date") {
+                } else {
                     return $.trim($(this).val()).length == 0
                 }
             }).length == 0;
@@ -650,7 +657,7 @@
 
 
             var form2_select = $("#information-part select").filter(function () {
-                    return $.trim($(this).val()).length == 0
+                return $.trim($(this).val()).length == 0
             }).length == 0;
 
             var form3_select = $("#products-part select").filter(function () {
@@ -719,10 +726,10 @@
             // console.log(data);
             $(".country_id_").val(data.id);
         });
-        $('.radio-group .radio').click(function(){
+        $('.radio-group .radio').click(function () {
             $(this).parent().find('.radio').removeClass('selected');
             $(this).addClass('selected');
-            var payment_method =$(this).data();
+            var payment_method = $(this).data();
             $("#payment_method").val(payment_method.value);
         });
     </script>
