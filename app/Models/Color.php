@@ -14,7 +14,7 @@ class Color extends Model
 
     public function countryCode()
 	{
-		return $this->belongsTo(CountryColor::class);
+		return $this->hasMany(CountryColor::class);
 	}
 
 }

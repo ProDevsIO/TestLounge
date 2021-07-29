@@ -9,7 +9,7 @@
         <div class="container-fluid">
 
             <!--states start-->
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-xl-3 col-sm-6">
                     <div class="card mb-4 bg-purple" title="Pending bookings">
                         <div class="card-body">
@@ -25,23 +25,33 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <form method="post" action="{{ url('/add/colors') }}">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add Color</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Add Country color zone</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             @csrf
-                            <label>Name</label>
-                            <input type="text" class="form-control"
-                                   value="{{ old('name') }}" name="name" required>
+                            <label>Country</label>
+                            <select name="country" class="form-control" id="">
+                                <option value="">select</option>
+                                @foreach($countries as $country)
+                                    <option value="{{$country->id}}">{{$country->nicename}}</option>
+                                @endforeach
+                            </select>
+                            <label>Color</label>
+                            <select name="color" class="form-control" id="">
+                                @foreach($colors as $color)
+                                    <option value="{{$color->id}}">{{$color->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -56,51 +66,55 @@
                 <div class="col-xl-12">
                     <div class="card card-shadow mb-4 ">
                         <div class="card-header border-0">
+                            
                             <div class="custom-title-wrap border-0 position-relative pb-2">
-                                <div class="custom-title">Colors</div>
-                                <a href="javascript:;" data-toggle="modal" data-target="#addProduct" class="btn btn-danger pull-right">Add Color</a>
+                                <div class="custom-title">Country Color Zones</div>
+                                <a href="javascript:;" data-toggle="modal" data-target="#addProduct" class="btn btn-info pull-right">Add Color Zone</a>
                             </div>
                         </div>
                         <div class="card-body p-0">
+                        @include('errors.showerrors')
                             <div class="table-responsive">
                                 <table class="table table-hover table-custom" id="data_table">
                                     <thead>
                                     <tr>
-                                        <th scope="col">Name</th>
-                                        
+                                        <th scope="col">Country</th>
+                                        <th scope="col">Color</th>
                                         @if(auth()->user()->type == "1")
                                             <th scope="col">Action</th>
                                         @endif
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($colors as $color)
+                                    @foreach($countryzone as $zone)
                                         <tr>
                                             <td>
-                                                {{ $color->name }}
+                                                {{ $zone->country['name']}}
                                             </td>
-                                           
+                                            <td>
+                                            {{ $zone->color['name']}}
+                                            </td>
                                             @if(auth()->user()->type == "1")
                                                 <td>
                                                         <a data-toggle="modal"
-                                                           data-target="#editModal{{ $color->id }}"
+                                                           data-target="#editModal{{ $zone->id }}"
                                                            href="javascript:;"
                                                            class="btn btn-sm btn-info">Edit</a>
                                         
-                                                        <a href="#" onclick="delete_product('{{ $color->id }}')"
+                                                        <a href="#" onclick="delete_zone('{{ $zone->id }}')"
                                                            class="btn btn-sm btn-danger">Delete</a>
                                             
                                                 </td>
                                             @endif
                                         </tr>
 
-                                        <div class="modal fade" id="editModal{{ $color->id }}" tabindex="-1"
+                                        <div class="modal fade" id="editModal{{ $zone->id }}" tabindex="-1"
                                              role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
-                                                    <form action="/edit/colors/{{$color->id}}" method="post">
+                                                    <form action="/edit/colors/{{$zone->id}}" method="post">
                                                         @csrf
-                                                        <input type="hidden" name="id" value="{{ $color->id }}"/>
+                                                        <input type="hidden" name="id" value="{{ $zone->id }}"/>
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="exampleModalLabel">Edit
                                                                 Color Zone</h5>
@@ -111,9 +125,25 @@
                                                         </div>
                                                         <div class="modal-body">
 
-                                                            <label>Name</label>
-                                                            <input type="text" class="form-control"
-                                                                   value="{{ $color->name }}" name="name">
+                                                           <label>Country</label>
+                                                           <select name="country" class="form-control"  id="">
+                                                           @foreach($countries as $country)
+                                                                <option value="{{$country->id}}"
+                                                                @if($country->id == $zone->country_id)
+                                                                    selected
+                                                                @endif > {{$country->nicename}}</option>
+                                                               @endforeach
+                                                           </select>
+
+                                                           <label>Color</label>
+                                                           <select name="color" class="form-control"  id="">
+                                                           @foreach($colors as $color)
+                                                                <option value="{{$color->id}}"
+                                                                @if($color->id == $zone->color_id)
+                                                                    selected
+                                                                @endif > {{$color->name}}</option>
+                                                               @endforeach
+                                                           </select>
                                                         
                                                         </div>
                                                         <div class="modal-footer">
@@ -155,8 +185,8 @@
             });
         });
 
-        function delete_product(id){
-            var d = confirm("Are you sure you want to delete this color?");
+        function delete_zone(id){
+            var d = confirm("Are you sure you want to delete this color zone?");
             if(d){
                 window.location = "/delete/color/" + id;
             }

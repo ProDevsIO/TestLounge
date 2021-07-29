@@ -50,6 +50,6 @@ class Country extends Model
 
 	public function countryColor()
     {
-        return $this->hasMany(Country::class);
+        return $this->hasOne(Country::class);
     }
 }

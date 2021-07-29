@@ -11,6 +11,8 @@ use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorProduct;
 use App\Models\Color;
+use App\Models\Country;
+use App\Models\CountryColor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -297,6 +299,14 @@ class DashboardController extends Controller
         return back();
     }
 
+    public function delete_color($id)
+    {
+   
+        CountryColor::where('id', $id)->delete();
+        session()->flash('alert-success', "Color zone deleted successfully.");
+        return back();
+    }
+
     public function users()
     {
         if (auth()->user()->type == 0) {
@@ -569,38 +579,48 @@ class DashboardController extends Controller
     {
         //get all colors
         $colors = Color::all();
-        //return the colors to view
-        return view('admin.colors')->with(compact('colors'));
+        //get all countries
+        $countries = Country::all();
+        $countryzone = CountryColor::all();
+        
+        return view('admin.colors')->with(compact('colors', 'countries', 'countryzone'));
     }
 
     public function edit_color(Request $request, $id)
     {
+        $exist = CountryColor::where('country_id', $request->country)->first();
 
-        $colors = Color::where([
-            'name' => $request->name
-        ])->get();
-
-        if (count($colors) > 0) {
-            session()->flash("alert-danger", "Color already exist");
-            return back();
-        } else {
-            Color::where('id', $id)->update([
-                'name' => $request->name
-            ]);
-            session()->flash("alert-success", "Color has been updated ");
+        if($exist->count() >0){
+            session()->flash("alert-success", "Sorry , this country has already been added.");
             return back();
         }
-
-
+        else{
+            CountryColor::where('id', $id)->update([
+                'country_id' => $request->country,
+                'color_id' => $request->color
+            ]);
+            session()->flash("alert-success", "Color Zone has been updated ");
+            return back();
+        }
     }
 
     public function add_color(Request $request)
     {
-        Color::create([
-            'name' => $request->name
-        ]);
-        session()->flash("alert-success", "New color added");
-        return back();
+        $exist = CountryColor::where('country_id', $request->country)->first();
+        
+        if($exist->count() >0){
+            session()->flash("alert-success", "Sorry , this country has already been added.");
+            return back();
+        }
+        else{
+            CountryColor::create([
+                'country_id' => $request->country,
+                'color_id' => $request->color
+            ]);
+            session()->flash("alert-success", "New country color zone added");
+            return back();
+        }
+       
     }
 
 

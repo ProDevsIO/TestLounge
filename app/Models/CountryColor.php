@@ -7,21 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class CountryColor extends Model
 {
+    protected $table = 'countrycolor';
     protected $fillable = [
-		'booking_id',
-		'product_id',
-		'vendor_id',
-		'vendor_product_id',
-		'price'
+
+		'country_id',
+        'color_id'
 	];
 
     public function country()
     {
-        return $this->belongsToMany(Country::class);
+        return $this->belongsTo(Country::class, 'country_id');
     }
 
 	public function color()
     {
-        return $this->HasOne(Color::class);
+        return $this->belongsTo(Color::class, 'color_id');
     }
 }

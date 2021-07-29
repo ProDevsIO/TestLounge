@@ -152,7 +152,7 @@
                                                 {{ $booking->first_name }} {{ $booking->first_name }}
                                             </td>
                                             <td>{{ $booking->phone_no }}</td>
-                                            <td>{{ $booking->email }}</td>
+                                            <td>{{ $booking->email }} <br>{{$booking->booking_code}}</td>
                                             <td> {{ $booking->created_at }} </td>
                                             <td>@if($booking->status == 0)
                                                     <span class="badge badge-warning">Not Paid</span>
