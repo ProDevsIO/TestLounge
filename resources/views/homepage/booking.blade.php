@@ -31,8 +31,41 @@
             width: 90%;
         }
 
+
+        .radio-group {
+            position: relative;
+            margin-bottom: 25px
+        }
+
+        .radio {
+            display: inline-block;
+            height: 64px;
+            border-radius: 0;
+            background: #eee;
+            box-sizing: border-box;
+            border: 1px solid lightgrey;
+            cursor: pointer;
+            margin: 8px 25px 8px 0px
+        }
+
+        .radio:hover {
+            box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2)
+        }
+
+        .radio.selected {
+            box-shadow: 0px 0px 0px 4px rgba(0, 0, 0, 0.4)
+        }
+
+        @media screen and (max-width: 600px) {
+            .radio{
+                width: 100%
+            }
+        }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.css" integrity="sha512-DJ1SGx61zfspL2OycyUiXuLtxNqA3GxsXNinUX3AnvnwxbZ+YQxBARtX8G/zHvWRG9aFZz+C7HxcWMB0+heo3w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.css"
+          integrity="sha512-DJ1SGx61zfspL2OycyUiXuLtxNqA3GxsXNinUX3AnvnwxbZ+YQxBARtX8G/zHvWRG9aFZz+C7HxcWMB0+heo3w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
 @endsection
 @section('content')
@@ -49,8 +82,9 @@
                             <h1>Book your test
                             </h1>
                             @if(isset($_GET['ref']) && isset($user))
-<div style="margin-top: -10px;"><span class="badge badge-warning" >Company: {{ (isset($user->company)) ?$user->company : $user->first_name." ".$user->last_name }}</span>
-</div>  <br/>       @endif
+                                <div style="margin-top: -10px;"><span
+                                            class="badge badge-warning">Company: {{ (isset($user->company)) ?$user->company : $user->first_name." ".$user->last_name }}</span>
+                                </div>  <br/>       @endif
                             <p style="margin-bottom: 25px">To be allowed to board a flight to the UK, Your airline will
                                 require a negative PCR Test within 72 hours of your travel date , evidence of booking
                                 your UK covid tests and completion of your Passenger Locator Form.
@@ -111,7 +145,8 @@
                                         <div class="col-md-12">
                                             <label>Country travelled from: <span
                                                         class="show_required"> *</span></label>
-                                            <select class="form-control select2 country_id__" name="country_travelling_from" autocomplete="off"
+                                            <select class="form-control select2 country_id__"
+                                                    name="country_travelling_from" autocomplete="off"
                                                     id="travel_from" onchange="run()" onselect="selectCountry()">
                                                 <option value="">Make a selection</option>
                                                 @foreach($countries as $country)
@@ -122,14 +157,15 @@
                                                 @endforeach
                                             </select>
                                         </div>
-<input type="hidden" name="product_id" class="test_type_"/>
+                                        <input type="hidden" name="product_id" class="test_type_"/>
                                         <input type="hidden" name="country_travelling_from_id" class="country_id_"/>
                                         <div class="col-md-12" id="test" style="margin-top:20px;">
                                             <label>Select Test types <span class="show_required"> *</span></label>
-                                            <select class="form-control test_type" autocomplete="off" onchange="test_type_select()"
+                                            <select class="form-control test_type" autocomplete="off"
+                                                    onchange="test_type_select()"
                                                     name="product_id_"
-                                                    >
-                                                    
+                                            >
+
                                             </select>
                                         </div>
                                         <br/>
@@ -221,7 +257,8 @@
 
                                         <div class="col-md-12">
                                             <label>Vaccination Status: <span class="show_required"> *</span></label>
-                                            <select class="form-control" name="vaccination_status" required>
+                                            <select class="form-control" id="vaccination_status"
+                                                    name="vaccination_status" onchange="vaccination_check()" required>
                                                 <option value="">Make a selection</option>
                                                 <option value="1">Not been vaccinated</option>
 
@@ -233,22 +270,24 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-md-12" style="margin-top: 30px">
-                                            <label>Vaccination Type: <span class="show_required"> *</span></label>
-                                            <select class="form-control" name="vaccination_type">
+                                        <div class="col-md-12" id="vaccination_type_div"
+                                             style="margin-top: 30px;display: none;">
+                                            <label>Vaccination Type:</label>
+                                            <select class="form-control" id="vaccination_type" name="vaccination_type">
                                                 <option value="">Make a selection</option>
-                                               <option value="Janssen vaccine">Janssen Vaccine</option>
-                                               <option value="Pfizer">Pfizer</option>
-                                               <option value="Moderna">Moderna</option>
-                                               <option value="Oxford/AZ">Oxford/AZ</option>
-                                               <option value="Other">Other</option>
+                                                <option value="Janssen vaccine">Janssen Vaccine</option>
+                                                <option value="Pfizer">Pfizer</option>
+                                                <option value="Moderna">Moderna</option>
+                                                <option value="Oxford/AZ">Oxford/AZ</option>
+                                                <option value="Other">Other</option>
                                             </select>
                                         </div>
 
-                                        <div class="col-md-12" style="margin-top: 20px">
-                                            <label>Vaccination Date: <span class="show_required"> *</span></label>
-                                            <input class="form-control date_picker" type="text"
-                                                   placeholder="Date of Birth"
+                                        <div class="col-md-12" id="vaccination_date_div"
+                                             style="margin-top: 20px;display: none;">
+                                            <label>Vaccination Date:</label>
+                                            <input class="form-control date_picker" id="vaccination_date" type="text"
+                                                   placeholder="Vaccination date"
                                                    name="vaccination_date"
                                                    value="{{ old('vaccination_date') }}">
                                         </div>
@@ -470,6 +509,21 @@
                                             <input class="form-control" type="text" required name="transport_no"
                                                    value="{{ old('transport_no') }}"/>
                                         </div>
+
+                                        <div class="col-md-12">
+                                            <label>Choose Payment Method: <span
+                                                        class="show_required"> *</span></label>
+                                            <div class="radio-group">
+                                                <input type="hidden" name="payment_method" id="payment_method"/>
+                                                <div class='radio' data-value="stripe" style="margin-top: 10px"><img
+                                                            src="{{ url('/img/stripe.png') }}"
+                                                            height="60px"></div>
+                                                <div class='radio' data-value="flutterwave" style="margin-top: 10px"><img
+                                                            src="{{ url('/img/Flutterwave.png') }}"
+                                                            height="60px"></div>
+                                                <br>
+                                            </div>
+                                        </div>
                                         <div class="col-md-12">
                                             <label>Consent to Test: <span class="show_required"> *</span></label><br/>
                                             <span class="field-description">I consent to this test being done, or if this test is for a child, I confirm I am a legal guardian of the child and consent to this test being done.</span>
@@ -483,6 +537,7 @@
 
 
                                         <br/>
+
 
                                         <!-- <h3 class="pull-left price_li" style="padding: 0px 20px;color: red;margin-top: 30px;"></h3> -->
 
@@ -521,7 +576,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"
             integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js" integrity="sha512-ljeReA8Eplz6P7m1hwWa+XdPmhawNmo9I0/qyZANCCFvZ845anQE+35TuZl9+velym0TKanM2DXVLxSJLLpQWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"
+            integrity="sha512-ljeReA8Eplz6P7m1hwWa+XdPmhawNmo9I0/qyZANCCFvZ845anQE+35TuZl9+velym0TKanM2DXVLxSJLLpQWw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         var input = document.querySelector("#phone");
         window.intlTelInput(input, {
@@ -568,14 +625,19 @@
 
 
             var form1 = $("#logins-part input").filter(function () {
-                if (this.id != "nhs") {
+                if (this.id == "nhs"  || this.id == "vaccination_date") {
+                }else{
                     return $.trim($(this).val()).length == 0
                 }
             }).length == 0;
 
 
             var form1_select = $("#logins-part select").filter(function () {
-                return $.trim($(this).val()).length == 0
+                if (this.id == "vaccination_type") {
+
+                } else {
+                    return $.trim($(this).val()).length == 0
+                }
             }).length == 0;
 
             var form2 = $("#information-part input").filter(function () {
@@ -588,7 +650,7 @@
 
 
             var form2_select = $("#information-part select").filter(function () {
-                return $.trim($(this).val()).length == 0
+                    return $.trim($(this).val()).length == 0
             }).length == 0;
 
             var form3_select = $("#products-part select").filter(function () {
@@ -596,16 +658,16 @@
             }).length == 0;
 
 
-                if ((stepperPan.getAttribute('id') === 'logins-part' && (!form1)) ||
-                    (stepperPan.getAttribute('id') === 'logins-part' && (!form1_select)) ||
-                    (stepperPan.getAttribute('id') === 'information-part' && (!form2)) ||
-                    (stepperPan.getAttribute('id') === 'information-part' && (!form2_select)) ||
-                    (stepperPan.getAttribute('id') === 'products-part' && (!form3_select))
-                ) {
-                    event.preventDefault()
+            if ((stepperPan.getAttribute('id') === 'logins-part' && (!form1)) ||
+                (stepperPan.getAttribute('id') === 'logins-part' && (!form1_select)) ||
+                (stepperPan.getAttribute('id') === 'information-part' && (!form2)) ||
+                (stepperPan.getAttribute('id') === 'information-part' && (!form2_select)) ||
+                (stepperPan.getAttribute('id') === 'products-part' && (!form3_select))
+            ) {
+                event.preventDefault()
 
-                    form.classList.add('was-validated')
-                }
+                form.classList.add('was-validated')
+            }
 
         });
 
@@ -640,7 +702,7 @@
 
                 $.each(data, function (key, value) {
                     $el.append($("<option></option>")
-                        .attr("value", value.product_id).text(value.name+"("+ value.price +")"));
+                        .attr("value", value.product_id).text(value.name + "(" + value.price + ")"));
                 });
 
             });
@@ -648,7 +710,7 @@
 
         }
 
-        function test_type_select(){
+        function test_type_select() {
             var d = $(".test_type").val();
             $(".test_type_").val(d);
         }
@@ -658,10 +720,12 @@
             // console.log(data);
             $(".country_id_").val(data.id);
         });
-        // function selectCountry(){
-        //     var c = $(".country_id__").val();
-        //     $(".country_id_").val(c);
-        // }
+        $('.radio-group .radio').click(function(){
+            $(this).parent().find('.radio').removeClass('selected');
+            $(this).addClass('selected');
+            var payment_method =$(this).data();
+            $("#payment_method").val(payment_method.value);
+        });
     </script>
     <script>
 
@@ -683,6 +747,17 @@
             });
         }
 
+        function vaccination_check() {
+            var check = $("#vaccination_status").val();
+
+            if (check == 2 || check == 3) {
+                $("#vaccination_type_div").show();
+                $("#vaccination_date_div").show();
+            } else if (check == 1 || !check) {
+                $("#vaccination_type_div").hide();
+                $("#vaccination_date_div").hide();
+            }
+        }
 
     </script>
 

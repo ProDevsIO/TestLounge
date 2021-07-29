@@ -62,7 +62,7 @@
     {{--</div>--}}
 {{--</div>--}}
 <?php
-    $ignore = ["booking","booking_success","booking_failed",'about','products_covid',"next_steps"];
+    $ignore = ["booking","booking_success","booking_failed",'about','products_covid',"next_steps","make_payment"];
 ?>
 <div class="nav-container">
     <nav class="top-bar

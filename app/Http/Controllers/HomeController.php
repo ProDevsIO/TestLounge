@@ -7,6 +7,7 @@ use App\Mail\VendorReceipt;
 use App\Models\Booking;
 use App\Models\BookingProduct;
 use App\Models\Country;
+use App\Models\CountryColor;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Transaction;
@@ -29,12 +30,12 @@ class HomeController extends Controller
         $vendors = Vendor::all();
         $user = "";
 
-        if($request->ref){
-            $user = User::where('referal_code',$request->ref)->first();
+        if ($request->ref) {
+            $user = User::where('referal_code', $request->ref)->first();
         }
 
 
-        return view('homepage.booking')->with(compact('countries', 'products', 'vendors','user'));
+        return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user'));
     }
 
     public function login()
@@ -113,8 +114,6 @@ class HomeController extends Controller
 
         $request->vendor_id = 3;
 
-
-
         if (empty($request->product_id)) {
             session()->flash('alert-danger', "Kindly select a product");
             return back()->withInput();
@@ -143,6 +142,9 @@ class HomeController extends Controller
         unset($request_data['ref']);
 
         $request_data['transaction_ref'] = $transaction_ref;
+        $request_data['vaccination_date'] = Carbon::parse($request->vaccination_date);
+
+        unset($request_data['payment_method']);
 
         $booking = Booking::create($request_data);
 
@@ -183,118 +185,25 @@ class HomeController extends Controller
 
         }
 
-
-        if ($request->country_travelling_from_id == 81) {
-            // naira to ghanian cedis
-            $convert_amount = $price * 0.014;
-            $data = [
-                "tx_ref" => $transaction_ref,
-                "amount" => $convert_amount,
-                "currency" => "GHS",
-                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
-                "customer" => [
-                    'email' => $booking->email,
-                    'phonenumber' => $booking->phone_no,
-                    'name' => $booking->first_name . " " . $booking->last_name
-                ],
-                "customizations" => [
-                    "title" => "UK Covid Testing Booking"
-                ]
-            ];
-        } elseif ($request->country_travelling_from_id == 156) {
-            $data = [
-                "tx_ref" => $transaction_ref,
-                "amount" => $price,
-                "currency" => "NGN",
-                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
-                "customer" => [
-                    'email' => $booking->email,
-                    'phonenumber' => $booking->phone_no,
-                    'name' => $booking->first_name . " " . $booking->last_name
-                ],
-                "customizations" => [
-                    "title" => "UK Covid Testing Booking"
-                ]
-            ];
-        } elseif ($request->country_travelling_from_id == 210) {
-            // naira to tanzanian cedis
-            $convert_amount = $price * 5.56;
-            $data = [
-                "tx_ref" => $transaction_ref,
-                "amount" => $convert_amount,
-                "currency" => "TZS",
-                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
-                "customer" => [
-                    'email' => $booking->email,
-                    'phonenumber' => $booking->phone_no,
-                    'name' => $booking->first_name . " " . $booking->last_name
-                ],
-                "customizations" => [
-                    "title" => "UK Covid Testing Booking"
-                ]
-            ];
-        } elseif ($request->country_travelling_from_id == 110) {
-            // naira to kenyan shillings
-            $convert_amount = $price * 0.26;
-            $data = [
-                "tx_ref" => $transaction_ref,
-                "amount" => $convert_amount,
-                "currency" => "KES",
-                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
-                "customer" => [
-                    'email' => $booking->email,
-                    'phonenumber' => $booking->phone_no,
-                    'name' => $booking->first_name . " " . $booking->last_name
-                ],
-                "customizations" => [
-                    "title" => "UK Covid Testing Booking"
-                ]
-            ];
-        } elseif ($request->country_travelling_from_id == 197) {
-            // naira to south african rand
-            $convert_amount = $price * 0.036;
-            $data = [
-                "tx_ref" => $transaction_ref,
-                "amount" => $convert_amount,
-                "currency" => "ZAR",
-                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
-                "customer" => [
-                    'email' => $booking->email,
-                    'phonenumber' => $booking->phone_no,
-                    'name' => $booking->first_name . " " . $booking->last_name
-                ],
-                "customizations" => [
-                    "title" => "UK Covid Testing Booking"
-                ]
-            ];
-        } else {
-            $data = [
-                "tx_ref" => $transaction_ref,
-                "amount" => $price,
-                "currency" => "NGN",
-                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
-                "customer" => [
-                    'email' => $booking->email,
-                    'phonenumber' => $booking->phone_no,
-                    'name' => $booking->first_name . " " . $booking->last_name
-                ],
-                "customizations" => [
-                    "title" => "UK Covid Testing Booking"
-                ]
-            ];
-        }
+        $data = $this->getFlutterwaveData($booking, $price, $transaction_ref);
 
         //redirect to payment page
         if (!empty($sub_account)) {
-            $data['subaccounts'] = ["id" => $sub_account ];
+            $data['subaccounts'] = ["id" => $sub_account];
         }
 
-         BookingProduct::where('booking_id',$booking->id)->update([
-            'charged_amount' => $data['amount'],'currency' => $data['currency']
+        BookingProduct::where('booking_id', $booking->id)->update([
+            'charged_amount' => $data['amount'], 'currency' => $data['currency']
         ]);
 
 
-        $redirect_url = $this->processFL($data);
+        $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $request->product_id)->first();
+
+        if ($request->payment_method == "stripe") {
+            $redirect_url = $this->processStripe($vendor_products->price_stripe, $booking);
+        } else {
+            $redirect_url = $this->processFL($data);
+        }
 
         return redirect()->to($redirect_url);
 
@@ -302,14 +211,14 @@ class HomeController extends Controller
 
     public function payment_confirmation(Request $request)
     {
-       
-       
+
+
         if (env('APP_ENV', "LIVE") == "LIVE") {
             $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
         } else {
             $url = "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/verify";
         }
-     
+
         $request_data = $request->all();
 
         $txRef = $request->tx_ref;
@@ -328,10 +237,10 @@ class HomeController extends Controller
         curl_close($ch);
 
         $data_response = json_decode($response);
-       
+
 
         if (isset($data_response->data->status) && $data_response->data->status == "successful") {
-            
+
             $booking = Booking::where('transaction_ref', $txRef)->first();
             if ($booking->status != 1) {
                 $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
@@ -366,38 +275,23 @@ class HomeController extends Controller
                     ]);
                 }
 
+                try {
+                    $code = $this->sendData($booking);
+                } catch (\Exception $e) {
 
-                //api call via function sendData()
-                    $test =$this->sendData($booking);
-                    dd($test);
-                // $code = "RUKHT" . rand(1000000, 9999999);
-            
-               
+                    $booking->update([
+                        'vendor_id' => 3,
+                        'mode_of_payment' => 1,
+                        'transaction_ref' => $txRef,
+                        'status' => 1
+                    ]);
 
-
-
-//                try {
-//                    $message = "
-//            Hi " . $request->first_name . ",
-//
-//            Thank you for booking with us, Here is your code " . $code . ". You are to use this code in your travel form.
-//
-//                  <br/><br/>
-//                  Thank you.
-//            ";
-//                    Mail::to($booking->email)->send(new BookingCreation($message));
-//                } catch (\Exception $e) {
-//
-//                }
-                //send the receipt to the vendor
+                    return redirect()->to('/booking/code/failed?b=' . $txRef);
+                }
 
                 if ($booking_product) {
                     try {
-
-                        // Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from " . optional($booking_product->vendor)->name, optional($booking_product->vendor)->email,$code));
-                        Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests" , optional($booking_product->vendor)->email,$code));
-
-
+                        Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                     } catch (\Exception $e) {
 
                     }
@@ -424,16 +318,16 @@ class HomeController extends Controller
 
     function sendData($booking)
     {
-       
+
         //ethnicity
         if ($booking->ethnicity == 0) {
             $ethnic = "white\_other";
         } elseif ($booking->ethnicity == 1) {
-            $ethnic = "Mixed\Muti Ethnic group";
+            $ethnic = "other\_mixed";
         } elseif ($booking->ethnicity == 2) {
-            $ethnic = "Asain\Asian British";
+            $ethnic = "other\_mixed";
         } elseif ($booking->ethnicity == 3) {
-            $ethnic = "Black\_other";
+            $ethnic = "black\_other";
         } elseif ($booking->ethnicity == 4) {
             $ethnic = "Other\_mixed";
         }
@@ -451,35 +345,42 @@ class HomeController extends Controller
             $transport = "Others";
         }
 
-        $data_send["test_kit_properties"] =  [
+        $color_code = CountryColor::where('id',$booking->country_travelling_from_id)->first();
+
+        $data_send["test_kit_properties"] = [
             'first_name' => $booking->first_name,
             'last_name' => $booking->last_name,
-            'birth_date' => Carbon::parse($booking->dob)->toDateString(),
-            'sex' => $booking->sex,
+            'birth_date' => Carbon::parse($booking->dob)->format('Y-m-d'),
+            'sex' => ($booking->sex == 1) ? "Male" : "Female",
             'ethnicity' => $ethnic,
             "email" => $booking->email,
-            'vaccination_type' => $booking->vaccination_type,
+            'vaccine_type' => $booking->vaccination_type,
             "mobile" => $booking->phone_no,
-            "arrival_in_uk" =>  Carbon::parse($booking->arrival_date)->toDateString(),
+            "arrival_in_uk" => Carbon::parse($booking->arrival_date)->toDateString(),
             "country_from" => $booking->travelingFrom->name,
-            "vaccination_date" =>  Carbon::parse($booking->vaccination_date)->toDateString(),
             "nhs_number" => $booking->nhs_number,
-            "departure_from_abroad_date" => Carbon::parse($booking->departure_date)->toDateString(),
+            "departure_from_abroad_date" => Carbon::parse($booking->departure_date)->format('Y-m-d'),
             "flight_number" => $booking->transport_no,
-            "passport"=> $booking->document_id,
+            "passport" => $booking->document_id,
             'vaccination_status' => $booking->vaccination_status,
             "address_line_1" => $booking->address_1,
             "city" => $booking->home_town,
-            "postcode" =>  $booking->post_code
-            
+            "postcode" => $booking->post_code,
+            "country_type" => $color_code->name,
+            "countries_travelled" => "Nigeria"
         ];
-        $data_send["shipping_address_attributes"] = 
-        [
-            "line_1" => $booking->address_1,
-            "city" => $booking->home_town,
-            "postcode" =>  $booking->post_code
-        ];
-        
+
+        if ($booking->vaccination_type != "n/a") {
+            $data_send["test_kit_properties"]["vaccination_date"] = Carbon::parse($booking->vaccination_date)->toDateString();
+        }
+
+        $data_send["shipping_address_attributes"] =
+            [
+                "line_1" => $booking->address_1,
+                "city" => $booking->home_town,
+                "postcode" => $booking->post_code
+            ];
+
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, "https://portal.ukhealthtesting.com/api/partner_orders");
@@ -493,7 +394,7 @@ class HomeController extends Controller
         curl_close($ch);
 
         $data_response = json_decode($response);
-        dd($data_send);
+
         return $data_response->reference;
     }
 
@@ -511,48 +412,39 @@ class HomeController extends Controller
         return view('homepage.failed')->with(compact('booking'));
     }
 
-    public function make_payment($booking_ref)
+    public function p_make_payment(Request $request, $booking_ref)
     {
-        $transaction_ref = $booking_ref;
+        $this->validate($request, [
+            'payment_method' => 'required'
+        ]);
+
         $booking = Booking::where('transaction_ref', $booking_ref)->first();
 
-        $setting = Setting::where('name', 'amount')->first();
-        //redirect to payment page
-        $data = [
-            "tx_ref" => $transaction_ref,
-            "amount" => $setting->value,
-            "currency" => "NGN",
-            "redirect_url" => "https://uktraveltest.test/payment/confirmation",
-            "customer" => [
-                'email' => $booking->email,
-                'phonenumber' => $booking->phone_no,
-                'name' => $booking->first_name . " " . $booking->last_name
-            ],
-            "customizations" => [
-                "title" => "UK Covid Testing Booking"
-            ]
-        ];
 
-        $sub_account = [];
+        $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $request->product_id)->first();
 
-        if ($booking->user_id) {
-            $user = User::where('id', $booking->user_id)->first();
+        if ($request->payment_method == "stripe") {
+            $redirect_url = $this->processStripe($vendor_products->price_stripe, $booking);
+        } else {
+            $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
 
-            if ($user) {
-                if ($user->flutterwave_key) {
-                    $sub_account[] = $user->flutterwave_key;
-                }
-            }
+            $price = $booking_product->price;
+
+            $data = $this->getFlutterwaveData($booking, $price, $booking_ref);
+            $redirect_url = $this->processFL($data);
         }
-
-        if (!empty($sub_account)) {
-            $data['subaccounts'] = $sub_account;
-        }
-
-        $redirect_url = $this->processFL($data);
 
         return redirect()->to($redirect_url);
     }
+
+    public function make_payment($booking_ref)
+    {
+        $booking = Booking::where('transaction_ref', $booking_ref)->first();
+
+        return view('homepage.make_payment')->with(compact('booking'));
+
+    }
+
 
     public function register_agent()
     {
@@ -612,33 +504,19 @@ class HomeController extends Controller
     public function testEmail()
     {
 //        dd(Hash::make('william'));
-        $booking = Booking::where('id',51)->first();
-        $booking_product = BookingProduct::where('booking_id',$booking->id)->first();
-        $code= "sdsbdjksds";
+        $booking = Booking::where('id', 51)->first();
+        $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
+        $code = "sdsbdjksds";
 
         if ($booking_product) {
 
 
-                Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from " . optional($booking_product->vendor)->name, optional($booking_product->vendor)->email,$code));
+            Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from " . optional($booking_product->vendor)->name, optional($booking_product->vendor)->email, $code));
 
 
         }
 
-//        $referral = $user->referal_code;
-//
-//        $message = "
-//            Hi " . $user->first_name . ",
-//
-//            Thank you for registering as an agent. To continue your registration, <br/><br/>Kindly click the button below<br/> <br/>
-//            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
-//                   Continue Registration
-//                  </a>
-//
-//                  <br/><br/>
-//                  Thank you.
-//            ";
 
-//        Mail::to($user->email)->send(new BookingCreation($message, "Registration"));
     }
 
     public function randomStr($length = 16)
@@ -1027,7 +905,86 @@ class HomeController extends Controller
 
     }
 
-    public function next_steps(){
+    public function next_steps()
+    {
         return view('homepage.next_steps');
     }
+
+    public function code_failed(Request $request)
+    {
+        $booking = Booking::where('transaction_ref', $request->b)->first();
+        return view('homepage.code_failed')->with(compact('booking'));
+    }
+
+    public function success_stripe(Request $request)
+    {
+        if (!$request->b) {
+            return redirect()->to('/');
+        }
+        $txRef = rand(10000000, 99929302399);
+
+        $booking_id = encrypt_decrypt('descrypt', $request->b);
+        $booking = Booking::where('id', $booking_id)->first();
+
+
+        if ($booking->status != 1) {
+            $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
+
+            $vendor_p = VendorProduct::where('product_id', $booking_product->product_id)->where('vendor_id', 3)->first();
+
+            $booking_product->udpate([
+                'charged_amount' => $vendor_p->price_pounds,
+                'currency' => "GBP"
+            ]);
+
+            try {
+                $code = $this->sendData($booking);
+            } catch (\Exception $e) {
+
+                $booking->update([
+                    'vendor_id' => 3,
+                    'mode_of_payment' => 2,
+                    'transaction_ref' => "stripe_" . $txRef,
+                    'status' => 1
+                ]);
+
+                return redirect()->to('/booking/code/failed?b=' . $txRef);
+            }
+
+            if ($booking_product) {
+                try {
+                    Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                } catch (\Exception $e) {
+
+                }
+            }
+            $booking->update([
+                'vendor_id' => 3,
+                'mode_of_payment' => 2,
+                'transaction_ref' => $txRef,
+                'status' => 1,
+                'booking_code' => $code
+            ]);
+
+        }
+
+
+        return redirect()->to('/booking/success?b=' . $txRef);
+
+    }
+
+    public function success_failed(Request $request)
+    {
+        if (!$request->b) {
+            return redirect()->to('/');
+        }
+        $txRef = "stripe_" . rand(10000000, 99929302399);
+        $booking_id = encrypt_decrypt('descrypt', $request->b);
+        $booking = Booking::where('id', $booking_id)->first();
+        $booking->update([
+            'transaction_ref' => $txRef
+        ]);
+        return redirect()->to('/booking/failed?b=' . $txRef);
+    }
+
 }
