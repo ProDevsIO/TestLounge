@@ -934,7 +934,7 @@ class HomeController extends Controller
         $booking = Booking::where('id', $booking_id)->first();
 
 
-//        if ($booking->status != 1) {
+        if ($booking->status != 1) {
             $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
 
             $vendor_p = VendorProduct::where('product_id', $booking_product->product_id)->where('vendor_id', 3)->first();
@@ -973,7 +973,7 @@ class HomeController extends Controller
                 'booking_code' => $code
             ]);
 
-//        }
+        }
 
 
         return redirect()->to('/booking/success?b=' . $txRef);
