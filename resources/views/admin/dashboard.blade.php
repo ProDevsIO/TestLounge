@@ -149,7 +149,7 @@
                                     @foreach($bookings as $booking)
                                         <tr>
                                             <td>
-                                                {{ $booking->first_name }} {{ $booking->first_name }}
+                                                {{ $booking->first_name }} {{ $booking->last_name }}
                                             </td>
                                             <td>{{ $booking->phone_no }}</td>
                                             <td>{{ $booking->email }} <br>{{$booking->booking_code}}</td>
