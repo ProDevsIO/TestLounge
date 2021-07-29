@@ -461,15 +461,17 @@ class HomeController extends Controller
             'vaccination_type' => $booking->vaccination_type,
             "mobile" => $booking->phone_no,
             "arrival_in_uk" =>  Carbon::parse($booking->arrival_date)->toDateString(),
+            "country_from" => $booking->travelingFrom->name,
             "vaccination_date" =>  Carbon::parse($booking->vaccination_date)->toDateString(),
             "nhs_number" => $booking->nhs_number,
             "departure_from_abroad_date" => Carbon::parse($booking->departure_date)->toDateString(),
-            'vaccination_status' => $booking->vaccination_status,
-            "country_from" => $booking->travelingFrom->name,
             "flight_number" => $booking->transport_no,
             "passport"=> $booking->document_id,
+            'vaccination_status' => $booking->vaccination_status,
+            "address_line_1" => $booking->address_1,
+            "city" => $booking->home_town,
+            "postcode" =>  $booking->post_code
             
-           
         ];
         $data_send["shipping_address_attributes"] = 
         [
