@@ -368,7 +368,7 @@ class HomeController extends Controller
             "city" => $booking->isolation_town,
             "postcode" => $booking->isolation_postal_code,
             "country_type" => (optional($color_code->color)->name) ? optional($color_code->color)->name : "Amber",
-            "countries_travelled" => optional($booking->travelingFrom)->name
+            "countries_travelled" => ($booking->travelingFrom) ? optional($booking->travelingFrom)->name: "Nigeria"
         ];
 
         if ($booking->vaccination_type && $booking->vaccination_type != "n/a") {
@@ -944,19 +944,19 @@ class HomeController extends Controller
                 'currency' => "GBP"
             ]);
 
-            try {
+//            try {
                 $code = $this->sendData($booking);
-            } catch (\Exception $e) {
-
-                $booking->update([
-                    'vendor_id' => 3,
-                    'mode_of_payment' => 2,
-                    'transaction_ref' => "stripe_" . $txRef,
-                    'status' => 1
-                ]);
-
-                return redirect()->to('/booking/code/failed?b=' . $txRef);
-            }
+//            } catch (\Exception $e) {
+//
+//                $booking->update([
+//                    'vendor_id' => 3,
+//                    'mode_of_payment' => 2,
+//                    'transaction_ref' =>  $txRef,
+//                    'status' => 1
+//                ]);
+//
+//                return redirect()->to('/booking/code/failed?b=' . $txRef);
+//            }
 
             if ($booking_product) {
                 try {
