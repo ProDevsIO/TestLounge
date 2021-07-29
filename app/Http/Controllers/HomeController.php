@@ -143,6 +143,7 @@ class HomeController extends Controller
 
         $request_data['transaction_ref'] = $transaction_ref;
         $request_data['vaccination_date'] = Carbon::parse($request->vaccination_date);
+        $request_data['last_day_travel'] = Carbon::parse($request->last_day_travel);
 
         unset($request_data['payment_method']);
 
@@ -440,6 +441,10 @@ class HomeController extends Controller
     public function make_payment($booking_ref)
     {
         $booking = Booking::where('transaction_ref', $booking_ref)->first();
+
+        if($booking->status == 1){
+            return redirect()->to('/booking/success?b=' . $booking_ref);
+        }
 
         return view('homepage.make_payment')->with(compact('booking'));
 

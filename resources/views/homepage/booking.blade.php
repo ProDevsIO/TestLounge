@@ -464,8 +464,8 @@
                                                             href='https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england'
                                                             target="_blank">here</a>:</span>
                                             </label>
-                                            <input class="form-control date_picker" type="text"
-                                                   placeholder="Arrival Date in UK"
+                                            <input class="form-control date_picker1" type="text"
+                                                   placeholder=""
                                                    name="last_day_travel"
                                                    value="{{ old('last_day_travel') }}" required>
                                         </div>
@@ -526,9 +526,9 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label>Consent to Test: <span class="show_required"> *</span></label><br/>
-                                            <span class="field-description">I consent to this test being done, or if this test is for a child, I confirm I am a legal guardian of the child and consent to this test being done.</span>
+                                            <p class="field-description" style="font-size: 15px;">I consent to this test being done, or if this test is for a child, I confirm I am a legal guardian of the child and consent to this test being done.</p>
 
-                                            <input class="pull-left" required type="checkbox" name="consent" value="1"
+                                            <input style="width:20px" class="pull-left" required type="checkbox" name="consent" value="1"
                                             />
                                         </div>
                                         @if(isset($_GET['ref']))
