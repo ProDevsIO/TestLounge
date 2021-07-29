@@ -13,15 +13,19 @@ class CreateBookingProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('booking_products', function (Blueprint $table) {
-            $table->integer('id', true);
-            $table->integer('booking_id')->nullable()->index('booking_product_fk_1_idx');
-            $table->integer('product_id')->nullable()->index('product_booking_fk_1_idx');
-            $table->integer('vendor_id')->nullable()->index('vendor_id_fk_p_idx');
-            $table->integer('vendor_product_id')->nullable()->index('vendor_products_fkp_idx');
-            $table->timestamps();
-            $table->double('price')->nullable();
-        });
+        try {
+            Schema::create('booking_products', function (Blueprint $table) {
+                $table->integer('id', true);
+                $table->integer('booking_id')->nullable()->index('booking_product_fk_1_idx');
+                $table->integer('product_id')->nullable()->index('product_booking_fk_1_idx');
+                $table->integer('vendor_id')->nullable()->index('vendor_id_fk_p_idx');
+                $table->integer('vendor_product_id')->nullable()->index('vendor_products_fkp_idx');
+                $table->timestamps();
+                $table->double('price')->nullable();
+            });
+        }catch (Exception $e){
+            
+        }
     }
 
     /**

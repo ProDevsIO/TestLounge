@@ -13,6 +13,7 @@ class AddForeignKeysToBookingsTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::table('bookings', function (Blueprint $table) {
             $table->foreign('country_code_id', 'country_code_fk__')->references('id')->on('countries')->onUpdate('CASCADE')->onDelete('NO ACTION');
             $table->foreign('country_travelling_from_id', 'country_from_fk_')->references('id')->on('countries')->onUpdate('CASCADE')->onDelete('NO ACTION');
@@ -21,6 +22,9 @@ class AddForeignKeysToBookingsTable extends Migration
             $table->foreign('user_id', 'user_id_fk')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('NO ACTION');
             $table->foreign('vendor_id', 'vendors_if_k')->references('id')->on('vendors')->onUpdate('CASCADE')->onDelete('NO ACTION');
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

@@ -13,10 +13,14 @@ class AddForeignKeysToVendorProductsTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::table('vendor_products', function (Blueprint $table) {
             $table->foreign('vendor_id', 'product_vendor_id')->references('id')->on('vendors')->onUpdate('CASCADE')->onDelete('NO ACTION');
             $table->foreign('product_id', 'vendor_product_fk_')->references('id')->on('products')->onUpdate('CASCADE')->onDelete('NO ACTION');
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

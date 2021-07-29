@@ -13,11 +13,15 @@ class AddPoundsToSettingsTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::table('settings', function (Blueprint $table) {
         
                 $table->decimal('pounds')->default(null)->after('value');
            
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**

@@ -13,6 +13,7 @@ class CreateVendorsTable extends Migration
      */
     public function up()
     {
+        try {
         Schema::create('vendors', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('name', 500)->nullable();
@@ -20,6 +21,9 @@ class CreateVendorsTable extends Migration
             $table->text('address')->nullable();
             $table->timestamps();
         });
+        }catch (Exception $e){
+
+        }
     }
 
     /**
