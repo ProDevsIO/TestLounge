@@ -930,7 +930,7 @@ class HomeController extends Controller
         }
         $txRef = rand(10000000, 99929302399);
 
-        $booking_id = encrypt_decrypt('descrypt', $request->b);
+        $booking_id = encrypt_decrypt('decrypt', $request->b);
         $booking = Booking::where('id', $booking_id)->first();
 
 
