@@ -346,7 +346,7 @@ class HomeController extends Controller
             $transport = "Others";
         }
 
-        $color_code = CountryColor::where('id',$booking->country_travelling_from_id)->first();
+        $color_code = CountryColor::where('country_id',$booking->country_travelling_from_id)->first();
 
         $data_send["test_kit_properties"] = [
             'first_name' => $booking->first_name,
@@ -367,8 +367,8 @@ class HomeController extends Controller
             "address_line_1" => $booking->address_1,
             "city" => $booking->home_town,
             "postcode" => $booking->post_code,
-            "country_type" => $color_code->name,
-            "countries_travelled" => "Nigeria"
+            "country_type" => (optional($color_code->color)->name) ? optional($color_code->color)->name : "Amber",
+            "countries_travelled" => optional($booking->travelingFrom)->name
         ];
 
         if ($booking->vaccination_type && $booking->vaccination_type != "n/a") {
@@ -928,7 +928,7 @@ class HomeController extends Controller
         if (!$request->b) {
             return redirect()->to('/');
         }
-        $txRef = rand(10000000, 99929302399);
+        $txRef = "stripe_".rand(10000000, 99929302399);
 
         $booking_id = encrypt_decrypt('decrypt', $request->b);
         $booking = Booking::where('id', $booking_id)->first();
