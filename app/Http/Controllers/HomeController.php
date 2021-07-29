@@ -944,19 +944,19 @@ class HomeController extends Controller
                 'currency' => "GBP"
             ]);
 
-            try {
+//            try {
                 $code = $this->sendData($booking);
-            } catch (\Exception $e) {
-
-                $booking->update([
-                    'vendor_id' => 3,
-                    'mode_of_payment' => 2,
-                    'transaction_ref' => "stripe_" . $txRef,
-                    'status' => 1
-                ]);
-
-                return redirect()->to('/booking/code/failed?b=' . $txRef);
-            }
+//            } catch (\Exception $e) {
+//
+//                $booking->update([
+//                    'vendor_id' => 3,
+//                    'mode_of_payment' => 2,
+//                    'transaction_ref' => "stripe_" . $txRef,
+//                    'status' => 1
+//                ]);
+//
+//                return redirect()->to('/booking/code/failed?b=' . $txRef);
+//            }
 
             if ($booking_product) {
                 try {
