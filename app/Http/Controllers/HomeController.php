@@ -364,9 +364,9 @@ class HomeController extends Controller
             "flight_number" => $booking->transport_no,
             "passport" => $booking->document_id,
             'vaccination_status' => $booking->vaccination_status,
-            "address_line_1" => $booking->address_1,
-            "city" => $booking->home_town,
-            "postcode" => $booking->post_code,
+            "address_line_1" => $booking->isolation_address,
+            "city" => $booking->isolation_town,
+            "postcode" => $booking->isolation_postal_code,
             "country_type" => (optional($color_code->color)->name) ? optional($color_code->color)->name : "Amber",
             "countries_travelled" => optional($booking->travelingFrom)->name
         ];
@@ -377,9 +377,9 @@ class HomeController extends Controller
 
         $data_send["shipping_address_attributes"] =
             [
-                "line_1" => $booking->address_1,
-                "city" => $booking->home_town,
-                "postcode" => $booking->post_code
+                "line_1" => $booking->isolation_address,
+                "city" => $booking->isolation_town,
+                "postcode" => $booking->isolation_postal_code
             ];
 
         $ch = curl_init();
@@ -944,19 +944,19 @@ class HomeController extends Controller
                 'currency' => "GBP"
             ]);
 
-//            try {
+            try {
                 $code = $this->sendData($booking);
-//            } catch (\Exception $e) {
-//
-//                $booking->update([
-//                    'vendor_id' => 3,
-//                    'mode_of_payment' => 2,
-//                    'transaction_ref' => "stripe_" . $txRef,
-//                    'status' => 1
-//                ]);
-//
-//                return redirect()->to('/booking/code/failed?b=' . $txRef);
-//            }
+            } catch (\Exception $e) {
+
+                $booking->update([
+                    'vendor_id' => 3,
+                    'mode_of_payment' => 2,
+                    'transaction_ref' => "stripe_" . $txRef,
+                    'status' => 1
+                ]);
+
+                return redirect()->to('/booking/code/failed?b=' . $txRef);
+            }
 
             if ($booking_product) {
                 try {
