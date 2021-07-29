@@ -231,6 +231,9 @@
                                                 <option value="3">Received both first and second dose
                                                 </option>
                                             </select>
+                                        </div>
+
+                                        <div class="col-md-12" style="margin-top: 30px">
                                             <label>Vaccination Type: <span class="show_required"> *</span></label>
                                             <select class="form-control" name="vaccination_type">
                                                 <option value="">Make a selection</option>
@@ -240,6 +243,9 @@
                                                <option value="Oxford/AZ">Oxford/AZ</option>
                                                <option value="Other">Other</option>
                                             </select>
+                                        </div>
+
+                                        <div class="col-md-12" style="margin-top: 20px">
                                             <label>Vaccination Date: <span class="show_required"> *</span></label>
                                             <input class="form-control date_picker" type="text"
                                                    placeholder="Date of Birth"
