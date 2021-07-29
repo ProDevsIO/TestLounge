@@ -510,7 +510,7 @@ class HomeController extends Controller
 
     public function testEmail()
     {
-//        dd(Hash::make('william'));
+        dd(encrypt_decrypt('encrypt',"99"));
         $booking = Booking::where('id', 51)->first();
         $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
         $code = "sdsbdjksds";
