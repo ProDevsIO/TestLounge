@@ -939,7 +939,7 @@ class HomeController extends Controller
 
             $vendor_p = VendorProduct::where('product_id', $booking_product->product_id)->where('vendor_id', 3)->first();
 
-            $booking_product->udpate([
+            $booking_product->update([
                 'charged_amount' => $vendor_p->price_pounds,
                 'currency' => "GBP"
             ]);
