@@ -382,6 +382,9 @@ class HomeController extends Controller
                 "postcode" => $booking->isolation_postal_code
             ];
 
+        $data_send['external_reference'] = "booking_".$booking->id;
+        $data_send['product'] = optional(optional($booking->product)->product)->name;
+
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, "https://portal.ukhealthtesting.com/api/partner_orders");
