@@ -309,11 +309,22 @@
                                     <td class="content-block">
                                         <p style="text-align: left;line-height: 25px">
                                             Hi {{ $booking->first_name }} {{ $booking->last_name }}<br/>
-                                            Thank you for choosing to book with us. Your booking reference
-                                            is {{ $code }}<br/>
-                                            Please make a note of this Reference Number as you will need it for your
-                                           <a a href="https://provide-journey-contact-details.homeoffice.gov.uk/passengerLocatorFormUserAccountHolderQuestion" target="_blank">passenger locator form </a>, and you would also need to present it at the
-                                            airport.
+                                            Thank you for choosing to book with us. <br/>
+                                            Booking Reference: {{ $code }}.<br/>
+                                            Test Provider: {{ $booking_product->vendor->name }},
+                                            <br/>
+                                            Please take a note of the above as you will require these to complete your passenger locator form
+                                            .<br/>
+                                            <a
+                                               href="https://provide-journey-contact-details.homeoffice.gov.uk/passengerLocatorFormUserAccountHolderQuestion"
+                                               target="_blank">Click here </a>to fill your passenger location form.
+                                            <br/>
+                                            We strongly advise that you complete your form before going to the airport.
+
+                                            You may be required to show this email at the airport.<br/>
+
+                                            For more information on test requirements kindly <a
+                                                    href="https://www.gov.uk/guidance/coronavirus-covid-19-getting-tested">click here</a>
                                             <br/>
                                         </p>
 
