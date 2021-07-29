@@ -12,6 +12,27 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
 
+    function processStripe($price,$booking){
+        \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JHzEGI12ZmR225jgcGfjm25u1RsPopaeB4x2Z6E32SsCaTGQQMB0GAFbBdEaHZLLBHBYAvEsOZjhf1CkooC9bTR00rh2Iytpz'));
+
+        header('Content-Type: application/json');
+        $YOUR_DOMAIN = env('APP_URL', "https://uktraveltest.prodevs.io/");
+
+        $checkout_session = \Stripe\Checkout\Session::create([
+            'payment_method_types' => [
+                'card',
+            ],
+            'line_items' => [[
+                'price' => $price,
+                'quantity' => 1
+            ]],
+            'mode' => 'payment',
+            'success_url' => $YOUR_DOMAIN . '/booking/stripe/success?b='.encrypt_decrypt('encrypt',$booking->id),
+            'cancel_url' => $YOUR_DOMAIN . '/booking/stripe/cancel?b='.encrypt_decrypt('encrypt',$booking->id),
+        ]);
+
+        return $checkout_session->url;
+    }
     public function processFL(array $request = [])
     {
         $ch = curl_init();
@@ -71,4 +92,109 @@ class Controller extends BaseController
         //dd($server_output);
         return $server_output;
     }
+
+    function getFlutterwaveData($booking,$price,$transaction_ref){
+        if ($booking->country_travelling_from_id == 81) {
+            // naira to ghanian cedis
+            $convert_amount = $price * 0.014;
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $convert_amount,
+                "currency" => "GHS",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        } elseif ($booking->country_travelling_from_id == 156) {
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $price,
+                "currency" => "NGN",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        } elseif ($booking->country_travelling_from_id == 210) {
+            // naira to tanzanian cedis
+            $convert_amount = $price * 5.56;
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $convert_amount,
+                "currency" => "TZS",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        } elseif ($booking->country_travelling_from_id == 110) {
+            // naira to kenyan shillings
+            $convert_amount = $price * 0.26;
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $convert_amount,
+                "currency" => "KES",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        } elseif ($booking->country_travelling_from_id == 197) {
+            // naira to south african rand
+            $convert_amount = $price * 0.036;
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $convert_amount,
+                "currency" => "ZAR",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        } else {
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $price,
+                "currency" => "NGN",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
+                "customer" => [
+                    'email' => $booking->email,
+                    'phonenumber' => $booking->phone_no,
+                    'name' => $booking->first_name . " " . $booking->last_name
+                ],
+                "customizations" => [
+                    "title" => "UK Covid Testing Booking"
+                ]
+            ];
+        }
+
+        return $data;
+    }
+
 }

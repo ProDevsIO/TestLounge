@@ -60,8 +60,12 @@ Route::post('/register', [\App\Http\Controllers\HomeController::class,"register"
 Route::post('/post/booking', [\App\Http\Controllers\HomeController::class,"post_booking"]);
 
 Route::get('/booking/success', [\App\Http\Controllers\HomeController::class,"booking_success"])->name('booking_success');
+Route::get('/booking/code/failed', [\App\Http\Controllers\HomeController::class,"code_failed"])->name('code_failed');
+Route::get('/booking/stripe/success', [\App\Http\Controllers\HomeController::class,"success_stripe"])->name('success_stripe');
+
 Route::get('/testEmail', [\App\Http\Controllers\HomeController::class,"testEmail"])->name('testEmail');
 Route::get('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"make_payment"])->name('make_payment');
+Route::post('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"p_make_payment"])->name('make_payment');
 Route::get('/booking/failed', [\App\Http\Controllers\HomeController::class,"booking_failed"])->name('booking_failed');
 Route::get('/continue/registration/{referral_code}/{id}', [\App\Http\Controllers\HomeController::class,"verify_account"])->name('verify_account');
 
