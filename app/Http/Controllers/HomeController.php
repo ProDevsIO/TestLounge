@@ -395,6 +395,7 @@ class HomeController extends Controller
         curl_close($ch);
 
         $data_response = json_decode($response);
+        dd($data_response);
 
         return $data_response->reference;
     }
