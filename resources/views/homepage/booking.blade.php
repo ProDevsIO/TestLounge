@@ -513,6 +513,9 @@
                                         <div class="col-md-12">
                                             <label>Choose Payment Method: <span
                                                         class="show_required"> *</span></label>
+                                            <div class="alert alert-warning">
+                                                * Nigerian cardholders are advised to use Flutterwave
+                                            </div>
                                             <div class="radio-group">
                                                 <input type="hidden" name="payment_method" id="payment_method"/>
                                                 <div class='radio' data-value="stripe" style="margin-top: 10px"><img
@@ -524,9 +527,7 @@
                                                             height="60px"></div>
                                                 <br>
                                             </div>
-                                            <div class="alert alert-warning">
-                                                * Flutterwave is preferred for Nigerian cardholders
-                                            </div>
+
                                         </div>
                                         <div class="col-md-12">
                                             <label>Consent to Test: <span class="show_required"> *</span></label><br/>
