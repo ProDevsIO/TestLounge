@@ -421,8 +421,10 @@ class HomeController extends Controller
 
         $booking = Booking::where('transaction_ref', $booking_ref)->first();
 
+        $booking_product = BookingProduct::where('booking_id',$booking->id)->first();
 
-        $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $request->product_id)->first();
+
+        $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $booking_product->product_id)->first();
 
         if ($request->payment_method == "stripe") {
             $redirect_url = $this->processStripe($vendor_products->price_stripe, $booking);
