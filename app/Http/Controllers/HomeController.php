@@ -322,15 +322,15 @@ class HomeController extends Controller
 
         //ethnicity
         if ($booking->ethnicity == 0) {
-            $ethnic = "white\_other";
+            $ethnic = "white_other";
         } elseif ($booking->ethnicity == 1) {
-            $ethnic = "other\_mixed";
+            $ethnic = "other_mixed";
         } elseif ($booking->ethnicity == 2) {
-            $ethnic = "other\_mixed";
+            $ethnic = "other_mixed";
         } elseif ($booking->ethnicity == 3) {
-            $ethnic = "black\_other";
+            $ethnic = "black_other";
         } elseif ($booking->ethnicity == 4) {
-            $ethnic = "Other\_mixed";
+            $ethnic = "Other_mixed";
         }
 
         //transportation means
