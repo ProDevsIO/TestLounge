@@ -677,7 +677,6 @@
                 format: 'MM/DD/YYYY'
             });
             $('.date_picker1').datetimepicker({
-                minDate: moment().add(1, 'd').toDate(),
                 format: 'MM/DD/YYYY'
             });
 
