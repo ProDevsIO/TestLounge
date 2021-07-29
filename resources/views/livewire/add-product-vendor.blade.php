@@ -11,7 +11,7 @@
     <label>Price in Pounds</label>
     <input type="number" wire:model="price" class="form-control" placeholder="£40">
     <label>Price Stripe</label>
-    <input type="text" wire:model="price_stripe" class="form-control" placeholder="£40">
+    <input type="text" wire:model="price_stripe" class="form-control" placeholder="Price_">
     </select>
     <br/>
     <div wire:loading wire:target="add_product" class="pull-right">

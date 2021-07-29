@@ -312,7 +312,7 @@
                                             Thank you for choosing to book with us. Your booking reference
                                             is {{ $code }}<br/>
                                             Please make a note of this Reference Number as you will need it for your
-                                            passenger locator form, and you would also need to present it at the
+                                           <a a href="https://provide-journey-contact-details.homeoffice.gov.uk/passengerLocatorFormUserAccountHolderQuestion" target="_blank">passenger locator form </a>, and you would also need to present it at the
                                             airport.
                                             <br/>
                                         </p>
