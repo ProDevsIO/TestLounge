@@ -24,8 +24,8 @@
                         <img src="/img/warning.jpeg" style="height: 100px"><br/>
                         @if(isset($booking))
                             <h3>Hi, {{ $booking->first_name }} {{ $booking->last_name }}</h3><br/>
-                            <p style="font-size:20px;color:#5C5C5C;">Your Payment Failed, if you would love to try again, kindly click these button<br/> <br/> <a href="{{ url('/make/payment/'.$booking->transaction_ref) }}" class="btn btn-primary">Retry Payment</a></p>
-
+                            <p style="font-size:20px;color:#5C5C5C;">Your Payment was received. However we are currently experiencing a
+                                challenge in retrieving your passenger locator form. Kindly contact admin by emailing info@uktraveltests.com</p>
                         @endif
                         <br><br>
                     </div>

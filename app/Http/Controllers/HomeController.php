@@ -143,6 +143,7 @@ class HomeController extends Controller
 
         $request_data['transaction_ref'] = $transaction_ref;
         $request_data['vaccination_date'] = Carbon::parse($request->vaccination_date);
+        $request_data['last_day_travel'] = Carbon::parse($request->last_day_travel);
 
         unset($request_data['payment_method']);
 
@@ -321,15 +322,15 @@ class HomeController extends Controller
 
         //ethnicity
         if ($booking->ethnicity == 0) {
-            $ethnic = "white\_other";
+            $ethnic = "white_other";
         } elseif ($booking->ethnicity == 1) {
-            $ethnic = "other\_mixed";
+            $ethnic = "other_mixed";
         } elseif ($booking->ethnicity == 2) {
-            $ethnic = "other\_mixed";
+            $ethnic = "other_mixed";
         } elseif ($booking->ethnicity == 3) {
-            $ethnic = "black\_other";
+            $ethnic = "black_other";
         } elseif ($booking->ethnicity == 4) {
-            $ethnic = "Other\_mixed";
+            $ethnic = "Other_mixed";
         }
 
         //transportation means
@@ -345,7 +346,7 @@ class HomeController extends Controller
             $transport = "Others";
         }
 
-        $color_code = CountryColor::where('id',$booking->country_travelling_from_id)->first();
+        $color_code = CountryColor::where('country_id',$booking->country_travelling_from_id)->first();
 
         $data_send["test_kit_properties"] = [
             'first_name' => $booking->first_name,
@@ -354,7 +355,7 @@ class HomeController extends Controller
             'sex' => ($booking->sex == 1) ? "Male" : "Female",
             'ethnicity' => $ethnic,
             "email" => $booking->email,
-            'vaccine_type' => $booking->vaccination_type,
+            'vaccine_type' => ($booking->vaccination_type) ? $booking->vaccination_type : "n/a",
             "mobile" => $booking->phone_no,
             "arrival_in_uk" => Carbon::parse($booking->arrival_date)->toDateString(),
             "country_from" => $booking->travelingFrom->name,
@@ -363,23 +364,26 @@ class HomeController extends Controller
             "flight_number" => $booking->transport_no,
             "passport" => $booking->document_id,
             'vaccination_status' => $booking->vaccination_status,
-            "address_line_1" => $booking->address_1,
-            "city" => $booking->home_town,
-            "postcode" => $booking->post_code,
-            "country_type" => $color_code->name,
-            "countries_travelled" => "Nigeria"
+            "address_line_1" => $booking->isolation_address,
+            "city" => $booking->isolation_town,
+            "postcode" => $booking->isolation_postal_code,
+            "country_type" => (optional($color_code->color)->name) ? optional($color_code->color)->name : "Amber",
+            "countries_travelled" => ($booking->travelingFrom) ? optional($booking->travelingFrom)->name: "Nigeria"
         ];
 
-        if ($booking->vaccination_type != "n/a") {
+        if ($booking->vaccination_type && $booking->vaccination_type != "n/a") {
             $data_send["test_kit_properties"]["vaccination_date"] = Carbon::parse($booking->vaccination_date)->toDateString();
         }
 
         $data_send["shipping_address_attributes"] =
             [
-                "line_1" => $booking->address_1,
-                "city" => $booking->home_town,
-                "postcode" => $booking->post_code
+                "line_1" => $booking->isolation_address,
+                "city" => $booking->isolation_town,
+                "postcode" => $booking->isolation_postal_code
             ];
+
+        $data_send['external_reference'] = "booking_".$booking->id;
+        $data_send['product'] = optional(optional($booking->product)->product)->name;
 
         $ch = curl_init();
 
@@ -420,8 +424,10 @@ class HomeController extends Controller
 
         $booking = Booking::where('transaction_ref', $booking_ref)->first();
 
+        $booking_product = BookingProduct::where('booking_id',$booking->id)->first();
 
-        $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $request->product_id)->first();
+
+        $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $booking_product->product_id)->first();
 
         if ($request->payment_method == "stripe") {
             $redirect_url = $this->processStripe($vendor_products->price_stripe, $booking);
@@ -440,6 +446,10 @@ class HomeController extends Controller
     public function make_payment($booking_ref)
     {
         $booking = Booking::where('transaction_ref', $booking_ref)->first();
+
+        if($booking->status == 1){
+            return redirect()->to('/booking/success?b=' . $booking_ref);
+        }
 
         return view('homepage.make_payment')->with(compact('booking'));
 
@@ -559,7 +569,7 @@ class HomeController extends Controller
 
     public function testEmail()
     {
-//        dd(Hash::make('william'));
+        dd(encrypt_decrypt('encrypt',"99"));
         $booking = Booking::where('id', 51)->first();
         $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
         $code = "sdsbdjksds";
@@ -977,9 +987,9 @@ class HomeController extends Controller
         if (!$request->b) {
             return redirect()->to('/');
         }
-        $txRef = rand(10000000, 99929302399);
+        $txRef = "stripe_".rand(10000000, 99929302399);
 
-        $booking_id = encrypt_decrypt('descrypt', $request->b);
+        $booking_id = encrypt_decrypt('decrypt', $request->b);
         $booking = Booking::where('id', $booking_id)->first();
 
 
@@ -988,7 +998,7 @@ class HomeController extends Controller
 
             $vendor_p = VendorProduct::where('product_id', $booking_product->product_id)->where('vendor_id', 3)->first();
 
-            $booking_product->udpate([
+            $booking_product->update([
                 'charged_amount' => $vendor_p->price_pounds,
                 'currency' => "GBP"
             ]);
@@ -1000,7 +1010,7 @@ class HomeController extends Controller
                 $booking->update([
                     'vendor_id' => 3,
                     'mode_of_payment' => 2,
-                    'transaction_ref' => "stripe_" . $txRef,
+                    'transaction_ref' =>  $txRef,
                     'status' => 1
                 ]);
 
@@ -1035,7 +1045,7 @@ class HomeController extends Controller
             return redirect()->to('/');
         }
         $txRef = "stripe_" . rand(10000000, 99929302399);
-        $booking_id = encrypt_decrypt('descrypt', $request->b);
+        $booking_id = encrypt_decrypt('decrypt', $request->b);
         $booking = Booking::where('id', $booking_id)->first();
         $booking->update([
             'transaction_ref' => $txRef

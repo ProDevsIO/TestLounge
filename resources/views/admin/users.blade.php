@@ -197,7 +197,7 @@
                                 <div class="card-body p-0">
                                     @include('errors.showerrors')
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-custom" id="data_table">
+                                        <table class="table table-hover table-custom" id="data_table1">
                                             <thead>
                                             <tr>
                                                 <th scope="col">Name</th>
@@ -351,7 +351,11 @@
                 "order": []
             });
         });
-
+        $(document).ready(function () {
+            $('#data_table1').DataTable({
+                "order": []
+            });
+        });
         function makeAdmin(id) {
             var d = confirm("Are you sure, you want to make this user an Admin?");
 

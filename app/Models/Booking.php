@@ -162,4 +162,9 @@ class Booking extends Model
 					->withPivot('id', 'vendor_id', 'vendor_product_id', 'price')
 					->withTimestamps();
 	}
+
+    public function product()
+    {
+        return $this->hasOne(BookingProduct::class, 'booking_id');
+    }
 }

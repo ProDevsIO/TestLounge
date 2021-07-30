@@ -173,11 +173,27 @@
                                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                             <a href="{{ url('/view/booking/'.$booking->id) }}" class="dropdown-item">View</a>
                                                             <a href="{{ url('/booking/delete/'.$booking->id) }}" class="dropdown-item">Delete</a>
-                                                            <a href="{{ url('/payment/confirmation?tx_ref='.$booking->transaction_ref) }}" class="dropdown-item" target="_blank">Check for Payment</a>
+                                                            <a href="javascript:;" class="dropdown-item" target="_blank" data-toggle="modal" data-target="#bookingModal{{ $booking->id }}">Check for Payment</a>
                                                         </div>
                                                     </div>
                                                 </td>
-                                              
+                                                <div class="modal fade" id="bookingModal{{ $booking->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Verify Payment</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <a href="{{ url('/booking/stripe/success?b='.encrypt_decrypt("encrypt",$booking->id)) }}" target="_blank" class="btn btn-danger">Stripe</a>
+                                                                <a href="{{ url('/payment/confirmation?tx_ref='.$booking->transaction_ref) }}" target="_blank" class="btn btn-danger">Flutterwave</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             @endif
 
                                             @if(auth()->user()->vendor_id != "0")

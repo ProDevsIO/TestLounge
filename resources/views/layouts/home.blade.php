@@ -62,7 +62,7 @@
     {{--</div>--}}
 {{--</div>--}}
 <?php
-    $ignore = ["booking","booking_success","booking_failed",'about','products_covid',"next_steps","make_payment"];
+    $ignore = ["booking","booking_success","booking_failed",'about','products_covid',"next_steps","make_payment","code_failed"];
 ?>
 <div class="nav-container">
     <nav class="top-bar
@@ -180,8 +180,11 @@
                 <div class="col-sm-12">
                 <h5 class="text-white">Contact us</h5>
                 <span class="text-white">If you have any questions further questions call us on<br>
-                    Phone number: +447985443559<br>
-                    WhatsApp: +447985443559</span>
+                    Phone number: +44 20 8087 2262<br>
+                    WhatsApp: +44 79 8544 3559
+                    <br>
+                   Powered by <a href="https://www.medburymedicals.com/" target="_blank">Medbury Medicals Services</a>
+                </span>
               
                     <span class="text-white">Email us at <br>
                     <a href="#">info@uktraveltests.com</a></span>

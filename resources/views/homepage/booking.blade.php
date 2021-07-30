@@ -57,7 +57,7 @@
         }
 
         @media screen and (max-width: 600px) {
-            .radio{
+            .radio {
                 width: 100%
             }
         }
@@ -464,8 +464,8 @@
                                                             href='https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england'
                                                             target="_blank">here</a>:</span>
                                             </label>
-                                            <input class="form-control date_picker" type="text"
-                                                   placeholder="Arrival Date in UK"
+                                            <input class="form-control date_picker1" type="text"
+                                                   placeholder=""
                                                    name="last_day_travel"
                                                    value="{{ old('last_day_travel') }}" required>
                                         </div>
@@ -513,22 +513,30 @@
                                         <div class="col-md-12">
                                             <label>Choose Payment Method: <span
                                                         class="show_required"> *</span></label>
+                                            <div class="alert alert-warning">
+                                                * Nigerian cardholders are advised to use Flutterwave
+                                            </div>
                                             <div class="radio-group">
                                                 <input type="hidden" name="payment_method" id="payment_method"/>
                                                 <div class='radio' data-value="stripe" style="margin-top: 10px"><img
                                                             src="{{ url('/img/stripe.png') }}"
                                                             height="60px"></div>
-                                                <div class='radio' data-value="flutterwave" style="margin-top: 10px"><img
+                                                <div class='radio' data-value="flutterwave" style="margin-top: 10px">
+                                                    <img
                                                             src="{{ url('/img/Flutterwave.png') }}"
                                                             height="60px"></div>
                                                 <br>
                                             </div>
+
                                         </div>
                                         <div class="col-md-12">
                                             <label>Consent to Test: <span class="show_required"> *</span></label><br/>
-                                            <span class="field-description">I consent to this test being done, or if this test is for a child, I confirm I am a legal guardian of the child and consent to this test being done.</span>
+                                            <p class="field-description" style="font-size: 15px;">I consent to this test
+                                                being done, or if this test is for a child, I confirm I am a legal
+                                                guardian of the child and consent to this test being done.</p>
 
-                                            <input class="pull-left" required type="checkbox" name="consent" value="1"
+                                            <input style="width:20px" class="pull-left" required type="checkbox"
+                                                   name="consent" value="1"
                                             />
                                         </div>
                                         @if(isset($_GET['ref']))
@@ -625,8 +633,8 @@
 
 
             var form1 = $("#logins-part input").filter(function () {
-                if (this.id == "nhs"  || this.id == "vaccination_date") {
-                }else{
+                if (this.id == "nhs" || this.id == "vaccination_date") {
+                } else {
                     return $.trim($(this).val()).length == 0
                 }
             }).length == 0;
@@ -650,7 +658,7 @@
 
 
             var form2_select = $("#information-part select").filter(function () {
-                    return $.trim($(this).val()).length == 0
+                return $.trim($(this).val()).length == 0
             }).length == 0;
 
             var form3_select = $("#products-part select").filter(function () {
@@ -677,7 +685,6 @@
                 format: 'MM/DD/YYYY'
             });
             $('.date_picker1').datetimepicker({
-                minDate: moment().add(1, 'd').toDate(),
                 format: 'MM/DD/YYYY'
             });
 
@@ -720,10 +727,10 @@
             // console.log(data);
             $(".country_id_").val(data.id);
         });
-        $('.radio-group .radio').click(function(){
+        $('.radio-group .radio').click(function () {
             $(this).parent().find('.radio').removeClass('selected');
             $(this).addClass('selected');
-            var payment_method =$(this).data();
+            var payment_method = $(this).data();
             $("#payment_method").val(payment_method.value);
         });
     </script>
