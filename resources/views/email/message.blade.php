@@ -82,7 +82,7 @@
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td class="featured-story__copy" style="background: #fff;" width="640" align="center">
+                                                                                <td class="featured-story__copy" style="background: #fff;" width="100%" align="left">
                                                                                     <table cellspacing="0" cellpadding="0">
                                                                                         <tr>
                                                                                             <td style="font-family: Geneva, Tahoma, Verdana, sans-serif; font-size: 16px; line-height: 22px; color: #555555; padding-top: 16px;" align="left">

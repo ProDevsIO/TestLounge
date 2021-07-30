@@ -490,9 +490,65 @@ class HomeController extends Controller
                 UKTravelsTeam
             ";
             Mail::to($request->email)->send(new BookingCreation($message, "Registration"));
+
+          
+           
         } catch (\Exception $e) {
 
         }
+
+        try{
+
+            $message2 = "
+            Hi Dr.itunu,<br/>
+            
+            We would like to inform you that a new Agent has registered with UKTravel Tests.<br/><br/>
+            Name: " . $request->first_name . " " . $request->last_name . " <br/>
+            Phone: " . $request->phone_no . "<br/>
+            Email: " . $request->email . "<br/>
+            Company Name: " . $request->company. "<br/>
+            <br/>Kindly click the button below to login and review<br/><br/>
+            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                   Go to Login
+                  </a>
+        
+                  <br/><br/>
+                  Thank you.
+                  <br/><br/>
+                UKTravelsTeam
+            ";
+            Mail::to("itunu.akinware@medburymedicals.com")->send(new BookingCreation($message2, "New Agent Registration"));
+
+        }catch (\Exception $e) {
+
+        }
+
+        try{
+
+            $message3 = "
+            Hi Ola,<br/>
+
+            We would like to inform you that a new Agent has registered with UKTravel Tests.<br/><br/>
+            Name: " . $request->first_name . " " . $request->last_name . " <br/>
+            Phone: " . $request->phone_no . "<br/>
+            Email: " . $request->email . "<br/>
+            Company Name: " . $request->company. "<br/><br/>
+
+            Kindly click the button below to login and review<br/><br/>
+            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                   Go to Login
+                  </a>
+                  
+                  <br/><br/>
+                  Thank you.
+                  <br/><br/>
+                UKTravelsTeam
+            ";
+            Mail::to("ola.2@hotmail.com")->send(new BookingCreation($message3, "New Agent Registration"));
+         }catch (\Exception $e) {
+
+        }
+       
 
         session()->flash('alert-success', "Thank you for your registration, kindly click the link sent to your email to continue your registration");
 
@@ -580,7 +636,7 @@ class HomeController extends Controller
 
             UKTravelsTeam
             ";
-            Mail::to($user->email)->send(new BookingCreation($message));
+            Mail::to($user->email)->send(new BookingCreation($message, 'Agent Activation'));
         } catch (\Exception $e) {
 
         }
@@ -641,7 +697,7 @@ class HomeController extends Controller
 
             UKTravelsTeam
             ";
-            Mail::to($user->email)->send(new BookingCreation($message));
+            Mail::to($user->email)->send(new BookingCreation($message, 'Agent Deactivation'));
         } catch (\Exception $e) {
 
         }
