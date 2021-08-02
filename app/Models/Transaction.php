@@ -39,6 +39,7 @@ class Transaction extends Model
 		'amount',
 		'booking_id',
 		'user_id',
+		'type',
 		'cost_config',
 		'pecentage_config'
 	];
