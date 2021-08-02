@@ -181,7 +181,7 @@
                 <h5 class="text-white">Contact us</h5>
                 <span class="text-white">If you have any questions further questions call us on<br>
                     Phone number: +44 20 8087 2262<br>
-                    WhatsApp: +44 79 8544 3559
+                    WhatsApp: +44 7436 875938
                     <br>
                    Powered by <a href="https://www.medburymedicals.com/" target="_blank">Medbury Medicals Services</a>
                 </span>
