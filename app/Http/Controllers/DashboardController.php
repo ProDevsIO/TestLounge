@@ -659,6 +659,7 @@ class DashboardController extends Controller
          ]);
 
          $user = User::where('referal_code', $request->referal_code)->first();
+         
          $check = Booking::where('id', $id)->update([
              'referral_code' =>$request->referal_code,
              'user_id' => $user->id
