@@ -201,6 +201,8 @@
                                             @endif
                                         </tr>
                                         <!-- Modal -->
+                                        @if(auth()->user()->type == "1")
+
                                         <div id="refmodal{{$booking->id}}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
 
@@ -232,6 +234,7 @@
 
                                             </div>
                                         </div>
+                                        @endif
                                     @endforeach
 
                                     </tbody>
