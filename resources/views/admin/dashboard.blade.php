@@ -201,7 +201,6 @@
                                             @endif
                                         </tr>
                                         <!-- Modal -->
-                                        @if(auth()->user()->type == "1")
 
                                         <div id="refmodal{{$booking->id}}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
@@ -216,6 +215,7 @@
                                                     <div class="modal-body">
                                                         <form action="{{ url('/add/referer/'.$booking->id) }}" method="post">
                                                         @csrf
+                                                            @if(isset($refs))
                                                         <label for="">Referrers</label>
                                                             <select name="referal_code" class="form-control" id="" required>
                                                                 <option value="">Select a referer</option>
@@ -223,7 +223,7 @@
                                                                      <option value="{{$ref->referal_code}}">{{$ref->first_name}} {{$ref->last_name}}</option>
                                                                 @endforeach
                                                             </select>
-                                                          
+                                                          @endif
                                                     </div>
                                                     <div class="modal-footer">
                                                             <button type="submit" class="btn btn-sm btn-info">submit</button>
@@ -234,7 +234,6 @@
 
                                             </div>
                                         </div>
-                                        @endif
                                     @endforeach
 
                                     </tbody>
