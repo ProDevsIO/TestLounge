@@ -14,8 +14,7 @@ class AddWalletFieldToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
-            $table->decimal('wallet')->nullable()->after('account_bank');
+            $table->decimal('total_credit')->nullable()->after('account_bank');
         });
     }
 

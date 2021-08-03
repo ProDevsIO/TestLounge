@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VendorReceipt;
 use App\Models\Booking;
 use App\Models\BookingProduct;
 use App\Models\PaymentCode;
 use App\Models\Product;
 use App\Models\Setting;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorProduct;
@@ -15,6 +17,8 @@ use App\Models\Country;
 use App\Models\CountryColor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class DashboardController extends Controller
 {
@@ -283,7 +287,8 @@ class DashboardController extends Controller
         session()->flash('alert-success', "Vendor successfully created.");
         return back();
     }
-        //deleting an agent 
+
+    //deleting an agent
     public function delete_user($users_id)
     {
         User::where('id', $users_id)->delete();
@@ -294,7 +299,7 @@ class DashboardController extends Controller
 
     public function delete_booking($id)
     {
-   
+
         BookingProduct::where('booking_id', $id)->delete();
         Booking::where('id', $id)->delete();
         session()->flash('alert-success', "Booking deleted successfully.");
@@ -303,7 +308,7 @@ class DashboardController extends Controller
 
     public function delete_color($id)
     {
-   
+
         CountryColor::where('id', $id)->delete();
         session()->flash('alert-success', "Color zone deleted successfully.");
         return back();
@@ -478,7 +483,7 @@ class DashboardController extends Controller
 
         $banks = json_decode($request->bank_array);
         $banks_ = [];
-        foreach ($banks as $bank){
+        foreach ($banks as $bank) {
             $banks_[$bank->code] = $bank->name;
         }
 
@@ -577,38 +582,36 @@ class DashboardController extends Controller
     }
 
 
-
     public function color()
     {
         //get all colors
         $colors = Color::all();
         //get all countries
         $country_id_exclude = CountryColor::pluck('country_id')->toArray();;
-        $countries = Country::whereNotIn('id',$country_id_exclude)->get();
+        $countries = Country::whereNotIn('id', $country_id_exclude)->get();
         $countryzone = CountryColor::all();
-        
+
         return view('admin.colors')->with(compact('colors', 'countries', 'countryzone'));
     }
 
     public function edit_color(Request $request, $id)
     {
-            CountryColor::where('id', $id)->update([
-                'color_id' => $request->color
-            ]);
-            session()->flash("alert-success", "Color Zone has been updated ");
-            return back();
-  
+        CountryColor::where('id', $id)->update([
+            'color_id' => $request->color
+        ]);
+        session()->flash("alert-success", "Color Zone has been updated ");
+        return back();
+
     }
 
     public function add_color(Request $request)
     {
         $exist = CountryColor::where('country_id', $request->country)->first();
-       
-        if($exist != null){
+
+        if ($exist != null) {
             session()->flash("alert-success", "Sorry , this country has already been added.");
             return back();
-        }
-        else{
+        } else {
             CountryColor::create([
                 'country_id' => $request->country,
                 'color_id' => $request->color
@@ -616,7 +619,7 @@ class DashboardController extends Controller
             session()->flash("alert-success", "New country color zone added");
             return back();
         }
-       
+
     }
 
 
@@ -627,25 +630,27 @@ class DashboardController extends Controller
         return redirect()->to('/');
     }
 
-    public function change_referral_code(Request $request ,$id){
-        $this->validate($request,[
-           'referal_code' => "required"
+    public function change_referral_code(Request $request, $id)
+    {
+        $this->validate($request, [
+            'referal_code' => "required"
         ]);
 
-        $user = User::where('referal_code',$request->referal_code)->where('id','!=',$id)->first();
+        $user = User::where('referal_code', $request->referal_code)->where('id', '!=', $id)->first();
 
-        if($user){
-            session()->flash("alert-info","Name already exist. Kindly use another name");
+        if ($user) {
+            session()->flash("alert-info", "Name already exist. Kindly use another name");
             return back();
         }
 
-        User::where('id',$id)->update([
-             'referal_code' => $request->referal_code
+        User::where('id', $id)->update([
+            'referal_code' => $request->referal_code
         ]);
 
-        session()->flash('alert-success',"Referral code changed successfully");
+        session()->flash('alert-success', "Referral code changed successfully");
         return back();
     }
+
 
     public function add_referer(Request $request, $id){
         
@@ -661,5 +666,129 @@ class DashboardController extends Controller
 
          session()->flash('alert-success',"Referer has been added successfully");
          return back();
+}
+    public function edit_email(Request $request)
+    {
+        $this->validate($request, [
+            'email'
+        ]);
+
+        $booking = Booking::where('id', $request->id)->first();
+
+        $booking->update([
+                'email' => $request->email
+            ]);
+
+//        try{
+            $reference = $this->sendData($booking);
+
+            $booking->update([
+                'email' => $request->email,
+                'booking_code' => $reference
+            ]);
+//        }catch (\Exception $ex){
+//
+//        }
+
+
+
+        session()->flash('alert-success', "Email edited successfully");
+
+        return back();
+    }
+
+    public function resend_receipt($id)
+    {
+
+        $booking = Booking::where('id', $id)->first();
+        $code = $booking->booking_code;
+        $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
+        try {
+            Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+        } catch (\Exception $e) {
+
+        }
+
+        session()->flash('alert-success', "Receipt has been sent successfully");
+
+        return back();
+    }
+
+    public function financial_report(Request $request)
+    {
+        if (auth()->user()->type == 0) {
+            abort(403);
+        }
+
+        if ($request->start && $request->end) {
+            $start = Carbon::parse($request->start);
+            $end = Carbon::parse($request->end);
+
+            $total_ngn = BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
+            $total_gbp = BookingProduct::where('currency', 'GBP')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
+            $total_ghs = BookingProduct::where('currency', 'GHS')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
+            $total_tzs = BookingProduct::where('currency', 'TZS')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
+            $total_kes = BookingProduct::where('currency', 'KES')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
+            $total_zar = BookingProduct::where('currency', 'ZAR')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
+        } else {
+            $total_ngn = BookingProduct::where('currency', 'NGN')->sum('charged_amount');
+            $total_gbp = BookingProduct::where('currency', 'GBP')->sum('charged_amount');
+            $total_ghs = BookingProduct::where('currency', 'GHS')->sum('charged_amount');
+            $total_tzs = BookingProduct::where('currency', 'TZS')->sum('charged_amount');
+            $total_kes = BookingProduct::where('currency', 'KES')->sum('charged_amount');
+            $total_zar = BookingProduct::where('currency', 'ZAR')->sum('charged_amount');
+        }
+
+        $due_amount = User::sum("wallet_balance");
+
+        $users = User::where('type','!=','1')->whereNotNull('wallet_balance')->orderby('wallet_balance','desc')->get();
+
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users'));
+
+    }
+
+    public function make_pay(Request $request)
+    {
+        $this->validate($request, [
+            'amount' => 'required'
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $user = User::where('id', $request->id)->first();
+            if ($user) {
+
+                if ($user->wallet_balance < $request->amount) {
+                    session()->flash("alert-info", "Insufficient Balance.");
+                    return back();
+                }
+                Transaction::create([
+                    'amount' => $request->amount,
+                    'booking_id' => null,
+                    'user_id' => $request->id,
+                    'type' => "2",
+                    'cost_config' => null,
+                    'pecentage_config' => null
+                ]);
+
+                $wallet_balance = $user->wallet_balance - $request->amount;
+
+                $user->update([
+                    'wallet_balance' => $wallet_balance
+                ]);
+
+                DB::commit();
+
+                session()->flash("alert-success","Debit Transaction has been recorded");
+                return back();
+            }
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+            session()->flash("alert-danger","An Error occurred");
+
+            return back();
+        }
+
     }
 }

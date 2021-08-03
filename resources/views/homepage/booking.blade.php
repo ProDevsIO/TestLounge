@@ -311,7 +311,7 @@
                                         <div class="col-md-12" style="margin-top: 20px">
                                             <label>Contact Email: <span class="show_required"> *</span></label> <small class="text-muted"> Please provide only ONE email address</small>
    
-                                            <input class="form-control" type="text" name="email" value="{{ old('email') }}" required/>
+                                            <input class="form-control" type="email" name="email" value="{{ old('email') }}" required/>
                                         </div>
                                         <button class="btn btn-primary pull-right" onclick="stepperForm.next()">Next
                                         </button>
@@ -406,8 +406,8 @@
                                                     name="isolation_country_id" required readonly>
                                                 <option value="">Make a selection</option>
 
-                                                <option value="{{ $country->id }}" selected
-                                                        selected>UNITED KINGDOM
+                                                <option value="225" selected
+                                                        >UNITED KINGDOM
                                                 </option>
                                             </select>
                                         </div>

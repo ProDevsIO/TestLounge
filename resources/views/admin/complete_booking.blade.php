@@ -40,7 +40,7 @@
                                     <div class="col-md-6">
                                         <label>End Date</label>
                                         <input type="date" name="end" class="form-control"
-                                               value="{{ (isset($_GET['end']) ? $_GET['start'] : "")  }}" required/>
+                                               value="{{ (isset($_GET['end']) ? $_GET['end'] : "")  }}" required/>
                                     </div>
                                     @if(auth()->user()->type == 1)
                                         <div class="col-md-6">
@@ -82,12 +82,13 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        @endif
-                                    <div style="width: 100%">
-                                    <input type="submit" class="btn btn-danger pull-right mt-2" value="Search">
-                                    @if(auth()->user()->type == 1)
-                                    <input type="submit" class="btn btn-warning pull-left mt-2" name="export" style="margin-left: 20px" value="Export">
                                     @endif
+                                    <div style="width: 100%">
+                                        <input type="submit" class="btn btn-danger pull-right mt-2" value="Search">
+                                        @if(auth()->user()->type == 1)
+                                            <input type="submit" class="btn btn-warning pull-left mt-2" name="export"
+                                                   style="margin-left: 20px" value="Export">
+                                        @endif
                                     </div>
                                     @csrf
                                 </div>
@@ -108,7 +109,7 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
-                        @include('errors.showerrors')
+                            @include('errors.showerrors')
                             <div class="table-responsive">
                                 <table class="table table-hover table-custom" id="data_table">
                                     <thead>
@@ -139,7 +140,21 @@
                                                 {{ $booking->first_name }} {{ $booking->last_name }}
                                             </td>
                                             <td>{{ $booking->phone_no }}</td>
-                                            <td>{{ $booking->email }}</td>
+                                            <td>{{ $booking->email }}<br/>
+                                                @if(auth()->user()->type == "1")
+                                                <ul>
+                                                    <li>{{ optional(optional($booking->product)->product)->name }}
+                                                        ({{ optional($booking->product)->currency.number_format(optional($booking->product)->charged_amount,2)}}
+                                                        )
+                                                    </li>
+                                                </ul>
+                                                <br/>
+                                                @if($booking->booking_code)
+                                                    Reference Code: {{ $booking->booking_code }}
+                                                @endif
+                                                    @endif
+                                            </td>
+
                                             <td> {{ $booking->created_at }} </td>
                                             <td>@if($booking->status == 0)
                                                     <span class="badge badge-warning">Not Paid</span>
@@ -176,11 +191,18 @@
                                                             Action
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                            <a href="{{ url('/view/booking/'.$booking->id) }}" class="dropdown-item">View</a>
-                                                            <a href="{{ url('/booking/delete/'.$booking->id) }}" class="dropdown-item">Delete</a>
-                                                         </div>
-                                                    </div>    
-                                                
+                                                            <a href="{{ url('/view/booking/'.$booking->id) }}"
+                                                               class="dropdown-item">View</a>
+                                                            <a href="javascript:;" data-toggle="modal"
+                                                               data-target="#editEmail{{ $booking->id }}"
+                                                               class="dropdown-item">Edit Email</a>
+                                                            <a href="javascript:;" onclick="resendReceipt('{{ $booking->id }}')"
+                                                               class="dropdown-item">Resend Receipt</a>
+                                                            <a href="{{ url('/booking/delete/'.$booking->id) }}"
+                                                               class="dropdown-item">Delete</a>
+                                                        </div>
+                                                    </div>
+
                                                 </td>
                                             @endif
 
@@ -192,6 +214,36 @@
                                                 </td>
                                             @endif
                                         </tr>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="editEmail{{ $booking->id }}" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <form action="{{ url('edit/email') }}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{ $booking->id }}">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Email</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <input type="email" name="email" value="{{ $booking->email }}" class="form-control"/>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary">Save changes
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endforeach
 
                                     </tbody>
@@ -219,5 +271,12 @@
                 "order": []
             });
         });
+
+        function resendReceipt(id){
+            var d = confirm("Are you sure you want to resend the receipt?");
+            if(d){
+                window.location = "/resend/receipt/"+ id;
+            }
+        }
     </script>
 @endsection

@@ -16,6 +16,7 @@ use App\Models\Vendor;
 use App\Models\VendorProduct;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -247,33 +248,44 @@ class HomeController extends Controller
                 $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
 
                 if ($booking->user_id) {
-                    $user = User::where('id', $booking->user_id)->first();
-                    if ($user->percentage_split != null) {
-                        $pecentage = $user->percentage_split;
-                    } else {
-                        $defaultpercent = Setting::where('id', '2')->first();
-                        $pecentage = $defaultpercent->value;
+                    try {
+                        DB::beginTransaction();
+                        $user = User::where('id', $booking->user_id)->first();
+                        if ($user->percentage_split != null) {
+                            $pecentage = $user->percentage_split;
+                        } else {
+                            $defaultpercent = Setting::where('id', '2')->first();
+                            $pecentage = $defaultpercent->value;
+                        }
+
+
+                        $cost_booking = $booking_product->price;
+
+                        $amount_credit = ($cost_booking * ($pecentage / 100));
+
+
+                        Transaction::create([
+                            'amount' => $amount_credit,
+                            'booking_id' => $booking->id,
+                            'user_id' => $user->id,
+                            'cost_config' => $cost_booking,
+                            'pecentage_config' => $pecentage,
+                            'type' => "1"
+                        ]);
+
+
+                        $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
+
+                        $total_amount = $user->wallet_balance + $amount_credit;
+
+                        User::where('id', $booking->user_id)->update([
+                            'wallet_balance' => $total_amount,
+                            'total_credit' => $transactions
+                        ]);
+                        DB::commit();
+                    }catch (\Exception $e){
+                        DB::rollBack();
                     }
-
-
-                    $cost_booking = $booking_product->price;
-
-                    $amount_credit = ($cost_booking * ($pecentage / 100));
-
-
-                    Transaction::create([
-                        'amount' => $amount_credit,
-                        'booking_id' => $booking->id,
-                        'user_id' => $user->id,
-                        'cost_config' => $cost_booking,
-                        'pecentage_config' => $pecentage
-                    ]);
-
-                    $total_amount = $user->wallet_balance + $amount_credit;
-
-                    User::where('id', $booking->user_id)->update([
-                        'wallet_balance' => $total_amount
-                    ]);
                 }
 
                 try {
@@ -317,90 +329,6 @@ class HomeController extends Controller
     }
 
 
-    function sendData($booking)
-    {
-
-        //ethnicity
-        if ($booking->ethnicity == 0) {
-            $ethnic = "white_other";
-        } elseif ($booking->ethnicity == 1) {
-            $ethnic = "other_mixed";
-        } elseif ($booking->ethnicity == 2) {
-            $ethnic = "other_mixed";
-        } elseif ($booking->ethnicity == 3) {
-            $ethnic = "black_other";
-        } elseif ($booking->ethnicity == 4) {
-            $ethnic = "Other_mixed";
-        }
-
-        //transportation means
-        if ($booking->method_of_transportation == 1) {
-            $transport = "Airline";
-        } elseif ($booking->method_of_transportation == 2) {
-            $transport = "Vessel";
-        } elseif ($booking->method_of_transportation == 3) {
-            $transport = "Train";
-        } elseif ($booking->method_of_transportation == 4) {
-            $transport = "Road Vehicle";
-        } elseif ($booking->method_of_transportation == 5) {
-            $transport = "Others";
-        }
-
-        $color_code = CountryColor::where('country_id',$booking->country_travelling_from_id)->first();
-
-        $data_send["test_kit_properties"] = [
-            'first_name' => $booking->first_name,
-            'last_name' => $booking->last_name,
-            'birth_date' => Carbon::parse($booking->dob)->format('Y-m-d'),
-            'sex' => ($booking->sex == 1) ? "Male" : "Female",
-            'ethnicity' => $ethnic,
-            "email" => $booking->email,
-            'vaccine_type' => ($booking->vaccination_type) ? $booking->vaccination_type : "n/a",
-            "mobile" => $booking->phone_no,
-            "arrival_in_uk" => Carbon::parse($booking->arrival_date)->toDateString(),
-            "country_from" => $booking->travelingFrom->name,
-            "nhs_number" => $booking->nhs_number,
-            "departure_from_abroad_date" => Carbon::parse($booking->departure_date)->format('Y-m-d'),
-            "flight_number" => $booking->transport_no,
-            "passport" => $booking->document_id,
-            'vaccination_status' => $booking->vaccination_status,
-            "address_line_1" => $booking->isolation_address,
-            "city" => $booking->isolation_town,
-            "postcode" => $booking->isolation_postal_code,
-            "country_type" => (optional($color_code->color)->name) ? optional($color_code->color)->name : "Amber",
-            "countries_travelled" => ($booking->travelingFrom) ? optional($booking->travelingFrom)->name: "Nigeria"
-        ];
-
-        if ($booking->vaccination_type && $booking->vaccination_type != "n/a") {
-            $data_send["test_kit_properties"]["vaccination_date"] = Carbon::parse($booking->vaccination_date)->toDateString();
-        }
-
-        $data_send["shipping_address_attributes"] =
-            [
-                "line_1" => $booking->isolation_address,
-                "city" => $booking->isolation_town,
-                "postcode" => $booking->isolation_postal_code
-            ];
-
-        $data_send['external_reference'] = "booking_".$booking->id;
-        $data_send['product'] = optional(optional($booking->product)->product)->name;
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, "https://portal.ukhealthtesting.com/api/partner_orders");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,
-            http_build_query($data_send));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $response = curl_exec($ch);
-
-        curl_close($ch);
-
-        $data_response = json_decode($response);
-
-        return $data_response->reference;
-    }
 
     public function booking_success(Request $request)
     {
@@ -508,9 +436,8 @@ class HomeController extends Controller
         }
 
         try{
-
             $message2 = "
-            Hi Dr.itunu,<br/>
+            Hi Admin,<br/>
             
             We would like to inform you that a new Agent has registered with UKTravel Tests.<br/><br/>
             Name: " . $request->first_name . " " . $request->last_name . " <br/>
@@ -527,38 +454,12 @@ class HomeController extends Controller
                   <br/><br/>
                 UKTravelsTeam
             ";
-            Mail::to("itunu.akinware@medburymedicals.com")->send(new BookingCreation($message2, "New Agent Registration"));
+            Mail::to(['itunu.akinware@medburymedicals.com','ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Agent Registration"));
 
         }catch (\Exception $e) {
 
         }
 
-        try{
-
-            $message3 = "
-            Hi Ola,<br/>
-
-            We would like to inform you that a new Agent has registered with UKTravel Tests.<br/><br/>
-            Name: " . $request->first_name . " " . $request->last_name . " <br/>
-            Phone: " . $request->phone_no . "<br/>
-            Email: " . $request->email . "<br/>
-            Company Name: " . $request->company. "<br/><br/>
-
-            Kindly click the button below to login and review<br/><br/>
-            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
-                   Go to Login
-                  </a>
-                  
-                  <br/><br/>
-                  Thank you.
-                  <br/><br/>
-                UKTravelsTeam
-            ";
-            Mail::to("ola.2@hotmail.com")->send(new BookingCreation($message3, "New Agent Registration"));
-         }catch (\Exception $e) {
-
-        }
-       
 
         session()->flash('alert-success', "Thank you for your registration, kindly click the link sent to your email to continue your registration");
 

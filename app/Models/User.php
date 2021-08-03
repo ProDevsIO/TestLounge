@@ -47,7 +47,7 @@ class User extends Authenticatable
         'company',
         'verified',
 		'type','wallet_balance','vendor_id', 'account_bank',
-        'account_no','flutterwave_key','country','account_name','wallet','bank','flutterwave_id'
+        'account_no','flutterwave_key','country','account_name','total_credit','bank','flutterwave_id'
 	];
 	public function bookings()
 	{

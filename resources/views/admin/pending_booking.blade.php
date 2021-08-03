@@ -40,7 +40,7 @@
                                     <div class="col-md-6">
                                         <label>End Date</label>
                                         <input type="date" name="end" class="form-control"
-                                               value="{{ (isset($_GET['end']) ? $_GET['start'] : "")  }}" required/>
+                                               value="{{ (isset($_GET['end']) ? $_GET['end'] : "")  }}" required/>
                                     </div>
                                     @if(auth()->user()->type == 1)
                                         <div class="col-md-6">
