@@ -246,6 +246,8 @@
                                                         <button type="button" class="btn btn-sm btn-info" data-dismiss="modal">Close</button>
                                                     </div>
                                                 </div>
+                                            </div>
+                                          </div>
 
 
                                         <!-- Modal -->
