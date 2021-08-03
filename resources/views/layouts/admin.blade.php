@@ -196,6 +196,13 @@
                             <span>Users/Referrals</span>
                         </a>
                     </li>
+                        <li>
+                            <a href="{{ url('/finance/report') }}">
+                                <i class="ti-receipt"></i>
+                                <span>Financial Report</span>
+                            </a>
+                        </li>
+
 
                         <li>
                             <a href="{{ url('/settings') }}">

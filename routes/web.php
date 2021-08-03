@@ -82,6 +82,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/view/booking/{id}', [\App\Http\Controllers\DashboardController::class,"view_booking"]);
     Route::get('/booking/delete/{id}', [\App\Http\Controllers\DashboardController::class,"delete_booking"]);
     Route::get('/vendors', [\App\Http\Controllers\DashboardController::class,"vendors"]);
+    Route::post('/edit/email', [\App\Http\Controllers\DashboardController::class,"edit_email"]);
+    Route::post('/make/pay', [\App\Http\Controllers\DashboardController::class,"make_pay"]);
+    Route::get('/resend/receipt/{id}', [\App\Http\Controllers\DashboardController::class,"resend_receipt"]);
+    Route::get('/finance/report', [\App\Http\Controllers\DashboardController::class,"financial_report"]);
+
+
+
+
     Route::get('/users', [\App\Http\Controllers\DashboardController::class,"users"]);
     Route::get('/users/delete/{id}', [\App\Http\Controllers\DashboardController::class,"delete_user"]);
     Route::get('/products', [\App\Http\Controllers\DashboardController::class,"products"]);
