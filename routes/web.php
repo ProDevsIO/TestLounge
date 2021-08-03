@@ -114,6 +114,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/add/colors', [\App\Http\Controllers\DashboardController::class, "add_color"]);
     Route::post('/edit/colors/{id}', [\App\Http\Controllers\DashboardController::class, "edit_color"]);
     Route::get('/delete/color/{id}', [\App\Http\Controllers\DashboardController::class, "delete_color"]);
+    Route::post('/add/referer/{code}', [\App\Http\Controllers\DashboardController::class, "add_referer"]);
 
 
     Route::get('/logout', [\App\Http\Controllers\DashboardController::class,"logout"]);

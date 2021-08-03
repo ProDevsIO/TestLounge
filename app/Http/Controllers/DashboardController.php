@@ -27,6 +27,8 @@ class DashboardController extends Controller
             $complete_booking = Booking::where('status', 1)->count();
             $users = User::count();
             $payment_codes = PaymentCode::count();
+            $refs = User::wherenotNull('referal_code')->get();
+
         } elseif (auth()->user()->vendor_id != 0) {
             $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
             $bookings = Booking::whereIn('id', $bookings_vendors)->orderby('id', 'desc')->get();
@@ -43,7 +45,7 @@ class DashboardController extends Controller
             $payment_codes = 0;
         }
 
-        return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking'));
+        return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking', 'refs'));
     }
 
 
@@ -643,5 +645,21 @@ class DashboardController extends Controller
 
         session()->flash('alert-success',"Referral code changed successfully");
         return back();
+    }
+
+    public function add_referer(Request $request, $id){
+        
+        $this->validate($request,[
+            'referal_code' => "required"
+         ]);
+
+         $user = User::where('referal_code', $request->referal_code)->first();
+         $check = Booking::where('id', $id)->update([
+             'referral_code' =>$request->referal_code,
+             'user_id' => $user->id
+        ]);
+
+         session()->flash('alert-success',"Referer has been added successfully");
+         return back();
     }
 }
