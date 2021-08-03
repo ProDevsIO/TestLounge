@@ -897,6 +897,48 @@ class HomeController extends Controller
         if ($booking->status != 1) {
             $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
 
+
+            if ($booking->user_id) {
+                try {
+                    DB::beginTransaction();
+                    $user = User::where('id', $booking->user_id)->first();
+                    if ($user->percentage_split != null) {
+                        $pecentage = $user->percentage_split;
+                    } else {
+                        $defaultpercent = Setting::where('id', '2')->first();
+                        $pecentage = $defaultpercent->value;
+                    }
+
+
+                    $cost_booking = $booking_product->price;
+
+                    $amount_credit = ($cost_booking * ($pecentage / 100));
+
+
+                    Transaction::create([
+                        'amount' => $amount_credit,
+                        'booking_id' => $booking->id,
+                        'user_id' => $user->id,
+                        'cost_config' => $cost_booking,
+                        'pecentage_config' => $pecentage,
+                        'type' => "1"
+                    ]);
+
+
+                    $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
+
+                    $total_amount = $user->wallet_balance + $amount_credit;
+
+                    User::where('id', $booking->user_id)->update([
+                        'wallet_balance' => $total_amount,
+                        'total_credit' => $transactions
+                    ]);
+                    DB::commit();
+                }catch (\Exception $e){
+                    DB::rollBack();
+                }
+            }
+
             $vendor_p = VendorProduct::where('product_id', $booking_product->product_id)->where('vendor_id', 3)->first();
 
             $booking_product->update([
@@ -925,6 +967,8 @@ class HomeController extends Controller
 
                 }
             }
+
+
             $booking->update([
                 'vendor_id' => 3,
                 'mode_of_payment' => 2,
