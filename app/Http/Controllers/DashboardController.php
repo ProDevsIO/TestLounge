@@ -36,6 +36,7 @@ class DashboardController extends Controller
             $complete_booking = Booking::whereIn('id', $bookings_vendors)->where('status', 1)->count();
             $users = 0;
             $payment_codes = 0;
+            $refs = "";
 
         } else {
             $bookings = Booking::where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->orderby('id', 'desc')->get();
@@ -43,6 +44,7 @@ class DashboardController extends Controller
             $complete_booking = Booking::where('status', 1)->where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->count();
             $users = 0;
             $payment_codes = 0;
+            $refs ="";
         }
 
         return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking', 'refs'));
@@ -103,8 +105,10 @@ class DashboardController extends Controller
 
     public function complete_booking(Request $request)
     {
+        $refs = "";
         if (auth()->user()->type == "1") {
             $bookings = Booking::where('status', 1)->orderby('id', 'desc');
+            $refs = User::wherenotNull('referal_code')->get();
         } elseif (auth()->user()->vendor_id != 0) {
             $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
             $bookings = Booking::whereIn('id', $bookings_vendors)->where('status', 1);
@@ -243,7 +247,7 @@ class DashboardController extends Controller
             return response()->stream($callback, 200, $headers);
         }
 
-        return view('admin.complete_booking')->with(compact('bookings', 'products', 'vendors', 'users'));
+        return view('admin.complete_booking')->with(compact('bookings', 'products', 'vendors', 'users','refs'));
     }
 
     public function view_booking($id)

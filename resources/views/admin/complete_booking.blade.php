@@ -178,7 +178,10 @@
                                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                             <a href="{{ url('/view/booking/'.$booking->id) }}" class="dropdown-item">View</a>
                                                             <a href="{{ url('/booking/delete/'.$booking->id) }}" class="dropdown-item">Delete</a>
-                                                         </div>
+                                                            @if($booking->user_id == null)
+                                                            <a class="dropdown-item" data-toggle="modal" href="#refmodal{{$booking->id}}">Add a referral</a>
+                                                            @endif 
+                                                        </div>
                                                     </div>    
                                                 
                                                 </td>
@@ -192,6 +195,38 @@
                                                 </td>
                                             @endif
                                         </tr>
+                                          <!-- Modal -->
+                                          <div id="refmodal{{$booking->id}}" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h4 class="modal-title">Add a referral</h4>
+                                                        <button type="button" class="close pull-left" data-dismiss="modal">&times;</button>
+                                                        
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="{{ url('/add/referer/'.$booking->id) }}" method="post">
+                                                        @csrf
+                                                        <label for="">Referrers</label>
+                                                            <select name="referal_code" class="form-control" id="" required>
+                                                                <option value="">Select a referer</option>
+                                                                @foreach($refs as $ref)
+                                                                     <option value="{{$ref->referal_code}}">{{$ref->first_name}} {{$ref->last_name}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                          
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-sm btn-info">submit</button>
+                                                        </form>
+                                                        <button type="button" class="btn btn-sm btn-info" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     @endforeach
 
                                     </tbody>
