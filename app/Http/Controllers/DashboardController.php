@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
 use App\Models\Booking;
 use App\Models\BookingProduct;
@@ -48,7 +49,7 @@ class DashboardController extends Controller
             $complete_booking = Booking::where('status', 1)->where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->count();
             $users = 0;
             $payment_codes = 0;
-            $refs ="";
+            $refs = "";
         }
 
         return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking', 'refs'));
@@ -251,7 +252,7 @@ class DashboardController extends Controller
             return response()->stream($callback, 200, $headers);
         }
 
-        return view('admin.complete_booking')->with(compact('bookings', 'products', 'vendors', 'users','refs'));
+        return view('admin.complete_booking')->with(compact('bookings', 'products', 'vendors', 'users', 'refs'));
     }
 
     public function view_booking($id)
@@ -656,22 +657,69 @@ class DashboardController extends Controller
     }
 
 
-    public function add_referer(Request $request, $id){
-        
-        $this->validate($request,[
-            'referal_code' => "required"
-         ]);
+    public function add_referer(Request $request, $id)
+    {
 
-         $user = User::where('referal_code', $request->referal_code)->first();
-         
-         $check = Booking::where('id', $id)->update([
-             'referral_code' =>$request->referal_code,
-             'user_id' => $user->id
+        $this->validate($request, [
+            'referal_code' => "required"
         ]);
 
-         session()->flash('alert-success',"Referer has been added successfully");
-         return back();
-}
+        $user = User::where('referal_code', $request->referal_code)->first();
+
+        $booking = Booking::where('id', $id)->first();
+        $booking->update([
+            'referral_code' => $request->referal_code,
+            'user_id' => $user->id
+        ]);
+
+        //add the payment under him
+
+        try {
+            DB::beginTransaction();
+            $booking_product = BookingProduct::where('booking_id', $id)->first();
+            if ($user->percentage_split != null) {
+                $pecentage = $user->percentage_split;
+            } else {
+                $defaultpercent = Setting::where('id', '2')->first();
+                $pecentage = $defaultpercent->value;
+            }
+
+            $check = Transaction::where('booking_id', $booking->id)->where('user_id', $user->id)->first();
+            if (!$check) {
+                $cost_booking = $booking_product->price;
+
+                $amount_credit = ($cost_booking * ($pecentage / 100));
+
+
+                Transaction::create([
+                    'amount' => $amount_credit,
+                    'booking_id' => $booking->id,
+                    'user_id' => $user->id,
+                    'cost_config' => $cost_booking,
+                    'pecentage_config' => $pecentage,
+                    'type' => "1"
+                ]);
+
+
+                $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
+
+                $total_amount = $user->wallet_balance + $amount_credit;
+
+                User::where('id', $booking->user_id)->update([
+                    'wallet_balance' => $total_amount,
+                    'total_credit' => $transactions
+                ]);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+
+        session()->flash('alert-success', "Referer has been added successfully");
+        return back();
+    }
+
     public function edit_email(Request $request)
     {
         $this->validate($request, [
@@ -681,20 +729,19 @@ class DashboardController extends Controller
         $booking = Booking::where('id', $request->id)->first();
 
         $booking->update([
-                'email' => $request->email
-            ]);
+            'email' => $request->email
+        ]);
 
 //        try{
-            $reference = $this->sendData($booking);
+        $reference = $this->sendData($booking);
 
-            $booking->update([
-                'email' => $request->email,
-                'booking_code' => $reference
-            ]);
+        $booking->update([
+            'email' => $request->email,
+            'booking_code' => $reference
+        ]);
 //        }catch (\Exception $ex){
 //
 //        }
-
 
 
         session()->flash('alert-success', "Email edited successfully");
@@ -746,7 +793,7 @@ class DashboardController extends Controller
 
         $due_amount = User::sum("wallet_balance");
 
-        $users = User::where('type','!=','1')->whereNotNull('wallet_balance')->orderby('wallet_balance','desc')->get();
+        $users = User::where('type', '!=', '1')->whereNotNull('wallet_balance')->orderby('wallet_balance', 'desc')->get();
 
         return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users'));
 
@@ -784,13 +831,31 @@ class DashboardController extends Controller
 
                 DB::commit();
 
-                session()->flash("alert-success","Debit Transaction has been recorded");
+                session()->flash("alert-success", "Debit Transaction has been recorded");
+
+                try {
+
+                    $message2 = "
+            Hi " . $user->first_name . ",<br/>
+            
+            Your payment has been processed into your bank account.<br/><br/>
+                  <br/><br/>
+                  Thank you.
+                  <br/><br/>
+                UKTravelsTeam
+            ";
+                    Mail::to($user->email)->send(new BookingCreation($message2, "Payment Notification"));
+
+
+                } catch (\Exception $e) {
+
+                }
                 return back();
             }
         } catch (\Exception $e) {
 
             DB::rollBack();
-            session()->flash("alert-danger","An Error occurred");
+            session()->flash("alert-danger", "An Error occurred");
 
             return back();
         }
