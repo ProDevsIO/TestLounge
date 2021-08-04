@@ -33,7 +33,18 @@ class Controller extends BaseController
             'cancel_url' => $YOUR_DOMAIN . 'booking/stripe/failed?b='.encrypt_decrypt('encrypt',$booking->id),
         ]);
 
-        return $checkout_session->url;
+        return $checkout_session;
+    }
+
+    function checkSession($booking_product){
+        \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JHzEGI12ZmR225jgcGfjm25u1RsPopaeB4x2Z6E32SsCaTGQQMB0GAFbBdEaHZLLBHBYAvEsOZjhf1CkooC9bTR00rh2Iytpz'));
+
+        header('Content-Type: application/json');
+
+        $checkout_session = \Stripe\Checkout\Session::retrieve($booking_product->stripe_session);
+
+        return $checkout_session;
+
     }
     public function processFL(array $request = [])
     {

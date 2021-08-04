@@ -202,7 +202,19 @@ class HomeController extends Controller
         $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $request->product_id)->first();
 
         if ($request->payment_method == "stripe") {
-            $redirect_url = $this->processStripe($vendor_products->price_stripe, $booking);
+            $response = $this->processStripe($vendor_products->price_stripe, $booking);
+            $redirect_url = $response->url;
+
+            BookingProduct::where('booking_id', $booking->id)->update([
+                'stripe_intent' => $response->payment_intent,
+                'stripe_session'=> $response->id
+            ]);
+
+            Booking::where('id', $booking->id)->update([
+                'stripe_intent' => $response->payment_intent,
+                'stripe_session'=> $response->id
+            ]);
+
         } else {
             $redirect_url = $this->processFL($data);
         }
@@ -283,7 +295,7 @@ class HomeController extends Controller
                             'total_credit' => $transactions
                         ]);
                         DB::commit();
-                    }catch (\Exception $e){
+                    } catch (\Exception $e) {
                         DB::rollBack();
                     }
                 }
@@ -329,7 +341,6 @@ class HomeController extends Controller
     }
 
 
-
     public function booking_success(Request $request)
     {
         $booking = Booking::where('transaction_ref', $request->b)->first();
@@ -352,13 +363,25 @@ class HomeController extends Controller
 
         $booking = Booking::where('transaction_ref', $booking_ref)->first();
 
-        $booking_product = BookingProduct::where('booking_id',$booking->id)->first();
+        $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
 
 
         $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $booking_product->product_id)->first();
 
         if ($request->payment_method == "stripe") {
-            $redirect_url = $this->processStripe($vendor_products->price_stripe, $booking);
+            $response = $this->processStripe($vendor_products->price_stripe, $booking);
+            $redirect_url = $response->url;
+
+            BookingProduct::where('booking_id', $booking->id)->update([
+                'stripe_intent' => $response->payment_intent,
+                'stripe_session'=> $response->id
+            ]);
+
+            Booking::where('id', $booking->id)->update([
+                'stripe_intent' => $response->payment_intent,
+                'stripe_session'=> $response->id
+            ]);
+
         } else {
             $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
 
@@ -375,7 +398,7 @@ class HomeController extends Controller
     {
         $booking = Booking::where('transaction_ref', $booking_ref)->first();
 
-        if($booking->status == 1){
+        if ($booking->status == 1) {
             return redirect()->to('/booking/success?b=' . $booking_ref);
         }
 
@@ -429,13 +452,12 @@ class HomeController extends Controller
             ";
             Mail::to($request->email)->send(new BookingCreation($message, "Registration"));
 
-          
-           
+
         } catch (\Exception $e) {
 
         }
 
-        try{
+        try {
             $message2 = "
             Hi Admin,<br/>
             
@@ -443,7 +465,7 @@ class HomeController extends Controller
             Name: " . $request->first_name . " " . $request->last_name . " <br/>
             Phone: " . $request->phone_no . "<br/>
             Email: " . $request->email . "<br/>
-            Company Name: " . $request->company. "<br/>
+            Company Name: " . $request->company . "<br/>
             <br/>Kindly click the button below to login and review<br/><br/>
             <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Go to Login
@@ -454,9 +476,9 @@ class HomeController extends Controller
                   <br/><br/>
                 UKTravelsTeam
             ";
-            Mail::to(['itunu.akinware@medburymedicals.com','ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Agent Registration"));
+            Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Agent Registration"));
 
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
 
         }
 
@@ -470,7 +492,7 @@ class HomeController extends Controller
 
     public function testEmail()
     {
-        dd(encrypt_decrypt('encrypt',"99"));
+        dd(encrypt_decrypt('encrypt', "99"));
         $booking = Booking::where('id', 51)->first();
         $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
         $code = "sdsbdjksds";
@@ -888,7 +910,7 @@ class HomeController extends Controller
         if (!$request->b) {
             return redirect()->to('/');
         }
-        $txRef = "stripe_".rand(10000000, 99929302399);
+        $txRef = "stripe_" . rand(10000000, 99929302399);
 
         $booking_id = encrypt_decrypt('decrypt', $request->b);
         $booking = Booking::where('id', $booking_id)->first();
@@ -896,6 +918,16 @@ class HomeController extends Controller
 
         if ($booking->status != 1) {
             $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
+
+            if(!$booking_product->stripe_session){
+                return redirect()->to('/booking/stripe/failed?b='.$request->b);
+            }
+
+            $checkout_session = $this->checkSession($booking_product);
+
+            if($checkout_session->payment_status != "paid"){
+                return redirect()->to('/booking/stripe/failed?b='.$request->b);
+            }
 
 
             if ($booking->user_id) {
@@ -934,7 +966,7 @@ class HomeController extends Controller
                         'total_credit' => $transactions
                     ]);
                     DB::commit();
-                }catch (\Exception $e){
+                } catch (\Exception $e) {
                     DB::rollBack();
                 }
             }
@@ -953,7 +985,7 @@ class HomeController extends Controller
                 $booking->update([
                     'vendor_id' => 3,
                     'mode_of_payment' => 2,
-                    'transaction_ref' =>  $txRef,
+                    'transaction_ref' => $txRef,
                     'status' => 1
                 ]);
 

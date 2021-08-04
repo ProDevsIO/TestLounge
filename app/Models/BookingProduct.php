@@ -45,7 +45,8 @@ class BookingProduct extends Model
 		'product_id',
 		'vendor_id',
 		'vendor_product_id',
-		'price','charged_amount','currency'
+		'price','charged_amount','currency','stripe_intent', 'stripe_session'
+
 	];
 
     public function booking()

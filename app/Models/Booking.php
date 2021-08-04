@@ -126,7 +126,9 @@ class Booking extends Model
 		'vendor_id',
 		'booking_code',
 		'transaction_ref',
-		'status'
+		'status',
+        'stripe_session',
+        'stripe_intent'
 	];
 
 	public function country()
