@@ -773,8 +773,8 @@ class DashboardController extends Controller
         }
 
         if ($request->start && $request->end) {
-            $start = Carbon::parse($request->start);
-            $end = Carbon::parse($request->end);
+            $start = Carbon::parse($request->start)->startOfDay();
+            $end = Carbon::parse($request->end)->endOfDay();
 
             $total_ngn = BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
             $total_gbp = BookingProduct::where('currency', 'GBP')->wherebetween('created_at', [$start, $end])->sum('charged_amount');

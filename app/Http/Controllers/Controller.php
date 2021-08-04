@@ -30,7 +30,7 @@ class Controller extends BaseController
             ]],
             'mode' => 'payment',
             'success_url' => $YOUR_DOMAIN . 'booking/stripe/success?b='.encrypt_decrypt('encrypt',$booking->id),
-            'cancel_url' => $YOUR_DOMAIN . 'booking/stripe/cancel?b='.encrypt_decrypt('encrypt',$booking->id),
+            'cancel_url' => $YOUR_DOMAIN . 'booking/stripe/failed?b='.encrypt_decrypt('encrypt',$booking->id),
         ]);
 
         return $checkout_session->url;
