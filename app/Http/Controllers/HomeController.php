@@ -175,10 +175,12 @@ class HomeController extends Controller
                 
                 Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
                 For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktraveltest.prodevs.io/#popular' >Here</a> <br>
+             <br/>
                 <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "make/payment/" . $transaction_ref . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                        Make Payment
                       </a>
-                      
+                      <br/>
+                      <p style='color: red'>Disregard this email, if you have made payment and your payment was successful.</p>
                       <br/><br/>
                       Thank you.
                 ";
@@ -492,7 +494,7 @@ class HomeController extends Controller
 
     public function testEmail()
     {
-        dd(encrypt_decrypt('encrypt', "99"));
+        dd(encrypt_decrypt('encrypt', "165"));
         $booking = Booking::where('id', 51)->first();
         $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
         $code = "sdsbdjksds";
@@ -1000,7 +1002,6 @@ class HomeController extends Controller
 
                 }
             }
-
 
             $booking->update([
                 'vendor_id' => 3,
