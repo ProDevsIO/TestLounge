@@ -180,7 +180,7 @@ class HomeController extends Controller
                        Make Payment
                       </a>
                       <br/>
-                      <p style='color: red'>Disregard this email, if you have made payment and your payment was successful.</p>
+                      <p style='color: red'>***Disregard this email, if you have made payment and your payment was successful.***</p>
                       <br/><br/>
                       Thank you.
                 ";
