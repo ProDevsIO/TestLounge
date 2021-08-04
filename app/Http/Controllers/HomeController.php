@@ -180,7 +180,13 @@ class HomeController extends Controller
                        Make Payment
                       </a>
                       <br/>
-                      <p style='color: red'>***Disregard this email, if you have made payment and your payment was successful.***</p>
+                      <p style='color: red'>
+                     *** If you have made payment, you will receive your receipt shortly. <br/>
+
+If you are yet to make payment or need to reprocess a failed payment you can click below to continue to the payment page ***
+</p>
+                      
+                      
                       <br/><br/>
                       Thank you.
                 ";
@@ -209,12 +215,12 @@ class HomeController extends Controller
 
             BookingProduct::where('booking_id', $booking->id)->update([
                 'stripe_intent' => $response->payment_intent,
-                'stripe_session'=> $response->id
+                'stripe_session' => $response->id
             ]);
 
             Booking::where('id', $booking->id)->update([
                 'stripe_intent' => $response->payment_intent,
-                'stripe_session'=> $response->id
+                'stripe_session' => $response->id
             ]);
 
         } else {
@@ -376,12 +382,12 @@ class HomeController extends Controller
 
             BookingProduct::where('booking_id', $booking->id)->update([
                 'stripe_intent' => $response->payment_intent,
-                'stripe_session'=> $response->id
+                'stripe_session' => $response->id
             ]);
 
             Booking::where('id', $booking->id)->update([
                 'stripe_intent' => $response->payment_intent,
-                'stripe_session'=> $response->id
+                'stripe_session' => $response->id
             ]);
 
         } else {
@@ -921,15 +927,15 @@ class HomeController extends Controller
         if ($booking->status != 1) {
             $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
 
-            if(!$booking_product->stripe_session){
-                return redirect()->to('/booking/stripe/failed?b='.$request->b);
+            if (!$booking_product->stripe_session) {
+                return redirect()->to('/booking/stripe/failed?b=' . $request->b);
             }
 
             $checkout_session = $this->checkSession($booking_product);
-            dd($checkout_session);
-            if($checkout_session->payment_status != "paid"){
 
-                return redirect()->to('/booking/stripe/failed?b='.$request->b);
+            if ($checkout_session->payment_status != "paid") {
+
+                return redirect()->to('/booking/stripe/failed?b=' . $request->b);
             }
 
 
@@ -1027,7 +1033,7 @@ class HomeController extends Controller
         $booking_id = encrypt_decrypt('decrypt', $request->b);
         $booking = Booking::where('id', $booking_id)->first();
 
-        if(!$booking->transaction_ref) {
+        if (!$booking->transaction_ref) {
             $booking->update([
                 'transaction_ref' => $txRef
             ]);
