@@ -924,8 +924,9 @@ class HomeController extends Controller
             }
 
             $checkout_session = $this->checkSession($booking_product);
-
+            dd($checkout_session);
             if($checkout_session->payment_status != "paid"){
+
                 return redirect()->to('/booking/stripe/failed?b='.$request->b);
             }
 
