@@ -13,9 +13,16 @@ class AddTypeFieldToTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::table('transactions', function (Blueprint $table) {
+        Schema::table('bookings', function (Blueprint $table) {
             //
-            $table->integer('type')->nullable()->default(1)->after('user_id');
+            $table->integer('stripe_session')->nullable()->default(1)->after('created_at');
+            $table->integer('stripe_intent')->nullable()->default(1)->after('created_at');
+        });
+
+        Schema::table('booking_products', function (Blueprint $table) {
+            //
+            $table->integer('stripe_session')->nullable()->default(1)->after('created_at');
+            $table->integer('stripe_intent')->nullable()->default(1)->after('created_at');
         });
     }
 
