@@ -1037,7 +1037,10 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             $booking->update([
                 'transaction_ref' => $txRef
             ]);
+        }else{
+            $txRef = $booking->transaction_ref;
         }
+
 
         return redirect()->to('/booking/failed?b=' . $txRef);
     }
