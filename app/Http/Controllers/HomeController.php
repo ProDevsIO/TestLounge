@@ -1025,9 +1025,13 @@ class HomeController extends Controller
         $txRef = "stripe_" . rand(10000000, 99929302399);
         $booking_id = encrypt_decrypt('decrypt', $request->b);
         $booking = Booking::where('id', $booking_id)->first();
-        $booking->update([
-            'transaction_ref' => $txRef
-        ]);
+
+        if(!$booking->transaction_ref) {
+            $booking->update([
+                'transaction_ref' => $txRef
+            ]);
+        }
+
         return redirect()->to('/booking/failed?b=' . $txRef);
     }
 
