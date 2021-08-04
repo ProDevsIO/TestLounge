@@ -74,7 +74,7 @@
                                                 @if($user->status == 1)
                                                 <tr>
                                                     <td>
-                                                        {{ $user->first_name }} {{ $user->first_name }}
+                                                        {{ $user->first_name }} {{ $user->last_name }}
                                                     </td>
                                                     <td>{{ $user->phone_no }}</td>
                                                     <td>{{ $user->email }}</td>
@@ -217,7 +217,7 @@
                                               @if($user->status == 0)
                                                 <tr>
                                                     <td>
-                                                        {{ $user->first_name }} {{ $user->first_name }}
+                                                        {{ $user->first_name }} {{ $user->last_name }}
                                                     </td>
                                                     <td>{{ $user->phone_no }}</td>
                                                     <td>{{ $user->email }}</td>
