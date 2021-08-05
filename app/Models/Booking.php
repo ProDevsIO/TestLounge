@@ -128,7 +128,8 @@ class Booking extends Model
 		'transaction_ref',
 		'status',
         'stripe_session',
-        'stripe_intent'
+        'stripe_intent',
+		'post_status'
 	];
 
 	public function country()

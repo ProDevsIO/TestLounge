@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
         Commands\UpdatePounds::class,
+        Commands\PostInfoBooking::class,
     ];
 
     /**
@@ -25,8 +26,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('update:pounds')->everyMinute();
-        // $schedule->command('inspire')->hourly();
+        // $schedule->command('update:pounds')->everyMinute();
+        $schedule->command('command:sendPostInfoBooking')
+        ->dailyAt('7:00');
     }
 
     /**
