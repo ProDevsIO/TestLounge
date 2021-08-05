@@ -160,7 +160,7 @@
                                         <input type="hidden" name="product_id" class="test_type_"/>
                                         <input type="hidden" name="country_travelling_from_id" class="country_id_"/>
                                         <div class="col-md-12" id="test" style="margin-top:20px;">
-                                            <label>Select Test types <span class="show_required"> *</span></label> <small class="text-muted"> Bookings can’t be cancelled or refunded </small>
+                                            <label>Select Test types <span class="show_required"> *</span></label> <small style="color:black"> <b>Bookings can’t be cancelled or refunded</b> </small>
                                             <select class="form-control test_type" autocomplete="off"
                                                     onchange="test_type_select()"
                                                     name="product_id_"

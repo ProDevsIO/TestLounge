@@ -357,10 +357,12 @@
             });
         });
         function makeAdmin(id) {
+            
             var d = confirm("Are you sure, you want to make this user an Admin?");
 
             if (d) {
-                window.location = "/admin/make/".id;
+                
+                window.location = "/admin/make/"+id;
             }
         }
 

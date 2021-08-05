@@ -332,6 +332,7 @@ class DashboardController extends Controller
 
     public function admin_make($id)
     {
+     
         if (auth()->user()->type == 0) {
             abort(403);
         }
