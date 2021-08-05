@@ -82,9 +82,12 @@
                             <h1>Book your test
                             </h1>
                             @if(isset($_GET['ref']) && isset($user))
-                                <div style="margin-top: -10px;"><span
-                                            class="badge badge-warning">Company: {{ (isset($user->company)) ?$user->company : $user->first_name." ".$user->last_name }}</span>
-                                </div>  <br/>       @endif
+                                @if($user->agent_show_name == 1)
+                                    <div style="margin-top: -10px;"><span
+                                                class="badge badge-warning">Company: {{ (isset($user->company)) ?$user->company : $user->first_name." ".$user->last_name }}</span>
+                                    </div>  <br/>  
+                                @endif
+                            @endif
                             <p style="margin-bottom: 25px">To be allowed to board a flight to the UK, Your airline will
                                 require a negative PCR Test within 72 hours of your travel date , evidence of booking
                                 your UK covid tests and completion of your Passenger Locator Form.
