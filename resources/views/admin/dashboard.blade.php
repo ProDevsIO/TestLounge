@@ -25,11 +25,11 @@
         </div>
         <div class=" alert alert-warning">
             @if(auth()->user()->agent_show_name == 0)
-            If you would like your name or company name to shown on the booking page via your referral. please activate with the button below
-            <a href="/agent/activate/name/{{auth()->user()->id}}" class="btn btn-md btn-success text-white"  onclick="confirm('Are you sure you want to display your name via referal booking?')">activate</a>
+            If you would like company name to show on the booking page through the referral link, Kindly click the button to enable it.
+            <a href="/agent/activate/name/{{auth()->user()->id}}" class="btn btn-md btn-success text-white"  onclick="confirm('Are you sure you want to display your name via referral booking?')">Enable</a>
            @else
-            If you would like your name or company name not to be shown on the booking page via your referral. Please deactivate with the button below
-            <a href ="/agent/deactivate/name/{{auth()->user()->id}}"class="btn btn-md btn-warning  text-white"  onclick="confirm('Are you sure you want to hide your name via referal booking?')">deactivate</a>
+             If you would like company name to show on the booking page through the referral link, Kindly click the button to disable it.
+            <a href ="/agent/deactivate/name/{{auth()->user()->id}}"class="btn btn-md btn-warning  text-white"  onclick="confirm('Are you sure you want to hide your name via referral booking?')">Disable</a>
            @endif
         </div>
         @endif
