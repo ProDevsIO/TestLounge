@@ -107,7 +107,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/add/vendor', [\App\Http\Controllers\DashboardController::class,"add_vendor"]);
     Route::get('/admin/make/{id}', [\App\Http\Controllers\DashboardController::class,"admin_make"]);
     Route::get('/send/booking/{id}', [\App\Http\Controllers\DashboardController::class,"send_booking"]);
-
+    
+    Route::get('/agent/deactivate/name/{id}', [\App\Http\Controllers\DashboardController::class,"agent_deactivate_name"]);
+    Route::get('/agent/activate/name/{id}', [\App\Http\Controllers\DashboardController::class,"agent_activate_name"]);
     Route::get('/agent/make/{id}', [\App\Http\Controllers\DashboardController::class,"agent_make"]);
     Route::get('/settings', [\App\Http\Controllers\DashboardController::class,"settings"]);
     Route::get('/user/bank', [\App\Http\Controllers\DashboardController::class,"user_bank"]);

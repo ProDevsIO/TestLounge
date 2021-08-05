@@ -862,4 +862,22 @@ class DashboardController extends Controller
         }
 
     }
+
+    public function agent_deactivate_name($id)
+    {
+        User::where('id', $id)->update(['agent_show_name' => 0]);
+
+        session()->flash('alert-success', "Successfully deactivated showing of name on agent referral booking ");
+
+        return back();
+    }
+
+    public function agent_activate_name($id)
+    {
+        User::where('id', $id)->update(['agent_show_name' => 1]);
+
+        session()->flash('alert-success', "Successfully activated showing of name on agent referral booking ");
+
+        return back();
+    }
 }

@@ -160,7 +160,7 @@
                                         <input type="hidden" name="product_id" class="test_type_"/>
                                         <input type="hidden" name="country_travelling_from_id" class="country_id_"/>
                                         <div class="col-md-12" id="test" style="margin-top:20px;">
-                                            <label>Select Test types <span class="show_required"> *</span></label> <small style="color:black"> <b>Bookings can’t be cancelled or refunded</b> </small>
+                                            <label>Select Test types <span class="show_required"> *</span></label> <small class="text-muted" style="color:red"> <b>Bookings can’t be cancelled or refunded</b> </small>
                                             <select class="form-control test_type" autocomplete="off"
                                                     onchange="test_type_select()"
                                                     name="product_id_"
@@ -309,7 +309,7 @@
                                         </div>
 
                                         <div class="col-md-12" style="margin-top: 20px">
-                                            <label>Contact Email: <span class="show_required"> *</span></label> <small class="text-muted"> Please provide only ONE email address</small>
+                                            <label>Contact Email: <span class="show_required"> *</span></label> <small class="text-muted" style="color:red"> Please provide only ONE email address</small>
    
                                             <input class="form-control" type="email" name="email" value="{{ old('email') }}" required/>
                                         </div>
@@ -447,7 +447,7 @@
                                                    name="departure_date"
                                                    value="{{ old('departure_date') }}" required>
                                         </div>
-                                        
+
                                         <div class="col-md-12">
                                             <label>Arrival date in the UK: <span class="show_required"> *</span></label>
                                             <input class="form-control date_picker1" type="text"
@@ -541,7 +541,7 @@
                                             <input style="width:20px" class="pull-left" required type="checkbox"
                                                    name="consent" value="1"
                                             />
-                                            <small class="text-muted"> Bookings can’t be cancelled or refunded </small>
+                                            <small class="text-muted" style="color:red"> Bookings can’t be cancelled or refunded </small>
                                         </div>
                                         @if(isset($_GET['ref']))
                                             <input type="hidden" name="ref" value="{{ $_GET['ref'] }}">
