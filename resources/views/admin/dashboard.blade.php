@@ -26,10 +26,10 @@
         <div class=" alert alert-warning">
             @if(auth()->user()->agent_show_name == 0)
             If you would like company name to show on the booking page through the referral link, Kindly click the button to enable it.
-            <a href="/agent/activate/name/{{auth()->user()->id}}" class="btn btn-md btn-success text-white"  onclick="confirm('Are you sure you want to display your name via referral booking?')">Enable</a>
+            <a  class="btn btn-md btn-success text-white" href="javascript:;"  onclick="enable(' {{auth()->user()->id}}')">Enable</a>
            @else
-             If you would like company name to show on the booking page through the referral link, Kindly click the button to disable it.
-            <a href ="/agent/deactivate/name/{{auth()->user()->id}}"class="btn btn-md btn-warning  text-white"  onclick="confirm('Are you sure you want to hide your name via referral booking?')">Disable</a>
+             If you would like company name not to show on the booking page through the referral link, Kindly click the button to disable it.
+            <a href="javascript:;"  class="btn btn-md btn-warning  text-white"  onclick="disable('{{auth()->user()->id}}')">Disable</a>
            @endif
         </div>
         @endif
@@ -271,5 +271,24 @@
                 "order": []
             });
         });
+
+        function enable(id) {
+            
+            var d = confirm("Are you sure you want to display your name via referral booking?");
+
+            if (d) {
+                
+                window.location = "/agent/activate/name/"+id;
+            }
+        }
+        function disable(id) {
+            
+            var d = confirm("Are you sure you want to hide your name via referral booking?");
+
+            if (d) {
+                
+                window.location = "/agent/deactivate/name/"+id;
+            }
+        }
     </script>
 @endsection
