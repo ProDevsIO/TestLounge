@@ -19,6 +19,7 @@
                             </div>
                         </div>
                         <div class="card-body p-3">
+                           
                             @include('errors.showerrors')
                             <form action="{{ url('/add/bank') }}" method="post">
                                 @csrf
@@ -44,8 +45,11 @@
                                         required/>
                                 <label>Account Name</label>
                                 <input type="text" name="account_name" class="form-control" id="account_name"
-                                        readonly/><br/>
+                                        readonly/>
+                                        <label>Password <span class="text-danger">*</span> </label>
+                                <input type="password" name="password" class="form-control"  required><br>
                                 <input type="submit" value="Add Bank Account" class="btn btn-primary"/>
+                               
                             </form>
                         </div>
 

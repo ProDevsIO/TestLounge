@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
@@ -484,8 +485,17 @@ class DashboardController extends Controller
 
         $this->validate($request, [
             'account_bank',
-            'account_no'
+            'account_no',
+            'password'
         ]);
+        
+       
+        if(Hash::check( $request->password, auth()->user()->password) == false)
+        {
+            session()->flash("alert-danger", "Incorrect password provided");
+            return back();
+        }
+        
 
         $banks = json_decode($request->bank_array);
         $banks_ = [];
