@@ -432,14 +432,6 @@
                                             <input class="form-control" type="text" name="document_id"
                                                    value="{{ old('document_id') }}" required/>
                                         </div>
-                                        <div class="col-md-12">
-                                            <label>Arrival date in the UK: <span class="show_required"> *</span></label>
-                                            <input class="form-control date_picker1" type="text"
-                                                   placeholder="Arrival Date in UK"
-                                                   name="arrival_date"
-                                                   value="{{ old('arrival_date') }}" required>
-                                        </div>
-
 
                                         <div class="col-md-12" style="margin-top: 20px">
                                             <label>City you are departing from: <span
@@ -455,6 +447,17 @@
                                                    name="departure_date"
                                                    value="{{ old('departure_date') }}" required>
                                         </div>
+                                        
+                                        <div class="col-md-12">
+                                            <label>Arrival date in the UK: <span class="show_required"> *</span></label>
+                                            <input class="form-control date_picker1" type="text"
+                                                   placeholder="Arrival Date in UK"
+                                                   name="arrival_date"
+                                                   value="{{ old('arrival_date') }}" required>
+                                        </div>
+
+
+                                       
 
                                         <div class="col-md-12">
                                             <label> Last day you were in a country/territory that was not in a travel

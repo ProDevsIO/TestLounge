@@ -458,7 +458,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                   <br/><br/>
                 UKTravelsTeam
             ";
-            Mail::to($request->email)->send(new BookingCreation($message, "Registration"));
+            Mail::to($request->email)->send(new BookingCreation($message, "Agent Registration"));
 
 
         } catch (\Exception $e) {
