@@ -890,4 +890,34 @@ class DashboardController extends Controller
 
         return back();
     }
+
+    public function agent_copy_receipt($id)
+    {
+        //check for status 1 means yes to be copied and 0 means no
+       $copied = User::where('id', $id)->first()->copy_receipt;
+
+        if($copied == 0){
+
+             User::where('id', $id)->update(['copy_receipt' => 1]);
+
+             session()->flash('alert-success', "Successfully activated this agent to be copied on emailing of receipt for bookings.");
+
+             return back();
+
+        }elseif($copied == 1){
+
+            User::where('id', $id)->update(['copy_receipt' => 0]);
+
+            session()->flash('alert-success', "Successfully deactivated this agent to be copied on emailing of receipt for bookings.");
+
+            return back();
+
+        }else{
+
+            session()->flash('alert-danger', "Something went wrong is processing this request");
+
+            return back();
+        }
+
+    }
 }

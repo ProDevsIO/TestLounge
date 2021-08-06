@@ -324,8 +324,29 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
                 if ($booking_product) {
                     try {
-                        Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
-                    } catch (\Exception $e) {
+                        //check if a referral code exist
+                            if($booking->referral_code != null)
+                            {
+                                //use the referral code to find the user
+                                $getUser =  User::where('referal_code', $booking->referral_code)->first();
+
+                                //check the status set by the copy receipt
+                                //if 1 :copy the agent else if 0: send normally
+                                    if($getUser->copy_receipt == 1)
+                                    {
+                                        Mail::to($booking->email,  $getUser->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                        
+                                    }elseif($getUser->copy_receipt == 0)
+                                    {
+                                        Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                          
+                                    }
+                             
+                            }else{
+                                //referral code doesnt exist
+                                Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                            }
+                        } catch (\Exception $e) {
 
                     }
                 }
@@ -466,6 +487,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         }
 
         try {
+
             $message2 = "
             Hi Admin,<br/>
             
@@ -1003,10 +1025,31 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
             if ($booking_product) {
                 try {
-                    Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
-                } catch (\Exception $e) {
+                        //check if a referral code exist
+                            if($booking->referral_code != null)
+                            {
+                                //use the referral code to find the user
+                                $getUser =  User::where('referal_code', $booking->referral_code)->first();
 
-                }
+                                //check the status set by the copy receipt
+                                //if 1 :copy the agent else if 0: send normally
+                                    if($getUser->copy_receipt == 1)
+                                    {
+                                        Mail::to($booking->email,  $getUser->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                        
+                                    }elseif($getUser->copy_receipt == 0)
+                                    {
+                                        Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                          
+                                    }
+                             
+                            }else{
+                                //referral code doesnt exist
+                                Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                            }
+                        } catch (\Exception $e) {
+
+                    }
             }
 
             $booking->update([

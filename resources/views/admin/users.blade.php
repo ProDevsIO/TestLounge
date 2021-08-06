@@ -135,6 +135,18 @@
                                                                     <a href="javascript:;" data-toggle="modal" data-target="#changeReferral{{ $user->id }}"
                                                                     class="dropdown-item">Change Referral Code</a>
 
+                                                                    @if($user->copy_receipt == 0)
+
+                                                                        <a href="javascript:;" onclick="confirmation('{{ url('/agent/copy/' .$user->id) }}')"
+                                                                        class="dropdown-item">Enable copy in receipt</a>
+
+                                                                    @elseif($user->copy_receipt == 1)
+
+                                                                        <a href="javascript:;" onclick="confirmation('{{ url('/agent/copy/' .$user->id) }}')"
+                                                                        class="dropdown-item">Disable copy in receipt</a>
+
+                                                                    @endif
+
                                                                     @if($user->status == 0)
 
                                                                         <a href="javascript:;" onclick="confirmation('{{ url('/agent/activate/' .$user->id) }}')"

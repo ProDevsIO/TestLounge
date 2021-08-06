@@ -103,11 +103,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/agent/percent/{id}', [\App\Http\Controllers\HomeController::class, "agent_percent"]);
     Route::get('/agent/percent/{id}', [\App\Http\Controllers\HomeController::class, "agent_percent"]);
     Route::post('/update/percent/{id}', [\App\Http\Controllers\HomeController::class, "UpdatePercent"]);
+    Route::get('/agent/copy/{id}', [\App\Http\Controllers\DashboardController::class, "agent_copy_receipt"]);
 
     Route::post('/add/vendor', [\App\Http\Controllers\DashboardController::class,"add_vendor"]);
     Route::get('/admin/make/{id}', [\App\Http\Controllers\DashboardController::class,"admin_make"]);
     Route::get('/send/booking/{id}', [\App\Http\Controllers\DashboardController::class,"send_booking"]);
-    
+
     Route::get('/agent/deactivate/name/{id}', [\App\Http\Controllers\DashboardController::class,"agent_deactivate_name"]);
     Route::get('/agent/activate/name/{id}', [\App\Http\Controllers\DashboardController::class,"agent_activate_name"]);
     Route::get('/agent/make/{id}', [\App\Http\Controllers\DashboardController::class,"agent_make"]);

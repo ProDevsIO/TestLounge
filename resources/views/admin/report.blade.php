@@ -201,7 +201,7 @@
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                         <a href="javascript:;" data-toggle="modal" data-target="#makePayment{{ $user->id }}"
-                                                           class="dropdown-item">Make Payment</a>
+                                                           class="dropdown-item">Pay Commissiion</a>
                                                     </div>
                                                 </div>
 
