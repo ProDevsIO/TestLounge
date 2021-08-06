@@ -117,7 +117,9 @@
                                                                 href="{{ url('complete/booking?user_id='.$user->id) }}">View
                                                                     Bookings</a>
 
-                                                                    
+                                                                <a class="dropdown-item"
+                                                                   href="javascript:;" onclick="imitate('{{ $user->id }}')">Imitate Account</a>
+
                                                                 @if($user->type == 2)
                                                                     <a href="javascript:;" onclick="makeAdmin('{{ $user->id }}')"
                                                                     class="dropdown-item">Make Admin</a>
@@ -392,6 +394,15 @@
             if (d) {
                 window.location = url;
             }
+        }
+
+        function imitate(id){
+            var d = confirm("Are you sure, you want to imitate account?");
+
+            if (d) {
+                window.location = "/imitate/account/" + id;
+            }
+
         }
     </script>
 @endsection

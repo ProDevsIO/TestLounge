@@ -42,7 +42,7 @@ class DashboardController extends Controller
             $complete_booking = Booking::whereIn('id', $bookings_vendors)->where('status', 1)->count();
             $users = 0;
             $payment_codes = 0;
-            $refs = "";
+            $refs = [];
 
         } else {
             $bookings = Booking::where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->orderby('id', 'desc')->get();
@@ -50,7 +50,7 @@ class DashboardController extends Controller
             $complete_booking = Booking::where('status', 1)->where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->count();
             $users = 0;
             $payment_codes = 0;
-            $refs = "";
+            $refs = [];
         }
 
         return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking', 'refs'));
@@ -652,7 +652,8 @@ class DashboardController extends Controller
             'referal_code' => "required"
         ]);
 
-        $user = User::where('referal_code', $request->referal_code)->where('id', '!=', $id)->first();
+        $code = str_replace(" ","_",$request->referal_code);
+        $user = User::where('referal_code', $code)->where('id', '!=', $id)->first();
 
         if ($user) {
             session()->flash("alert-info", "Name already exist. Kindly use another name");
@@ -919,5 +920,10 @@ class DashboardController extends Controller
             return back();
         }
 
+    }
+
+    function imitate_account($id){
+        auth()->loginUsingId($id);
+        return redirect()->to('/dashboard');
     }
 }
