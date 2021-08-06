@@ -224,7 +224,7 @@
                                                     <div class="modal-body">
                                                         <form action="{{ url('/add/referer/'.$booking->id) }}" method="post">
                                                         @csrf
-                                                            @if(isset($refs))
+                                                            @if(isset($refs) && count($refs) > 0 )
                                                         <label for="">Referrers</label>
                                                             <select name="referal_code" class="form-control" id="" required>
                                                                 <option value="">Select a referer</option>
