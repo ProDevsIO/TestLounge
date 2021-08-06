@@ -106,7 +106,7 @@ class Controller extends BaseController
         return $server_output;
     }
 
-    function getFlutterwaveData($booking,$price,$transaction_ref){
+    function getFlutterwaveData($booking,$price,$transaction_ref,$price_pound = null){
         if ($booking->country_travelling_from_id == 81) {
             // naira to ghanian cedis
             $convert_amount = $price * 0.014;
@@ -193,8 +193,8 @@ class Controller extends BaseController
         } else {
             $data = [
                 "tx_ref" => $transaction_ref,
-                "amount" => $price,
-                "currency" => "NGN",
+                "amount" => $price_pound,
+                "currency" => "GBP",
                 "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
                 "customer" => [
                     'email' => $booking->email,

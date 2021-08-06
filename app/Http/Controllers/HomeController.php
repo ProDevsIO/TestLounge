@@ -150,7 +150,7 @@ class HomeController extends Controller
 
         $booking = Booking::create($request_data);
 
-        $price = 0;
+        $price = $price_pounds = 0;
         $product_id[] = $request->product_id;
         foreach ($product_id as $r_product) {
 
@@ -165,6 +165,7 @@ class HomeController extends Controller
             ]);
 
             $price = $price + $vendor_products->price;
+            $price_pounds = $price_pounds + $vendor_products->price_pounds;
         }
 
 
@@ -195,7 +196,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         }
 
-        $data = $this->getFlutterwaveData($booking, $price, $transaction_ref);
+        $data = $this->getFlutterwaveData($booking, $price, $transaction_ref,$price_pounds);
 
         //redirect to payment page
         if (!empty($sub_account)) {
@@ -416,7 +417,9 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
             $price = $booking_product->price;
 
-            $data = $this->getFlutterwaveData($booking, $price, $booking_ref);
+            $price_pounds = $vendor_products->price_pounds;
+
+            $data = $this->getFlutterwaveData($booking, $price, $booking_ref,$price_pounds);
             $redirect_url = $this->processFL($data);
         }
 
