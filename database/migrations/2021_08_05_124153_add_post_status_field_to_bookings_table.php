@@ -15,7 +15,7 @@ class AddPostStatusFieldToBookingsTable extends Migration
     {
         Schema::table('bookings', function (Blueprint $table) {
             //
-            $table->integer('post_status')->nullable()->default(1)->after('stripe_session');
+            $table->integer('post_status')->nullable()->default(0)->after('stripe_session');
         });
     }
 
