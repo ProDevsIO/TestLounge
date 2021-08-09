@@ -111,7 +111,7 @@ class DashboardController extends Controller
 
     public function complete_booking(Request $request)
     {
-        $refs = "";
+        $refs = [];
         if (auth()->user()->type == "1") {
             $bookings = Booking::where('status', 1)->orderby('id', 'desc');
             $refs = User::wherenotNull('referal_code')->get();
@@ -785,6 +785,7 @@ class DashboardController extends Controller
         }
 
         if ($request->start && $request->end) {
+        
             $start = Carbon::parse($request->start)->startOfDay();
             $end = Carbon::parse($request->end)->endOfDay();
 
@@ -806,6 +807,59 @@ class DashboardController extends Controller
         $due_amount = User::sum("wallet_balance");
 
         $users = User::where('type', '!=', '1')->whereNotNull('wallet_balance')->orderby('wallet_balance', 'desc')->get();
+// dd('₦'. number_format($total_ngn));
+        if ($request->export) {
+            $fileName = 'financial_reports.csv';
+
+            $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $columns = array('Name', 'Referral Code', 'Total C.booking', 'Wallet Balance', 'Account Details');
+            $columnMoney = array('Total Revenue(Naira)', 'Total Revenue(Pound)', 'Total Revenue(cedis)', 'Total Revenue(TZS)', 'Total Revenue(KES)', 'Total Revenue(ZAR)' , 'Amount due(Referrals');
+
+            $callback = function () use ($users, $columns, $columnMoney, $total_ngn, $total_gbp, $total_ghs, $total_tzs, $total_kes, $total_zar, $due_amount) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+
+                foreach ($users as $user) {
+
+                    $row['Name'] = $user->first_name . " " . $user->last_name;
+                    $row['Referral Code'] =  $user->referal_code.", ".$user->email.", ".$user->phone;
+                    $row['Total C.booking'] = $user->cbookings->count() ;
+                    $row['Wallet Balance'] = "N". number_format($user->wallet_balance,2);
+                    $row['Account Details'] =  "Country:" .$user->country. ", " ."Bank:" .$user->bank . "Account No:". $user->account_no .", "
+                    ."Account Name:". $user->account_name;
+                   
+
+                    fputcsv($file, array($row['Name'],  $row['Referral Code'] ,$row['Total C.booking'] , $row['Wallet Balance'] , $row['Account Details']));
+                
+                }
+                fputcsv($file, array(' ',' ',' ',' ',' ',' ',' ',' '));
+
+                fputcsv($file, $columnMoney);
+                  $row['Naira'] = 'N'. number_format($total_ngn);
+                  $row['Pound'] = '# '. number_format($total_gbp);
+                  $row['cedis']= 'GH'. number_format($total_ghs);
+                  $row['tzs'] = 'TZS '. number_format($total_tzs);
+                  $row['kes'] = 'KES '. number_format($total_kes);
+                  $row['zar'] = 'ZAR '. number_format($total_zar);
+                  $row['due'] = 'N '. number_format($due_amount);
+
+
+                fputcsv($file, array($row['Naira'],  $row['Pound'], $row['cedis'], $row['tzs'], $row['kes'], $row['zar'], $row['due'])); 
+                fclose($file);
+            };
+
+            return response()->stream($callback, 200, $headers);
+        }
+
+
 
         return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users'));
 

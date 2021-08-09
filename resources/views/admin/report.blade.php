@@ -29,8 +29,13 @@
                                     </div>
                                     <div style="width: 100%">
                                         <input type="submit" class="btn btn-danger pull-right mt-2" value="Search">
-                                    </div>
+                                    
+                                    @if(auth()->user()->type == 1)
+                                            <input type="submit" class="btn btn-warning pull-left mt-2" name="export"
+                                                   style="margin-left: 20px" value="Export">
+                                        @endif
                                     @csrf
+                                    </div>
                                 </div>
                             </form>
 
