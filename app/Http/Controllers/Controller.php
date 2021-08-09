@@ -212,7 +212,6 @@ class Controller extends BaseController
 
     function sendData($booking)
     {
-
         //ethnicity
         if ($booking->ethnicity == 0) {
             $ethnic = "white_other";
@@ -240,7 +239,13 @@ class Controller extends BaseController
         }
 
         $color_code = CountryColor::where('country_id',$booking->country_travelling_from_id)->first();
-
+        if($color_code == null)
+        {
+            $c_type = "Amber";
+        }else{
+             $c_type = (optional($color_code->color)->name) ? optional($color_code->color)->name : "Amber";
+        }
+        
         $data_send["test_kit_properties"] = [
             'first_name' => $booking->first_name,
             'last_name' => $booking->last_name,
@@ -260,7 +265,7 @@ class Controller extends BaseController
             "address_line_1" => $booking->isolation_address,
             "city" => $booking->isolation_town,
             "postcode" => $booking->isolation_postal_code,
-            "country_type" => (optional($color_code->color)->name) ? optional($color_code->color)->name : "Amber",
+            "country_type" => $c_type,
             "countries_travelled" => ($booking->travelingFrom) ? optional($booking->travelingFrom)->name: "Nigeria"
         ];
 

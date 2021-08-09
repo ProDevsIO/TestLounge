@@ -235,7 +235,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
     public function payment_confirmation(Request $request)
     {
 
-
+       
         if (env('APP_ENV', "LIVE") == "LIVE") {
             $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
         } else {
@@ -261,11 +261,14 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         $data_response = json_decode($response);
 
-
+        
         if (isset($data_response->data->status) && $data_response->data->status == "successful") {
 
             $booking = Booking::where('transaction_ref', $txRef)->first();
+          
+
             if ($booking->status != 1) {
+                
                 $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
 
                 if ($booking->user_id) {
@@ -310,7 +313,10 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                 }
 
                 try {
+                    
                     $code = $this->sendData($booking);
+                    
+                    
                 } catch (\Exception $e) {
 
                     $booking->update([
@@ -322,9 +328,11 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
                     return redirect()->to('/booking/code/failed?b=' . $txRef);
                 }
-
+               
                 if ($booking_product) {
-                    try {
+                    
+                  
+                     try {
                         //check if a referral code exist
                             if($booking->referral_code != null)
                             {
@@ -335,21 +343,23 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                                 //if 1 :copy the agent else if 0: send normally
                                     if($getUser->copy_receipt == 1)
                                     {
-                                        Mail::to($booking->email,  $getUser->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                                       $yes = Mail::to($booking->email, $getUser->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                         
                                     }elseif($getUser->copy_receipt == 0)
                                     {
-                                        Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                                       $no =  Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                           
                                     }
                              
                             }else{
                                 //referral code doesnt exist
-                                Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                               $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                             }
-                        } catch (\Exception $e) {
+                          
+                    } catch (\Exception $e) {
 
                     }
+                
                 }
 
                 $booking->update([
@@ -363,7 +373,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
             }
 
-
+        
             return redirect()->to('/booking/success?b=' . $txRef);
         }
 
@@ -446,13 +456,18 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
     public function register(Request $request)
     {
+        
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|unique:users',
             'phone_no' => 'required',
             'company' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'platform_name' => 'required',
+            'director' => 'required',
+            'file' => 'required|file|mimes:csv,txt,xlx,xls,pdf|max:2048',
+            'certified' => 'required',
 
         ]);
 
@@ -464,9 +479,15 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         $request_data['password'] = Hash::make($request_data['password']);
         $request_data['type'] = 2;
         $request_data['status'] = 0;
+        
+        $certificate =  time().'.'.$request->file->extension();  
+     
+        $request->file->move(public_path('img/certificate'), $certificate);
+
+        $request_data['c_o_i'] = "img/certificate/". $certificate;
 
         $user = User::create($request_data);
-
+        
 
         try {
             $message = "

@@ -40,6 +40,9 @@
     <!--custom styles-->
     <link href="/assets/css/main.css" rel="stylesheet">
 
+    <!-- phone styles -->
+    <link rel="stylesheet" href="/js/phone_lib/css/intlTelInput.css">
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="/assets/vendor/html5shiv.js"></script>
@@ -51,7 +54,7 @@
 
 
 @yield('content')
-
+<script src="/js/phone_lib/js/intlTelInput.js"></script>
 <script src="/assets/vendor/jquery/jquery.min.js"></script>
 <script src="/assets/vendor/jquery-ui/jquery-ui.min.js"></script>
 <script src="/assets/vendor/popper.min.js"></script>
@@ -64,7 +67,7 @@
 <script src="/assets/vendor/modernizr.js"></script>
 <![endif]-->
 
-
+@yield('script')
 </body>
 </html>
 

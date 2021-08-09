@@ -47,9 +47,18 @@ class User extends Authenticatable
 		'referal_code',
         'company',
         'verified',
-		'type','wallet_balance','vendor_id', 'account_bank',
-        'account_no','flutterwave_key','country','account_name','total_credit','bank','flutterwave_id','agent_show_name'
+		'type','wallet_balance',
+        'vendor_id', 'account_bank',
+        'account_no','flutterwave_key',
+        'country','account_name',
+        'total_credit','bank',
+        'flutterwave_id','agent_show_name',
+        'director','c_o_i',
+        'certified','certified_no',
+        'platform_name'
+
 	];
+  
 	public function bookings()
 	{
 		return $this->hasMany(Booking::class);
