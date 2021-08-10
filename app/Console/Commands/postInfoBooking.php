@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\Booking;
 use App\Models\Users;
 use App\Mail\BookingCreation;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 class postInfoBooking extends Command
@@ -15,7 +16,7 @@ class postInfoBooking extends Command
      *
      * @var string
      */
-    protected $signature = 'command:sendPostInfoBooking';
+    protected $signature = 'send:postInfoBooking';
 
     /**
      * The console command description.
@@ -41,7 +42,11 @@ class postInfoBooking extends Command
      */
     public function handle()
     {
-        $bookings = Booking::where('post_status', 0)->get();
+        $now = Carbon::now()->subDay()->startOfDay();
+        $now_end = Carbon::now()->subDay()->endOfDay();
+        $bookings = Booking::where('post_status', 0)->wherebetween('arrival_date',[$now,$now_end])->get();
+
+      
         $i= 0; 
          foreach($bookings as $booking)
          {
@@ -61,7 +66,7 @@ class postInfoBooking extends Command
 
             Mail::to($booking->email)->send(new BookingCreation($message, "Post Booking information"));
          }
-         Booking::where('post_status', 0)->update(['post_status' =>1]);
+         Booking::where('post_status', 0)->update(['post_status' => 1]);
 
         echo $i;
     }

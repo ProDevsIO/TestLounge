@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('update:pounds')->everyMinute();
-        $schedule->command('command:sendPostInfoBooking')
+        $schedule->command('send:PostInfoBooking')
         ->dailyAt('7:00');
     }
 
