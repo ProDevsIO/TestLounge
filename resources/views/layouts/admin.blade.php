@@ -211,6 +211,12 @@
                             </a>
                         </li>
                         @endif
+                        <!-- <li>
+                            <a href="{{ url('/profile') }}">
+                                <i class="icon-user"></i>
+                                <span>Proile</span>
+                            </a>
+                        </li> -->
                 </ul>
             </nav>
         </div>

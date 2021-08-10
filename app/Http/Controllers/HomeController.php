@@ -466,7 +466,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             'password' => 'required',
             'platform_name' => 'required',
             'director' => 'required',
-            'file' => 'required|file|mimes:csv,txt,xlx,xls,pdf|max:2048',
+            'file' => 'file|mimes:csv,txt,xlx,xls,pdf|max:2048',
             'certified' => 'required',
 
         ]);
@@ -480,15 +480,18 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         $request_data['type'] = 2;
         $request_data['status'] = 0;
         
-        $certificate =  time().'.'.$request->file->extension();  
-     
-        $request->file->move(public_path('img/certificate'), $certificate);
-
-        $request_data['c_o_i'] = "img/certificate/". $certificate;
-
-        $user = User::create($request_data);
+        if($request->file)
+        {
+            
+            $certificate =  time().'.'.$request->file->extension();  
         
+            $request->file->move(public_path('img/certificate'), $certificate);
 
+            $request_data['c_o_i'] = "img/certificate/". $certificate;
+
+            $user = User::create($request_data);
+        }
+     
         try {
             $message = "
             Hi " . $request->first_name . ",

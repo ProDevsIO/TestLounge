@@ -980,4 +980,12 @@ class DashboardController extends Controller
         auth()->loginUsingId($id);
         return redirect()->to('/dashboard');
     }
+
+    function profile_view()
+    {
+        $id = Auth()->user()->id;
+        $users = User::where('id', $id)->first();
+
+        return view('admin.report')->with(compact('user')); 
+    }
 }
