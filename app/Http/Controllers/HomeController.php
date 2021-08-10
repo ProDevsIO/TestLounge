@@ -1062,7 +1062,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                                 //if 1 :copy the agent else if 0: send normally
                                     if($getUser->copy_receipt == 1)
                                     {
-                                        Mail::to([$booking->email, $getUser->email])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                                        Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                         
                                     }elseif($getUser->copy_receipt == 0)
                                     {
