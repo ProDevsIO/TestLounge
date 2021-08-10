@@ -106,6 +106,7 @@
                         <input type="text" value="{{ old('director') }}" name="director" class="form-control" id="exampleInputEmail1" placeholder="Name of managing director" required>
                     </div> 
                     <div class="form-group">
+                        <small class="text-muted">If available</small>
                         <label class="text-center " style="width:100%">Certificate of incorporation</label>
                        <input type="file"  name="file" class="form-control" >
                     </div>
