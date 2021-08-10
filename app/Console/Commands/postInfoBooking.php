@@ -66,7 +66,8 @@ class postInfoBooking extends Command
 
             Mail::to($booking->email)->send(new BookingCreation($message, "Post Booking information"));
          }
-         Booking::where('post_status', 0)->update(['post_status' => 1]);
+         
+         $bookings->update(['post_status' => 1]);
 
         echo $i;
     }
