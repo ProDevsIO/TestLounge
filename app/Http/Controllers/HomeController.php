@@ -489,9 +489,9 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
             $request_data['c_o_i'] = "img/certificate/". $certificate;
 
-            $user = User::create($request_data);
+            
         }
-     
+        $user = User::create($request_data);
         try {
             $message = "
             Hi " . $request->first_name . ",
