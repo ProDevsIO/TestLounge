@@ -84,14 +84,13 @@
                 <div class="dropdown-divider"></div>
                 @if(auth()->user()->type == "2")
                       
-                            <a class="dropdown-item" href="{{ url('/profile') }}">
-                                <i class="icon-user"></i>
+                            <a class="dropdown-item" href="{{ url('/profile') }}" >
                                 <span>Profile</span>
                             </a>
                        
                        
                       @endif
-                <a class="dropdown-item" href="{{ url('/logout') }}">Sign Out</a>
+                <a class="dropdown-item" href="javascript:;"  onclick="signOut()">Sign Out</a>
             </div>
         </li>
 
@@ -277,6 +276,15 @@
         /* Alert the copied text */
         toastr.success("Success", 'Link has been copied successfully')
     }
+    function signOut() {
+            
+            var d = confirm("Are you sure, you want to sign out?");
+
+            if (d) {
+                
+                window.location = "/logout";
+            }
+        }
 </script>
 </body>
 </html>
