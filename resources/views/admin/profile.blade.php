@@ -18,7 +18,7 @@
                                 <!-- <div class="mt-5 mb-3">
                                     <img class="rounded-circle" src="/assets/img/avatar/avatar2.jpeg" width="100" alt="">
                                 </div> -->
-                                <h1 class="text-uppercase mt-2">{{ $users->first_name }} {{ $users->last_name }}</h1>
+                                <h2 class="text-uppercase mt-2">{{ $users->first_name }} {{ $users->last_name }}</h2>
                                 <p class="text-muted mt-2">{{ $users->email }} </p>
 
                             </div>

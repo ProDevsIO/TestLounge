@@ -211,12 +211,16 @@
                             </a>
                         </li>
                         @endif
+                        @if(auth()->user()->type == "2")
                         <li>
                             <a href="{{ url('/profile') }}">
                                 <i class="icon-user"></i>
                                 <span>Proile</span>
                             </a>
                         </li>
+                       
+                      @endif
+                        
                 </ul>
             </nav>
         </div>
