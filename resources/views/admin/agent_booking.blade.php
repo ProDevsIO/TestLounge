@@ -47,7 +47,7 @@
                     <div class="card card-shadow mb-4 ">
                         <div class="card-header border-0">
                             <div class="custom-title-wrap border-0 position-relative pb-2">
-                                <div class="custom-title">Bookings</div>
+                                <div class="custom-title">Agents Booking</div>
                             </div>
                         </div>
                         <div class="card-body p-0">

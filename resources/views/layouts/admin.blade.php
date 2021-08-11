@@ -82,6 +82,15 @@
                     <span class="text-muted">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>
                 </div>
                 <div class="dropdown-divider"></div>
+                @if(auth()->user()->type == "2")
+                      
+                            <a class="dropdown-item" href="{{ url('/profile') }}">
+                                <i class="icon-user"></i>
+                                <span>Profile</span>
+                            </a>
+                       
+                       
+                      @endif
                 <a class="dropdown-item" href="{{ url('/logout') }}">Sign Out</a>
             </div>
         </li>
@@ -158,8 +167,10 @@
 
                             <li><a href="{{ url('/pending/booking') }}">Unpaid Bookings</a></li>
                             <li><a href="{{ url('complete/booking') }}">Paid Bookings</a></li>
+                            @if(auth()->user()->type == "1")
                             <li><a href="{{ url('/view/agent/booking') }}">Agent Bookings</a></li>
                             <li><a href="{{ url('/view/individual/booking') }}">Individual Bookings</a></li>
+                            @endif
                         </ul>
                     </li>
                     @if(auth()->user()->type == "2")
@@ -212,15 +223,7 @@
                             </a>
                         </li>
                         @endif
-                        @if(auth()->user()->type == "2")
-                        <li>
-                            <a href="{{ url('/profile') }}">
-                                <i class="icon-user"></i>
-                                <span>Proile</span>
-                            </a>
-                        </li>
                        
-                      @endif
                         
                 </ul>
             </nav>
