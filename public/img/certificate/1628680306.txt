@@ -1,0 +1,1 @@
+Name,Email,PhoneNo,Sex,DOB,Ethnicity,"Vaccination Status",Products,"Home Address","Isolation Address","Document Id","Arrival Date","Country From","Departure Date","Mode of Transportation","Flight Number"

@@ -487,7 +487,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         
             $request->file->move(public_path('img/certificate'), $certificate);
 
-            $request_data['c_o_i'] = "img/certificate/". $certificate;
+            $request_data['c_o_i'] = "/img/certificate/". $certificate;
 
             
         }

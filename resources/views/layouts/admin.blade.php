@@ -211,12 +211,12 @@
                             </a>
                         </li>
                         @endif
-                        <!-- <li>
+                        <li>
                             <a href="{{ url('/profile') }}">
                                 <i class="icon-user"></i>
                                 <span>Proile</span>
                             </a>
-                        </li> -->
+                        </li>
                 </ul>
             </nav>
         </div>

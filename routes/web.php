@@ -106,6 +106,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/update/percent/{id}', [\App\Http\Controllers\HomeController::class, "UpdatePercent"]);
     Route::get('/agent/copy/{id}', [\App\Http\Controllers\DashboardController::class, "agent_copy_receipt"]);
     Route::get('/profile', [\App\Http\Controllers\DashboardController::class, "profile_view"]);
+    Route::get('/edit/profile/view', [\App\Http\Controllers\DashboardController::class, "edit_profile_view"]);
+    Route::post('/edit/profile', [\App\Http\Controllers\DashboardController::class, "edit_profile"]);
 
     Route::post('/add/vendor', [\App\Http\Controllers\DashboardController::class,"add_vendor"]);
     Route::get('/admin/make/{id}', [\App\Http\Controllers\DashboardController::class,"admin_make"]);

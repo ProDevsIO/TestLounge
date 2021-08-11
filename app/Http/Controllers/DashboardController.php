@@ -986,6 +986,65 @@ class DashboardController extends Controller
         $id = Auth()->user()->id;
         $users = User::where('id', $id)->first();
 
-        return view('admin.report')->with(compact('user')); 
+        return view('admin.profile')->with(compact('users')); 
+    }
+
+    function edit_profile_view()
+    {
+        $id = Auth()->user()->id;
+        $users = User::where('id', $id)->first();
+
+        return view('admin.edit_profile')->with(compact('users')); 
+    }
+
+    function edit_profile(Request $request)
+    {
+      
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required',
+            'phone_no' => 'required',
+            'company' => 'required',
+            'password' => 'required',
+            'platform_name' => 'required',
+            'director' => 'required',
+            'file' => 'file|mimes:csv,txt,xlx,xls,pdf,docx|max:2048',
+            'certified' => 'required',
+
+        ]);
+
+        $request_data = $request->all();
+
+        $id = Auth()->user()->id;
+        $user = User::where('id', $id)->first();
+
+        $request_data['password'] = Hash::make($request_data['password']);
+        
+        if($request->file)
+        {
+            
+            $certificate =  time().'.'.$request->file->extension();  
+        
+            $request->file->move(public_path('img/certificate'), $certificate);
+
+            $request_data['c_o_i'] = "/img/certificate/". $certificate;
+
+            $certificate_path = $user->c_o_i;
+
+            if($certificate_path != null)
+            {
+            
+               unlink($_SERVER['DOCUMENT_ROOT'].$certificate_path);
+            }
+        
+        }
+        
+        $user->update($request_data);
+        
+        session()->flash('alert-success', "Successfully updated your profile");
+
+        return back();
+        // return view('admin.profile')->with(compact('users')); 
     }
 }
