@@ -78,6 +78,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,"dashboard"]);
     Route::get('/pending/booking', [\App\Http\Controllers\DashboardController::class,"pending_booking"]);
     Route::get('/complete/booking', [\App\Http\Controllers\DashboardController::class,"complete_booking"]);
+    Route::get('/view/individual/booking', [\App\Http\Controllers\DashboardController::class,"view_individual_booking"]);
+    Route::get('/view/agent/booking', [\App\Http\Controllers\DashboardController::class,"view_agent_booking"]);
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,"dashboard"]);
     Route::get('/view/booking/{id}', [\App\Http\Controllers\DashboardController::class,"view_booking"]);
     Route::get('/booking/delete/{id}', [\App\Http\Controllers\DashboardController::class,"delete_booking"]);

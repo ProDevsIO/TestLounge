@@ -1047,4 +1047,23 @@ class DashboardController extends Controller
         return back();
         // return view('admin.profile')->with(compact('users')); 
     }
+
+    public function view_individual_booking()
+    {
+        $bookings = Booking::whereNull('referral_code')->orderby('id', 'desc')->get();
+        $users = User::count();
+        $refs = User::wherenotNull('referal_code')->get();
+
+        return view('admin.individual_booking')->with(compact('users','refs','bookings')); 
+    }
+
+    public function view_agent_booking()
+    {
+        $bookings = Booking::wherenotNull('referral_code')->orderby('id', 'desc')->get();
+        $users = User::count();
+        // get agent with referral code
+        $refs = User::wherenotNull('referal_code')->get();
+
+        return view('admin.agent_booking')->with(compact('users','refs','bookings')); 
+    }
 }
