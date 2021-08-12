@@ -90,6 +90,20 @@
                         <input id="phone" style="width:100%;margin-right:0px" type="text" value="{{ old('phone_no') }}" name="phone_no" class="form-control pr-5"  placeholder="Phone No" required>
                     </div>
                     <div class="form-group">
+                            <label class="text-center"  style="width:100%">Country of residence</label>
+                            <select class="form-control select2 country_id__"
+                                name="country" autocomplete="off"
+                                id="travel_from" onchange="run()" onselect="selectCountry()" required>
+                                <option value="">Make a selection</option>
+                                    @foreach($countries as $country)
+                                    <option value="{{ $country->iso }}"
+                                        @if(old('country_travelling_from_id') == $country->id) selected
+                                        @endif>{{ $country->name }}
+                                    </option>
+                                    @endforeach
+                            </select>
+                    </div>
+                    <div class="form-group">
                         <input type="email" value="{{ old('email') }}" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Email" required>
                     </div>
                     <div class="form-group mb-4">

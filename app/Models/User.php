@@ -78,4 +78,15 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Vendor::class,'vendor_id');
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function ptransactions()
+    {
+        return $this->hasMany(PoundTransaction::class);
+    }
+    
 }

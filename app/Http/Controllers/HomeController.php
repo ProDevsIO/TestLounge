@@ -11,6 +11,7 @@ use App\Models\CountryColor;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Transaction;
+use App\Models\PoundTransaction;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorProduct;
@@ -161,7 +162,8 @@ class HomeController extends Controller
                 'product_id' => $r_product,
                 'vendor_id' => $request->vendor_id,
                 'vendor_product_id' => $vendor_products->id,
-                'price' => $vendor_products->price
+                'price' => $vendor_products->price,
+                'price_pounds' => $vendor_products->price_pounds
             ]);
 
             $price = $price + $vendor_products->price;
@@ -451,7 +453,8 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
     public function register_agent()
     {
-        return view('homepage.register');
+        $countries = Country::all();
+        return view('homepage.register')->with(compact('countries'));
     }
 
     public function register(Request $request)
@@ -999,30 +1002,35 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                         $pecentage = $defaultpercent->value;
                     }
 
+                    if($user->country != null){
 
-                    $cost_booking = $booking_product->price;
+                        $cost_booking = $booking_product->price_pounds;
 
-                    $amount_credit = ($cost_booking * ($pecentage / 100));
+                        $amount_credit = ($cost_booking * ($pecentage / 100));
+    
+    
+                        PoundTransaction::create([
+                            'amount' => $amount_credit,
+                            'booking_id' => $booking->id,
+                            'user_id' => $user->id,
+                            'cost_config' => $cost_booking,
+                            'pecentage_config' => $pecentage,
+                            'type' => "1"
+                        ]);
+    
+    
+                        $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
+    
+                        $total_amount = $user->pounds_wallet_balance + $amount_credit;
+    
+                        User::where('id', $booking->user_id)->update([
+                            'pounds_wallet_balance' => $total_amount,
+                            'total_credit_pounds' => $transactions
+                        ]);
+                        
+                    }
 
-
-                    Transaction::create([
-                        'amount' => $amount_credit,
-                        'booking_id' => $booking->id,
-                        'user_id' => $user->id,
-                        'cost_config' => $cost_booking,
-                        'pecentage_config' => $pecentage,
-                        'type' => "1"
-                    ]);
-
-
-                    $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
-
-                    $total_amount = $user->wallet_balance + $amount_credit;
-
-                    User::where('id', $booking->user_id)->update([
-                        'wallet_balance' => $total_amount,
-                        'total_credit' => $transactions
-                    ]);
+                    
                     DB::commit();
                 } catch (\Exception $e) {
                     DB::rollBack();

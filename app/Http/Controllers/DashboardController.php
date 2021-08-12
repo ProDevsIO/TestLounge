@@ -10,6 +10,7 @@ use App\Models\PaymentCode;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Transaction;
+use App\Models\PoundTransaction;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorProduct;
@@ -868,33 +869,58 @@ class DashboardController extends Controller
     public function make_pay(Request $request)
     {
         $this->validate($request, [
-            'amount' => 'required'
+            'amount' => 'required',
+            'type' => 'required'
         ]);
 
         try {
             DB::beginTransaction();
+            
             $user = User::where('id', $request->id)->first();
+            $type = $request->type;
+
             if ($user) {
+                if($type == 1){
+                    if ($user->wallet_balance < $request->amount) {
+                        session()->flash("alert-info", "Insufficient Balance.");
+                        return back();
+                    }
+                    Transaction::create([
+                        'amount' => $request->amount,
+                        'booking_id' => null,
+                        'user_id' => $request->id,
+                        'type' => "2",
+                        'cost_config' => null,
+                        'pecentage_config' => null
+                    ]);
 
-                if ($user->wallet_balance < $request->amount) {
-                    session()->flash("alert-info", "Insufficient Balance.");
-                    return back();
+                    $wallet_balance = $user->wallet_balance - $request->amount;
+
+                    $user->update([
+                        'wallet_balance' => $wallet_balance
+                    ]);
+                }elseif($type == 2){
+
+                    if ($user->pounds_wallet_balance < $request->amount) {
+                        session()->flash("alert-info", "Insufficient Balance.");
+                        return back();
+                    }
+
+                    PoundTransaction::create([
+                        'amount' => $request->amount,
+                        'booking_id' => null,
+                        'user_id' => $request->id,
+                        'type' => "2",
+                        'cost_config' => null,
+                        'pecentage_config' => null
+                    ]);
+
+                    $wallet_balance = $user->pounnds_wallet_balance - $request->amount;
+
+                    $user->update([
+                        'pounds_wallet_balance' => $wallet_balance
+                    ]);
                 }
-                Transaction::create([
-                    'amount' => $request->amount,
-                    'booking_id' => null,
-                    'user_id' => $request->id,
-                    'type' => "2",
-                    'cost_config' => null,
-                    'pecentage_config' => null
-                ]);
-
-                $wallet_balance = $user->wallet_balance - $request->amount;
-
-                $user->update([
-                    'wallet_balance' => $wallet_balance
-                ]);
-
                 DB::commit();
 
                 session()->flash("alert-success", "Debit Transaction has been recorded");
@@ -902,14 +928,14 @@ class DashboardController extends Controller
                 try {
 
                     $message2 = "
-            Hi " . $user->first_name . ",<br/>
-            
-            Your payment has been processed into your bank account.<br/><br/>
-                  <br/><br/>
-                  Thank you.
-                  <br/><br/>
-                UKTravelsTeam
-            ";
+                    Hi " . $user->first_name . ",<br/>
+                    
+                    Your payment has been processed into your bank account.<br/><br/>
+                        <br/><br/>
+                        Thank you.
+                        <br/><br/>
+                        UKTravelsTeam
+                    ";
                     Mail::to($user->email)->send(new BookingCreation($message2, "Payment Notification"));
 
 
@@ -921,7 +947,7 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
 
             DB::rollBack();
-            session()->flash("alert-danger", "An Error occurred");
+            session()->flash("alert-danger", "An Error occurred $e");
 
             return back();
         }
@@ -1065,5 +1091,64 @@ class DashboardController extends Controller
         $refs = User::wherenotNull('referal_code')->get();
 
         return view('admin.agent_booking')->with(compact('users','refs','bookings')); 
+    }
+
+    public function view_transactions()
+    {
+        
+        if (auth()->user()->type == 1) {
+
+            //money from bookings
+            $booking_trans = Transaction::where([
+                'type' => 1
+            ])->get();
+
+            //money from paid commision
+            $paid_trans = Transaction::where([
+                'type' => 2
+            ])->get();
+
+               //money from Pound bookings
+            $booking_trans_p = PoundTransaction::where([
+            'type' => 1
+            ])->get();
+
+            //money from pounds paid commision
+             $paid_trans_p = PoundTransaction::where([
+                'type' => 2
+            ])->get();
+
+        }elseif(auth()->user()->type == 2){
+
+            $id = auth()->user()->id;
+
+            //money from bookings
+            $booking_trans = Transaction::where([
+                'user_id'=> $id,
+                'type' => 1
+            ])->get();
+
+            //money from paid commision
+            $paid_trans = Transaction::where([
+                'user_id'=> $id,
+                'type' => 2
+            ])->get();
+
+            //money from pounds bookings
+            $booking_trans_p = PoundTransaction::where([
+                'user_id'=> $id,
+                'type' => 1
+            ])->get();
+
+            //money from pounds paid commision
+            $paid_trans_p = PoundTransaction::where([
+                'user_id'=> $id,
+                'type' => 2
+            ])->get();
+
+        }
+
+        return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p'));
+
     }
 }
