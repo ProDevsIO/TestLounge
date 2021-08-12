@@ -126,6 +126,7 @@ class Controller extends BaseController
             ];
         } elseif ($booking->country_travelling_from_id == 156) {
             $data = [
+                //
                 "tx_ref" => $transaction_ref,
                 "amount" => $price,
                 "currency" => "NGN",
