@@ -30,9 +30,6 @@
                                 <div class="form-group">
                                     <input type="email" value="{{ $users->email}}" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Email" required>
                                 </div>
-                                <div class="form-group mb-4">
-                                    <input type="password" class="form-control" name="password" placeholder="Enter Password" required>
-                                </div>
                                 <div class="form-group">
                                     <small class="text-muted">Please let us know what name you would like displayed on the UK Travel Test portal.  </small>
                                 <input type="text" value="{{ $users->platform_name}}" name="platform_name" class="form-control" id="exampleInputEmail1" placeholder="Name on platform">
@@ -56,8 +53,8 @@
                                     </select>   
                                 </div>
                                 <div class="form-group">
-                                    <small class="text-muted">if certified</small>
-                                <input type="text" value="{{ $users->certified_no}}" name="certified_no" class="form-control" id="exampleInputEmail1" placeholder="please fill in your IATA number">
+                                    <small class="text-muted">If certified</small>
+                                <input type="text" value="{{ $users->certified_no}}" name="certified_no" class="form-control" id="exampleInputEmail1" placeholder="Please fill in your IATA number">
                                 </div>
                                 
                                 

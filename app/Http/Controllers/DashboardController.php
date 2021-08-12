@@ -1006,7 +1006,6 @@ class DashboardController extends Controller
             'email' => 'required',
             'phone_no' => 'required',
             'company' => 'required',
-            'password' => 'required',
             'platform_name' => 'required',
             'director' => 'required',
             'file' => 'file|mimes:csv,txt,xlx,xls,pdf,docx|max:2048',
@@ -1019,7 +1018,7 @@ class DashboardController extends Controller
         $id = Auth()->user()->id;
         $user = User::where('id', $id)->first();
 
-        $request_data['password'] = Hash::make($request_data['password']);
+        // $request_data['password'] = Hash::make($request_data['password']);
         
         if($request->file)
         {
