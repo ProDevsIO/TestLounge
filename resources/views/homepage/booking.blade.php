@@ -185,10 +185,16 @@
                                                 onclick="stepperForm.next()">Next
                                         </button>
                                     </div>
+                                    
                                     <div id="logins-part" class="content bs-stepper-pane" role="tabpanel"
                                          aria-labelledby="logins-part-trigger">
+                                         
+                                         <div class="container-fluid mb-2">
+                                            <small class="text-muted" style="color:red;"><b>Not for children aged 4 and under.</b></small>
+                                         </div>
+                                         <!-- , Aged 5 to 10 who are Uk residents take day 2 test and non-residents take day 2 and 8 test -->
                                         <div class="col-md-6 ">
-                                            <label>First Name <span class="show_required"> *</span></label>
+                                        <label>First Name <span class="show_required"> *</span></label>
                                             <input class="form-control" type="text" placeholder="First name"
                                                    name="first_name"
                                                    value="{{ old('first_name') }}" required>
@@ -216,7 +222,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Date of Birth <span class="show_required"> *</span></label>
+                                            <label>Date of Birth <span class="show_required"> *</span>  </label>
                                             <input class="form-control date_picker" type="text"
                                                    placeholder="Date of Birth"
                                                    name="dob"
