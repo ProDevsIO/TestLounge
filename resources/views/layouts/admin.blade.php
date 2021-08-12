@@ -68,7 +68,7 @@
     <!--header rightside links-->
     <ul class="header-links hide-arrow navbar">
 
-       
+
         <li class="nav-item dropdown ">
             <a class="nav-link dropdown-toggle" id="userNav" href="#" data-toggle="dropdown" aria-haspopup="true"
                aria-expanded="false">
@@ -83,12 +83,12 @@
                 </div>
                 <div class="dropdown-divider"></div>
                 @if(auth()->user()->type == "2")
-                      
+
                             <a class="dropdown-item" href="{{ url('/profile') }}" >
                                 <span>Profile</span>
                             </a>
-                       
-                       
+
+
                       @endif
                 <a class="dropdown-item" href="javascript:;"  onclick="signOut()">Sign Out</a>
             </div>
@@ -112,30 +112,41 @@
                 <div class="form-inline">
                 <input type="text" class="form-control" value="{{ url('/booking?ref='.auth()->user()->referal_code) }}" id="myInput">
                 <button onclick="copyText()" class="btn btn-primary">Copy Link</button></div>
+
+                <div class="barcode text-center m-3">
+                    <img src="{{ getMyRefBarcode() }}" alt=""  class="img-fluid" width="200">
+                </div>
+
                 <p>Share on social media</p>
                 <div id="share-buttons">
 
                     <!-- Email -->
                     <a href="mailto:?Subject=Uk Travel Test&amp;Body=Are%20you%20travelling%20to%20the%20UK,%20Book%20your%20travel%20test%20here,follow%20this%20link: {{ url('/booking?ref='.auth()->user()->referal_code) }}">
-                        <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email"/>
+                        <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email"  style="height: 50px; width: 50px;"/>
                     </a>
 
                     <!-- Facebook -->
                     <a href="http://www.facebook.com/sharer.php?u={{ url('/booking?ref='.auth()->user()->referal_code) }}" target="_blank">
-                        <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook"/>
+                        <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook"  style="height: 50px; width: 50px;"/>
                     </a>
 
                     <!-- LinkedIn -->
                     <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ url('/booking?ref='.auth()->user()->referal_code) }}"
                        target="_blank">
-                        <img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn"/>
+                        <img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" style="height: 50px; width: 50px;"/>
                     </a>
 
-                    <a style="background: #12d012;border-radius: 130px;padding: 20px 10px;" href="whatsapp://send?text=Are you travelling to the UK, Book your travel test here,follow this link: {{ url('/booking?ref='.auth()->user()->referal_code) }}"
+                    <a href="whatsapp://send?text=Are you travelling to the UK, Book your travel test here,follow this link: {{ url('/booking?ref='.auth()->user()->referal_code) }}"
                        target="_blank">
-                        <img src="https://platform-cdn.sharethis.com/img/whatsapp.svg" alt="Whatsapp" style="height: 35px;"/>
+                        <img src="https://platform-cdn.sharethis.com/img/whatsapp.svg" alt="Whatsapp" style="
+                        height: 50px;
+                        width: 50px;
+                        background: #12d012;
+                        border-radius: 100px;
+                        padding: 5px;"/>
                     </a>
                 </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -185,7 +196,7 @@
                             <span>Payment Settings</span>
                         </a>
                     </li>
-                    
+
                     @endif
                     @if(auth()->user()->type == "1")
                     <li>
@@ -229,8 +240,8 @@
                             </a>
                         </li>
                         @endif
-                       
-                        
+
+
                 </ul>
             </nav>
         </div>
@@ -284,11 +295,11 @@
         toastr.success("Success", 'Link has been copied successfully')
     }
     function signOut() {
-            
+
             var d = confirm("Are you sure, you want to sign out?");
 
             if (d) {
-                
+
                 window.location = "/logout";
             }
         }

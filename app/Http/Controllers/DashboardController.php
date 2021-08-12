@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\BarcodeHelper;
 use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
 use App\Models\Booking;
@@ -333,7 +334,7 @@ class DashboardController extends Controller
 
     public function admin_make($id)
     {
-     
+
         if (auth()->user()->type == 0) {
             abort(403);
         }
@@ -488,14 +489,14 @@ class DashboardController extends Controller
             'account_no',
             'password'
         ]);
-        
-       
+
+
         if(Hash::check( $request->password, auth()->user()->password) == false)
         {
             session()->flash("alert-danger", "Incorrect password provided");
             return back();
         }
-        
+
 
         $banks = json_decode($request->bank_array);
         $banks_ = [];
@@ -785,7 +786,7 @@ class DashboardController extends Controller
         }
 
         if ($request->start && $request->end) {
-        
+
             $start = Carbon::parse($request->start)->startOfDay();
             $end = Carbon::parse($request->end)->endOfDay();
 
@@ -835,10 +836,10 @@ class DashboardController extends Controller
                     $row['Wallet Balance'] = "N". number_format($user->wallet_balance,2);
                     $row['Account Details'] =  "Country:" .$user->country. ", " ."Bank:" .$user->bank . "Account No:". $user->account_no .", "
                     ."Account Name:". $user->account_name;
-                   
+
 
                     fputcsv($file, array($row['Name'],  $row['Referral Code'] ,$row['Total C.booking'] , $row['Wallet Balance'] , $row['Account Details']));
-                
+
                 }
                 fputcsv($file, array(' ',' ',' ',' ',' ',' ',' ',' '));
 
@@ -852,7 +853,7 @@ class DashboardController extends Controller
                   $row['due'] = 'N '. number_format($due_amount);
 
 
-                fputcsv($file, array($row['Naira'],  $row['Pound'], $row['cedis'], $row['tzs'], $row['kes'], $row['zar'], $row['due'])); 
+                fputcsv($file, array($row['Naira'],  $row['Pound'], $row['cedis'], $row['tzs'], $row['kes'], $row['zar'], $row['due']));
                 fclose($file);
             };
 
@@ -903,7 +904,7 @@ class DashboardController extends Controller
 
                     $message2 = "
             Hi " . $user->first_name . ",<br/>
-            
+
             Your payment has been processed into your bank account.<br/><br/>
                   <br/><br/>
                   Thank you.
@@ -986,7 +987,7 @@ class DashboardController extends Controller
         $id = Auth()->user()->id;
         $users = User::where('id', $id)->first();
 
-        return view('admin.profile')->with(compact('users')); 
+        return view('admin.profile')->with(compact('users'));
     }
 
     function edit_profile_view()
@@ -994,12 +995,12 @@ class DashboardController extends Controller
         $id = Auth()->user()->id;
         $users = User::where('id', $id)->first();
 
-        return view('admin.edit_profile')->with(compact('users')); 
+        return view('admin.edit_profile')->with(compact('users'));
     }
 
     function edit_profile(Request $request)
     {
-      
+
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -1022,9 +1023,9 @@ class DashboardController extends Controller
         
         if($request->file)
         {
-            
-            $certificate =  time().'.'.$request->file->extension();  
-        
+
+            $certificate =  time().'.'.$request->file->extension();
+
             $request->file->move(public_path('img/certificate'), $certificate);
 
             $request_data['c_o_i'] = "/img/certificate/". $certificate;
@@ -1033,18 +1034,18 @@ class DashboardController extends Controller
 
             if($certificate_path != null)
             {
-            
+
                unlink($_SERVER['DOCUMENT_ROOT'].$certificate_path);
             }
-        
+
         }
-        
+
         $user->update($request_data);
-        
+
         session()->flash('alert-success', "Successfully updated your profile");
 
         return back();
-        // return view('admin.profile')->with(compact('users')); 
+        // return view('admin.profile')->with(compact('users'));
     }
 
     public function view_individual_booking()
@@ -1053,7 +1054,7 @@ class DashboardController extends Controller
         $users = User::count();
         $refs = User::wherenotNull('referal_code')->get();
 
-        return view('admin.individual_booking')->with(compact('users','refs','bookings')); 
+        return view('admin.individual_booking')->with(compact('users','refs','bookings'));
     }
 
     public function view_agent_booking()
@@ -1063,6 +1064,8 @@ class DashboardController extends Controller
         // get agent with referral code
         $refs = User::wherenotNull('referal_code')->get();
 
-        return view('admin.agent_booking')->with(compact('users','refs','bookings')); 
+        return view('admin.agent_booking')->with(compact('users','refs','bookings'));
     }
+
+   
 }
