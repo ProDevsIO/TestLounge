@@ -172,6 +172,12 @@
                             @endif
                         </ul>
                     </li>
+                    <li>
+                      <a href="{{ url('/view/subagent') }}">
+                            <i class="icon-calculator"></i>
+                            <span>Sub agents</span>
+                        </a>
+                    </li>
                     @if(auth()->user()->type == "2")
                    <li>
                       <a href="{{ url('/user/bank') }}">
@@ -179,6 +185,7 @@
                             <span>Payment Settings</span>
                         </a>
                     </li>
+                    
                     @endif
                     @if(auth()->user()->type == "1")
                     <li>
