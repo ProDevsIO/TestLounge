@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\BarcodeHelper;
+
 function encrypt_decrypt($action, $string)
 {
     $output = false;
@@ -56,4 +58,15 @@ function convertSeconds($value){
     $hours = $dt->diffInHours($dt->copy()->addSeconds($value)->subDays($days));
     $minutes = $dt->diffInMinutes($dt->copy()->addSeconds($value)->subDays($days)->subHours($hours));
      return \Carbon\CarbonInterval::days($days)->hours($hours)->minutes($minutes)->forHumans();
+}
+
+function getMyRefBarcode($user  = null)
+{
+    $user = $user ?? auth()->user();
+    if(empty($user)){
+        return null;
+    }
+    $barcodeHelper = new BarcodeHelper;
+    $content = url('/booking?ref='.$user->referal_code);
+    return $barcodeHelper->generate($content);
 }
