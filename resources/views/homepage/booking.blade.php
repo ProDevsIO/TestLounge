@@ -189,7 +189,7 @@
                                          aria-labelledby="logins-part-trigger">
                                     
                                         <div class="col-md-6 ">
-                                        <label>First Name <span class="show_required"> * <b>Children aged 4 and under don’t require COVID-19 travel. <a target="_blank" href="https://www.gov.uk/guidance/how-to-quarantine-when-you-arrive-in-england#rules-for-children-and-young-people">Learn more</a></b></span> 
+                                        <label>First Name <span class="show_required"> * <b>Children aged 4 and under don’t require COVID-19 travel tests. <a target="_blank" href="https://www.gov.uk/guidance/how-to-quarantine-when-you-arrive-in-england#rules-for-children-and-young-people">Learn more</a></b></span> 
                                        </label>
                                             <input class="form-control" type="text" placeholder="First name"
                                                    name="first_name"
