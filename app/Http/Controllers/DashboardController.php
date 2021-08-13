@@ -54,8 +54,8 @@ class DashboardController extends Controller
             $payment_codes = 0;
             $refs = [];
         }
-
-        return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking', 'refs'));
+        $countries = Country::all();
+        return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking', 'refs', 'countries'));
     }
 
 
@@ -1151,4 +1151,16 @@ class DashboardController extends Controller
         return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p'));
 
     }
+    public function update_country(Request $request)
+    {
+      
+        $id = auth()->user()->id;
+        
+        User::where('id', $id)->update(['country' => $request->country]);
+
+        session()->flash('alert-success', "Successfully updated your country of residence");
+
+        return back();
+    }
+   
 }
