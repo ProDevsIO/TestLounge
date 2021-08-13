@@ -16,6 +16,36 @@
 
 
     <div class="content-wrapper">
+        <!----force modal if country not filled in db -->
+        <div id="countryForce" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Please update your Country of residence</h5>
+                         </div>
+                    <div class="modal-body">
+                        <small class ="text-muted text-danger"> No activites can be conducted on your account until ypu updated this requirement *.</small>
+                        <form action="{{ url('/update/country') }}" method="post">
+                        @csrf
+                                    <select class="form-control select2 country_id__"
+                                                    name="country" autocomplete="off"
+                                                    id="travel_from" onchange="run()" onselect="selectCountry()" required>
+                                                <option value="">Select a country</option>
+                                                @foreach($countries as $country)
+                                                    <option value="{{ $country->iso }}"
+                                                            @if(old('country_travelling_from_id') == $country->id)
+                                                            selected
+                                                            @endif>{{ $country->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <br>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end of country force modal-->
         <div class="container-fluid">
         @if(auth()->user()->referal_code && auth()->user()->vendor_id == 0)
         <div class="alert alert-success">
@@ -291,4 +321,12 @@
             }
         }
     </script>
+    @if(auth()->user()->type == 2 && auth()->user()->country == null)
+    <script>
+          $(document).ready(function(){
+                $("#countryForce").modal({backdrop: 'static', keyboard: false}, 'show');
+            });
+       
+    </script>
+    @endif
 @endsection

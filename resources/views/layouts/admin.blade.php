@@ -44,6 +44,7 @@
     <script src="/assets/vendor/html5shiv.js"></script>
     <script src="/assets/vendor/respond.min.js"></script>
     <![endif]-->
+   
     @yield('style')
 </head>
 

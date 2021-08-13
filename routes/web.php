@@ -89,7 +89,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/resend/receipt/{id}', [\App\Http\Controllers\DashboardController::class,"resend_receipt"]);
     Route::get('/finance/report', [\App\Http\Controllers\DashboardController::class,"financial_report"]);
     Route::get('/imitate/account/{id}', [\App\Http\Controllers\DashboardController::class,"imitate_account"]);
-
+    Route::post('/update/country', [\App\Http\Controllers\DashboardController::class,"update_country"]);
 
 
 
