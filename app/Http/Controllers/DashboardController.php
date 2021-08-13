@@ -1148,7 +1148,7 @@ class DashboardController extends Controller
 
         }
 
-        dd( $booking_trans,  $paid_trans);
+       
         return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p'));
 
     }
