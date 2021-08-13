@@ -24,7 +24,7 @@
                         <h5 class="modal-title">Please update your Country of residence</h5>
                          </div>
                     <div class="modal-body">
-                        <small class ="text-muted text-danger"> No activites can be conducted on your account until ypu updated this requirement *.</small>
+                        <small class ="text-muted text-danger"> No activites can be conducted on your account until you have updated this requirement *.</small>
                         <form action="{{ url('/update/country') }}" method="post">
                         @csrf
                                     <select class="form-control select2 country_id__"
