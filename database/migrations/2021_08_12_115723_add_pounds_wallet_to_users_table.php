@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddWalletFieldToUsersTable extends Migration
+class AddPoundsWalletToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,9 @@ class AddWalletFieldToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->decimal('total_credit')->nullable()->after('account_bank');
-            $table->decimal('wallet_balance')->nullable()->after('verified');
+            //
+            $table->decimal('total_credit_pounds')->nullable()->after('total_credit');
+            $table->decimal('pounds_wallet_balance')->nullable()->after('wallet_balance');
         });
     }
 
@@ -28,8 +29,8 @@ class AddWalletFieldToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->dropColumn('total_credit');
-            $table->dropColumn('wallet_balance');
+            $table->dropColumn('total_credit_pounds');
+            $table->dropColumn('pounds_wallet_balance');
         });
     }
 }

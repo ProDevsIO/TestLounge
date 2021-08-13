@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PoundTransaction extends Model
+{
+    use HasFactory;
+    
+	protected $table = 'pound_transactions';
+
+	protected $casts = [
+		'amount' => 'float',
+		'booking_id' => 'int',
+		'user_id' => 'int',
+		'cost_config' => 'float',
+		'pecentage_config' => 'float'
+	];
+
+	protected $fillable = [
+		'amount',
+		'booking_id',
+		'user_id',
+		'type',
+		'cost_config',
+		'pecentage_config'
+	];
+
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
+}

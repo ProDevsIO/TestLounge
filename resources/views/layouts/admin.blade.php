@@ -189,6 +189,12 @@
                             <span>Sub agents</span>
                         </a>
                     </li> -->
+                    <li>
+                      <a href="{{ url('/view/transactions') }}">
+                            <i class="icon-calculator"></i>
+                            <span>View transactions</span>
+                        </a>
+                    </li>
                     @if(auth()->user()->type == "2")
                    <li>
                       <a href="{{ url('/user/bank') }}">

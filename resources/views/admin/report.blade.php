@@ -170,6 +170,7 @@
                                         <th scope="col">Referral Code</th>
                                         <th scope="col">Total C.Bookings</th>
                                         <th scope="col">Wallet Balance</th>
+                                        <th scope="col">Pounds Wallet Balance</th>
                                         <th scope="col">Account Details</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -188,6 +189,7 @@
                                             </td>
                                             <td>{{ $user->cbookings->count() }}</td>
                                             <td>N{{ number_format($user->wallet_balance,2) }}</td>
+                                            <td>£{{ number_format($user->pounds_wallet_balance,2) }}</td>
                                             <td>
                                                 <ul>
                                                     <li>Country: {{ $user->country }}</li>
@@ -231,6 +233,13 @@
                                                         <div class="modal-body">
                                                             <label>Amount: </label>
                                                             <input type="number" name="amount" class="form-control"/>
+                                                            <br>
+                                                            <label>Currency: </label>
+                                                            <select name="type" class="form-control" id="" required>
+                                                                <option value="">Please Select a Currency</option>
+                                                                <option value="1">Naira</option>
+                                                                <option value="2">Pounds</option>
+                                                            </select>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
