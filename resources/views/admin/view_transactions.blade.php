@@ -69,7 +69,7 @@
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">
-                                        <div class="custom-title">Paid Commission</div>
+                                        <div class="custom-title">Booking Transaction((Naira)</div>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
