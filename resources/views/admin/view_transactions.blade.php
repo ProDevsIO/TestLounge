@@ -90,15 +90,23 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                        @if(isset($booking_trans))
+                                       
                                             @foreach($booking_trans as $booking_tran)
                                             
                                                     <tr>
                                                        
                                                         @if(auth()->user()->type == 1)
-                                                        <td>{{ $booking_tran->user->first_name }} {{ $booking_tran->user->last_name }}</td>
+                                                            @if(!empty($booking_tran->user))
+                                                            <td>{{ $booking_tran->user->first_name }} {{ $booking_tran->user->last_name }}</td>
+                                                            @else
+                                                            <td> <span class ="badge badge-danger"> Agent NULL</span></td>
+                                                            @endif
                                                         @elseif(auth()->user()->type == 2)
-                                                        <td>{{ $booking_tran->user->first_name }} {{ $booking_tran->user->last_name }}</td>
+                                                            @if(!empty($booking_tran->user))
+                                                                <td>{{ $booking_tran->user->first_name }} {{ $booking_tran->user->last_name }}</td>
+                                                            @else
+                                                                <td> <span class ="badge badge-danger"> Agent NULL</span></td>
+                                                            @endif
                                                         @endif
                                                         <td>₦{{ number_format($booking_tran->amount) }}</td>
                                                         <td>₦{{ number_format($booking_tran->cost_config) }}</td>
@@ -107,7 +115,7 @@
                                                   
                                                
                                             @endforeach
-                                        @endif
+                                        
                                             </tbody>
                                         </table>
                                     </div>
