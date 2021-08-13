@@ -95,7 +95,7 @@
                                                     <tr>
                                                        
                                                         @if(auth()->user()->type == 1)
-                                                        <td>{{ $booking_tran->user_id }} </td>
+                                                        <td>{{ $booking_tran->user }} </td>
                                                         @elseif(auth()->user()->type == 2)
                                                         <td>{{ $booking_tran->user->user_id }}</td>
                                                         @endif
