@@ -937,7 +937,7 @@ class DashboardController extends Controller
                         <br/><br/>
                         UKTravelsTeam
                     ";
-                    Mail::to($user->email)->send(new BookingCreation($message2, "Payment Notification"));
+                    Mail::to('kelvin@prodevs.io')->send(new BookingCreation($message2, "Payment Notification"));
 
 
                 } catch (\Exception $e) {
