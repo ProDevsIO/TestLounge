@@ -289,25 +289,57 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
                         $amount_credit = ($cost_booking * ($pecentage / 100));
 
+                        if($booking->card_type == null || $booking->card_type == 2){
+                            //for international transaction in pounds
+                            $cost_booking = $booking_product->price_pounds;
+    
+                            $amount_credit = ($cost_booking * ($pecentage / 100));
+        
+        
+                            PoundTransaction::create([
+                                'amount' => $amount_credit,
+                                'booking_id' => $booking->id,
+                                'user_id' => $user->id,
+                                'cost_config' => $cost_booking,
+                                'pecentage_config' => $pecentage,
+                                'type' => "1"
+                            ]);
+        
+        
+                            $transactions =  PoundTransaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
+        
+                            $total_amount = $user->pounds_wallet_balance + $amount_credit;
+        
+                            User::where('id', $booking->user_id)->update([
+                                'pounds_wallet_balance' => $total_amount,
+                                'total_credit_pounds' => $transactions
+                            ]);
+                            
+                        }elseif($booking->card_type == 1 ){
+                            //for local transaction in naira
+                            $cost_booking = $booking_product->price;
 
-                        Transaction::create([
-                            'amount' => $amount_credit,
-                            'booking_id' => $booking->id,
-                            'user_id' => $user->id,
-                            'cost_config' => $cost_booking,
-                            'pecentage_config' => $pecentage,
-                            'type' => "1"
-                        ]);
+                            $amount_credit = ($cost_booking * ($pecentage / 100));
+
+                            Transaction::create([
+                                'amount' => $amount_credit,
+                                'booking_id' => $booking->id,
+                                'user_id' => $user->id,
+                                'cost_config' => $cost_booking,
+                                'pecentage_config' => $pecentage,
+                                'type' => "1"
+                            ]);
 
 
-                        $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
+                            $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
 
-                        $total_amount = $user->wallet_balance + $amount_credit;
+                            $total_amount = $user->wallet_balance + $amount_credit;
 
-                        User::where('id', $booking->user_id)->update([
-                            'wallet_balance' => $total_amount,
-                            'total_credit' => $transactions
-                        ]);
+                            User::where('id', $booking->user_id)->update([
+                                'wallet_balance' => $total_amount,
+                                'total_credit' => $transactions
+                            ]);
+                        }
                         DB::commit();
                     } catch (\Exception $e) {
                         DB::rollBack();

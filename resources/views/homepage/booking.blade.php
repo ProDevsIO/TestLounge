@@ -523,21 +523,27 @@
                                             <label>Choose Payment Method: <span
                                                         class="show_required"> *</span></label>
                                             <div class="alert alert-warning">
-                                                * Nigerian cardholders are advised to use Flutterwave
+                                                * All cardholders are advised to use Flutterwave
                                             </div>
                                             <div class="radio-group">
                                                 <input type="hidden" name="payment_method" id="payment_method"/>
-                                                <div class='radio' data-value="stripe" style="margin-top: 10px"><img
+                                                <!-- <div class='radio' data-value="stripe" style="margin-top: 10px"><img
                                                             src="{{ url('/img/stripe.png') }}"
-                                                            height="60px"></div>
+                                                            height="60px"></div> -->
                                                 <div class='radio' data-value="flutterwave" style="margin-top: 10px">
                                                     <img
                                                             src="{{ url('/img/Flutterwave.png') }}"
                                                             height="60px"></div>
                                                 <br>
                                             </div>
-
+                                           
                                         </div>
+                                        <div class="col-md-12" id="card" style="margin-top:20px;">
+                                            <label>Select Card types <span class="show_required"> *</span></label> <small class="text-muted" style="color:red"> <b>please select your local or international card</b> </small>
+                                            <select class="form-control card_type" autocomplete="off" name="card_type">
+
+                                            </select>
+                                          </div>
                                         <div class="col-md-12">
                                             <label>Consent to Test: <span class="show_required"> *</span></label><br/>
                                             <p class="field-description" style="font-size: 15px;">I consent to this test
@@ -723,6 +729,15 @@
                 });
 
             });
+
+            if( nationality == 156){
+                var $card = $(".card_type");
+                $card.empty(); // remove old options
+                $card.append($("<option value=''>Select type of card</option>"));
+                $card.append($("<option></option>").attr("value", 1).text("Local Card"));
+                $card.append($("<option></option>").attr("value", 2).text("International Card"));
+
+            }
 
 
         }
