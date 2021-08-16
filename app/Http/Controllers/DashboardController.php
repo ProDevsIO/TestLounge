@@ -1095,7 +1095,8 @@ class DashboardController extends Controller
 
     public function view_transactions()
     {
-        
+       
+
         if (auth()->user()->type == 1) {
 
             //money from bookings
@@ -1118,9 +1119,27 @@ class DashboardController extends Controller
                 'type' => 2
             ])->get();
 
+            $earned =  Transaction::where([
+                'type' => 2
+            ])->sum('amount');
+
+            $earnedPounds = PoundTransaction::where([
+                'type' => 2
+            ])->sum('amount');
+
         }elseif(auth()->user()->type == 2){
 
             $id = auth()->user()->id;
+
+            $earned =  Transaction::where([
+                'user_id'=> $id,
+                'type' => 2
+            ])->sum('amount');
+
+            $earnedPounds =  PoundTransaction::where([
+                'user_id'=> $id,
+                'type' => 2
+            ])->sum('amount');
 
             //money from bookings
             $booking_trans = Transaction::where([
@@ -1149,9 +1168,9 @@ class DashboardController extends Controller
         }
 
        
-        return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p'));
-
+        return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p', 'earned', 'earnedPounds'));
     }
+
     public function update_country(Request $request)
     {
       

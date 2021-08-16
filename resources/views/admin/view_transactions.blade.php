@@ -29,6 +29,41 @@
 
             <!--employee data table-->
             <div class="row">
+                <div class="col-sm-6">
+                <div class="card mb-4 bg-success">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                        <i class="vl_money"></i>
+                                    </div>
+                                    <div class="media-body text-white">
+                                        <h4 class="text-uppercase mb-0 weight500">
+                                            N{{ number_format($earned,0) }}</h4>
+                                        <span>Expected Earning(Naira)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-sm-6">
+                <div class="card mb-4 bg-success">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                        <i class="vl_money"></i>
+                                    </div>
+                                    <div class="media-body text-white">
+                                        <h4 class="text-uppercase mb-0 weight500">
+                                        £{{ number_format($earnedPounds,0) }}</h4>
+                                        <span>Expected Earning(Pounds)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-xl-12 container">
                     <ul class="nav nav-tabs nav-justified ">
                     @if(auth()->user()->type == 1)
