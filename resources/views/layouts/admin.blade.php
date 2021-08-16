@@ -229,7 +229,13 @@
                     <li>
                         <a href="{{ url('/users') }}">
                             <i class=" ti-pie-chart"></i>
-                            <span>Users/Referrals</span>
+                            <span>Agents/Referrals</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/admins') }}">
+                            <i class=" ti-pie-chart"></i>
+                            <span>Admins</span>
                         </a>
                     </li>
                         <li>

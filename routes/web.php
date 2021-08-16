@@ -95,6 +95,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/users', [\App\Http\Controllers\DashboardController::class,"users"]);
+    Route::get('/admins', [\App\Http\Controllers\DashboardController::class,"admins"]);
     Route::get('/users/delete/{id}', [\App\Http\Controllers\DashboardController::class,"delete_user"]);
     Route::get('/products', [\App\Http\Controllers\DashboardController::class,"products"]);
     Route::post('/edit/product', [\App\Http\Controllers\DashboardController::class,"edit_product"]);

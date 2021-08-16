@@ -327,10 +327,21 @@ class DashboardController extends Controller
         if (auth()->user()->type == 0) {
             abort(403);
         }
-        $users = User::orderby('created_at', 'desc')->get();
+        $users = User::orderby('created_at', 'desc')->where('type', 2)->get();
         $setting = Setting::where('id', 2)->first();
 
         return view('admin.users')->with(compact('users', 'setting'));
+    }
+
+    public function admins()
+    {
+        if (auth()->user()->type == 0) {
+            abort(403);
+        }
+        $users = User::orderby('created_at', 'desc')->where('type', 1)->get();
+        $setting = Setting::where('id', 2)->first();
+
+        return view('admin.admins')->with(compact('users', 'setting'));
     }
 
     public function admin_make($id)
