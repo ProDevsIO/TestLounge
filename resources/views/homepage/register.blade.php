@@ -118,7 +118,9 @@
                         </select>   
                     </div>
                     <div class="form-group">
-                        <small class="text-muted">if certified</small>
+                    
+                        <small class="tezt-muted" style="color:red">An IATA number is not a prerequisite to  completing your registration and inclusion to the network.</small>
+                        <p><small>if IATA certified</small></p>
                        <input type="text" value="{{ old('certified_no') }}" name="certified_no" class="form-control" id="exampleInputEmail1" placeholder="please fill in your IATA number">
                     </div>
                     
