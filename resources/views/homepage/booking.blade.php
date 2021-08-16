@@ -543,7 +543,8 @@
                                             <select class="form-control card_type" autocomplete="off" name="card_type">
 
                                             </select>
-                                          </div>
+                                        </div>
+                                        <br>
                                         <div class="col-md-12">
                                             <label>Consent to Test: <span class="show_required"> *</span></label><br/>
                                             <p class="field-description" style="font-size: 15px;">I consent to this test

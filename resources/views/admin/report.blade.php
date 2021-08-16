@@ -44,94 +44,106 @@
                 </div>
 
                 <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-purple" title="Revenue">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Revenue">
-                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($total_ngn) }}</h4>
-                                    <span>Total Revenue(Naira)</span>
+                    <a href="{{  url('currency/detail/report/naira/'.$start .'/'. $end) }}">
+                        <div class="card mb-4 bg-purple" title="Revenue">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Revenue">
+                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($total_ngn) }}</h4>
+                                        <span>Total Revenue(Naira)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-purple" title="Revenue">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Revenue">
-                                    <h4 class="text-uppercase mb-0 weight500">£{{ number_format($total_gbp) }}</h4>
-                                    <span>Total Revenue(Pound)</span>
+                    <a href="{{  url('currency/detail/report/pounds/'.$start.'/'.$end) }}">
+                        <div class="card mb-4 bg-purple" title="Revenue">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Revenue">
+                                        <h4 class="text-uppercase mb-0 weight500">£{{ number_format($total_gbp) }}</h4>
+                                        <span>Total Revenue(Pound)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-purple" title="Revenue">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Revenue">
-                                    <h4 class="text-uppercase mb-0 weight500">GH₵{{ number_format($total_ghs) }}</h4>
-                                    <span>Total Revenue(Cedis)</span>
+                    <a href="{{  url('currency/detail/report/cedis/'.$start.'/'.$end) }}">
+                        <div class="card mb-4 bg-purple" title="Revenue">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Revenue">
+                                        <h4 class="text-uppercase mb-0 weight500">GH₵{{ number_format($total_ghs) }}</h4>
+                                        <span>Total Revenue(Cedis)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-purple" title="Revenue">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Revenue">
-                                    <h4 class="text-uppercase mb-0 weight500">TZS{{ number_format($total_tzs) }}</h4>
-                                    <span>Total Revenue(TZS)</span>
+                    <a href="{{  url('currency/detail/report/tzs/'.$start.'/'.$end) }}">
+                        <div class="card mb-4 bg-purple" title="Revenue">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Revenue">
+                                        <h4 class="text-uppercase mb-0 weight500">TZS{{ number_format($total_tzs) }}</h4>
+                                        <span>Total Revenue(TZS)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-purple" title="Revenue">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Revenue">
-                                    <h4 class="text-uppercase mb-0 weight500">KES{{ number_format($total_kes) }}</h4>
-                                    <span>Total Revenue(KES)</span>
+                    <a href="{{  url('currency/detail/report/kes/'.$start.'/'.$end) }}">
+                        <div class="card mb-4 bg-purple" title="Revenue">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Revenue">
+                                        <h4 class="text-uppercase mb-0 weight500">KES{{ number_format($total_kes) }}</h4>
+                                        <span>Total Revenue(KES)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-purple" title="Revenue">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Revenue">
-                                    <h4 class="text-uppercase mb-0 weight500">ZAR{{ number_format($total_zar) }}</h4>
-                                    <span>Total Revenue(ZAR)</span>
+                    <a href="{{  url('currency/detail/report/zar/'.$start.'/'.$end) }}">
+                        <div class="card mb-4 bg-purple" title="Revenue">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Revenue">
+                                        <h4 class="text-uppercase mb-0 weight500">ZAR{{ number_format($total_zar) }}</h4>
+                                        <span>Total Revenue(ZAR)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-xl-3 col-sm-3">
                     <div class="card mb-4 bg-purple" title="Revenue">
@@ -264,8 +276,8 @@
 
         </div>
         <!--footer-->
-    @include('includes.footer ')
-    <!--/footer-->
+        @include('includes.footer ')
+        <!--/footer-->
     </div>
 
 
