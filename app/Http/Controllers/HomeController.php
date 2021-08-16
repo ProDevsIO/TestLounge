@@ -198,7 +198,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         }
 
-        $data = $this->getFlutterwaveData($booking, $price, $transaction_ref,$price_pounds);
+        $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
 
         //redirect to payment page
         if (!empty($sub_account)) {
@@ -458,12 +458,12 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         } else {
             $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
-
+            $booking = Booking::where('id', $booking->id)->first();
             $price = $booking_product->price;
 
             $price_pounds = $vendor_products->price_pounds;
 
-            $data = $this->getFlutterwaveData($booking, $price, $booking_ref,$price_pounds);
+            $data = $this->getFlutterwaveData($booking, $price, $booking_ref,$price_pounds, $booking->card_type);
             $redirect_url = $this->processFL($data);
         }
 
