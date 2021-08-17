@@ -200,12 +200,21 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
 
+        //agent percentage on subaccount
+        if($user->percentage_split != null)
+        {
+            $transaction_charge = 100 - $user->percentage_split; 
+        }else{
+            $percentage = Setting::where('id', 2)->first();
+            $transaction_charge = 100 - $percentage;
+        }
+
         //redirect to payment page
         if (!empty($sub_account)) {
             $data['subaccounts'][] = [
                                         "id" => $sub_account,
-                                            "transaction_charge_type"=> "percentage",
-                                            "transaction_charge"=> "0.05"
+                                        "transaction_charge_type"=> "percentage",
+                                        "transaction_charge"=> $transaction_charge
                                      ];
         }
 
