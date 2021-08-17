@@ -153,7 +153,7 @@
                             <input type="text" value="{{ old('company') }}" name="company" class="form-control" id="exampleInputEmail1" placeholder="Name of organization" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" value="{{ old('director') }}" name="director" class="form-control" id="exampleInputEmail1" placeholder="Name of managing director" required>
+                            <input type="text" value="{{ old('director') }}" name="director" class="form-control" id="exampleInputEmail1" placeholder="Name of Managing Director" required>
                         </div> 
                         <div class="form-group">
                             <small class="text-muted">If available</small>
