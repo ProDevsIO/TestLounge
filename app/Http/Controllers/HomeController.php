@@ -202,7 +202,11 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         //redirect to payment page
         if (!empty($sub_account)) {
-            $data['subaccounts'] = ["id" => $sub_account];
+            $data['subaccounts'][] = [
+                                        "id" => $sub_account,
+                                            "transaction_charge_type"=> "percentage",
+                                            "transaction_charge"=> "0.05"
+                                     ];
         }
 
         BookingProduct::where('booking_id', $booking->id)->update([
@@ -227,7 +231,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             ]);
 
         } else {
-            dd($data);
+           
             $redirect_url = $this->processFL($data);
         }
 
