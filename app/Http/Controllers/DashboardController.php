@@ -28,7 +28,8 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-
+        $earned = 0;
+        $earnedPounds = 0;
         if (auth()->user()->type == 1) {
             $bookings = Booking::orderby('id', 'desc')->get();
             $pending_booking = Booking::where('status', 0)->count();
@@ -36,6 +37,7 @@ class DashboardController extends Controller
             $users = User::count();
             $payment_codes = PaymentCode::count();
             $refs = User::wherenotNull('referal_code')->get();
+
 
         } elseif (auth()->user()->vendor_id != 0) {
             $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
@@ -47,6 +49,16 @@ class DashboardController extends Controller
             $refs = [];
 
         } else {
+            $earned =  Transaction::where([
+                'user_id'=> auth()->user()->id,
+                'type' => 2
+            ])->sum('amount');
+
+            $earnedPounds =  PoundTransaction::where([
+                'user_id'=> auth()->user()->id,
+                'type' => 2
+            ])->sum('amount');
+
             $bookings = Booking::where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->orderby('id', 'desc')->get();
             $pending_booking = Booking::where('status', 0)->where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->count();
             $complete_booking = Booking::where('status', 1)->where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->count();
@@ -55,7 +67,7 @@ class DashboardController extends Controller
             $refs = [];
         }
         $countries = Country::all();
-        return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking', 'refs', 'countries'));
+        return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking', 'refs', 'countries', 'earned', 'earnedPounds'));
     }
 
 
