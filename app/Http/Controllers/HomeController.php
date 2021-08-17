@@ -163,7 +163,8 @@ class HomeController extends Controller
                 'vendor_id' => $request->vendor_id,
                 'vendor_product_id' => $vendor_products->id,
                 'price' => $vendor_products->price,
-                'price_pounds' => $vendor_products->price_pounds
+                'price_pounds' => $vendor_products->price_pounds,
+                'vendor_cost_price' => $vendor_products->cost_price
             ]);
 
             $price = $price + $vendor_products->price;

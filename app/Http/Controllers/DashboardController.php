@@ -480,11 +480,12 @@ class DashboardController extends Controller
         return back();
     }
 
-    public function product_vendor($id, $price, $priceStripe)
+    public function product_vendor($id, $price, $priceStripe, $costPrice)
     {
         VendorProduct::where('id', $id)->update([
             'price_pounds' => $price,
-            'price_stripe' => $priceStripe
+            'price_stripe' => $priceStripe,
+            'cost_price' => $costPrice
         ]);
 
         return "success";
