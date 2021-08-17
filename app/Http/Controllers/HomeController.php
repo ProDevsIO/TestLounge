@@ -227,6 +227,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             ]);
 
         } else {
+            dd($data);
             $redirect_url = $this->processFL($data);
         }
 
