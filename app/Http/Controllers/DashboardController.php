@@ -118,8 +118,98 @@ class DashboardController extends Controller
         $bookings = $bookings->get();
         $vendors = Vendor::all();
         $users = User::where('type', "!=", '1')->get();
-
         $products = Product::all();
+
+        if ($request->export) {
+            $fileName = 'exports.csv';
+
+            $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $columns = array('Name', 'Email', 'PhoneNo', 'Sex', 'DOB', 'Ethnicity', 'Vaccination Status', 'Products', 'Home Address', "Isolation Address", "Document Id", "Arrival Date", "Country From", "Departure Date", "Mode of Transportation", "Flight Number");
+
+            $callback = function () use ($bookings, $columns) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+
+                foreach ($bookings as $booking) {
+
+                    if ($booking->ethnicity == "1") {
+                        $row['Ethnicity'] = "White";
+                    } elseif ($booking->ethnicity == "2") {
+                        $row['Ethnicity'] = "Mixed/Multiple Ethnic groups";
+                    } elseif ($booking->ethnicity == "3") {
+                        $row['Ethnicity'] = "Asian / Asian British";
+                    } elseif ($booking->ethnicity == "4") {
+                        $row['Ethnicity'] = "Black / African / Caribbean / Black British";
+                    } elseif ($booking->ethnicity == "5") {
+                        $row['Ethnicity'] = "Other Ethnic Group";
+                    }
+
+                    if ($booking->vaccination_status == "1") {
+                        $row['Vaccination Status'] = "Has not been vaccinated";
+                    } elseif ($booking->vaccination_status == "2") {
+                        $row['Vaccination Status'] = "Has received the first dose, but not the second";
+                    } elseif ($booking->vaccination_status == "3") {
+                        $row['Vaccination Status'] = "Has received both first and second dose";
+                    }
+                    $p = [];
+                    foreach ($booking->products as $product) {
+                        $p[] = $product->name;
+                    }
+
+                    $row['Name'] = $booking->first_name . " " . $booking->last_name;
+                    $row['Email'] = $booking->email;
+                    $row['PhoneNo'] = $booking->phone_no;
+                    $row['Sex'] = ($booking->sex == 1) ? "Male" : "Female";
+                    $row['DOB'] = $booking->dob;
+                    $row['Products'] = implode(',', $p);
+                    $row['Home Address'] = "Address1: {$booking->address_1}\n
+                                        Address2: {$booking->address_2}\n
+                                        Home City: {$booking->home_town}\n
+                                        Home PostCode: {$booking->post_code}\n
+                                        Home Country: {$booking->homeCountry->name}\n";
+
+                    $row['Isolation Address'] = "Address1: {$booking->isolation_address }\n
+                                        Address2: {$booking->isolation_addres2}\n
+                                        Home City: {$booking->isolation_town}\n
+                                        Home PostCode: {$booking->isolation_postal_code }\n
+                                        Home Country: {$booking->country->name}\n";
+
+                    $row['Document Id'] = $booking->document_id;
+
+                    $row['Arrival Date'] = $booking->arrival_date;
+
+                    $row['Country From'] = $booking->travelingFrom->name;
+                    $row['Departure Date'] = $booking->departure_date;
+                    if ($booking->method_of_transportation == "1") {
+                        $row['Mode of Transportation'] = "Airplane";
+                    } elseif ($booking->method_of_transportation == "2") {
+                        $row['Mode of Transportation'] = "Vessel";
+                    } elseif ($booking->method_of_transportation == "3") {
+                        $row['Mode of Transportation'] = "Train";
+                    } elseif ($booking->method_of_transportation == "4") {
+                        $row['Mode of Transportation'] = "Road Vehicle";
+                    } elseif ($booking->method_of_transportation == "5") {
+                        $row['Mode of Transportation'] = "Other";
+                    }
+                    $row['Flight Number'] = $booking->transport_no;
+
+                    fputcsv($file, array($row['Name'], $row['Email'], $row['PhoneNo'], $row['Sex'], $row['DOB'], $row['Ethnicity'], $row['Vaccination Status'], $row['Products'], $row['Home Address'], $row['Isolation Address'], $row['Document Id'], $row['Arrival Date'], $row['Country From'], $row['Departure Date'], $row['Mode of Transportation'], $row['Flight Number']));
+                }
+
+                fclose($file);
+            };
+
+            return response()->stream($callback, 200, $headers);
+        }
+
         return view('admin.pending_booking')->with(compact('bookings', 'products', 'vendors', 'users'));
     }
 
@@ -1255,10 +1345,102 @@ class DashboardController extends Controller
         }
        
 
-        return view('admin.currency_report')->with(compact('transact','currency'));
+        return view('admin.currency_report')->with(compact('transact','currency', 'startDate', 'endDate'));
 
     }
    
+    public function currency_export($currency, $startDate, $endDate)
+    {
+
+        if($startDate != 1){
+            $start = Carbon::parse($startDate)->startOfDay();
+             $end = Carbon::parse($endDate)->endOfDay();
+            //if a date range exist
+            if($currency == "naira"){
+                $transact = BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "pounds"){
+                $transact = BookingProduct::where('currency', 'GBP')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "cedis"){
+                $transact = BookingProduct::where('currency', 'GHS')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "tzs"){
+                $transact = BookingProduct::where('currency', 'TZS')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "kes"){
+                $transact = BookingProduct::where('currency', 'KES')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "zar"){
+                $transact = BookingProduct::where('currency', 'ZAR')->wherebetween('created_at', [$start, $end])->get();
+            }
+        }else{
+         
+            //if no date range exist
+            if($currency == "naira"){
+                $transact = BookingProduct::where('currency', 'NGN')->get();
+            }elseif($currency == "pounds"){
+                $transact = BookingProduct::where('currency', 'GBP')->get();
+            }elseif($currency == "cedis"){
+                $transact = BookingProduct::where('currency', 'GHS')->get();
+            }elseif($currency == "tzs"){
+                $transact = BookingProduct::where('currency', 'TZS')->get();
+            }elseif($currency == "kes"){
+                $transact = BookingProduct::where('currency', 'KES')->get();
+            }elseif($currency == "zar"){
+                $transact = BookingProduct::where('currency', 'ZAR')->get();
+            }
+        }
+       
+        $fileName = 'currency_tarnsactions.csv';
+
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        );
+
+        $columns = array('Name', 'Product', 'Vendor', 'Amount', 'Date');
+
+
+        $callback = function () use ($transact, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+
+            foreach ($transact as $transact) {
+                if($transact->currency == 'NGN'){
+                    $amount = 'N' . number_format($transact->charged_amount,2);
+                }elseif($transact->currency == 'GBP'){
+                    $amount ='£'. number_format($transact->charged_amount,2);
+                }elseif($transact->currency = 'GHS'){
+                    $amount ='GHS' .number_format($transact->charged_amount,2);
+                }elseif($transact->currency = 'TZS'){
+                    $amount ='TZS' .number_format($transact->charged_amount,2);
+                }elseif($transact->currency = 'KES'){
+                    $amount ='KES'. number_format($transact->charged_amount,2);
+                }elseif($transact->currency = 'ZAR'){
+                    $amount ='ZAR'. number_format($transact->charged_amount,2);
+                }
+
+                $row['Name'] = $transact->booking->first_name . " " . $transact->booking->last_name;
+                $row['Product'] =  $transact->product->name;
+                $row['Vendor'] = $transact->vendor->name;
+                $row['Amount'] = $amount;
+                $row['Date'] = $transact->created_at ;
+                // $row['Account Details'] =  "Country:" .$user->country. ", " ."Bank:" .$user->bank . "Account No:". $user->account_no .", "
+                // ."Account Name:". $user->account_name;
+
+
+                fputcsv($file, array($row['Name'],  $row['Product'] ,$row['Vendor'] , $row['Amount'] , $row['Date']));
+
+            }
+           
+        };
+
+        return response()->stream($callback, 200, $headers);
+
+        return back();
+
+    }
+
     public function admin_export()
     {
         $users = User::where('type', 1)->get();

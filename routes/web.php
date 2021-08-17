@@ -139,8 +139,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/list/export', [\App\Http\Controllers\DashboardController::class,"admin_export"]);
     Route::get('/active/agent/export', [\App\Http\Controllers\DashboardController::class,"Agent_active_export"]);
     Route::get('/inactive/agent/export', [\App\Http\Controllers\DashboardController::class,"Agent_inactive_export"]);
-
-
+    Route::get('currency/export/{currency}/{startDate}/{endDate}', [\App\Http\Controllers\DashboardController::class,"currency_export"]);
 
     Route::get('/logout', [\App\Http\Controllers\DashboardController::class,"logout"]);
 
