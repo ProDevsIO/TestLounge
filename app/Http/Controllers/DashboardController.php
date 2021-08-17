@@ -1259,4 +1259,163 @@ class DashboardController extends Controller
 
     }
    
+    public function admin_export()
+    {
+        $users = User::where('type', 1)->get();
+
+            $fileName = 'admin_list.csv';
+
+            $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $columns = array('Name', 'Phone', 'Email', 'User type', 'status');
+
+
+            $callback = function () use ($users, $columns) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+
+                foreach ($users as $user) {
+                    if($user->status == 1){
+                        $stat = "Active";
+                        
+                    }else{
+                        $stat = "Not Active";
+                    }
+
+                    $row['Name'] = $user->first_name . " " . $user->last_name;
+                    $row['Phone'] =  $user->phone;
+                    $row['Email'] = $user->email ;
+                    $row['User type'] = 'Admin';
+                    $row['status'] = $stat ;
+                    // $row['Account Details'] =  "Country:" .$user->country. ", " ."Bank:" .$user->bank . "Account No:". $user->account_no .", "
+                    // ."Account Name:". $user->account_name;
+
+
+                    fputcsv($file, array($row['Name'],  $row['Phone'] ,$row['Email'] , $row['User type'] , $row['status']));
+
+                }
+               
+            };
+
+            return response()->stream($callback, 200, $headers);
+
+            return back();
+    }
+
+    public function Agent_active_export()
+    {
+        $users = User::where(['type'=> 2, 'status' => 1])->get();
+        $setting = Setting::where('id', 2)->first();
+            $fileName = 'active_agent_list.csv';
+
+            $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $columns = array('Name', 'Phone', 'Email', 'Pending booking','Completed booking','User type', 'Status', 'Percentage', 'Referral Code');
+
+
+            $callback = function () use ($users, $columns, $setting) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+
+                foreach ($users as $user) {
+                    if($user->percentage_split == null)
+                    {
+                        $percent = $setting->value.'%';
+                    }else
+                    {
+                      $percent = $user->percentage_split .'%';
+                    }
+
+                    $row['Name'] = $user->first_name . " " . $user->last_name;
+                    $row['Phone'] =  $user->phone;
+                    $row['Email'] = $user->email ;
+                    $row['Pending_booking'] =  $user->pbookings->count() ;
+                    $row['Completed booking'] =  $user->cbookings->count();
+                    $row['User type'] = 'Agent';
+                    $row['status'] = 'Active';
+                    $row['Percentage'] = $percent ;
+                    $row[ 'Referral Code'] = $user->referal_code ;
+                    // $row['Account Details'] =  "Country:" .$user->country. ", " ."Bank:" .$user->bank . "Account No:". $user->account_no .", "
+                    // ."Account Name:". $user->account_name;
+
+
+                    fputcsv($file, array($row['Name'],  $row['Phone'] ,$row['Email'] , $row['Pending_booking'] , $row['Completed booking'], $row['User type'] , $row['status'],  $row['Percentage'],  $row[ 'Referral Code']));
+
+                }
+               
+            };
+
+            return response()->stream($callback, 200, $headers);
+
+            return back();
+    }
+
+    public function Agent_inactive_export()
+    {
+        $users = User::where(['type'=> 2, 'status' => 1])->get();
+        $setting = Setting::where('id', 2)->first();
+            $fileName = 'Inactive_agents_list.csv';
+
+            $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $columns = array('Name', 'Phone', 'Email', 'Pending booking','Completed booking','User type', 'Status', 'Percentage', 'Referral Code');
+
+
+            $callback = function () use ($users, $columns, $setting) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+
+                foreach ($users as $user) {
+                    if($user->percentage_split == null)
+                    {
+                        $percent = $setting->value.'%';
+                    }else
+                    {
+                      $percent = $user->percentage_split .'%';
+                    }
+
+                    $row['Name'] = $user->first_name . " " . $user->last_name;
+                    $row['Phone'] =  $user->phone;
+                    $row['Email'] = $user->email ;
+                    $row['Pending_booking'] =  $user->pbookings->count() ;
+                    $row['Completed booking'] =  $user->cbookings->count();
+                    $row['User type'] = 'Agent';
+                    $row['status'] = 'Not Active';
+                    $row['Percentage'] = $percent ;
+                    $row[ 'Referral Code'] = $user->referal_code ;
+                    // $row['Account Details'] =  "Country:" .$user->country. ", " ."Bank:" .$user->bank . "Account No:". $user->account_no .", "
+                    // ."Account Name:". $user->account_name;
+
+
+                    fputcsv($file, array($row['Name'],  $row['Phone'] ,$row['Email'] , $row['Pending_booking'] , $row['Completed booking'], $row['User type'] , $row['status'],  $row['Percentage'],  $row[ 'Referral Code']));
+
+                }
+               
+            };
+
+            return response()->stream($callback, 200, $headers);
+
+            return back();
+    }
 }

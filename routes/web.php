@@ -136,6 +136,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/delete/color/{id}', [\App\Http\Controllers\DashboardController::class, "delete_color"]);
     Route::post('/add/referer/{code}', [\App\Http\Controllers\DashboardController::class, "add_referer"]);
 
+    Route::get('/admin/list/export', [\App\Http\Controllers\DashboardController::class,"admin_export"]);
+    Route::get('/active/agent/export', [\App\Http\Controllers\DashboardController::class,"Agent_active_export"]);
+    Route::get('/inactive/agent/export', [\App\Http\Controllers\DashboardController::class,"Agent_inactive_export"]);
+
+
 
     Route::get('/logout', [\App\Http\Controllers\DashboardController::class,"logout"]);
 
