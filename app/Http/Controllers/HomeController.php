@@ -203,10 +203,10 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         //agent percentage on subaccount
         if($user->percentage_split != null)
         {
-            $transaction_charge = 100 - $user->percentage_split; 
+            $transaction_charge = (100 - $user->percentage_split)/100; 
         }else{
             $percentage = Setting::where('id', 2)->first();
-            $transaction_charge = 100 - $percentage;
+            $transaction_charge = (100 - $percentage)/100;
         }
 
         //redirect to payment page
