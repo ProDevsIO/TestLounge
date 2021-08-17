@@ -24,6 +24,23 @@
                             </div>
                         </div>
                     </div>
+                    @if(auth()->user()->type = 1)
+                        @if($ven != null)
+                        <div class="card mb-4 bg-purple" title="Pending bookings">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_money"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Pending bookings">
+                                        <h4 class="text-uppercase mb-0 weight500">N {{ number_format($vendorsTotalCost) }}</h4>
+                                        <span>{{$ven->vendor->name}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                    @endif
                 </div>
                 <div class="col-xl-9 col-sm-6">
                     <div class="card mb-4 bg-primary" title="Completed bookings">
