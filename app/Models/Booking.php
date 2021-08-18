@@ -159,6 +159,10 @@ class Booking extends Model
 	    return $this->hasOne(Transaction::class,'booking_id');
     }
 
+	public function ptransaction(){
+	    return $this->hasOne(PoundTransaction::class,'booking_id');
+    }
+
 	public function products()
 	{
 		return $this->belongsToMany(Product::class, 'booking_products')
