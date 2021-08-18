@@ -11,6 +11,7 @@ use App\Models\CountryColor;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Transaction;
+use App\Models\PoundTransaction;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorProduct;
@@ -69,7 +70,7 @@ class HomeController extends Controller
 
             //To restrict access as per admin 
             if (auth()->user()->status == 0) {
-                session()->flash('alert-danger', "Your profile is currently under review and will be activated shortly by our Admin. To Facilitate this process, Kindly contact INFO@UKTRAVELTESTS.CO.UK");
+                session()->flash('alert-danger', "Your profile is currently under review and will be activated shortly by our Admin. To Facilitate this process, Kindly contact INFO@TRAVELTESTSLTD.COM");
                 auth()->logout();
                 return back();
             }
@@ -161,7 +162,9 @@ class HomeController extends Controller
                 'product_id' => $r_product,
                 'vendor_id' => $request->vendor_id,
                 'vendor_product_id' => $vendor_products->id,
-                'price' => $vendor_products->price
+                'price' => $vendor_products->price,
+                'price_pounds' => $vendor_products->price_pounds,
+                'vendor_cost_price' => $vendor_products->cost_price
             ]);
 
             $price = $price + $vendor_products->price;
@@ -196,11 +199,24 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         }
 
-        $data = $this->getFlutterwaveData($booking, $price, $transaction_ref,$price_pounds);
+        $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
+
+        //agent percentage on subaccount
+        if($user->percentage_split != null)
+        {
+            $transaction_charge = (100 - $user->percentage_split)/100; 
+        }else{
+            $percentage = Setting::where('id', 2)->first();
+            $transaction_charge = (100 - $percentage)/100;
+        }
 
         //redirect to payment page
         if (!empty($sub_account)) {
-            $data['subaccounts'] = ["id" => $sub_account];
+            $data['subaccounts'][] = [
+                                        "id" => $sub_account,
+                                        "transaction_charge_type"=> "percentage",
+                                        "transaction_charge"=> $transaction_charge
+                                     ];
         }
 
         BookingProduct::where('booking_id', $booking->id)->update([
@@ -225,6 +241,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             ]);
 
         } else {
+           
             $redirect_url = $this->processFL($data);
         }
 
@@ -287,25 +304,57 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
                         $amount_credit = ($cost_booking * ($pecentage / 100));
 
+                        if($booking->card_type == null || $booking->card_type == 2){
+                            //for international transaction in pounds
+                            $cost_booking = $booking_product->price_pounds;
+    
+                            $amount_credit = ($cost_booking * ($pecentage / 100));
+        
+        
+                            PoundTransaction::create([
+                                'amount' => $amount_credit,
+                                'booking_id' => $booking->id,
+                                'user_id' => $user->id,
+                                'cost_config' => $cost_booking,
+                                'pecentage_config' => $pecentage,
+                                'type' => "1"
+                            ]);
+        
+        
+                            $transactions =  PoundTransaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
+        
+                            $total_amount = $user->pounds_wallet_balance + $amount_credit;
+        
+                            User::where('id', $booking->user_id)->update([
+                                'pounds_wallet_balance' => $total_amount,
+                                'total_credit_pounds' => $transactions
+                            ]);
+                            
+                        }elseif($booking->card_type == 1 ){
+                            //for local transaction in naira
+                            $cost_booking = $booking_product->price;
 
-                        Transaction::create([
-                            'amount' => $amount_credit,
-                            'booking_id' => $booking->id,
-                            'user_id' => $user->id,
-                            'cost_config' => $cost_booking,
-                            'pecentage_config' => $pecentage,
-                            'type' => "1"
-                        ]);
+                            $amount_credit = ($cost_booking * ($pecentage / 100));
+
+                            Transaction::create([
+                                'amount' => $amount_credit,
+                                'booking_id' => $booking->id,
+                                'user_id' => $user->id,
+                                'cost_config' => $cost_booking,
+                                'pecentage_config' => $pecentage,
+                                'type' => "1"
+                            ]);
 
 
-                        $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
+                            $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
 
-                        $total_amount = $user->wallet_balance + $amount_credit;
+                            $total_amount = $user->wallet_balance + $amount_credit;
 
-                        User::where('id', $booking->user_id)->update([
-                            'wallet_balance' => $total_amount,
-                            'total_credit' => $transactions
-                        ]);
+                            User::where('id', $booking->user_id)->update([
+                                'wallet_balance' => $total_amount,
+                                'total_credit' => $transactions
+                            ]);
+                        }
                         DB::commit();
                     } catch (\Exception $e) {
                         DB::rollBack();
@@ -424,12 +473,12 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         } else {
             $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
-
+            $booking = Booking::where('id', $booking->id)->first();
             $price = $booking_product->price;
 
             $price_pounds = $vendor_products->price_pounds;
 
-            $data = $this->getFlutterwaveData($booking, $price, $booking_ref,$price_pounds);
+            $data = $this->getFlutterwaveData($booking, $price, $booking_ref,$price_pounds, $booking->card_type);
             $redirect_url = $this->processFL($data);
         }
 
@@ -451,7 +500,8 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
     public function register_agent()
     {
-        return view('homepage.register');
+        $countries = Country::all();
+        return view('homepage.register')->with(compact('countries'));
     }
 
     public function register(Request $request)
@@ -496,7 +546,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             $message = "
             Hi " . $request->first_name . ",
             
-            Thank you for your interest to register as an Agent with UKTravel Tests,<br/><br/>Kindly click the button below<br/><br/>
+            Thank you for your interest to register as an Agent with Traveltestsltd,<br/><br/>Kindly click the button below<br/><br/>
             <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Continue Registration
                   </a>
@@ -504,7 +554,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                   <br/><br/>
                   Thank you.
                   <br/><br/>
-                UKTravelsTeam
+                Traveltestsltd Team
             ";
             Mail::to($request->email)->send(new BookingCreation($message, "Agent Registration"));
 
@@ -518,7 +568,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             $message2 = "
             Hi Admin,<br/>
             
-            We would like to inform you that a new Agent has registered with UKTravel Tests.<br/><br/>
+            We would like to inform you that a new Agent has registered with Traveltestsltd.<br/><br/>
             Name: " . $request->first_name . " " . $request->last_name . " <br/>
             Phone: " . $request->phone_no . "<br/>
             Email: " . $request->email . "<br/>
@@ -531,7 +581,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                   <br/><br/>
                   Thank you.
                   <br/><br/>
-                UKTravelsTeam
+                Traveltestsltd Team
             ";
             Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Agent Registration"));
 
@@ -619,12 +669,12 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         //send an email
         try {
             $message = "Congratulations!,<br>
-            Your application to join the Agent network of the UKTravelTests Platform has been approved.<br><br>
+            Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
             You can now log in to your portal to complete your profile and set up your account. <br><br>
             You will find your dedicated customer booking link on your portal <br><br>
-            Thank you for joining the  UKTravelTests network!<br><br>
+            Thank you for joining the  Traveltestsltd network!<br><br>
 
-            UKTravelsTeam
+            Traveltestsltd Team
             ";
             Mail::to($user->email)->send(new BookingCreation($message, 'Agent Activation'));
         } catch (\Exception $e) {
@@ -683,9 +733,9 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             
             You will no longer be able to access your Agent portal , you will also not recieve any of the Agent benefits during the time of deactivation.<br><br>
             
-            Do kindly reach out to the UKtravel Test Desk for more information on how to get back on the network.<br><br>
+            Do kindly reach out to the Traveltestsltd  Desk for more information on how to get back on the network.<br><br>
 
-            UKTravelsTeam
+            Traveltestsltd Team
             ";
             Mail::to($user->email)->send(new BookingCreation($message, 'Agent Deactivation'));
         } catch (\Exception $e) {
@@ -864,7 +914,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
             Kindly click this link to reset your password : <a href='" . env('APP_URL') . 'reset/password/' . encrypt_decrypt('encrypt', $people->id) . "/" . encrypt_decrypt("encrypt", $people->email) . "'>Reset Password</a>,<br><br>
           
-            UKTravelsTeam
+             Traveltestsltd
             ";
             Mail::to($people->email)->send(new BookingCreation($message, "Password Reset"));
         } catch (\Exception $e) {
@@ -999,30 +1049,35 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                         $pecentage = $defaultpercent->value;
                     }
 
+                    if($user->country != null){
 
-                    $cost_booking = $booking_product->price;
+                        $cost_booking = $booking_product->price_pounds;
 
-                    $amount_credit = ($cost_booking * ($pecentage / 100));
+                        $amount_credit = ($cost_booking * ($pecentage / 100));
+    
+    
+                        PoundTransaction::create([
+                            'amount' => $amount_credit,
+                            'booking_id' => $booking->id,
+                            'user_id' => $user->id,
+                            'cost_config' => $cost_booking,
+                            'pecentage_config' => $pecentage,
+                            'type' => "1"
+                        ]);
+    
+    
+                        $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
+    
+                        $total_amount = $user->pounds_wallet_balance + $amount_credit;
+    
+                        User::where('id', $booking->user_id)->update([
+                            'pounds_wallet_balance' => $total_amount,
+                            'total_credit_pounds' => $transactions
+                        ]);
+                        
+                    }
 
-
-                    Transaction::create([
-                        'amount' => $amount_credit,
-                        'booking_id' => $booking->id,
-                        'user_id' => $user->id,
-                        'cost_config' => $cost_booking,
-                        'pecentage_config' => $pecentage,
-                        'type' => "1"
-                    ]);
-
-
-                    $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
-
-                    $total_amount = $user->wallet_balance + $amount_credit;
-
-                    User::where('id', $booking->user_id)->update([
-                        'wallet_balance' => $total_amount,
-                        'total_credit' => $transactions
-                    ]);
+                    
                     DB::commit();
                 } catch (\Exception $e) {
                     DB::rollBack();

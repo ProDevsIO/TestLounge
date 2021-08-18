@@ -39,6 +39,7 @@ class VendorProduct extends Model
 		'price',
 		'price_pounds',
 		'price_stripe',
+		'cost_price',
 		'product_id',
 		'vendor_id'
 	];

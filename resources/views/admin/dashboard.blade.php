@@ -24,7 +24,7 @@
                         <h5 class="modal-title">Please update your Country of residence</h5>
                          </div>
                     <div class="modal-body">
-                        <small class ="text-muted text-danger"> No activites can be conducted on your account until ypu updated this requirement *.</small>
+                        <small class ="text-muted text-danger"> No activites can be conducted on your account until you have updated this requirement *.</small>
                         <form action="{{ url('/update/country') }}" method="post">
                         @csrf
                                     <select class="form-control select2 country_id__"
@@ -133,6 +133,58 @@
                     {{--</div>--}}
                 @else
                     @if(!auth()->user()->vendor_id)
+                        @if(auth()->user()->type == 2)
+                            @if(auth()->user()->country == 'NG')
+                                <div class="col-xl-3 col-sm-6">
+                                    <div class="card mb-4 bg-success">
+                                        <div class="card-body">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                                    <i class="vl_money"></i>
+                                                </div>
+                                                <div class="media-body text-white">
+                                                    <h4 class="text-uppercase mb-0 weight500">
+                                                        N{{ number_format(auth()->user()->wallet_balance,0) }}</h4>
+                                                    <span>Wallet Balance(Pounds)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-sm-6">
+                                    <div class="card mb-4 bg-success">
+                                        <div class="card-body">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                                    <i class="vl_money"></i>
+                                                </div>
+                                                <div class="media-body text-white">
+                                                    <h4 class="text-uppercase mb-0 weight500">
+                                                        N{{ number_format($earned,0) }}</h4>
+                                                    <span>Total Earnings(Naira)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
+                        <div class="col-xl-3 col-sm-6">
+                        <div class="card mb-4 bg-success">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                        <i class="vl_money"></i>
+                                    </div>
+                                    <div class="media-body text-white">
+                                        <h4 class="text-uppercase mb-0 weight500">
+                                        £ {{ number_format(auth()->user()->pounds_wallet_balance,0) }}</h4>
+                                        <span> Wallet Balance</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-xl-3 col-sm-6">
                         <div class="card mb-4 bg-success">
                             <div class="card-body">
@@ -142,14 +194,15 @@
                                     </div>
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
-                                            N{{ number_format(auth()->user()->wallet_balance,0) }}</h4>
+                                        £ {{ number_format($earnedPounds,0) }}</h4>
                                         <span>Total Earnings</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                        @endif
+                   
+                    @endif
                 @endif
             </div>
 

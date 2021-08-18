@@ -11,6 +11,7 @@ use App\Models\PaymentCode;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Transaction;
+use App\Models\PoundTransaction;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorProduct;
@@ -27,7 +28,8 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-
+        $earned = 0;
+        $earnedPounds = 0;
         if (auth()->user()->type == 1) {
             $bookings = Booking::orderby('id', 'desc')->get();
             $pending_booking = Booking::where('status', 0)->count();
@@ -35,6 +37,7 @@ class DashboardController extends Controller
             $users = User::count();
             $payment_codes = PaymentCode::count();
             $refs = User::wherenotNull('referal_code')->get();
+
 
         } elseif (auth()->user()->vendor_id != 0) {
             $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
@@ -46,6 +49,16 @@ class DashboardController extends Controller
             $refs = [];
 
         } else {
+            $earned =  Transaction::where([
+                'user_id'=> auth()->user()->id,
+                'type' => 2
+            ])->sum('amount');
+
+            $earnedPounds =  PoundTransaction::where([
+                'user_id'=> auth()->user()->id,
+                'type' => 2
+            ])->sum('amount');
+
             $bookings = Booking::where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->orderby('id', 'desc')->get();
             $pending_booking = Booking::where('status', 0)->where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->count();
             $complete_booking = Booking::where('status', 1)->where('referral_code', auth()->user()->referal_code)->where('user_id', auth()->user()->id)->count();
@@ -54,7 +67,7 @@ class DashboardController extends Controller
             $refs = [];
         }
         $countries = Country::all();
-        return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking', 'refs', 'countries'));
+        return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking', 'refs', 'countries', 'earned', 'earnedPounds'));
     }
 
 
@@ -105,8 +118,98 @@ class DashboardController extends Controller
         $bookings = $bookings->get();
         $vendors = Vendor::all();
         $users = User::where('type', "!=", '1')->get();
-
         $products = Product::all();
+
+        if ($request->export) {
+            $fileName = 'exports.csv';
+
+            $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $columns = array('Name', 'Email', 'PhoneNo', 'Sex', 'DOB', 'Ethnicity', 'Vaccination Status', 'Products', 'Home Address', "Isolation Address", "Document Id", "Arrival Date", "Country From", "Departure Date", "Mode of Transportation", "Flight Number");
+
+            $callback = function () use ($bookings, $columns) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+
+                foreach ($bookings as $booking) {
+
+                    if ($booking->ethnicity == "1") {
+                        $row['Ethnicity'] = "White";
+                    } elseif ($booking->ethnicity == "2") {
+                        $row['Ethnicity'] = "Mixed/Multiple Ethnic groups";
+                    } elseif ($booking->ethnicity == "3") {
+                        $row['Ethnicity'] = "Asian / Asian British";
+                    } elseif ($booking->ethnicity == "4") {
+                        $row['Ethnicity'] = "Black / African / Caribbean / Black British";
+                    } elseif ($booking->ethnicity == "5") {
+                        $row['Ethnicity'] = "Other Ethnic Group";
+                    }
+
+                    if ($booking->vaccination_status == "1") {
+                        $row['Vaccination Status'] = "Has not been vaccinated";
+                    } elseif ($booking->vaccination_status == "2") {
+                        $row['Vaccination Status'] = "Has received the first dose, but not the second";
+                    } elseif ($booking->vaccination_status == "3") {
+                        $row['Vaccination Status'] = "Has received both first and second dose";
+                    }
+                    $p = [];
+                    foreach ($booking->products as $product) {
+                        $p[] = $product->name;
+                    }
+
+                    $row['Name'] = $booking->first_name . " " . $booking->last_name;
+                    $row['Email'] = $booking->email;
+                    $row['PhoneNo'] = $booking->phone_no;
+                    $row['Sex'] = ($booking->sex == 1) ? "Male" : "Female";
+                    $row['DOB'] = $booking->dob;
+                    $row['Products'] = implode(',', $p);
+                    $row['Home Address'] = "Address1: {$booking->address_1}\n
+                                        Address2: {$booking->address_2}\n
+                                        Home City: {$booking->home_town}\n
+                                        Home PostCode: {$booking->post_code}\n
+                                        Home Country: {$booking->homeCountry->name}\n";
+
+                    $row['Isolation Address'] = "Address1: {$booking->isolation_address }\n
+                                        Address2: {$booking->isolation_addres2}\n
+                                        Home City: {$booking->isolation_town}\n
+                                        Home PostCode: {$booking->isolation_postal_code }\n
+                                        Home Country: {$booking->country->name}\n";
+
+                    $row['Document Id'] = $booking->document_id;
+
+                    $row['Arrival Date'] = $booking->arrival_date;
+
+                    $row['Country From'] = $booking->travelingFrom->name;
+                    $row['Departure Date'] = $booking->departure_date;
+                    if ($booking->method_of_transportation == "1") {
+                        $row['Mode of Transportation'] = "Airplane";
+                    } elseif ($booking->method_of_transportation == "2") {
+                        $row['Mode of Transportation'] = "Vessel";
+                    } elseif ($booking->method_of_transportation == "3") {
+                        $row['Mode of Transportation'] = "Train";
+                    } elseif ($booking->method_of_transportation == "4") {
+                        $row['Mode of Transportation'] = "Road Vehicle";
+                    } elseif ($booking->method_of_transportation == "5") {
+                        $row['Mode of Transportation'] = "Other";
+                    }
+                    $row['Flight Number'] = $booking->transport_no;
+
+                    fputcsv($file, array($row['Name'], $row['Email'], $row['PhoneNo'], $row['Sex'], $row['DOB'], $row['Ethnicity'], $row['Vaccination Status'], $row['Products'], $row['Home Address'], $row['Isolation Address'], $row['Document Id'], $row['Arrival Date'], $row['Country From'], $row['Departure Date'], $row['Mode of Transportation'], $row['Flight Number']));
+                }
+
+                fclose($file);
+            };
+
+            return response()->stream($callback, 200, $headers);
+        }
+
         return view('admin.pending_booking')->with(compact('bookings', 'products', 'vendors', 'users'));
     }
 
@@ -116,6 +219,7 @@ class DashboardController extends Controller
         if (auth()->user()->type == "1") {
             $bookings = Booking::where('status', 1)->orderby('id', 'desc');
             $refs = User::wherenotNull('referal_code')->get();
+
         } elseif (auth()->user()->vendor_id != 0) {
             $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
             $bookings = Booking::whereIn('id', $bookings_vendors)->where('status', 1);
@@ -128,11 +232,15 @@ class DashboardController extends Controller
             $bookings_vendors = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->pluck('booking_id')->toArray();
             $bookings = $bookings->whereIn('id', $bookings_vendors);
         }
-
+        $vendorsTotalCost = 0;
+        $ven = null;
         if (auth()->user()->type == 1) {
             if ($request->vendor_id) {
                 $bookings_vendors = BookingProduct::where('vendor_id', $request->vendor_id)->pluck('booking_id')->toArray();
                 $bookings = $bookings->whereIn('id', $bookings_vendors);
+                $vendorsTotalCost = $bookings_vendors = BookingProduct::where('vendor_id', $request->vendor_id)->sum('vendor_cost_price');
+               
+                $ven = BookingProduct::where('vendor_id', $request->vendor_id)->first();
             }
 
             if ($request->user_id) {
@@ -253,8 +361,8 @@ class DashboardController extends Controller
 
             return response()->stream($callback, 200, $headers);
         }
-
-        return view('admin.complete_booking')->with(compact('bookings', 'products', 'vendors', 'users', 'refs'));
+    
+        return view('admin.complete_booking')->with(compact('bookings', 'products', 'vendors', 'users', 'refs', 'ven', 'vendorsTotalCost'));
     }
 
     public function view_booking($id)
@@ -326,10 +434,21 @@ class DashboardController extends Controller
         if (auth()->user()->type == 0) {
             abort(403);
         }
-        $users = User::orderby('created_at', 'desc')->get();
+        $users = User::orderby('created_at', 'desc')->where('type', 2)->get();
         $setting = Setting::where('id', 2)->first();
 
         return view('admin.users')->with(compact('users', 'setting'));
+    }
+
+    public function admins()
+    {
+        if (auth()->user()->type == 0) {
+            abort(403);
+        }
+        $users = User::orderby('created_at', 'desc')->where('type', 1)->get();
+        $setting = Setting::where('id', 2)->first();
+
+        return view('admin.admins')->with(compact('users', 'setting'));
     }
 
     public function admin_make($id)
@@ -456,11 +575,12 @@ class DashboardController extends Controller
         return back();
     }
 
-    public function product_vendor($id, $price, $priceStripe)
+    public function product_vendor($id, $price, $priceStripe, $costPrice)
     {
         VendorProduct::where('id', $id)->update([
             'price_pounds' => $price,
-            'price_stripe' => $priceStripe
+            'price_stripe' => $priceStripe,
+            'cost_price' => $costPrice
         ]);
 
         return "success";
@@ -784,9 +904,10 @@ class DashboardController extends Controller
         if (auth()->user()->type == 0) {
             abort(403);
         }
-
+        
         if ($request->start && $request->end) {
-
+            $start = $request->start;
+            $end = $request->end;
             $start = Carbon::parse($request->start)->startOfDay();
             $end = Carbon::parse($request->end)->endOfDay();
 
@@ -797,6 +918,8 @@ class DashboardController extends Controller
             $total_kes = BookingProduct::where('currency', 'KES')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
             $total_zar = BookingProduct::where('currency', 'ZAR')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
         } else {
+            $start = 1;
+            $end = 1;
             $total_ngn = BookingProduct::where('currency', 'NGN')->sum('charged_amount');
             $total_gbp = BookingProduct::where('currency', 'GBP')->sum('charged_amount');
             $total_ghs = BookingProduct::where('currency', 'GHS')->sum('charged_amount');
@@ -862,40 +985,65 @@ class DashboardController extends Controller
 
 
 
-        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users'));
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end'));
 
     }
 
     public function make_pay(Request $request)
     {
         $this->validate($request, [
-            'amount' => 'required'
+            'amount' => 'required',
+            'type' => 'required'
         ]);
 
         try {
             DB::beginTransaction();
+            
             $user = User::where('id', $request->id)->first();
+            $type = $request->type;
+
             if ($user) {
+                if($type == 1){
+                    if ($user->wallet_balance < $request->amount) {
+                        session()->flash("alert-info", "Insufficient Balance.");
+                        return back();
+                    }
+                    Transaction::create([
+                        'amount' => $request->amount,
+                        'booking_id' => null,
+                        'user_id' => $request->id,
+                        'type' => "2",
+                        'cost_config' => null,
+                        'pecentage_config' => null
+                    ]);
 
-                if ($user->wallet_balance < $request->amount) {
-                    session()->flash("alert-info", "Insufficient Balance.");
-                    return back();
+                    $wallet_balance = $user->wallet_balance - $request->amount;
+
+                    $user->update([
+                        'wallet_balance' => $wallet_balance
+                    ]);
+                }elseif($type == 2){
+
+                    if ($user->pounds_wallet_balance < $request->amount) {
+                        session()->flash("alert-info", "Insufficient Balance.");
+                        return back();
+                    }
+
+                    PoundTransaction::create([
+                        'amount' => $request->amount,
+                        'booking_id' => null,
+                        'user_id' => $request->id,
+                        'type' => "2",
+                        'cost_config' => null,
+                        'pecentage_config' => null
+                    ]);
+
+                    $wallet_balance = $user->pounnds_wallet_balance - $request->amount;
+
+                    $user->update([
+                        'pounds_wallet_balance' => $wallet_balance
+                    ]);
                 }
-                Transaction::create([
-                    'amount' => $request->amount,
-                    'booking_id' => null,
-                    'user_id' => $request->id,
-                    'type' => "2",
-                    'cost_config' => null,
-                    'pecentage_config' => null
-                ]);
-
-                $wallet_balance = $user->wallet_balance - $request->amount;
-
-                $user->update([
-                    'wallet_balance' => $wallet_balance
-                ]);
-
                 DB::commit();
 
                 session()->flash("alert-success", "Debit Transaction has been recorded");
@@ -903,15 +1051,15 @@ class DashboardController extends Controller
                 try {
 
                     $message2 = "
-            Hi " . $user->first_name . ",<br/>
-
-            Your payment has been processed into your bank account.<br/><br/>
-                  <br/><br/>
-                  Thank you.
-                  <br/><br/>
-                UKTravelsTeam
-            ";
-                    Mail::to($user->email)->send(new BookingCreation($message2, "Payment Notification"));
+                    Hi " . $user->first_name . ",<br/>
+                    
+                    Your payment has been processed into your bank account.<br/><br/>
+                        <br/><br/>
+                        Thank you.
+                        <br/><br/>
+                         Traveltestsltd Team
+                    ";
+                    Mail::to('kelvin@prodevs.io')->send(new BookingCreation($message2, "Payment Notification"));
 
 
                 } catch (\Exception $e) {
@@ -922,7 +1070,7 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
 
             DB::rollBack();
-            session()->flash("alert-danger", "An Error occurred");
+            session()->flash("alert-danger", "An Error occurred $e");
 
             return back();
         }
@@ -1067,6 +1215,84 @@ class DashboardController extends Controller
         return view('admin.agent_booking')->with(compact('users','refs','bookings'));
     }
 
+    public function view_transactions()
+    {
+       
+
+        if (auth()->user()->type == 1) {
+
+            //money from bookings
+            $booking_trans = Transaction::where([
+                'type' => 1
+            ])->get();
+
+            //money from paid commision
+            $paid_trans = Transaction::where([
+                'type' => 2
+            ])->get();
+
+               //money from Pound bookings
+            $booking_trans_p = PoundTransaction::where([
+            'type' => 1
+            ])->get();
+
+            //money from pounds paid commision
+             $paid_trans_p = PoundTransaction::where([
+                'type' => 2
+            ])->get();
+
+            $earned =  Transaction::where([
+                'type' => 2
+            ])->sum('amount');
+
+            $earnedPounds = PoundTransaction::where([
+                'type' => 2
+            ])->sum('amount');
+
+        }elseif(auth()->user()->type == 2){
+
+            $id = auth()->user()->id;
+
+            $earned =  Transaction::where([
+                'user_id'=> $id,
+                'type' => 2
+            ])->sum('amount');
+
+            $earnedPounds =  PoundTransaction::where([
+                'user_id'=> $id,
+                'type' => 2
+            ])->sum('amount');
+
+            //money from bookings
+            $booking_trans = Transaction::where([
+                'user_id'=> $id,
+                'type' => 1
+            ])->get();
+
+            //money from paid commision
+            $paid_trans = Transaction::where([
+                'user_id'=> $id,
+                'type' => 2
+            ])->get();
+
+            //money from pounds bookings
+            $booking_trans_p = PoundTransaction::where([
+                'user_id'=> $id,
+                'type' => 1
+            ])->get();
+
+            //money from pounds paid commision
+            $paid_trans_p = PoundTransaction::where([
+                'user_id'=> $id,
+                'type' => 2
+            ])->get();
+
+        }
+
+       
+        return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p', 'earned', 'earnedPounds'));
+    }
+
     public function update_country(Request $request)
     {
       
@@ -1078,5 +1304,300 @@ class DashboardController extends Controller
 
         return back();
     }
+
+    public function view_currency_report($currency, $startDate, $endDate)
+    {
+        
+     
+        if($startDate != 1){
+            $start = Carbon::parse($startDate)->startOfDay();
+             $end = Carbon::parse($endDate)->endOfDay();
+            //if a date range exist
+            if($currency == "naira"){
+                $transact = BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "pounds"){
+                $transact = BookingProduct::where('currency', 'GBP')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "cedis"){
+                $transact = BookingProduct::where('currency', 'GHS')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "tzs"){
+                $transact = BookingProduct::where('currency', 'TZS')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "kes"){
+                $transact = BookingProduct::where('currency', 'KES')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "zar"){
+                $transact = BookingProduct::where('currency', 'ZAR')->wherebetween('created_at', [$start, $end])->get();
+            }
+        }else{
+         
+            //if no date range exist
+            if($currency == "naira"){
+                $transact = BookingProduct::where('currency', 'NGN')->get();
+            }elseif($currency == "pounds"){
+                $transact = BookingProduct::where('currency', 'GBP')->get();
+            }elseif($currency == "cedis"){
+                $transact = BookingProduct::where('currency', 'GHS')->get();
+            }elseif($currency == "tzs"){
+                $transact = BookingProduct::where('currency', 'TZS')->get();
+            }elseif($currency == "kes"){
+                $transact = BookingProduct::where('currency', 'KES')->get();
+            }elseif($currency == "zar"){
+                $transact = BookingProduct::where('currency', 'ZAR')->get();
+            }
+        }
+       
+
+        return view('admin.currency_report')->with(compact('transact','currency', 'startDate', 'endDate'));
+
+    }
    
+    public function currency_export($currency, $startDate, $endDate)
+    {
+
+        if($startDate != 1){
+            $start = Carbon::parse($startDate)->startOfDay();
+             $end = Carbon::parse($endDate)->endOfDay();
+            //if a date range exist
+            if($currency == "naira"){
+                $transact = BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "pounds"){
+                $transact = BookingProduct::where('currency', 'GBP')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "cedis"){
+                $transact = BookingProduct::where('currency', 'GHS')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "tzs"){
+                $transact = BookingProduct::where('currency', 'TZS')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "kes"){
+                $transact = BookingProduct::where('currency', 'KES')->wherebetween('created_at', [$start, $end])->get();
+            }elseif($currency == "zar"){
+                $transact = BookingProduct::where('currency', 'ZAR')->wherebetween('created_at', [$start, $end])->get();
+            }
+        }else{
+         
+            //if no date range exist
+            if($currency == "naira"){
+                $transact = BookingProduct::where('currency', 'NGN')->get();
+            }elseif($currency == "pounds"){
+                $transact = BookingProduct::where('currency', 'GBP')->get();
+            }elseif($currency == "cedis"){
+                $transact = BookingProduct::where('currency', 'GHS')->get();
+            }elseif($currency == "tzs"){
+                $transact = BookingProduct::where('currency', 'TZS')->get();
+            }elseif($currency == "kes"){
+                $transact = BookingProduct::where('currency', 'KES')->get();
+            }elseif($currency == "zar"){
+                $transact = BookingProduct::where('currency', 'ZAR')->get();
+            }
+        }
+       
+        $fileName = 'currency_tarnsactions.csv';
+
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        );
+
+        $columns = array('Name', 'Product', 'Vendor', 'Amount', 'Date');
+
+
+        $callback = function () use ($transact, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+
+            foreach ($transact as $transact) {
+                if($transact->currency == 'NGN'){
+                    $amount = 'N' . number_format($transact->charged_amount,2);
+                }elseif($transact->currency == 'GBP'){
+                    $amount ='£'. number_format($transact->charged_amount,2);
+                }elseif($transact->currency = 'GHS'){
+                    $amount ='GHS' .number_format($transact->charged_amount,2);
+                }elseif($transact->currency = 'TZS'){
+                    $amount ='TZS' .number_format($transact->charged_amount,2);
+                }elseif($transact->currency = 'KES'){
+                    $amount ='KES'. number_format($transact->charged_amount,2);
+                }elseif($transact->currency = 'ZAR'){
+                    $amount ='ZAR'. number_format($transact->charged_amount,2);
+                }
+
+                $row['Name'] = $transact->booking->first_name . " " . $transact->booking->last_name;
+                $row['Product'] =  $transact->product->name;
+                $row['Vendor'] = $transact->vendor->name;
+                $row['Amount'] = $amount;
+                $row['Date'] = $transact->created_at ;
+                // $row['Account Details'] =  "Country:" .$user->country. ", " ."Bank:" .$user->bank . "Account No:". $user->account_no .", "
+                // ."Account Name:". $user->account_name;
+
+
+                fputcsv($file, array($row['Name'],  $row['Product'] ,$row['Vendor'] , $row['Amount'] , $row['Date']));
+
+            }
+           
+        };
+
+        return response()->stream($callback, 200, $headers);
+
+        return back();
+
+    }
+
+    public function admin_export()
+    {
+        $users = User::where('type', 1)->get();
+
+            $fileName = 'admin_list.csv';
+
+            $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $columns = array('Name', 'Phone', 'Email', 'User type', 'status');
+
+
+            $callback = function () use ($users, $columns) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+
+                foreach ($users as $user) {
+                    if($user->status == 1){
+                        $stat = "Active";
+                        
+                    }else{
+                        $stat = "Not Active";
+                    }
+
+                    $row['Name'] = $user->first_name . " " . $user->last_name;
+                    $row['Phone'] =  $user->phone;
+                    $row['Email'] = $user->email ;
+                    $row['User type'] = 'Admin';
+                    $row['status'] = $stat ;
+                    // $row['Account Details'] =  "Country:" .$user->country. ", " ."Bank:" .$user->bank . "Account No:". $user->account_no .", "
+                    // ."Account Name:". $user->account_name;
+
+
+                    fputcsv($file, array($row['Name'],  $row['Phone'] ,$row['Email'] , $row['User type'] , $row['status']));
+
+                }
+               
+            };
+
+            return response()->stream($callback, 200, $headers);
+
+            return back();
+    }
+
+    public function Agent_active_export()
+    {
+        $users = User::where(['type'=> 2, 'status' => 1])->get();
+        $setting = Setting::where('id', 2)->first();
+            $fileName = 'active_agent_list.csv';
+
+            $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $columns = array('Name', 'Phone', 'Email', 'Pending booking','Completed booking','User type', 'Status', 'Percentage', 'Referral Code');
+
+
+            $callback = function () use ($users, $columns, $setting) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+
+                foreach ($users as $user) {
+                    if($user->percentage_split == null)
+                    {
+                        $percent = $setting->value.'%';
+                    }else
+                    {
+                      $percent = $user->percentage_split .'%';
+                    }
+
+                    $row['Name'] = $user->first_name . " " . $user->last_name;
+                    $row['Phone'] =  $user->phone;
+                    $row['Email'] = $user->email ;
+                    $row['Pending_booking'] =  $user->pbookings->count() ;
+                    $row['Completed booking'] =  $user->cbookings->count();
+                    $row['User type'] = 'Agent';
+                    $row['status'] = 'Active';
+                    $row['Percentage'] = $percent ;
+                    $row[ 'Referral Code'] = $user->referal_code ;
+                    // $row['Account Details'] =  "Country:" .$user->country. ", " ."Bank:" .$user->bank . "Account No:". $user->account_no .", "
+                    // ."Account Name:". $user->account_name;
+
+
+                    fputcsv($file, array($row['Name'],  $row['Phone'] ,$row['Email'] , $row['Pending_booking'] , $row['Completed booking'], $row['User type'] , $row['status'],  $row['Percentage'],  $row[ 'Referral Code']));
+
+                }
+               
+            };
+
+            return response()->stream($callback, 200, $headers);
+
+            return back();
+    }
+
+    public function Agent_inactive_export()
+    {
+        $users = User::where(['type'=> 2, 'status' => 1])->get();
+        $setting = Setting::where('id', 2)->first();
+            $fileName = 'Inactive_agents_list.csv';
+
+            $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $columns = array('Name', 'Phone', 'Email', 'Pending booking','Completed booking','User type', 'Status', 'Percentage', 'Referral Code');
+
+
+            $callback = function () use ($users, $columns, $setting) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+
+                foreach ($users as $user) {
+                    if($user->percentage_split == null)
+                    {
+                        $percent = $setting->value.'%';
+                    }else
+                    {
+                      $percent = $user->percentage_split .'%';
+                    }
+
+                    $row['Name'] = $user->first_name . " " . $user->last_name;
+                    $row['Phone'] =  $user->phone;
+                    $row['Email'] = $user->email ;
+                    $row['Pending_booking'] =  $user->pbookings->count() ;
+                    $row['Completed booking'] =  $user->cbookings->count();
+                    $row['User type'] = 'Agent';
+                    $row['status'] = 'Not Active';
+                    $row['Percentage'] = $percent ;
+                    $row[ 'Referral Code'] = $user->referal_code ;
+                    // $row['Account Details'] =  "Country:" .$user->country. ", " ."Bank:" .$user->bank . "Account No:". $user->account_no .", "
+                    // ."Account Name:". $user->account_name;
+
+
+                    fputcsv($file, array($row['Name'],  $row['Phone'] ,$row['Email'] , $row['Pending_booking'] , $row['Completed booking'], $row['User type'] , $row['status'],  $row['Percentage'],  $row[ 'Referral Code']));
+
+                }
+               
+            };
+
+            return response()->stream($callback, 200, $headers);
+
+            return back();
+    }
 }

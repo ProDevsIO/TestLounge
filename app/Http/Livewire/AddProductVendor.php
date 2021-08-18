@@ -15,6 +15,7 @@ class AddProductVendor extends Component
     public $price;
     public $product_id;
     public $price_stripe;
+    public $costPrice;
 
     protected $listeners = ['deleteProduct' => 'deleteProduct',"productVendor" => '$refresh'];
 
@@ -29,7 +30,7 @@ class AddProductVendor extends Component
 
     public function add_product()
     {
-        if (!$this->product_id || !$this->price || !$this->price_stripe) {
+        if (!$this->product_id || !$this->price || !$this->price_stripe || !$this->costPrice) {
             $this->dispatchBrowserEvent(
                 'toastMessage', ['type' => 'error', 'heading' => "Error", 'message' => 'Enter a price or Select a Product']);
 
@@ -46,6 +47,7 @@ class AddProductVendor extends Component
                 'price' => $this->price * $pounds_value->pounds,
                 'price_stripe' => $this->price_stripe,
                 'product_id' => $this->product_id,
+                'cost_price' =>$this->costPrice,
                 'vendor_id' => $this->vendor_id
             ]);
         }

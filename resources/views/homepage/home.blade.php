@@ -136,6 +136,145 @@
         display:flex ;
     }
 </style>
+<style> 
+        .fs-18{
+            font-size:18px;
+        }
+        
+        .h{
+            text-align:center;
+            margin:30px 0;
+            font-weight:500;
+        }
+        .table{
+            background: #FFFFFF;
+            border-radius: 7px;
+            font-weight:600;
+        }
+        .table .table-item{
+            display:grid;
+            grid-template-columns:1fr 1fr 1fr;
+            padding:15px 63px;
+            border-bottom:1px solid #eeeeee;
+            align-items:center;
+            transition:.4s ease-in-out all;
+            min-height:75px;
+
+        }
+        .table .table-head{
+            background:#0C6685;
+            padding:35px 63px;
+            color:#fff;
+            border-radius:7px 7px 0 0;
+            border:none;
+        }
+        .table .table-item div{
+            width:206px;
+            padding-right:0px;
+        }
+        .table .table-item div:last-child{
+            padding:0;
+        }
+        .table .table-item-2{
+            grid-template-columns:1fr 2fr;
+        }
+        .table .table-item-2 .table-col-2{
+            text-align:center;
+            width:100%;
+        }
+
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+
+        /* start laptop version */
+        @media screen and (max-width: 2450px) {
+           
+        }
+
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+
+        /* tab version */
+        @media screen and (max-width: 1024px) {
+            
+            .table .table-item div{
+                width:auto;
+                padding-right:50px;
+            }
+        }
+
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+
+        /* mobile version */
+        @media screen and (max-width: 800px) {
+           
+            .inner{
+                display:flex;
+                flex-wrap:nowrap;
+                overflow:hidden;
+                overflow-x:auto;
+            }
+            /* .table{
+                width:1000px;
+            } */
+            .table .table-item{
+                width:700px;
+                /* min-width:150px; */
+            }
+            .table .table-item div{
+                width:auto;
+                padding-right:60px;
+            }
+        }
+
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+        /* break */
+
+        /* mobile version */
+        @media screen and (max-width: 468px) {
+        }
+        </style>
 @endsection
 
     <div class="main-container">
@@ -325,9 +464,48 @@
             <div class="alert alert-danger">
                <span style="font-size:30px;color:white;">**</span> Please note that Only Travellers <b>who have specifically been vaccinated by the UK NHS and have completed all doses at least 2weeks before travel are considered eligible</b>. Passengers from France MUST undergo Quarantine , Day 2 and 8 tests irrespective of Vaccination Status
             </div>
+            
+        
         </div>
         <br>
         </div>
+        <div class="jumbotron container-fluid">
+             <div class="text-center"><h3 style="font-weight:900">Travel test rules for Children and Young People<h3>
+            </div>
+        </div>
+            <div class="inner container">
+                <div class="table">
+                    <div class="table-item table-head">
+                        <div>Age</div>
+                        <div>Children resident in the UK, British Overseas Territories, Channel Islands, Isle of Man, USA or a recognised European country. <a target="_blank" href="https://www.gov.uk/guidance/how-to-quarantine-when-you-arrive-in-england#rules-for-children-and-young-people"><img src="/link.svg" alt="link" /></a></div>
+                        <div>Children resident in other countries </div>
+                    </div>
+                    <div class="table-normal table-item">
+                        <div>Quarantine</div>
+                        <div>Do not have to quarantine </div>
+                        <div>Must quarantine at home or in the place they are staying for 10days or for the duration of their trip if it’s less than 10days. </div>
+                    </div>
+                    <div class="table-normal table-item">
+                        <div>0 - 4 years</div>
+                        <div>Pre-departure test not required</div>
+                        <div>Pre-departure test not required</div>
+                    </div>
+                    <div class="table-normal table-item">
+                        <div>5 - 10 years</div>
+                        <div>Pre-departure test not required Day 2 test required on arrival in the UK</div>
+                        <div>Pre-departure test required Day 2 and Day 8 tests required on arrival in the UK</div>
+                    </div>
+                    <div class="table-normal table-item">
+                        <div>11 - 11 years</div>
+                        <div>Pre-departure test required  Day 2 test required on arrival in the UK</div>
+                        <div>Pre-departure test required Day 2 and Day 8 tests required on arrival in the UK</div>
+                    </div>
+                    <div class="table-normal table-item table-item-2">
+                        <div>18 years and over</div>
+                        <div class="table-col-2">Follow adult travel test rules</div>
+                    </div>
+                </div>
+            </div>
         <section class="strip bg-secondary-1">
             <div class="container">
                 <div class="row clearfix">
@@ -372,7 +550,7 @@
                             All test Results are available 24 hours from receipt of samples in the Laboratory <br><br></p>
                         <div class="alert alert-warning">
                        <p class="lead" style="text-align: justify;">     * Disclaimer : <br>
-                            Country guidelines change from time to time and the information provided here is a guide. Please ensure to confirm country and airline regulations with relevant authorities at your destination. UKTravelTests will not take any responsibility for challenges that arise as a result of information provided here
+                            Country guidelines change from time to time and the information provided here is a guide. Please ensure to confirm country and airline regulations with relevant authorities at your destination. Traveltestsltd will not take any responsibility for challenges that arise as a result of information provided here
                        </p></div>
                         <p class="lead" style="text-align: justify">
                         <!-- <p style="text-align: justify">You must book and pay for all of our tests on our website; You

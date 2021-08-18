@@ -9,7 +9,7 @@
     <!--favicon icon-->
     <link rel="icon" type="image/png" href="/img/favicon.png">
 
-    <title>UKTravel Tests</title>
+    <title>Traveltestsltd</title>
 
     <!--web fonts-->
     <link href="//fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet">

@@ -9,7 +9,7 @@
     <!--favicon icon-->
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
-    <title>UKTravel Tests | Admin</title>
+    <title>Traveltestsltd | Admin</title>
     <link rel="icon" type="image/png" href="/img/favicon.png">
 
     <!--web fonts-->
@@ -60,7 +60,7 @@
         <!--brand start-->
         <div class="navbar-brand pos-fixed">
             <a class="" href="{{ url('/dashboard') }}">
-                <img src="/img/logo-dark.png" style="height: 40px;" srcset="/img/logo-dark.png 2x" alt="UkTravelTest">
+                <img src="/img/logo-dark.png" style="height: 40px;" srcset="/img/logo-dark.png 2x" alt="Traveltestsltd">
             </a>
         </div>
         <!--brand end-->
@@ -190,6 +190,12 @@
                             <span>Sub agents</span>
                         </a>
                     </li> -->
+                    <li>
+                      <a href="{{ url('/view/transactions') }}">
+                            <i class="icon-calculator"></i>
+                            <span>View transactions</span>
+                        </a>
+                    </li>
                     @if(auth()->user()->type == "2")
                    <li>
                       <a href="{{ url('/user/bank') }}">
@@ -223,7 +229,13 @@
                     <li>
                         <a href="{{ url('/users') }}">
                             <i class=" ti-pie-chart"></i>
-                            <span>Users/Referrals</span>
+                            <span>Agents/Referrals</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/admins') }}">
+                            <i class=" ti-pie-chart"></i>
+                            <span>Admins</span>
                         </a>
                     </li>
                         <li>

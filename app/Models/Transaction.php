@@ -43,4 +43,9 @@ class Transaction extends Model
 		'cost_config',
 		'pecentage_config'
 	];
+
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
 }

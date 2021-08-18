@@ -15,7 +15,10 @@ class AddCopyReceiptFieldToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->integer('copy_receipt')->nullable()->default(0)->after('flutterwave_id');
+            if(!Schema::hasColumn('users', 'copy_receipt'))
+            { 
+                $table->integer('copy_receipt')->nullable()->default(0)->after('flutterwave_id');
+            }
         });
     }
 
@@ -28,7 +31,10 @@ class AddCopyReceiptFieldToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->dropColum('agent_show_name');
+            if(Schema::hasColumn('users', 'copy_receipt'))
+            { 
+                $table->dropColum('copy_receipt');
+            }
         });
     }
 }

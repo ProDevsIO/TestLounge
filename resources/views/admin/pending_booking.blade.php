@@ -82,7 +82,14 @@
                                             </select>
                                         </div>
                                     @endif
-                                    <input type="submit" class="btn btn-danger pull-right mt-2" value="Search">
+                                    <input type="submit" class="btn btn-danger pull-left mt-2" value="Search">
+                                    @if(auth()->user()->type == 1)
+                                    <div style="width:100%">
+                                    <input type="submit" class="btn btn-warning pull-right  mt-2" name="export"
+                                                   style="margin-left: 20px" value="Export">
+                                    </div>
+                                            
+                                        @endif
                                     @csrf
                                 </div>
                             </form>

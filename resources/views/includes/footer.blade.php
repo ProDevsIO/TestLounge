@@ -1,7 +1,9 @@
 <footer class="sticky-footer">
     <div class="container">
         <div class="text-center">
-            <small>Copyright &copy; UKTravelTests {{ date('Y') }}<br/>Hand-crafted by <a href="https://prodevs.io" target="_blank">ProDevs</a></small>
+            <h6 class=""><b>Copyright &copy; Traveltestsltd {{ date('Y') }}</b><br/>
+            <!-- Hand-crafted by <a href="https://prodevs.io" target="_blank">ProDevs</a> -->
+            </h6>
         </div>
 
     </div>
