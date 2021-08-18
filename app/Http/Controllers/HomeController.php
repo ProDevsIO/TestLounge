@@ -773,20 +773,22 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         foreach ($vendor_products as $vproduct) {
             $price = "£" . number_format($vproduct->price_pounds, 0);
 
-            if ($nationality == 81) {
-                // naira to ghanian cedis
-                $price = "GH₵" . number_format($vproduct->price * 0.014, 0);
-            } elseif ($nationality == 156) {
+//            if ($nationality == 81) {
+//                // naira to ghanian cedis
+//                $price = "GH₵" . number_format($vproduct->price * 0.014, 0);
+//            } else
+                if ($nationality == 156) {
                 $price = "₦" . number_format($vproduct->price, 0);
-            } elseif ($nationality == 210) {
-                // naira to tanzanian cedis
-                $price = "TZS" . number_format($vproduct->price * 5.64, 0);
-            } elseif ($nationality == 110) {
-                $price = "KES" . number_format($vproduct->price * 0.26, 0);
-            } elseif ($nationality == 197) {
-                // naira to south african rand
-                $price = "ZAR" . number_format($vproduct->price * 0.036, 0);
             }
+//                elseif ($nationality == 210) {
+//                // naira to tanzanian cedis
+//                $price = "TZS" . number_format($vproduct->price * 5.64, 0);
+//            } elseif ($nationality == 110) {
+//                $price = "KES" . number_format($vproduct->price * 0.26, 0);
+//            } elseif ($nationality == 197) {
+//                // naira to south african rand
+//                $price = "ZAR" . number_format($vproduct->price * 0.036, 0);
+//            }
 
             $product[] = [
                 'name' => $vproduct->product->name,
