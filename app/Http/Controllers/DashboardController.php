@@ -1057,7 +1057,7 @@ class DashboardController extends Controller
                         <br/><br/>
                         Thank you.
                         <br/><br/>
-                        UKTravelsTeam
+                         Traveltestsltd Team
                     ";
                     Mail::to('kelvin@prodevs.io')->send(new BookingCreation($message2, "Payment Notification"));
 

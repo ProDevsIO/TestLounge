@@ -550,7 +550,7 @@
                             All test Results are available 24 hours from receipt of samples in the Laboratory <br><br></p>
                         <div class="alert alert-warning">
                        <p class="lead" style="text-align: justify;">     * Disclaimer : <br>
-                            Country guidelines change from time to time and the information provided here is a guide. Please ensure to confirm country and airline regulations with relevant authorities at your destination. UKTravelTests will not take any responsibility for challenges that arise as a result of information provided here
+                            Country guidelines change from time to time and the information provided here is a guide. Please ensure to confirm country and airline regulations with relevant authorities at your destination. Traveltestsltd will not take any responsibility for challenges that arise as a result of information provided here
                        </p></div>
                         <p class="lead" style="text-align: justify">
                         <!-- <p style="text-align: justify">You must book and pay for all of our tests on our website; You

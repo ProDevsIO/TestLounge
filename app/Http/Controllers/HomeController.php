@@ -70,7 +70,7 @@ class HomeController extends Controller
 
             //To restrict access as per admin 
             if (auth()->user()->status == 0) {
-                session()->flash('alert-danger', "Your profile is currently under review and will be activated shortly by our Admin. To Facilitate this process, Kindly contact INFO@UKTRAVELTESTS.CO.UK");
+                session()->flash('alert-danger', "Your profile is currently under review and will be activated shortly by our Admin. To Facilitate this process, Kindly contact INFO@TRAVELTESTSLTD.COM");
                 auth()->logout();
                 return back();
             }
@@ -546,7 +546,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             $message = "
             Hi " . $request->first_name . ",
             
-            Thank you for your interest to register as an Agent with UKTravel Tests,<br/><br/>Kindly click the button below<br/><br/>
+            Thank you for your interest to register as an Agent with Traveltestsltd,<br/><br/>Kindly click the button below<br/><br/>
             <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Continue Registration
                   </a>
@@ -554,7 +554,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                   <br/><br/>
                   Thank you.
                   <br/><br/>
-                UKTravelsTeam
+                Traveltestsltd Team
             ";
             Mail::to($request->email)->send(new BookingCreation($message, "Agent Registration"));
 
@@ -568,7 +568,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             $message2 = "
             Hi Admin,<br/>
             
-            We would like to inform you that a new Agent has registered with UKTravel Tests.<br/><br/>
+            We would like to inform you that a new Agent has registered with Traveltestsltd.<br/><br/>
             Name: " . $request->first_name . " " . $request->last_name . " <br/>
             Phone: " . $request->phone_no . "<br/>
             Email: " . $request->email . "<br/>
@@ -581,7 +581,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                   <br/><br/>
                   Thank you.
                   <br/><br/>
-                UKTravelsTeam
+                Traveltestsltd Team
             ";
             Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Agent Registration"));
 
@@ -669,12 +669,12 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         //send an email
         try {
             $message = "Congratulations!,<br>
-            Your application to join the Agent network of the UKTravelTests Platform has been approved.<br><br>
+            Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
             You can now log in to your portal to complete your profile and set up your account. <br><br>
             You will find your dedicated customer booking link on your portal <br><br>
-            Thank you for joining the  UKTravelTests network!<br><br>
+            Thank you for joining the  Traveltestsltd network!<br><br>
 
-            UKTravelsTeam
+            Traveltestsltd Team
             ";
             Mail::to($user->email)->send(new BookingCreation($message, 'Agent Activation'));
         } catch (\Exception $e) {
@@ -733,9 +733,9 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             
             You will no longer be able to access your Agent portal , you will also not recieve any of the Agent benefits during the time of deactivation.<br><br>
             
-            Do kindly reach out to the UKtravel Test Desk for more information on how to get back on the network.<br><br>
+            Do kindly reach out to the Traveltestsltd  Desk for more information on how to get back on the network.<br><br>
 
-            UKTravelsTeam
+            Traveltestsltd Team
             ";
             Mail::to($user->email)->send(new BookingCreation($message, 'Agent Deactivation'));
         } catch (\Exception $e) {
@@ -914,7 +914,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
             Kindly click this link to reset your password : <a href='" . env('APP_URL') . 'reset/password/' . encrypt_decrypt('encrypt', $people->id) . "/" . encrypt_decrypt("encrypt", $people->email) . "'>Reset Password</a>,<br><br>
           
-            UKTravelsTeam
+             Traveltestsltd
             ";
             Mail::to($people->email)->send(new BookingCreation($message, "Password Reset"));
         } catch (\Exception $e) {
