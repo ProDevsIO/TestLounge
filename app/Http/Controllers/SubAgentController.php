@@ -17,11 +17,10 @@ class SubAgentController extends Controller
      */
     public function index()
     {
-        $agents = User::where("main_agent_id" , auth()->id())->paginate(20);
+        $agents = User::where("main_agent_id", auth()->id())->paginate(20);
         $setting = Setting::where('id', 2)->first();
 
-        return view("users.sub_agents.index" , ["users" => $agents , "setting" => $setting]);
-
+        return view("users.sub_agents.index", ["users" => $agents, "setting" => $setting]);
     }
 
     /**
@@ -56,36 +55,33 @@ class SubAgentController extends Controller
         ]);
 
         $main_agent = auth()->user();
-        $setting = Setting::where('id', 2)->first();
 
-        if($request->file)
-        {
-            $certificate =  time().'.'.$request->file->extension();
+        if ($request->file) {
+            $certificate =  time() . '.' . $request->file->extension();
             $request->file->move(public_path('img/certificate'), $certificate);
-            $data['c_o_i'] = "/img/certificate/". $certificate;
+            $data['c_o_i'] = "/img/certificate/" . $certificate;
         }
 
 
-        $main_agent_share_raw = $data["my_share"];
-        $base_agent_share = $setting->value;
-        $main_agent_share = $main_agent_share_raw * $base_agent_share / 100;
-        $sub_agent_share = $base_agent_share - $main_agent_share;
-
+        $referral = generateReferralCode(6);
         $password = time();
-        $data["main_agent_id"] = $main_agent->id;
-        $data["main_agent_share_percent"] = $main_agent_share;
-        $data["main_agent_share_raw"] = $main_agent_share_raw;
-        $data["percentage_split"] = $sub_agent_share;
         $data["password"] = bcrypt($password);
+        $data["main_agent_id"] = $main_agent->id;
+
+        $share_data = $this->calculateShare($data["my_share"]);
+        $data['referal_code'] = $referral;
+        $data['type'] = 2;
+        $data['status'] = 0;
 
         unset($data["my_share"]);
         unset($data["file"]);
-        $user = User::create($data);
+        $user = User::create(array_merge($data, $share_data));
 
         Mail::to($user->email)->send(new NewSubAgent([
             "email" => $user->email,
             "password" => $password,
-            "main_agent_name" => $main_agent->first_name." ".$main_agent->last_name
+            "main_agent_name" => $main_agent->first_name . " " . $main_agent->last_name,
+            "complete_link" => env('APP_URL', "https://uktraveltest.prodevs.io") . "/continue/registration/" . $referral . "/" . $user->id
         ]));
 
         return redirect()->route("sub-agents.index")->with('alert-success', "Successfully created sub-agent");
@@ -122,7 +118,13 @@ class SubAgentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findorfail($id);
+        $data = $request->validate([
+            'my_share' => 'required|gt:0',
+        ]);
+        $share_data = $this->calculateShare($data["my_share"]);
+        $user->update($share_data);
+        return back()->with('alert-success', "Successfully updated sub-agent share");
     }
 
     /**
@@ -134,5 +136,21 @@ class SubAgentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function calculateShare($my_share)
+    {
+        $setting = Setting::where('id', 2)->first();
+        $main_agent_share_raw = $my_share;
+        $base_agent_share = $setting->value;
+        $main_agent_share = $main_agent_share_raw * $base_agent_share / 100;
+        $sub_agent_share = $base_agent_share - $main_agent_share;
+
+        return [
+            "main_agent_share_percent" => $main_agent_share,
+            "main_agent_share_raw" => $main_agent_share_raw,
+            "percentage_split" => $sub_agent_share
+        ];
     }
 }

@@ -68,7 +68,7 @@ class HomeController extends Controller
                 }
             }
 
-            //To restrict access as per admin 
+            //To restrict access as per admin
             if (auth()->user()->status == 0) {
                 session()->flash('alert-danger', "Your profile is currently under review and will be activated shortly by our Admin. To Facilitate this process, Kindly contact INFO@UKTRAVELTESTS.CO.UK");
                 auth()->logout();
@@ -175,7 +175,7 @@ class HomeController extends Controller
         try {
             $message = "
                 Hi " . $request->first_name . ",
-                
+
                 Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
                 For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktraveltest.prodevs.io/#popular' >Here</a> <br>
              <br/>
@@ -188,8 +188,8 @@ class HomeController extends Controller
 
 If you are yet to make payment or need to reprocess a failed payment you can click below to continue to the payment page ***
 </p>
-                      
-                      
+
+
                       <br/><br/>
                       Thank you.
                 ";
@@ -237,7 +237,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
     public function payment_confirmation(Request $request)
     {
 
-       
+
         if (env('APP_ENV', "LIVE") == "LIVE") {
             $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
         } else {
@@ -263,14 +263,14 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         $data_response = json_decode($response);
 
-        
+
         if (isset($data_response->data->status) && $data_response->data->status == "successful") {
 
             $booking = Booking::where('transaction_ref', $txRef)->first();
-          
+
 
             if ($booking->status != 1) {
-                
+
                 $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
 
                 if ($booking->user_id) {
@@ -292,10 +292,10 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                         if($booking->card_type == null || $booking->card_type == 2){
                             //for international transaction in pounds
                             $cost_booking = $booking_product->price_pounds;
-    
+
                             $amount_credit = ($cost_booking * ($pecentage / 100));
-        
-        
+
+
                             PoundTransaction::create([
                                 'amount' => $amount_credit,
                                 'booking_id' => $booking->id,
@@ -304,17 +304,17 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                                 'pecentage_config' => $pecentage,
                                 'type' => "1"
                             ]);
-        
-        
+
+
                             $transactions =  PoundTransaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
-        
+
                             $total_amount = $user->pounds_wallet_balance + $amount_credit;
-        
+
                             User::where('id', $booking->user_id)->update([
                                 'pounds_wallet_balance' => $total_amount,
                                 'total_credit_pounds' => $transactions
                             ]);
-                            
+
                         }elseif($booking->card_type == 1 ){
                             //for local transaction in naira
                             $cost_booking = $booking_product->price;
@@ -347,10 +347,10 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                 }
 
                 try {
-                    
+
                     $code = $this->sendData($booking);
-                    
-                    
+
+
                 } catch (\Exception $e) {
 
                     $booking->update([
@@ -362,10 +362,10 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
                     return redirect()->to('/booking/code/failed?b=' . $txRef);
                 }
-               
+
                 if ($booking_product) {
-                    
-                  
+
+
                      try {
                         //check if a referral code exist
                             if($booking->referral_code != null)
@@ -378,22 +378,22 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                                     if($getUser->copy_receipt == 1)
                                     {
                                        $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
-                        
+
                                     }elseif($getUser->copy_receipt == 0)
                                     {
                                        $no =  Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
-                          
+
                                     }
-                             
+
                             }else{
                                 //referral code doesnt exist
                                $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                             }
-                          
+
                     } catch (\Exception $e) {
 
                     }
-        
+
                 }
 
                 $booking->update([
@@ -407,7 +407,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
             }
 
-        
+
             return redirect()->to('/booking/success?b=' . $txRef);
         }
 
@@ -491,7 +491,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
     public function register(Request $request)
     {
-        
+
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -508,34 +508,34 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         $request_data = $request->all();
 
-        $referral = $this->randomStr(6);
+        $referral = generateReferralCode(6);
 
         $request_data['referal_code'] = $referral;
         $request_data['password'] = Hash::make($request_data['password']);
         $request_data['type'] = 2;
         $request_data['status'] = 0;
-        
+
         if($request->file)
         {
-            
-            $certificate =  time().'.'.$request->file->extension();  
-        
+
+            $certificate =  time().'.'.$request->file->extension();
+
             $request->file->move(public_path('img/certificate'), $certificate);
 
             $request_data['c_o_i'] = "/img/certificate/". $certificate;
 
-            
+
         }
         $user = User::create($request_data);
         try {
             $message = "
             Hi " . $request->first_name . ",
-            
+
             Thank you for your interest to register as an Agent with UKTravel Tests,<br/><br/>Kindly click the button below<br/><br/>
             <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Continue Registration
                   </a>
-                  
+
                   <br/><br/>
                   Thank you.
                   <br/><br/>
@@ -552,7 +552,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
             $message2 = "
             Hi Admin,<br/>
-            
+
             We would like to inform you that a new Agent has registered with UKTravel Tests.<br/><br/>
             Name: " . $request->first_name . " " . $request->last_name . " <br/>
             Phone: " . $request->phone_no . "<br/>
@@ -562,7 +562,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Go to Login
                   </a>
-        
+
                   <br/><br/>
                   Thank you.
                   <br/><br/>
@@ -600,20 +600,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
     }
 
-    public function randomStr($length = 16)
-    {
-        $string = '';
-
-        while (($len = strlen($string)) < $length) {
-            $size = $length - $len;
-
-            $bytes = random_bytes($size);
-
-            $string .= substr(str_replace(['/', '+', '='], '', base64_encode($bytes)), 0, $size);
-        }
-
-        return $string;
-    }
 
     public function verify_account($referral_code, $user)
     {
@@ -715,9 +701,9 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             $message = "Dear Network Partner,<br><br>
 
             Please be informed that your account has been temporarily deactivated.,<br><br>
-            
+
             You will no longer be able to access your Agent portal , you will also not recieve any of the Agent benefits during the time of deactivation.<br><br>
-            
+
             Do kindly reach out to the UKtravel Test Desk for more information on how to get back on the network.<br><br>
 
             UKTravelsTeam
@@ -898,7 +884,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             $message = "Dear " . $people->first_name . ",<br><br>
 
             Kindly click this link to reset your password : <a href='" . env('APP_URL') . 'reset/password/' . encrypt_decrypt('encrypt', $people->id) . "/" . encrypt_decrypt("encrypt", $people->email) . "'>Reset Password</a>,<br><br>
-          
+
             UKTravelsTeam
             ";
             Mail::to($people->email)->send(new BookingCreation($message, "Password Reset"));
@@ -953,13 +939,13 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         $booking = Booking::first();
         $message = "
                 Hi,
-                
+
                 Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
                 For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktraveltest.prodevs.io/#popular' >Here</a> <br>
                 <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "make/payment/'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                        Make Payment
                       </a>
-                      
+
                       <br/><br/>
                       Thank you.
                 ";
@@ -1039,8 +1025,8 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                         $cost_booking = $booking_product->price_pounds;
 
                         $amount_credit = ($cost_booking * ($pecentage / 100));
-    
-    
+
+
                         PoundTransaction::create([
                             'amount' => $amount_credit,
                             'booking_id' => $booking->id,
@@ -1049,20 +1035,20 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                             'pecentage_config' => $pecentage,
                             'type' => "1"
                         ]);
-    
-    
+
+
                         $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
-    
+
                         $total_amount = $user->pounds_wallet_balance + $amount_credit;
-    
+
                         User::where('id', $booking->user_id)->update([
                             'pounds_wallet_balance' => $total_amount,
                             'total_credit_pounds' => $transactions
                         ]);
-                        
+
                     }
 
-                    
+
                     DB::commit();
                 } catch (\Exception $e) {
                     DB::rollBack();
@@ -1103,13 +1089,13 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                                     if($getUser->copy_receipt == 1)
                                     {
                                         Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
-                        
+
                                     }elseif($getUser->copy_receipt == 0)
                                     {
                                         Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
-                          
+
                                     }
-                             
+
                             }else{
                                 //referral code doesnt exist
                                 Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));

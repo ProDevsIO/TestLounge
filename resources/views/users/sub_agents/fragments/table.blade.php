@@ -56,13 +56,13 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <a class="dropdown-item"
-                                                    href="{{ url('complete/booking?user_id=' . $user->id) }}">Edit</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#edit_sub_agent_{{ $user->id }}"
+                                                    href="javascript;;">Edit</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-
+                                @include("users.sub_agents.fragments.edit_modal" , ["user" => $user])
                             @endif
                         @endforeach
 

@@ -303,9 +303,31 @@
                                                                                                         {{ $email }}
                                                                                                     </p>
                                                                                                     <p>
-                                                                                                        <b>Password: </b>
+                                                                                                        <b>Password:
+                                                                                                        </b>
                                                                                                         {{ $password }}
                                                                                                     </p>
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    Kindly click the
+                                                                                                    button
+                                                                                                    below to complete
+                                                                                                    your registeration.
+                                                                                                    <br /><br />
+                                                                                                    <a href="{{ $complete_link }}"
+                                                                                                        style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                                                                                                        Continue
+                                                                                                        Registration
+                                                                                                    </a>
+
+                                                                                                    <br /><br />
+                                                                                                    Thank you.
+                                                                                                    <br />
+                                                                                                    <br />
+                                                                                                    UKTravelsTeam
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>
