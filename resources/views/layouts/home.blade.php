@@ -78,7 +78,7 @@
             <div class="row utility-menu">
                 <div class="col-sm-12 ">
                     <div class="utility-inner clearfix">
-                        <span class="alt-font"><i class="icon icon_mail"></i>info@traveltestsltd.com/</span>
+                        <span class="alt-font"><i class="icon icon_mail"></i>info@traveltestsltd.com</span>
 
                         <div class="pull-right">
                             @if(!in_array(\Illuminate\Support\Facades\Route::current()->getName(),$ignore))
@@ -88,7 +88,6 @@
                                 <a href="/login" class="btn btn-primary btn-xs">Login</a>
                                 <a href="/register/agent" class="btn btn-primary btn-xs">Register as an Agent</a>
                                 @endif
-                            <a href="#" class="language"><img alt="English" src="/img/english.png"></a>
                         </div>
                     </div>
                 </div>
