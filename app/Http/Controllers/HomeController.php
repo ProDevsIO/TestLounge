@@ -80,8 +80,6 @@ class HomeController extends Controller
 
         session()->flash('alert-danger', 'Login Incorrect, Kindly check your username/password.');
         return back();
-
-
     }
 
     public function post_booking(Request $request)
@@ -196,27 +194,25 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                 ";
             Mail::to($booking->email)->send(new BookingCreation($message));
         } catch (\Exception $e) {
-
         }
 
         $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
 
         //agent percentage on subaccount
-        if($user->percentage_split != null)
-        {
-            $transaction_charge = (100 - $user->percentage_split)/100;
-        }else{
+        if ($user->percentage_split != null) {
+            $transaction_charge = (100 - $user->percentage_split) / 100;
+        } else {
             $percentage = Setting::where('id', 2)->first();
-            $transaction_charge = (100 - $percentage)/100;
+            $transaction_charge = (100 - $percentage) / 100;
         }
 
         //redirect to payment page
         if (!empty($sub_account)) {
             $data['subaccounts'][] = [
-                                        "id" => $sub_account,
-                                        "transaction_charge_type"=> "percentage",
-                                        "transaction_charge"=> $transaction_charge
-                                     ];
+                "id" => $sub_account,
+                "transaction_charge_type" => "percentage",
+                "transaction_charge" => $transaction_charge
+            ];
         }
 
         BookingProduct::where('booking_id', $booking->id)->update([
@@ -239,14 +235,12 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                 'stripe_intent' => $response->payment_intent,
                 'stripe_session' => $response->id
             ]);
-
         } else {
 
             $redirect_url = $this->processFL($data);
         }
 
         return redirect()->to($redirect_url);
-
     }
 
     public function payment_confirmation(Request $request)
@@ -267,8 +261,11 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,
-            "txref=" . $txRef . "&SECKEY=" . env('RAVE_SECRET_KEY', 'FLWSECK_TEST-516babb36b12f7f60ae0a118dcc9482a-X'));
+        curl_setopt(
+            $ch,
+            CURLOPT_POSTFIELDS,
+            "txref=" . $txRef . "&SECKEY=" . env('RAVE_SECRET_KEY', 'FLWSECK_TEST-516babb36b12f7f60ae0a118dcc9482a-X')
+        );
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -304,7 +301,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
                         $amount_credit = ($cost_booking * ($pecentage / 100));
 
-                        if($booking->card_type == null || $booking->card_type == 2){
+                        if ($booking->card_type == null || $booking->card_type == 2) {
                             //for international transaction in pounds
                             $cost_booking = $booking_product->price_pounds;
 
@@ -329,8 +326,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                                 'pounds_wallet_balance' => $total_amount,
                                 'total_credit_pounds' => $transactions
                             ]);
-
-                        }elseif($booking->card_type == 1 ){
+                        } elseif ($booking->card_type == 1) {
                             //for local transaction in naira
                             $cost_booking = $booking_product->price;
 
@@ -364,8 +360,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                 try {
 
                     $code = $this->sendData($booking);
-
-
                 } catch (\Exception $e) {
 
                     $booking->update([
@@ -381,34 +375,25 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                 if ($booking_product) {
 
 
-                     try {
+                    try {
                         //check if a referral code exist
-                            if($booking->referral_code != null)
-                            {
-                                //use the referral code to find the user
-                                $getUser =  User::where('referal_code', $booking->referral_code)->first();
+                        if ($booking->referral_code != null) {
+                            //use the referral code to find the user
+                            $getUser =  User::where('referal_code', $booking->referral_code)->first();
 
-                                //check the status set by the copy receipt
-                                //if 1 :copy the agent else if 0: send normally
-                                    if($getUser->copy_receipt == 1)
-                                    {
-                                       $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
-
-                                    }elseif($getUser->copy_receipt == 0)
-                                    {
-                                       $no =  Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
-
-                                    }
-
-                            }else{
-                                //referral code doesnt exist
-                               $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                            //check the status set by the copy receipt
+                            //if 1 :copy the agent else if 0: send normally
+                            if ($getUser->copy_receipt == 1) {
+                                $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                            } elseif ($getUser->copy_receipt == 0) {
+                                $no =  Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                             }
-
+                        } else {
+                            //referral code doesnt exist
+                            $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                        }
                     } catch (\Exception $e) {
-
                     }
-
                 }
 
                 $booking->update([
@@ -418,8 +403,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                     'status' => 1,
                     'booking_code' => $code
                 ]);
-
-
             }
 
 
@@ -470,7 +453,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                 'stripe_intent' => $response->payment_intent,
                 'stripe_session' => $response->id
             ]);
-
         } else {
             $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
             $booking = Booking::where('id', $booking->id)->first();
@@ -478,7 +460,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
             $price_pounds = $vendor_products->price_pounds;
 
-            $data = $this->getFlutterwaveData($booking, $price, $booking_ref,$price_pounds, $booking->card_type);
+            $data = $this->getFlutterwaveData($booking, $price, $booking_ref, $price_pounds, $booking->card_type);
             $redirect_url = $this->processFL($data);
         }
 
@@ -494,7 +476,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         }
 
         return view('homepage.make_payment')->with(compact('booking'));
-
     }
 
 
@@ -530,16 +511,13 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         $request_data['type'] = 2;
         $request_data['status'] = 0;
 
-        if($request->file)
-        {
+        if ($request->file) {
 
-            $certificate =  time().'.'.$request->file->extension();
+            $certificate =  time() . '.' . $request->file->extension();
 
             $request->file->move(public_path('img/certificate'), $certificate);
 
-            $request_data['c_o_i'] = "/img/certificate/". $certificate;
-
-
+            $request_data['c_o_i'] = "/img/certificate/" . $certificate;
         }
         $user = User::create($request_data);
         try {
@@ -557,10 +535,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                 Traveltestsltd Team
             ";
             Mail::to($request->email)->send(new BookingCreation($message, "Agent Registration"));
-
-
         } catch (\Exception $e) {
-
         }
 
         try {
@@ -584,17 +559,13 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                 Traveltestsltd Team
             ";
             Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Agent Registration"));
-
         } catch (\Exception $e) {
-
         }
 
 
         session()->flash('alert-success', "Thank you for your registration, kindly click the link sent to your email to continue your registration");
 
         return back();
-
-
     }
 
     public function testEmail()
@@ -608,11 +579,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
 
             Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from " . optional($booking_product->vendor)->name, optional($booking_product->vendor)->email, $code));
-
-
         }
-
-
     }
 
 
@@ -664,7 +631,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             ";
             Mail::to($user->email)->send(new BookingCreation($message, 'Agent Activation'));
         } catch (\Exception $e) {
-
         }
 
         return back();
@@ -701,7 +667,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         session()->flash('alert-success', "Percentage has been updated successfully");
 
         return redirect()->to('/users');
-
     }
 
     public function agent_deactivate($id)
@@ -725,7 +690,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             ";
             Mail::to($user->email)->send(new BookingCreation($message, 'Agent Deactivation'));
         } catch (\Exception $e) {
-
         }
 
         return back();
@@ -904,7 +868,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             ";
             Mail::to($people->email)->send(new BookingCreation($message, "Password Reset"));
         } catch (\Exception $e) {
-
         }
 
         session()->flash("alert-success", "Reset password link has been sent to your email");
@@ -920,7 +883,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             return redirect()->to('/forgot/password');
         }
         return view('homepage.change_password')->with(compact('email'));
-
     }
 
     public function change_password(Request $request)
@@ -977,14 +939,12 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
         });
 
         return $banks;
-
     }
 
     public function account_name($bank, $account_no)
     {
         $account_name = $this->account_name_($bank, $account_no);
         return (isset($account_name->data->account_name) ? $account_name->data->account_name : "");
-
     }
 
     public function next_steps()
@@ -1035,7 +995,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                         $pecentage = $defaultpercent->value;
                     }
 
-                    if($user->country != null){
+                    if ($user->country != null) {
 
                         $cost_booking = $booking_product->price_pounds;
 
@@ -1060,7 +1020,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                             'pounds_wallet_balance' => $total_amount,
                             'total_credit_pounds' => $transactions
                         ]);
-
                     }
 
 
@@ -1093,31 +1052,24 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
             if ($booking_product) {
                 try {
-                        //check if a referral code exist
-                            if($booking->referral_code != null)
-                            {
-                                //use the referral code to find the user
-                                $getUser =  User::where('referal_code', $booking->referral_code)->first();
+                    //check if a referral code exist
+                    if ($booking->referral_code != null) {
+                        //use the referral code to find the user
+                        $getUser =  User::where('referal_code', $booking->referral_code)->first();
 
-                                //check the status set by the copy receipt
-                                //if 1 :copy the agent else if 0: send normally
-                                    if($getUser->copy_receipt == 1)
-                                    {
-                                        Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
-
-                                    }elseif($getUser->copy_receipt == 0)
-                                    {
-                                        Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
-
-                                    }
-
-                            }else{
-                                //referral code doesnt exist
-                                Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
-                            }
-                        } catch (\Exception $e) {
-
+                        //check the status set by the copy receipt
+                        //if 1 :copy the agent else if 0: send normally
+                        if ($getUser->copy_receipt == 1) {
+                            Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                        } elseif ($getUser->copy_receipt == 0) {
+                            Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                        }
+                    } else {
+                        //referral code doesnt exist
+                        Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                     }
+                } catch (\Exception $e) {
+                }
             }
 
             $booking->update([
@@ -1127,12 +1079,10 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                 'status' => 1,
                 'booking_code' => $code
             ]);
-
         }
 
 
         return redirect()->to('/booking/success?b=' . $txRef);
-
     }
 
     public function success_failed(Request $request)
@@ -1148,12 +1098,11 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             $booking->update([
                 'transaction_ref' => $txRef
             ]);
-        }else{
+        } else {
             $txRef = $booking->transaction_ref;
         }
 
 
         return redirect()->to('/booking/failed?b=' . $txRef);
     }
-
 }

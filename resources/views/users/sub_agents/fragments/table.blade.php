@@ -24,6 +24,9 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
+                        @php
+                            $shareData = $user->superAgentShare();
+                        @endphp
                             @if ($user->status == $table_status)
                                 <tr>
                                     <td>
@@ -37,14 +40,9 @@
                                     @elseif($user->status == 0)
                                         <td><span class="badge badge-warning">Not Active</span></td>
                                     @endif
-                                    <td>{{ $user->main_agent_share_raw }}%</td>
-                                    <td>{{ $user->main_agent_share_percent }}%</td>
-
-                                    @if ($user->percentage_split == null)
-                                        <td>{{ $setting->value }}%</td>
-                                    @else
-                                        <td>{{ $user->percentage_split }}%</td>
-                                    @endif
+                                    <td>{{ $shareData["main_agent_share_raw"] ?? "N/A" }}%</td>
+                                    <td>{{ $shareData["main_agent_share_percent"] ?? "N/A" }}%</td>
+                                    <td>{{ $user->myPercent() }}%</td>
                                     <td>
                                         {{ $user->referal_code }}
                                     </td>
@@ -56,7 +54,8 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#edit_sub_agent_{{ $user->id }}"
+                                                <a class="dropdown-item" data-toggle="modal"
+                                                    data-target="#edit_sub_agent_{{ $user->id }}"
                                                     href="javascript;;">Edit</a>
                                             </div>
                                         </div>

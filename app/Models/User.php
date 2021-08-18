@@ -93,4 +93,16 @@ class User extends Authenticatable
         return $this->hasMany(PoundTransaction::class);
     }
 
+    public function myPercent()
+    {
+       return  shareHelper()->myShare($this);
+    }
+
+    public function superAgentShare()
+    {
+        if(!empty($main = $this->main_agent_share_raw)){
+            return shareHelper()->calculateMainAgentShare( $main , $this->myPercent());
+        }
+    }
+
 }

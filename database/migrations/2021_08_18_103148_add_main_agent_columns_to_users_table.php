@@ -20,9 +20,6 @@ class AddMainAgentColumnsToUsersTable extends Migration
             if(!Schema::hasColumn('users', 'main_agent_share_raw')){
                 $table->float('main_agent_share_raw')->nullable();
             }
-            if(!Schema::hasColumn('users', 'main_agent_share_percent')){
-                $table->float('main_agent_share_percent')->nullable();
-            }
         });
     }
 

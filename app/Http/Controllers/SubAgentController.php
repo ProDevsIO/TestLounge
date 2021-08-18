@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\UserShare;
 use App\Mail\NewSubAgent;
 use App\Models\Setting;
 use App\Models\User;
@@ -10,6 +11,13 @@ use Illuminate\Support\Facades\Mail;
 
 class SubAgentController extends Controller
 {
+
+    public $userShareHelper;
+    public function __construct()
+    {
+        $this->userShareHelper = new UserShare();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -68,11 +76,12 @@ class SubAgentController extends Controller
         $data["password"] = bcrypt($password);
         $data["main_agent_id"] = $main_agent->id;
 
-        $share_data = $this->calculateShare($data["my_share"]);
+        $share_data = $this->userShareHelper->calculateMainAgentShare($data["my_share"]);
         $data['referal_code'] = $referral;
         $data['type'] = 2;
         $data['status'] = 0;
 
+        unset($share_data["sub_agent_share"]);
         unset($data["my_share"]);
         unset($data["file"]);
         $user = User::create(array_merge($data, $share_data));
@@ -139,18 +148,5 @@ class SubAgentController extends Controller
     }
 
 
-    public function calculateShare($my_share)
-    {
-        $setting = Setting::where('id', 2)->first();
-        $main_agent_share_raw = $my_share;
-        $base_agent_share = $setting->value;
-        $main_agent_share = $main_agent_share_raw * $base_agent_share / 100;
-        $sub_agent_share = $base_agent_share - $main_agent_share;
 
-        return [
-            "main_agent_share_percent" => $main_agent_share,
-            "main_agent_share_raw" => $main_agent_share_raw,
-            "percentage_split" => $sub_agent_share
-        ];
-    }
 }
