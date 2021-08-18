@@ -257,28 +257,28 @@
                                             <td> {{ $booking->created_at }} </td>
                                             @if(auth()->user()->type == 1)
                                                 <td> {{   optional(optional(optional($booking)->product)->vendor)->name }} </td>
-            
-                                                @if($booking->product->currency == "NGN")
+
+                                                @if(isset($booking->product) && $booking->product->currency == "NGN")
                                                 <td> ₦ {{ $booking->product->price }} </td>
-                                                @elseif($booking->product->currency == "GBP")
+                                                @elseif(isset($booking->product) && $booking->product->currency == "GBP")
                                                 
                                                 <td> £ {{ $booking->product->charged_amount }} </td>
-                                                @elseif($booking->product->currency == "GHS")
+                                                @elseif(isset($booking->product) && $booking->product->currency == "GHS")
                                                 <td> GHS {{ $booking->product->charged_amount }} </td>
-                                                @elseif($booking->product->currency == "KES")
+                                                @elseif(isset($booking->product) && $booking->product->currency == "KES")
                                                 <td> KES {{ $booking->product->charged_amount }} </td>
-                                                @elseif($booking->product->currency == "ZAR")
+                                                @elseifisset($booking->product) && ($booking->product->currency == "ZAR")
                                                 <td> ZAR {{ $booking->product->charged_amount }} </td>
                                                 @else
-                                                <td> </td>
+                                                <td>Product has been deleted</td>
                                                 @endif
 
-                                                @if($booking->product->transaction != null)
+                                                @if(isset($booking->product) && $booking->product->transaction != null)
                                                 <td> ₦ {{ $booking->product->transaction->amount }} </td>
                                                 @elseif($booking->product->ptransaction != null)
                                                 <td> £ {{ $booking->product->transaction->amount }} </td>
                                                 @else
-                                                <td> </td>
+                                                <td> Product has been deleted</td>
                                                 @endif
                                             @endif
                                             <td>@if($booking->status == 0)
