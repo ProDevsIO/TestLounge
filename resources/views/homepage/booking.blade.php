@@ -518,23 +518,24 @@
                                             <input class="form-control" type="text" required name="transport_no"
                                                    value="{{ old('transport_no') }}"/>
                                         </div>
+                                        <input type="hidden" name="payment_method" value="flutterwave" id="payment_method"/>
 
-                                        <div class="col-md-12">
-                                            <label>Choose Payment Method: <span
-                                                        class="show_required"> *</span></label>
-                                            <div class="radio-group">
-                                                <input type="hidden" name="payment_method" id="payment_method"/>
+                                        {{--<div class="col-md-12">--}}
+                                            {{--<label>Choose Payment Method: <span--}}
+                                                        {{--class="show_required"> *</span></label>--}}
+                                            {{--<div class="radio-group">--}}
+                                                {{--<input type="hidden" name="payment_method" id="payment_method"/>--}}
                                                  {{--<div class='radio' data-value="stripe" style="margin-top: 10px"><img--}}
                                                             {{--src="{{ url('/img/stripe.png') }}"--}}
                                                             {{--height="60px"></div>--}}
-                                                <div class='radio' data-value="flutterwave" style="margin-top: 10px">
-                                                    <img
-                                                            src="{{ url('/img/Flutterwave.png') }}"
-                                                            height="60px"></div>
-                                                <br>
-                                            </div>
+                                                {{--<div class='radio' data-value="flutterwave" style="margin-top: 10px">--}}
+                                                    {{--<img--}}
+                                                            {{--src="{{ url('/img/Flutterwave.png') }}"--}}
+                                                            {{--height="60px"></div>--}}
+                                                {{--<br>--}}
+                                            {{--</div>--}}
 
-                                        </div>
+                                        {{--</div>--}}
                                         <div class="col-md-12" id="card" style="margin-top:20px;display:none;">
                                             <label>Select Card types <span class="show_required"> *</span></label> <small class="text-muted" style="color:red"> <b>Please select a card payment option</b> </small>
                                             <select class="form-control card_type" autocomplete="off" name="card_type">
