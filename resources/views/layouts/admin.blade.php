@@ -9,7 +9,7 @@
     <!--favicon icon-->
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
-    <title>UKTravel Tests | Admin</title>
+    <title>Traveltestsltd | Admin</title>
     <link rel="icon" type="image/png" href="/img/favicon.png">
 
     <!--web fonts-->
@@ -60,7 +60,7 @@
         <!--brand start-->
         <div class="navbar-brand pos-fixed">
             <a class="" href="{{ url('/dashboard') }}">
-                <img src="/img/logo-dark.png" style="height: 40px;" srcset="/img/logo-dark.png 2x" alt="UkTravelTest">
+                <img src="/img/logo-dark.png" style="height: 40px;" srcset="/img/logo-dark.png 2x" alt="Traveltestsltd">
             </a>
         </div>
         <!--brand end-->

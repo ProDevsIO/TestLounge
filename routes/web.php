@@ -102,7 +102,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/edit/product', [\App\Http\Controllers\DashboardController::class,"edit_product"]);
     Route::post('/add/product', [\App\Http\Controllers\DashboardController::class,"add_product"]);
     Route::get('/delete/product/{id}', [\App\Http\Controllers\DashboardController::class,"delete_product"]);
-    Route::get('/product/vendor/{id}/{price}/{pricestripe}', [\App\Http\Controllers\DashboardController::class,"product_vendor"]);
+    Route::get('/product/vendor/{id}/{price}/{pricestripe}/{costPrice}', [\App\Http\Controllers\DashboardController::class,"product_vendor"]);
 
     Route::get('/agent/activate/{id}', [\App\Http\Controllers\HomeController::class,"agent_activate"]);
     Route::get('/agent/deactivate/{id}', [\App\Http\Controllers\HomeController::class,"agent_deactivate"]);
@@ -137,6 +137,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/delete/color/{id}', [\App\Http\Controllers\DashboardController::class, "delete_color"]);
     Route::post('/add/referer/{code}', [\App\Http\Controllers\DashboardController::class, "add_referer"]);
 
+    Route::get('/admin/list/export', [\App\Http\Controllers\DashboardController::class,"admin_export"]);
+    Route::get('/active/agent/export', [\App\Http\Controllers\DashboardController::class,"Agent_active_export"]);
+    Route::get('/inactive/agent/export', [\App\Http\Controllers\DashboardController::class,"Agent_inactive_export"]);
+    Route::get('currency/export/{currency}/{startDate}/{endDate}', [\App\Http\Controllers\DashboardController::class,"currency_export"]);
 
     Route::get('/logout', [\App\Http\Controllers\DashboardController::class,"logout"]);
 

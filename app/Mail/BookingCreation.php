@@ -34,7 +34,7 @@ class BookingCreation extends Mailable
     public function build()
     {
         $message_to_send = $this->message;
-        return $this->from('info@uktraveltests.co.uk',$this->subject)->view('email.message')->with(compact('message_to_send'));
+        return $this->from('info@traveltestsltd.com',$this->subject)->view('email.message')->with(compact('message_to_send'));
 
     }
 }

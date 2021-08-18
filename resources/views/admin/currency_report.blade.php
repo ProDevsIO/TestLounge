@@ -13,7 +13,7 @@
                     <div class="card card-shadow mb-4 ">
                         <div class="card-header border-0">
                             <div class="custom-title-wrap border-0 position-relative pb-2">
-                                <div class="custom-title">
+                                <div class="custom-title pull-left">
                                            @if($currency == 'naira')
                                             Naira
                                             @elseif($currency == 'pounds')
@@ -28,6 +28,8 @@
                                             South African Rand 
                                             @endif
                                 </div>
+                                <div class="pull-right"> <a href="{{ url('/currency/export/'.$currency.'/'.$startDate .'/'. $endDate) }}" class="btn btn-md btn-warning text-white">Export</a></div>
+                                  
                             </div>
                         </div>
                         <div class="card-body p-0">
@@ -36,18 +38,18 @@
                                 <table class="table table-hover table-custom" id="data_table">
                                     <thead>
                                     <tr>
-                                        <th scope="col">Booking</th>
+                                        <th scope="col">Name</th>
                                         <th scope="col">Product</th>
                                         <th scope="col">vendor</th>
                                         <th scope="col">Amount</th>
-                                        
+                                        <th scope="col">Date</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($transact as $transact)
                                         <tr>
                                             <td>
-                                                {{ $transact->created_at }}
+                                                {{ $transact->booking->first_name }}   {{ $transact->booking->last_name }}
                                             </td>
                                             <td>
                                                 {{$transact->product->name}}
@@ -66,6 +68,7 @@
                                             @elseif($transact->currency = 'ZAR')
                                             <td>ZAR{{ number_format($transact->charged_amount,2) }}</td>
                                             @endif
+                                            <td>{{$transact->created_at}}</td>
                                         </tr>
 
                                         

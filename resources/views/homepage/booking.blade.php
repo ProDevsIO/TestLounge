@@ -539,7 +539,7 @@
                                            
                                         </div>
                                         <div class="col-md-12" id="card" style="margin-top:20px;">
-                                            <label>Select Card types <span class="show_required"> *</span></label> <small class="text-muted" style="color:red"> <b>please select your local or international card</b> </small>
+                                            <label>Select Card types <span class="show_required"> *</span></label> <small class="text-muted" style="color:red"> <b>Please select a card payment option</b> </small>
                                             <select class="form-control card_type" autocomplete="off" name="card_type">
 
                                             </select>
@@ -735,8 +735,8 @@
                 var $card = $(".card_type");
                 $card.empty(); // remove old options
                 $card.append($("<option value=''>Select type of card</option>"));
-                $card.append($("<option></option>").attr("value", 1).text("Local Card"));
-                $card.append($("<option></option>").attr("value", 2).text("International Card"));
+                $card.append($("<option></option>").attr("value", 1).text("Nigerian Card"));
+                $card.append($("<option></option>").attr("value", 2).text("Non-Nigerian Card"));
 
             }
 

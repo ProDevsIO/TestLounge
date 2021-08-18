@@ -48,7 +48,8 @@
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">
-                                        <div class="custom-title">Users</div>
+                                        <div class="custom-title pull-left">Users</div>
+                                        <div class="pull-right"> <a href="{{ url('/active/agent/export') }}" class="btn btn-md btn-warning text-white">Export</a></div>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
@@ -205,7 +206,8 @@
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">
-                                        <div class="custom-title">Users</div>
+                                        <div class="custom-title pull-left">Users</div>
+                                        <div class="pull-right"> <a href="{{ url('/inactive/agent/export') }}" class="btn btn-md btn-warning text-white">Export</a></div>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
