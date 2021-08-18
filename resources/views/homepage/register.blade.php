@@ -113,50 +113,6 @@
                 @include('errors.showerrors')
                 <form action="{{ url('/register') }}" method="post" id="regForm" enctype="multipart/form-data">
                     @csrf
-<<<<<<< HEAD
-                    <div class="form-group">
-                        <input type="text" value="{{ old('first_name') }}" name="first_name" class="form-control" placeholder="First Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" value="{{ old('last_name') }}" name="last_name" class="form-control"  placeholder="Last Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input id="phone" style="width:100%;margin-right:0px" type="text" value="{{ old('phone_no') }}" name="phone_no" class="form-control pr-5"  placeholder="Phone No" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" value="{{ old('email') }}" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Email" required>
-                    </div>
-                    <div class="form-group mb-4">
-                        <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Password" required>
-                    </div>
-                    <div class="form-group">
-                        <small class="text-muted">Please let us know what name you would like displayed on the UK Travel Test portal.  </small>
-                       <input type="text" value="{{ old('platform_name') }}" name="platform_name" class="form-control" id="exampleInputEmail1" placeholder="Name on platform">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" value="{{ old('company') }}" name="company" class="form-control" id="exampleInputEmail1" placeholder="Name of organization" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" value="{{ old('director') }}" name="director" class="form-control" id="exampleInputEmail1" placeholder="Name of managing director" required>
-                    </div> 
-                    <div class="form-group">
-                        <small class="text-muted">If available</small>
-                        <label class="text-center " style="width:100%">Certificate of incorporation</label>
-                       <input type="file"  name="file" class="form-control" >
-                    </div>
-                    <div class="form-group " >
-                        <select name="certified" class="form-control" id="">
-                            <option  class="pl-5" value="">Are you IATA certified?</option>
-                            <option class="text-center" value="Yes">Yes</option>
-                            <option class="text-center" value="No">No</option>
-                        </select>   
-                    </div>
-                    <div class="form-group">
-                    
-                        <small class="tezt-muted" style="color:red">An IATA number is not a prerequisite to  completing your registration and inclusion to the network.</small>
-                        <p><small>if IATA certified</small></p>
-                       <input type="text" value="{{ old('certified_no') }}" name="certified_no" class="form-control" id="exampleInputEmail1" placeholder="please fill in your IATA number">
-=======
                     <div class="tab"><h5>Personal Infomation</h5>
                         <div class="form-group">
                             <input type="text" value="{{ old('first_name') }}" name="first_name" class="form-control" placeholder="First Name" required>
@@ -187,7 +143,6 @@
                         <div class="form-group mb-4">
                             <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Password" required>
                         </div>
->>>>>>> origin/develop
                     </div>
                     <div class="tab"><h5>Business Information</h5>
                         <div class="form-group">
