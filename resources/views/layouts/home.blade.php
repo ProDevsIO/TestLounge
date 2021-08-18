@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>UKTravel Tests | Home</title>
+    <title>Traveltestsltd | Home</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -78,7 +78,7 @@
             <div class="row utility-menu">
                 <div class="col-sm-12 ">
                     <div class="utility-inner clearfix">
-                        <span class="alt-font"><i class="icon icon_mail"></i>info@uktraveltests.com</span>
+                        <span class="alt-font"><i class="icon icon_mail"></i>info@traveltestsltd.com/</span>
 
                         <div class="pull-right">
                             @if(!in_array(\Illuminate\Support\Facades\Route::current()->getName(),$ignore))
@@ -183,14 +183,14 @@
                     Phone number: +44 20 8087 2262<br>
                     WhatsApp: +44 74 3687 5938
                     <br>
-                   <!-- Powered by <a href="https://www.medburymedicals.com/" target="_blank">Medbury Medicals Services</a> -->
+                  {{--Powered by <a href="https://www.medburymedicals.com/" target="_blank">MMS</a>--}}
                 </span>
               
                     <span class="text-white">Email us at <br>
-                    <a href="#">info@uktraveltests.com</a></span>
+                    <a href="#">info@traveltestsltd.com</a></span>
                     <span class="text-white">London, UK</span>
                          
-                    <span class="text-white">© {{ date('Y') }} UKTravelTests.
+                    <span class="text-white">© {{ date('Y') }} Traveltestsltd.
                         </span>
                 </div>
             </div><!--end for row-->
@@ -199,7 +199,7 @@
         <div class="contact-action">
             <div class="align-vertical">
                 <i class="icon text-white icon_mail"></i>
-                <a href="mailto:info@uktraveltests.com" class="text-white"><span class="text-white">Get in touch with us <i class="icon arrow_right"></i></span></a>
+                <a href="mailto:info@traveltestsltd.com" class="text-white"><span class="text-white">Get in touch with us <i class="icon arrow_right"></i></span></a>
             </div>
         </div>
     </footer>
