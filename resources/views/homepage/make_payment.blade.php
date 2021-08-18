@@ -92,9 +92,9 @@
                                                 class="show_required"> *</span></label>
                                     <div class="radio-group">
                                         <input type="hidden" name="payment_method" id="payment_method"/>
-                                        <div class='radio' data-value="stripe" style="margin-top: 10px"><img
-                                                    src="{{ url('/img/stripe.png') }}"
-                                                    height="60px"></div>
+                                        {{--<div class='radio' data-value="stripe" style="margin-top: 10px"><img--}}
+                                                    {{--src="{{ url('/img/stripe.png') }}"--}}
+                                                    {{--height="60px"></div>--}}
                                         <div class='radio' data-value="flutterwave" style="margin-top: 10px"><img
                                                     src="{{ url('/img/Flutterwave.png') }}"
                                                     height="60px"></div>
