@@ -523,7 +523,7 @@
                                             <label>Choose Payment Method: <span
                                                         class="show_required"> *</span></label>
                                             <div class="alert alert-warning">
-                                                * All cardholders are advised to use Flutterwave
+                                                * 
                                             </div>
                                             <div class="radio-group">
                                                 <input type="hidden" name="payment_method" id="payment_method"/>
