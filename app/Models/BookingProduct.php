@@ -75,4 +75,12 @@ class BookingProduct extends Model
 	{
 		return $this->belongsTo(VendorProduct::class);
 	}
+
+	public function transaction(){
+	    return $this->hasOne(Transaction::class,'booking_id')->where('type', 1);
+    }
+
+	public function ptransaction(){
+	    return $this->hasOne(PoundTransaction::class,'booking_id')->where('type', 1);
+    }
 }

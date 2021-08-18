@@ -153,7 +153,7 @@
                                     <i class="vl_book"></i>
                                 </div>
                                 <div class="media-body text-light" title="Revenue">
-                                    <h4 class="text-uppercase mb-0 weight500">N{{ number_format($due_amount) }}</h4>
+                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($due_amount) }}</h4>
                                     <span>Amount due(Referrals)</span>
                                 </div>
                             </div>

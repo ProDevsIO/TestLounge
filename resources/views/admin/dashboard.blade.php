@@ -145,7 +145,7 @@
                                                 <div class="media-body text-white">
                                                     <h4 class="text-uppercase mb-0 weight500">
                                                         N{{ number_format(auth()->user()->wallet_balance,0) }}</h4>
-                                                    <span>Wallet Balance(Pounds)</span>
+                                                    <span>Wallet Balance(Naira)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -179,7 +179,7 @@
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
                                         £ {{ number_format(auth()->user()->pounds_wallet_balance,0) }}</h4>
-                                        <span> Wallet Balance</span>
+                                        <span> Wallet Balance(Pounds)</span>
                                     </div>
                                 </div>
                             </div>
@@ -195,7 +195,7 @@
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
                                         £ {{ number_format($earnedPounds,0) }}</h4>
-                                        <span>Total Earnings</span>
+                                        <span>Total (Pounds)</span>
                                     </div>
                                 </div>
                             </div>
@@ -222,9 +222,16 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">Name</th>
+                                        @if(auth()->user()->type == 2)
                                         <th scope="col">Phone</th>
+                                        @endif
                                         <th scope="col">Email</th>
                                         <th scope="col">Date/Time</th>
+                                        @if(auth()->user()->type == 1)
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Product Price</th>
+                                        <th scope="col">Commission</th>
+                                        @endif
                                         <th scope="col">Status</th>
                                         <th scope="col">Mode of Payment</th>
                                         @if(auth()->user()->referal_code)
@@ -243,9 +250,37 @@
                                             <td>
                                                 {{ $booking->first_name }} {{ $booking->last_name }}
                                             </td>
+                                            @if(auth()->user()->type == 2)
                                             <td>{{ $booking->phone_no }}</td>
+                                            @endif
                                             <td>{{ $booking->email }} <br>{{$booking->booking_code}}</td>
                                             <td> {{ $booking->created_at }} </td>
+                                            @if(auth()->user()->type == 1)
+                                                <td> {{ $booking->product->vendor->name }} </td>
+            
+                                                @if($booking->product->currency == "NGN")
+                                                <td> ₦ {{ $booking->product->price }} </td>
+                                                @elseif($booking->product->currency == "GBP")
+                                                
+                                                <td> £ {{ $booking->product->charged_amount }} </td>
+                                                @elseif($booking->product->currency == "GHS")
+                                                <td> GHS {{ $booking->product->charged_amount }} </td>
+                                                @elseif($booking->product->currency == "KES")
+                                                <td> KES {{ $booking->product->charged_amount }} </td>
+                                                @elseif($booking->product->currency == "ZAR")
+                                                <td> ZAR {{ $booking->product->charged_amount }} </td>
+                                                @else
+                                                <td> </td>
+                                                @endif
+
+                                                @if($booking->product->transaction != null)
+                                                <td> ₦ {{ $booking->product->transaction->amount }} </td>
+                                                @elseif($booking->product->ptransaction != null)
+                                                <td> £ {{ $booking->product->transaction->amount }} </td>
+                                                @else
+                                                <td> </td>
+                                                @endif
+                                            @endif
                                             <td>@if($booking->status == 0)
                                                     <span class="badge badge-warning">Not Paid</span>
                                                 @elseif($booking->status == 1)
