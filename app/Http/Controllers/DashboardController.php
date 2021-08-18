@@ -810,12 +810,20 @@ class DashboardController extends Controller
         try {
             DB::beginTransaction();
             $booking_product = BookingProduct::where('booking_id', $id)->first();
-            if ($user->percentage_split != null) {
-                $pecentage = $user->percentage_split;
-            } else {
+            
+            if(isset($user))
+            {
+                if ($user->percentage_split != null) {
+                    $pecentage = $user->percentage_split;
+                } else {
+                    $defaultpercent = Setting::where('id', '2')->first();
+                    $pecentage = $defaultpercent->value;
+                }
+            }else{
                 $defaultpercent = Setting::where('id', '2')->first();
                 $pecentage = $defaultpercent->value;
             }
+           
 
             $check = Transaction::where('booking_id', $booking->id)->where('user_id', $user->id)->first();
             if (!$check) {

@@ -522,9 +522,6 @@
                                         <div class="col-md-12">
                                             <label>Choose Payment Method: <span
                                                         class="show_required"> *</span></label>
-                                            <div class="alert alert-warning">
-                                                * 
-                                            </div>
                                             <div class="radio-group">
                                                 <input type="hidden" name="payment_method" id="payment_method"/>
                                                 <!-- <div class='radio' data-value="stripe" style="margin-top: 10px"><img

@@ -256,7 +256,7 @@
                                             <td>{{ $booking->email }} <br>{{$booking->booking_code}}</td>
                                             <td> {{ $booking->created_at }} </td>
                                             @if(auth()->user()->type == 1)
-                                                <td> {{ $booking->product->vendor->name }} </td>
+                                                <td> {{ optional($booking->product->vendor->name) }} </td>
             
                                                 @if($booking->product->currency == "NGN")
                                                 <td> ₦ {{ $booking->product->price }} </td>
