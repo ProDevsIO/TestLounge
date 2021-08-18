@@ -207,7 +207,7 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
             $transaction_charge = (100 - $user->percentage_split)/100; 
         }else{
             $percentage = Setting::where('id', 2)->first();
-            $transaction_charge = (100 - $percentage)/100;
+            $transaction_charge = (100 - $percentage->value)/100;
         }
 
         //redirect to payment page
