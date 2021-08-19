@@ -38,19 +38,19 @@
                                     <small class="text-muted">Please let us know what name you would like displayed on the
                                         UK Travel Test portal. </small>
                                     <input type="text" value="" name="platform_name" class="form-control"
-                                        id="exampleInputEmail1" placeholder="Name on platform">
+                                        id="exampleInputEmail1" placeholder="Name on Platform">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" value="" name="company" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Name of organization" required>
+                                        placeholder="Name of Organization" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" value="" name="director" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Name of managing director" required>
+                                        placeholder="Name of Managing Director" required>
                                 </div>
                                 <div class="form-group">
                                     <small class="text-muted">If available</small>
-                                    <label style="width:100%">Certificate of incorporation</label>
+                                    <label style="width:100%">Certificate of Incorporation</label>
                                     <input type="file" name="file" class="form-control">
                                 </div>
                                 <div class="form-group ">
@@ -62,6 +62,7 @@
                                 </div>
                                 <div class="form-group">
                                     <small class="text-muted">If certified</small>
+                                    <small style="color:red;"> (An IATA number is not a prerequisite to completing your registration and inclusion to the network)</small>
                                     <input type="text" value="" name="certified_no" class="form-control"
                                         id="exampleInputEmail1" placeholder="Please fill in your IATA number">
                                 </div>
