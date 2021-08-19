@@ -195,7 +195,7 @@
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
                                         £ {{ number_format($earnedPounds,0) }}</h4>
-                                        <span>Total (Pounds)</span>
+                                        <span>Total Earnings(Pounds)</span>
                                     </div>
                                 </div>
                             </div>
