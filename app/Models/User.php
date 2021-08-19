@@ -98,6 +98,11 @@ class User extends Authenticatable
        return  shareHelper()->myShare($this);
     }
 
+    public function superAgent()
+    {
+        return $this->belongsTo(User::class , "main_agent_id" , "id");
+    }
+
     public function superAgentShare()
     {
         if(!empty($main = $this->main_agent_share_raw)){

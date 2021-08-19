@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\BookingConfirmationService;
+use App\Helpers\BookingService;
+use App\Helpers\UserShare;
 use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
 use App\Models\Booking;
@@ -25,6 +28,15 @@ use PDF;
 
 class HomeController extends Controller
 {
+
+    public $bookingService;
+    public $bookConfirmationService;
+    public function __construct()
+    {
+        $this->bookingService = new BookingService;
+        $this->bookConfirmationService = new BookingConfirmationService;
+    }
+
     public function booking(Request $request)
     {
         $countries = Country::all();
@@ -112,14 +124,13 @@ class HomeController extends Controller
             'consent' => 'required'
         ]);
 
+
         $request->vendor_id = 3;
 
         if (empty($request->product_id)) {
             session()->flash('alert-danger', "Kindly select a product");
             return back()->withInput();
         }
-
-        $sub_account = [];
 
         $request_data = $request->all();
 
@@ -128,18 +139,11 @@ class HomeController extends Controller
         $transaction_ref = uniqid('booking_') . rand(10000, 999999);
 
         if (isset($request_data['ref'])) {
-            $user = User::where('referal_code', $request_data['ref'])->first();
-
-            if ($user) {
-                $request_data['referral_code'] = $request_data['ref'];
-                $request_data['user_id'] = $user->id;
-                if ($user->flutterwave_key) {
-                    $sub_account[] = $user->flutterwave_key;
-                }
-            }
+            $request_data = $this->bookingService->getSubAccountsByRefCode($request_data['ref'])
+                ->processRequestData($request_data);
         }
-
         unset($request_data['ref']);
+
 
         $request_data['transaction_ref'] = $transaction_ref;
         $request_data['vaccination_date'] = Carbon::parse($request->vaccination_date);
@@ -169,7 +173,6 @@ class HomeController extends Controller
             $price_pounds = $price_pounds + $vendor_products->price_pounds;
         }
 
-
         //send an email
         try {
             $message = "
@@ -185,8 +188,8 @@ class HomeController extends Controller
                       <p style='color: red'>
                      *** If you have made payment, you will receive your receipt shortly. <br/>
 
-If you are yet to make payment or need to reprocess a failed payment you can click below to continue to the payment page ***
-</p>
+                        If you are yet to make payment or need to reprocess a failed payment you can click below to continue to the payment page ***
+                        </p>
 
 
                       <br/><br/>
@@ -198,22 +201,12 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
 
-        //agent percentage on subaccount
-        if ($user->percentage_split != null) {
-            $transaction_charge = (100 - $user->percentage_split) / 100;
-        } else {
-            $percentage = Setting::where('id', 2)->first();
-            $transaction_charge = (100 - $percentage) / 100;
-        }
 
         //redirect to payment page
-        if (!empty($sub_account)) {
-            $data['subaccounts'][] = [
-                "id" => $sub_account,
-                "transaction_charge_type" => "percentage",
-                "transaction_charge" => $transaction_charge
-            ];
+        if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
+            $data['subaccounts'] = $sub_accounts;
         }
+
 
         BookingProduct::where('booking_id', $booking->id)->update([
             'charged_amount' => $data['amount'], 'currency' => $data['currency']
@@ -275,7 +268,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
 
         $data_response = json_decode($response);
 
-
         if (isset($data_response->data->status) && $data_response->data->status == "successful") {
 
             $booking = Booking::where('transaction_ref', $txRef)->first();
@@ -288,71 +280,76 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                 if ($booking->user_id) {
                     try {
                         DB::beginTransaction();
-                        $user = User::where('id', $booking->user_id)->first();
-                        if ($user->percentage_split != null) {
-                            $pecentage = $user->percentage_split;
-                        } else {
-                            $defaultpercent = Setting::where('id', '2')->first();
-                            $pecentage = $defaultpercent->value;
-                        }
 
+                        $userService = new UserShare;
+                        $user = User::where('id', $booking->user_id)->first();
+                        $agent_share = $userService->myShare($user);
+                        $share_data = $userService->calculateMainAgentShare($user->main_agent_share_raw, $agent_share);
+
+                        $agent_percentage = $share_data["sub_agent_share"];
 
                         $cost_booking = $booking_product->price;
 
-                        $amount_credit = ($cost_booking * ($pecentage / 100));
 
                         if ($booking->card_type == null || $booking->card_type == 2) {
+
                             //for international transaction in pounds
                             $cost_booking = $booking_product->price_pounds;
-
-                            $amount_credit = ($cost_booking * ($pecentage / 100));
-
-
-                            PoundTransaction::create([
-                                'amount' => $amount_credit,
-                                'booking_id' => $booking->id,
-                                'user_id' => $user->id,
-                                'cost_config' => $cost_booking,
-                                'pecentage_config' => $pecentage,
-                                'type' => "1"
-                            ]);
+                            $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
 
 
-                            $transactions =  PoundTransaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
+                            BookingConfirmationService::processPoundTransaction(
+                                $user,
+                                $booking->id,
+                                $agent_amount_credit,
+                                $cost_booking,
+                                $agent_percentage
+                            );
 
-                            $total_amount = $user->pounds_wallet_balance + $amount_credit;
+                            if (!empty($superAgent = $user->superAgent)) {
+                                $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
 
-                            User::where('id', $booking->user_id)->update([
-                                'pounds_wallet_balance' => $total_amount,
-                                'total_credit_pounds' => $transactions
-                            ]);
+                                BookingConfirmationService::processPoundTransaction(
+                                    $superAgent,
+                                    $booking->id,
+                                    $super_agent_amount_credit,
+                                    $cost_booking,
+                                    $super_agent_percentage
+                                );
+                            }
+
                         } elseif ($booking->card_type == 1) {
                             //for local transaction in naira
                             $cost_booking = $booking_product->price;
 
-                            $amount_credit = ($cost_booking * ($pecentage / 100));
+                            $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
 
-                            Transaction::create([
-                                'amount' => $amount_credit,
-                                'booking_id' => $booking->id,
-                                'user_id' => $user->id,
-                                'cost_config' => $cost_booking,
-                                'pecentage_config' => $pecentage,
-                                'type' => "1"
-                            ]);
+                            BookingConfirmationService::processNairaTransaction(
+                                $user,
+                                $booking->id,
+                                $agent_amount_credit,
+                                $cost_booking,
+                                $agent_percentage
+                            );
 
+                            if (!empty($superAgent = $user->superAgent)) {
+                                $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
 
-                            $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
+                                BookingConfirmationService::processNairaTransaction(
+                                    $superAgent,
+                                    $booking->id,
+                                    $super_agent_amount_credit,
+                                    $cost_booking,
+                                    $super_agent_percentage
+                                );
+                            }
 
-                            $total_amount = $user->wallet_balance + $amount_credit;
-
-                            User::where('id', $booking->user_id)->update([
-                                'wallet_balance' => $total_amount,
-                                'total_credit' => $transactions
-                            ]);
                         }
                         DB::commit();
                     } catch (\Exception $e) {
+                        logger("An error occured while confirming payments" , $request->all());
                         DB::rollBack();
                     }
                 }
@@ -404,7 +401,6 @@ If you are yet to make payment or need to reprocess a failed payment you can cli
                     'booking_code' => $code
                 ]);
             }
-
 
             return redirect()->to('/booking/success?b=' . $txRef);
         }
