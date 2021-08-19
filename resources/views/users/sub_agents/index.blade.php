@@ -30,11 +30,14 @@
 
             <!--employee data table-->
             <div class="row">
+                @if (!auth()->user()->isAdmin())
                 <div class="col-12 text-right mb-3">
                     <a href="{{ route("sub-agents.create")}}" class="btn btn-primary">
                         New Sub Agent
                     </a>
                 </div>
+                @endif
+
                 <div class="col-xl-12 container">
                     <ul class="nav nav-tabs nav-justified ">
                         <li class="nav-item">
@@ -48,6 +51,7 @@
 
                 <br>
                 <!-- Tab panes -->
+                @if (!auth()->user()->isAdmin())
                 <div class="tab-content col-xl-12 p-0">
                     <div class="tab-pane active" id="home">
                         @include("users.sub_agents.fragments.table" , ["id" => "data_table" , "table_status" => 1])
@@ -59,6 +63,19 @@
 
                     </div>
                 </div>
+                @else
+                <div class="tab-content col-xl-12 p-0">
+                    <div class="tab-pane active" id="home">
+                        @include("users.sub_agents.fragments.admin_table" , ["id" => "data_table" , "table_status" => 1])
+                    </div>
+                    <div class="tab-pane fade" id="menu1">
+
+                        @include("users.sub_agents.fragments.admin_table" , ["id" => "data_table1" ,
+                        "table_status" => 0])
+
+                    </div>
+                </div>
+                @endif
             </div>
 
         </div>

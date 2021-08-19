@@ -13,8 +13,8 @@
                 <div class="form-group">
                     <small class="text-muted">My Percentage Share</small>
                     <input type="range" value="{{ $user->main_agent_share_raw }}" name="my_share" class="form-control" min="0" max="100"
-                        id="exampleInputEmail1" placeholder="How much percent would you take for yourself?"  onInput="$('#rangeval').html($(this).val())" required>
-                    <span id="rangeval">{{ $user->main_agent_share_raw }}</span>%
+                        id="exampleInputEmail1" placeholder="How much percent would you take for yourself?"  onInput="$('#rangeval_{{ $user->id }}').html($(this).val())" required>
+                    <span id="rangeval_{{ $user->id }}">{{ $user->main_agent_share_raw }}</span>%
                 </div>
             </div>
             <div class="modal-footer">

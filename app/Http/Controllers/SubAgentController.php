@@ -25,7 +25,12 @@ class SubAgentController extends Controller
      */
     public function index()
     {
-        $agents = User::where("main_agent_id", auth()->id())->paginate(20);
+        $builder = User::whereNotNull("main_agent_id")->whereHas("superAgent")->orderby("created_at" , "desc");
+
+        if(!auth()->user()->isAdmin()){
+            $builder = $builder->where("main_agent_id", auth()->id());
+        }
+        $agents = $builder->paginate(20);
         $setting = Setting::where('id', 2)->first();
 
         return view("users.sub_agents.index", ["users" => $agents, "setting" => $setting]);
