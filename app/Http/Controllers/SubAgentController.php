@@ -131,8 +131,9 @@ class SubAgentController extends Controller
         $data = $request->validate([
             'my_share' => 'required|gt:0',
         ]);
-        $share_data = $this->calculateShare($data["my_share"]);
-        $user->update($share_data);
+        $user->update([
+            "main_agent_share_raw" => $data["my_share"]
+        ]);
         return back()->with('alert-success', "Successfully updated sub-agent share");
     }
 

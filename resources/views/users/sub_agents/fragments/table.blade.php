@@ -42,7 +42,7 @@
                                     @endif
                                     <td>{{ $shareData["main_agent_share_raw"] ?? "N/A" }}%</td>
                                     <td>{{ $shareData["main_agent_share_percent"] ?? "N/A" }}%</td>
-                                    <td>{{ $user->myPercent() }}%</td>
+                                    <td>{{ $shareData["sub_agent_share"] ?? "N/A" }}%</td>
                                     <td>
                                         {{ $user->referal_code }}
                                     </td>
