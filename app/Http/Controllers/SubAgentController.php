@@ -81,15 +81,14 @@ class SubAgentController extends Controller
         $data["password"] = bcrypt($password);
         $data["main_agent_id"] = $main_agent->id;
 
-        $share_data = $this->userShareHelper->calculateMainAgentShare($data["my_share"]);
+        $data["main_agent_share_raw"] = $data["my_share"];
         $data['referal_code'] = $referral;
         $data['type'] = 2;
         $data['status'] = 0;
 
-        unset($share_data["sub_agent_share"]);
         unset($data["my_share"]);
         unset($data["file"]);
-        $user = User::create(array_merge($data, $share_data));
+        $user = User::create($data);
 
         Mail::to($user->email)->send(new NewSubAgent([
             "email" => $user->email,
