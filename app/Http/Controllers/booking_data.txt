@@ -1,0 +1,49 @@
+$data = [
+    "ref" => "8bYOLw",
+  "country_travelling_from" => "156",
+  "product_id" => "4",
+  "country_travelling_from_id" => "156",
+  "product_id_" => "4",
+  "first_name" => "Confidence",
+  "last_name" => "Ugolo",
+  "sex" => "1",
+  "dob" => "09/03/2021",
+  "ethnicity" => "4",
+  "nhs_number" => "nhs-000",
+  "vaccination_status" => "2",
+  "vaccination_type" => "Janssen vaccine",
+  "vaccination_date" => "09/04/2021",
+  "uk_phone_no" => "+2347036331480",
+  "phone_no" => "07070707",
+  "email" => "Ugoloconfidence@gmail.com",
+  "address_1" => "Ibeju Lekki",
+  "address_2" => "12",
+  "home_town" => "Lagos",
+  "post_code" => "gftyuik",
+  "home_country_id" => "156",
+  "isolation_address" => "Ibeju Lekki",
+  "isolation_address2" => "12",
+  "isolation_town" => "Lagos",
+  "isolation_postal_code" => "gftyuik",
+  "isolation_country_id" => "225",
+  "document_id" => "101010",
+  "city_from" => "Lagos",
+  "departure_date" => "08/19/2021",
+  "arrival_date" => "08/27/2021",
+  "last_day_travel" => "08/19/2021",
+  "method_of_transportation" => "1",
+  "transport_no" => "Flight",
+  "payment_method" => "flutterwave",
+  "card_type" => "1",
+  "consent" => "1",
+  "_token" => "HDpCKuum3RXLMa6b0ThjyI2SLUcEYwduwcUVMJUd"
+];
+
+
+Payment confirmation
+
+array:3 [▼
+  "status" => "successful"
+  "tx_ref" => "booking_611e3ba003acf822505"
+  "transaction_id" => "2421064"
+]

@@ -44,7 +44,7 @@
     <script src="/assets/vendor/html5shiv.js"></script>
     <script src="/assets/vendor/respond.min.js"></script>
     <![endif]-->
-   
+
     @yield('style')
 </head>
 
@@ -184,12 +184,12 @@
                             @endif
                         </ul>
                     </li>
-                    <!-- <li>
-                      <a href="{{ url('/view/subagent') }}">
+                    <li>
+                      <a href="{{ route("sub-agents.index") }}">
                             <i class="icon-calculator"></i>
                             <span>Sub agents</span>
                         </a>
-                    </li> -->
+                    </li>
                     <li>
                       <a href="{{ url('/view/transactions') }}">
                             <i class="icon-calculator"></i>
