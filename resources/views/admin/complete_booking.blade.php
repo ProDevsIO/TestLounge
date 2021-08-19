@@ -24,7 +24,7 @@
                             </div>
                         </div>
                     </div>
-                    @if(auth()->user()->type = 1)
+                    @if(auth()->user()->type == 1)
                         @if($ven != null)
                         <div class="card mb-4 bg-purple" title="Pending bookings">
                             <div class="card-body">

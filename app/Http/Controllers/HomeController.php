@@ -402,7 +402,7 @@ class HomeController extends Controller
 // dd('checking', $data_response);
             return redirect()->to('/booking/success?b=' . $txRef);
         }
-dd('not checking', $data_response);
+// dd('not checking', $data_response);
         return redirect()->to('/booking/failed?b=' . $txRef);
     }
 

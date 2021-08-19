@@ -28,6 +28,7 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
+        
         $earned = 0;
         $earnedPounds = 0;
         if (auth()->user()->type == 1) {
@@ -215,6 +216,7 @@ class DashboardController extends Controller
 
     public function complete_booking(Request $request)
     {
+        
         $refs = [];
         if (auth()->user()->type == "1") {
             $bookings = Booking::where('status', 1)->orderby('id', 'desc');
@@ -234,7 +236,7 @@ class DashboardController extends Controller
         }
         $vendorsTotalCost = 0;
         $ven = null;
-        if (auth()->user()->type == 1) {
+        if (auth()->user()->type == "1") {
             if ($request->vendor_id) {
                 $bookings_vendors = BookingProduct::where('vendor_id', $request->vendor_id)->pluck('booking_id')->toArray();
                 $bookings = $bookings->whereIn('id', $bookings_vendors);
@@ -361,7 +363,7 @@ class DashboardController extends Controller
 
             return response()->stream($callback, 200, $headers);
         }
-    
+       
         return view('admin.complete_booking')->with(compact('bookings', 'products', 'vendors', 'users', 'refs', 'ven', 'vendorsTotalCost'));
     }
 

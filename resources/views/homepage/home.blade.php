@@ -454,10 +454,10 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td>  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td>  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td>  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td> <a class="btn btn-primary btn-filled">Not available</a></td>
+                    <td style="background-color:green">  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td style="background-color:orange">  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td style="background-color:orange">  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td style="background-color:red"> <a class="btn btn-primary btn-filled">Not available</a></td>
                 </tr>
                 
             </table>

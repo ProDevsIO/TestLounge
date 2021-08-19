@@ -156,6 +156,8 @@
     </div>
 </div>
 
+
+
 <div class="app-body">
     <!--left sidebar start-->
     <div class="left-nav-wrap">
@@ -179,6 +181,7 @@
                             <li><a href="{{ url('/pending/booking') }}">Unpaid Bookings</a></li>
                             <li><a href="{{ url('complete/booking') }}">Paid Bookings</a></li>
                             @if(auth()->user()->type == "1")
+                           
                             <li><a href="{{ url('/view/agent/booking') }}">Agent Bookings</a></li>
                             <li><a href="{{ url('/view/individual/booking') }}">Individual Bookings</a></li>
                             @endif
