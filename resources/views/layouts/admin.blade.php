@@ -187,12 +187,14 @@
                             @endif
                         </ul>
                     </li>
+                    @if(auth()->user()->main_agent_id == null)
                     <li>
                       <a href="{{ route("sub-agents.index") }}">
                             <i class="icon-calculator"></i>
                             <span>Sub agents</span>
                         </a>
                     </li>
+                    @endif
                     <li>
                       <a href="{{ url('/view/transactions') }}">
                             <i class="icon-calculator"></i>
