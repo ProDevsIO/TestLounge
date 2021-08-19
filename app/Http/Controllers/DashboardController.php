@@ -935,7 +935,8 @@ class DashboardController extends Controller
             $total_kes = BookingProduct::where('currency', 'KES')->sum('charged_amount');
             $total_zar = BookingProduct::where('currency', 'ZAR')->sum('charged_amount');
         }
-
+        $commission = Transaction::where('type', 1)->sum('amount');
+        $pcommission = PoundTransaction::where('type', 1)->sum('amount');
         $due_amount = User::sum("wallet_balance");
 
         $users = User::where('type', '!=', '1')->whereNotNull('wallet_balance')->orderby('wallet_balance', 'desc')->get();
@@ -993,7 +994,7 @@ class DashboardController extends Controller
 
 
 
-        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end'));
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'pcommission'));
 
     }
 

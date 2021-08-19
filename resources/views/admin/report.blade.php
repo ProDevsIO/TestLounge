@@ -77,6 +77,36 @@
                         </div>
                     </a>
                 </div>
+                <div class="col-xl-3 col-sm-3">
+                    <div class="card mb-4 bg-purple" title="Revenue">
+                        <div class="card-body">
+                            <div class="media d-flex align-items-center ">
+                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                    <i class="vl_book"></i>
+                                </div>
+                                <div class="media-body text-light" title="Revenue">
+                                    <h4 class="text-uppercase mb-0 weight500">N{{ number_format($commission) }}</h4>
+                                    <span>Total Commision(Naira)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-3">
+                    <div class="card mb-4 bg-purple" title="Revenue">
+                        <div class="card-body">
+                            <div class="media d-flex align-items-center ">
+                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                    <i class="vl_book"></i>
+                                </div>
+                                <div class="media-body text-light" title="Revenue">
+                                    <h4 class="text-uppercase mb-0 weight500">£{{ number_format($pcommission) }}</h4>
+                                    <span>Total Commision(Pounds)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- <div class="col-xl-3 col-sm-3">
                     <a href="{{  url('currency/detail/report/cedis/'.$start.'/'.$end) }}">
                         <div class="card mb-4 bg-purple" title="Revenue">
