@@ -8,11 +8,11 @@ use App\Models\User;
 class BookingService
 {
 
-    public array $sub_accounts = [];
-    public int $user_id;
-    public String $referral_code;
-    public User $user;
-    public User $superAgent;
+    public $sub_accounts = [];
+    public $user_id;
+    public $referral_code;
+    public $user;
+    public $superAgent;
 
     public function getSubAccountsByRefCode($referal_code)
     {

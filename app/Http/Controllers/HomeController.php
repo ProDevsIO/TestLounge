@@ -399,10 +399,10 @@ class HomeController extends Controller
                     'booking_code' => $code
                 ]);
             }
-
+// dd('checking', $data_response);
             return redirect()->to('/booking/success?b=' . $txRef);
         }
-
+dd('not checking', $data_response);
         return redirect()->to('/booking/failed?b=' . $txRef);
     }
 
