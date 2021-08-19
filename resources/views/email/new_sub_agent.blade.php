@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-    <title>New Sub Agent</title>
+    <title>New Subagent</title>
 
     <style>
         body {
@@ -288,8 +288,7 @@
                                                                                                 <td style="font-family: Geneva, Tahoma, Verdana, sans-serif; font-size: 16px; line-height: 22px; color: #555555; padding-top: 16px;"
                                                                                                     align="left">
                                                                                                     {{ $main_agent_name }}
-                                                                                                    added you as a sub
-                                                                                                    agent!
+                                                                                                    added you as a sub-agent!
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tr>

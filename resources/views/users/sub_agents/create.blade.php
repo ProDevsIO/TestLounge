@@ -14,7 +14,7 @@
                 <div class="col-xl-12 col-md-12 profile-info-position">
                     <div class="card card-shadow mb-4 ">
                         <div class="card-body">
-                            <h3 class="text-center mb-3">Create Sub Agent Account</h3>
+                            <h3 class="text-center mb-3">Create Sub-Agent Account</h3>
                             @include('errors.showerrors')
                             <form action="{{ route("sub-agents.store") }}" method="post" enctype="multipart/form-data">
                                 @csrf
