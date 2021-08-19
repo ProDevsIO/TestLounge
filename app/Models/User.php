@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 /**
  * Class User
- * 
+ *
  * @property int $id
  * @property string|null $first_name
  * @property string|null $last_name
@@ -23,7 +23,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $type
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property Collection|Booking[] $bookings
  *
  * @package App\Models
@@ -55,10 +55,14 @@ class User extends Authenticatable
         'flutterwave_id','agent_show_name',
         'director','c_o_i',
         'certified','certified_no',
-        'platform_name'
+        'platform_name',
+        "main_agent_share_percent",
+        "main_agent_share_raw",
+        "main_agent_id",
+        "percentage_split"
 
 	];
-  
+
 	public function bookings()
 	{
 		return $this->hasMany(Booking::class);
@@ -88,5 +92,27 @@ class User extends Authenticatable
     {
         return $this->hasMany(PoundTransaction::class);
     }
-    
+
+    public function myPercent()
+    {
+       return  shareHelper()->myShare($this);
+    }
+
+    public function superAgent()
+    {
+        return $this->belongsTo(User::class , "main_agent_id" , "id");
+    }
+
+    public function superAgentShare()
+    {
+        if(!empty($main = $this->main_agent_share_raw)){
+            return shareHelper()->calculateMainAgentShare( $main , $this->myPercent());
+        }
+    }
+
+    public function isAdmin()
+    {
+       return $this->type == 1;
+    }
+
 }

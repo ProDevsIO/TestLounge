@@ -11,7 +11,7 @@
     <label>Price in Pounds</label>
     <input type="number" wire:model="price" class="form-control" placeholder="£40">
     <label>Vendors Cost Price</label>
-    <input type="number" wire:model="costPrice" class="form-control" placeholder="please fill out in naira">
+    <input type="number" wire:model="costPrice" class="form-control" placeholder="please fill out in pounds">
     <label>Price Stripe</label>
     <input type="text" wire:model="price_stripe" class="form-control" placeholder="Price_">
     </select>

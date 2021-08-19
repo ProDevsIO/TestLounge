@@ -33,7 +33,7 @@
                                         <i class="vl_money"></i>
                                     </div>
                                     <div class="media-body text-light" title="Pending bookings">
-                                        <h4 class="text-uppercase mb-0 weight500">N {{ number_format($vendorsTotalCost) }}</h4>
+                                        <h4 class="text-uppercase mb-0 weight500">£ {{ number_format($vendorsTotalCost) }}</h4>
                                         <span>{{$ven->vendor->name}}</span>
                                     </div>
                                 </div>
