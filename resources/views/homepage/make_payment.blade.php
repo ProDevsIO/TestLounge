@@ -87,20 +87,21 @@
                                 <p>Name: {{ $booking->first_name }} {{ $booking->last_name }}</p>
                                 <p>Email: {{ $booking->email }}</p>
                                 <p>Phone: {{ $booking->phone_no }}</p>
-                                <div class="col-md-12">
-                                    <label>Choose Payment Method: <span
-                                                class="show_required"> *</span></label>
-                                    <div class="radio-group">
-                                        <input type="hidden" name="payment_method" id="payment_method"/>
-                                        <div class='radio' data-value="stripe" style="margin-top: 10px"><img
-                                                    src="{{ url('/img/stripe.png') }}"
-                                                    height="60px"></div>
-                                        <div class='radio' data-value="flutterwave" style="margin-top: 10px"><img
-                                                    src="{{ url('/img/Flutterwave.png') }}"
-                                                    height="60px"></div>
-                                        <br>
-                                    </div>
-                                </div>
+                                <input type="hidden" name="payment_method" value="flutterwave" id="payment_method"/>
+                                {{--<div class="col-md-12">--}}
+                                    {{--<label>Choose Payment Method: <span--}}
+                                                {{--class="show_required"> *</span></label>--}}
+                                    {{--<div class="radio-group">--}}
+                                        {{----}}
+                                        {{--<div class='radio' data-value="stripe" style="margin-top: 10px"><img--}}
+                                                    {{--src="{{ url('/img/stripe.png') }}"--}}
+                                                    {{--height="60px"></div>--}}
+                                        {{--<div class='radio' data-value="flutterwave" style="margin-top: 10px"><img--}}
+                                                    {{--src="{{ url('/img/Flutterwave.png') }}"--}}
+                                                    {{--height="60px"></div>--}}
+                                        {{--<br>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
                                 <input type="submit" style="max-width: 200px;" value="Proceed to Payment" class="btn btn-primary">
                             </div>
                         </form>

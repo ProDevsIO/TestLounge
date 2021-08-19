@@ -287,7 +287,7 @@
                 <div class="row">
                     <div class="col-sm-12 text-center">
                         <img alt="logo" class="logo hidden-xs" src="/img/logo-light.png">
-                        <h1 class="text-white space-bottom-medium text-center">We simplify the process of booking and making payments for Covid-19 UK Travel Tests for both travellers and travel agents. You’ll get up to date information on UK travel requirements and access to accredited test providers in the UK ensuring a  hassle free travel experience.</h1>
+                        <h1 class="text-white space-bottom-medium text-center">We simplify the process of booking and making payments for Covid-19 Travel Tests for both travellers and travel agents. You’ll get up to date information on UK travel requirements and access to accredited test providers in the UK ensuring a  hassle free travel experience.</h1>
                         <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a>
                         <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a>
                     </div>
@@ -529,13 +529,13 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
                         <span class="sub alt-font">popular questions</span>
-                        <h1><strong>GUIDELINES FOR UK TRAVEL TESTS</strong></h1>
+                        <h1><strong>GUIDELINES FOR TRAVEL TESTS GLOBAl</strong></h1>
                         <ul style="text-align: justify; list-style-type: square; font-size:18px;padding: 0px 20px;">
                             <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is <b>MANDATORY</b> for entry into the UK. You can book your test <a href="/pick" class="">Here</a> </li>
-                           <br/> <li> Book and Pay for your UK travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>. Evidence of booking and payment is <b>MANDATORY</b> before you can board a flight to the UK</li>
+                           <br/> <li> Book and Pay for your travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>. Evidence of booking and payment is <b>MANDATORY</b> before you can board a flight to the UK</li>
                             <br/><li>Following Payment, you will immediately receive your Passenger locator Number and receipt of payment.</li>
                             <br/> <li>This number will be used to Complete your Passenger locator form <a href="https://provide-journey-contact-details.homeoffice.gov.uk/passengerLocatorFormUserAccountHolderQuestion" target="_blank">Here</a>.You must show evidence that you have completed your Passenger locator form before you will be allowed to board a flight into the UK</li>
-                            <br/> <li>You may also need to show your receipt of payment for your UK test before you are allowed to board a flight to the UK; <br>
+                            <br/> <li>You may also need to show your receipt of payment for your test before you are allowed to board a flight to the UK; <br>
                                 Please have these documents handy at the airport ; both electronic and printed copies are accepted by airlines</li>
                             <br/> <li>Following your arrival into the UK, you will receive the  test packages you booked for on or before the 2nd day of your  arrival.</li>
                             <br/> <li>You must carry out a self test on your 1st or 2nd day of arrival into the UK . The directions on how to carry out a self test, how to activate your test and where to send your test samples to are all written  on the pack  you will receive. Click to watch video on how to carry out a self test. <a href="https://youtu.be/8lo6g-TYZ-c" target="_blank">Watch</a>.</li>

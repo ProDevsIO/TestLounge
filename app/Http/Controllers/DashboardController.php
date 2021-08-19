@@ -810,12 +810,20 @@ class DashboardController extends Controller
         try {
             DB::beginTransaction();
             $booking_product = BookingProduct::where('booking_id', $id)->first();
-            if ($user->percentage_split != null) {
-                $pecentage = $user->percentage_split;
-            } else {
+            
+            if(isset($user))
+            {
+                if ($user->percentage_split != null) {
+                    $pecentage = $user->percentage_split;
+                } else {
+                    $defaultpercent = Setting::where('id', '2')->first();
+                    $pecentage = $defaultpercent->value;
+                }
+            }else{
                 $defaultpercent = Setting::where('id', '2')->first();
                 $pecentage = $defaultpercent->value;
             }
+           
 
             $check = Transaction::where('booking_id', $booking->id)->where('user_id', $user->id)->first();
             if (!$check) {
@@ -927,7 +935,8 @@ class DashboardController extends Controller
             $total_kes = BookingProduct::where('currency', 'KES')->sum('charged_amount');
             $total_zar = BookingProduct::where('currency', 'ZAR')->sum('charged_amount');
         }
-
+        $commission = Transaction::where('type', 1)->sum('amount');
+        $pcommission = PoundTransaction::where('type', 1)->sum('amount');
         $due_amount = User::sum("wallet_balance");
 
         $users = User::where('type', '!=', '1')->whereNotNull('wallet_balance')->orderby('wallet_balance', 'desc')->get();
@@ -985,7 +994,7 @@ class DashboardController extends Controller
 
 
 
-        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end'));
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'pcommission'));
 
     }
 
