@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Booking
- * 
+ *
  * @property int $id
  * @property string|null $first_name
  * @property string|null $last_name
@@ -54,7 +54,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $status
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property Country|null $country
  * @property User|null $user
  * @property Vendor|null $vendor
@@ -129,7 +129,8 @@ class Booking extends Model
 		'status',
         'stripe_session',
         'stripe_intent',
-		'post_status'
+		'post_status',
+        'card_type'
 	];
 
 	public function country()
