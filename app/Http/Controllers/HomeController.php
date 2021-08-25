@@ -800,7 +800,7 @@ class HomeController extends Controller
         if(!session()->has('ip'))
         {
             $ip = uniqid('ip_').rand(100, 999);
-            session(['ip' => $create]);
+            session(['ip' => $ip]);
         }else{
             $ip = session()->get('ip');
         }
