@@ -134,7 +134,7 @@
                         <li><a href="/#contact">Contact</a>
                         </li>
                         <?php 
-                            $cartcount = App\Models\Cart::where('ip',request()->ip())->count();
+                            $cartcount = App\Models\Cart::where('ip', session()->get('ip'))->count();
                         
                         ?>
                         <li> <a href="{{url('/view/cart')}}"><i class="icon icon_cart"></i><span class="badge badge-cart">{{$cartcount}}</span></a></li>

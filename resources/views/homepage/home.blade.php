@@ -538,6 +538,7 @@
                         <h1 class="text-white space-bottom-medium text-center">We simplify the process of booking and making payments for Covid-19 Travel Tests for both travellers and travel agents. You’ll get up to date information on UK travel requirements and access to accredited test providers in the UK ensuring a  hassle free travel experience.</h1>
                         <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a>
                         <a href="{{ url('/product/all') }}" class="btn btn-primary btn-filled">Book Now</a>
+                        
                     </div>
                 </div><!--end of row-->
             </div><!--end of container-->

@@ -147,7 +147,7 @@ class HomeController extends Controller
         //     session()->flash('alert-danger', "Kindly select a product");
         //     return back()->withInput();
         // }
-        $carts = Cart::where('ip', request()->ip())->get();
+        $carts = Cart::where('ip', session()->get('ip'))->get();
         $request_data = $request->all();
       
         unset($request_data['_token']);
@@ -447,10 +447,10 @@ class HomeController extends Controller
                 ]);
 
                 //to remove items from cart
-                $cart = Cart::where('ip', request()->ip())->delete();
+                $cart = Cart::where('ip', session()->get('ip'))->delete();
             }
             //to remove items from cart
-            $cart = Cart::where('ip', request()->ip())->delete();
+            $cart = Cart::where('ip', session()->get('ip'))->delete();
 
             return redirect()->to('/booking/success?b=' . $txRef);
         }
@@ -650,6 +650,7 @@ class HomeController extends Controller
 
     public function about()
     {
+        
         return view('homepage.about');
     }
 
@@ -783,7 +784,7 @@ class HomeController extends Controller
 
     public function viewCart()
     {
-        $carts = Cart::where('ip', request()->ip())->get();
+        $carts = Cart::where('ip', session()->get('ip'))->get();
         $cartSum = 0;
         foreach($carts as $cart)
         {
@@ -796,7 +797,15 @@ class HomeController extends Controller
 
     public function addToCart($p_id, $v_id)
     {
-        $ip = request()->ip();
+        if(!session()->has('ip'))
+        {
+            $ip = uniqid('ip_').rand(100, 999);
+            session(['ip' => $create]);
+        }else{
+            $ip = session()->get('ip');
+        }
+
+
         $v_product = VendorProduct::where([
             'product_id' => $p_id,
             'vendor_id' => $v_id 
