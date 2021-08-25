@@ -44,6 +44,11 @@ Route::get('/payment/confirmation', [\App\Http\Controllers\HomeController::class
 Route::get('/pick', [\App\Http\Controllers\HomeController::class,"pick"])->name('pick');
 Route::get('/pricing', [\App\Http\Controllers\HomeController::class,"pricing"])->name('pricing');
 Route::get('/about', [\App\Http\Controllers\HomeController::class,"about"])->name('about');
+Route::get('/product/{type}', [\App\Http\Controllers\HomeController::class,"viewProducts"]);
+Route::get('/add/cart/{product_id}/{vendor_id}', [\App\Http\Controllers\HomeController::class,"addToCart"]);
+Route::get('/view/cart', [\App\Http\Controllers\HomeController::class,"viewCart"]);
+Route::get('/update/cart/{id}/{quantity}', [\App\Http\Controllers\HomeController::class,"updateCart"]);
+Route::get('/delete/cart/{id}', [\App\Http\Controllers\HomeController::class,"deleteCart"]);
 Route::get('/covid/testing', [\App\Http\Controllers\HomeController::class,"products"])->name('products_covid');
 Route::get('/check/price/{vendor_id}', [\App\Http\Controllers\HomeController::class,"check_price"])->name('check_price');
 
@@ -58,7 +63,7 @@ Route::post('/register', [\App\Http\Controllers\HomeController::class,"register"
 
 
 Route::post('/post/booking', [\App\Http\Controllers\HomeController::class,"post_booking"]);
-
+Route::get('/booking2', [\App\Http\Controllers\HomeController::class,"booking2"]);
 Route::get('/booking/success', [\App\Http\Controllers\HomeController::class,"booking_success"])->name('booking_success');
 Route::get('/booking/code/failed', [\App\Http\Controllers\HomeController::class,"code_failed"])->name('code_failed');
 Route::get('/booking/stripe/success', [\App\Http\Controllers\HomeController::class,"success_stripe"])->name('success_stripe');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CountryColor;
+use App\Models\BookingProduct;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -147,6 +148,7 @@ class Controller extends BaseController
 
     function sendData($booking)
     {
+       
         //ethnicity
         if ($booking->ethnicity == 0) {
             $ethnic = "white_other";
@@ -215,24 +217,49 @@ class Controller extends BaseController
                 "postcode" => $booking->isolation_postal_code
             ];
 
-        $data_send['external_reference'] = "booking_".$booking->id;
+        // $data_send['external_reference'] = "booking_".$booking->id;
         $data_send['product'] = optional(optional($booking->product)->product)->name;
 
-        $ch = curl_init();
+        $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
 
-        curl_setopt($ch, CURLOPT_URL, "https://portal.ukhealthtesting.com/api/partner_orders");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,
-            http_build_query($data_send));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // dd($booking_products);
+        $code = [];
+        $z = 0;
+        $y = 0;
+        $i = 0;
+        ini_set('max_execution_time', 300);
+        foreach($booking_products as $booking_product)
+        {
+            $z = $z + $booking_product->quantity;
+        }
+            
+            while($y < $z){
+                $data_send['external_reference'] = "booking_".$booking->id."_".$y;
+                $i++;
+                $ch = curl_init();
 
-        $response = curl_exec($ch);
+                curl_setopt($ch, CURLOPT_URL, "https://portal.ukhealthtesting.com/api/partner_orders");
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS,
+                    http_build_query($data_send));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+                $response = curl_exec($ch);
+        
+                curl_close($ch);
+        
+                $data_response = json_decode($response);
+                $code[] = $data_response->reference;
+                $y++;
+                
+               
+            }
+         
+       
+        $formatted_data = json_encode($code);
 
-        curl_close($ch);
+        return $formatted_data;
 
-        $data_response = json_decode($response);
-
-        return $data_response->reference;
     }
 
 

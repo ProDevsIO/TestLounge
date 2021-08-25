@@ -49,7 +49,7 @@
                                 <p>
                                {{ $product->description }}
                                 </p>
-                                <a href="{{ url('/booking?product_id='.$product->id) }}" class="btn btn-primary">Book</a>
+                                <a href="{{ url('/booking/all) }}" class="btn btn-primary">Book</a>
                             </div>
                         </div>
                     </div>

@@ -18,6 +18,7 @@ use App\Models\PoundTransaction;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorProduct;
+use App\Models\Cart;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,6 +40,7 @@ class HomeController extends Controller
 
     public function booking(Request $request)
     {
+      
         $countries = Country::all();
         $products = Product::all();
         $vendors = Vendor::all();
@@ -51,7 +53,21 @@ class HomeController extends Controller
 
         return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user'));
     }
+    public function booking2(Request $request)
+    {
+      
+        $countries = Country::all();
+        $products = Product::all();
+        $vendors = Vendor::all();
+        $user = "";
 
+        if ($request->ref) {
+            $user = User::where('referal_code', $request->ref)->first();
+        }
+
+
+        return view('homepage.booking2')->with(compact('countries', 'products', 'vendors', 'user'));
+    }
     public function login()
     {
         if (auth()->check()) {
@@ -127,17 +143,18 @@ class HomeController extends Controller
 
         $request->vendor_id = 3;
 
-        if (empty($request->product_id)) {
-            session()->flash('alert-danger', "Kindly select a product");
-            return back()->withInput();
-        }
-
+        // if (empty($request->product_id)) {
+        //     session()->flash('alert-danger', "Kindly select a product");
+        //     return back()->withInput();
+        // }
+        $carts = Cart::where('ip', request()->ip())->get();
         $request_data = $request->all();
-
+      
         unset($request_data['_token']);
 
         $transaction_ref = uniqid('booking_') . rand(10000, 999999);
-
+        $external_ref = 'REF' . rand(10000, 99999);
+        
         if (isset($request_data['ref'])) {
             $request_data = $this->bookingService->getSubAccountsByRefCode($request_data['ref'])
                 ->processRequestData($request_data);
@@ -146,32 +163,56 @@ class HomeController extends Controller
 
 
         $request_data['transaction_ref'] = $transaction_ref;
+        $request_data['external_reference'] = $external_ref;
         $request_data['vaccination_date'] = Carbon::parse($request->vaccination_date);
         $request_data['last_day_travel'] = Carbon::parse($request->last_day_travel);
 
         unset($request_data['payment_method']);
 
-        $booking = Booking::create($request_data);
-
         $price = $price_pounds = 0;
-        $product_id[] = $request->product_id;
-        foreach ($product_id as $r_product) {
-
-            $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $r_product)->first();
-
-            BookingProduct::create([
-                'booking_id' => $booking->id,
-                'product_id' => $r_product,
-                'vendor_id' => $request->vendor_id,
-                'vendor_product_id' => $vendor_products->id,
-                'price' => $vendor_products->price,
-                'price_pounds' => $vendor_products->price_pounds,
-                'vendor_cost_price' => $vendor_products->cost_price
-            ]);
-
-            $price = $price + $vendor_products->price;
-            $price_pounds = $price_pounds + $vendor_products->price_pounds;
+        $booking = Booking::create($request_data);  
+        foreach($carts as  $cart){
+            $product_id = $cart->vendorProduct->product_id;
+        
+    
+                $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $product_id)->first();
+    
+                BookingProduct::create([
+                    'booking_id' => $booking->id,
+                    'product_id' => $product_id,
+                    'vendor_id' => $vendor_products->vendor_id,
+                    'vendor_product_id' => $vendor_products->id,
+                    'price' => ($vendor_products->price * $cart->quantity),
+                    'price_pounds' => ($vendor_products->price_pounds * $cart->quantity),
+                    'vendor_cost_price' => ($vendor_products->cost_price * $cart->quantity),
+                    'quantity' => $cart->quantity
+                ]);
+    
+                $price = $price + ($vendor_products->price * $cart->quantity);
+                $price_pounds = $price_pounds + ($vendor_products->price_pounds * $cart->quantity);
+            
         }
+        
+
+        // $price = $price_pounds = 0;
+        // $product_id[] = $request->product_id;
+        // foreach ($product_id as $r_product) {
+
+        //     $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $r_product)->first();
+
+        //     BookingProduct::create([
+        //         'booking_id' => $booking->id,
+        //         'product_id' => $r_product,
+        //         'vendor_id' => $request->vendor_id,
+        //         'vendor_product_id' => $vendor_products->id,
+        //         'price' => $vendor_products->price,
+        //         'price_pounds' => $vendor_products->price_pounds,
+        //         'vendor_cost_price' => $vendor_products->cost_price
+        //     ]);
+
+        //     $price = $price + $vendor_products->price;
+        //     $price_pounds = $price_pounds + $vendor_products->price_pounds;
+        // }
 
         //send an email
         try {
@@ -198,7 +239,7 @@ class HomeController extends Controller
             Mail::to($booking->email)->send(new BookingCreation($message));
         } catch (\Exception $e) {
         }
-
+       
         $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
 
         //redirect to payment page
@@ -236,7 +277,7 @@ class HomeController extends Controller
 
     public function payment_confirmation(Request $request)
     {
-
+        
 
         if (env('APP_ENV', "LIVE") == "LIVE") {
             $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
@@ -269,94 +310,98 @@ class HomeController extends Controller
         if (isset($data_response->data->status) && $data_response->data->status == "successful") {
 
             $booking = Booking::where('transaction_ref', $txRef)->first();
-
+          
 
             if ($booking->status != 1) {
 
-                $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
-
-                if ($booking->user_id) {
-                    try {
-                        DB::beginTransaction();
-
-                        $userService = new UserShare;
-                        $user = User::where('id', $booking->user_id)->first();
-                        $agent_share = $userService->myShare($user);
-                        $share_data = $userService->calculateMainAgentShare($user->main_agent_share_raw, $agent_share);
-
-                        $agent_percentage = $share_data["sub_agent_share"];
-
-                        $cost_booking = $booking_product->price;
-
-
-                        if ($booking->card_type == null || $booking->card_type == 2) {
-
-                            //for international transaction in pounds
-                            $cost_booking = $booking_product->price_pounds;
-                            $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
-
-
-                            BookingConfirmationService::processPoundTransaction(
-                                $user,
-                                $booking->id,
-                                $agent_amount_credit,
-                                $cost_booking,
-                                $agent_percentage
-                            );
-
-                            if (!empty($superAgent = $user->superAgent)) {
-                                $super_agent_percentage = $share_data["main_agent_share_percent"];
-                                $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
-
-                                BookingConfirmationService::processPoundTransaction(
-                                    $superAgent,
-                                    $booking->id,
-                                    $super_agent_amount_credit,
-                                    $cost_booking,
-                                    $super_agent_percentage
-                                );
-                            }
-
-                        } elseif ($booking->card_type == 1) {
-                            //for local transaction in naira
+                $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
+                
+                foreach( $booking_products as $booking_product){
+                    if ($booking->user_id) {
+                        try {
+                            DB::beginTransaction();
+    
+                            $userService = new UserShare;
+                            $user = User::where('id', $booking->user_id)->first();
+                            $agent_share = $userService->myShare($user);
+                            $share_data = $userService->calculateMainAgentShare($user->main_agent_share_raw, $agent_share);
+    
+                            $agent_percentage = $share_data["sub_agent_share"];
+    
                             $cost_booking = $booking_product->price;
-
-                            $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
-
-                            BookingConfirmationService::processNairaTransaction(
-                                $user,
-                                $booking->id,
-                                $agent_amount_credit,
-                                $cost_booking,
-                                $agent_percentage
-                            );
-
-                            if (!empty($superAgent = $user->superAgent)) {
-                                $super_agent_percentage = $share_data["main_agent_share_percent"];
-                                $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
-
-                                BookingConfirmationService::processNairaTransaction(
-                                    $superAgent,
+    
+    
+                            if ($booking->card_type == null || $booking->card_type == 2) {
+                                
+                                //for international transaction in pounds
+                                $cost_booking = $booking_product->price_pounds;
+                                $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
+    
+    
+                                BookingConfirmationService::processPoundTransaction(
+                                    $user,
                                     $booking->id,
-                                    $super_agent_amount_credit,
+                                    $agent_amount_credit,
                                     $cost_booking,
-                                    $super_agent_percentage
+                                    $agent_percentage
                                 );
+    
+                                if (!empty($superAgent = $user->superAgent)) {
+                                    $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                    $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
+    
+                                    BookingConfirmationService::processPoundTransaction(
+                                        $superAgent,
+                                        $booking->id,
+                                        $super_agent_amount_credit,
+                                        $cost_booking,
+                                        $super_agent_percentage
+                                    );
+                                }
+    
+                            } elseif ($booking->card_type == 1) {
+                                //for local transaction in naira
+                                $cost_booking = $booking_product->price;
+    
+                                $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
+    
+                                BookingConfirmationService::processNairaTransaction(
+                                    $user,
+                                    $booking->id,
+                                    $agent_amount_credit,
+                                    $cost_booking,
+                                    $agent_percentage
+                                );
+    
+                                if (!empty($superAgent = $user->superAgent)) {
+                                    $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                    $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
+    
+                                    BookingConfirmationService::processNairaTransaction(
+                                        $superAgent,
+                                        $booking->id,
+                                        $super_agent_amount_credit,
+                                        $cost_booking,
+                                        $super_agent_percentage
+                                    );
+                                }
+    
                             }
-
+                            DB::commit();
+                        } catch (\Exception $e) {
+                            logger("An error occured while confirming payments" , $request->all());
+                            DB::rollBack();
                         }
-                        DB::commit();
-                    } catch (\Exception $e) {
-                        logger("An error occured while confirming payments" , $request->all());
-                        DB::rollBack();
                     }
                 }
+               
 
                 try {
-
+                   
                     $code = $this->sendData($booking);
+                    
                 } catch (\Exception $e) {
-
+                
                     $booking->update([
                         'vendor_id' => 3,
                         'mode_of_payment' => 1,
@@ -366,31 +411,33 @@ class HomeController extends Controller
 
                     return redirect()->to('/booking/code/failed?b=' . $txRef);
                 }
+               
 
-                if ($booking_product) {
-
-
-                    try {
-                        //check if a referral code exist
-                        if ($booking->referral_code != null) {
-                            //use the referral code to find the user
-                            $getUser =  User::where('referal_code', $booking->referral_code)->first();
-
-                            //check the status set by the copy receipt
-                            //if 1 :copy the agent else if 0: send normally
-                            if ($getUser->copy_receipt == 1) {
-                                $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
-                            } elseif ($getUser->copy_receipt == 0) {
-                                $no =  Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                    foreach($booking_products as $booking_product)
+                    {
+                        try {
+                            //check if a referral code exist
+                            if ($booking->referral_code != null) {
+                                //use the referral code to find the user
+                                $getUser =  User::where('referal_code', $booking->referral_code)->first();
+    
+                                //check the status set by the copy receipt
+                                //if 1 :copy the agent else if 0: send normally
+                                if ($getUser->copy_receipt == 1) {
+                                    $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                                } elseif ($getUser->copy_receipt == 0) {
+                                    $no =  Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                                }
+                            } else {
+                                //referral code doesnt exist
+                                $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                             }
-                        } else {
-                            //referral code doesnt exist
-                            $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                        } catch (\Exception $e) {
                         }
-                    } catch (\Exception $e) {
                     }
-                }
-
+                   
+            
+                //update wiith transaction code
                 $booking->update([
                     'vendor_id' => 3,
                     'mode_of_payment' => 1,
@@ -398,8 +445,13 @@ class HomeController extends Controller
                     'status' => 1,
                     'booking_code' => $code
                 ]);
+
+                //to remove items from cart
+                $cart = Cart::where('ip', request()->ip())->delete();
             }
-// dd('checking', $data_response);
+            //to remove items from cart
+            $cart = Cart::where('ip', request()->ip())->delete();
+
             return redirect()->to('/booking/success?b=' . $txRef);
         }
 // dd('not checking', $data_response);
@@ -693,6 +745,109 @@ class HomeController extends Controller
     {
         $products = Product::all();
         return view('homepage.products')->with(compact('products'));
+    }
+
+    public function viewProducts($type)
+    {
+       
+
+        if($type == "all"){
+           
+            $products = vendorProduct::where('vendor_id', 3)->get();
+
+        }elseif($type == "Green")
+        {
+            $products = vendorProduct::where(['vendor_id' => 3, 'product_id'=> 1])->get();
+
+        }elseif($type == "Amber_v"){
+
+            $products = vendorProduct::where(['vendor_id' => 3, 'product_id'=> 2])->get();
+
+        }elseif($type == "Amber_uv"){
+
+            $products = vendorProduct::where(['vendor_id' => 3])->whereIn('product_id',[2, 4, 3])->get();
+
+        }elseif($type == "Red"){
+
+            $products =[];
+
+        }elseif($type == "UK"){
+           
+            $products = vendorProduct::where(['vendor_id' => 3, 'product_id' => 5])->get();
+        
+           
+        }
+    
+        return view('homepage.addProducts')->with(compact('products'));
+    }
+
+    public function viewCart()
+    {
+        $carts = Cart::where('ip', request()->ip())->get();
+        $cartSum = 0;
+        foreach($carts as $cart)
+        {
+            
+            $cartSum = $cartSum + ($cart->vendorProduct->price_pounds * $cart->quantity);
+        }
+
+        return view('homepage.cart')->with(compact('carts','cartSum'));
+    }
+
+    public function addToCart($p_id, $v_id)
+    {
+        $ip = request()->ip();
+        $v_product = VendorProduct::where([
+            'product_id' => $p_id,
+            'vendor_id' => $v_id 
+            ])->first();
+            
+            $check= Cart::where([
+                'ip' => $ip,
+                'vendor_product_id' => $v_product->id
+            ])->get();
+    
+     
+      
+
+        if($check->count() == 0){
+
+            Cart::create([
+                'ip' => $ip,
+                'quantity' => 1,
+                'vendor_product_id' => $v_product->id
+            ]);
+
+
+            session()->flash("alert-success", "Successfully added to cart.");
+            return back();
+
+        }else{
+
+            session()->flash("alert-danger", "This product has already been added to cart.");
+            return back();
+
+        }
+    }
+
+    public function updateCart($id, $quantity)
+    {
+        $carts = Cart::where('id', $id)->first();
+       
+        $carts->update(['quantity' => $quantity]);
+
+        session()->flash("alert-success", "Quantity has been updated.");
+        return back();
+    }
+
+    public function deleteCart($id)
+    {
+        $carts = Cart::where('id', $id)->first();
+       
+        $carts->delete();
+
+        session()->flash("alert-success", "Item removed from ");
+        return back();
     }
 
     public function check_price($vendor_id)

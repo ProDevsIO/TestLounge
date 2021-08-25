@@ -224,11 +224,12 @@
                                         <th scope="col">Name</th>
                                         @if(auth()->user()->type == 2)
                                         <th scope="col">Phone</th>
+                                       
                                         @endif
                                         <th scope="col">Email</th>
                                         <th scope="col">Date/Time</th>
                                         @if(auth()->user()->type == 1)
-                                        <th scope="col">Product</th>
+                                        <th scope="col" style="padding-left:70px; padding-right:70px">Product</th>
                                         <th scope="col">Product Price</th>
                                         <th scope="col">Commission</th>
                                         @endif
@@ -252,11 +253,19 @@
                                             </td>
                                             @if(auth()->user()->type == 2)
                                             <td>{{ $booking->phone_no }}</td>
+                                           
                                             @endif
-                                            <td>{{ $booking->email }} <br>{{$booking->booking_code}}</td>
+                                            <td>{{ $booking->email }}</td>
                                             <td> {{ $booking->created_at }} </td>
                                             @if(auth()->user()->type == 1)
-                                                <td> {{   optional(optional(optional($booking)->product)->vendor)->name }} </td>
+                                                <td> <b style="font-size:11px;"> 
+                                                        @foreach($booking->symproduct as $name)
+                                                            {{optional(optional($name)->product)->name}} x ({{ $name->quantity}})
+
+                                                            <br><br>
+                                                        @endforeach
+                                                     </b>
+                                                  </td>
 
                                                 @if(isset($booking->product) && $booking->product->currency == "NGN")
                                                 <td> ₦ {{ $booking->product->price }} </td>

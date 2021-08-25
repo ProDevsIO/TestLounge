@@ -2,141 +2,142 @@
 
 @section('content')
 @section('style')
-<style>
-     body {
-        font-size: 14px;
-        font-family: "Inter", sans-serif;
-        padding: 0;
-        margin: 0;
-      }
-      .bg-1 {
-        background: #2e5c99;
-        color: #fff;
-      }
-      .bg-2 {
-        background: #92D050;
-        color: #fff;
-      }
-      .bg-3 {
-        background: #FFC000;
-        color: #fff;
-      }
-      .bg-4 {
-        background: #E60000;
-        color: #fff;
-      }
-      .font-30 {
-        font-size: 30px;
-      }
-      .header{
-        padding:100px;
-        display:grid;
-        grid-template-columns:3fr 1fr;
-    }
+    <style>
+       
+        body {
+            font-size: 14px;
+           
+            padding: 0;
+            margin: 0;
+        }
+        .bg-1 {
+            background: #2e5c99;
+            color: #fff;
+        }
+        .bg-2 {
+            background: #92D050;
+            color: #fff;
+        }
+        .bg-3 {
+            background: #FFC000;
+            color: #fff;
+        }
+        .bg-4 {
+            background: #E60000;
+            color: #fff;
+        }
+        .font-30 {
+            font-size: 30px;
+        }
+        .header{
+            padding:100px;
+            display:grid;
+            grid-template-columns:3fr 1fr;
+        }
 
-    .shadow {
-    position: relative;
-    box-shadow: 0 0 25px 0 rgba(50,50,50,.3) inset;
-    }
+        .shadow {
+        position: relative;
+        box-shadow: 0 0 25px 0 rgba(50,50,50,.3) inset;
+        }
 
-    .shadow:after {
-    content: "";
-    position: relative;
-    }
+        .shadow:after {
+        content: "";
+        position: relative;
+        }
 
-    .curved:after, .curved-2:after {
-    position: relative;
-    z-index: -2;
-    }
+        .curved:after, .curved-2:after {
+        position: relative;
+        z-index: -2;
+        }
 
-    .curved:after {
-    position: absolute;
-    top: 50%;
-    left: 12px;
-    right: 12px;
-    bottom: 0;
-    box-shadow: 0 0px 10px 7px rgba(100,100,100,0.5);
-    border-radius: 450px / 15px
-    }
-        table{
-            border-collapse:collapse;
-            /* width:1000px; */
-            /* margin-top:20px; */
-            width:100%;
+        .curved:after {
+        position: absolute;
+        top: 50%;
+        left: 12px;
+        right: 12px;
+        bottom: 0;
+        box-shadow: 0 0px 10px 7px rgba(100,100,100,0.5);
+        border-radius: 450px / 15px
         }
-        thead{
-            border-bottom:.5px solid #293459;
+            table{
+                border-collapse:collapse;
+                /* width:1000px; */
+                /* margin-top:20px; */
+                width:100%;
+            }
+            thead{
+                border-bottom:.5px solid #293459;
+            }
+            th{
+                color:#FD6244;
+                border:2px solid #fff;
+                padding:15px;
+                border-top:none;
+            }
+            /* img{
+                width:10px;
+                margin-left:10px;
+            } */
+            tr{
+                text-align:center;
+            }
+            tr:nth-child(odd){
+                background:#A6C3E0;
+            }
+            tr:nth-child(even){
+                background:#d4e9ff;
+            }
+            td{
+                padding:15px;
+                border:2px solid #fff;
+            }
+            .icon{
+                height:50px;
+                width:auto;
+            }
+            th:last-child, td:last-child{
+                border-right:none;
+            }
+            th:first-child, td:first-child{
+                border-left:none;
+            }
+        
+        .card {
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,.025);
         }
-        th{
-            color:#FD6244;
-            border:2px solid #fff;
-            padding:15px;
-            border-top:none;
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid #e5e9f2;
+            border-radius: .2rem;
         }
-        /* img{
-            width:10px;
-            margin-left:10px;
-        } */
-        tr{
-            text-align:center;
+        .accordion li.active .text {
+            padding: 24px;
+            max-height: 1500px !important;
+            border-bottom: 2px solid #dadada;
+            opacity: 8 !important;
         }
-        tr:nth-child(odd){
-            background:#A6C3E0;
+        .background-image-holder.parallax-background {
+        height: 140%;
+        top: -33%;
         }
-        tr:nth-child(even){
-            background:#d4e9ff;
+        .content{
+            width:80vw;
+            margin:auto;
         }
-        td{
-            padding:15px;
-            border:2px solid #fff;
+        .header{
+            display:flex ;
         }
-        .icon{
-            height:50px;
-            width:auto;
-        }
-        th:last-child, td:last-child{
-            border-right:none;
-        }
-        th:first-child, td:first-child{
-            border-left:none;
-        }
-     
-     .card {
-         margin-bottom: 1.5rem;
-         box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,.025);
-     }
-     .card {
-         position: relative;
-         display: -ms-flexbox;
-         display: flex;
-         -ms-flex-direction: column;
-         flex-direction: column;
-         min-width: 0;
-         word-wrap: break-word;
-         background-color: #fff;
-         background-clip: border-box;
-         border: 1px solid #e5e9f2;
-         border-radius: .2rem;
-     }
-    .accordion li.active .text {
-        padding: 24px;
-        max-height: 1500px !important;
-        border-bottom: 2px solid #dadada;
-        opacity: 8 !important;
-    }
-    .background-image-holder.parallax-background {
-    height: 140%;
-    top: -33%;
-    }
-    .content{
-        width:80vw;
-        margin:auto;
-    }
-    .header{
-        display:flex ;
-    }
-</style>
-<style> 
+    </style>
+    <style> 
         .fs-18{
             font-size:18px;
         }
@@ -274,7 +275,254 @@
         /* mobile version */
         @media screen and (max-width: 468px) {
         }
-        </style>
+    </style>
+    <style>
+   
+    .link{
+        text-decoration:none;
+        color:white;
+    }
+
+    /***** background */
+    .bg-1 {
+        background: #1A8BB3;
+        color: #fff;
+    }
+    .bg-2 {
+        background: #7FC8A9;
+        color: #fff;
+    }
+    .bg-3 {
+        background:#FA8072;
+        color:#fff;
+    }
+    .bg-4{
+        background:#F6D167;
+        color:#fff;
+    }
+    .bg-5{
+        background:#DF2E2E;
+        color:#fff;
+    }
+    .bg-6{
+        background:#989898;
+        color:#fff;
+    }
+    .bg-7{
+        background:#F3F3F3;
+    }
+    .bg-8{
+        background:#616161;
+    }
+    .bg-9{
+        background:#8d8d8d;
+    }
+    .bg-10{
+        background:#D22F27;
+    }
+    .bg-11{
+        background:#eaeaea;
+    }
+    .bg-white{
+        background:#fff;
+    }
+    .bg-none{
+        background:none;
+    }
+
+    /***** color */
+    .color-1{
+        color:#1A8BB3;
+    }
+    .color-2{
+        color:#7FC8A9;
+    }
+    .color-3{
+        color:#FA8072;
+    }
+    .color-4{
+        color:#F6D167;
+    }
+    .color-5{
+        color:#DF2E2E;
+    }
+    .color-6{
+        color:#989898;
+    }
+    .color-7{
+        color:#F3F3F3;
+    }
+    .color-8{
+        color:#616161;
+    }
+    .color-9{
+        color:#8d8d8d;
+    }
+    .color-10{
+        color:#D22F27;
+    }
+    .color-11{
+        color:#eaeaea;
+    }
+    .color-black{
+        color:#000;
+    }
+
+  
+
+    /***** font size */
+    .fs-30 {
+        font-size: 30px;
+    }
+    .fs-28{
+        font-size:28px;
+    }
+    .fs-20{
+        font-size:20px;
+    }
+    .fs-18{
+        font-size:18px;
+    }
+    .fs-16{
+        font-size:16px;
+    }
+
+    /***** font weight */
+    .fw-700{
+        font-weight:700;
+    }
+    .fw-600{
+        font-weight:600;
+    }
+    .fw-500{
+        font-weight:500;
+    }
+
+    /***** alignment */
+    .text-center{
+        text-align:center;
+    }
+    .text-left{
+        text-align:left;
+    }
+    .text-right{
+        text-align:right;
+    }
+
+    /***** containers */
+    .double-container{
+        display:grid;
+        grid-template-columns:repeat(2, 45%);
+        justify-content:space-between;
+    }
+
+    /***** country category */
+    .country-category{
+        padding:0 200px;
+    }
+    .country-category .card-container{
+        margin:50px 0;
+    }
+    .country-category .card-container .card{
+        height:142px;
+        border-radius:10px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        margin-bottom:30px;
+    }
+    .country-category .card-container .card .inner{
+        padding:40px;
+    }
+
+
+    /* start laptop version */
+    @media screen and (max-width: 2450px) {
+    }
+
+    /* tab version */
+    @media screen and (max-width: 1024px) {
+        section{
+            padding:50px;
+        }
+
+        /***** cart */
+        .cart{
+            padding:0;
+        }
+
+        /***** country category */
+        .country-category, .form-page{
+            padding:0;
+        }
+
+        /***** form page */
+        .form-page form{
+            padding:50px 0;
+        }
+    }
+
+   
+    /* mobile version */
+    @media screen and (max-width: 800px) {
+        .cart .cart-container .card{
+            grid-template-columns:2fr 1fr 2fr 2fr;
+        }
+    }
+
+
+    /* mobile version */
+    @media screen and (max-width: 468px) {
+        section{
+            padding:50px 20px;
+        }
+
+        button{
+            display:block;
+            width:100%;
+        }
+
+        .double-container{
+            display:block;
+        }
+
+        /***** navigation */
+        .navigation{
+            display:none;
+        }
+
+        /***** cart */
+        .cart .cart-container .card{
+            display:block;
+        }
+        .cart .cart-container .card-item{
+            height:auto;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-right:none;
+            border-bottom:1px solid #c2c2c2;
+          
+        }
+        .cart .cart-container .card-item:first-child{
+            justify-content:center;
+           
+        }
+        .cart .cart-container .card-item:last-child{
+            justify-content:center;
+            
+        }
+
+        /***** form page */
+        .form-page form{
+            box-shadow:none;
+            border:none;
+        }
+        .form-page form .button-container button{
+            margin:0 0 28px 0;
+        }
+    }
+ </style>
 @endsection
 
     <div class="main-container">
@@ -289,7 +537,7 @@
                         <img alt="logo" class="logo hidden-xs" src="/img/logo-light.png">
                         <h1 class="text-white space-bottom-medium text-center">We simplify the process of booking and making payments for Covid-19 Travel Tests for both travellers and travel agents. You’ll get up to date information on UK travel requirements and access to accredited test providers in the UK ensuring a  hassle free travel experience.</h1>
                         <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a>
-                        <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a>
+                        <a href="{{ url('/product/all') }}" class="btn btn-primary btn-filled">Book Now</a>
                     </div>
                 </div><!--end of row-->
             </div><!--end of container-->
@@ -454,9 +702,9 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td style="background-color:green">  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td style="background-color:orange">  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td style="background-color:orange">  <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td style="background-color:green">  <a href="{{ url('/product/Green') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td style="background-color:orange">  <a href="{{ url('/product/Amber_v') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td style="background-color:orange">  <a href="{{ url('/product/Amber_uv') }}" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td style="background-color:red"> <a class="btn btn-primary btn-filled">Not available</a></td>
                 </tr>
                 
@@ -506,22 +754,67 @@
                     </div>
                 </div>
             </div>
-        <section class="strip bg-secondary-1">
+        <!-- <section class="strip bg-secondary-1">
             <div class="container">
                 <div class="row clearfix">
-                    <!-- <div class="col-md-6 col-xs-12 text-center">
-                         <h5 class="text-white">Not sure of which package or color code your.  </h5>
-                         <a href="https://calculator.prodevs.io/" target="_blank" class="btn btn-primary btn-white">Book now</a>
                    
-                    </div> -->
-                 
                     <div class="col-md-12 col-xs-12 text-center">
                         <h5 class="text-white">If you do not know what category your country of origin belongs to , please click on this link for more information</h5>
                         <a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" target="_blank" class="btn btn-primary btn-white">Click here</a>
                   
-</div>
+                    </div>
                 </div>
             </div>
+        </section> -->
+        <section class="content">
+            <div class="country-category">
+                <div class="header text-center" style="padding:20px">
+                    
+                    <div class="container">
+                        <p class="fw-700 fs-28">Select your country category</p>
+                        <p class="fw-600 fs-20">To Know your country category, <span class="color-1">click here</span></p>
+                    </div>
+                </div>
+                <div class="card-container double-container fs-20 text-center">
+                    <a href="{{url('/product/UK')}}"  class="link text-white">
+                        <div class="card bg-3 fw-700">
+                            <div class="inner">Travelling from the UK</div>
+                        </div>
+                    </a>
+                    <a href="/product/Green" class="link text-white">
+                        <div class="card bg-2 fw-700">
+                                <div class="inner">Travelling from a Green country</div>
+                        </div>
+                    </a>
+                    <a href="/product/Amber_v" class="link">
+                        <div class="card bg-4 fw-700">
+                                <div class="inner">
+                                    Travelling from an Amber country
+                                    (Vaccinated)
+                                </div>
+                        </div>
+                    </a>
+                    <a href="/product/Amber_uv" class="link text-white">
+                        <div class="card bg-4 fw-700">
+                                <div class="inner">
+                                    Travelling from an Amber country
+                                    (Unvaccinated)
+                                </div>
+                        </div>
+                    </a>
+                    <a href="/product/Red" class="link text-white">
+                        <div class="card bg-5 fw-700">
+                                <div class="inner">Travelling from a red country</div>
+                        </div>
+                    </a>
+                    <a href="/product/all" class="link text-white">
+                        <div class="card fw-600">
+                            <div class="inner color-1">View all tests</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
         </section>
 
         <section class="pure-text-centered" id="popular">
@@ -532,7 +825,7 @@
                         <h1><strong>GUIDELINES FOR TRAVEL TESTS GLOBAl</strong></h1>
                         <ul style="text-align: justify; list-style-type: square; font-size:18px;padding: 0px 20px;">
                             <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is <b>MANDATORY</b> for entry into the UK. You can book your test <a href="/pick" class="">Here</a> </li>
-                           <br/> <li> Book and Pay for your travel tests  <a href="{{ url('/booking') }}" class="">Book Now</a>. Evidence of booking and payment is <b>MANDATORY</b> before you can board a flight to the UK</li>
+                           <br/> <li> Book and Pay for your travel tests  <a href="{{ url('/product/all') }}" class="">Book Now</a>. Evidence of booking and payment is <b>MANDATORY</b> before you can board a flight to the UK</li>
                             <br/><li>Following Payment, you will immediately receive your Passenger locator Number and receipt of payment.</li>
                             <br/> <li>This number will be used to Complete your Passenger locator form <a href="https://provide-journey-contact-details.homeoffice.gov.uk/passengerLocatorFormUserAccountHolderQuestion" target="_blank">Here</a>.You must show evidence that you have completed your Passenger locator form before you will be allowed to board a flight into the UK</li>
                             <br/> <li>You may also need to show your receipt of payment for your test before you are allowed to board a flight to the UK; <br>
@@ -573,7 +866,7 @@
                         <br/>
                         <p><a href="/#faq" class="btn btn-primary">FAQs</a>
 
-                            <a href="{{ url('/booking') }}" class="btn btn-primary btn-filled">Book Now</a></p>
+                            <a href="{{ url('/product/all') }}" class="btn btn-primary btn-filled">Book Now</a></p>
                         </p>
                     </div>
                 </div><!--end of row-->

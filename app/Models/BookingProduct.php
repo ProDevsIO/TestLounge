@@ -53,6 +53,7 @@ class BookingProduct extends Model
 		'vendor_cost_price',
 		'price_pounds',
 		'charged_amount',
+		'quantity'
 		
 	];
 

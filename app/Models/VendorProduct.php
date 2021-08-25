@@ -58,4 +58,10 @@ class VendorProduct extends Model
 	{
 		return $this->hasMany(BookingProduct::class);
 	}
+
+	public function Carts()
+{
+    return $this->hasMany(Cart::class);
 }
+}
+

@@ -52,6 +52,12 @@
         display: block;
         }
     }
+    .badge-cart{
+        background:#1a8bb3;
+        position:relative;
+        top: -10px;
+        left: -5px;
+        }
     </style>
 </head>
 <body>
@@ -127,11 +133,17 @@
                         </li>
                         <li><a href="/#contact">Contact</a>
                         </li>
+                        <?php 
+                            $cartcount = App\Models\Cart::where('ip',request()->ip())->count();
+                        
+                        ?>
+                        <li> <a href="{{url('/view/cart')}}"><i class="icon icon_cart"></i><span class="badge badge-cart">{{$cartcount}}</span></a></li>
                         <li id="hide"><a href="/login">login</a></li>
                         <li id="hide"><a href="/register/agent">Register as an agent</a></li>
                     </ul>
 
                     <ul class="social-icons text-right">
+                        
                         <li>
                             <a target="_blank" href="https://twitter.com/tests_uk">
                                 <i class="icon social_twitter"></i>
