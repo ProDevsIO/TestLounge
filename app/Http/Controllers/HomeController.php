@@ -816,7 +816,7 @@ class HomeController extends Controller
     
      
       
-
+            $product= $v_product->product->name;
         if($check->count() == 0){
 
             Cart::create([
@@ -825,14 +825,12 @@ class HomeController extends Controller
                 'vendor_product_id' => $v_product->id
             ]);
 
-
-            session()->flash("alert-success", "Successfully added to cart.");
-            return back();
+          
+            return "Successfully $product added to cart.";
 
         }else{
 
-            session()->flash("alert-danger", "This product has already been added to cart.");
-            return back();
+            return "$product has already been added to cart.";
 
         }
     }

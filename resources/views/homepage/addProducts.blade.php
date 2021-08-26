@@ -325,19 +325,30 @@
                 </div>
                 <div class="card-container" >
                 @if(count($products) > 0)
-                @include('errors.showerrors')
+               
+                <div class="container" id="show-result">
+
+                </div>
                 <br>
                     @foreach($products as $vproduct)
-                    
-                        <div class="card bg-7" style="padding-left:20px">
                         
-                            <div class="fw-600 purchase-name ">
-                                <span class="color-8 w-100" >{{optional(optional($vproduct)->product)->name}}</span>
-                                <br>
-                                <span class="color-8 w-100" >{{optional(optional($vproduct)->vendor)->name}}</span>
-                                <span class="currency w-100">£{{optional($vproduct)->price_pounds}}</span>
+                        <div class="container bg-7" style="padding:20px;margin-bottom:20px">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p class="text-center"><span class="color-8 " >{{optional(optional($vproduct)->product)->name}}</span></p>
+                                    <hr>
+                                    <p class="text-center"><span class="color-8 " >{{optional(optional($vproduct)->vendor)->name}}</span></p>
+                                    <hr>
+                                    <p class="text-center"><span class=" ">£{{optional($vproduct)->price_pounds}}</span></p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="container" style="padding-top:70px">
+                                
+                                         <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" type="button" class="btn btn-block btn-info" style="background-color: #46b8da;">Add to cart</a>
+                                    </div>
+                                 </div>
                             </div>
-                            <a href="{{url('/add/cart/'.$vproduct->product->id.'/'.$vproduct->vendor->id)}}" class="btn-1 bg-1 fw-500">Add to cart</a>
+                           
                         </div>
                     @endforeach
                 @else
@@ -348,4 +359,35 @@
             </div>
         </section>
 </div>
+@endsection
+@section('script')
+<script>
+    //  function show() {
+    //        console.log(1);
+    //         $("#country-section").show();
+    //    }
+
+       function addCart(product_id, vendor_id)
+       {
+
+        var url = '/add/cart/' + product_id +'/'+ vendor_id;
+            $("#show-result")
+                .find('p')
+                .remove()
+                .end();
+            $.get(url, function (data) {
+
+                var holder = document.getElementById("show-result");
+                var newNode = document.createElement('p');
+                var close =  document.createElement('a');
+                newNode.innerHTML = data;
+                close.innerHTML = "X";
+                holder.appendChild(newNode);
+                newNode.appendChild(close);
+                $("#show-result p a").addClass('close')
+                $("#show-result p a").attr("data-dismiss","alert")
+                $("#show-result p").addClass('alert alert-info')
+            });
+       }
+</script>
 @endsection

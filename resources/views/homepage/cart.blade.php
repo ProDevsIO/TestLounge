@@ -571,7 +571,7 @@ input[type=number]::-webkit-inner-spin-button {
                 </div>
                 <div class="cart-container">
                 @include('errors.showerrors')
-                <br>
+            
                     <div class="card heading text-center color-8">
                         <div>TESTS</div>
                         <div>QUANTITY</div>
