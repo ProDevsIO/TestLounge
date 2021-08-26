@@ -578,12 +578,11 @@
 				</div><!--end of container-->
 			</section><br/>
         <div class="container">
-        <div class="header shadow curved bg-1 font-30" style="">
-            <div class="text-center"><h3 style="color:white;font-weight:600px">The Mandatory Covid-19 Tests for the UK follows a "traffic light system" which determines the required tests based on the  Country you are travelling from.</h3><br><br> <p>See table below with the list of expected tests for each Category</p></div>
-                <div>
-                    
-                </div>
-        
+            <div class="header shadow curved bg-1 font-30" style="">
+                <div class="text-center">
+                    <h3 style="color:white;font-weight:600px">The Mandatory Covid-19 Tests for the UK follows a "traffic light system" which determines the required tests based on the  Country you are travelling from.</h3><br><br> <p>See table below with the list of expected tests for each Category</p></div>
+                <div>            
+            </div>
         </div>
         <br>
         <div class="table-responsive">
@@ -704,9 +703,9 @@
                 <tr>
                     <td></td>
                     <td style="background-color:green">  <a href="{{ url('/product/Green') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td style="background-color:orange">  <a href="{{ url('/product/Amber_v') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td style="background-color:orange">  <a href="{{ url('/product/Amber_uv') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td style="background-color:red"> <a class="btn btn-primary btn-filled">Not available</a></td>
+                    <td style="background-color:red">  <a href="{{ url('/product/Amber_v') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td style="background-color:red">  <a href="{{ url('/product/Amber_uv') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td style="background-color:orange"> <a class="btn btn-primary btn-filled">Not available</a></td>
                 </tr>
                 
             </table>
@@ -731,120 +730,126 @@
             </div>
         </section> -->
        
-        <section class="content">
-        <div class="header shadow curved bg-1 font-30">
-            <div>AT A GLANCE GUIDE FOR ARRIVALS TO THE UK FOLLOWING IMPLEMENTATION OF THE
-        'TRAFFIC LIGHT SYSTEM'</div>
-                <div></div>
+    
+            <div class="container">
+                <div class="header shadow curved bg-1 font-30 " style="padding:50px">
+                    <div class="text-center">
+                        <h3 style="color:white;font-weight:600px">AT A GLANCE GUIDE FOR ARRIVALS TO THE UK FOLLOWING IMPLEMENTATION OF THE'TRAFFIC LIGHT SYSTEM'</h3>
+                    </div>
+                </div>
+            </div>
         
-        </div>
+        
         <br>
-        <div class="table-responsive">
-            <table className="font-16">
-                <tr>
-                    <th class="bg-1">&nbsp;</th>
-                    <th class="bg-1" colspan="3">
-                        <b class="fs-25">Children resident in the UK, British Overseas Territories, Channel Islands, Isle of Man, USA or a recognised European country. </b><br /><br />
-                        The recognised European countries are the EU countries, Andorra, Iceland, Liechtenstein, Monaco, Norway, San Marino, Switzerland or the Vatican City
-                    </th>
-                    <th class="bg-1" colspan="3"><b class="fs-25">Children resident in other countries</b></th>
-                </tr>
-                <tr>
-                    <th class="bg-1">Ages (years)</th>
-                    <th class="bg-2">0 - 4</th>
-                    <th class="bg-3">5 - 10</th>
-                    <th class="bg-4">11 - 17</th>
-                    <th class="bg-2">0 - 4</th>
-                    <th class="bg-3">5 - 10</th>
-                    <th class="bg-4">11 - 17</th>
-                </tr>
-                <tr>
-                    <td width="35.5%"><h6>Quarantine (at home or in the place they are staying for 10 days or for the duration of their trip if it’s less than 10 days)</h6> </td>
-                    <td width="10%">
-                        <img src="/img/close-cross.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/close-cross.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/close-cross.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                </tr>
-                <tr>
-                    <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
-                    <td width="10%">
-                        <img src="/img/close-cross.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/close-cross.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/close-cross.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                </tr>
-                <tr>
-                    <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
-                    <td width="10%">
-                        <img src="/img/close-cross.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/close-cross.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                </tr>
-                <tr>
-                    <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
-                    <td width="10%">
-                        <img src="/img/close-cross.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/close-cross.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/close-cross.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                    <td width="10%">
-                        <img src="/img/check-mark.svg" class="icon" />
-                    </td>
-                </tr>
-            </table>
+        <div class="container">
+            <div class="table-responsive">
+                <table className="font-16">
+                    <tr>
+                        <th class="bg-1">&nbsp;</th>
+                        <th class="bg-1" colspan="3">
+                            <b class="fs-25">Children resident in the UK, British Overseas Territories, Channel Islands, Isle of Man, USA or a recognised European country. </b><br /><br />
+                            The recognised European countries are the EU countries, Andorra, Iceland, Liechtenstein, Monaco, Norway, San Marino, Switzerland or the Vatican City
+                        </th>
+                        <th class="bg-1" colspan="3"><b class="fs-25">Children resident in other countries</b></th>
+                    </tr>
+                    <tr>
+                        <th class="bg-1">Ages (years)</th>
+                        <th class="bg-2">0 - 4</th>
+                        <th class="bg-3">5 - 10</th>
+                        <th class="bg-4">11 - 17</th>
+                        <th class="bg-2">0 - 4</th>
+                        <th class="bg-3">5 - 10</th>
+                        <th class="bg-4">11 - 17</th>
+                    </tr>
+                    <tr>
+                        <td width="35.5%"><h6>Quarantine (at home or in the place they are staying for 10 days or for the duration of their trip if it’s less than 10 days)</h6> </td>
+                        <td width="10%">
+                            <img src="/img/close-cross.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/close-cross.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/close-cross.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
+                        <td width="10%">
+                            <img src="/img/close-cross.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/close-cross.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/close-cross.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
+                        <td width="10%">
+                            <img src="/img/close-cross.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/close-cross.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
+                        <td width="10%">
+                            <img src="/img/close-cross.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/close-cross.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/close-cross.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                        <td width="10%">
+                            <img src="/img/check-mark.svg" class="icon" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        </section>
+        
+        
 
             <div class="country-category">
                 <div class="header text-center" style="padding:20px">
@@ -855,21 +860,17 @@
                     </div>
                 </div>
                 <div class="card-container double-container fs-20 text-center">
-                    <a href="{{url('/product/UK')}}"  class="link text-white">
-                        <div class="card bg-3 fw-700">
-                            <div class="inner">Travelling from the UK</div>
-                        </div>
-                    </a>
+                   
                     <a href="/product/Green" class="link text-white">
                         <div class="card bg-2 fw-700">
-                                <div class="inner">Travelling from a Green country</div>
+                                <div class="inner">Travelling from a Green country to the UK</div>
                         </div>
                     </a>
                     <a href="/product/Amber_v" class="link">
                         <div class="card bg-4 fw-700">
                                 <div class="inner">
-                                    Travelling from an Amber country
-                                    (Vaccinated)
+                                    Travelling from an Amber country 
+                                    (Vaccinated) to the UK
                                 </div>
                         </div>
                     </a>
@@ -877,13 +878,18 @@
                         <div class="card bg-4 fw-700">
                                 <div class="inner">
                                     Travelling from an Amber country
-                                    (Unvaccinated)
+                                    (Unvaccinated) to the UK
                                 </div>
                         </div>
                     </a>
                     <a href="/product/Red" class="link text-white">
                         <div class="card bg-5 fw-700">
-                                <div class="inner">Travelling from a red country</div>
+                                <div class="inner">Travelling from a red country to the UK</div>
+                        </div>
+                    </a>
+                    <a href="{{url('/product/UK')}}"  class="link text-white">
+                        <div class="card bg-3 fw-700">
+                            <div class="inner">Travelling from the UK</div>
                         </div>
                     </a>
                     <a href="/product/all" class="link text-white">

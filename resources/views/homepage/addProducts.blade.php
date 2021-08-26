@@ -335,7 +335,7 @@
                                 <span class="color-8 w-100" >{{optional(optional($vproduct)->product)->name}}</span>
                                 <span class="currency w-100">£{{optional($vproduct)->price_pounds}}</span>
                             </div>
-                            <a href="{{url('/add/cart/'.$vproduct->product->id.'/'.$vproduct->vendor->id)}}" class="btn-1 bg-1 fw-500">Add to bag</a>
+                            <a href="{{url('/add/cart/'.$vproduct->product->id.'/'.$vproduct->vendor->id)}}" class="btn-1 bg-1 fw-500">Add to cart</a>
                         </div>
                     @endforeach
                 @else

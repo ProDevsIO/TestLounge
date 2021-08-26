@@ -2,7 +2,6 @@
 @section('style')
     
     <style>
-       
 
         body {
     font-size: 14px;
@@ -393,6 +392,9 @@ input[type=text]{
 
 /* start laptop version */
 @media screen and (max-width: 2450px) {
+    input[type=number]::-webkit-inner-spin-button {
+    opacity: 1;
+}
 }
 
 /* break */
@@ -410,6 +412,9 @@ input[type=text]{
 
 /* tab version */
 @media screen and (max-width: 1024px) {
+    input[type=number]::-webkit-inner-spin-button {
+    opacity: 1;
+}
     section{
         padding:50px;
     }
@@ -445,6 +450,9 @@ input[type=text]{
 
 /* mobile version */
 @media screen and (max-width: 800px) {
+    input[type=number]::-webkit-inner-spin-button {
+    opacity: 1;
+}
     .cart .cart-container .card{
         grid-template-columns:2fr 1fr 2fr 2fr;
     }
@@ -465,6 +473,9 @@ input[type=text]{
 
 /* mobile version */
 @media screen and (max-width: 468px) {
+    input[type=number]::-webkit-inner-spin-button {
+        opacity: 1;
+    }
     section{
         padding:50px 20px;
     }
@@ -532,6 +543,9 @@ input[type=text]{
         width:auto;
     }
 }
+input[type=number]::-webkit-inner-spin-button {
+    opacity: 1;
+}
     </style>
 @endsection
 @section('content')
@@ -573,7 +587,11 @@ input[type=text]{
                                 
                             </div>
                             <div class="card-item">
-                                <input type="number" class="form-control text-center" onkeydown="return false" min="1" id= "quantity_{{$i}}"value ="{{$cart->quantity}}">
+                                <select name="" class="form-control" id="quantity_{{$i}}" >
+                                    @for($y =1; $y < 10; $y++)
+                                        <option value="{{$y}}"  @if($cart->quantity == $y)selected @endif>{{$y}}</option>
+                                    @endfor
+                                </select>
                                
                             </div>
                             <div class="card-item">£{{ $cart->quantity * $cart->vendorProduct->price_pounds}}</div>
@@ -597,6 +615,11 @@ input[type=text]{
             @else
                 <div class="jumbotron">
                     <h4 class="text-center">No products in cart</h4>
+                    <br>
+                    <center>
+                      <a href="{{url('/product/all')}}" class="btn-3 bg-1 color-1 fw-600" style="color:white">Continue shopping</a>
+                    </center>
+                    
                 </div>
             @endif
         </section>
@@ -604,6 +627,7 @@ input[type=text]{
 @section('script')
 
     <script>
+         
         $(document).ready(function () {
             $('#data_table').DataTable({
                 responsive: true,
@@ -612,9 +636,10 @@ input[type=text]{
         });
 
         function update(id,count) {
-            
-            var quantity= $("#quantity_"+count).val();
-            
+           
+            var q = "quantity_"+count;
+            var quantity = document.getElementById(q).value;
+          
             var d = confirm("Are you sure you want to update this item in cart?");
 
             if (d) {
