@@ -1096,7 +1096,7 @@ class HomeController extends Controller
             return "No color code available for this country";
         }else{
             $color = $query->color->name;
-            return "Your country selected is $color";
+            return "The country selected is $color";
         }
     }
 

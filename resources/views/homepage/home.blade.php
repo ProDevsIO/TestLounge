@@ -590,9 +590,9 @@
                 <thead>
                     <th class="bg-1 text-center">MEASURE REQUIRED</th>
                     <th class="bg-2 text-center">GREEN</th>
-                    <th class="bg-3 text-center">AMBER(Vaccinated) **</th>
-                    <th class="bg-3 text-center">AMBER(Unvaccinated)</th>
-                    <th class="bg-4 text-center">RED</th>
+                    <th class="bg-4 text-center">AMBER(Vaccinated) **</th>
+                    <th class="bg-4 text-center">AMBER(Unvaccinated)</th>
+                    <th class="bg-3 text-center">RED</th>
                 </thead>
                 <tr>
                     <td width="25%"><h6>COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</h6></td>
@@ -703,9 +703,9 @@
                 <tr>
                     <td></td>
                     <td style="background-color:green">  <a href="{{ url('/product/Green') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td style="background-color:red">  <a href="{{ url('/product/Amber_v') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td style="background-color:red">  <a href="{{ url('/product/Amber_uv') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td style="background-color:orange"> <a class="btn btn-primary btn-filled">Not available</a></td>
+                    <td style="background-color:orange">  <a href="{{ url('/product/Amber_v') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td style="background-color:orange">  <a href="{{ url('/product/Amber_uv') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td style="background-color:red"> <a class="btn btn-primary btn-filled">Not available</a></td>
                 </tr>
                 
             </table>
@@ -855,15 +855,15 @@
                 <div class="header text-center" style="padding:20px; padding-top:100px;">
                     
                     <div class="container">
-                        <p class="fw-700 fs-28">Select your country category</p>
-                        <p class="fw-600 fs-20">To Know your country category,  <a href="javascript:;"  onclick="show()"><span class="color-1">click here </span></a></p>
+                        <p class="fw-700 fs-28">BOOK NOW</p>
+                        <p class="fw-600 fs-20">The travel tests requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
                     </div>
                 </div>
-                <div class="card-container" id="country-section" style="display:none">
+                <div class="card-container" id="country-section" style="">
                     <div id="show-result">
 
                     </div>
-                    <label for="">Select a country</label>
+                    <label for="">Choose the country you’re travelling to</label>
                          <?php 
                             $countries = App\Models\Country::all();
                         
@@ -1141,10 +1141,10 @@
 @endsection
 @section('script')
 <script>
-     function show() {
-           console.log(1);
-            $("#country-section").show();
-       }
+    //  function show() {
+    //        console.log(1);
+    //         $("#country-section").show();
+    //    }
 
        function countryQuery()
        {
