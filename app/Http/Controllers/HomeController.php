@@ -749,25 +749,26 @@ class HomeController extends Controller
     public function viewProducts($type)
     {
        
-
+        $faq = 0;
         if($type == "all"){
            
             $products = vendorProduct::where('vendor_id', 3)->get();
 
         }elseif($type == "Green")
         {
+            $faq = 1;
             $products = vendorProduct::where(['vendor_id' => 3, 'product_id'=> 1])->get();
 
         }elseif($type == "Amber_v"){
-
+            $faq = 1;
             $products = vendorProduct::where(['vendor_id' => 3])->whereIn('product_id',[2, 10])->get();
 
         }elseif($type == "Amber_uv"){
-
+            $faq = 1;
             $products = vendorProduct::where(['vendor_id' => 3])->whereIn('product_id',[2, 4, 3, 10])->get();
 
         }elseif($type == "Red"){
-
+            $faq = 1;
             $products =[];
 
         }elseif($type == "UK"){
@@ -777,7 +778,7 @@ class HomeController extends Controller
            
         }
     
-        return view('homepage.addProducts')->with(compact('products'));
+        return view('homepage.addProducts')->with(compact('products', 'faq'));
     }
 
     public function viewCart()
