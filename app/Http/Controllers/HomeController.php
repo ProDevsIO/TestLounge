@@ -132,10 +132,8 @@ class HomeController extends Controller
             'document_id' => 'required',
             'arrival_date' => 'required',
             'country_travelling_from_id' => 'required',
-            'city_from' => 'required',
             'departure_date' => 'required',
             'last_day_travel' => 'required',
-            'method_of_transportation' => 'required',
             'transport_no' => 'required',
             'consent' => 'required'
         ]);

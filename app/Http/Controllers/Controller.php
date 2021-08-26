@@ -163,17 +163,17 @@ class Controller extends BaseController
         }
 
         //transportation means
-        if ($booking->method_of_transportation == 1) {
-            $transport = "Airline";
-        } elseif ($booking->method_of_transportation == 2) {
-            $transport = "Vessel";
-        } elseif ($booking->method_of_transportation == 3) {
-            $transport = "Train";
-        } elseif ($booking->method_of_transportation == 4) {
-            $transport = "Road Vehicle";
-        } elseif ($booking->method_of_transportation == 5) {
-            $transport = "Others";
-        }
+        // if ($booking->method_of_transportation == 1) {
+        //     $transport = "Airline";
+        // } elseif ($booking->method_of_transportation == 2) {
+        //     $transport = "Vessel";
+        // } elseif ($booking->method_of_transportation == 3) {
+        //     $transport = "Train";
+        // } elseif ($booking->method_of_transportation == 4) {
+        //     $transport = "Road Vehicle";
+        // } elseif ($booking->method_of_transportation == 5) {
+        //     $transport = "Others";
+        // }
 
         $color_code = CountryColor::where('country_id',$booking->country_travelling_from_id)->first();
         if($color_code == null)

@@ -718,43 +718,6 @@
         </div>
         <br>
         </div>
-        <div class="jumbotron container-fluid">
-             <div class="text-center"><h3 style="font-weight:900">Travel test rules for Children and Young People<h3>
-            </div>
-        </div>
-            <div class="inner container">
-                <div class="table">
-                    <div class="table-item table-head">
-                        <div>Age</div>
-                        <div>Children resident in the UK, British Overseas Territories, Channel Islands, Isle of Man, USA or a recognised European country. <a target="_blank" href="https://www.gov.uk/guidance/how-to-quarantine-when-you-arrive-in-england#rules-for-children-and-young-people"><img src="/link.svg" alt="link" /></a></div>
-                        <div>Children resident in other countries </div>
-                    </div>
-                    <div class="table-normal table-item">
-                        <div>Quarantine</div>
-                        <div>Do not have to quarantine </div>
-                        <div>Must quarantine at home or in the place they are staying for 10days or for the duration of their trip if it’s less than 10days. </div>
-                    </div>
-                    <div class="table-normal table-item">
-                        <div>0 - 4 years</div>
-                        <div>Pre-departure test not required</div>
-                        <div>Pre-departure test not required</div>
-                    </div>
-                    <div class="table-normal table-item">
-                        <div>5 - 10 years</div>
-                        <div>Pre-departure test not required Day 2 test required on arrival in the UK</div>
-                        <div>Pre-departure test required Day 2 and Day 8 tests required on arrival in the UK</div>
-                    </div>
-                    <div class="table-normal table-item">
-                        <div>11 - 11 years</div>
-                        <div>Pre-departure test required  Day 2 test required on arrival in the UK</div>
-                        <div>Pre-departure test required Day 2 and Day 8 tests required on arrival in the UK</div>
-                    </div>
-                    <div class="table-normal table-item table-item-2">
-                        <div>18 years and over</div>
-                        <div class="table-col-2">Follow adult travel test rules</div>
-                    </div>
-                </div>
-            </div>
         <!-- <section class="strip bg-secondary-1">
             <div class="container">
                 <div class="row clearfix">
@@ -767,7 +730,122 @@
                 </div>
             </div>
         </section> -->
+       
         <section class="content">
+        <div class="header shadow curved bg-1 font-30">
+            <div>AT A GLANCE GUIDE FOR ARRIVALS TO THE UK FOLLOWING IMPLEMENTATION OF THE
+        'TRAFFIC LIGHT SYSTEM'</div>
+                <div></div>
+        
+        </div>
+        <br>
+        <div class="table-responsive">
+            <table className="font-16">
+                <tr>
+                    <th class="bg-1">&nbsp;</th>
+                    <th class="bg-1" colspan="3">
+                        <b class="fs-25">Children resident in the UK, British Overseas Territories, Channel Islands, Isle of Man, USA or a recognised European country. </b><br /><br />
+                        The recognised European countries are the EU countries, Andorra, Iceland, Liechtenstein, Monaco, Norway, San Marino, Switzerland or the Vatican City
+                    </th>
+                    <th class="bg-1" colspan="3"><b class="fs-25">Children resident in other countries</b></th>
+                </tr>
+                <tr>
+                    <th class="bg-1">Ages (years)</th>
+                    <th class="bg-2">0 - 4</th>
+                    <th class="bg-3">5 - 10</th>
+                    <th class="bg-4">11 - 17</th>
+                    <th class="bg-2">0 - 4</th>
+                    <th class="bg-3">5 - 10</th>
+                    <th class="bg-4">11 - 17</th>
+                </tr>
+                <tr>
+                    <td width="35.5%"><h6>Quarantine (at home or in the place they are staying for 10 days or for the duration of their trip if it’s less than 10 days)</h6> </td>
+                    <td width="10%">
+                        <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
+                    <td width="10%">
+                        <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
+                    <td width="10%">
+                        <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
+                    <td width="10%">
+                        <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/close-cross.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                    <td width="10%">
+                        <img src="/img/check-mark.svg" class="icon" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </section>
+
             <div class="country-category">
                 <div class="header text-center" style="padding:20px">
                     
@@ -816,7 +894,7 @@
                 </div>
             </div>
             
-        </section>
+      
 
         <section class="pure-text-centered" id="popular">
             <div class="container">

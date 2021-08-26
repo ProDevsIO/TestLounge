@@ -881,12 +881,6 @@ input[type=text]{
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="input-container" style="margin-top: 20px">
-                                            <label>City you are departing from: <span
-                                                        class="show_required"> *</span></label>
-                                            <input  type="text" name="city_from"
-                                                   value="{{ old('city_from') }}" required/>
-                                        </div>
 
                                         <div class="input-container" style="margin-top: 20px">
                                             <label> Departure Date(from country of origin): <span class="show_required"> *</span></label>
@@ -922,37 +916,7 @@ input[type=text]{
                                         </div>
 
 
-                                        <div class="input-container" style="margin-top: 20px">
-                                            <label> What method of transport will you be entering the UK on: <span
-                                                        class="show_required"> *</span></label>
-                                            <select class="select-2" name="method_of_transportation" required>
-                                                <option value="">Make a selection</option>
-                                                <option value="1" @if(old('method_of_transportation') == "1")
-                                                selected
-                                                        @endif>Airplane
-                                                </option>
-
-                                                <option value="2" @if(old('method_of_transportation') == "2")
-                                                selected
-                                                        @endif>Vessel
-                                                </option>
-
-                                                <option value="3" @if(old('method_of_transportation') == "3")
-                                                selected
-                                                        @endif>Train
-                                                </option>
-
-                                                <option value="4" @if(old('method_of_transportation') == "4")
-                                                selected
-                                                        @endif>Road Vehicle
-                                                </option>
-
-                                                <option value="5" @if(old('method_of_transportation') == "5")
-                                                selected
-                                                        @endif>Other
-                                                </option>
-                                            </select>
-                                        </div>
+                                       
 
                                         <div class="input-container" style="margin-top: 20px">
                                             <label>Flight Number / Coach Number / Vessel Name / Airline: <span
