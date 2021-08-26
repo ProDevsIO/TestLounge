@@ -852,12 +852,28 @@
         
 
             <div class="country-category">
-                <div class="header text-center" style="padding:20px">
+                <div class="header text-center" style="padding:20px; padding-top:100px;">
                     
                     <div class="container">
                         <p class="fw-700 fs-28">Select your country category</p>
-                        <p class="fw-600 fs-20">To Know your country category, <span class="color-1">click here</span></p>
+                        <p class="fw-600 fs-20">To Know your country category,  <a href="javascript:;"  onclick="show()"><span class="color-1">click here </span></a></p>
                     </div>
+                </div>
+                <div class="card-container" id="country-section" style="display:none">
+                    <div id="show-result">
+
+                    </div>
+                    <label for="">Select a country</label>
+                         <?php 
+                            $countries = App\Models\Country::all();
+                        
+                        ?>
+                    <select name="" class="form-control" id="country" onchange="countryQuery()">
+                        <option value="">select a country</option>
+                        @foreach($countries as $country)
+                            <option value="{{$country->id}}">{{$country->nicename}} </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="card-container double-container fs-20 text-center">
                    
@@ -1122,4 +1138,36 @@
     </div>
 
 
+@endsection
+@section('script')
+<script>
+     function show() {
+           console.log(1);
+            $("#country-section").show();
+       }
+
+       function countryQuery()
+       {
+        var country_id = document.getElementById("country").value;
+        console.log(country_id);
+        var url = '/country/query/' + country_id;
+            $("#show-result")
+                .find('p')
+                .remove()
+                .end();
+            $.get(url, function (data) {
+
+                var holder = document.getElementById("show-result");
+                var newNode = document.createElement('p');
+                var close =  document.createElement('a');
+                newNode.innerHTML = data;
+                close.innerHTML = "X";
+                holder.appendChild(newNode);
+                newNode.appendChild(close);
+                $("#show-result p a").addClass('close')
+                $("#show-result p a").attr("data-dismiss","alert")
+                $("#show-result p").addClass('alert alert-info')
+            });
+       }
+</script>
 @endsection

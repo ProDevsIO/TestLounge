@@ -1088,6 +1088,17 @@ class HomeController extends Controller
         Mail::to($booking->email)->send(new BookingCreation($message));
     }
 
+    public function country_query($id)
+    {
+        $query = CountryColor::where('country_id' ,$id)->first();
+        if($query == null)
+        {
+            return "No color code available for this country";
+        }else{
+            $color = $query->color->name;
+            return "Your country selected is $color";
+        }
+    }
 
     public function country_bank($country)
     {

@@ -26,6 +26,7 @@ Route::get('/password',[\App\Http\Controllers\HomeController::class,"testing"]);
 Route::get('/login', [\App\Http\Controllers\HomeController::class,"login"]);
 Route::get('/country_bank/{country}', [\App\Http\Controllers\HomeController::class,"country_bank"]);
 Route::get('/account/name/{bank}/{no}', [\App\Http\Controllers\HomeController::class,"account_name"]);
+Route::get('/country/query/{id}', [\App\Http\Controllers\HomeController::class,"country_query"]);
 
 Route::get('/forgot/password', [\App\Http\Controllers\HomeController::class,"forgot_password"]);
 Route::post('/reset_password', [\App\Http\Controllers\HomeController::class,"reset_password"]);
