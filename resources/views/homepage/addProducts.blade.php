@@ -312,7 +312,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                     
-                        <h1 class="text-white">COVID TESTING</h1>
+                        <h1 class="text-white">COUNTRY TESTS</h1>
                     </div>
                 </div><!--end of row-->
             </div><!--end of container-->
@@ -333,6 +333,8 @@
                         
                             <div class="fw-600 purchase-name ">
                                 <span class="color-8 w-100" >{{optional(optional($vproduct)->product)->name}}</span>
+                                <br>
+                                <span class="color-8 w-100" >{{optional(optional($vproduct)->vendor)->name}}</span>
                                 <span class="currency w-100">£{{optional($vproduct)->price_pounds}}</span>
                             </div>
                             <a href="{{url('/add/cart/'.$vproduct->product->id.'/'.$vproduct->vendor->id)}}" class="btn-1 bg-1 fw-500">Add to cart</a>

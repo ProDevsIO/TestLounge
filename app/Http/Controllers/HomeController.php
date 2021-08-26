@@ -760,11 +760,11 @@ class HomeController extends Controller
 
         }elseif($type == "Amber_v"){
 
-            $products = vendorProduct::where(['vendor_id' => 3, 'product_id'=> 2])->get();
+            $products = vendorProduct::where(['vendor_id' => 3])->whereIn('product_id',[2, 10])->get();
 
         }elseif($type == "Amber_uv"){
 
-            $products = vendorProduct::where(['vendor_id' => 3])->whereIn('product_id',[2, 4, 3])->get();
+            $products = vendorProduct::where(['vendor_id' => 3])->whereIn('product_id',[2, 4, 3, 10])->get();
 
         }elseif($type == "Red"){
 

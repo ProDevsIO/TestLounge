@@ -113,7 +113,7 @@
                         <li ><a href="{{ url('/') }}">Home</a>
                         </li>
                         <li><a href="{{ url('/about') }}">About</a></li>
-                        <li><a href="{{ url('/pricing') }}">Pricing</a></li>
+                        <!-- <li><a href="{{ url('/pricing') }}">Pricing</a></li> -->
                         <li class="has-dropdown"><a  href="#">COVID TESTING</a>
                             <div class="subnav subnav-halfwidth">
                                 <div class="col-sm-12">

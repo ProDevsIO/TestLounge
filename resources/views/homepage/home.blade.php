@@ -535,7 +535,7 @@
                 <div class="row">
                     <div class="col-sm-12 text-center">
                         <img alt="logo" class="logo hidden-xs" src="/img/logo-light.png">
-                        <h1 class="text-white space-bottom-medium text-center">We simplify the process of booking and making payments for Covid-19 Travel Tests for both travellers and travel agents. You’ll get up to date information on UK travel requirements and access to accredited test providers in the UK ensuring a  hassle free travel experience.</h1>
+                        <h1 class="text-white space-bottom-medium text-center">Welcome to Travel Tests Global. We simplify the process of booking and making payments for Covid-19 Travel Tests for both travellers and travel agents. You’ll get up to date information on travel requirements and access to test providers in the country of destination. This ensures you have a hassle free travel experience.</h1>
                         <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a>
                         <a href="{{ url('/product/all') }}" class="btn btn-primary btn-filled">Book Now</a>
                         
@@ -717,7 +717,7 @@
         </div>
         <br>
         </div>
-        <!-- <section class="strip bg-secondary-1">
+        <section class="strip bg-secondary-1">
             <div class="container">
                 <div class="row clearfix">
                    
@@ -728,7 +728,7 @@
                     </div>
                 </div>
             </div>
-        </section> -->
+        </section>
        
     
             <div class="container">
@@ -923,7 +923,7 @@
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
                         <span class="sub alt-font">popular questions</span>
-                        <h1><strong>GUIDELINES FOR TRAVEL TESTS GLOBAl</strong></h1>
+                        <h1><strong>GUIDELINES FOR TRAVEL TESTS GLOBAL</strong></h1>
                         <ul style="text-align: justify; list-style-type: square; font-size:18px;padding: 0px 20px;">
                             <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is <b>MANDATORY</b> for entry into the UK. You can book your test <a href="/pick" class="">Here</a> </li>
                            <br/> <li> Book and Pay for your travel tests  <a href="{{ url('/product/all') }}" class="">Book Now</a>. Evidence of booking and payment is <b>MANDATORY</b> before you can board a flight to the UK</li>
