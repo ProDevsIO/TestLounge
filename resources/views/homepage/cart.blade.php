@@ -573,7 +573,7 @@ input[type=text]{
                                 
                             </div>
                             <div class="card-item">
-                                <input type="number" class="form-control text-center" id= "quantity_{{$i}}"value ="{{$cart->quantity}}">
+                                <input type="number" class="form-control text-center" onkeydown="return false" min="1" id= "quantity_{{$i}}"value ="{{$cart->quantity}}">
                                
                             </div>
                             <div class="card-item">£{{ $cart->quantity * $cart->vendorProduct->price_pounds}}</div>
