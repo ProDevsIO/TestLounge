@@ -717,7 +717,7 @@
         </div>
         <br>
         </div>
-        <section class="strip bg-secondary-1">
+        <!-- <section class="strip bg-secondary-1">
             <div class="container">
                 <div class="row clearfix">
                    
@@ -729,7 +729,7 @@
                 </div>
             </div>
         </section>
-       
+       <br> -->
     
             <div class="container">
                 <div class="header shadow curved bg-1 font-30 " style="padding:50px">
