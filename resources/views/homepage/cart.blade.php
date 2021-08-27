@@ -736,31 +736,13 @@
 
             var q = "quantity_" + count;
             var quantity = document.getElementById(q).value;
-        
-            if (q && quantity) {
-                var url =  "/update/cart/" + id + "/" + quantity;
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-                    }
-                });
 
-                $.ajax({
-                    type: "get",
-                    url: url,
-                    data: null,
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log(data);
-                        toastr.success(data.message)  
-                    },
-                    error: function(error) {
-                        toastr.error('Error', 'Unable to process request')
-                        console.log(error);
-                       
-                    }
-                });
-            } 
+            var d = confirm("Are you sure you want to update this item in cart?");
+
+            if (d) {
+
+                window.location = "/update/cart/" + id + "/" + quantity;
+            }
         }
 
         function remove(id) {

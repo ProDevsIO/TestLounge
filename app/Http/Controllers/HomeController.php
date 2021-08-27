@@ -837,10 +837,8 @@ class HomeController extends Controller
 
         $carts->update(['quantity' => $quantity]);
 
-         $data = [
-                "message" => "Quantity has been updated.",
-         ];
-        return response()->json($data);
+        session()->flash("alert-success", "Quantity has been updated.");
+        return back();
     }
 
     public function deleteCart($id)
