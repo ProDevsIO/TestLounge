@@ -363,6 +363,59 @@
         </section>
        
         @if($faq == 1)
+        <section class="strip bg-secondary-1">
+            <div class="container">
+                <div class="row clearfix">
+                    <!-- <div class="col-md-6 col-xs-12 text-center">
+                         <h5 class="text-white">Not sure of which package or color code your.  </h5>
+                         <a href="https://calculator.prodevs.io/" target="_blank" class="btn btn-primary btn-white">Book now</a>
+                   
+                    </div> -->
+                 
+                    <div class="col-md-12 col-xs-12 text-center">
+                        <h5 class="text-white">If you do not know what category your country of origin belongs to , please click on this link for more information</h5>
+                        <a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" target="_blank" class="btn btn-primary btn-white">Click here</a>
+                  
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="pure-text-centered" id="popular">
+            <div class="container" style="width:100%;">
+                <div class="row">
+                    <div class="col-sm-10 col-md-12 text-center">
+                        <span class="sub alt-font">popular questions</span>
+                        <h1><strong>GUIDELINES FOR TRAVEL TESTS GLOBAL</strong></h1>
+                        <ul style="text-align: justify; list-style-type: square; font-size:18px;padding: 0px 20px;">
+                            <li>Run a PCR Test in your country of origin 72 hours before your trip to the UK. Evidence of a negative PCR Test is <b>MANDATORY</b> for entry into the UK. You can book your test <a href="/pick" class="">Here</a> </li>
+                           <br/> <li> Book and Pay for your travel tests  <a href="{{ url('/product/all') }}" class="">Book Now</a>. Evidence of booking and payment is <b>MANDATORY</b> before you can board a flight to the UK</li>
+                            <br/><li>Following Payment, you will immediately receive your Passenger locator Number and receipt of payment.</li>
+                            <br/> <li>This number will be used to Complete your Passenger locator form <a href="https://provide-journey-contact-details.homeoffice.gov.uk/passengerLocatorFormUserAccountHolderQuestion" target="_blank">Here</a>.You must show evidence that you have completed your Passenger locator form before you will be allowed to board a flight into the UK</li>
+                            <br/> <li>You may also need to show your receipt of payment for your test before you are allowed to board a flight to the UK; <br>
+                                Please have these documents handy at the airport ; both electronic and printed copies are accepted by airlines</li>
+                            <br/> <li>Following your arrival into the UK, you will receive the  test packages you booked for on or before the 2nd day of your  arrival.</li>
+                            <br/> <li>You must carry out a self test on your 1st or 2nd day of arrival into the UK . The directions on how to carry out a self test, how to activate your test and where to send your test samples to are all written  on the pack  you will receive. Click to watch video on how to carry out a self test. <a href="https://youtu.be/8lo6g-TYZ-c" target="_blank">Watch</a>.</li>
+                            <br/> <li> Following your self test, you will drop your sample at the designated points nearest to you as directed on the test pack you will recieve </li>
+                            <br/> <li> You will also be expected to "Activate" your test by visiting the website that will be indicated on the pack you will receive and by following the simple instructions on this website. This is required to analyse your test and send your results </li>
+                            <br/> <li> If you have  purchased a Fit to Fly Test or Package, for your exit out of the UK to another country, check the country guidelines for when you are expected to carry out your PCR test before flying. </li>
+                        </ul>
+                        <br/>   <p class="lead" style="text-align: justify;">
+                            You can also get more information about travel requirements for other countries <a href="https://calculator.prodevs.io/" target="_blank" style="color:#428bca; text-decoration:none;font-size:18px;"> here </a>. <br>
+                            Follow the guidelines above on how to carry out a self test and activate your tests <br>
+
+                            All test Results are available 24 hours from receipt of samples in the Laboratory <br><br></p>
+                        <div class="alert alert-warning">
+                       <p class="lead" style="text-align: justify;">     * Disclaimer : <br>
+                            Country guidelines change from time to time and the information provided here is a guide. Please ensure to confirm country and airline regulations with relevant authorities at your destination. Traveltestsltd will not take any responsibility for challenges that arise as a result of information provided here
+                       </p></div>
+                        <p class="lead" style="text-align: justify">
+                        <br/>
+                       
+                    </div>
+                </div><!--end of row-->
+
+            </div><!--end of container-->
+        </section>
             <section class="content" id="faq">
                 <div class="container" style="width:100%;">
                     <div class="row">
