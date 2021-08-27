@@ -635,8 +635,8 @@
                             <div class="inner">Travelling from the UK</div>
                         </div>
                     </a>
-                    <a href="/product/all" class="link text-white">
-                        <div class="card fw-600">
+                    <a href="/product/all" class="link text-white ">
+                        <div class="card fw-600" style="border: 2px solid black;">
                             <div class="inner color-1">View all tests</div>
                         </div>
                     </a>

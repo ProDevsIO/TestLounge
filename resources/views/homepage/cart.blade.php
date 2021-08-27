@@ -682,9 +682,9 @@
                                     @endfor
                                 </select> --}}
                                 <div class="input-group">
-                                    <span class="input-group-addon cart_update_btn" data-action="add">+</span>
-                                    <input type="text" class="form-control text-center cart_input" id="quantity_{{$i}}"  value="{{ $cart->quantity }}">
                                     <span class="input-group-addon cart_update_btn" data-action="remove">-</span>
+                                    <input type="text" class="form-control text-center cart_input" id="quantity_{{$i}}"  value="{{ $cart->quantity }}"> 
+                                    <span class="input-group-addon cart_update_btn" data-action="add">+</span>
                                 </div>
                             </div>
                             <div class="card-item text-center">£{{ $cart->quantity * $cart->vendorProduct->price_pounds }}</div>
@@ -736,13 +736,31 @@
 
             var q = "quantity_" + count;
             var quantity = document.getElementById(q).value;
+        
+            if (q && quantity) {
+                var url =  "/update/cart/" + id + "/" + quantity;
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
 
-            var d = confirm("Are you sure you want to update this item in cart?");
-
-            if (d) {
-
-                window.location = "/update/cart/" + id + "/" + quantity;
-            }
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    data: null,
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(data);
+                        toastr.success(data.message)  
+                    },
+                    error: function(error) {
+                        toastr.error('Error', 'Unable to process request')
+                        console.log(error);
+                       
+                    }
+                });
+            } 
         }
 
         function remove(id) {
