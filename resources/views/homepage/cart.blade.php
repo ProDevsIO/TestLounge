@@ -46,7 +46,7 @@
         }
 
         .bg-7 {
-            background: #fafafa;
+            background: white;
         }
 
         .bg-8 {
@@ -689,7 +689,9 @@
                                     <span class="input-group-addon cart_update_btn" data-action="remove">-</span>
                                 </div>
                             </div>
-                            <div class="card-item text-center">£{{ $cart->quantity * $cart->vendorProduct->price_pounds }}
+                            <div class="card-item text-center">£
+                                <span id="cart_item_total_{{ $cart->id }}">
+                                    {{ $cart->quantity * $cart->vendorProduct->price_pounds }}</span>
                             </div>
                             <div class="card-item color-6 text-center ">
                                 <a class="btn btn-sm btn-danger" style="background-color:#f1315d;margin:2px;"
@@ -749,6 +751,7 @@
                 success: function(data) {
                     $("#totalCartPrice").html(data.total_price);
                     btn.removeAttr("disabled");
+                    $("#cart_item_total_"+id).html(data.item_total);
                 },
                 error: function(error) {
                     toastr.error('Error', 'Unable to process request')
@@ -758,11 +761,8 @@
         }
 
         function remove(id) {
-
             var d = confirm("Are you sure you want to remove this item from cart?");
-
             if (d) {
-
                 window.location = "/delete/cart/" + id;
             }
         }
@@ -783,7 +783,7 @@
                     }
                 }
                 inputValue.val(value)
-                update(btn, input.attr("data-cart_id"), value);
+                update(btn,  input.attr("data-cart_id"), value);
             }
         })
     </script>

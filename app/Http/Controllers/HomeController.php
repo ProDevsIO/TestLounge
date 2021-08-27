@@ -833,7 +833,9 @@ class HomeController extends Controller
 
     public function updateCart($id, $quantity)
     {
-        Cart::where('id', $id)->first()->update(['quantity' => $quantity]);
+        $singleCart = Cart::findorfail($id);
+        $singleCart->update(['quantity' => $quantity]);
+        $singleCart->refresh();
 
         $cartSum = 0;
         $carts = Cart::where('ip', myIP())->get();
@@ -843,6 +845,7 @@ class HomeController extends Controller
 
         return response()->json([
             "message" => "Quantity has been updated",
+            "item_total" => $singleCart->quantity * $singleCart->vendorProduct->price_pounds,
             "total_price" => $cartSum
         ]);
     }
