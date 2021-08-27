@@ -406,15 +406,22 @@
                                         <div class="col-md-4">
                                             <div class="container" style="padding-top:70px">
                                                 {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
-                                                <a type="button" data-product_id="{{ $vproduct->product->id }}"
-                                                    data-vendor_id="{{ $vproduct->vendor->id }}"
-                                                    class="btn btn-block btn-info cart_btn"
-                                                    style="background-color: #46b8da;">
-                                                    <div class="spinner-border text-success" role="status">
-                                                        <span class="sr-only">Loading...</span>
-                                                    </div>
-                                                    Add to cart
-                                                </a>
+
+                                                @if ($vproduct->cartItem)
+                                                    <a type="button" data-product_id="{{ $vproduct->product->id }}"
+                                                        data-vendor_id="{{ $vproduct->vendor->id }}"
+                                                        class="btn btn-block btn-info cart_btn"
+                                                        style="background-color: #BC5636;">
+                                                        Remove from cart
+                                                    </a>
+                                                @else
+                                                    <a type="button" data-product_id="{{ $vproduct->product->id }}"
+                                                        data-vendor_id="{{ $vproduct->vendor->id }}"
+                                                        class="btn btn-block btn-info cart_btn"
+                                                        style="background-color: #46b8da;">
+                                                        Add to cart
+                                                    </a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
