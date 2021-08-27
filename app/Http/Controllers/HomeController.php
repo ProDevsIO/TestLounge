@@ -845,8 +845,8 @@ class HomeController extends Controller
 
         return response()->json([
             "message" => "Quantity has been updated",
-            "item_total" => $singleCart->quantity * $singleCart->vendorProduct->price_pounds,
-            "total_price" => $cartSum
+            "item_total" => number_format($singleCart->quantity * $singleCart->vendorProduct->price_pounds , 2),
+            "total_price" => number_format($cartSum , 2)
         ]);
     }
 

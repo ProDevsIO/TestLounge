@@ -431,6 +431,11 @@
 
                                 </div>
                             @endforeach
+                            <div class="row">
+                                <div class="col-sm-5" style="padding:2%"></div>
+                                <div class="col-sm-4" style="padd"></div>
+                                <div class="col-sm-3 p-2"><a href="{{ url('/view/cart') }}" type="button" class="btn btn-block btn-info" style="background-color: #46b8da;">Go to cart</a></div>
+                            </div>
                         @else
                             <h4 class="text-center">No product available for now</h4>
                         @endif

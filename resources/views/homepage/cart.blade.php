@@ -354,6 +354,10 @@
             margin-bottom: 25px;
         }
 
+        .cart_update_btn:hover {
+            background-color: white;
+        }
+
         .cart .cart-container .heading {
             margin-bottom: 15px;
         }
@@ -439,7 +443,7 @@
         }
 
         /* .form-page form .form-section .input-container input{
-        } */
+            } */
 
 
 
@@ -546,6 +550,10 @@
 
         /* mobile version */
         @media screen and (max-width: 468px) {
+            #cent {
+                text-align: center;
+            }
+
             input[type=number]::-webkit-inner-spin-button {
                 opacity: 1;
             }
@@ -644,7 +652,7 @@
             <div class="row">
                 <div class="col-xs-12">
 
-                    <h1 class="text-white">CART</h1>
+                    <h1 id="cent" class="text-white">CART</h1>
                 </div>
             </div>
             <!--end of row-->
@@ -691,7 +699,7 @@
                             </div>
                             <div class="card-item text-center">£
                                 <span id="cart_item_total_{{ $cart->id }}">
-                                    {{ $cart->quantity * $cart->vendorProduct->price_pounds }}</span>
+                                    {{ number_format($cart->quantity * $cart->vendorProduct->price_pounds, 2) }}</span>
                             </div>
                             <div class="card-item color-6 text-center ">
                                 <a class="btn btn-sm btn-danger" style="background-color:#f1315d;margin:2px;"
@@ -703,11 +711,13 @@
                         <?php $i++; ?>
                     @endforeach
                     <div class="text-center fw-700 " style="font-size: 24px; margin-top: 50px">
-                        TOTAL: <b class="color-1 price">£ <span id="totalCartPrice">{{ $cartSum }}</span></b>
+                        TOTAL: <b class="color-1 price">£ <span
+                                id="totalCartPrice">{{ number_format($cartSum, 2) }}</span></b>
                     </div>
                     <div class="button-container">
                         <!-- <a class="btn-3 bg-none color-1 fw-600">Back to Shopping</a> -->
-                        <a href="{{ url('/booking') }}" class="btn-3 bg-1 fw-600 text-white">Proceed</a>
+                        <a href="{{ url('/booking') }}" type="button" class="btn btn-sm btn-info"
+                            style="background-color: #46b8da;">Proceed</a>
                     </div>
                 </div>
             </div>
@@ -716,7 +726,8 @@
                 <h4 class="text-center">No products in cart</h4>
                 <br>
                 <center>
-                    <a href="{{ url('/product/all') }}" class="btn-3 bg-1 color-1 fw-600" style="color:white">Continue
+                    <a href="{{ url('/product/all') }}" class="btn-3 bg-1 color-1 fw-600"
+                        style="color:white; padding-right:10px; padding-left:10px;">Continue
                         shopping</a>
                 </center>
 
@@ -734,7 +745,7 @@
             });
         });
 
-        function update(btn, id, quantity ) {
+        function update(btn, id, quantity) {
             btn.attr("disabled", true);
             const url = "/update/cart/" + id + "/" + quantity;
             $.ajaxSetup({
@@ -751,7 +762,7 @@
                 success: function(data) {
                     $("#totalCartPrice").html(data.total_price);
                     btn.removeAttr("disabled");
-                    $("#cart_item_total_"+id).html(data.item_total);
+                    $("#cart_item_total_" + id).html(data.item_total);
                 },
                 error: function(error) {
                     toastr.error('Error', 'Unable to process request')
@@ -773,7 +784,8 @@
             const input = btn.parent().find("input");
             if (input !== undefined) {
                 let inputValue = $(input[0])
-                let value = parseInt(inputValue.val());
+                const value_ = parseInt(inputValue.val());
+                let value = value_
                 const action = btn.attr("data-action")
                 if (action == "add") {
                     value = value + 1
@@ -782,8 +794,11 @@
                         value = value - 1
                     }
                 }
-                inputValue.val(value)
-                update(btn,  input.attr("data-cart_id"), value);
+                if (value_ != value) {
+                    inputValue.val(value)
+                    update(btn, input.attr("data-cart_id"), value);
+
+                }
             }
         })
     </script>

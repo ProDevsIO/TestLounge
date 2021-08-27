@@ -418,7 +418,7 @@
 
     /***** country category */
     .country-category{
-        padding:0 200px;
+        padding:0 2px;
     }
     .country-category .card-container{
         margin:50px 0;
@@ -577,71 +577,77 @@
 					</div><!--end of row-->
 				</div><!--end of container-->
 			</section><br/>
-            <div class="country-category">
+                <div class="container">
                 <div class="header text-center bg-1" style="padding:59px;">
-                    
-                    <div class="container ">
-                        <p class="fw-700 fs-28">BOOK NOW</p>
-                        <p class="fw-600 fs-20">The travel tests requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
-                    </div>
-                </div>
-                <div class="card-container"  style="margin-left:20px; margin-right:20px;"id="country-section" style="">
-                    <div id="show-result">
-
-                    </div>
-                    <label for="">Choose the country you’re travelling to</label>
-                         <?php 
-                            $countries = App\Models\Country::all();
                         
-                        ?>
-                    <select name="" class="form-control" id="country" onchange="countryQuery()">
-                        <option value="">Select a country</option>
-                        <option value="225">United Kingdom</option>
-                        @foreach($countries as $country)
-                            <option value="{{$country->id}}">{{$country->nicename}} </option>
-                        @endforeach
-                    </select>
+                        <div class="container ">
+                            <p class="fw-700 fs-28">BOOK NOW</p>
+                            <p class="fw-600 fs-20">The travel tests requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-container double-container fs-20 text-center">
-                   
-                    <a href="/product/Green" class="link text-white">
-                        <div class="card bg-2 fw-700">
-                                <div class="inner">Travelling from a Green country to the UK</div>
+               
+            <div class="container">
+                <div class="country-category">    
+                    <div class="card-container"  style="margin-left:20px; margin-right:20px;"id="country-section" style="">
+                        <div id="show-result">
+
                         </div>
-                    </a>
-                    <a href="/product/Amber_v" class="link">
-                        <div class="card bg-4 fw-700">
-                                <div class="inner">
-                                    Travelling from an Amber country 
-                                    (Vaccinated) to the UK
-                                </div>
-                        </div>
-                    </a>
-                    <a href="/product/Amber_uv" class="link text-white">
-                        <div class="card bg-4 fw-700">
-                                <div class="inner">
-                                    Travelling from an Amber country
-                                    (Unvaccinated) to the UK
-                                </div>
-                        </div>
-                    </a>
-                    <a href="/product/Red" class="link text-white">
-                        <div class="card bg-5 fw-700">
-                                <div class="inner">Travelling from a red country to the UK</div>
-                        </div>
-                    </a>
-                    <a href="{{url('/product/UK')}}"  class="link text-white">
-                        <div class="card bg-3 fw-700">
-                            <div class="inner">Travelling from the UK</div>
-                        </div>
-                    </a>
-                    <a href="/product/all" class="link text-white">
-                        <div class="card fw-600">
-                            <div class="inner color-1">View all tests</div>
-                        </div>
-                    </a>
+                        <label for="">Choose the country you’re travelling to</label>
+                            <?php 
+                                $countries = App\Models\Country::all();
+                            
+                            ?>
+                        <select name="" class="form-control" id="country" onchange="countryQuery()">
+                            <option value="">Select a country</option>
+                            <option value="225">United Kingdom</option>
+                            @foreach($countries as $country)
+                                <option value="{{$country->id}}">{{$country->nicename}} </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="card-container double-container fs-20 text-center">
+                    
+                        <a href="/product/Green" class="link text-white">
+                            <div class="card bg-2 fw-700">
+                                    <div class="inner">Travelling from a Green country to the UK</div>
+                            </div>
+                        </a>
+                        <a href="/product/Amber_v" class="link">
+                            <div class="card bg-4 fw-700">
+                                    <div class="inner">
+                                        Travelling from an Amber country 
+                                        (Vaccinated) to the UK
+                                    </div>
+                            </div>
+                        </a>
+                        <a href="/product/Amber_uv" class="link text-white">
+                            <div class="card bg-4 fw-700">
+                                    <div class="inner">
+                                        Travelling from an Amber country
+                                        (Unvaccinated) to the UK
+                                    </div>
+                            </div>
+                        </a>
+                        <a href="/product/Red" class="link text-white">
+                            <div class="card bg-5 fw-700">
+                                    <div class="inner">Travelling from a red country to the UK</div>
+                            </div>
+                        </a>
+                        <a href="{{url('/product/UK')}}"  class="link text-white">
+                            <div class="card bg-3 fw-700">
+                                <div class="inner">Travelling from the UK</div>
+                            </div>
+                        </a>
+                        <a href="/product/all" class="link text-white ">
+                            <div class="card fw-600" style="border: 2px solid black;">
+                                <div class="inner color-1">View all tests</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
+           
         <div class="container">
             <div class="header shadow curved bg-1 font-30" style="">
                 <div class="text-center">
