@@ -353,7 +353,9 @@
             border-radius: 5px;
             margin-bottom: 25px;
         }
-
+        .cart_update_btn:hover{
+            background-color:white;
+        }
         .cart .cart-container .heading {
             margin-bottom: 15px;
         }
@@ -546,6 +548,9 @@
 
         /* mobile version */
         @media screen and (max-width: 468px) {
+            #cent{
+                text-align:center;
+            }
             input[type=number]::-webkit-inner-spin-button {
                 opacity: 1;
             }
@@ -644,7 +649,7 @@
             <div class="row">
                 <div class="col-xs-12">
 
-                    <h1 class="text-white">CART</h1>
+                    <h1 id ="cent" class="text-white">CART</h1>
                 </div>
             </div>
             <!--end of row-->
@@ -687,21 +692,23 @@
                                     <span class="input-group-addon cart_update_btn" data-action="add">+</span>
                                 </div>
                             </div>
-                            <div class="card-item text-center">£{{ $cart->quantity * $cart->vendorProduct->price_pounds }}</div>
+                            <div class="card-item text-center">£{{ number_format($cart->quantity * $cart->vendorProduct->price_pounds, 2) }}</div>
                             <div class="card-item color-6 text-center ">
-                                <a class="btn btn-sm btn-danger" style="background-color:#f1315d;margin:2px;"
-                                    href="javascript:;" onclick="remove(' {{ $cart->id }}')"> <i
-                                        class="icon icon_trash"> </i> Remove </a>
-                                <br class="m-2">
+                               
                                 <a class="btn btn-sm btn-info" style="background-color:#1a8bb3;margin:2px;"
                                     href="javascript:;" onclick="update(' {{ $cart->id }}', '{{ $i }}')"> <i
                                         class="icon icon_pencil" style="margin-right: 5px"> </i> Update </a>
+                                        <br class="m-2">
+                                <a class="btn btn-sm btn-danger" style="background-color:#f1315d;margin:2px;"
+                                    href="javascript:;" onclick="remove(' {{ $cart->id }}')"> <i
+                                        class="icon icon_trash"> </i> Remove </a>
+                                
                             </div>
                         </div>
                         <?php $i++; ?>
                     @endforeach
                     <div class="text-center fw-700 " style="font-size: 24px; margin-top: 50px">
-                        TOTAL: <b class="color-1 price">£ {{ $cartSum }}</b>
+                        TOTAL: <b class="color-1 price">£ {{ number_format($cartSum, 2) }}</b>
                     </div>
                     <div class="button-container">
                         <!-- <a class="btn-3 bg-none color-1 fw-600">Back to Shopping</a> -->
@@ -714,7 +721,7 @@
                 <h4 class="text-center">No products in cart</h4>
                 <br>
                 <center>
-                    <a href="{{ url('/product/all') }}" class="btn-3 bg-1 color-1 fw-600" style="color:white">Continue
+                    <a href="{{ url('/product/all') }}" class="btn-3 bg-1 color-1 fw-600" style="color:white; padding-right:10px; padding-left:10px;">Continue
                         shopping</a>
                 </center>
 
