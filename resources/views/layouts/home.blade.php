@@ -116,7 +116,7 @@
                         </li>
                         <li><a href="{{ url('/about') }}">About</a></li>
                         <!-- <li><a href="{{ url('/pricing') }}">Pricing</a></li> -->
-                        <li class="has-dropdown"><a  href="#">COVID TESTING</a>
+                        <!-- <li class="has-dropdown"><a  href="#">COVID TESTING</a>
                             <div class="subnav subnav-halfwidth">
                                 <div class="col-sm-12">
                                     <ul class="subnav">
@@ -130,8 +130,8 @@
                                 </div>
 
                             </div>
-                        </li>
-                        <li><a href="/#faq">FAQ</a>
+                        </li> -->
+                        <!-- <li><a href="/#faq">FAQ</a> -->
                         </li>
                         <li><a href="/#contact">Contact</a>
                         </li>
