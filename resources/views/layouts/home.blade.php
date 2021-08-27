@@ -43,15 +43,24 @@
         #hide{
         display: block;
         }
+        #hide2{
+        display: none;
+        }
     }
     @media screen and (max-width: 800px) {
         #hide{
         display: block;
         }
+        #hide2{
+        display: none;
+        }
     }
     @media screen and (max-width: 1024px) {
         #hide{
         display: block;
+        }
+        #hide2{
+        display: none;
         }
     }
     .badge-cart{
@@ -139,7 +148,7 @@
                             $cartcount = App\Models\Cart::where('ip', session()->get('ip'))->count();
 
                         ?>
-                        <li> <a href="{{url('/view/cart')}}"><i class="icon icon_cart"></i><span class="badge badge-cart cart_count_item">{{$cartcount}}</span></a></li>
+                        <li id="hide2"> <a href="{{url('/view/cart')}}"><i class="icon icon_cart"></i><span class="badge badge-cart cart_count_item">{{$cartcount}}</span></a></li>
                         <li id="hide"><a href="/login">login</a></li>
                         <li id="hide"><a href="/register/agent">Register as an agent</a></li>
                     </ul>
@@ -166,8 +175,15 @@
                     </ul>
                 </div>
             </div><!--end of row-->
-
+                <div id="hide" style="
+                    position: absolute;
+                    top: 33px;
+                    right: 50px;">
+                <a href="{{url('/view/cart')}}" style="color:#777777;font-size:14px;"><i class="icon icon_cart"></i><span class="badge badge-cart cart_count_item">{{$cartcount}}</span></a></li>
+                     
+                </div>
             <div class="mobile-toggle">
+                   
                 <i class="icon icon_menu"></i>
             </div>
 

@@ -14,6 +14,10 @@
             background: #2e5c99;
             color: #fff;
         }
+        .bg-6 {
+            background: #f4db94;
+            color: #fff;
+        }
         .bg-2 {
             background: #92D050;
             color: #fff;
@@ -296,6 +300,10 @@
         background:#FA8072;
         color:#fff;
     }
+    .bg-6 {
+            background: #f4db94 !important;
+            color: #fff;
+        }
     .bg-4{
         background:#F6D167;
         color:#fff;
@@ -304,10 +312,7 @@
         background:#DF2E2E;
         color:#fff;
     }
-    .bg-6{
-        background:#989898;
-        color:#fff;
-    }
+  
     .bg-7{
         background:#F3F3F3;
     }
@@ -614,7 +619,7 @@
                             </div>
                         </a>
                         <a href="/product/Amber_v" class="link">
-                            <div class="card bg-4 fw-700">
+                            <div class="card bg-6 fw-700">
                                     <div class="inner">
                                         Travelling from an Amber country 
                                         (Vaccinated) to the UK
@@ -661,122 +666,122 @@
                 <thead>
                     <th class="bg-1 text-center">MEASURE REQUIRED</th>
                     <th class="bg-2 text-center">GREEN</th>
-                    <th class="bg-4 text-center">AMBER(Vaccinated) **</th>
+                    <th class="bg-6 text-center">AMBER(Vaccinated) **</th>
                     <th class="bg-4 text-center">AMBER(Unvaccinated)</th>
-                    <th class="bg-3 text-center">RED</th>
+                    <th class="bg-5 text-center">RED</th>
                 </thead>
                 <tr>
                     <td width="25%"><h6>COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</h6></td>
-                    <td width="25%">
+                    <td class="bg-2" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-6" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-4" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-5"  width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
                 </tr>
                 <tr>
                     <td width="25%"><h6>PRE-DEPARTURE TEST AT DESTINATION WITHIN 72 HOURS OF TRAVEL</h6></td>
-                    <td width="25%">
+                    <td class="bg-2" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-6" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-4" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-5" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
                 </tr>
                 <tr>
                     <td width="25%"><h6>MANDATORY PCR TEST UPON ENTRY TO UK ON/BEFORE DAY 2</h6></td>
-                    <td width="25%">
+                    <td class="bg-2" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-6" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-4" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-5" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
                 </tr>
                 <tr>
                     <td width="25%"><h6>MANDATORY ADDITIONAL PCR TESTING ON DAY 8 OF ARRIVAL INTO THE UK</h6></td>
-                    <td width="25%">
-                    <img src="/img/close-cross.svg" class="icon" />
+                    <td class="bg-2" width="25%">
+                        <img src="/img/close-cross.svg" class="icon" />
                     </td>
-                    <td width="25%">
-                     <img src="/img/close-cross.svg" class="icon" />   
+                    <td class="bg-6" width="25%">
+                        <img src="/img/close-cross.svg" class="icon" />   
                     </td>
-                    <td width="25%">
-                    <h6>Required on day 8</h6>
+                    <td class="bg-4" width="25%">
+                        <h6>Required on day 8</h6>
                     </td>
-                    <td width="25%">
+                    <td class="bg-5" width="25%">
                         <h6>Required on day 8</h6>
                     </td>
                 </tr>
                 <tr>
                     <td width="25%"><h6 >OPTIONAL DAY 5 PCR TEST<br>( Test to Release )</h6></td>
-                    <td width="25%">
+                    <td class="bg-2" width="25%">
                     <img src="/img/close-cross.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-6" width="25%">
                      <img src="/img/close-cross.svg" class="icon" />   
                     </td>
-                    <td width="25%">
+                    <td class="bg-4" width="25%">
                     <h6> You can reduce the time required for self isolation to 5 days by taking a Day 5 Test; a negative Day 5 PCR Test allows you to immediately leave self isolation</h6>
                     </td>
-                    <td width="25%">
+                    <td class="bg-5" width="25%">
                     <img src="/img/close-cross.svg" class="icon" />
                     </td>
                 </tr>
                 <tr>
                     <td width="25%"><h6>SELF ISOLATION</h6></td>
-                    <td width="25%">
+                    <td class="bg-2" width="25%">
                     <img src="/img/close-cross.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-6"  width="25%">
                       <img src="/img/close-cross.svg" class="icon" />
                      </td>
-                    <td width="25%">
+                    <td class="bg-4" width="25%">
                         <h6> 10 days of Isolation at the UK Isolation address provided in your passenger locator form.
                             You can reduce this time to 5days  following a negative PCR result taken on  Day 5 Test (  See above)</h6>
                     </td>
-                    <td width="25%">
+                    <td class="bg-5" width="25%">
                         <h6>10 days of Isolation in a Government approved Quarantine Hotel</h6>
                     </td>
                 </tr>
                 <tr>
                     <td width="25%"><h6>FIT TO FLY( PCR Test Taken before travel out of the UK  if required by destination country) </h6></td>
-                    <td width="25%">
+                    <td class="bg-2" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-6" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-4" width="25%">
                         <img src="/img/check-mark.svg" class="icon" />
                     </td>
-                    <td width="25%">
+                    <td class="bg-5" width="25%">
                       <img src="/img/check-mark.svg" class="icon" />
                     </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td class="bg-2">  <a href="{{ url('/product/Green') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td class="bg-4">  <a href="{{ url('/product/Amber_v') }}" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td class="bg-6">  <a href="{{ url('/product/Amber_v') }}" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td class="bg-4">  <a href="{{ url('/product/Amber_uv') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td class="bg-3"> <a class="btn btn-primary btn-filled">Not available</a></td>
+                    <td class="bg-5"> <a class="btn btn-primary btn-filled">Not available</a></td>
                 </tr>
                 
             </table>
@@ -826,93 +831,93 @@
                     <tr>
                         <th class="bg-1">Ages (years)</th>
                         <th class="bg-2">0 - 4</th>
-                        <th class="bg-3">5 - 10</th>
-                        <th class="bg-4">11 - 17</th>
+                        <th class="bg-4">5 - 10</th>
+                        <th class="bg-5">11 - 17</th>
                         <th class="bg-2">0 - 4</th>
-                        <th class="bg-3">5 - 10</th>
-                        <th class="bg-4">11 - 17</th>
+                        <th class="bg-4">5 - 10</th>
+                        <th class="bg-5">11 - 17</th>
                     </tr>
                     <tr>
                         <td width="35.5%"><h6>Quarantine (at home or in the place they are staying for 10 days or for the duration of their trip if it’s less than 10 days)</h6> </td>
-                        <td width="10%">
+                        <td class="bg-2" width="10%">
                             <img src="/img/close-cross.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-4" width="10%">
                             <img src="/img/close-cross.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-5" width="10%">
                             <img src="/img/close-cross.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-2" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-4" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-5" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
                     </tr>
                     <tr>
                         <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
-                        <td width="10%">
+                        <td class="bg-2" width="10%">
                             <img src="/img/close-cross.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-4" width="10%">
                             <img src="/img/close-cross.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-5" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-2" width="10%">
                             <img src="/img/close-cross.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-4" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-5" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
                     </tr>
                     <tr>
                         <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
-                        <td width="10%">
+                        <td class="bg-2" width="10%">
                             <img src="/img/close-cross.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-4" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-5" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-2" width="10%">
                             <img src="/img/close-cross.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-4" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-5" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
                     </tr>
                     <tr>
                         <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
-                        <td width="10%">
+                        <td class="bg-2" width="10%">
                             <img src="/img/close-cross.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-4" width="10%">
                             <img src="/img/close-cross.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-5" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-2" width="10%">
                             <img src="/img/close-cross.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-4" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
-                        <td width="10%">
+                        <td class="bg-5" width="10%">
                             <img src="/img/check-mark.svg" class="icon" />
                         </td>
                     </tr>
