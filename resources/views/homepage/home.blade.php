@@ -536,7 +536,7 @@
                     <div class="col-sm-12 text-center">
                         <img alt="logo" class="logo hidden-xs" src="/img/logo-light.png">
                         <h1 class="text-white space-bottom-medium text-center">Welcome to Travel Tests Global. We simplify the process of booking and making payments for Covid-19 Travel Tests for both travellers and travel agents. You’ll get up to date information on travel requirements and access to test providers in the country of destination. This ensures you have a hassle free travel experience.</h1>
-                        <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a>
+                        <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
                         <a href="{{ url('/product/all') }}" class="btn btn-primary btn-filled">Book Now</a>
                         
                     </div>
@@ -595,7 +595,8 @@
                         
                         ?>
                     <select name="" class="form-control" id="country" onchange="countryQuery()">
-                        <option value="">select a country</option>
+                        <option value="">Select a country</option>
+                        <option value="225">United Kingdom</option>
                         @foreach($countries as $country)
                             <option value="{{$country->id}}">{{$country->nicename}} </option>
                         @endforeach
@@ -910,6 +911,7 @@
                         </td>
                     </tr>
                 </table>
+                <br>
             </div>
         </div>
     </div>
@@ -943,7 +945,10 @@
                 newNode.appendChild(close);
                 $("#show-result p a").addClass('close')
                 $("#show-result p a").attr("data-dismiss","alert")
-                $("#show-result p").addClass('alert alert-info')
+                $("#show-result p").addClass('alert')
+                $("#show-result p").addClass('p-5')
+                $("#show-result p").attr("style", "background-color: #4169e1;color:white")
+               
             });
        }
 </script>
