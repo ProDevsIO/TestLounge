@@ -11,6 +11,7 @@
     <title>Traveltestsltd | Home</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="/css/flexslider.min.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="/css/line-icons.min.css" rel="stylesheet" type="text/css" media="all"/>
@@ -28,6 +29,7 @@
     <script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <link rel="stylesheet" href="/js/phone_lib/css/intlTelInput.css">
     <link rel="icon" type="image/png" href="/img/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
     @yield('style')
     <style>
@@ -133,17 +135,17 @@
                         </li>
                         <li><a href="/#contact">Contact</a>
                         </li>
-                        <?php 
+                        <?php
                             $cartcount = App\Models\Cart::where('ip', session()->get('ip'))->count();
-                        
+
                         ?>
-                        <li> <a href="{{url('/view/cart')}}"><i class="icon icon_cart"></i><span class="badge badge-cart">{{$cartcount}}</span></a></li>
+                        <li> <a href="{{url('/view/cart')}}"><i class="icon icon_cart"></i><span class="badge badge-cart cart_count_item">{{$cartcount}}</span></a></li>
                         <li id="hide"><a href="/login">login</a></li>
                         <li id="hide"><a href="/register/agent">Register as an agent</a></li>
                     </ul>
 
                     <ul class="social-icons text-right">
-                        
+
                         <li>
                             <a target="_blank" href="https://twitter.com/tests_uk">
                                 <i class="icon social_twitter"></i>
@@ -187,7 +189,7 @@
     <footer class="bg-primary short-2" id="contact">
         <div class="container">
             <div class="row">
-                
+
                 <div class="col-sm-12">
                 <h5 class="text-white">Contact us</h5>
                 <span class="text-white">If you have any questions further questions call us on<br>
@@ -196,11 +198,11 @@
                     <br>
                   {{--Powered by <a href="https://www.medburymedicals.com/" target="_blank">MMS</a>--}}
                 </span>
-              
+
                     <span class="text-white">Email us at <br>
                     <a href="#">info@traveltestsltd.com</a></span>
                     <span class="text-white">London, UK</span>
-                         
+
                     <span class="text-white">© {{ date('Y') }} Traveltestsltd.
                         </span>
                 </div>
@@ -232,6 +234,7 @@
 <script>
     console.log('Built with ❤ by ProDevs(https://prodevs.io)');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 @yield('script')
 </body>
 </html>
