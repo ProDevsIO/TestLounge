@@ -770,7 +770,7 @@ class HomeController extends Controller
             $products =[];
         }
 
-        return view('homepage.addProducts')->with(compact('products', 'faq'));
+        return view('homepage.addProducts')->with(compact('products', 'faq', 'type'));
     }
 
     public function viewCart()
@@ -811,7 +811,7 @@ class HomeController extends Controller
             $data = [
                 "message" => "Added $product to cart.",
                 "btn_text" => "Remove from cart",
-                "btn_color" => "#BC5636",
+                "btn_color" => "#46b8da",
             ];
         } else {
 

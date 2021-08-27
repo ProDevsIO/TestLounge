@@ -371,6 +371,17 @@
                     <div class="col-xs-12">
 
                         <h1 id="h9" class="text-white">COUNTRY TESTS</h1>
+                        @if($type == "Green")
+                        <p id="h9" class="text-white">Travelling from a Green country to the Uk <span class="badge" style="background-color:#7FC8A9;padding:10px">G</span></p>
+                        @elseif($type=="Amber_v")
+                        <p id="h9" class="text-white">Travelling from a Amber country(vaccinated) to the Uk <span class="badge" style="background-color:yellow;color:black;padding:10px">A</span></p>
+                        @elseif($type == "Amber_uv")
+                        <p id="h9" class="text-white">Travelling from a Amber country(unvaccinated) to the Uk <span class="badge" style="background-color:orange;padding:10px">A</span></p>
+                        @elseif($type=="Red")
+                        <p id="h9" class="text-white">Travelling from a Red country to the Uk<span class="badge" style="background-color:red;padding:10px">R</span></p>
+                        @elseif($type == "UK")
+                        <p id="h9" class="text-white">Travelling from a the Uk<span class="badge" style="background-color:grey;padding:10px">UK</span></p>
+                        @endif
                     </div>
                 </div>
                 <!--end of row-->
@@ -392,7 +403,17 @@
                             <br>
                             @foreach ($products as $vproduct)
 
-                                <div class="container bg-7" style="padding:20px;margin-bottom:20px">
+                                    @if($type == 'Green') 
+                                    <div  class="container bg-2" style="padding:20px;margin-bottom:20px">
+                                    @elseif($type == 'Amber_v')
+                                    <div class="container"  style="background-color:yellow;padding:20px;margin-bottom:20px">
+                                    @elseif($type == 'Amber_uv')
+                                        <div  class="container bg-4"  style="padding:20px;margin-bottom:20px">
+                                    @elseif($type == 'Red')
+                                        <div class="container bg-5"  style="padding:20px;margin-bottom:20px">
+                                    @elseif($type == 'all' || $type == 'UK' )
+                                        <div class="container bg-7"  style="padding:20px;margin-bottom:20px">
+                                    @endif
                                     <div class="row">
                                         <div class="col-md-8">
                                             <p class="text-center"><span
@@ -403,7 +424,7 @@
                                                     class="color-8 ">{{ optional(optional($vproduct)->vendor)->name }}</span>
                                             </p>
                                             <hr>
-                                            <p class="text-center"><span
+                                            <p class="text-center" style="color:#616161"><span
                                                     class=" ">£{{ optional($vproduct)->price_pounds }}</span></p>
                                         </div>
                                         <div class="col-md-4">
@@ -414,7 +435,7 @@
                                                     <a type="button" data-product_id="{{ $vproduct->product->id }}"
                                                         data-vendor_id="{{ $vproduct->vendor->id }}"
                                                         class="btn btn-block btn-info cart_btn"
-                                                        style="background-color: #BC5636;">
+                                                        style="background-color: #46b8da;">
                                                         Remove from cart
                                                     </a>
                                                 @else
@@ -431,10 +452,10 @@
 
                                 </div>
                             @endforeach
-                            <div class="row">
-                                <div class="col-sm-5" style="padding:2%"></div>
-                                <div class="col-sm-4" style="padd"></div>
-                                <div class="col-sm-3 p-2"><a href="{{ url('/view/cart') }}" type="button" class="btn btn-block btn-info" style="background-color: #46b8da;">Go to cart</a></div>
+                            <div class="row container" style="margin-right:0px; margin-left:0px">
+                                <div class="col-sm-5" style=""></div>
+                                <div class="col-sm-4" style=""></div>
+                                <div class="col-sm-3"><a href="{{ url('/view/cart') }}" type="button" class="btn btn-block btn-info" style="background-color: #46b8da;">Go to cart</a></div>
                             </div>
                         @else
                             <h4 class="text-center">No product available for now</h4>
