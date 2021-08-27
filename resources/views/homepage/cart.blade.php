@@ -695,11 +695,11 @@
                             <div class="card-item text-center">£{{ number_format($cart->quantity * $cart->vendorProduct->price_pounds, 2) }}</div>
                             <div class="card-item color-6 text-center ">
                                
-                                <a class="btn btn-sm btn-info" style="background-color:#1a8bb3;margin:2px;"
+                                <a type="button" class="btn btn-sm btn-info" style="background-color: #46b8da; margin:3px;"
                                     href="javascript:;" onclick="update(' {{ $cart->id }}', '{{ $i }}')"> <i
                                         class="icon icon_pencil" style="margin-right: 5px"> </i> Update </a>
                                         <br class="m-2">
-                                <a class="btn btn-sm btn-danger" style="background-color:#f1315d;margin:2px;"
+                                <a type="button" class="btn btn-sm btn-danger" style="background-color:#d43f3a; margin:3px;"
                                     href="javascript:;" onclick="remove(' {{ $cart->id }}')"> <i
                                         class="icon icon_trash"> </i> Remove </a>
                                 
@@ -712,7 +712,7 @@
                     </div>
                     <div class="button-container">
                         <!-- <a class="btn-3 bg-none color-1 fw-600">Back to Shopping</a> -->
-                        <a href="{{ url('/booking') }}" class="btn-3 bg-1 fw-600 text-white">Proceed</a>
+                        <a href="{{ url('/booking') }}" type="button" class="btn btn-sm btn-info" style="background-color: #46b8da;">Proceed</a>
                     </div>
                 </div>
             </div>
