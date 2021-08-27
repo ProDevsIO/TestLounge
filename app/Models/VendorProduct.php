@@ -66,6 +66,6 @@ class VendorProduct extends Model
 
     public function cartItem()
     {
-        return $this->hasOne(Cart::class , "vendor_product_id" , "id");
+        return $this->hasOne(Cart::class , "vendor_product_id" , "id")->where("ip" , myIP());
     }
 }

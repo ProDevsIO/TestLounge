@@ -786,14 +786,7 @@ class HomeController extends Controller
 
     public function addToCart($p_id, $v_id)
     {
-        if (!session()->has('ip')) {
-            $ip = uniqid('ip_') . rand(100, 999);
-            session(['ip' => $ip]);
-        } else {
-            $ip = session()->get('ip');
-        }
-
-
+        $ip = myIP();
         $v_product = VendorProduct::where([
             'product_id' => $p_id,
             'vendor_id' => $v_id

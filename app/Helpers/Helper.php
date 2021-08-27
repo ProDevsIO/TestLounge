@@ -96,3 +96,15 @@ function shareHelper()
 {
     return new UserShare;
 }
+
+
+function myIP()
+{
+    if (!session()->has('ip')) {
+        $ip = uniqid('ip_') . rand(100, 999);
+        session(['ip' => $ip]);
+    } else {
+        $ip = session()->get('ip');
+    }
+    return $ip;
+}
