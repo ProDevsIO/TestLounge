@@ -439,7 +439,7 @@
         }
 
         /* .form-page form .form-section .input-container input{
-    } */
+        } */
 
 
 
@@ -683,25 +683,25 @@
                                 </select> --}}
                                 <div class="input-group">
                                     <span class="input-group-addon cart_update_btn" data-action="add">+</span>
-                                    <input type="text" class="form-control text-center cart_input" id="quantity_{{$i}}"  value="{{ $cart->quantity }}">
+                                    <input type="text" class="form-control text-center cart_input"
+                                        id="quantity_{{ $i }}" value="{{ $cart->quantity }}"
+                                        data-cart_id="{{ $cart->id }}" />
                                     <span class="input-group-addon cart_update_btn" data-action="remove">-</span>
                                 </div>
                             </div>
-                            <div class="card-item text-center">£{{ $cart->quantity * $cart->vendorProduct->price_pounds }}</div>
+                            <div class="card-item text-center">£{{ $cart->quantity * $cart->vendorProduct->price_pounds }}
+                            </div>
                             <div class="card-item color-6 text-center ">
                                 <a class="btn btn-sm btn-danger" style="background-color:#f1315d;margin:2px;"
                                     href="javascript:;" onclick="remove(' {{ $cart->id }}')"> <i
                                         class="icon icon_trash"> </i> Remove </a>
                                 <br class="m-2">
-                                <a class="btn btn-sm btn-info" style="background-color:#1a8bb3;margin:2px;"
-                                    href="javascript:;" onclick="update(' {{ $cart->id }}', '{{ $i }}')"> <i
-                                        class="icon icon_pencil" style="margin-right: 5px"> </i> Update </a>
                             </div>
                         </div>
                         <?php $i++; ?>
                     @endforeach
                     <div class="text-center fw-700 " style="font-size: 24px; margin-top: 50px">
-                        TOTAL: <b class="color-1 price">£ {{ $cartSum }}</b>
+                        TOTAL: <b class="color-1 price">£ <span id="totalCartPrice">{{ $cartSum }}</span></b>
                     </div>
                     <div class="button-container">
                         <!-- <a class="btn-3 bg-none color-1 fw-600">Back to Shopping</a> -->
@@ -732,17 +732,29 @@
             });
         });
 
-        function update(id, count) {
+        function update(btn, id, quantity ) {
+            btn.attr("disabled", true);
+            const url = "/update/cart/" + id + "/" + quantity;
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-            var q = "quantity_" + count;
-            var quantity = document.getElementById(q).value;
-
-            var d = confirm("Are you sure you want to update this item in cart?");
-
-            if (d) {
-
-                window.location = "/update/cart/" + id + "/" + quantity;
-            }
+            $.ajax({
+                type: "get",
+                url: url,
+                data: null,
+                dataType: 'json',
+                success: function(data) {
+                    $("#totalCartPrice").html(data.total_price);
+                    btn.removeAttr("disabled");
+                },
+                error: function(error) {
+                    toastr.error('Error', 'Unable to process request')
+                    btn.removeAttr("disabled");
+                }
+            });
         }
 
         function remove(id) {
@@ -756,21 +768,22 @@
         }
 
 
-        $(".cart_update_btn").on("click" , function() {
-            const input = $(this).parent().find("input");
-            if(input !== undefined){
+        $(".cart_update_btn").on("click", function() {
+            const btn = $(this);
+            const input = btn.parent().find("input");
+            if (input !== undefined) {
                 let inputValue = $(input[0])
                 let value = parseInt(inputValue.val());
-                const action = $(this).attr("data-action")
-                if(action == "add"){
-                    value = value+ 1
-                }
-                else{
-                    if(value >= 2){
+                const action = btn.attr("data-action")
+                if (action == "add") {
+                    value = value + 1
+                } else {
+                    if (value >= 2) {
                         value = value - 1
                     }
                 }
                 inputValue.val(value)
+                update(btn, input.attr("data-cart_id"), value);
             }
         })
     </script>
