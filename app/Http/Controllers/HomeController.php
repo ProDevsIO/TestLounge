@@ -766,7 +766,7 @@ class HomeController extends Controller
             $faq = 1;
             $products = vendorProduct::where(['vendor_id' => 3, 'product_id' => 5])->get();
         }elseif($type == "UK"){
-            
+
             $products =[];
         }
 
@@ -775,7 +775,7 @@ class HomeController extends Controller
 
     public function viewCart()
     {
-        $carts = Cart::where('ip', session()->get('ip'))->get();
+        $carts = Cart::where('ip', myIP())->get();
         $cartSum = 0;
         foreach ($carts as $cart) {
 
@@ -833,12 +833,21 @@ class HomeController extends Controller
 
     public function updateCart($id, $quantity)
     {
-        $carts = Cart::where('id', $id)->first();
+        $singleCart = Cart::findorfail($id);
+        $singleCart->update(['quantity' => $quantity]);
+        $singleCart->refresh();
 
-        $carts->update(['quantity' => $quantity]);
+        $cartSum = 0;
+        $carts = Cart::where('ip', myIP())->get();
+        foreach ($carts as $cart) {
+            $cartSum = $cartSum + ($cart->vendorProduct->price_pounds * $cart->quantity);
+        }
 
-        session()->flash("alert-success", "Quantity has been updated.");
-        return back();
+        return response()->json([
+            "message" => "Quantity has been updated",
+            "item_total" => number_format($singleCart->quantity * $singleCart->vendorProduct->price_pounds , 2),
+            "total_price" => number_format($cartSum , 2)
+        ]);
     }
 
     public function deleteCart($id)
