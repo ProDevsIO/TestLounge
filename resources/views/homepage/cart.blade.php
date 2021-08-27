@@ -743,13 +743,7 @@
 
             var q = "quantity_" + count;
             var quantity = document.getElementById(q).value;
-
-            var d = confirm("Are you sure you want to update this item in cart?");
-
-            if (d) {
-
-                window.location = "/update/cart/" + id + "/" + quantity;
-            }
+             window.location.href = "/update/cart/" + id + "/" + quantity;
         }
 
         function remove(id) {
