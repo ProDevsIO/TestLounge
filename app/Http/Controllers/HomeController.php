@@ -764,9 +764,10 @@ class HomeController extends Controller
 
         }elseif($type == "Red"){
             $faq = 1;
-            $products =[];
-
             $products = vendorProduct::where(['vendor_id' => 3, 'product_id' => 5])->get();
+        }elseif($type == "UK"){
+            
+            $products =[];
         }
 
         return view('homepage.addProducts')->with(compact('products', 'faq'));
