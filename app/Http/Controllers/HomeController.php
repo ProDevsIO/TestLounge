@@ -743,29 +743,10 @@ class HomeController extends Controller
 
     public function viewProducts($type)
     {
-<<<<<<< HEAD
 
-
-        if ($type == "all") {
-
-            $products = vendorProduct::where('vendor_id', 3)->get();
-        } elseif ($type == "Green") {
-            $products = vendorProduct::where(['vendor_id' => 3, 'product_id' => 1])->get();
-        } elseif ($type == "Amber_v") {
-
-            $products = vendorProduct::where(['vendor_id' => 3])->whereIn('product_id', [2, 10])->get();
-        } elseif ($type == "Amber_uv") {
-
-            $products = vendorProduct::where(['vendor_id' => 3])->whereIn('product_id', [2, 4, 3, 10])->get();
-        } elseif ($type == "Red") {
-
-            $products = [];
-        } elseif ($type == "UK") {
-=======
-       
         $faq = 0;
         if($type == "all"){
-           
+
             $products = vendorProduct::where('vendor_id', 3)->get();
 
         }elseif($type == "Green")
@@ -784,17 +765,11 @@ class HomeController extends Controller
         }elseif($type == "Red"){
             $faq = 1;
             $products =[];
->>>>>>> 5506136d7b9255016bc134c64e116f9688bc4121
 
             $products = vendorProduct::where(['vendor_id' => 3, 'product_id' => 5])->get();
         }
-<<<<<<< HEAD
 
-        return view('homepage.addProducts')->with(compact('products'));
-=======
-    
         return view('homepage.addProducts')->with(compact('products', 'faq'));
->>>>>>> 5506136d7b9255016bc134c64e116f9688bc4121
     }
 
     public function viewCart()

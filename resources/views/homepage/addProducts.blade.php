@@ -323,16 +323,11 @@
 
         /* mobile version */
         @media screen and (max-width: 468px) {
-<<<<<<< HEAD
-            section {
-                padding: 50px 20px;
-=======
             #h9{
                 text-align:center;
             }
             section{
                 padding:50px 20px;
->>>>>>> 5506136d7b9255016bc134c64e116f9688bc4121
             }
 
             button {
@@ -374,13 +369,8 @@
             <div class="container align-bottom">
                 <div class="row">
                     <div class="col-xs-12">
-<<<<<<< HEAD
 
-                        <h1 class="text-white">COUNTRY TESTS</h1>
-=======
-                    
                         <h1 id="h9" class="text-white">COUNTRY TESTS</h1>
->>>>>>> 5506136d7b9255016bc134c64e116f9688bc4121
                     </div>
                 </div>
                 <!--end of row-->
@@ -448,10 +438,7 @@
                 </div>
             </div>
         </section>
-<<<<<<< HEAD
-    </div>
-=======
-       
+
         @if($faq == 1)
         <section class="strip bg-secondary-1">
             <div class="container">
@@ -459,13 +446,13 @@
                     <!-- <div class="col-md-6 col-xs-12 text-center">
                          <h5 class="text-white">Not sure of which package or color code your.  </h5>
                          <a href="https://calculator.prodevs.io/" target="_blank" class="btn btn-primary btn-white">Book now</a>
-                   
+
                     </div> -->
-                 
+
                     <div class="col-md-12 col-xs-12 text-center">
                         <h5 class="text-white">If you do not know what category your country of origin belongs to , please click on this link for more information</h5>
                         <a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england" target="_blank" class="btn btn-primary btn-white">Click here</a>
-                  
+
                     </div>
                 </div>
             </div>
@@ -500,7 +487,7 @@
                        </p></div>
                         <p class="lead" style="text-align: justify">
                         <br/>
-                       
+
                     </div>
                 </div><!--end of row-->
 
@@ -663,7 +650,6 @@
             </section>
         @endif
 </div>
->>>>>>> 5506136d7b9255016bc134c64e116f9688bc4121
 @endsection
 @section('script')
     <script>
