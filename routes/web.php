@@ -98,7 +98,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/imitate/account/{id}', [\App\Http\Controllers\DashboardController::class,"imitate_account"]);
     Route::get('/view/transactions', [\App\Http\Controllers\DashboardController::class,"view_transactions"]);
     Route::post('/update/country', [\App\Http\Controllers\DashboardController::class,"update_country"]);
-
+   
 
 
     Route::get('/users', [\App\Http\Controllers\DashboardController::class,"users"]);
@@ -120,6 +120,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [\App\Http\Controllers\DashboardController::class, "profile_view"]);
     Route::get('/edit/profile/view', [\App\Http\Controllers\DashboardController::class, "edit_profile_view"]);
     Route::post('/edit/profile', [\App\Http\Controllers\DashboardController::class, "edit_profile"]);
+    Route::get('/agent/view/products', [\App\Http\Controllers\DashboardController::class,"agent_view_product"]);
+    Route::get('/post/agent/buy/{product_id}/{vendor_id}/{quantity}', [\App\Http\Controllers\DashboardController::class,"post_agent_buy"]);
+    Route::get('/process/price/{product_id}/{quantity}', [\App\Http\Controllers\DashboardController::class,"agent_process_price"]);
+    Route::get('/voucher/payment/confirmation', [\App\Http\Controllers\DashboardController::class,"voucher_payment_confirmation"]);
+    Route::get('/view/vouchers', [\App\Http\Controllers\DashboardController::class, "view_vouchers"]);
 
     Route::post('/add/vendor', [\App\Http\Controllers\DashboardController::class,"add_vendor"]);
     Route::get('/admin/make/{id}', [\App\Http\Controllers\DashboardController::class,"admin_make"]);

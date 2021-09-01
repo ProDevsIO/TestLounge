@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\CountryColor;
 use App\Models\BookingProduct;
 use Carbon\Carbon;
@@ -141,6 +142,50 @@ class Controller extends BaseController
                     "title" => "UK Covid Testing Booking"
                 ]
             ];
+        }
+
+        return $data;
+    }
+
+    function processFlutterwaveVoucherData($price,$transaction_ref, $country, $agent_id){
+
+        $agent= User::where('id', $agent_id)->first();
+
+        if ($country == "NG") {
+
+            $data = [
+                //
+                "tx_ref" => $transaction_ref,
+                "amount" => $price,
+                "currency" => "NGN",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "voucher/payment/confirmation",
+                "customer" => [
+                    'email' => $agent->email,
+                    'phonenumber' => $agent->phone_no,
+                    'name' => $agent->first_name . " " . $agent->last_name
+                ],
+                "customizations" => [
+                    "title" => "Traveltestglobal Voucher payment"
+                ]
+            ];
+
+        } else {
+
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $price,
+                "currency" => "GBP",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "voucher/payment/confirmation",
+                "customer" => [
+                    'email' => $agent->email,
+                    'phonenumber' => $agent->phone_no,
+                    'name' => $agent->first_name . " " . $agent->last_name
+                ],
+                "customizations" => [
+                    "title" => "Traveltestglobal Voucher payment"
+                ]
+            ];
+
         }
 
         return $data;

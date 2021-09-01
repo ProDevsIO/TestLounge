@@ -22,6 +22,7 @@ class BookingService
             $this->user = $user;
             $this->referral_code = $user->referal_code;
             $this->user_id = $user->id;
+            
             if (!empty($user->flutterwave_key)) {
                 $this->generateSubAccountData();
             }

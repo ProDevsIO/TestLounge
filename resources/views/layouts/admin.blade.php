@@ -201,6 +201,26 @@
                             <span>View transactions</span>
                         </a>
                     </li>
+                    
+                    @if(auth()->user()->type == "2")
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class=" icon-book-open"></i>
+                                <span>Vouchers</span>
+                            </a>
+                            <ul class="sub">
+
+                                <li><a href="{{ url('/agent/view/products') }}">Products</a></li>
+                                <li><a href="{{ url('/view/vouchers') }}">Vouchers</a></li>
+                            
+                            
+                                <!-- <li><a href="{{ url('/view/agent/booking') }}">Agent Bookings</a></li>
+                                <li><a href="{{ url('/view/individual/booking') }}">Individual Bookings</a></li> -->
+                        
+                            </ul>
+                        </li>
+                    @endif
+
                     @if(auth()->user()->type == "2")
                    <li>
                       <a href="{{ url('/user/bank') }}">

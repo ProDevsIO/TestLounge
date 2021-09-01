@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\BookingConfirmationService;
+use App\Helpers\BookingService;
 use App\Helpers\BarcodeHelper;
 use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
+use App\Models\Voucher;
+use App\Models\VoucherProduct;
 use App\Models\Booking;
 use App\Models\BookingProduct;
 use App\Models\PaymentCode;
@@ -26,6 +30,14 @@ use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
+    public $bookingService;
+    public $bookConfirmationService;
+    public function __construct()
+    {
+        $this->bookingService = new BookingService;
+        $this->bookConfirmationService = new BookingConfirmationService;
+    }
+
     public function dashboard()
     {
         
@@ -1134,6 +1146,147 @@ class DashboardController extends Controller
             return back();
         }
 
+    }
+
+    public function agent_view_product()
+    {
+        $vproducts = VendorProduct::where('vendor_id', 3)->get();
+
+        return view('admin.agent_view_product')->with(compact('vproducts'));
+    }
+
+    public function post_agent_buy($product_id, $vendor_id, $quantity)
+    {
+       $product = VendorProduct::findorfail($product_id);
+
+       $country = auth()->user()->country;
+
+        if($country = "NG")
+        {
+            $amount = $product->price * $quantity;
+           
+        }else{
+            $amount = $product->price_pounds * $quantity;
+           
+        }
+
+        $transaction_ref = uniqid('voucher_') . rand(10000, 999999);
+
+        $agent_id = auth()->user()->id;
+
+        $data = $this->processFlutterwaveVoucherData($amount,$transaction_ref, $country, $agent_id);
+
+        $this->bookingService->getSubAccountsByRefCode(auth()->user()->referral_code);
+
+        //redirect to payment page
+        if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
+            $data['subaccounts'] = $sub_accounts;
+        }
+      
+        $vendorProduct = VendorProduct::where(['product_id' => $product_id, 'vendor_id' => $vendor_id])->first();
+
+    
+        $voucher = Voucher::create([
+                'agent' => $agent_id,
+                'transaction_ref' => $transaction_ref,
+                'quantity' => $quantity
+        ]);
+
+        $voucherProduct = VoucherProduct::Create([
+            'voucher_id' => $voucher->id,
+            'vendor_id'=> $vendor_id,
+            'product_id' => $product_id,
+            'vendor_product_id' => $vendorProduct->id,
+            'quantity' => $quantity,
+            'charged_amount' => $amount,
+            'currency' => $country
+        ]);
+
+      
+
+        $redirect_url = $this->processFL($data);
+
+        return redirect()->to($redirect_url);
+    }
+
+    public function voucher_payment_confirmation(Request $request)
+    {
+
+
+        if (env('APP_ENV', "LIVE") == "LIVE") {
+            $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
+        } else {
+            $url = "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/verify";
+        }
+
+        $request_data = $request->all();
+
+        $txRef = $request->tx_ref;
+
+        //run some curl commands to verify
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt(
+            $ch,
+            CURLOPT_POSTFIELDS,
+            "txref=" . $txRef . "&SECKEY=" . env('RAVE_SECRET_KEY', 'FLWSECK_TEST-516babb36b12f7f60ae0a118dcc9482a-X')
+        );
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $data_response = json_decode($response);
+
+      
+        //check if succesful
+        if (isset($data_response->data->status) && $data_response->data->status == "successful") {
+
+            $voucher = Voucher::where('transaction_ref', $txRef)->first();
+
+            if ($voucher->status != 1) {
+
+                //update voucher payment status
+                $voucher->update([
+                    'status' => 1,
+                ]);
+
+            }
+         
+            session()->flash('alert-success', "Transaction completed. The voucher code generated can be used for your clients booking. Your voucher code is $txRef");
+            return redirect()->to('/view/vouchers');
+        }
+
+        session()->flash('alert-danger', "Sorry but this transaction wasnt successful");
+        return redirect()->to('agent/view/products');
+    }
+
+    public function view_vouchers()
+    {
+        return view('admin.view_vouchers');
+    }
+
+    public function agent_process_price($product_id, $quantity)
+    {
+        $product = VendorProduct::findorfail($product_id);
+
+        if(auth()->user()->country = "NG")
+        {
+            $amount = $product->price * $quantity;
+            $price = "N " . number_format($amount, 2);
+        }else{
+            $amount = $product->price_pounds * $quantity;
+            $price = "£ " . number_format($amount, 2);
+        }
+
+        return response()->json([
+            
+            "item_total" => $price,
+           
+        ]);
+       
     }
 
     function imitate_account($id){
