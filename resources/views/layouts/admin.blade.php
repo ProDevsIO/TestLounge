@@ -202,15 +202,16 @@
                         </a>
                     </li>
                     
-                    @if(auth()->user()->type == "2")
+                   
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class=" icon-book-open"></i>
                                 <span>Vouchers</span>
                             </a>
                             <ul class="sub">
-
+                            @if(auth()->user()->type == "2")
                                 <li><a href="{{ url('/agent/view/products') }}">Products</a></li>
+                            @endif
                                 <li><a href="{{ url('/view/vouchers') }}">Vouchers</a></li>
                             
                             
@@ -219,7 +220,7 @@
                         
                             </ul>
                         </li>
-                    @endif
+                  
 
                     @if(auth()->user()->type == "2")
                    <li>

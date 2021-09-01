@@ -68,6 +68,11 @@ class User extends Authenticatable
 		return $this->hasMany(Booking::class);
 	}
 
+    public function voucher()
+	{
+		return $this->hasOne(Voucher::class);
+	}
+
     public function cbookings()
     {
         return $this->hasMany(Booking::class)->where('status','1');

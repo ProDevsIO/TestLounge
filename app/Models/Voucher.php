@@ -14,7 +14,18 @@ class Voucher extends Model
 	protected $fillable = [
 		'agent',
         'quantity',
-        'transaction_ref'
+        'transaction_ref',
+        'status'
 	];
+
+    public function user()
+	{
+		return $this->BelongsTo(User::class, 'agent');
+	}
     
+    public function voucherProduct()
+	{
+		return $this->hasOne(VoucherProduct::class);
+	}
+
 }

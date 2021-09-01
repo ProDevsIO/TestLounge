@@ -1265,7 +1265,15 @@ class DashboardController extends Controller
 
     public function view_vouchers()
     {
-        return view('admin.view_vouchers');
+        if(auth()->user()->type == 1)
+        {
+           $vouchers = Voucher::all(); 
+        }
+        else{
+            $vouchers = Voucher::where('agent', auth()->user()->id)->get();
+        }
+       
+        return view('admin.view_vouchers')->with(compact('vouchers'));
     }
 
     public function agent_process_price($product_id, $quantity)

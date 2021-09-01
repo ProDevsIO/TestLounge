@@ -20,4 +20,9 @@ class VoucherProduct extends Model
         'charged_amount',
         'currency'
 	];
+
+    public function voucher()
+	{
+		return $this->BelongsTo(Voucher::class);
+	}
 }
