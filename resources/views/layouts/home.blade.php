@@ -95,15 +95,15 @@
             <div class="row utility-menu">
                 <div class="col-sm-12 ">
                     <div class="utility-inner clearfix">
-                        <span class="alt-font"><i class="icon icon_mail"></i>info@traveltestsltd.com</span>
+                        <span class=""><i class="icon-envelope"></i> INFO@TRAVELTESTSLTD.COM</span>
 
                         <div class="pull-right">
                             @if(!in_array(\Illuminate\Support\Facades\Route::current()->getName(),$ignore))
-                                <a href="/login" class="btn btn-primary btn-white btn-xs">Login</a>
-                                <a href="/register/agent" class="btn btn-primary btn-white btn-xs">Register as an Agent</a>
+                                <a id="nav-btn" href="/login" class="btn btn-primary btn-white btn-xs">Login</a>
+                                <a id="nav-btn" href="/register/agent" class="btn btn-primary btn-white btn-xs">Register as an Agent</a>
                             @else
-                                <a href="/login" class="btn btn-primary btn-xs">Login</a>
-                                <a href="/register/agent" class="btn btn-primary btn-xs">Register as an Agent</a>
+                                <a id="nav-btn" href="/login" class="btn btn-primary btn-xs">Login</a>
+                                <a id="nav-btn" href="/register/agent" class="btn btn-primary btn-xs">Register as an Agent</a>
                                 @endif
                         </div>
                     </div>

@@ -11,7 +11,7 @@
             margin: 0;
         }
         .bg-1 {
-            background: #2e5c99;
+            background: #1E50A0;
             color: #fff;
         }
         .bg-6 {
@@ -289,7 +289,7 @@
 
     /***** background */
     .bg-1 {
-        background: #1A8BB3;
+        background: #1E50A0;
         color: #fff;
     }
     .bg-2 {
@@ -533,16 +533,23 @@
     <div class="main-container">
         <header class="page-header">
             <div class="background-image-holder parallax-background">
-                <img class="background-image" alt="Background Image" src="/img/banner.jpg">
+                <img class="background-image" alt="Background Image" src="/img/image 3 (1).png" >
             </div>
 
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <img alt="logo" class="logo hidden-xs" src="/img/logo-light.png">
-                        <h1 class="text-white space-bottom-medium text-center">Welcome to Travel Tests Global. We simplify the process of booking and making payments for Covid-19 Travel Tests for both travellers and travel agents. You’ll get up to date information on travel requirements and access to test providers in the country of destination. This ensures you have a hassle free travel experience.</h1>
-                        <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
-                        <a href="{{ url('/product/all') }}" class="btn btn-primary btn-filled">Book Now</a>
+                    <div class="col-md-12 text-center" id="banner-writeup-container">
+                            <div class="row">
+                                    <div class="col-md-6 "style=" padding-top:100px">
+                                        <h2 class="text-white space-bottom-medium" id="banner-writeup">We simplify the process of booking and making payments for Covid-19 UK Travel Tests for both travellers and travel agents. You’ll get up to date information on UK travel requirements and access to accredited test providers in the UK ensuring a hassle free travel experience.</h2>
+                                        <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
+                                        <a href="{{ url('/product/all') }}" class="btn btn-primary btn-filled ">Book Now</a>
+                                    </div>
+                                    <div class="col-md-6 pull-right" id="banner-writeup2" style="left:10%;top:100px ">
+                                        <img class="background-image" alt="Background Image" src="/img/Group 6.png"  style="background-repeat: no-repeat;background-size: 100% 100%">
+                                    </div>
+                            </div>
+                       
                         
                     </div>
                 </div><!--end of row-->
@@ -581,13 +588,14 @@
 						{{--</div>--}}
 					</div><!--end of row-->
 				</div><!--end of container-->
-			</section><br/>
-                <div class="container">
+			</section>
+                <div class="container-fluid" style="padding:0">
                 <div class="header text-center bg-1" style="padding:59px;">
                         
-                        <div class="container ">
-                            <p class="fw-700 fs-28">BOOK NOW</p>
-                            <p class="fw-600 fs-20">The travel tests requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
+                        <div class="container" id="banner2">
+                            <p style="font-weight:600px;font-size:20px;line-height: 41px;" class="fw-600 fs-20 text-left">The travel tests requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
+                           <br>
+                            <p class="fw-700 fs-28"> <a href="{{ url('/product/all') }}" type="button" class="btn btn-md bg-white" style="border-radius:25px; padding:14px 28px 13px 28px;color:">Book Now</a></p>
                         </div>
                     </div>
                 </div>
