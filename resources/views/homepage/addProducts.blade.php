@@ -16,54 +16,46 @@
 
         /***** background */
         .bg-1 {
-            background: #1A8BB3;
+        background: #1E50A0;
+        color: #fff;
+    }
+    .bg-2 {
+        background: #7FC8A9;
+        color: #fff;
+    }
+    .bg-3 {
+        background:#BBBEFF;
+        color:#fff;
+    }
+    .bg-6 {
+            background: #FFDF80 !important;
             color: #fff;
         }
-
-        .bg-2 {
-            background: #7FC8A9;
-            color: #fff;
-        }
-
-        .bg-3 {
-            background: #FA8072;
-            color: #fff;
-        }
-
-        .bg-4 {
-            background: #F6D167;
-            color: #fff;
-        }
-
-        .bg-5 {
-            background: #DF2E2E;
-            color: #fff;
-        }
-
-        .bg-6 {
-            background: #989898;
-            color: #fff;
-        }
-
-        .bg-7 {
-            background: #F3F3F3;
-        }
-
-        .bg-8 {
-            background: #616161;
-        }
-
-        .bg-9 {
-            background: #8d8d8d;
-        }
-
-        .bg-10 {
-            background: #D22F27;
-        }
-
-        .bg-11 {
-            background: #eaeaea;
-        }
+    .bg-4{
+        background:#FFF380;
+        color:#fff;
+    }
+    .bg-5{
+        background:#FF0000;
+        color:#fff;
+    }
+  
+    .bg-7{
+        background:#F3F3F3;
+    }
+    .bg-8{
+        background:#616161;
+    }
+    .bg-9{
+        background:#8d8d8d;
+    }
+    .bg-10{
+        background:#D22F27;
+    }
+    .bg-11{
+        background:#eaeaea;
+    }
+   
 
         .bg-white {
             background: #fff;
@@ -370,7 +362,7 @@
                 <div class="row">
                     <div class="col-xs-12">
 
-                        <h1 id="h9" class="text-white">COUNTRY TESTS</h1>
+                        <h5 id="h9" class="text-white">COUNTRY TESTS</h1>
                         @if($type == "Green")
                         <p id="h9" class="text-white">Travelling from a Green country to the Uk <span class="badge" style="background-color:#7FC8A9;padding:10px">G</span></p>
                         @elseif($type=="Amber_v")
