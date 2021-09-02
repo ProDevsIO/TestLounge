@@ -2,6 +2,9 @@
 @section('style')
 
     <style>
+        .background-image-holder{
+            background-color:#1E50A0 !important;
+        }
         body {
             font-size: 14px;
             font-family: 'Raleway', sans-serif;
@@ -55,8 +58,39 @@
     .bg-11{
         background:#eaeaea;
     }
-   
-
+   #add_button
+   {
+    border-radius:25px !important;
+     padding:14px 20px 13px 20px !important;
+     color:white; 
+     background: #1E50A0;
+   }
+   #go_button
+   {
+    
+     color:#1E50A0; 
+     background: white ;
+     font-family: Nunito;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 41px;
+   }
+   #remove_button{
+    border-radius:25px !important;
+     padding:14px 20px 13px 20px !important;
+     color:#1E50A0; 
+     background: white;
+   }
+   h5{
+    font-family: Nunito !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    font-size: 25px !important;
+    line-height: 34px  !important;
+    text-align: center;
+    color: #1B1B1B;
+   }
         .bg-white {
             background: #fff;
         }
@@ -209,7 +243,26 @@
             justify-content: space-between;
         }
 
+        #h9{
+            font-family: Nunito;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 40px;
+            line-height: 55px;
+            text-align:left;
+        }
 
+        #innerP{
+            font-family: Nunito !important;
+            font-style: normal !important;
+            font-weight: 200;
+            font-size: 17px;
+            line-height: 34px;
+            /* identical to box height */
+
+
+            color: #1B1B1B;
+        }
 
 
         /***** purchase */
@@ -301,7 +354,12 @@
 
 
         /* start laptop version */
-        @media screen and (max-width: 2450px) {}
+        @media screen and (min-width: 1000px) {
+            #con{
+                margin-left:140px;
+                margin-right:20px;
+            }
+        }
 
 
 
@@ -355,8 +413,8 @@
     <div class="main-container">
 
         <header class="title" style="max-height: 300px !important;">
-            <div class="background-image-holder parallax-background">
-                <img class="background-image" alt="Background Image" src="/img/hero14.jpg">
+            <div class="background-image-holder parallax-background" >
+                
             </div>
             <div class="container align-bottom">
                 <div class="row">
@@ -380,61 +438,53 @@
             </div>
             <!--end of container-->
         </header>
-        <section class="content">
-            <div class="jumbotron bg-white">
+        <section class="content bg-white" style="padding:0;">
+            <div class="jumbotron bg-white" >
                 <div class="purchase">
                     <div class="header text-center">
                         <!-- <div class="fw-700 fs-28">Travelling from the UK</div> -->
                     </div>
-                    <div class="card-container">
+                   
                         @if (count($products) > 0)
-
+                        <div class="row">
                             <div class="container" id="show-result">
 
                             </div>
                             <br>
-                            @foreach ($products as $vproduct)
 
-                                    @if($type == 'Green') 
-                                    <div  class="container bg-2" style="padding:20px;margin-bottom:20px">
-                                    @elseif($type == 'Amber_v')
-                                    <div class="container"  style="background-color:yellow;padding:20px;margin-bottom:20px">
-                                    @elseif($type == 'Amber_uv')
-                                        <div  class="container bg-4"  style="padding:20px;margin-bottom:20px">
-                                    @elseif($type == 'Red')
-                                        <div class="container bg-5"  style="padding:20px;margin-bottom:20px">
-                                    @elseif($type == 'all' || $type == 'UK' )
-                                        <div class="container bg-7"  style="padding:20px;margin-bottom:20px">
-                                    @endif
+                            @foreach ($products as $vproduct)    
+                            <div class="col-md-4" id="con" style="">         
+                                <div class="container bg-7"  style="padding:30px;margin-bottom:20px; height:400px; border-radius:10px">
+                                  
                                     <div class="row">
-                                        <div class="col-md-8">
-                                            <p class="text-center"><span
+                                        <div class="col-md-12">
+                                            <h5 class="text-center"><span
                                                     class="color-8 ">{{ optional(optional($vproduct)->product)->name }}</span>
-                                            </p>
-                                            <hr>
-                                            <p class="text-center"><span
+                                            </h5>
+                                           
+                                            <p id ="innerP" class="text-center"><span
                                                     class="color-8 ">{{ optional(optional($vproduct)->vendor)->name }}</span>
                                             </p>
-                                            <hr>
-                                            <p class="text-center" style="color:#616161"><span
-                                                    class=" ">£{{ optional($vproduct)->price_pounds }}</span></p>
+                                          
+                                            <h5 class="text-center" style="color:#616161"><span
+                                                    class=" ">£{{ optional($vproduct)->price_pounds }}</span></h5>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="container" style="padding-top:70px">
+                                        <div class="col-md-12">
+                                            <div class="container" style="padding-top:50px">
                                                 {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
 
                                                 @if ($vproduct->cartItem)
-                                                    <a type="button" data-product_id="{{ $vproduct->product->id }}"
+                                                    <a id ="remove_button" type="button" data-product_id="{{ $vproduct->product->id }}"
                                                         data-vendor_id="{{ $vproduct->vendor->id }}"
-                                                        class="btn btn-block btn-info cart_btn"
-                                                        style="background-color: #46b8da;">
+                                                        class="btn btn-block btn-outline-info cart_btn"
+                                                        style="border:1px solid #1E50A0;">
                                                         Remove from cart
                                                     </a>
                                                 @else
-                                                    <a type="button" data-product_id="{{ $vproduct->product->id }}"
+                                                    <a id ="add_button" type="button" data-product_id="{{ $vproduct->product->id }}"
                                                         data-vendor_id="{{ $vproduct->vendor->id }}"
                                                         class="btn btn-block btn-info cart_btn"
-                                                        style="background-color: #46b8da;">
+                                                        >
                                                         Add to cart
                                                     </a>
                                                 @endif
@@ -443,16 +493,18 @@
                                     </div>
 
                                 </div>
-                            @endforeach
-                            <div class="row container" style="margin-right:0px; margin-left:0px">
-                                <div class="col-sm-5" style=""></div>
-                                <div class="col-sm-4" style=""></div>
-                                <div class="col-sm-3"><a href="{{ url('/view/cart') }}" type="button" class="btn btn-block btn-info" style="background-color: #46b8da;">Go to cart</a></div>
                             </div>
+                            @endforeach
+                        </div>
+                            <div class="row container" style="margin-right:0px; margin-left:0px">
+                                
+                                <div class="col-sm-12 text-center"><a id="go_button" href="{{ url('/view/cart') }}" type="button" class="btn bg-1">Go to cart <img src="https://img.icons8.com/fluency/20/000000/right.png"/></a></div>
+                            </div>
+                        
                         @else
                             <h4 class="text-center">No product available for now</h4>
                         @endif
-                    </div>
+                  
                 </div>
             </div>
         </section>
@@ -700,7 +752,8 @@
                         toastr.success(data.message)
                         btn.html(data.btn_text)
                         btn.css({
-                            "backgroundColor": data.btn_color
+                            "backgroundColor": data.btn_color,
+                            "color": data.color
                         });
                         btn.removeAttr("disabled");
                         $(".cart_count_item").html(data.cart_items);

@@ -811,7 +811,8 @@ class HomeController extends Controller
             $data = [
                 "message" => "Added $product to cart.",
                 "btn_text" => "Remove from cart",
-                "btn_color" => "#46b8da",
+                "btn_color" => "white",
+                "color" => "#1E50A0"
             ];
         } else {
 
@@ -823,7 +824,8 @@ class HomeController extends Controller
             $data = [
                 "message" => "Removed $product from cart.",
                 "btn_text" => "Add to Cart",
-                "btn_color" => "#46b8da",
+                "btn_color" => "#1E50A0",
+                "color" => "white"
             ];
             // return "$product has already been added to cart.";
         }
