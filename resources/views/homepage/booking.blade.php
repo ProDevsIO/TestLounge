@@ -16,6 +16,49 @@
 .link{
     text-decoration:none;
 }
+.input-container, .col-md-6,.col-md-5, .col-md-3, .col-md-12{
+    margin-top:40px !important;
+}
+
+#regForm{
+    padding:50px;
+    padding-top:10%
+}
+#nextBtn:hover{
+    color:white !important;
+}
+#nextBtn{
+    margin:20px;
+    color:#1E50A0 !important;
+}
+#prevBtn{
+    margin:20px;
+    color:#1E50A0 !important;
+} 
+#prevBtn:hover{
+    color:white !important;
+}
+label{
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 27px;
+    color: #636363;
+    margin-bottom:20px;
+}
+
+h5{
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 41px;
+    /* identical to box height */
+
+
+    color: #1B1B1B;
+}
 
 /***** background */
 .bg-1 {
@@ -129,6 +172,9 @@ section{
 }
 
 /***** font weight */
+.fw-900{
+    font-weight:900;
+}
 .fw-700{
     font-weight:700;
 }
@@ -158,6 +204,7 @@ button{
     box-sizing: border-box;
     border-radius: 5px;
     cursor:pointer;
+    color: #1E50A0 !important;
 }
 .btn-1{
     padding:17px;
@@ -183,6 +230,9 @@ button{
     outline:none;
     border:none;
     border-bottom:1px solid grey;
+    height: 50px;
+    left: 324px;
+    top: 1012px;
 }
 .select-2{
     border: 1px solid #C8C8C8;
@@ -192,6 +242,9 @@ button{
     display:block;
     width:100%;
     outline:none;
+    height: 50px;
+    left: 324px;
+    top: 1012px;
 }
 
 /***** text input */
@@ -203,6 +256,9 @@ input[type=text]{
     display:block;
     width:100%;
     outline:none;
+    height: 50px;
+   
+   
 }
 
 /***** containers */
@@ -468,6 +524,14 @@ input[type=text]{
 
 /* mobile version */
 @media screen and (max-width: 468px) {
+    #nextBtn{
+    margin:0;
+   
+}
+#prevBtn{
+    margin:0;
+   
+} 
     section{
         padding:20px 20px;
     }
@@ -481,6 +545,10 @@ input[type=text]{
         display:block;
     }
 
+    #regForm{
+    padding:10px;
+    padding-top:10%
+    }
     /***** navigation */
     .navigation{
         display:none;
@@ -550,7 +618,7 @@ input[type=text]{
         height: 15px;
         width: 15px;
         margin: 0 2px;
-        background-color: #bbbbbb;
+        background-color: #BBBEFF;
         border: none;
         border-radius: 50%;
         display: inline-block;
@@ -643,24 +711,26 @@ input[type=text]{
 
     <div class="main-container">
         <section class="contact-photo">
-        <section class="content">
-            <div class="form-page">
-                <div class="header">
+        <section class="content" >
+            <div class="form-page ">
+                <div class="header " style="margin-top:10%" >
                     <!-- <div class="fw-700 fs-28 text-center">Travel Information</div> -->
 
                     @include('errors.showerrors')
-                <form action="{{ url('/post/booking') }}" method="post" id="regForm" class="needs-validation" >
+                <form action="{{ url('/post/booking') }}" method="post" id="regForm"  class="needs-validation bg-white" style="">
                     @csrf
-                    <div class="tab">
+                    <div class="tab ">
+                        <div></div>
                          <h5>Personal Infomation</h5>
-                         <div class="col-md-6 ">
+                                        <div class="col-md-5 ">
                                             <label>First Name <span class="show_required"> *</span> 
                                             </label>
                                             <input  type="text" placeholder="First name"
                                                    name="first_name"
                                                    value="{{ old('first_name') }}"  style="margin-bottom:0px;" required>
                                         </div>
-                                        <div class="col-md-6 ">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-5">
                                             <label>Surname <span class="show_required"> *</span></label>
                                             <input  type="text" placeholder="Surname"
                                                    name="last_name"
@@ -673,9 +743,9 @@ input[type=text]{
                                         </div>
                                         <div class="col-md-12 " style="margin-top: 20px">
                                         <label>Phone number<span class="show_required"> *</span></label>
-                                            <input id="phone" style="width:100%;margin-right:0px" type="text" value="{{ old('phone_no') }}" name="phone_no" class=" pr-5"  placeholder="Phone No" required>
+                                            <input id="phone" style="" type="text" value="{{ old('phone_no') }}" name="phone_no" class=" pr-5"  placeholder="Phone No" required>
                                         </div>
-                                        <div class="col-md-6"
+                                        <div class="col-md-5"
                                              style="margin-bottom: 20px">
                                             <label>Sex <span class="show_required"> *</span></label>
                                             <select class="select-2" name="sex" required>
@@ -690,7 +760,8 @@ input[type=text]{
                                                 </option>
                                             </select>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-5">
                                             <label>Date of Birth <span class="show_required"> *</span>
                                         </label>
                                             <input class="date_picker" type="text"
@@ -792,17 +863,21 @@ input[type=text]{
                                                    value="{{ old('address_2') }}"/>
                              </div>
 
-                            <div class="col-md-6 ">
+                            <div class="col-md-5" style="padding:0;">
                                             <label>Home City/Town: <span class="show_required"> *</span></label>
                                             <input class="" type="text" name="home_town"
                                                    value="{{ old('home_town') }}" required/>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-5"  style="padding:0;">
                                             <label>Home Postcode: <span class="show_required"> *</span></label>
                                             <input class="" type="text" name="post_code"
                                                    value="{{ old('post_code') }}" required/>
                             </div>
-                            <div class="input-container">
+                            <div class="container" style="padding:30px">
+
+                            </div>
+                            <div class="input-container" >
                                             <label>Home Country: <span class="show_required"> *</span></label>
                                             <select style="width: 100%;" class="select-2"
                                                     name="home_country_id" id="nationality"
@@ -928,9 +1003,9 @@ input[type=text]{
                             
                         <div class="form-section" >
                             <div class="input-container" style="margin-top: 10px">
-                                <div class="fw-700 fs-20 title">Payment Method</div>
+                                <label class="">Payment Method</label>
                                 <div class="color-8"> All cardholders are advised to use Flutterwave</div>
-                                    <div class='radio' style="padding:20px;height:100px;border-radius:25px" data-value="flutterwave" >
+                                    <div class='radio' style="background:none;border:none;padding:20px;height:100px;border-radius:25px" data-value="flutterwave" >
                                                     <img src="{{ url('/img/Flutterwave.png') }}" style="padding-bottom: 0px;width: 200px;">
                                     </div>
                             </div>
@@ -942,9 +1017,9 @@ input[type=text]{
 
                                             </select>
                             </div>
-                            <div class="input-container color-9 fw-700">
-                                <div class="label">Consent to Test <span class="color-10">*</span></div>
-                                <div class="color-8">I consent to this test being done, or if this test is for a child, I confirm I am a legal guardian of the child and consent to this test being done.</div>
+                            <div class="input-container color-9">
+                                <div class=" fw-900"><b>Consent to Test</> <span class="color-10">*</span></div>
+                                <div class="color-8  fw-700">I consent to this test being done, or if this test is for a child, I confirm I am a legal guardian of the child and consent to this test being done.</div>
                             </div>
                             <div class="input-container color-9 fw-700">
                                 <input type="checkbox" name="consent" value="1" class="bg-1" /> <span class="color-10">Bookings can’t be cancelled or refunded</span>
@@ -953,10 +1028,12 @@ input[type=text]{
                 
                     </div>
 
-                    <div class="container-fluid mb-5" >
-                        <div class="text-center pb-5">
-                            <button type="button" style="margin-top:50px;margin-bottom:30px;border:1px solid #428bca;"  class="btn btn-dark btn-pill float-right " id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                            <button type="button" style="margin-top:50px;margin-bottom:30px;border:1px solid #428bca;" class="btn btn-purple btn-pill float-right" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                    <div class="container-fluid mb-5" style="margin-top:50px;margin-bottom:30px;">
+                    
+                        <div class="text-center pb-5" >
+                            
+                            <button type="button" style="border:1px solid #1E50A0;color:#1E50A0;"  class="btn btn-purple btn-pill float-right " id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                            <button type="button" style="border:1px solid #1E50A0;color:#1E50A0;" class="btn btn-purple btn-pill float-right" id="nextBtn" onclick="nextPrev(1)">Next</button>
                         </div>
                     </div>
 
@@ -1009,6 +1086,7 @@ input[type=text]{
         document.getElementById("prevBtn").style.display = "none";
     } else {
         document.getElementById("prevBtn").style.display = "inline";
+        
     }
     if (n == (x.length - 1)) {
         document.getElementById("nextBtn").innerHTML = "Submit";
