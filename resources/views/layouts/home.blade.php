@@ -220,7 +220,18 @@
             </div><!--end for row-->
         </div><!--end of container-->
 
-        <div class="contact-action">
+        <div class="" style="  position: absolute;
+  right: 0px;
+  height: 100%;
+  width: 25%;
+  background:#1E50A0;
+  z-index: 3;
+  top: 40%;
+  text-align: center;
+  font-size: 18px;
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  transition: all .3s ease;">
             <div class="align-vertical">
                 <span class="text-white">© {{ date('Y') }} Traveltestsltd.
                 </span>
