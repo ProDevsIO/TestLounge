@@ -38,6 +38,51 @@
         }
         #hide{
         display: none;
+
+        }
+        .bg-1 {
+        background: #1E50A0;
+        color: #fff;
+    }
+    .bg-2 {
+        background: #7FC8A9;
+        color: #fff;
+    }
+    .bg-3 {
+        background:#BBBEFF;
+        color:#fff;
+    }
+    .bg-6 {
+            background: #FFDF80 !important;
+            color: #fff;
+        }
+    .bg-4{
+        background:#FFF380;
+        color:#fff;
+    }
+    .bg-5{
+        background:#FF0000;
+        color:#fff;
+    }
+  
+    .bg-7{
+        background:#F3F3F3;
+    }
+    .bg-8{
+        background:#616161;
+    }
+    .bg-9{
+        background:#8d8d8d;
+    }
+    .bg-10{
+        background:#D22F27;
+    }
+    .bg-11{
+        background:#eaeaea;
+    }
+
+   .bg-12{
+        background:#F0F5F7;;
     }
     @media screen and (max-width: 600px) {
         #hide{

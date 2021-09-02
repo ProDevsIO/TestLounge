@@ -2,6 +2,105 @@
 @section('style')
 
     <style>
+         .background-image-holder{
+            background-color:#1E50A0 !important;
+        }
+        #cent {
+                font-family: Nunito !important;
+                font-style: normal !important;
+                font-weight: 200 !important;
+                font-size: 40px !important;
+                line-height: 55px !important;
+                text-align: left;
+            }
+            #go_button
+            {
+                border:1px solid #1E50A0;
+                border-radius:25px !important;
+                padding:10px 20px 10px 20px !important;
+                color:#1E50A0; 
+                background: white ;
+                font-family: Nunito;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 12px;
+                line-height: 41px;
+                
+            }
+
+            #cart-header{
+                margin-top:20%;
+                font-family: Nunito;
+                font-style: normal;
+                font-weight: 800;
+                font-size: 35px;
+                line-height: 48px;
+
+                color: #1B1B1B;
+            }
+
+            #cart-table-header{
+                font-family: Nunito;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 20px;
+                line-height: 34px;
+                /* identical to box height */
+                color: #1E50A0;
+            }
+
+            .cart_input{
+                border:none !important;
+                border-top:1px solid #B8B8B8 !important;
+                border-bottom:1px solid #B8B8B8 !important;
+            }
+            #add_button
+            {
+                border-radius:25px !important;
+                padding:14px 20px 13px 20px !important;
+                color:white; 
+                background: #1E50A0;
+            }
+            #x-icon{
+               display:none;
+            }
+            #remove{
+                border:none;
+                font-family: Nunito;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 18px;
+                line-height: 27px;
+                background-color:#F0F5F7;;
+                color: #FF0000;
+            }
+            #cart-text{
+                font-family: Nunito !important;
+                font-style: normal !important;
+                font-weight: bold !important;
+                font-size: 20px !important;
+                line-height: 27px !important;
+                color: #000000 !important;
+            }
+
+            #cart-total{
+                margin-top:10%;
+                font-family: Nunito;
+                font-style: normal;
+                font-weight: 800;
+                font-size: 35px;
+                line-height: 48px;
+
+                color: #1B1B1B;
+            }
+            .input-group{
+                width:50%;
+                text-align:center !important;
+            }
+            #underlay{
+                border-radius:10px;
+                background-color:#F0F5F7;
+            }
         body {
             font-size: 14px;
             font-family: 'Raleway', sans-serif;
@@ -15,56 +114,7 @@
         }
 
         /***** background */
-        .bg-1 {
-            background: #1A8BB3;
-            color: #fff;
-        }
-
-        .bg-2 {
-            background: #7FC8A9;
-            color: #fff;
-        }
-
-        .bg-3 {
-            background: #FA8072;
-            color: #fff;
-        }
-
-        .bg-4 {
-            background: #F6D167;
-            color: #fff;
-        }
-
-        .bg-5 {
-            background: #DF2E2E;
-            color: #fff;
-        }
-
-        .bg-6 {
-            background: #989898;
-            color: #fff;
-        }
-
-        .bg-7 {
-            background: white;
-        }
-
-        .bg-8 {
-            background: #616161;
-        }
-
-        .bg-9 {
-            background: #8d8d8d;
-        }
-
-        .bg-10 {
-            background: #D22F27;
-        }
-
-        .bg-11 {
-            background: #eaeaea;
-        }
-
+    
         .bg-white {
             background: #fff;
         }
@@ -319,7 +369,7 @@
 
         .purchase .card-container .card {
             padding: 24px 155px 24px 45px;
-            border-radius: 8px;
+            border-radius: 10px;
             display: ;
             align-items: center;
             justify-content: space-between;
@@ -355,7 +405,7 @@
         }
 
         .cart_update_btn:hover {
-            background-color: white;
+            background-color: #B2BEB5;
         }
 
         .cart .cart-container .heading {
@@ -367,8 +417,9 @@
             display: ;
             align-items: center;
             justify-content: center;
-            border-right: 1px solid #c2c2c2;
-            padding: 20px;
+            /* border-right: 1px solid #c2c2c2; */
+            padding-top: 40px;
+            border-radius:5%;
         }
 
         .cart .cart-container .card-item:first-child {
@@ -529,8 +580,7 @@
             input[type=number]::-webkit-inner-spin-button {
                 opacity: 1;
             }
-
-            .cart .cart-container .card {
+         .cart .cart-container .card {
                 grid-template-columns: 2fr 1fr 2fr 2fr;
             }
         }
@@ -550,7 +600,39 @@
 
         /* mobile version */
         @media screen and (max-width: 468px) {
+            #underlay{
+                border-radius:10px;
+                background:none;
+            }
+            #x-icon{
+               display: inline-block; 
+            }
+            #cart-table-header{
+                display:none;
+             
+            }
+            .cart_input{
+                border:none !important;
+                border-top:1px solid #B8B8B8 !important;
+                border-bottom:1px solid #B8B8B8 !important;
+            }
+            .cart-p{
+                margin-top:-76px;
+                margin-left: 20px
+            }
+            .input-group{
+                width:40%;
+                margin-right:60% !important;
+            }
+            #remove{
+                margin-right:60% !important;
+            }
             #cent {
+                font-family: Nunito !important;
+                font-style: normal !important;
+                font-weight: 600 !important;
+                font-size: 40px !important;
+                line-height: 55px !important;
                 text-align: center;
             }
 
@@ -578,6 +660,7 @@
 
             /***** cart */
             .cart .cart-container .card {
+                border-radius:10px;
                 display: block;
             }
 
@@ -587,7 +670,7 @@
                 align-items: center;
                 justify-content: center;
                 border-right: none;
-                border-bottom: 1px solid #c2c2c2;
+               
                 padding: 20px;
             }
 
@@ -619,6 +702,7 @@
             .purchase .card-container .card {
                 padding: 24px 20px;
                 display: block;
+                border-radius: 10px;
             }
 
             .purchase .card-container .card .purchase-name {
@@ -646,7 +730,7 @@
 @section('content')
     <header class="title" style="max-height: 300px !important;">
         <div class="background-image-holder parallax-background">
-            <img class="background-image" alt="Background Image" src="/img/hero14.jpg">
+           
         </div>
         <div class="container align-bottom">
             <div class="row">
@@ -659,65 +743,71 @@
         </div>
         <!--end of container-->
     </header>
-    <section class="content">
-
+    <section class="content bg-white">
+    <div class="col-sm-12 text-let"><a id="go_button" href="{{ url('/view/cart') }}" type="button" class="btn bg-1"><img src="https://img.icons8.com/fluency/20/000000/left.png"/> Go to back to Test products </a></div>
         @if ($carts->count() > 0)
             <div class="cart">
                 <div class="header">
-                    <div class="fw-700 fs-28 text-center">Cart ({{ $carts->count() }} Item)</div>
+                    <div class="fw-700 fs-28 text-center" id="cart-header">Cart: {{ $carts->count() }} Item</div>
                 </div>
-                <div class="cart-container">
+                <div class="cart-container" >
                     @include('errors.showerrors')
 
-                    <div class="card heading text-center color-8">
-                        <div>TESTS</div>
-                        <div>QUANTITY</div>
-                        <div>AMOUNT</div>
-                        <div>OPTION</div>
+                    <div  class="card heading text-center color-8">
+                        <div id="cart-table-header">Tests</div>
+                        <div id="cart-table-header">Quantity</div>
+                        <div id="cart-table-header">Amount</div>
+                        <div id="cart-table-header">Option</div>
                     </div>
                     <?php $i = 0; ?>
+                    <div id="underlay">
                     @foreach ($carts as $cart)
                         <br>
-                        <div class="card fw-600 bg-7">
-                            <div class="card-item color-1 name">
+                        <div class="card fw-600 bg-12">
+                            <div class="card-item text-left" id="cart-text">
                                 <span>{{ optional($cart->vendorProduct->product)->name }}</span>
 
                             </div>
-                            <div class="card-item">
+                            <div class="card-item" >
                                 {{-- <select name="" class="form-control" id="quantity_{{$i}}" >
                                     @for ($y = 1; $y < 10; $y++)
                                         <option value="{{$y}}"  @if ($cart->quantity == $y)selected @endif>{{$y}}</option>
                                     @endfor
                                 </select> --}}
+                                
                                 <div class="input-group">
-                                    <span class="input-group-addon cart_update_btn" data-action="add">+</span>
-                                    <input type="text" class="form-control text-center cart_input"
+                                     <span class="input-group-addon cart_update_btn bg-white" data-action="remove">-</span>
+                                    
+                                    <input type="text" style="" class="form-control text-center cart_input"
                                         id="quantity_{{ $i }}" value="{{ $cart->quantity }}"
                                         data-cart_id="{{ $cart->id }}" />
-                                    <span class="input-group-addon cart_update_btn" data-action="remove">-</span>
+                                    
+                                        <span class="input-group-addon cart_update_btn bg-white" data-action="add">+</span>
                                 </div>
+                                
                             </div>
-                            <div class="card-item text-center">£
-                                <span id="cart_item_total_{{ $cart->id }}">
+                            <div class="card-item text-center cart-p" id="cart-text">£
+                                <span id="cart_item_total_{{ $cart->id }}" >
                                     {{ number_format($cart->quantity * $cart->vendorProduct->price_pounds, 2) }}</span>
                             </div>
                             <div class="card-item color-6 text-center ">
-                                <a class="btn btn-sm btn-danger" style="background-color:#f1315d;margin:2px;"
+                                <a id="remove" class="btn btn-sm btn-danger"
                                     href="javascript:;" onclick="remove(' {{ $cart->id }}')"> <i
-                                        class="icon icon_trash"> </i> Remove </a>
+                                        class="icon icon_cross_mark"> </i> <img id="x-icon"src="https://img.icons8.com/plumpy/20/000000/cancel.png"/> Remove </a>
                                 <br class="m-2">
                             </div>
                         </div>
                         <?php $i++; ?>
                     @endforeach
-                    <div class="text-center fw-700 " style="font-size: 24px; margin-top: 50px">
+                    </div>
+                    <div class="text-center fw-700 " id="cart-total">
                         TOTAL: <b class="color-1 price">£ <span
                                 id="totalCartPrice">{{ number_format($cartSum, 2) }}</span></b>
                     </div>
                     <div class="button-container">
                         <!-- <a class="btn-3 bg-none color-1 fw-600">Back to Shopping</a> -->
-                        <a href="{{ url('/booking') }}" type="button" class="btn btn-sm btn-info"
-                            style="background-color: #46b8da;">Proceed</a>
+                        <a id="add_button" href="{{ url('/booking') }}" type="button" class="btn btn-sm btn-info"
+                           >Proceed to checkout</a>
                     </div>
                 </div>
             </div>

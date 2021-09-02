@@ -18,7 +18,7 @@
         }
 
         /***** background */
-        .bg-1 {
+    .bg-1 {
         background: #1E50A0;
         color: #fff;
     }
@@ -422,15 +422,15 @@
 
                         <h5 id="h9" class="text-white">COUNTRY TESTS</h1>
                         @if($type == "Green")
-                        <p id="h9" class="text-white">Travelling from a Green country to the Uk <span class="badge" style="background-color:#7FC8A9;padding:10px">G</span></p>
+                        <h5 id="h9" class="text-white">Travelling from a Green country to the Uk <span class="badge" style="background-color:#7FC8A9;padding:10px">G</span></h5>
                         @elseif($type=="Amber_v")
-                        <p id="h9" class="text-white">Travelling from a Amber country(vaccinated) to the Uk <span class="badge" style="background-color:yellow;color:black;padding:10px">A</span></p>
+                        <h5 id="h9" class="text-white">Travelling from a Amber country(vaccinated) to the Uk <span class="badge" style="background-color:yellow;color:black;padding:10px">A</span></h5>
                         @elseif($type == "Amber_uv")
-                        <p id="h9" class="text-white">Travelling from a Amber country(unvaccinated) to the Uk <span class="badge" style="background-color:orange;padding:10px">A</span></p>
+                        <h5 id="h9" class="text-white">Travelling from a Amber country(unvaccinated) to the Uk <span class="badge" style="background-color:orange;padding:10px">A</span></h5>
                         @elseif($type=="Red")
-                        <p id="h9" class="text-white">Travelling from a Red country to the Uk<span class="badge" style="background-color:red;padding:10px">R</span></p>
+                        <h5 id="h9" class="text-white">Travelling from a Red country to the Uk<span class="badge" style="background-color:red;padding:10px">R</span></h5>
                         @elseif($type == "UK")
-                        <p id="h9" class="text-white">Travelling from a the Uk<span class="badge" style="background-color:grey;padding:10px">UK</span></p>
+                        <h5 id="h9" class="text-white">Travelling from a the Uk<span class="badge" style="background-color:grey;padding:10px">UK</span></h5>
                         @endif
                     </div>
                 </div>
