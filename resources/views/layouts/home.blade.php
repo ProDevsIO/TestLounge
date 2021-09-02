@@ -84,6 +84,30 @@
    .bg-12{
         background:#F0F5F7;;
     }
+    @media only screen and (min-width: 320px) and (max-width: 767px){
+        .align-vertical{
+            width: 100% !important;
+          
+            align:center;
+        }
+        .footer2{
+        position: relative !important;
+        width: 100% !important;
+        margin-bottom:50px;
+        text-align:center !important;
+        right: 0px;
+        height: 100%;
+        width: 25%;
+        background:#1E50A0;
+        z-index: 3;
+        top: 40%;
+        text-align: center;
+        font-size: 18px;
+        -webkit-transition: all .3s ease;
+        -moz-transition: all .3s ease;
+        transition: all .3s ease;
+        }
+    }
     @media screen and (max-width: 600px) {
         #hide{
         display: block;
@@ -91,6 +115,7 @@
         #hide2{
         display: none;
         }
+      
     }
     @media screen and (max-width: 800px) {
         #hide{
@@ -113,7 +138,22 @@
         position:relative;
         top: -10px;
         left: -5px;
+    }
+    .footer2{
+        position: absolute;
+        right: 0px;
+        height: 100%;
+        width: 25%;
+        background:#1E50A0;
+        z-index: 3;
+        top: 40%;
+        text-align: center;
+        font-size: 18px;
+        -webkit-transition: all .3s ease;
+        -moz-transition: all .3s ease;
+        transition: all .3s ease;
         }
+    }
     </style>
 </head>
 <body>
@@ -265,18 +305,7 @@
             </div><!--end for row-->
         </div><!--end of container-->
 
-        <div class="" style="  position: absolute;
-  right: 0px;
-  height: 100%;
-  width: 25%;
-  background:#1E50A0;
-  z-index: 3;
-  top: 40%;
-  text-align: center;
-  font-size: 18px;
-  -webkit-transition: all .3s ease;
-  -moz-transition: all .3s ease;
-  transition: all .3s ease;">
+        <div class="footer2" >
             <div class="align-vertical">
                 <span class="text-white">© {{ date('Y') }} Traveltestsltd.
                 </span>

@@ -910,10 +910,10 @@ h1{
                 </tr>
                 <tr>
                     <td class="bg-sky"></td>
-                    <td class="bg-2">  <a href="{{ url('/product/Green') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td class="bg-6">  <a href="{{ url('/product/Amber_v') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td class="bg-4">  <a href="{{ url('/product/Amber_uv') }}" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td class="bg-5"> <a class="btn btn-primary btn-filled">Not available</a></td>
+                    <td class="bg-2">  <a href="{{ url('/product/Green') }}" style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td class="bg-6">  <a href="{{ url('/product/Amber_v') }}" style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td class="bg-4">  <a href="{{ url('/product/Amber_uv') }}" style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td class="bg-5"> <a href="{{ url('/product/Red') }}" class="btn btn-primary btn-filled"  style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" >Book Now</a></td>
                 </tr>
                 
             </table>
