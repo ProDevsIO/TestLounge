@@ -202,7 +202,7 @@
 
 <div class="footer-container">
 
-    <footer class="bg-primary short-2" id="contact">
+    <footer class="bg-1 short-2" id="contact">
         <div class="container">
             <div class="row">
 
@@ -210,25 +210,20 @@
                 <h5 class="text-white">Contact us</h5>
                 <span class="text-white">If you have any questions further questions call us on<br>
                     Phone number: +44 20 8087 2262<br>
-                    WhatsApp: +44 74 3687 5938
+                    WhatsApp: +44 74 3687 5938<br>
+                    Email us at:info@traveltestsltd.com
                     <br>
                   {{--Powered by <a href="https://www.medburymedicals.com/" target="_blank">MMS</a>--}}
                 </span>
 
-                    <span class="text-white">Email us at <br>
-                    <a href="#">info@traveltestsltd.com</a></span>
-                    <span class="text-white">London, UK</span>
-
-                    <span class="text-white">© {{ date('Y') }} Traveltestsltd.
-                        </span>
                 </div>
             </div><!--end for row-->
         </div><!--end of container-->
 
         <div class="contact-action">
             <div class="align-vertical">
-                <i class="icon text-white icon_mail"></i>
-                <a href="mailto:info@traveltestsltd.com" class="text-white"><span class="text-white">Get in touch with us <i class="icon arrow_right"></i></span></a>
+                <span class="text-white">© {{ date('Y') }} Traveltestsltd.
+                </span>
             </div>
         </div>
     </footer>

@@ -10,26 +10,6 @@
             padding: 0;
             margin: 0;
         }
-        .bg-1 {
-            background: #1E50A0;
-            color: #fff;
-        }
-        .bg-6 {
-            background: #f4db94;
-            color: #fff;
-        }
-        .bg-2 {
-            background: #92D050;
-            color: #fff;
-        }
-        .bg-3 {
-            background: #FFC000;
-            color: #fff;
-        }
-        .bg-4 {
-            background: #E60000;
-            color: #fff;
-        }
         .font-30 {
             font-size: 30px;
         }
@@ -297,19 +277,19 @@
         color: #fff;
     }
     .bg-3 {
-        background:#FA8072;
+        background:#BBBEFF;
         color:#fff;
     }
     .bg-6 {
-            background: #f4db94 !important;
+            background: #FFDF80 !important;
             color: #fff;
         }
     .bg-4{
-        background:#F6D167;
+        background:#FFF380;
         color:#fff;
     }
     .bg-5{
-        background:#DF2E2E;
+        background:#FF0000;
         color:#fff;
     }
   
@@ -417,7 +397,7 @@
     /***** containers */
     .double-container{
         display:grid;
-        grid-template-columns:repeat(2, 45%);
+        grid-template-columns:repeat(3, 32%);
         justify-content:space-between;
     }
 
@@ -590,7 +570,7 @@
 				</div><!--end of container-->
 			</section>
                 <div class="container-fluid" style="padding:0">
-                <div class="header text-center bg-1" style="padding:59px;">
+                    <div class="header text-center bg-1" style="padding:59px;">
                         
                         <div class="container" id="banner2">
                             <p style="font-weight:600px;font-size:20px;line-height: 41px;" class="fw-600 fs-20 text-left">The travel tests requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
@@ -599,62 +579,83 @@
                         </div>
                     </div>
                 </div>
-               
-            <div class="container">
-                <div class="country-category">    
-                    <div class="card-container"  style="margin-left:20px; margin-right:20px;"id="country-section" style="">
-                        <div id="show-result">
-
-                        </div>
-                        <label for="">Choose the country you’re travelling to</label>
+                <div class="card-container bg-sky"  style="padding:70px"id="country-section" style="">
                             <?php 
                                 $countries = App\Models\Country::all();
                             
                             ?>
-                        <select name="" class="form-control" id="country" onchange="countryQuery()">
-                            <option value="">Select a country</option>
-                            <option value="225">United Kingdom</option>
-                            @foreach($countries as $country)
-                                <option value="{{$country->id}}">{{$country->nicename}} </option>
-                            @endforeach
-                        </select>
-                    </div>
+                        <div class="row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-8">
+                                <div id="show-result">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4 text-center">
+                            
+                                <label for="">Choose the country you’re travelling to</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select name="" class="form-control" id="country" onchange="countryQuery()">
+                                    <option value="">Select a country</option>
+                                    <option value="225">United Kingdom</option>
+                                    @foreach($countries as $country)
+                                        <option value="{{$country->id}}">{{$country->nicename}} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-sm 2"></div>
+                        </div>
+                </div>
+            <div class="container">
+                <div class="country-category">    
+                    
                     <div class="card-container double-container fs-20 text-center">
                     
                         <a href="/product/Green" class="link text-white">
-                            <div class="card bg-2 fw-700">
-                                    <div class="inner">Travelling from a Green country to the UK</div>
+                            <div class="card bg-2 fw-700" style="">
+                                    <div class="inner"><v>Travelling from a Green country to the UK</v></div>
                             </div>
                         </a>
                         <a href="/product/Amber_v" class="link">
                             <div class="card bg-6 fw-700">
                                     <div class="inner">
+                                        <v>
                                         Travelling from an Amber country 
                                         (Vaccinated) to the UK
+                                        </v>
                                     </div>
                             </div>
                         </a>
                         <a href="/product/Amber_uv" class="link text-white">
                             <div class="card bg-4 fw-700">
                                     <div class="inner">
+                                        <v>
                                         Travelling from an Amber country
                                         (Unvaccinated) to the UK
+                                        </v>
                                     </div>
                             </div>
                         </a>
                         <a href="/product/Red" class="link text-white">
                             <div class="card bg-5 fw-700">
-                                    <div class="inner">Travelling from a red country to the UK</div>
+                                    <div class="inner"><v>Travelling from a red country to the UK</v></div>
                             </div>
                         </a>
                         <a href="{{url('/product/UK')}}"  class="link text-white">
                             <div class="card bg-3 fw-700">
-                                <div class="inner">Travelling from the UK</div>
+                                <div class="inner"><v>Travelling from the UK</div>
                             </div>
                         </a>
                         <a href="/product/all" class="link text-white ">
-                            <div class="card fw-600" style="border: 2px solid black;">
-                                <div class="inner color-1">View all tests</div>
+                            <div class="card" style="border:none;">
+                                <div class="inner"><v>  <button type="button" class="btn btn-md" style="border-radius:25px; padding:14px 20px 13px 20px;color:white; background:#1E50A0"> View all tests</button> </v></div>
                             </div>
                         </a>
                     </div>
@@ -662,9 +663,9 @@
             </div>
            
         <div class="container">
-            <div class="header shadow curved bg-1 font-30" style="">
+            <div class="header bg-sky " style="">
                 <div class="text-center">
-                    <h3 style="color:white;font-weight:600px">The Mandatory Covid-19 Tests for the UK follows a "traffic light system" which determines the required tests based on the  Country you are travelling from.</h3><br><br> <p>See table below with the list of expected tests for each Category</p></div>
+                    <h3 style="">The Mandatory Covid-19 Tests for the UK follows a "traffic light system" which determines the required tests based on the  Country you are travelling from.<br><br> <p>See table below with the list of expected tests for each Category</p> </h3></div>
                 <div>            
             </div>
         </div>
@@ -672,64 +673,64 @@
         <div class="table-responsive">
             <table className="font-16" style="overflow-x:auto !important;">
                 <thead>
-                    <th class="bg-1 text-center">MEASURE REQUIRED</th>
+                    <th class="bg-sky text-center">MEASURE REQUIRED</th>
                     <th class="bg-2 text-center">GREEN</th>
                     <th class="bg-6 text-center">AMBER(Vaccinated) **</th>
                     <th class="bg-4 text-center">AMBER(Unvaccinated)</th>
                     <th class="bg-5 text-center">RED</th>
                 </thead>
                 <tr>
-                    <td width="25%"><h6>COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</h6></td>
+                    <td class="bg-sky" width="25%"><h6>COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</h6></td>
                     <td class="bg-2" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-6" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-4" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-5"  width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%"><h6>PRE-DEPARTURE TEST AT DESTINATION WITHIN 72 HOURS OF TRAVEL</h6></td>
+                    <td class="bg-sky" width="25%"><h6>PRE-DEPARTURE TEST AT DESTINATION WITHIN 72 HOURS OF TRAVEL</h6></td>
                     <td class="bg-2" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-6" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-4" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-5" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%"><h6>MANDATORY PCR TEST UPON ENTRY TO UK ON/BEFORE DAY 2</h6></td>
+                    <td class="bg-sky" width="25%"><h6>MANDATORY PCR TEST UPON ENTRY TO UK ON/BEFORE DAY 2</h6></td>
                     <td class="bg-2" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-6" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-4" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-5" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%"><h6>MANDATORY ADDITIONAL PCR TESTING ON DAY 8 OF ARRIVAL INTO THE UK</h6></td>
+                    <td class="bg-sky" width="25%"><h6>MANDATORY ADDITIONAL PCR TESTING ON DAY 8 OF ARRIVAL INTO THE UK</h6></td>
                     <td class="bg-2" width="25%">
-                        <img src="/img/close-cross.svg" class="icon" />
+                    <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                     </td>
                     <td class="bg-6" width="25%">
-                        <img src="/img/close-cross.svg" class="icon" />   
+                    <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>  
                     </td>
                     <td class="bg-4" width="25%">
                         <h6>Required on day 8</h6>
@@ -739,27 +740,27 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%"><h6 >OPTIONAL DAY 5 PCR TEST<br>( Test to Release )</h6></td>
+                    <td class="bg-sky" width="25%"><h6 >OPTIONAL DAY 5 PCR TEST<br>( Test to Release )</h6></td>
                     <td class="bg-2" width="25%">
-                    <img src="/img/close-cross.svg" class="icon" />
+                    <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                     </td>
                     <td class="bg-6" width="25%">
-                     <img src="/img/close-cross.svg" class="icon" />   
+                    <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/> 
                     </td>
                     <td class="bg-4" width="25%">
                     <h6> You can reduce the time required for self isolation to 5 days by taking a Day 5 Test; a negative Day 5 PCR Test allows you to immediately leave self isolation</h6>
                     </td>
                     <td class="bg-5" width="25%">
-                    <img src="/img/close-cross.svg" class="icon" />
+                    <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%"><h6>SELF ISOLATION</h6></td>
+                    <td class="bg-sky" width="25%"><h6>SELF ISOLATION</h6></td>
                     <td class="bg-2" width="25%">
-                    <img src="/img/close-cross.svg" class="icon" />
+                    <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                     </td>
                     <td class="bg-6"  width="25%">
-                      <img src="/img/close-cross.svg" class="icon" />
+                    <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                      </td>
                     <td class="bg-4" width="25%">
                         <h6> 10 days of Isolation at the UK Isolation address provided in your passenger locator form.
@@ -770,22 +771,22 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="25%"><h6>FIT TO FLY( PCR Test Taken before travel out of the UK  if required by destination country) </h6></td>
+                    <td class="bg-sky" width="25%"><h6>FIT TO FLY( PCR Test Taken before travel out of the UK  if required by destination country) </h6></td>
                     <td class="bg-2" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-6" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-4" width="25%">
-                        <img src="/img/check-mark.svg" class="icon" />
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-5" width="25%">
-                      <img src="/img/check-mark.svg" class="icon" />
+                     <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                 </tr>
                 <tr>
-                    <td></td>
+                    <td class="bg-sky"></td>
                     <td class="bg-2">  <a href="{{ url('/product/Green') }}" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td class="bg-6">  <a href="{{ url('/product/Amber_v') }}" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td class="bg-4">  <a href="{{ url('/product/Amber_uv') }}" class="btn btn-primary btn-filled">Book Now</a></td>
@@ -793,8 +794,14 @@
                 </tr>
                 
             </table>
-            <div class="alert alert-danger">
-               <span style="font-size:30px;color:white;">**</span> Please note that Only Travellers <b>who have specifically been vaccinated by the UK NHS and have completed all doses at least 2weeks before travel are considered eligible</b>. Passengers from France MUST undergo Quarantine , Day 2 and 8 tests irrespective of Vaccination Status
+            <div class="alert">
+               <p style="font-family: Nunito;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 25px;
+
+"><span style="font-size:30px;color:black;">**</span> Please note that Only Travellers <b>who have specifically been vaccinated by the UK NHS and have completed all doses at least 2weeks before travel are considered eligible</b>. Passengers from France MUST undergo Quarantine , Day 2 and 8 tests irrespective of Vaccination Status</p>
             </div>
             
         
@@ -816,9 +823,9 @@
        <br> -->
     
             <div class="container">
-                <div class="header shadow curved bg-1 font-30 " style="padding:50px">
-                    <div class="text-center">
-                        <h3 style="color:white;font-weight:600px">AT A GLANCE GUIDE FOR ARRIVALS TO THE UK FOLLOWING IMPLEMENTATION OF THE'TRAFFIC LIGHT SYSTEM'</h3>
+                <div class="header bg-sky " style="padding:70px">
+                    <div class="text-left">
+                        <h3 class="text-left">AT A GLANCE GUIDE FOR ARRIVALS TO THE UK FOLLOWING IMPLEMENTATION OF THE'TRAFFIC LIGHT SYSTEM'</h3>
                     </div>
                 </div>
             </div>
@@ -829,15 +836,15 @@
             <div class="table-responsive">
                 <table className="font-16">
                     <tr>
-                        <th class="bg-1">&nbsp;</th>
+                        <th class="bg-white">&nbsp;</th>
                         <th class="bg-1" colspan="3">
-                            <b class="fs-25">Children resident in the UK, British Overseas Territories, Channel Islands, Isle of Man, USA or a recognised European country. </b><br /><br />
-                            The recognised European countries are the EU countries, Andorra, Iceland, Liechtenstein, Monaco, Norway, San Marino, Switzerland or the Vatican City
+                            <div id="child">Children resident in the UK, British Overseas Territories, Channel Islands, Isle of Man, USA or a recognised European country.<br> <br>
+                            The recognised European countries are the EU countries, Andorra, Iceland, Liechtenstein, Monaco, Norway, San Marino, Switzerland or the Vatican City</div>
                         </th>
-                        <th class="bg-1" colspan="3"><b class="fs-25">Children resident in other countries</b></th>
+                        <th class="bg-1 text-center" colspan="3"><div id="child">Children resident in other countries</div></th>
                     </tr>
                     <tr>
-                        <th class="bg-1">Ages (years)</th>
+                        <th class="bg-sky">Ages (years)</th>
                         <th class="bg-2">0 - 4</th>
                         <th class="bg-4">5 - 10</th>
                         <th class="bg-5">11 - 17</th>
@@ -846,87 +853,87 @@
                         <th class="bg-5">11 - 17</th>
                     </tr>
                     <tr>
-                        <td width="35.5%"><h6>Quarantine (at home or in the place they are staying for 10 days or for the duration of their trip if it’s less than 10 days)</h6> </td>
-                        <td class="bg-2" width="10%">
-                            <img src="/img/close-cross.svg" class="icon" />
+                        <td class="bg-sky" width="35.5%"><h6>Quarantine (at home or in the place they are staying for 10 days or for the duration of their trip if it’s less than 10 days)</h6> </td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                         </td>
-                        <td class="bg-4" width="10%">
-                            <img src="/img/close-cross.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                         </td>
-                        <td class="bg-5" width="10%">
-                            <img src="/img/close-cross.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                         </td>
-                        <td class="bg-2" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                         </td>
-                        <td class="bg-4" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                         </td>
-                        <td class="bg-5" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
-                        <td class="bg-2" width="10%">
-                            <img src="/img/close-cross.svg" class="icon" />
-                        </td>
-                        <td class="bg-4" width="10%">
-                            <img src="/img/close-cross.svg" class="icon" />
-                        </td>
-                        <td class="bg-5" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
-                        </td>
-                        <td class="bg-2" width="10%">
-                            <img src="/img/close-cross.svg" class="icon" />
-                        </td>
-                        <td class="bg-4" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
-                        </td>
-                        <td class="bg-5" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                         </td>
                     </tr>
                     <tr>
-                        <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
-                        <td class="bg-2" width="10%">
-                            <img src="/img/close-cross.svg" class="icon" />
+                        <td class="bg-sky" width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                         </td>
-                        <td class="bg-4" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                         </td>
-                        <td class="bg-5" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                         </td>
-                        <td class="bg-2" width="10%">
-                            <img src="/img/close-cross.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                         </td>
-                        <td class="bg-4" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                         </td>
-                        <td class="bg-5" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                         </td>
                     </tr>
                     <tr>
-                        <td width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
-                        <td class="bg-2" width="10%">
-                            <img src="/img/close-cross.svg" class="icon" />
+                        <td class="bg-sky" width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                         </td>
-                        <td class="bg-4" width="10%">
-                            <img src="/img/close-cross.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                         </td>
-                        <td class="bg-5" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                         </td>
-                        <td class="bg-2" width="10%">
-                            <img src="/img/close-cross.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                         </td>
-                        <td class="bg-4" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                         </td>
-                        <td class="bg-5" width="10%">
-                            <img src="/img/check-mark.svg" class="icon" />
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bg-sky" width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
+                        </td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
+                        </td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
+                        </td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
+                        </td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
+                        </td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                         </td>
                     </tr>
                 </table>
@@ -966,7 +973,7 @@
                 $("#show-result p a").attr("data-dismiss","alert")
                 $("#show-result p").addClass('alert')
                 $("#show-result p").addClass('p-5')
-                $("#show-result p").attr("style", "background-color: #4169e1;color:white")
+                $("#show-result p").attr("style", "background-color: #87CEEB;color:white")
                
             });
        }

@@ -2789,9 +2789,9 @@ footer.short-2 .contact-action {
   right: 0px;
   height: 100%;
   width: 25%;
-  background: #09303d;
+  background:#1E50A0;
   z-index: 3;
-  top: 0;
+  top: 40%;
   text-align: center;
   font-size: 18px;
   -webkit-transition: all .3s ease;
