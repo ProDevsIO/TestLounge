@@ -20,7 +20,7 @@
                                     <div class="col-md-6 "style=" padding-top:100px">
                                         <h2 class="text-white space-bottom-medium" id="banner-writeup">We simplify the process of booking and making payments for Covid-19 UK Travel Tests for both travellers and travel agents. You’ll get up to date information on UK travel requirements and access to accredited test providers in the UK ensuring a hassle free travel experience.</h2>
                                         <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
-                                        <a href="/#calculator" class="btn btn-primary btn-filled " style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;">Find More</a>
+                                        <a href="/#calculator" class="btn btn-primary btn-filled " style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;">Learn More</a>
                                     </div>
                                     <div class="col-md-6 pull-right" id="banner-writeup2" style="left:10%;top:100px ">
                                         <img class="background-image" alt="Background Image" src="/img/Group 6.png"  style="background-repeat: no-repeat;background-size: 100% 100%">
