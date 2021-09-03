@@ -89,8 +89,9 @@
 
                                     </div>
                                 </div>
-                                @endforeach
                             </div>
+                                @endforeach
+
                         </div>
                             <div class="row" style="margin-right:0px; margin-left:0px">
                                 

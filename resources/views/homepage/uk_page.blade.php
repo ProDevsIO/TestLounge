@@ -635,7 +635,7 @@ h1{
 </style>
 @endsection
 
-<div class="main-container">
+<div class="main-container" style="margin-bottom: 50px">
 
         <header class="title" style="max-height: 300px !important;">
             <div class="background-image-holder parallax-background" >

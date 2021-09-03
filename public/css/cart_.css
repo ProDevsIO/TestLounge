@@ -29,7 +29,7 @@
 
 
 #cart-header{
-    margin-top:20%;
+    margin-top:3%;
     font-family: Nunito;
     font-style: normal;
     font-weight: 800;
@@ -88,7 +88,7 @@
     font-family: Nunito;
     font-style: normal;
     font-weight: 800;
-    font-size: 35px;
+    font-size: 30px;
     line-height: 48px;
 
     color: #1B1B1B;
@@ -126,7 +126,7 @@ body {
 
 /***** color */
 .color-1 {
-    color: #1A8BB3;
+    color: #1e50a0;
 }
 
 .color-2 {
@@ -447,7 +447,7 @@ input[type=text] {
 }
 
 .cart .cart-container .button-container {
-    margin: 83px 0 50px 0;
+    margin: 40px 0 50px 0;
     text-align: center;
 }
 

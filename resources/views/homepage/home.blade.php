@@ -10,7 +10,7 @@
     <div class="main-container">
         <header class="page-header">
             <div class="background-image-holder parallax-background">
-                <img class="background-image" alt="Background Image" src="/img/image 3 (1).png" >
+                <img class="background-image" alt="Background Image" src="/img/bg.jpeg" >
             </div>
 
             <div class="container">
@@ -20,7 +20,7 @@
                                     <div class="col-md-6 "style=" padding-top:100px">
                                         <h2 class="text-white space-bottom-medium" id="banner-writeup">We simplify the process of booking and making payments for Covid-19 UK Travel Tests for both travellers and travel agents. You’ll get up to date information on UK travel requirements and access to accredited test providers in the UK ensuring a hassle free travel experience.</h2>
                                         <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
-                                        <a href="/#calculator" class="btn btn-primary btn-filled " style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;">TRAVEL CALCULATOR</a>
+                                        <a href="/#calculator" class="btn btn-primary btn-filled " style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;">Find More</a>
                                     </div>
                                     <div class="col-md-6 pull-right" id="banner-writeup2" style="left:10%;top:100px ">
                                         <img class="background-image" alt="Background Image" src="/img/Group 6.png"  style="background-repeat: no-repeat;background-size: 100% 100%">
@@ -72,7 +72,7 @@
                         <div class="container" id="banner2">
                             <p style="font-weight:600px;font-size:20px;line-height: 41px;" class="fw-600 fs-20 text-left">The travel tests requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
                            <br>
-                            <p class="fw-700 fs-28"> <a href="{{ url('/product/all') }}" type="button" class="btn btn-md bg-primary" style="border-radius:25px; padding:14px 28px 13px 28px;font-family: Nunito;font-style: normal;font-weight: bolder;font-size: 16px;line-height: 19px;color: #1E50A0 !important;background-color:white !important;">BOOK NOW</a></p>
+                            <p class="fw-700 fs-28"> <a href="{{ url('/product/all') }}" type="button" class="btn btn-md bg-primary" style="margin-bottom: 30px;border-radius:25px; padding:14px 28px 13px 28px;font-family: Nunito;font-style: normal;font-weight: bolder;font-size: 16px;line-height: 19px;color: #1E50A0 !important;background-color:white !important;">BOOK NOW</a></p>
                         </div>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
                             
                                 <label for="">Choose the country you’re travelling to</label>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" style="margin-bottom: 35px;">
                                 <select name="" class="form-control" id="country" onchange="countryQuery()">
                                     <option value="">Select a country</option>
                                     <option value="225">United Kingdom</option>
