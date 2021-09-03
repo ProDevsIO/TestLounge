@@ -1481,7 +1481,7 @@ img.phone-portrait {
   border-bottom: 2px solid #dadada;
 }
 .accordion .title:hover {
-  background-color: #136480;
+  background-color: #1e50a0;
   color: #fff;
 }
 .accordion li:last-child .title,
@@ -1498,7 +1498,7 @@ img.phone-portrait {
   opacity: 0;
 }
 .accordion li.active .title {
-  background-color: #136480;
+  background-color: #1e50a0;
   color: #fff;
   border-bottom: 2px solid #dadada;
 }

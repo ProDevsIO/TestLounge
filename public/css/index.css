@@ -204,6 +204,9 @@
     .bg-sky{
         padding: 10px !important;
     }
+    #child{
+        width: 300px
+    }
 }
 
 .bg-white{

@@ -3,7 +3,7 @@
 }
 body {
     font-size: 14px;
-    font-family: 'Raleway', sans-serif;
+    font-family: Nunito;
     padding: 0;
     margin: 0;
     width: 100vw;
@@ -71,6 +71,9 @@ body {
     font-weight: bold;
     font-size: 30px;
     line-height: 41px;
+}
+#go_button:hover{
+    background: white !important;
 }
 #remove_button{
     border-radius:25px !important;

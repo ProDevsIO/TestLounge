@@ -103,8 +103,8 @@
         </section>
 
         @if($faq == 1)
-        <section class="strip bg-secondary-1">
-            <div class="container">
+        <section class="strip" style="background: #1E50A0;">
+            <div class="container bg-1">
                 <div class="row clearfix">
                     <!-- <div class="col-md-6 col-xs-12 text-center">
                          <h5 class="text-white">Not sure of which package or color code your.  </h5>
@@ -139,16 +139,16 @@
                             <br/> <li> You will also be expected to "Activate" your test by visiting the website that will be indicated on the pack you will receive and by following the simple instructions on this website. This is required to analyse your test and send your results </li>
                             <br/> <li> If you have  purchased a Fit to Fly Test or Package, for your exit out of the UK to another country, check the country guidelines for when you are expected to carry out your PCR test before flying. </li>
                         </ul>
-                        <br/>   <p class="lead" style="text-align: justify;">
+                        <br/>   <p style="text-align: justify;">
                             You can also get more information about travel requirements for other countries <a href="https://calculator.prodevs.io/" target="_blank" style="color:#428bca; text-decoration:none;font-size:18px;"> here </a>. <br>
                             Follow the guidelines above on how to carry out a self test and activate your tests <br>
 
                             All test Results are available 24 hours from receipt of samples in the Laboratory <br><br></p>
                         <div class="alert alert-warning">
-                       <p class="lead" style="text-align: justify;">     * Disclaimer : <br>
+                       <p  style="text-align: justify;">     * Disclaimer : <br>
                             Country guidelines change from time to time and the information provided here is a guide. Please ensure to confirm country and airline regulations with relevant authorities at your destination. Traveltestsltd will not take any responsibility for challenges that arise as a result of information provided here
                        </p></div>
-                        <p class="lead" style="text-align: justify">
+                        <p style="text-align: justify">
                         <br/>
 
                     </div>
