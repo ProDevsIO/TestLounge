@@ -154,7 +154,7 @@ h3 {
   line-height: 32px;
 }
 h5 {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 600;
   margin-bottom: 16px;
 }
@@ -324,10 +324,9 @@ section:nth-of-type(even) {
   min-width: 155px;
 }
 .btn:hover {
-  background: none;
+  background: #2c5ca9 !important;;
   color: #fff;
   border-color: #1E50A0;
-  background-color: #1E50A0;
 }
 .btn-primary {
   border-radius: 25px;
@@ -335,7 +334,7 @@ section:nth-of-type(even) {
   padding: 14px 28px 13px 28px;
   line-height: 1;
   border: 2px solid #1E50A0;
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito !important;
   font-weight: bold;
   font-size: 11px;
   text-transform: uppercase;
@@ -1482,7 +1481,7 @@ img.phone-portrait {
   border-bottom: 2px solid #dadada;
 }
 .accordion .title:hover {
-  background-color: #136480;
+  background-color: #1e50a0;
   color: #fff;
 }
 .accordion li:last-child .title,
@@ -1499,7 +1498,7 @@ img.phone-portrait {
   opacity: 0;
 }
 .accordion li.active .title {
-  background-color: #136480;
+  background-color: #1e50a0;
   color: #fff;
   border-bottom: 2px solid #dadada;
 }
