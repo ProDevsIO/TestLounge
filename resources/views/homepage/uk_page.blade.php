@@ -1,10 +1,10 @@
 @extends('layouts.home')
-@section('content')
+
 @section('style')
 <style>
     #nav-btn {
-        border: 1px solid #1E50A0;
-        color: #1E50A0;
+        border: 1px solid #fff !important;
+        color: #fff !important;
     }
     .background-image-holder{
             background-color:#1E50A0 !important;
@@ -77,10 +77,6 @@ h1{
 
 .alert-blue{
     background-color: #87CEEB;
-}
-#nav-btn{
-    border: 1px solid #1E50A0;
-    color: #1E50A0;
 }
 
 #banner-writeup{
@@ -638,7 +634,7 @@ h1{
     }
 </style>
 @endsection
-
+@section('content')
 <div class="main-container" style="margin-bottom: 50px">
 
         <header class="title" style="max-height: 300px !important;">
