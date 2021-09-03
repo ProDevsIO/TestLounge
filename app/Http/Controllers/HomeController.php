@@ -431,7 +431,7 @@ class HomeController extends Controller
                 if( !empty($booking->phone_no))
                 {
                   
-                    $decode =  implode(", ",$code);
+                    $decode =  implode(", ",json_decode($code));
                            
                     $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.
                     Your Booking Reference: ". $decode.

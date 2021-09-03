@@ -94,8 +94,9 @@
                 color: #1B1B1B;
             }
             .input-group{
-                width:50%;
-                text-align:center !important;
+                width:70%;
+                margin: auto;
+                padding: 2px;
             }
             #underlay{
                 border-radius:10px;
