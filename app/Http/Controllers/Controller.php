@@ -341,7 +341,7 @@ class Controller extends BaseController
              curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_string)));
              $result = curl_exec($ch);
              $res_array = json_decode($result);
-    dd($sender_name ,$message, $api_token,  $res_array);
+    dd($sender_name ,$message, $api_token,  $res_array, $recipients);
              if ($res_array->data->status != "success") {
                 return [
                    'status' => false,
