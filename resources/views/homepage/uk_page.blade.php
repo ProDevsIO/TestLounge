@@ -2,6 +2,10 @@
 @section('content')
 @section('style')
 <style>
+    #nav-btn {
+        border: 1px solid #1E50A0;
+        color: #1E50A0;
+    }
     .background-image-holder{
             background-color:#1E50A0 !important;
         }
@@ -712,6 +716,9 @@ h1{
         </div>
 
         <div class="table-responsive">
+            <div class="visible-xs text-center">
+                <img src="/img/slide_sideways.gif" style="height: 65px">
+            </div>
             <table className="font-16" style="overflow-x:auto !important;">
                 <thead>
                     <th class="bg-sky text-center">MEASURE REQUIRED</th>
@@ -855,6 +862,9 @@ h1{
         <br>
         <div class="container">
             <div class="table-responsive">
+                <div class="visible-xs text-center">
+                    <img src="/img/slide_sideways.gif" style="height: 65px">
+                </div>
                 <table className="font-16">
                     <tr>
                         <th class="bg-white">&nbsp;</th>
