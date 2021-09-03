@@ -307,5 +307,59 @@ class Controller extends BaseController
 
     }
 
-
+    function sendSMS($message = "", array $phone_numbers = [], int $forceSendDND = 4)
+    {
+       try {
+          
+             $numbersToString = "";
+             foreach ($phone_numbers as $number) {
+                if(strlen($number) == 11){
+                   $remove = ltrim($number, "0");
+                   //Remove leading zero
+                  $number_ = '234' . $remove;
+                }
+                else{
+                   $number_ = str_replace("+" , "", $number);
+                }
+    
+                $numbersToString .= $number_ . ',';
+             }
+    
+             $api_token = env("SMS_TOKEN", "FMvbeUayBAfg5lcrimO6Hhd1Jz3qJAjL2W8OiNESYL8BfCgPOMv2mm3S3N7F");
+             $message = $message;
+             $sender_name = env("SMS_SENDER_NAME", "Traveltest");
+             $recipients = $numbersToString;
+             $forcednd = $forceSendDND;
+    
+    
+             $data = array("api_token" => $api_token, "body" => $message, "from" => $sender_name, "to" => $recipients, "dnd" => $forcednd);
+             $data_string = json_encode($data);
+             $ch = curl_init('https://www.bulksmsnigeria.com/api/v1/sms/create');
+             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+             curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_string)));
+             $result = curl_exec($ch);
+             $res_array = json_decode($result);
+    
+             if ($res_array->data->status != "success") {
+                return [
+                   'status' => false,
+                   'msg' => $res_array->data->message,
+                ];
+             } else {
+                return [
+                   'status' => true,
+                   'msg' => "SMS sent successfully!",
+                ];
+             }
+          
+       } catch (Exception $e) {
+          logger($e->getMessage());
+          return [
+             'status' => false,
+             'msg' => "An SMS error occurred",
+          ];
+       }
+    }
 }

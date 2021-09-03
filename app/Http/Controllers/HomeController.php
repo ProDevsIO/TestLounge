@@ -428,7 +428,17 @@ class HomeController extends Controller
                     } catch (\Exception $e) {
                     }
                 }
-
+                if( !empty($booking->phone_no))
+                {
+                  
+                    $decode =  implode(", ",$code);
+                           
+                    $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.
+                    Your Booking Reference: ". $decode.
+                    "Test Provider: ".$booking_product->vendor->name.".Thank you";
+                    $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
+                    dd($sms);
+                }
 
                 //update wiith transaction code
                 $booking->update([
