@@ -533,7 +533,7 @@ input[type=text]{
    
 } 
     section{
-        padding:20px 20px;
+        padding:0px;
     }
 
     button{
@@ -709,15 +709,15 @@ input[type=text]{
 @endsection
 @section('content')
 
-    <div class="main-container">
+    <div class="main-container" style="margin-top: 0px">
         <section class="contact-photo">
         <section class="content" >
             <div class="form-page ">
-                <div class="header " style="margin-top:10%" >
+                <div class="header">
                     <!-- <div class="fw-700 fs-28 text-center">Travel Information</div> -->
 
                     @include('errors.showerrors')
-                <form action="{{ url('/post/booking') }}" method="post" id="regForm"  class="needs-validation bg-white" style="">
+                <form action="{{ url('/post/booking') }}" method="post" id="regForm"  class="needs-validation bg-white">
                     @csrf
                     <div class="tab ">
                         <div></div>
