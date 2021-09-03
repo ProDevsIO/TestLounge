@@ -1287,4 +1287,9 @@ class HomeController extends Controller
 
         return redirect()->to('/booking/failed?b=' . $txRef);
     }
+
+    public function view_uk()
+    {
+        return view('homepage.uk_page');
+    }
 }
