@@ -414,7 +414,7 @@ h1{
         color:#fff;
     }
     .bg-5{
-        background:#FF0000;
+        background:#FF0000 !important;
         color:#fff;
     }
   

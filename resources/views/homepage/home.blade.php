@@ -19,16 +19,16 @@
                             <div class="col-md-6 "style=" padding-top:10px">
                                 <h2 class="text-white space-bottom-medium" id="banner-writeup">We simplify the process of booking and making payments for Covid-19 UK Travel Tests for both travellers and travel agents. You’ll get up to date information on UK travel requirements and access to accredited test providers in the UK ensuring a hassle free travel experience.</h2>
                                 <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
-                                <a href="javascript:;" id ="travel" onclick="show()" class="btn btn-primary btn-filled " style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;">Learn More</a>
-                                <br>
-                                <div class="row" id="country-section" style="display:none;">
+                               <p style="color: #fff;text-align: left" class="learn_more">Learn More about your country code below: </p>
+
+                                <div class="row" id="country-section">
                                     <?php
                                     $countries = App\Models\Country::all();
 
                                     ?>
 
 
-                                    <div class="col-sm-12"> <br><div id="show-result">
+                                    <div class="col-sm-12" style="margin-top: -10px"> <br><div id="show-result">
 
                                         </div>
                                         <br>
@@ -120,12 +120,9 @@
                                 <label for="">Choose the country you’re travelling to</label>
                             </div>
                             <div class="col-sm-4" style="margin-bottom: 35px;">
-                                <select name="" class="form-control" id="country" onchange="countryQuery()">
+                                <select name="" class="form-control" id="country" onchange="ukDirect()">
                                     <option value="">Select a country</option>
                                     <option value="225">United Kingdom</option>
-                                    <!-- @foreach($countries as $country)
-                                        <option value="{{$country->id}}">{{$country->nicename}} </option>
-                                    @endforeach -->
                                 </select>
                             </div>
                             <div class="col-sm 2"></div>
@@ -164,32 +161,32 @@
     {
         window.location = '/view/uk/';
     }
-    function countryQuery()
-    {
-
-        var country_id = document.getElementById("country").value;
-        console.log(country_id);
-        var url = '/country/query/' + country_id;
-        $("#show-result")
-            .find('p')
-            .remove()
-            .end();
-        $.get(url, function (data) {
-
-            var holder = document.getElementById("show-result");
-            var newNode = document.createElement('p');
-            var close =  document.createElement('a');
-            newNode.innerHTML = data;
-            close.innerHTML = "X";
-            holder.appendChild(newNode);
-            newNode.appendChild(close);
-            $("#show-result p a").addClass('close')
-            $("#show-result p a").attr("data-dismiss","alert")
-            $("#show-result p").addClass('alert')
-            $("#show-result p").addClass('p-2')
-            $("#show-result p").attr("style", "background-color: #1E50A0;color:white")
-
-        });
-    }
+    // function countryQuery()
+    // {
+    //
+    //     var country_id = document.getElementById("country").value;
+    //     console.log(country_id);
+    //     var url = '/country/query/' + country_id;
+    //     $("#show-result")
+    //         .find('p')
+    //         .remove()
+    //         .end();
+    //     $.get(url, function (data) {
+    //
+    //         var holder = document.getElementById("show-result");
+    //         var newNode = document.createElement('p');
+    //         var close =  document.createElement('a');
+    //         newNode.innerHTML = data;
+    //         close.innerHTML = "X";
+    //         holder.appendChild(newNode);
+    //         newNode.appendChild(close);
+    //         $("#show-result p a").addClass('close')
+    //         $("#show-result p a").attr("data-dismiss","alert")
+    //         $("#show-result p").addClass('alert')
+    //         $("#show-result p").addClass('p-2')
+    //         $("#show-result p").attr("style", "background-color: #1E50A0;color:white")
+    //
+    //     });
+    // }
 </script>
 @endsection
