@@ -239,7 +239,7 @@
         /***** containers */
         .double-container {
             display: grid;
-            grid-template-columns: repeat(2, 45%);
+            grid-template-columns: repeat(2, 40%);
             justify-content: space-between;
         }
 
@@ -356,8 +356,8 @@
         /* start laptop version */
         @media screen and (min-width: 1000px) {
             #con{
-                margin-left:140px;
-                margin-right:20px;
+                margin-right:200px;
+             
             }
         }
 
@@ -373,6 +373,12 @@
 
         /* mobile version */
         @media screen and (max-width: 468px) {
+            .double-container {
+            display: grid;
+            grid-template-columns: none;
+            justify-content: space-between;
+        }
+
             #h9{
                 text-align:center;
             }
@@ -446,57 +452,60 @@
                     </div>
                    
                         @if (count($products) > 0)
-                        <div class="row">
-                            <div class="container" id="show-result">
+                        <div class="container">
+                        <div class="container" id="show-result">
 
-                            </div>
-                            <br>
+                        </div>
+                            <div class="row double-container">
+                               
+                                <br>
 
-                            @foreach ($products as $vproduct)    
-                            <div class="col-md-4" id="con" style="">         
-                                <div class="container bg-7"  style="padding:30px;margin-bottom:20px; height:400px; border-radius:10px">
-                                  
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <h5 class="text-center"><span
-                                                    class="color-8 ">{{ optional(optional($vproduct)->product)->name }}</span>
-                                            </h5>
-                                           
-                                            <p id ="innerP" class="text-center"><span
-                                                    class="color-8 ">{{ optional(optional($vproduct)->vendor)->name }}</span>
-                                            </p>
-                                          
-                                            <h5 class="text-center" style="color:#616161"><span
-                                                    class=" ">£{{ optional($vproduct)->price_pounds }}</span></h5>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="container" style="padding-top:50px">
-                                                {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
+                                @foreach ($products as $vproduct)    
+                                <div class="col-md-12 col-sm-12"  style="">         
+                                    <div class="container bg-7"  style="padding:30px;margin-bottom:20px; height:400px; border-radius:10px">
+                                    
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h5 class="text-center"><span
+                                                        class="color-8 ">{{ optional(optional($vproduct)->product)->name }}</span>
+                                                </h5>
+                                            
+                                                <p id ="innerP" class="text-center"><span
+                                                        class="color-8 ">{{ optional(optional($vproduct)->vendor)->name }}</span>
+                                                </p>
+                                            
+                                                <h5 class="text-center" style="color:#616161"><span
+                                                        class=" ">£{{ optional($vproduct)->price_pounds }}</span></h5>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="container" style="padding-top:50px">
+                                                    {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
 
-                                                @if ($vproduct->cartItem)
-                                                    <a id ="remove_button" type="button" data-product_id="{{ $vproduct->product->id }}"
-                                                        data-vendor_id="{{ $vproduct->vendor->id }}"
-                                                        class="btn btn-block btn-outline-info cart_btn"
-                                                        style="border:1px solid #1E50A0;">
-                                                        Remove from cart
-                                                    </a>
-                                                @else
-                                                    <a id ="add_button" type="button" data-product_id="{{ $vproduct->product->id }}"
-                                                        data-vendor_id="{{ $vproduct->vendor->id }}"
-                                                        class="btn btn-block btn-info cart_btn"
-                                                        >
-                                                        Add to cart
-                                                    </a>
-                                                @endif
+                                                    @if ($vproduct->cartItem)
+                                                        <a id ="remove_button" type="button" data-product_id="{{ $vproduct->product->id }}"
+                                                            data-vendor_id="{{ $vproduct->vendor->id }}"
+                                                            class="btn btn-block btn-outline-info cart_btn"
+                                                            style="border:1px solid #1E50A0;">
+                                                            Remove from cart
+                                                        </a>
+                                                    @else
+                                                        <a id ="add_button" type="button" data-product_id="{{ $vproduct->product->id }}"
+                                                            data-vendor_id="{{ $vproduct->vendor->id }}"
+                                                            class="btn btn-block btn-info cart_btn"
+                                                            >
+                                                            Add to cart
+                                                        </a>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
+                                @endforeach
                             </div>
-                            @endforeach
                         </div>
-                            <div class="row container" style="margin-right:0px; margin-left:0px">
+                            <div class="row container" style="margin-right:0px; margin-left:0px; width: 100%">
                                 
                                 <div class="col-sm-12 text-center"><a id="go_button" href="{{ url('/view/cart') }}" type="button" class="btn bg-1">Go to cart <img src="https://img.icons8.com/fluency/20/000000/right.png"/></a></div>
                             </div>

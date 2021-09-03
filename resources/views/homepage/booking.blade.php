@@ -1005,9 +1005,13 @@ input[type=text]{
                             <div class="input-container" style="margin-top: 10px">
                                 <label class="">Payment Method</label>
                                 <div class="color-8"> All cardholders are advised to use Flutterwave</div>
-                                    <div class='radio' style="background:none;border:none;padding:20px;height:100px;border-radius:25px" data-value="flutterwave" >
+                                    <div class='radio' style="background:none;border:none;padding:20px;height:100px;border-radius:25px;" data-value="flutterwave" >
                                                     <img src="{{ url('/img/Flutterwave.png') }}" style="padding-bottom: 0px;width: 200px;">
                                     </div>
+
+                                    <!-- <div class='radio' style="background:none;border:none;padding:40px;height:100px;border-radius:25px" data-value="voucher" >
+                                         <img src="https://img.icons8.com/fluency/32/000000/ticket-purchase.png"  style="padding-bottom: 0px;"/>Pay with Voucher
+                                    </div> -->
                             </div>
                         </div>
                         <div class="form-section">
