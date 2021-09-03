@@ -32,7 +32,7 @@
             <!--end of container-->
         </header>
         <section class="content bg-white" style="padding:0;">
-            <div class="jumbotron bg-white" >
+            <div class="jumbotron bg-white" style="padding: 0px">
                 <div class="purchase">
                     <div class="header text-center">
                         <!-- <div class="fw-700 fs-28">Travelling from the UK</div> -->
@@ -50,7 +50,7 @@
 
                             @foreach ($products as $vproduct)    
                             <div class="col-md-4" id="con" style="">         
-                                <div class="container bg-7"  style="padding:30px;margin-bottom:20px;  border-radius:10px">
+                                <div class="container bg-7"  style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px">
                                   
                                     <div class="row">
                                         <div class="col-md-12">

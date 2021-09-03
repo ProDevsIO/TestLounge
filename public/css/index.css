@@ -214,7 +214,7 @@
     .learn_more{
         color: #fff;
         text-align: center !important;
-        font-size: 17px;
+        font-size: 17px !important;
         line-height: 24px;
     }
 }

@@ -161,32 +161,32 @@
     {
         window.location = '/view/uk/';
     }
-    // function countryQuery()
-    // {
-    //
-    //     var country_id = document.getElementById("country").value;
-    //     console.log(country_id);
-    //     var url = '/country/query/' + country_id;
-    //     $("#show-result")
-    //         .find('p')
-    //         .remove()
-    //         .end();
-    //     $.get(url, function (data) {
-    //
-    //         var holder = document.getElementById("show-result");
-    //         var newNode = document.createElement('p');
-    //         var close =  document.createElement('a');
-    //         newNode.innerHTML = data;
-    //         close.innerHTML = "X";
-    //         holder.appendChild(newNode);
-    //         newNode.appendChild(close);
-    //         $("#show-result p a").addClass('close')
-    //         $("#show-result p a").attr("data-dismiss","alert")
-    //         $("#show-result p").addClass('alert')
-    //         $("#show-result p").addClass('p-2')
-    //         $("#show-result p").attr("style", "background-color: #1E50A0;color:white")
-    //
-    //     });
-    // }
+    function countryQuery()
+    {
+
+        var country_id = document.getElementById("country").value;
+        console.log(country_id);
+        var url = '/country/query/' + country_id;
+        $("#show-result")
+            .find('p')
+            .remove()
+            .end();
+        $.get(url, function (data) {
+
+            var holder = document.getElementById("show-result");
+            var newNode = document.createElement('p');
+            var close =  document.createElement('a');
+            newNode.innerHTML = data;
+            close.innerHTML = "X";
+            holder.appendChild(newNode);
+            newNode.appendChild(close);
+            $("#show-result p a").addClass('close')
+            $("#show-result p a").attr("data-dismiss","alert")
+            $("#show-result p").addClass('alert')
+            $("#show-result p").addClass('p-2')
+            $("#show-result p").attr("style", "background-color: #1E50A0;color:white;margin-bottom: 5px;")
+
+        });
+    }
 </script>
 @endsection
