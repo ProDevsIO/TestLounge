@@ -1,413 +1,6 @@
 @extends('layouts.home')
 @section('style')
-
-    <style>
-        .background-image-holder{
-            background-color:#1E50A0 !important;
-        }
-        body {
-            font-size: 14px;
-            font-family: 'Raleway', sans-serif;
-            padding: 0;
-            margin: 0;
-            width: 100vw;
-        }
-
-        .link {
-            text-decoration: none;
-        }
-
-        /***** background */
-    .bg-1 {
-        background: #1E50A0;
-        color: #fff;
-    }
-    .bg-2 {
-        background: #7FC8A9;
-        color: #fff;
-    }
-    .bg-3 {
-        background:#BBBEFF;
-        color:#fff;
-    }
-    .bg-6 {
-            background: #FFDF80 !important;
-            color: #fff;
-        }
-    .bg-4{
-        background:#FFF380;
-        color:#fff;
-    }
-    .bg-5{
-        background:#FF0000;
-        color:#fff;
-    }
-  
-    .bg-7{
-        background:#F3F3F3;
-    }
-    .bg-8{
-        background:#616161;
-    }
-    .bg-9{
-        background:#8d8d8d;
-    }
-    .bg-10{
-        background:#D22F27;
-    }
-    .bg-11{
-        background:#eaeaea;
-    }
-   #add_button
-   {
-    border-radius:25px !important;
-     padding:14px 20px 13px 20px !important;
-     color:white; 
-     background: #1E50A0;
-   }
-   #go_button
-   {
-    
-     color:#1E50A0; 
-     background: white ;
-     font-family: Nunito;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 30px;
-    line-height: 41px;
-   }
-   #remove_button{
-    border-radius:25px !important;
-     padding:14px 20px 13px 20px !important;
-     color:#1E50A0; 
-     background: white;
-   }
-   h5{
-    font-family: Nunito !important;
-    font-style: normal !important;
-    font-weight: bold !important;
-    font-size: 25px !important;
-    line-height: 34px  !important;
-    text-align: center;
-    color: #1B1B1B;
-   }
-        .bg-white {
-            background: #fff;
-        }
-
-        .bg-none {
-            background: none;
-        }
-
-        /***** color */
-        .color-1 {
-            color: #1A8BB3;
-        }
-
-        .color-2 {
-            color: #7FC8A9;
-        }
-
-        .color-3 {
-            color: #FA8072;
-        }
-
-        .color-4 {
-            color: #F6D167;
-        }
-
-        .color-5 {
-            color: #DF2E2E;
-        }
-
-        .color-6 {
-            color: #989898;
-        }
-
-        .color-7 {
-            color: #F3F3F3;
-        }
-
-        .color-8 {
-            color: #616161;
-        }
-
-        .color-9 {
-            color: #8d8d8d;
-        }
-
-        .color-10 {
-            color: #D22F27;
-        }
-
-        .color-11 {
-            color: #eaeaea;
-        }
-
-        .color-black {
-            color: #000;
-        }
-
-        /***** border */
-        .bd-1 {
-            border: 1px solid #1A8BB3;
-        }
-
-        section {
-            padding: 50px 25vw;
-        }
-
-        /***** font size */
-        .fs-30 {
-            font-size: 30px;
-        }
-
-        .fs-28 {
-            font-size: 28px;
-        }
-
-        .fs-20 {
-            font-size: 20px;
-        }
-
-        .fs-18 {
-            font-size: 18px;
-        }
-
-        .fs-16 {
-            font-size: 16px;
-        }
-
-        /***** font weight */
-        .fw-700 {
-            font-weight: 700;
-        }
-
-        .fw-600 {
-            font-weight: 600;
-        }
-
-        .fw-500 {
-            font-weight: 500;
-        }
-
-        /***** alignment */
-        .text-center {
-            text-align: center;
-        }
-
-        .text-left {
-            text-align: left;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-
-        /***** button */
-        button {
-            outline: none;
-            border: none;
-            background: none;
-            box-sizing: border-box;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .btn-1 {
-            padding: 17px;
-        }
-
-        .btn-2 {
-            padding: 7px 12.5px;
-        }
-
-        .btn-3 {
-            padding: 13px 85px;
-        }
-
-        .btn-4 {
-            padding: 20px 45px;
-        }
-
-        .btn-5 {
-            padding: 15px;
-            border-radius: 13px;
-        }
-
-
-        /***** containers */
-        .double-container {
-            display: grid;
-            grid-template-columns: repeat(2, 45%);
-            justify-content: space-between;
-        }
-
-        #h9{
-            font-family: Nunito;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 40px;
-            line-height: 55px;
-            text-align:left;
-        }
-
-        #innerP{
-            font-family: Nunito !important;
-            font-style: normal !important;
-            font-weight: 200;
-            font-size: 17px;
-            line-height: 34px;
-            /* identical to box height */
-
-
-            color: #1B1B1B;
-        }
-
-
-        /***** purchase */
-        .purchase {
-            padding: 0 30pxpx;
-        }
-
-        .purchase .card-container {
-            margin: 50px 0;
-        }
-
-        .purchase .card-container .card {
-            /* padding:24px 155px 24px 45px; */
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .purchase .card-container .card .currency {
-            margin-left: 18px;
-        }
-
-        .purchase .card-container .card .quantity {
-            margin: 0 13px;
-        }
-
-        .purchase .card-container .card .quantity-summary {
-            margin-left: 13px;
-        }
-
-        /***** cart */
-        .cart {
-            padding: 0 123px;
-        }
-
-        .cart .cart-container {
-            margin: 50px 0;
-        }
-
-        .cart .cart-container .card {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 2fr;
-            border-radius: 5px;
-            margin-bottom: 25px;
-        }
-
-        .cart .cart-container .heading {
-            margin-bottom: 15px;
-        }
-
-        .cart .cart-container .card-item {
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-right: 1px solid #c2c2c2;
-            padding: 20px;
-        }
-
-        .cart .cart-container .card-item:first-child {
-            justify-content: flex-start;
-            padding-left: 45px;
-        }
-
-        .cart .cart-container .card-item:last-child {
-            justify-content: flex-end;
-            border: none;
-            padding-right: 45px;
-        }
-
-        .cart .cart-container .card-item .remove-icon {
-            margin-right: 8px;
-        }
-
-        .cart .cart-container .total {
-            text-align: right;
-        }
-
-        .cart .cart-container .total .price {
-            margin-left: 22px;
-        }
-
-        .cart .cart-container .button-container {
-            margin: 83px 0 50px 0;
-            text-align: right;
-        }
-
-
-        /* start laptop version */
-        @media screen and (min-width: 1000px) {
-            #con{
-                margin-left:140px;
-                margin-right:20px;
-            }
-        }
-
-
-
-        /* tab version */
-        @media screen and (max-width: 1024px) {
-            section {
-                padding: 50px;
-            }
-
-        }
-
-        /* mobile version */
-        @media screen and (max-width: 468px) {
-            #h9{
-                text-align:center;
-            }
-            section{
-                padding:50px 20px;
-            }
-
-            button {
-                display: block;
-                width: 100%;
-            }
-
-            /***** purchase */
-            .purchase {
-                padding: 0;
-            }
-
-            .purchase .card-container .card {
-                padding: 24px 20px;
-                display: block;
-            }
-
-            .purchase .card-container .card .purchase-name {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 20px;
-            }
-
-            .purchase .card-container .card .btn-2 {
-                display: inline-block;
-                width: auto;
-            }
-        }
-
-    </style>
+    <link href="{{ url('/css/product.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <div class="main-container">
@@ -420,7 +13,7 @@
                 <div class="row">
                     <div class="col-xs-12">
 
-                        <h5 id="h9" class="text-white">COUNTRY TESTS</h1>
+                        <h5 id="h9" class="text-white">COUNTRY TESTS</h5>
                         @if($type == "Green")
                         <h5 id="h9" class="text-white">Travelling from a Green country to the Uk <span class="badge" style="background-color:#7FC8A9;padding:10px">G</span></h5>
                         @elseif($type=="Amber_v")
@@ -454,7 +47,7 @@
 
                             @foreach ($products as $vproduct)    
                             <div class="col-md-4" id="con" style="">         
-                                <div class="container bg-7"  style="padding:30px;margin-bottom:20px; height:400px; border-radius:10px">
+                                <div class="container bg-7"  style="padding:30px;margin-bottom:20px;  border-radius:10px">
                                   
                                     <div class="row">
                                         <div class="col-md-12">
@@ -470,18 +63,18 @@
                                                     class=" ">£{{ optional($vproduct)->price_pounds }}</span></h5>
                                         </div>
                                         <div class="col-md-12">
-                                            <div class="container" style="padding-top:50px">
+                                            <div class="container text-center" style="padding-top:50px">
                                                 {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
 
                                                 @if ($vproduct->cartItem)
-                                                    <a id ="remove_button" type="button" data-product_id="{{ $vproduct->product->id }}"
+                                                    <a id ="remove_button" type="button"  data-product_id="{{ $vproduct->product->id }}"
                                                         data-vendor_id="{{ $vproduct->vendor->id }}"
                                                         class="btn btn-block btn-outline-info cart_btn"
-                                                        style="border:1px solid #1E50A0;">
+                                                        style="border:1px solid #1E50A0;width: 100px;margin: auto;">
                                                         Remove from cart
                                                     </a>
                                                 @else
-                                                    <a id ="add_button" type="button" data-product_id="{{ $vproduct->product->id }}"
+                                                    <a id ="add_button" type="button" style="width: 100px;margin: auto;" data-product_id="{{ $vproduct->product->id }}"
                                                         data-vendor_id="{{ $vproduct->vendor->id }}"
                                                         class="btn btn-block btn-info cart_btn"
                                                         >
@@ -496,7 +89,7 @@
                             </div>
                             @endforeach
                         </div>
-                            <div class="row container" style="margin-right:0px; margin-left:0px">
+                            <div class="row" style="margin-right:0px; margin-left:0px">
                                 
                                 <div class="col-sm-12 text-center"><a id="go_button" href="{{ url('/view/cart') }}" type="button" class="btn bg-1">Go to cart <img src="https://img.icons8.com/fluency/20/000000/right.png"/></a></div>
                             </div>

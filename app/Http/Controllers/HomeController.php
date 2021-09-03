@@ -32,6 +32,7 @@ class HomeController extends Controller
 
     public $bookingService;
     public $bookConfirmationService;
+
     public function __construct()
     {
         $this->bookingService = new BookingService;
@@ -53,6 +54,7 @@ class HomeController extends Controller
 
         return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user'));
     }
+
     public function booking2(Request $request)
     {
 
@@ -68,6 +70,7 @@ class HomeController extends Controller
 
         return view('homepage.booking2')->with(compact('countries', 'products', 'vendors', 'user'));
     }
+
     public function login()
     {
         if (auth()->check()) {
@@ -169,7 +172,7 @@ class HomeController extends Controller
 
         $price = $price_pounds = 0;
         $booking = Booking::create($request_data);
-        foreach ($carts as  $cart) {
+        foreach ($carts as $cart) {
             $product_id = $cart->vendorProduct->product_id;
 
 
@@ -412,14 +415,14 @@ class HomeController extends Controller
                         //check if a referral code exist
                         if ($booking->referral_code != null) {
                             //use the referral code to find the user
-                            $getUser =  User::where('referal_code', $booking->referral_code)->first();
+                            $getUser = User::where('referal_code', $booking->referral_code)->first();
 
                             //check the status set by the copy receipt
                             //if 1 :copy the agent else if 0: send normally
                             if ($getUser->copy_receipt == 1) {
                                 $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                             } elseif ($getUser->copy_receipt == 0) {
-                                $no =  Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                                $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                             }
                         } else {
                             //referral code doesnt exist
@@ -428,14 +431,13 @@ class HomeController extends Controller
                     } catch (\Exception $e) {
                     }
                 }
-                if( !empty($booking->phone_no))
-                {
-                  
-                    $decode =  implode(", ",json_decode($code));
-                           
-                    $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- ". $decode.". Test Provider:- ".$booking_product->vendor->name.".Thank you";
+                if (!empty($booking->phone_no)) {
+
+                    $decode = implode(", ", json_decode($code));
+
+                    $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
                     $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
-                   
+
                 }
 
                 //update wiith transaction code
@@ -560,7 +562,7 @@ class HomeController extends Controller
 
         if ($request->file) {
 
-            $certificate =  time() . '.' . $request->file->extension();
+            $certificate = time() . '.' . $request->file->extension();
 
             $request->file->move(public_path('img/certificate'), $certificate);
 
@@ -751,33 +753,24 @@ class HomeController extends Controller
 
     public function viewProducts($type)
     {
+        $faq = 1;
+        $products = VendorProduct::where('vendor_id', 3);
+        if ($type == "all") {
+            $faq = 0;
+            $products = $products->get();
+        } elseif ($type == "Green") {
+            $products = $products->where('product_id', 1)->get();
+        } elseif ($type == "Amber_v") {
+            $products = $products->whereIn('product_id', [2, 10])->get();
 
-        $faq = 0;
-        if($type == "all"){
-
-            $products = vendorProduct::where('vendor_id', 3)->get();
-
-        }elseif($type == "Green")
-        {
-            $faq = 1;
-            $products = vendorProduct::where(['vendor_id' => 3, 'product_id'=> 1])->get();
-
-        }elseif($type == "Amber_v"){
-            $faq = 1;
-            $products = vendorProduct::where(['vendor_id' => 3])->whereIn('product_id',[2, 10])->get();
-
-        }elseif($type == "Amber_uv"){
-            $faq = 1;
-            $products = vendorProduct::where(['vendor_id' => 3])->whereIn('product_id',[2, 4, 3, 10])->get();
-
-        }elseif($type == "Red"){
-            $faq = 1;
-            $products = vendorProduct::where(['vendor_id' => 3, 'product_id' => 5])->get();
-        }elseif($type == "UK"){
-
-            $products =[];
+        } elseif ($type == "Amber_uv") {
+            $products = $products->whereIn('product_id', [2, 4, 3, 10])->get();
+        } elseif ($type == "Red") {
+            $products = $products->where('product_id', 5)->get();
+        } elseif ($type == "UK") {
+            $faq = 0;
+            $products = [];
         }
-
         return view('homepage.addProducts')->with(compact('products', 'faq', 'type'));
     }
 
@@ -837,7 +830,7 @@ class HomeController extends Controller
             ];
             // return "$product has already been added to cart.";
         }
-        $data["cart_items"] = Cart::where('ip' , $ip)->count();
+        $data["cart_items"] = Cart::where('ip', $ip)->count();
         return response()->json($data);
     }
 
@@ -855,8 +848,8 @@ class HomeController extends Controller
 
         return response()->json([
             "message" => "Quantity has been updated",
-            "item_total" => number_format($singleCart->quantity * $singleCart->vendorProduct->price_pounds , 2),
-            "total_price" => number_format($cartSum , 2)
+            "item_total" => number_format($singleCart->quantity * $singleCart->vendorProduct->price_pounds, 2),
+            "total_price" => number_format($cartSum, 2)
         ]);
     }
 
@@ -893,22 +886,11 @@ class HomeController extends Controller
             $price = "£" . number_format($vproduct->price_pounds, 0);
 
             if ($nationality == 81) {
-                // naira to ghanian cedis
                 $price = "GH₵" . number_format($vproduct->price * 0.014, 0);
             }
-            //    else
             if ($nationality == 156) {
                 $price = "₦" . number_format($vproduct->price, 0);
             }
-            //                elseif ($nationality == 210) {
-            //                // naira to tanzanian cedis
-            //                $price = "TZS" . number_format($vproduct->price * 5.64, 0);
-            //            } elseif ($nationality == 110) {
-            //                $price = "KES" . number_format($vproduct->price * 0.26, 0);
-            //            } elseif ($nationality == 197) {
-            //                // naira to south african rand
-            //                $price = "ZAR" . number_format($vproduct->price * 0.036, 0);
-            //            }
 
             $product[] = [
                 'name' => $vproduct->product->name,
@@ -1237,7 +1219,7 @@ class HomeController extends Controller
                     //check if a referral code exist
                     if ($booking->referral_code != null) {
                         //use the referral code to find the user
-                        $getUser =  User::where('referal_code', $booking->referral_code)->first();
+                        $getUser = User::where('referal_code', $booking->referral_code)->first();
 
                         //check the status set by the copy receipt
                         //if 1 :copy the agent else if 0: send normally
