@@ -437,7 +437,7 @@ class HomeController extends Controller
                     Your Booking Reference: ". $decode.
                     "Test Provider: ".$booking_product->vendor->name.".Thank you";
                     $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
-                    dd($sms);
+                   
                 }
 
                 //update wiith transaction code
