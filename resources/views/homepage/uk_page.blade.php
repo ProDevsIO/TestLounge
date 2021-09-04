@@ -640,7 +640,7 @@ h1{
 
 
 
-    <header class="page-header" style="height: 400px;padding-top: 50px">
+    <header class="page-header" style="height: 450px;padding-top: 50px">
         <div class="background-image-holder parallax-background">
             <img class="background-image" alt="Background Image" src="/img/bg.jpeg" >
         </div>
@@ -654,7 +654,13 @@ h1{
                                 The Mandatory Covid-19 Tests for the UK follows a "traffic light system"
                                 which determines the required tests based on the  Country you are travelling from.</p>
                             <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
-
+                            <select name="" class="form-control" id="country" onchange="countryQuery()">
+                                <option value="">Select a country</option>
+                                <option value="225">United Kingdom</option>
+                                @foreach($countries as $country)
+                                    <option value="{{$country->id}}">{{$country->nicename}} </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-md-6 pull-right" id="banner-writeup2" style="left:10%;top:100px ">
                             <img class="background-image" alt="Background Image" src="/img/Group 6.png"  style="background-repeat: no-repeat;background-size: 100% 100%">
@@ -981,4 +987,37 @@ h1{
             </div>
         </div>
 </div>
+@endsection
+
+@section('script')
+    <script>
+
+        function countryQuery()
+        {
+
+            var country_id = document.getElementById("country").value;
+            console.log(country_id);
+            var url = '/country/query/' + country_id;
+            $("#show-result")
+                .find('p')
+                .remove()
+                .end();
+            $.get(url, function (data) {
+
+                var holder = document.getElementById("show-result");
+                var newNode = document.createElement('p');
+                var close =  document.createElement('a');
+                newNode.innerHTML = data;
+                close.innerHTML = "X";
+                holder.appendChild(newNode);
+                newNode.appendChild(close);
+                $("#show-result p a").addClass('close')
+                $("#show-result p a").attr("data-dismiss","alert")
+                $("#show-result p").addClass('alert')
+                $("#show-result p").addClass('p-2')
+                $("#show-result p").attr("style", "background-color: #1E50A0;color:white;margin-bottom: 5px;")
+
+            });
+        }
+    </script>
 @endsection

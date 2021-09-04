@@ -121,34 +121,28 @@ class HomeController extends Controller
             'sex' => 'required',
             'dob' => 'required',
             'ethnicity' => 'required',
-            'vaccination_status' => 'required',
             'phone_no' => 'required',
             'email' => 'required',
-            'address_1' => 'required',
-            'home_town' => 'required',
-            'post_code' => 'required',
-            'home_country_id' => 'required',
             'isolation_address' => 'required',
             'isolation_town' => 'required',
             'isolation_postal_code' => 'required',
             'isolation_country_id' => 'required',
-            'document_id' => 'required',
             'arrival_date' => 'required',
             'country_travelling_from_id' => 'required',
             'departure_date' => 'required',
-            'last_day_travel' => 'required',
-            'transport_no' => 'required',
             'consent' => 'required'
         ]);
 
 
         $request->vendor_id = 3;
 
-        // if (empty($request->product_id)) {
-        //     session()->flash('alert-danger', "Kindly select a product");
-        //     return back()->withInput();
-        // }
+
         $carts = Cart::where('ip', session()->get('ip'))->get();
+
+        if ($carts->count() == 0) {
+            session()->flash('alert-danger', "Kindly select a product and add to your cart");
+            return back()->withInput();
+        }
         $request_data = $request->all();
 
         unset($request_data['_token']);
@@ -165,12 +159,11 @@ class HomeController extends Controller
 
         $request_data['transaction_ref'] = $transaction_ref;
         $request_data['external_reference'] = $external_ref;
-        $request_data['vaccination_date'] = Carbon::parse($request->vaccination_date);
-        $request_data['last_day_travel'] = Carbon::parse($request->last_day_travel);
 
         unset($request_data['payment_method']);
 
         $price = $price_pounds = 0;
+
         $booking = Booking::create($request_data);
         foreach ($carts as $cart) {
             $product_id = $cart->vendorProduct->product_id;
@@ -192,27 +185,6 @@ class HomeController extends Controller
             $price = $price + ($vendor_products->price * $cart->quantity);
             $price_pounds = $price_pounds + ($vendor_products->price_pounds * $cart->quantity);
         }
-
-
-        // $price = $price_pounds = 0;
-        // $product_id[] = $request->product_id;
-        // foreach ($product_id as $r_product) {
-
-        //     $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $r_product)->first();
-
-        //     BookingProduct::create([
-        //         'booking_id' => $booking->id,
-        //         'product_id' => $r_product,
-        //         'vendor_id' => $request->vendor_id,
-        //         'vendor_product_id' => $vendor_products->id,
-        //         'price' => $vendor_products->price,
-        //         'price_pounds' => $vendor_products->price_pounds,
-        //         'vendor_cost_price' => $vendor_products->cost_price
-        //     ]);
-
-        //     $price = $price + $vendor_products->price;
-        //     $price_pounds = $price_pounds + $vendor_products->price_pounds;
-        // }
 
         //send an email
         try {
@@ -277,8 +249,6 @@ class HomeController extends Controller
 
     public function payment_confirmation(Request $request)
     {
-
-
         if (env('APP_ENV', "LIVE") == "LIVE") {
             $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
         } else {
@@ -802,19 +772,36 @@ class HomeController extends Controller
         $product = $v_product->product->name;
         if ($check == 0) {
 
-            Cart::create([
-                'ip' => $ip,
-                'quantity' => 1,
-                'vendor_product_id' => $v_product->id
-            ]);
+            //check again
+            $check_at_all = Cart::where([
+                'ip' => $ip
+            ])->count();
+
+            if ($check_at_all > 0) {
+                $data = [
+                    "message" => "You cannot add more than one product to the cart",
+                    "btn_text" => "Add from cart",
+                    "btn_color" => "white",
+                    "color" => "#1E50A0",
+                    "error" => "yes"
+                ];
+            } else {
+
+                Cart::create([
+                    'ip' => $ip,
+                    'quantity' => 1,
+                    'vendor_product_id' => $v_product->id
+                ]);
 
 
-            $data = [
-                "message" => "Added $product to cart.",
-                "btn_text" => "Remove from cart",
-                "btn_color" => "white",
-                "color" => "#1E50A0"
-            ];
+                $data = [
+                    "message" => "Added $product to cart.",
+                    "btn_text" => "Remove from cart",
+                    "btn_color" => "white",
+                    "color" => "#1E50A0",
+                     "error" => "no"
+                ];
+            }
         } else {
 
             Cart::where([
@@ -826,7 +813,8 @@ class HomeController extends Controller
                 "message" => "Removed $product from cart.",
                 "btn_text" => "Add to Cart",
                 "btn_color" => "#1E50A0",
-                "color" => "white"
+                "color" => "white",
+                "error" => "no"
             ];
             // return "$product has already been added to cart.";
         }
@@ -1272,6 +1260,7 @@ class HomeController extends Controller
 
     public function view_uk()
     {
-        return view('homepage.uk_page');
+        $countries = Country::all();
+        return view('homepage.uk_page')->with(compact('countries'));
     }
 }

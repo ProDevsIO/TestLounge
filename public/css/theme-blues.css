@@ -324,7 +324,7 @@ section:nth-of-type(even) {
   min-width: 155px;
 }
 .btn:hover {
-  background: #2c5ca9 !important;;
+  /*background: #2c5ca9 !important;;*/
   color: #fff;
   border-color: #1E50A0;
 }
