@@ -287,7 +287,7 @@
                                                 @elseif(isset($booking->product) && $booking->product->ptransaction != null)
                                                 <td> £ {{ optional($booking->product->ptransaction)->amount }} </td>
                                                 @else
-                                                <td> Product has been deleted</td>
+                                                <td> No Commision</td>
                                                 @endif
                                             @endif
                                             <td>@if($booking->status == 0)
