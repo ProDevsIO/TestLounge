@@ -647,5 +647,9 @@ th:first-child, td:first-child{
     .form-page form .button-container button{
         margin:0 0 28px 0;
     }
+
+    .ct{
+        padding: 25% !important;
+    }
 }
 

@@ -17,27 +17,19 @@
                     <div class="col-md-12 text-center" id="banner-writeup-container">
                         <div class="row">
                             <div class="col-md-6 "style=" padding-top:10px">
-                                <h2 class="text-white space-bottom-medium" id="banner-writeup">We simplify the process of booking and making payments for Covid-19 UK Travel Tests for both travellers and travel agents. You’ll get up to date information on UK travel requirements and access to accredited test providers in the UK ensuring a hassle free travel experience.</h2>
+                                <h2 class="text-white space-bottom-medium" id="banner-writeup">We simplify the process of booking and making payments for COVID-19 Travel Tests for both travellers and travel agents. You’ll get up to date information on travel requirements and access to test providers in the country of destination. This ensures you have a hassle free travel experience.</h2>
                                 <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
-                               <p style="color: #fff;text-align: left" class="learn_more">Learn More about your country code below: </p>
+                               <p style="color: #fff;text-align: left" class="learn_more">Choose the Country you are travelling to: </p>
 
                                 <div class="row" id="country-section">
-                                    <?php
-                                    $countries = App\Models\Country::all();
-
-                                    ?>
-
 
                                     <div class="col-sm-12" style="margin-top: -10px"> <br><div id="show-result">
 
                                         </div>
                                         <br>
-                                        <select name="" class="form-control" id="country" onchange="countryQuery()">
+                                        <select name="" class="form-control" id="country" onchange="ukDirect()">
                                             <option value="">Select a country</option>
                                             <option value="225">United Kingdom</option>
-                                            @foreach($countries as $country)
-                                                <option value="{{$country->id}}">{{$country->nicename}} </option>
-                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-sm 2"></div>
@@ -88,13 +80,26 @@
 				</div><!--end of container-->
 			</section>
                 <div class="container-fluid" style="padding:0">
-                    <div class="header text-center bg-1" style="padding:59px;">
-                        
-                        <div class="container" id="banner2">
-                            <p style="font-weight:600px;font-size:20px;line-height: 41px;" class="fw-600 fs-20 text-left">The travel tests requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
-                           <br>
-                            <p class="fw-700 fs-28"> <a href="{{ url('/product/all') }}" type="button" class="btn btn-md bg-primary" style="margin-bottom: 30px;border-radius:25px; padding:14px 28px 13px 28px;font-family: Nunito;font-style: normal;font-weight: bolder;font-size: 16px;line-height: 19px;color: #1E50A0 !important;background-color:white !important;">BOOK NOW</a></p>
+                    <div class="text-center bg-1 ct" style="padding:59px;">
+                        <div class="row" id="calculator">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-4 text-center">
+
+                            <label for="">Choose the country you’re travelling to</label>
                         </div>
+                        <div class="col-sm-4" style="margin-bottom: 35px;">
+                            <select name="" class="form-control" id="country" onchange="ukDirect()">
+                                <option value="">Select a country</option>
+                                <option value="225">United Kingdom</option>
+                            </select>
+                        </div>
+                        <div class="col-sm 2"></div>
+                        </div>
+                        {{--<div class="container" id="banner2">--}}
+                            {{--<p style="font-weight:600px;font-size:20px;line-height: 41px;" class="fw-600 fs-20 text-left">The travel tests requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>--}}
+                           {{--<br>--}}
+                            {{--<p class="fw-700 fs-28"> <a href="{{ url('/product/all') }}" type="button" class="btn btn-md bg-primary" style="margin-bottom: 30px;border-radius:25px; padding:14px 28px 13px 28px;font-family: Nunito;font-style: normal;font-weight: bolder;font-size: 16px;line-height: 19px;color: #1E50A0 !important;background-color:white !important;">BOOK NOW</a></p>--}}
+                        {{--</div>--}}
                     </div>
                 </div>
                 <div class="card-container bg-sky"  style="padding:70px"id="country-section" style="">
@@ -113,19 +118,23 @@
                         </div>
                         <br>
                         <div class="row" >
-                            
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-4 text-center">
-                            
-                                <label for="">Choose the country you’re travelling to</label>
+                            <div class="container" id="banner2">
+                            <p style="font-weight:600px;font-size:20px;line-height: 41px;" class="fw-600 fs-20 text-left">The travel testing requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
+                            <br>
+                            {{--<p class="fw-700 fs-28"> <a href="{{ url('/product/all') }}" type="button" class="btn btn-md bg-primary" style="margin-bottom: 30px;border-radius:25px; padding:14px 28px 13px 28px;font-family: Nunito;font-style: normal;font-weight: bolder;font-size: 16px;line-height: 19px;color: #1E50A0 !important;background-color:white !important;">BOOK NOW</a></p>--}}
                             </div>
-                            <div class="col-sm-4" style="margin-bottom: 35px;">
-                                <select name="" class="form-control" id="country" onchange="ukDirect()">
-                                    <option value="">Select a country</option>
-                                    <option value="225">United Kingdom</option>
-                                </select>
-                            </div>
-                            <div class="col-sm 2"></div>
+                            {{--<div class="col-sm-2"></div>--}}
+                            {{--<div class="col-sm-4 text-center">--}}
+                            {{----}}
+                                {{--<label for="">Choose the country you’re travelling to</label>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-sm-4" style="margin-bottom: 35px;">--}}
+                                {{--<select name="" class="form-control" id="country" onchange="ukDirect()">--}}
+                                    {{--<option value="">Select a country</option>--}}
+                                    {{--<option value="225">United Kingdom</option>--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-sm 2"></div>--}}
                         </div>
                 </div>
            

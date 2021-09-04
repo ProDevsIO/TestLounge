@@ -637,22 +637,35 @@ h1{
 @section('content')
 <div class="main-container" style="margin-bottom: 50px">
 
-        <header class="title" style="max-height: 300px !important;">
-            <div class="background-image-holder parallax-background" >
-                
-            </div>
-            <div class="container align-bottom">
-                <div class="row">
-                    <div class="col-xs-12">
 
-                        <h5 id="h9" class="text-white">UNITED KINGDOM</h1>
-                     
+
+
+    <header class="page-header" style="height: 400px;padding-top: 50px">
+        <div class="background-image-holder parallax-background">
+            <img class="background-image" alt="Background Image" src="/img/bg.jpeg" >
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center" id="banner-writeup-container">
+                    <div class="row">
+                        <div class="col-md-6 "style=" padding-top:10px">
+                            <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>UNITED KINGDOM</b></h2>
+                            <p style="color: #fff;text-align: left">
+                                The Mandatory Covid-19 Tests for the UK follows a "traffic light system"
+                                which determines the required tests based on the  Country you are travelling from.</p>
+                            <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
+
+                        </div>
+                        <div class="col-md-6 pull-right" id="banner-writeup2" style="left:10%;top:100px ">
+                            <img class="background-image" alt="Background Image" src="/img/Group 6.png"  style="background-repeat: no-repeat;background-size: 100% 100%">
+                        </div>
                     </div>
+
+
                 </div>
-                <!--end of row-->
-            </div>
-            <!--end of container-->
-        </header>
+            </div><!--end of row-->
+        </div><!--end of co-->
+    </header>
 
         <div class="container">
                 <div class="country-category">    
@@ -706,7 +719,7 @@ h1{
         <div class="container">
             <div class="header bg-sky " style="">
                 <div class="text-center">
-                    <h3 style="">The Mandatory Covid-19 Tests for the UK follows a "traffic light system" which determines the required tests based on the  Country you are travelling from.<br><br> <p>See table below with the list of expected tests for each Category</p> </h3></div>
+                    <h3 style=""><p>See table below with the list of requirement and expected tests for each Category</p> </h3></div>
                 <div>            
             </div>
         </div>
@@ -834,12 +847,12 @@ h1{
                     <td class="bg-2">  <a href="{{ url('/product/Green') }}" style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td class="bg-6">  <a href="{{ url('/product/Amber_v') }}" style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td class="bg-4">  <a href="{{ url('/product/Amber_uv') }}" style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" class="btn btn-primary btn-filled">Book Now</a></td>
-                    <td class="bg-5"> <a href="{{ url('/product/Red') }}" class="btn btn-primary btn-filled"  style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" >Book Now</a></td>
+                    <td class="bg-5"> Unavailable</td>
                 </tr>
                 
             </table>
             <div class="alert">
-               <p style="font-family: Nunito;font-style: normal;font-weight: normal;font-size: 18px;line-height: 25px;"><span style="font-size:30px;color:black;">**</span> Please note that Only Travellers <b>who have specifically been vaccinated by the UK NHS and have completed all doses at least 2weeks before travel are considered eligible</b>. Passengers from France MUST undergo Quarantine , Day 2 and 8 tests irrespective of Vaccination Status</p>
+               <p style="font-family: Nunito;font-style: normal;font-weight: normal;font-size: 18px;line-height: 25px;"><span style="font-size:30px;color:black;">**</span> Please note that Only Travellers <b>who have specifically been vaccinated by the UK NHS and have completed all doses at least 2weeks before travel are considered eligible</b>.</p>
             </div>
             
         
@@ -849,7 +862,7 @@ h1{
         <div class="container">
                 <div class="header bg-sky " style="padding:70px">
                     <div class="text-left">
-                        <h3 class="text-left">AT A GLANCE GUIDE FOR ARRIVALS TO THE UK FOLLOWING IMPLEMENTATION OF THE'TRAFFIC LIGHT SYSTEM'</h3>
+                        <h3 class="text-left">Guide for Children Arriving in the UK</h3>
                     </div>
                 </div>
             </div>
