@@ -283,9 +283,9 @@
                                                 @endif
 
                                                 @if(isset($booking->product) && $booking->product->transaction != null)
-                                                <td> ₦ {{ $booking->product->transaction->amount }} </td>
+                                                <td> ₦ {{ optional($booking->product->transaction)->amount }} </td>
                                                 @elseif(isset($booking->product) && $booking->product->ptransaction != null)
-                                                <td> £ {{ $booking->product->transaction->amount }} </td>
+                                                <td> £ {{ optional($booking->product->ptransaction)->amount }} </td>
                                                 @else
                                                 <td> Product has been deleted</td>
                                                 @endif
