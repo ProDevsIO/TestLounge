@@ -47,7 +47,7 @@
                                             <tbody>
                                        
                                             @foreach($vouchers as $voucher)
-                                            
+                                            {{dd($voucher->voucherProduct)}}
                                                     <tr>
                                                        
                                                         @if(auth()->user()->type == 1)
@@ -64,7 +64,8 @@
                                                             @endif
                                                         @endif
                                                         <td>{{ $voucher->transaction_ref }}</td>
-                                                        @if($voucher->voucherProduct->currency == "NG")
+
+                                                        @if(optional($voucher->voucherProduct)->currency == "NG")
                                                         <td>₦{{ number_format($voucher->voucherProduct->charged_amount) }}</td>
                                                         @else
                                                         <td>E{{ number_format($voucher->voucherProduct->charged_amount) }}</td>
