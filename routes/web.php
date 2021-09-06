@@ -76,6 +76,7 @@ Route::get('/make/payment/{booking}', [\App\Http\Controllers\HomeController::cla
 Route::post('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"p_make_payment"])->name('make_payment');
 Route::get('/booking/failed', [\App\Http\Controllers\HomeController::class,"booking_failed"])->name('booking_failed');
 Route::get('/continue/registration/{referral_code}/{id}', [\App\Http\Controllers\HomeController::class,"verify_account"])->name('verify_account');
+Route::post('/complete/register', [\App\Http\Controllers\HomeController::class,"complete_registration"])->name('complete_registration');
 
 
 
@@ -87,6 +88,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/complete/booking', [\App\Http\Controllers\DashboardController::class,"complete_booking"]);
     Route::get('/view/individual/booking', [\App\Http\Controllers\DashboardController::class,"view_individual_booking"]);
     Route::get('/view/agent/booking', [\App\Http\Controllers\DashboardController::class,"view_agent_booking"]);
+    Route::get('/view/agent/details/{id}', [\App\Http\Controllers\DashboardController::class,"details"]);
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,"dashboard"]);
     Route::get('/view/booking/{id}', [\App\Http\Controllers\DashboardController::class,"view_booking"]);
     Route::get('/booking/delete/{id}', [\App\Http\Controllers\DashboardController::class,"delete_booking"]);

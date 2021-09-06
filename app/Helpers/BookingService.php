@@ -34,6 +34,8 @@ class BookingService
     {
         $data["referral_code"] = $this->referral_code;
         $data["user_id"] = $this->user_id;
+
+
         return $data;
     }
 
@@ -44,7 +46,7 @@ class BookingService
         $share_data = $userService->calculateMainAgentShare($this->user->main_agent_share_raw, $agent_share);
 
 
-        $agent_transaction_charge = (100 - $share_data["sub_agent_share"]) / 100;
+        $agent_transaction_charge = (100 -  ($share_data["sub_agent_share"])  ) / 100;
         $super_agent_transaction_charge = (100 - $share_data["main_agent_share_percent"]) / 100;
 
         $this->sub_accounts[] = [
@@ -66,6 +68,7 @@ class BookingService
             ];
         }
 
+        return $this;
 
     }
 }

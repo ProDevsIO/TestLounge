@@ -166,5 +166,12 @@
                 }
             }
         })
+
+        var checkref = localStorage.getItem('ref');
+
+        if(checkref){
+            $("#add_button").attr('href',"{{ url('/booking') }}"+ "?ref=" + checkref);
+        }
+
     </script>
 @endsection

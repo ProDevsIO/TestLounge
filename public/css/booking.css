@@ -614,6 +614,11 @@ input[type=text] {
 
     }
 
+    form h5{
+        font-size: 21px;
+        padding: 0px 17px;
+    }
+
     #prevBtn {
         margin: 0;
 

@@ -68,6 +68,11 @@ class User extends Authenticatable
 		return $this->hasMany(Booking::class);
 	}
 
+    public function country_residence()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
     public function voucher()
 	{
 		return $this->hasOne(Voucher::class);

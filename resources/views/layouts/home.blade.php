@@ -48,7 +48,7 @@ $ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_co
             overlay-bar
 
 @endif
-">
+            ">
 
 
         <div class="container">
@@ -186,6 +186,9 @@ $ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_co
 <script src="/js/jquery.countdown.min.js"></script>
 <script src="/js/scripts.js"></script>
 <script>
+    @if(isset($_GET['ref']) && $_GET['ref'])
+      localStorage.setItem('ref', '{{ $_GET['ref'] }}');
+    @endif
     console.log('Built with ❤ by ProDevs(https://prodevs.io)');
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

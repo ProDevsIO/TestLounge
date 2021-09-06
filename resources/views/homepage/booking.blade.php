@@ -17,213 +17,229 @@
                         <!-- <div class="fw-700 fs-28 text-center">Travel Information</div> -->
 
                         @include('errors.showerrors')
-                        <form action="{{ url('/post/booking') }}" method="post"
-                              class="bg-white">
-                            @csrf
 
-                            <h5>Fill the Booking form Below</h5>
-                            <div class="col-md-6">
-                                <label>First Name <span class="show_required"> *</span>
-                                </label>
-                                <input type="text" placeholder="First name"
-                                       name="first_name"
-                                       value="{{ old('first_name') }}" style="margin-bottom:0px;" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Surname <span class="show_required"> *</span></label>
-                                <input type="text" placeholder="Surname"
-                                       name="last_name"
-                                       value="{{ old('last_name') }}" required>
-                            </div>
-                            <div class="col-md-12" style="margin-top: 20px">
-                                <label>Contact Email: <span class="show_required"> *</span></label>
-                                <small class="text-muted" style="color:red"> Please provide only ONE email address
-                                </small>
+                        @if($carts_count > 0)
+                            <form action="{{ url('/post/booking') }}" method="post"
+                                  class="bg-white">
+                                @csrf
 
-                                <input type="text" name="email" value="{{ old('email') }}" required/>
-                            </div>
-                            <div class="col-md-12 " style="margin-top: 20px">
-                                <label>Phone number<span class="show_required"> *</span></label>
-                                <input id="phone" style="" type="text" value="{{ old('phone_no') }}" name="phone_no"
-                                       class=" pr-5" placeholder="Phone No" required>
-                            </div>
-                            <div class="col-md-6"
-                                 style="margin-bottom: 20px">
-                                <label>Sex <span class="show_required"> *</span></label>
-                                <select class="select-2" name="sex" required>
-                                    <option value="">Make a selection</option>
-                                    <option value="1" @if(old('sex') == "1")
-                                    selected
-                                            @endif>Male
-                                    </option>
-                                    <option value="2" @if(old('sex') == "2")
-                                    selected
-                                            @endif>Female
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label>Date of Birth <span class="show_required"> *</span>
-                                </label>
-                                <input class="date_picker" type="text"
-                                       placeholder="Date of Birth"
-                                       name="dob"
-                                       value="{{ old('dob') }}" required>
-                            </div>
-                            <div class="col-md-12">
-                                <label>Ethnicity <span class="show_required"> *</span></label>
-                                <select class="select-2" name="ethnicity" required>
-                                    <option value="">Make a selection</option>
-                                    <option value="1" @if(old('ethnicity') == "1")
-                                    selected
-                                            @endif>White
-                                    </option>
-                                    <option value="2" @if(old('ethnicity') == "2")
-                                    selected
-                                            @endif>Mixed/Multiple Ethnic groups
-                                    </option>
-                                    <option value="3" @if(old('ethnicity') == "3")
-                                    selected
-                                            @endif>Asian/Asian British
-                                    </option>
-                                    <option value="4" @if(old('ethnicity') == "4")
-                                    selected
-                                            @endif>
-                                        Black/African/Caribbean/Black British
-                                    </option>
-                                    <option value="5" @if(old('ethnicity') == "5")
-                                    selected
-                                            @endif>Other Ethnic group
-                                    </option>
-
-                                </select>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label>Isolation Address1: <span class="show_required"> *</span> </label>
-                                <input class="" type="text" name="isolation_address"
-                                       value="{{ old('isolation_address') }}" required/>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Isolation Address2: </label>
-                                <input class="" type="text" name="isolation_address2"
-                                       id="isolation_address2"
-                                       value="{{ old('isolation_address2') }}"/>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Isolation City/Town: <span class="show_required"> *</span></label>
-                                <input class="" type="text" name="isolation_town"
-                                       value="{{ old('isolation_town') }}" required/>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Isolation Postcode: <span class="show_required"> *</span></label>
-                                <input class="" type="text" name="isolation_postal_code"
-                                       value="{{ old('isolation_postal_code') }}" required/>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Isolation Country: <span class="show_required"> *</span></label>
-                                <select style="width: 100%;" class="select-2"
-                                        name="isolation_country_id" required readonly>
-                                    <option value="">Make a selection</option>
-
-                                    <option value="225" selected
-                                    >UNITED KINGDOM
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Country travelled from: <span
-                                            class="show_required"> *</span></label>
-                                <select class="select-2 select2 country_id__"
-                                        name="country_travelling_from_id" autocomplete="off"
-                                        id="travel_from" onchange="run()" onselect="selectCountry()">
-                                    <option value="">Make a selection</option>
-                                    @foreach($countries as $country)
-                                        <option value="{{ $country->id }}"
-                                                @if(old('country_travelling_from_id') == $country->id)
-                                                selected
-                                                @endif>{{ $country->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label> Departure Date: <span
-                                            class="show_required"> *</span></label>
-                                <input class="date_picker" type="text"
-                                       placeholder="Departure Date in UK"
-                                       name="departure_date"
-                                       value="{{ old('departure_date') }}" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label>Arrival date in the UK: <span class="show_required"> *</span></label>
-                                <input class="date_picker1" type="text"
-                                       placeholder="Arrival Date in UK"
-                                       name="arrival_date"
-                                       value="{{ old('arrival_date') }}" required>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div style="margin-top: 10px">
-                                    <label class="">Payment Method</label>
-                                    <div class="color-8"> All cardholders are advised to use Flutterwave</div>
-                                    <div class="radio-group">
-                                        <div class='radio'
-                                             style="background:none;border:none;padding: 0px 20px;height: 86px;border-radius:25px;"
-                                             data-value="flutterwave" onclick ="run()">
-                                            <img src="{{ url('/img/Flutterwave.png') }}"
-                                                 style="padding-bottom: 0px;width: 200px;">
-                                        </div>
-
-                                        <div class='radio'
-                                             style="background:none;border:none;padding: 25px 40px;height: 86px;border-radius:25px"
-                                             data-value="voucher" onclick ="voucherOption()">
-                                            <img src="https://img.icons8.com/fluency/32/000000/ticket-purchase.png"
-                                                 style="padding-bottom: 0px;"/> <span><label> Pay with <b>voucher</b></label></span>
-                                               
-                                        </div>
-                                    </div>
+                                <h5>Fill the Booking form Below</h5>
+                                <div class="col-md-6">
+                                    <label>First Name <span class="show_required"> *</span>
+                                    </label>
+                                    <input type="text" placeholder="First name"
+                                           name="first_name"
+                                           value="{{ old('first_name') }}" style="margin-bottom:0px;" required>
                                 </div>
-                            </div>
-
-                            <div class="form-section">
-                                <div class="voucher_input" style="margin-top:20px;display:none;" >
-                                    <label>Voucher Number<span class="show_required"> *</span></label>
-                                    <small class="text-muted" style="color:red"> Please provide a valid voucher number given to you by an agent
-                                     </small>
-                                    <input class="" type="text" name="voucher" value="{{ old('voucher') }}" />
+                                <div class="col-md-6">
+                                    <label>Surname <span class="show_required"> *</span></label>
+                                    <input type="text" placeholder="Surname"
+                                           name="last_name"
+                                           value="{{ old('last_name') }}" required>
                                 </div>
-                                <div id="card" style="margin-top:20px;display:none;">
-                                    <label>Select Card types <span class="show_required"> *</span></label>
-                                    <small class="text-muted" style="color:red"><b>Please select a card payment
-                                            option</b></small>
-                                    <select class="select-2 card_type" autocomplete="off" name="card_type">
+                                <div class="col-md-12" style="margin-top: 20px">
+                                    <label>Contact Email: <span class="show_required"> *</span></label>
+                                    <small class="text-muted" style="color:red"> Please provide only ONE email address
+                                    </small>
+
+                                    <input type="text" name="email" value="{{ old('email') }}" required/>
+                                </div>
+                                <div class="col-md-12 " style="margin-top: 20px">
+                                    <label>Phone number<span class="show_required"> *</span></label>
+                                    <input id="phone" style="" type="text" value="{{ old('phone_no') }}" name="phone_no"
+                                           class=" pr-5" placeholder="Phone No" required>
+                                </div>
+                                <div class="col-md-6"
+                                     style="margin-bottom: 20px">
+                                    <label>Sex <span class="show_required"> *</span></label>
+                                    <select class="select-2" name="sex" required>
+                                        <option value="">Make a selection</option>
+                                        <option value="1" @if(old('sex') == "1")
+                                        selected
+                                                @endif>Male
+                                        </option>
+                                        <option value="2" @if(old('sex') == "2")
+                                        selected
+                                                @endif>Female
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Date of Birth <span class="show_required"> *</span>
+                                    </label>
+                                    <input class="date_picker" type="text"
+                                           placeholder="Date of Birth"
+                                           name="dob"
+                                           value="{{ old('dob') }}" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Ethnicity <span class="show_required"> *</span></label>
+                                    <select class="select-2" name="ethnicity" required>
+                                        <option value="">Make a selection</option>
+                                        <option value="1" @if(old('ethnicity') == "1")
+                                        selected
+                                                @endif>White
+                                        </option>
+                                        <option value="2" @if(old('ethnicity') == "2")
+                                        selected
+                                                @endif>Mixed/Multiple Ethnic groups
+                                        </option>
+                                        <option value="3" @if(old('ethnicity') == "3")
+                                        selected
+                                                @endif>Asian/Asian British
+                                        </option>
+                                        <option value="4" @if(old('ethnicity') == "4")
+                                        selected
+                                                @endif>
+                                            Black/African/Caribbean/Black British
+                                        </option>
+                                        <option value="5" @if(old('ethnicity') == "5")
+                                        selected
+                                                @endif>Other Ethnic group
+                                        </option>
 
                                     </select>
                                 </div>
-                                <div class="col-md-12 color-9">
-                                    <label>Consent to Test <span class="color-10">*</span></label>
-                                    <div class="color-8"><input type="checkbox" name="consent" value="1"
-                                                                        class="bg-1"/>
-                                        I consent to this test being done, or if this test
-                                        is for a child, I confirm I am a legal guardian of the child and consent to
-                                        this test being done.
 
+                                <div class="col-md-6">
+                                    <label>Isolation Address1: <span class="show_required"> *</span> </label>
+                                    <input class="" type="text" name="isolation_address"
+                                           value="{{ old('isolation_address') }}" required/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Isolation Address2: </label>
+                                    <input class="" type="text" name="isolation_address2"
+                                           id="isolation_address2"
+                                           value="{{ old('isolation_address2') }}"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Isolation City/Town: <span class="show_required"> *</span></label>
+                                    <input class="" type="text" name="isolation_town"
+                                           value="{{ old('isolation_town') }}" required/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Isolation Postcode: <span class="show_required"> *</span></label>
+                                    <input class="" type="text" name="isolation_postal_code"
+                                           value="{{ old('isolation_postal_code') }}" required/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Isolation Country: <span class="show_required"> *</span></label>
+                                    <select style="width: 100%;" class="select-2"
+                                            name="isolation_country_id" required readonly>
+                                        <option value="">Make a selection</option>
+
+                                        <option value="225" selected
+                                        >UNITED KINGDOM
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Country travelled from: <span
+                                                class="show_required"> *</span></label>
+                                    <select class="select-2 select2 country_id__"
+                                            name="country_travelling_from_id" autocomplete="off"
+                                            id="travel_from" onchange="run()" onselect="selectCountry()">
+                                        <option value="">Make a selection</option>
+                                        @foreach($countries as $country)
+                                            <option value="{{ $country->id }}"
+                                                    @if(old('country_travelling_from_id') == $country->id)
+                                                    selected
+                                                    @endif>{{ $country->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label> Departure Date: <span
+                                                class="show_required"> *</span></label>
+                                    <input class="date_picker" type="text"
+                                           placeholder="Departure Date in UK"
+                                           name="departure_date"
+                                           value="{{ old('departure_date') }}" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Arrival date in the UK: <span class="show_required"> *</span></label>
+                                    <input class="date_picker1" type="text"
+                                           placeholder="Arrival Date in UK"
+                                           name="arrival_date"
+                                           value="{{ old('arrival_date') }}" required>
+                                </div>
+
+                                @if(isset($_GET['ref']))
+                                    <input type="hidden" name="ref" value="{{ $_GET['ref'] }}">
+                                @endif
+
+                                <div class="col-md-12">
+                                    <div style="margin-top: 10px">
+                                        <label class="">Select A Payment Method</label>
+                                        <div class="color-8"> All cardholders are advised to use Flutterwave</div>
+                                        <div class="radio-group">
+                                            <div class='radio'
+                                                 style="background:none;border:none;padding: 0px 20px;height: 86px;border-radius:25px;"
+                                                 data-value="flutterwave">
+                                                <img src="{{ url('/img/Flutterwave.png') }}"
+                                                     style="padding-bottom: 0px;width: 200px;">
+                                            </div>
+
+                                            <div class='radio'
+                                                 style="background:none;border:none;padding: 25px 40px;height: 86px;border-radius:25px"
+                                                 data-value="voucher">
+                                                <img src="https://img.icons8.com/fluency/32/000000/ticket-purchase.png"
+                                                     style="padding-bottom: 0px;"/>Pay with Voucher
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <br/><br/>
-                                <span
-                                        class="color-10" style="margin-left: 17px;margin-top: 10px">Bookings can’t be cancelled or refunded</span>
 
+                                <div class="form-section">
+                                    <div id="card" style="margin-top:20px;display:none;">
+                                        <label>Select Card types <span class="show_required"> *</span></label>
+                                        <small class="text-muted" style="color:red"><b>Please select a card payment
+                                                option</b></small>
+                                        <select class="select-2 card_type" autocomplete="off" name="card_type">
+
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12 color-9">
+                                        <label>Consent to Test <span class="color-10">*</span></label>
+                                        <div class="color-8"><input type="checkbox" name="consent" value="1"
+                                                                    class="bg-1"/>
+                                            I consent to this test being done, or if this test
+                                            is for a child, I confirm I am a legal guardian of the child and consent to
+                                            this test being done.
+
+                                        </div>
+                                    </div>
+                                    <br/><br/>
+                                    <span
+                                            class="color-10" style="margin-left: 17px;margin-top: 10px">Bookings can’t be cancelled or refunded</span>
+
+                                </div>
+                                <input type="hidden" name="payment_method" value="flutterwave" id="payment_method"/>
+
+                                <input type="submit" class="btn btn-primary pull-right" value="Make Payment">
+
+
+                            </form>
+
+                        @else
+                            <div class="alert alert-danger text-center">
+                                <h1>
+                                    Oops!</h1>
+                                <h2>
+                                    No Item has been selected</h2><br/>
+                                <div class="error-details">
+                                    Kindly add an item to you cart to continue
+                                </div><br/>
+                                <div class="error-actions">
+                                    <a href="{{ url('/') }}" class="btn btn-primary btn-lg"><span
+                                                class="glyphicon glyphicon-home"></span>
+                                        Take Me Home </a>
+                                </div>
                             </div>
-                            <input type="hidden" name="payment_method" value="flutterwave" id="payment_method"/>
-
-                            <input type="submit" class="btn btn-primary pull-right" value="Make Payment">
-
-
-                        </form>
+                        @endif
                     </div>
                 </div>
             </section>

@@ -49,12 +49,14 @@ class HomeController extends Controller
         $vendors = Vendor::all();
         $user = "";
 
+        $carts_count = Cart::where('ip', session()->get('ip'))->count();
+
         if ($request->ref) {
             $user = User::where('referal_code', $request->ref)->first();
         }
 
 
-        return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user'));
+        return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user','carts_count'));
     }
 
     public function booking2(Request $request)
@@ -212,9 +214,13 @@ class HomeController extends Controller
         $external_ref = 'REF' . rand(10000, 99999);
 
         if (isset($request_data['ref'])) {
-            $request_data = $this->bookingService->getSubAccountsByRefCode($request_data['ref'])
-                ->processRequestData($request_data);
+            $request_data_ = $this->bookingService->getSubAccountsByRefCode($request_data['ref']);
+
+            $request_data['sub_accounts'] = $request_data_->sub_accounts;
+            $request_data["referral_code"] = $request_data_->referral_code;
+            $request_data["user_id"] = $request_data_->user_id;
         }
+
         unset($request_data['ref']);
 
 
@@ -667,19 +673,48 @@ class HomeController extends Controller
     {
 
         $user = User::where('id', $user)->where('referal_code', $referral_code)->first();
-
+        $countries = Country::all();
         if ($user && $user->verified == 0) {
-            $user->update([
-                'verified' => '1'
-            ]);
-
-            session()->flash('alert-success', "Account has been verified. Kindly login into your account");
-
-            return redirect()->to('/login');
+            return view('users.sub_agents.continue_registration')->with(compact('user','countries'));
         } else {
             session()->flash('alert-success', "Kindly login into your account");
             return redirect()->to('/login');
         }
+    }
+
+    public function complete_registration(Request $request){
+
+        $this->validate($request, [
+            'phone_no' => 'required',
+            'company' => 'required',
+            'platform_name' => 'required',
+            'director' => 'required',
+            'file' => 'file|mimes:csv,txt,xlx,xls,pdf|max:2048',
+            'certified' => 'required'
+        ]);
+
+        $request_data = $request->all();
+
+        $request_data['status'] = 0;
+        $request_data['verified'] = '1';
+
+        if ($request->file) {
+
+            $certificate = time() . '.' . $request->file->extension();
+
+            $request->file->move(public_path('img/certificate'), $certificate);
+
+            $request_data['c_o_i'] = "/img/certificate/" . $certificate;
+        }
+        unset($request_data['user_id']);
+        unset($request_data['_token']);
+        unset($request_data['file']);
+
+        User::where('id',$request->user_id)->update($request_data);
+
+        session()->flash('alert-success', "Thank you for completing your profile. Your profile is currently under review by our Admin. As soon as the review is completed, you will receive an email enabling you to access your account.");
+
+        return redirect()->to('/login');
     }
 
     public function about()

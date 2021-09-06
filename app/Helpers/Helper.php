@@ -72,7 +72,7 @@ function getMyRefBarcode($user  = null)
         return null;
     }
     $barcodeHelper = new BarcodeHelper;
-    $content = url('/booking?ref=' . $user->referal_code);
+    $content = url('/?ref=' . $user->referal_code);
     return $barcodeHelper->generate($content);
 }
 

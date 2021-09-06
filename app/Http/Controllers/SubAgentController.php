@@ -58,12 +58,6 @@ class SubAgentController extends Controller
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'email' => 'required|string|unique:users,email',
-            'phone_no' => 'required|string',
-            'company' => 'required|string',
-            'platform_name' => 'required|string',
-            'director' => 'required|string',
-            'file' => 'file|mimes:csv,txt,xlx,xls,pdf,docx|max:2048',
-            'certified' => 'required|string',
             'my_share' => 'required|gt:0',
         ]);
 

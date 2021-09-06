@@ -40,6 +40,9 @@
         .iti--allow-dropdown {
             width: 100%;
         }
+        .no_padding{
+            padding: 0px !important;
+        }
 
         #backbutton {
             margin-bottom: 190px;
@@ -121,32 +124,23 @@
 
 
                 @include('errors.showerrors')
-                <form action="{{ url('/register') }}" style="margin-top: 20px" method="post" id="regForm"
+                <form action="{{ url('/complete/register') }}" style="margin-top: 20px" method="post" id="regForm"
                       enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="user_id" value="{{ $user->id }}">
                     <div class="row">
-                        <h5>Basic Information</h5><br/>
-                        <div class="col-lg-12 form-group" style="padding: 0px">
+                        <h5>Hi, {{ $user->first_name }} {{  $user->last_name }}</h5><br/>
+                        <div class="col-lg-12 form-group no_padding">
                             <small class="text-muted">Kindly fill the information below to proceed:</small>
                         </div>
 
-                        <div class="col-lg-6 form-group">
-                            <label>First name:</label>
-                            <input type="text" value="{{ old('first_name') }}" name="first_name" class="form-control"
-                                   placeholder="First Name" required>
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label>Last name:</label>
-                            <input type="text" value="{{ old('last_name') }}" name="last_name" class="form-control"
-                                   placeholder="Last Name" required>
-                        </div>
-                        <div class="col-lg-6 form-group">
+                        <div class="col-lg-6 form-group no_padding">
                             <label>Phone No:</label>
                             <input id="phone" style="width:100%;margin-right:0px" type="text"
                                    value="{{ old('phone_no') }}" name="phone_no" class="form-control pr-5"
                                    placeholder="Phone No" required>
                         </div>
-                        <div class="col-lg-6 form-group">
+                        <div class="col-lg-6 form-group no_padding">
                             <label class="text-left" style="width:100%">Country of residence</label>
                             <select class="form-control select2 country_id__"
                                     name="country" autocomplete="off"
@@ -160,43 +154,34 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-lg-6 form-group">
-                            <label>Email:</label>
-                            <input type="email" value="{{ old('email') }}" name="email" class="form-control"
-                                   id="exampleInputEmail1" placeholder="Enter Email" required>
-                        </div>
-                        <div class="col-lg-6 form-group mb-4">
-                            <label>Password:</label>
-                            <input type="password" class="form-control" name="password" id="exampleInputPassword1"
-                                   placeholder="Enter Password" required>
-                        </div>
-                        <div class="col-lg-12 form-group" style="padding: 0px">
+
+                        <div class="col-lg-12 form-group no_padding" style="padding: 0px">
                             <h5>Business Information</h5>
 
                             <small class="text-muted">Please let us know what name you would like displayed on the UK
                                 Travel Test portal.
                             </small>
                         </div>
-                        <div class="col-lg-6 form-group">
+                        <div class="col-lg-6 form-group no_padding">
                             <label>Trading name: </label>
                             <input type="text" value="{{ old('platform_name') }}" name="platform_name"
                                    class="form-control" id="exampleInputEmail1" placeholder="Name on platform">
                         </div>
-                        <div class="col-lg-6 form-group">
+                        <div class="col-lg-6 form-group no_padding">
                             <label>Company name: </label>
                             <input type="text" value="{{ old('company') }}" name="company" class="form-control"
                                    id="exampleInputEmail1" placeholder="Name of organization" required>
                         </div>
-                        <div class="col-lg-6 form-group">
+                        <div class="col-lg-6 form-group no_padding">
                             <label>Name of MD: </label>
                             <input type="text" value="{{ old('director') }}" name="director" class="form-control"
                                    id="exampleInputEmail1" placeholder="Name of Managing Director" required>
                         </div>
-                        <div class="col-lg-6 form-group">
+                        <div class="col-lg-6 form-group no_padding">
                             <label>CAC Document: </label>
                             <input type="file" name="file" class="form-control">
                         </div>
-                        <div class="col-lg-6  form-group">
+                        <div class="col-lg-6  form-group no_padding">
                             Certification:
                             <select name="certified" class="form-control" id="">
                                 <option class="pl-5" value="">Are you IATA certified?</option>
@@ -204,7 +189,7 @@
                                 <option class="text-center" value="No">No</option>
                             </select>
                         </div>
-                        <div class="col-lg-12 form-group">
+                        <div class="col-lg-12 form-group no_padding">
                             <small class="text-muted">if certified</small>
                             <small style="color:red;"> (An IATA number is not a prerequisite to completing your
                                 registration and inclusion to the network)
@@ -216,10 +201,8 @@
                         </div>
 
 
-                        <p>Already have an account? <a href="/login"> Login</a></p>
-
                         <div class="col-lg-12 form-group clearfix">
-                            <button type="submit" class="btn btn-purple btn-pill pull-right">Register</button>
+                            <button type="submit" class="btn btn-purple btn-pill pull-right">Complete Registration</button>
                         </div>
 
 

@@ -19,59 +19,23 @@
                             <form action="{{ route("sub-agents.store") }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="text" value="" name="first_name" class="form-control"
+                                    <input type="text" value="{{ old('first_name') }}" name="first_name" class="form-control"
                                         placeholder="First Name" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" value="" name="last_name" class="form-control"
+                                    <input type="text" value="{{ old('last_name') }}" name="last_name" class="form-control"
                                         placeholder="Last Name" required>
                                 </div>
                                 <div class="form-group">
-                                    <input id="phone" style="width:100%;margin-right:0px" type="text" value=""
-                                        name="phone_no" class="form-control pr-5" placeholder="Phone No" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" value="" name="email" class="form-control" id="exampleInputEmail1"
+                                    <input type="email" value="{{ old('email') }}" name="email" class="form-control" id="exampleInputEmail1"
                                         placeholder="Enter Email" required>
-                                </div>
-                                <div class="form-group">
-                                    <small class="text-muted">Please let us know what name you would like displayed on the
-                                        UK Travel Test portal. </small>
-                                    <input type="text" value="" name="platform_name" class="form-control"
-                                        id="exampleInputEmail1" placeholder="Name on Platform">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" value="" name="company" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Name of Organization" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" value="" name="director" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Name of Managing Director" required>
-                                </div>
-                                <div class="form-group">
-                                    <small class="text-muted">If available</small>
-                                    <label style="width:100%">Certificate of Incorporation</label>
-                                    <input type="file" name="file" class="form-control">
-                                </div>
-                                <div class="form-group ">
-                                    <select name="certified" class="form-control" id="" required>
-                                        <option class="pl-5" value="">Is this Sub Agent IATA certified?</option>
-                                        <option class="text-center" value="Yes">Yes</option>
-                                        <option class="text-center" value="No ">No</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <small class="text-muted">If certified</small>
-                                    <small style="color:red;"> (An IATA number is not a prerequisite to completing your registration and inclusion to the network)</small>
-                                    <input type="text" value="" name="certified_no" class="form-control"
-                                        id="exampleInputEmail1" placeholder="Please fill in your IATA number">
                                 </div>
 
                                 <div class="form-group">
                                     <small class="text-muted">Your Percentage Share</small>
-                                    <input type="range" value="0" name="my_share" class="form-control" min="0" max="100"
+                                    <input type="range" value="{{ old('my_share') }}" name="my_share" class="form-control" min="0" max="30"
                                         id="exampleInputEmail1" placeholder="How much percent would you take for yourself?"  onInput="$('#rangeval').html($(this).val())" required>
-                                    <span id="rangeval">0</span>%
+                                    <span id="rangeval">{{ old('my_share') }}</span>%
                                 </div>
 
 

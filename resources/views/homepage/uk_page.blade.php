@@ -22,6 +22,9 @@
                                 The Mandatory Covid-19 Tests for the UK follows a "traffic light system"
                                 which determines the required tests based on the  Country you are travelling from.</p>
                             <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
+                            <div id="show-result">
+
+                            </div>
                             <select name="" class="form-control" id="country" onchange="countryQuery()">
                                 <option value="">Select a country</option>
                                 <option value="225">United Kingdom</option>

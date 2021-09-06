@@ -80,36 +80,38 @@
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendor/data-tables/dataTables.bootstrap4.min.js"></script>
     <script>
+    @if(auth()->user()->country)
+        updateBank();
+    @endif
+            function updateBank() {
+                var country = $(".country_select").val();
+                    $(".loader").show();
+                $.get('/country_bank/' + country, function (data) {
+                    $("#bank_array").val(JSON.stringify(data));
+                    var $el = $(".account_bank");
+                    $el.empty(); // remove old options
+                    $el.append($("<option value=''>Select your Bank</option>"));
 
-        function updateBank() {
-            var country = $(".country_select").val();
-                $(".loader").show();
-            $.get('/country_bank/' + country, function (data) {
-                $("#bank_array").val(JSON.stringify(data));
-                var $el = $(".account_bank");
-                $el.empty(); // remove old options
-                $el.append($("<option value=''>Select your Bank</option>"));
+                    $.each(data, function (key, value) {
+                        $el.append($("<option></option>")
+                            .attr("value", value.code).text(value.name));
+                    });
+                    $(".loader").hide();
 
-                $.each(data, function (key, value) {
-                    $el.append($("<option></option>")
-                        .attr("value", value.code).text(value.name));
                 });
-                $(".loader").hide();
 
-            });
+            }
 
-        }
+            function account_name_details() {
+                var account_bank = $(".account_bank").val();
+                var account_no = $(".account_no").val();
 
-        function account_name_details() {
-            var account_bank = $(".account_bank").val();
-            var account_no = $(".account_no").val();
+                $(".loader").show();
+                $.get('/account/name/' + account_bank +"/" + account_no, function (data) {
+                    $("#account_name").val(data);
+                    $(".loader").hide();
+                });
 
-            $(".loader").show();
-            $.get('/account/name/' + account_bank +"/" + account_no, function (data) {
-                $("#account_name").val(data);
-                $(".loader").hide();
-            });
-
-        }
-    </script>
-@endsection
+            }
+        </script>
+    @endsection
