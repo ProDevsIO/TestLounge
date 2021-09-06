@@ -15,22 +15,22 @@
                         <h5 id="h9" class="text-white">COUNTRY TESTS (UNITED KINGDOM)</h5>
                         @if($type == "Green")
                             <h5 id="h9" class="text-white">Travelling from a Green country to the UK <span class="badge"
-                                                                                                           style="background-color:#7FC8A9;padding:10px">G</span>
+                                                                                                           style="background-color:#258C48;padding:10px">G</span>
                             </h5>
                         @elseif($type=="Amber_v")
                             <h5 id="h9" class="text-white">Travelling from an Amber country(Vaccinated) to the UK <span
-                                        class="badge" style="background-color:yellow;color:black;padding:10px">A</span>
+                                        class="badge" style="background-color:#FFBF00;color:black;padding:10px">A</span>
                             </h5>
                         @elseif($type == "Amber_uv")
                             <h5 id="h9" class="text-white">Travelling from an Amber country(Unvaccinated) to the UK
-                                <span class="badge" style="background-color:orange;padding:10px">A</span></h5>
+                                <span class="badge" style="background-color:#FFE600;padding:10px">A</span></h5>
                         @elseif($type=="Red")
                             <h5 id="h9" class="text-white">Travelling from a Red country to the UK<span class="badge"
-                                                                                                        style="background-color:red;padding:10px">R</span>
+                                                                                                        style="background-color:#E73636;padding:10px">R</span>
                             </h5>
                         @elseif($type == "UK")
                             <h5 id="h9" class="text-white">Travelling from a the UK<span class="badge"
-                                                                                         style="background-color:grey;padding:10px">UK</span>
+                                                                                         style="background-color:#BBBEFF;padding:10px">UK</span>
                             </h5>
                         @endif
                     </div>
@@ -58,17 +58,34 @@
                                     <?php $i =1 ?>
                                     @foreach ($products as $vproduct)
                                         <div class="col-md-4" id="con" style="">
-                                            <div class="container bg-7"
-                                                 style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px">
+                                        @if($type == "Green")
+                                        <div class="container" style="padding:30px;margin-bottom:20px;min-height: 378px; border-radius:10px; background-color:#258C48;">
 
+                                        @elseif($type=="Amber_v")
+                                        <div class="container" style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#FFBF00;">
+
+                                        @elseif($type == "Amber_uv")
+                                        <div class="container" style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#FFE600;">
+
+                                        @elseif($type=="Red")
+                                        <div class="container" style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#E73636;">
+
+                                        @elseif($type == "UK")
+                                        <div class="container" style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#BBBEFF;">
+                                        
+                                        @else
+                                        <div class="container" style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#1E50A0;">
+                                        
+                                        @endif
+                                          
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <h5 class="text-center"><span
-                                                                    class="color-8 ">{{ optional(optional($vproduct)->product)->name }}</span>
+                                                                    class="color-7 ">{{ optional(optional($vproduct)->product)->name }}</span>
                                                         </h5>
 
                                                         <p id="innerP" class="text-center"><span
-                                                                    class="color-8 ">{{ optional(optional($vproduct)->vendor)->name }}</span>
+                                                                    class="color-7 ">{{ optional(optional($vproduct)->vendor)->name }}</span>
                                                         </p>
 
                                                         
@@ -88,7 +105,7 @@
                                                                         <span class="input-group-addon cart_update_btn bg-white" data-action="add">+</span>
                                                                 </div>
                                                                 <h5 class="text-center" style="color:#616161"><span
-                                                                    class=" ">£{{ optional($vproduct)->price_pounds }}</span>
+                                                                    class=" color-7">£{{ optional($vproduct)->price_pounds }}</span>
                                                                 </h5>
                                                                 <a id="remove_button" type="button"
                                                                    data-product_id="{{ $vproduct->product->id }}"
@@ -99,7 +116,7 @@
                                                                 </a>
                                                             @else
                                                             <h5 class="text-center" style="color:#616161"><span
-                                                                    class=" ">£{{ optional($vproduct)->price_pounds }}</span>
+                                                                    class="color-7">£{{ optional($vproduct)->price_pounds }}</span>
                                                             </h5>
                                                                 <a id="add_button" type="button"
                                                                    style="width: 100px;margin: auto;"
