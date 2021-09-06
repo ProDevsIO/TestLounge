@@ -55,7 +55,7 @@
 
                                     </div>
                                     <br>
-
+                                    <?php $i =1 ?>
                                     @foreach ($products as $vproduct)
                                         <div class="col-md-4" id="con" style="">
                                             <div class="container bg-7"
@@ -71,15 +71,25 @@
                                                                     class="color-8 ">{{ optional(optional($vproduct)->vendor)->name }}</span>
                                                         </p>
 
-                                                        <h5 class="text-center" style="color:#616161"><span
-                                                                    class=" ">£{{ optional($vproduct)->price_pounds }}</span>
-                                                        </h5>
+                                                        
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="container text-center" style="padding-top:50px">
                                                             {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
 
                                                             @if ($vproduct->cartItem)
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon cart_update_btn bg-white" data-action="remove">-</span>
+                                                                    
+                                                                    <input type="text" style="" class="form-control text-center cart_input"
+                                                                        id="quantity_{{ $i }}" value="{{ $vproduct->cartItem->quantity }}"
+                                                                        data-cart_id="{{  $vproduct->cartItem->id }}" />
+                                                                    
+                                                                        <span class="input-group-addon cart_update_btn bg-white" data-action="add">+</span>
+                                                                </div>
+                                                                <h5 class="text-center" style="color:#616161"><span
+                                                                    class=" ">£{{ optional($vproduct)->price_pounds }}</span>
+                                                                </h5>
                                                                 <a id="remove_button" type="button"
                                                                    data-product_id="{{ $vproduct->product->id }}"
                                                                    data-vendor_id="{{ $vproduct->vendor->id }}"
@@ -88,6 +98,9 @@
                                                                     Remove from cart
                                                                 </a>
                                                             @else
+                                                            <h5 class="text-center" style="color:#616161"><span
+                                                                    class=" ">£{{ optional($vproduct)->price_pounds }}</span>
+                                                            </h5>
                                                                 <a id="add_button" type="button"
                                                                    style="width: 100px;margin: auto;"
                                                                    data-product_id="{{ $vproduct->product->id }}"
@@ -103,6 +116,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <?php $i ++; ?>
                                     @endforeach
 
                                 </div>
@@ -515,6 +529,56 @@
                 $("#show-result p").addClass('p-2')
                 $("#show-result p").attr("style", "background-color: #1E50A0;color:white;margin-bottom: 5px;")
 
+            });
+        }
+
+        $(".cart_update_btn").on("click", function() {
+            const btn = $(this);
+            const input = btn.parent().find("input");
+            if (input !== undefined) {
+                let inputValue = $(input[0])
+                const value_ = parseInt(inputValue.val());
+                let value = value_
+                const action = btn.attr("data-action")
+                if (action == "add") {
+                    value = value + 1
+                } else {
+                    if (value >= 2) {
+                        value = value - 1
+                    }
+                }
+                if (value_ != value) {
+                    inputValue.val(value)
+                    update(btn, input.attr("data-cart_id"), value);
+
+                }
+            }
+        })
+
+        function update(btn, id, quantity) {
+            btn.attr("disabled", true);
+            const url = "/update/cart/" + id + "/" + quantity;
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: "get",
+                url: url,
+                data: null,
+                dataType: 'json',
+                success: function(data) {
+                    toastr.success('Successfully updated quantity in cart')
+                    $("#totalCartPrice").html(data.total_price);
+                    btn.removeAttr("disabled");
+                    $("#cart_item_total_" + id).html(data.item_total);
+                },
+                error: function(error) {
+                    toastr.error('Error', 'Unable to process request')
+                    btn.removeAttr("disabled");
+                }
             });
         }
     </script>
