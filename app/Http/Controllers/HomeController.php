@@ -18,6 +18,8 @@ use App\Models\PoundTransaction;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorProduct;
+use App\Models\Voucher;
+use App\Models\VoucherProduct;
 use App\Models\Cart;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -143,7 +145,66 @@ class HomeController extends Controller
             session()->flash('alert-danger', "Kindly select a product and add to your cart");
             return back()->withInput();
         }
+       
         $request_data = $request->all();
+
+        if($request->voucher != null){
+            $voucher = Voucher::where('transaction_ref', $request->voucher )->first();
+            
+            if($voucher != null)
+            {
+
+               if($voucher->quantity == 0)
+               {
+                    session()->flash('alert-danger', "Sorry to inform you, but the quota for this voucher has been used up");
+                    return back()->withInput();
+               }
+
+               $cart_item = Cart::where('ip', session()->get('ip'))->first();
+
+            
+               if($voucher->voucherProduct->product_id != $cart_item->vendorProduct->product_id)
+               {
+                    session()->flash('alert-danger', "Please the item selected in cart do not match the product in ther voucher");
+                    return back()->withInput();
+               }
+
+               if($voucher->quantity < $cart_item->quantity)
+               {
+                    session()->flash('alert-danger', "The quota for this voucher is $voucher->quantity, please your quantity in cart cannot be greater than $voucher->quantity");
+                    return back()->withInput();
+               }
+
+               unset($request_data['_token']);
+
+               $transaction_ref = uniqid('booking_') . rand(10000, 999999);
+               $external_ref =  $request->voucher;
+
+               if (isset($request_data['ref'])) {
+                    $request_data = $this->bookingService->getSubAccountsByRefCode($request_data['ref'])
+                    ->processRequestData($request_data);
+                }
+
+                unset($request_data['ref']);
+                unset($request_data['voucher']);
+
+                $request_data['transaction_ref'] = $transaction_ref;
+                $request_data['external_reference'] = $external_ref;
+        
+                unset($request_data['payment_method']);
+
+                $redirect_url = $this->voucherProcessing($request_data);
+                return redirect()->to($redirect_url);
+                
+                
+            }else{
+                session()->flash('alert-danger', "An invalid voucher number was provided, please kindly provide a valid one.");
+                return back()->withInput();
+            }
+        }
+
+       
+       
 
         unset($request_data['_token']);
 
@@ -1262,5 +1323,206 @@ class HomeController extends Controller
     {
         $countries = Country::all();
         return view('homepage.uk_page')->with(compact('countries'));
+    }
+
+    public function voucherProcessing(array $request_data ){
+
+        $price = $price_pounds = 0;
+       
+
+        $booking = Booking::create($request_data);
+        $carts =  Cart::where('ip', session()->get('ip'))->get();
+        $voucher =  Voucher::where('transaction_ref', $request_data['external_reference'])->first();
+        foreach ($carts as $cart) {
+            $product_id = $cart->vendorProduct->product_id;
+
+
+            $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $product_id)->first();
+
+            BookingProduct::create([
+                'booking_id' => $booking->id,
+                'product_id' => $product_id,
+                'vendor_id' => $vendor_products->vendor_id,
+                'vendor_product_id' => $vendor_products->id,
+                'price' => ($vendor_products->price * $cart->quantity),
+                'price_pounds' => ($vendor_products->price_pounds * $cart->quantity),
+                'vendor_cost_price' => ($vendor_products->cost_price * $cart->quantity),
+                'quantity' => $cart->quantity
+            ]);
+
+            $price = $price + ($vendor_products->price * $cart->quantity);
+            $price_pounds = $price_pounds + ($vendor_products->price_pounds * $cart->quantity);
+        }
+
+        $charged = $voucher->voucherProduct->charged_amount;
+        if($voucher->voucherProduct->currency == 'NG')
+        {
+          $currency = 'NGN';
+        }else{
+            $currency = 'GBP';
+        }
+
+        BookingProduct::where('booking_id', $booking->id)->update([
+            'charged_amount' => $charged, 'currency' => $currency
+        ]);
+
+        $txRef =  $request_data['transaction_ref'];
+         
+        if ($booking->status != 1) {
+
+            $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
+
+            foreach ($booking_products as $booking_product) {
+                if ($voucher != null) {
+                    try {
+                        DB::beginTransaction();
+
+                        $userService = new UserShare;
+                        $user = User::where('id', $voucher->agent)->first();
+                        $agent_share = $userService->myShare($user);
+                        $share_data = $userService->calculateMainAgentShare($user->main_agent_share_raw, $agent_share);
+
+                        $agent_percentage = $share_data["sub_agent_share"];
+
+                        $cost_booking = $booking_product->price;
+
+
+                        if ($voucher->currency != 'NG') {
+
+                            //for international transaction in pounds
+                            $cost_booking = $booking_product->price_pounds;
+                            $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
+
+
+                            BookingConfirmationService::processPoundTransaction(
+                                $user,
+                                $booking->id,
+                                $agent_amount_credit,
+                                $cost_booking,
+                                $agent_percentage
+                            );
+
+                            if (!empty($superAgent = $user->superAgent)) {
+                                $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
+
+                                BookingConfirmationService::processPoundTransaction(
+                                    $superAgent,
+                                    $booking->id,
+                                    $super_agent_amount_credit,
+                                    $cost_booking,
+                                    $super_agent_percentage
+                                );
+                            }
+                        } elseif ($voucher->currency == 'NG') {
+                            //for local transaction in naira
+                            $cost_booking = $booking_product->price;
+
+                            $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
+
+                            BookingConfirmationService::processNairaTransaction(
+                                $user,
+                                $booking->id,
+                                $agent_amount_credit,
+                                $cost_booking,
+                                $agent_percentage
+                            );
+
+                            if (!empty($superAgent = $user->superAgent)) {
+                                $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
+
+                                BookingConfirmationService::processNairaTransaction(
+                                    $superAgent,
+                                    $booking->id,
+                                    $super_agent_amount_credit,
+                                    $cost_booking,
+                                    $super_agent_percentage
+                                );
+                            }
+                        }
+                        DB::commit();
+                    } catch (\Exception $e) {
+                        logger("An error occured while confirming payments", $request->all());
+                        DB::rollBack();
+                    }
+                }
+            }
+
+
+            try {
+
+                $code = $this->sendData($booking);
+                $cart_item = Cart::where('ip', session()->get('ip'))->first();
+                $q = $voucher->quantity - $cart_item->quantity;
+
+                $voucher->update([
+                        'quantity' => $q
+                ]);
+
+            } catch (\Exception $e) {
+
+                $booking->update([
+                    'vendor_id' => 3,
+                    'mode_of_payment' => 1,
+                    'transaction_ref' => $txRef,
+                    'status' => 1
+                ]);
+              
+                $redirect = '/booking/code/failed?b=' . $txRef;
+                return $redirect;
+            }
+
+
+            foreach ($booking_products as $booking_product) {
+                try {
+                    //check if a referral code exist
+                    if ($booking->referral_code != null) {
+                        //use the referral code to find the user
+                        $getUser = User::where('referal_code', $booking->referral_code)->first();
+
+                        //check the status set by the copy receipt
+                        //if 1 :copy the agent else if 0: send normally
+                        if ($getUser->copy_receipt == 1) {
+                            $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                        } elseif ($getUser->copy_receipt == 0) {
+                            $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                        }
+                    } else {
+                        //referral code doesnt exist
+                        $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                    }
+                } catch (\Exception $e) {
+                }
+            }
+
+            if (!empty($booking->phone_no)) {
+
+                $decode = implode(", ", json_decode($code));
+
+                $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
+                $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
+
+            }
+
+            //update wiith transaction code
+            $booking->update([
+                'vendor_id' => 3,
+                'mode_of_payment' => 1,
+                'transaction_ref' => $txRef,
+                'status' => 1,
+                'booking_code' => $code
+            ]);
+            $redirect =  '/booking/success?b=' . $txRef;
+            return $redirect;
+            //to remove items from cart
+            $cart = Cart::where('ip', session()->get('ip'))->delete();
+        }
+        
+        //to remove items from cart
+        $cart = Cart::where('ip', session()->get('ip'))->delete();
+        $redirect ='/booking/success?b=' . $txRef;
+        return $redirect;
+      
     }
 }

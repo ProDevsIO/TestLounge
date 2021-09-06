@@ -27,6 +27,7 @@
                             <h3>Hi, {{ $booking->first_name }} {{ $booking->last_name }}</h3>
                             <p style="font-size:20px;color:#5C5C5C;">Thank you for booking with us, Here is your
                                 code    
+                                
                                 @foreach(json_decode($booking->booking_code) as $code)
                                     {{$code}},
                                 @endforeach
