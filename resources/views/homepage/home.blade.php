@@ -95,14 +95,10 @@
                         </div>
                         <div class="col-sm 2"></div>
                         </div>
-                        {{--<div class="container" id="banner2">--}}
-                            {{--<p style="font-weight:600px;font-size:20px;line-height: 41px;" class="fw-600 fs-20 text-left">The travel tests requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>--}}
-                           {{--<br>--}}
-                            {{--<p class="fw-700 fs-28"> <a href="{{ url('/product/all') }}" type="button" class="btn btn-md bg-primary" style="margin-bottom: 30px;border-radius:25px; padding:14px 28px 13px 28px;font-family: Nunito;font-style: normal;font-weight: bolder;font-size: 16px;line-height: 19px;color: #1E50A0 !important;background-color:white !important;">BOOK NOW</a></p>--}}
-                        {{--</div>--}}
+                       
                     </div>
                 </div>
-                <div class="card-container bg-sky"  style="padding:70px"id="country-section" style="">
+                <div class="card-container"  style="padding:70px"id="country-section" style="">
                             <?php 
                                 $countries = App\Models\Country::all();
                             
@@ -119,7 +115,15 @@
                         <br>
                         <div class="row" >
                             <div class="container" id="banner2">
-                            <p style="font-weight:600px;font-size:20px;line-height: 41px;" class="fw-600 fs-20 text-left">The travel testing requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
+                                <div class="card-container"  style="padding:70px; background-color:#1B1B1B"id="country-section" style="">
+                                        <div class="row">
+                                            <div class="col-md-6">  <p style="font-weight:200px;font-size:30px;line-height: 41px;color:white" class=" fs-20 text-center">Are you a travel agent? Join our network.</a></p>
+                                            </div>
+                                            <div class="col-md-6 text-center">
+                                            <p><a href="{{ url('/register/agent') }}" type="button" class="btn btn-md bg-primary" style="margin-bottom: 30px;border-radius:25px; padding:14px 28px 13px 28px;font-family: Nunito;font-style: normal;font-weight: bolder;font-size: 16px;line-height: 19px;color: #1E50A0 !important;background-color:white !important;">Join our network</a></p>
+                                            </div>
+                                        </div>
+                                </div>
                             <br>
                             {{--<p class="fw-700 fs-28"> <a href="{{ url('/product/all') }}" type="button" class="btn btn-md bg-primary" style="margin-bottom: 30px;border-radius:25px; padding:14px 28px 13px 28px;font-family: Nunito;font-style: normal;font-weight: bolder;font-size: 16px;line-height: 19px;color: #1E50A0 !important;background-color:white !important;">BOOK NOW</a></p>--}}
                             </div>
@@ -137,7 +141,11 @@
                             {{--<div class="col-sm 2"></div>--}}
                         </div>
                 </div>
-           
+                <div class="card-container bg-sky"  style="padding:100px" id="banner2">
+                         <div class="container ">
+                               <p style="font-weight:600px;font-size:20px;line-height: 41px;" class="fw-600 fs-20 text-center">The travel tests requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
+                         </div>
+                 </div>
      
         <!-- <section class="strip bg-secondary-1">
             <div class="container">
