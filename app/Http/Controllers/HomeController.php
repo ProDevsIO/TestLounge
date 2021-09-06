@@ -149,7 +149,7 @@ class HomeController extends Controller
         $request_data = $request->all();
 
         if($request->voucher != null){
-            $voucher = Voucher::where('transaction_ref', $request->voucher )->first();
+            $voucher = Voucher::where(['transaction_ref' => $request->voucher,'status' => 1] )->first();
             
             if($voucher != null)
             {
@@ -1332,7 +1332,7 @@ class HomeController extends Controller
 
         $booking = Booking::create($request_data);
         $carts =  Cart::where('ip', session()->get('ip'))->get();
-        $voucher =  Voucher::where('transaction_ref', $request_data['external_reference'])->first();
+        $voucher =  Voucher::where(['transaction_ref'=> $request_data['external_reference'], 'status' => 1])->first();
         foreach ($carts as $cart) {
             $product_id = $cart->vendorProduct->product_id;
 
