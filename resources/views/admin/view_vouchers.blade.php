@@ -65,17 +65,14 @@
                                                         @endif
                                                         <td>{{ $voucher->transaction_ref }}</td>
 
-                                                        @if(optional($voucher->voucherProduct) != null)
+                                                        
                                                         
                                                             @if(optional($voucher->voucherProduct)->currency == "NG")
-                                                            <td>₦{{ number_format($voucher->voucherProduct->charged_amount) }}</td>
+                                                            <td>₦{{ number_format(optional($voucher->voucherProduct)->charged_amount) }}</td>
                                                             @else
-                                                            <td>£{{ number_format($voucher->voucherProduct->charged_amount) }}</td>
+                                                            <td>£{{ number_format(optional($voucher->voucherProduct)->charged_amount) }}</td>
                                                             @endif
-                                                        @else
-                                                            <td> No record </td>
-                                                            <td> No record </td>
-                                                        @endif
+                                                        
                                                         <td>{{ $voucher->quantity }}</td>
                                                         @if($voucher->status == 0)
                                                         <td><span class ="badge badge-warning">Pending </span></td>
