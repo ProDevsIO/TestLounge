@@ -29,7 +29,7 @@
                                                                                                         style="background-color:#E73636;padding:10px">R</span>
                             </h5>
                         @elseif($type == "UK")
-                            <h5 id="h9" class="text-white">Travelling from a the UK<span class="badge"
+                            <h5 id="h9" class="text-white">Travelling from the UK<span class="badge"
                                                                                          style="background-color:#BBBEFF;padding:10px">UK</span>
                             </h5>
                         @endif
@@ -156,6 +156,60 @@
             </div>
         </section>
 
+        @if($type == "UK")
+
+        @endif
+        <section class="content bg-white" style="padding:0;">
+        <div class="container">
+        <h4 style="font-family: Nunito;
+font-style: normal;
+font-weight: 600;
+font-size: 30px;
+line-height: 55px;
+
+color: #1E50A0;">Product Rules & Information ____</h4>
+        </div>
+      
+            <div class="container" style="padding-top:20px">
+                <h6>Day 2 Test</h6>
+                <p>
+                    This test is a Government Mandatory test for those arriving from a Green List Country or an Amber List Country. This should be done on or before day 2 of arrival to the UK.</p>
+            </div>
+            <div class="container"  style="padding-top:20px">
+                <h6> Day 8 Test</h6>
+                <p>
+               
+                This is a Government Mandatory test for those arriving for those arriving from an Amber List Country. This MUST be done on day 8 of arrival to the UK.
+                You MUST NOT take this test before day 8 even if you have received your kit before then.
+                </p>
+            </div>
+            <div class="container"  style="padding-top:20px">
+                <h6>Day 2 and Day 8 Tests</h6>
+                <p>
+                
+                This is a Government Mandatory test for those arriving from an Amber List Country and are unvaccinated by the UK NHS. The Day 2 test should be done on or before day 2 of arrival to the UK. The day 8 test should be done on day 8 of arrival to the UK.
+                You MUST NOT take the tests on the same day.
+                </p>
+            </div>
+            <div class="container"  style="padding-top:20px">
+                <h6>Day 5 Test</h6>
+                <p>
+                This is NOT a Government Mandatory test, but it allows you to leave quarantine earlier if the test result is negative. This can only  be done only after 5 full days after your arrival to the UK.</p>
+            </div>
+            <div class="container"  style="padding-top:20px">
+                <h6>Day 2, Day 8 and Day 5 Tests</h6>
+                <p>
+                
+                Day 2 and Day 8 tests are Government Mandatory tests for those arriving for an Amber List Country.
+                The Day 2 test should be done on or before day 2 of arrival to the UK.
+                The day 5 test should be done on day 5 of arrival to the UK.
+                The day 8 test should be done on day 8 of arrival to the UK.
+                You MUST NOT take the day 5 and day 8 tests before the appropriate days.
+                </p>
+            </div>
+            
+        </section>
+        <br>
         @if($faq == 1)
             <section class="strip" style="background: #1E50A0;">
                 <div class="container bg-1">
