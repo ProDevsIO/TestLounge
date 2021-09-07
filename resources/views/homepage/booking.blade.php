@@ -173,27 +173,34 @@
 
                                 <div class="col-md-12">
                                     <div style="margin-top: 10px">
-                                        <label class="">Select A Payment Method</label>
+                                        <label class="">Select a Payment Method</label>
                                         <div class="color-8"> All cardholders are advised to use Flutterwave</div>
                                         <div class="radio-group">
                                             <div class='radio'
                                                  style="background:none;border:none;padding: 0px 20px;height: 86px;border-radius:25px;"
-                                                 data-value="flutterwave">
+                                                 data-value="flutterwave" onclick ="run()">
                                                 <img src="{{ url('/img/Flutterwave.png') }}"
                                                      style="padding-bottom: 0px;width: 200px;">
                                             </div>
 
                                             <div class='radio'
                                                  style="background:none;border:none;padding: 25px 40px;height: 86px;border-radius:25px"
-                                                 data-value="voucher">
+                                                 data-value="voucher" onclick ="voucherOption()">
                                                 <img src="https://img.icons8.com/fluency/32/000000/ticket-purchase.png"
-                                                     style="padding-bottom: 0px;"/>Pay with Voucher
+                                                     style="padding-bottom: 0px;"/> <span><label> Pay with <b>voucher</b></label></span>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-section">
+                                    <div class="voucher_input" style="margin-top:20px;display:none;" >
+                                        <label>Voucher Number<span class="show_required"> *</span></label>
+                                        <small class="text-muted" style="color:red"> Please provide a valid voucher number given to you by an agent
+                                        </small>
+                                        <input class="" type="text" name="voucher" value="{{ old('voucher') }}" />
+                                    </div>
                                     <div id="card" style="margin-top:20px;display:none;">
                                         <label>Select Card types <span class="show_required"> *</span></label>
                                         <small class="text-muted" style="color:red"><b>Please select a card payment
@@ -202,6 +209,7 @@
 
                                         </select>
                                     </div>
+
                                     <div class="col-md-12 color-9">
                                         <label>Consent to Test <span class="color-10">*</span></label>
                                         <div class="color-8"><input type="checkbox" name="consent" value="1"
