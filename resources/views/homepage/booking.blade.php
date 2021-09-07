@@ -227,7 +227,7 @@
                                 </div>
                                 <input type="hidden" name="payment_method" value="flutterwave" id="payment_method"/>
 
-                                <input type="submit" class="btn btn-primary pull-right" value="Make Payment">
+                                <input type="submit" class="btn btn-primary pull-right" style="margin-top: 0px;" value="Make Payment">
 
 
                             </form>
