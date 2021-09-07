@@ -46,7 +46,7 @@
                             <div class="col-sm-12">
                                 <p class="lead">
                                     <p  style = "font-size:18px;text-align: justify">We are a platform that aggregates Labs and Test Providers, vetted and seen to provide seamless and good customer services to their clients.</p>
-                                    <p  style = "font-size:18px;text-align: justify">This platform gives you the information you need to confidently book the appropriate test(s) for trip. Our mission is to provide clarity on the information needed for travel tests. We currently provide a list of COVID-19 test providers who help to make the testing process as seamless as possible.</p>
+                                    <p  style = "font-size:18px;text-align: justify">This platform gives you the information you need to confidently book the appropriate test(s) for your trip. Our mission is to provide clarity on the information needed for travel tests. We currently provide a list of COVID-19 test providers who help to make the testing process as seamless as possible.</p>
                                     <p  style = "font-size:18px;text-align: justify"> Through our partnerships, we help make one part of your travel experience less daunting.</p>
                                  </p>
                             </div>

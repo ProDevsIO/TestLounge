@@ -63,7 +63,7 @@
                                                      style="padding:30px;margin-bottom:20px;min-height: 378px; border-radius:10px; background-color:#258C48;">
 
                                                     @elseif($type=="Amber_v")
-                                                        <div class="containerbg-6"
+                                                        <div class="container bg-6"
                                                              style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;">
 
                                                             @elseif($type == "Amber_uv")

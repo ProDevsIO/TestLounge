@@ -19,8 +19,7 @@
                         <div class="col-md-6 "style=" padding-top:10px">
                             <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>UNITED KINGDOM</b></h2>
                             <p style="color: #fff;text-align: left">
-                                The Mandatory Covid-19 Tests for the UK follows a "traffic light system"
-                                which determines the required tests based on the  Country you are travelling from.</p>
+                            The mandatory COVID-19 tests for UK travellers are determined by a <b>Traffic Light System</b> which is based on the country you are travelling from.</p>
                             <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
                             <div id="show-result">
 

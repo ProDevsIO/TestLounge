@@ -143,7 +143,7 @@
                 </div>
                 <div class="card-container bg-sky"  style="padding:100px" id="banner2">
                          <div class="container ">
-                               <p style="font-weight:600px;font-size:20px;line-height: 41px;" class="fw-600 fs-20 text-center">The travel tests requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
+                               <p style="font-weight:600px;font-size:20px;line-height: 41px;" class="fw-600 fs-20 text-center">The travel test requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
                          </div>
                  </div>
      

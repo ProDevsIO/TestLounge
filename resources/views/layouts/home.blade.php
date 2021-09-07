@@ -151,7 +151,7 @@ $ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_co
 
                 <div class="col-sm-12">
                     <h5 class="text-white">Contact us</h5>
-                    <span class="text-white" style="font-size: 16px !important;line-height: 33px;">If you have any questions further questions call us on<br>
+                    <span class="text-white" style="font-size: 16px !important;line-height: 33px;">If you have further questions call us on<br>
                     Phone number: +44 20 8087 2262<br>
                     WhatsApp: +44 74 3687 5938<br>
                     Email us at:info@traveltestsltd.com
