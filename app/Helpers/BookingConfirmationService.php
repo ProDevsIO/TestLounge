@@ -32,6 +32,24 @@ class BookingConfirmationService
             'pounds_wallet_balance' => $total_amount,
             'total_credit_pounds' => $transactions
         ]);
+
+        if($user->flutterwave_key)
+        {
+            PoundTransaction::create([
+                'amount' => $amount_credit,
+                'booking_id' => $booking->id,
+                'user_id' => $user->id,
+                'cost_config' => $cost_booking,
+                'pecentage_config' => $pecentage,
+                'type' => "2"
+            ]);
+
+            $wallet_balance = $user->pounnds_wallet_balance - $amount_credit;
+
+            $user->update([
+                'pounds_wallet_balance' => $wallet_balance
+            ]);
+        }
     }
 
     public static function processNairaTransaction(User $user , $booking_id , $amount_credit , $cost_booking , $percentage)
@@ -54,5 +72,23 @@ class BookingConfirmationService
             'wallet_balance' => $total_amount,
             'total_credit' => $transactions
         ]);
+
+        if($user->flutterwave_key)
+        {
+            Transaction::create([
+                'amount' => $amount_credit,
+                'booking_id' => $booking->id,
+                'user_id' => $user->id,
+                'cost_config' => $cost_booking,
+                'pecentage_config' => $pecentage,
+                'type' => "2"
+            ]);
+
+            $wallet_balance = $user->pounnds_wallet_balance - $amount_credit;
+
+            $user->update([
+                'wallet_balance' => $wallet_balance
+            ]);
+        }
     }
 }
