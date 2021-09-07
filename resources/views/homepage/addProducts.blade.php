@@ -11,7 +11,7 @@
             </div>
             <div class="container align-bottom">
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12 h9_header">
                         <h5 id="h9" class="text-white">COUNTRY TESTS (UNITED KINGDOM)</h5>
                         @if($type == "Green")
                             <h5 id="h9" class="text-white">Travelling from a Green country to the UK <span class="badge"
@@ -19,18 +19,18 @@
                             </h5>
                         @elseif($type=="Amber_v")
                             <h5 id="h9" class="text-white">Travelling from an Amber country(Vaccinated) to the UK <span
-                                        class="badge" style="background-color:#FFBF00;color:black;padding:10px">A</span>
+                                        class="badge bg-6" style="color:black;padding:10px">A</span>
                             </h5>
                         @elseif($type == "Amber_uv")
                             <h5 id="h9" class="text-white">Travelling from an Amber country(Unvaccinated) to the UK
-                                <span class="badge" style="background-color:#FFE600;padding:10px">A</span></h5>
+                                <span class="badge bg-4" style="padding:10px">A</span></h5>
                         @elseif($type=="Red")
                             <h5 id="h9" class="text-white">Travelling from a Red country to the UK<span class="badge"
                                                                                                         style="background-color:#E73636;padding:10px">R</span>
                             </h5>
                         @elseif($type == "UK")
                             <h5 id="h9" class="text-white">Travelling from the UK<span class="badge"
-                                                                                         style="background-color:#BBBEFF;padding:10px">UK</span>
+                                                                                       style="background-color:#BBBEFF;padding:10px">UK</span>
                             </h5>
                         @endif
                     </div>
@@ -55,159 +55,215 @@
 
                                     </div>
                                     <br>
-                                    <?php $i =1 ?>
+                                    <?php $i = 1 ?>
                                     @foreach ($products as $vproduct)
                                         <div class="col-md-4" id="con" style="">
-                                        @if($type == "Green")
-                                        <div class="container" style="padding:30px;margin-bottom:20px;min-height: 378px; border-radius:10px; background-color:#258C48;">
+                                            @if($type == "Green")
+                                                <div class="container"
+                                                     style="padding:30px;margin-bottom:20px;min-height: 378px; border-radius:10px; background-color:#258C48;">
 
-                                        @elseif($type=="Amber_v")
-                                        <div class="container" style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#FFBF00;">
+                                                    @elseif($type=="Amber_v")
+                                                        <div class="containerbg-6"
+                                                             style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;">
 
-                                        @elseif($type == "Amber_uv")
-                                        <div class="container" style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#FFE600;">
+                                                            @elseif($type == "Amber_uv")
+                                                                <div class="container bg-4"
+                                                                     style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;">
 
-                                        @elseif($type=="Red")
-                                        <div class="container" style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#E73636;">
+                                                                    @elseif($type=="Red")
+                                                                        <div class="container"
+                                                                             style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#E73636;">
 
-                                        @elseif($type == "UK")
-                                        <div class="container" style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#BBBEFF;">
-                                        
-                                        @else
-                                        <div class="container" style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#1E50A0;">
-                                        
-                                        @endif
-                                          
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <h5 class="text-center"><span
-                                                                    class="color-7 ">{{ optional(optional($vproduct)->product)->name }}</span>
-                                                        </h5>
+                                                                            @elseif($type == "UK")
+                                                                                <div class="container"
+                                                                                     style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#BBBEFF;">
 
-                                                        <p id="innerP" class="text-center"><span
-                                                                    class="color-7 ">{{ optional(optional($vproduct)->vendor)->name }}</span>
-                                                        </p>
+                                                                                    @else
+                                                                                        <div class="container"
+                                                                                             style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;background-color:#1E50A0;">
 
-                                                        
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="container text-center" style="padding-top:50px">
-                                                            {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
+                                                                                            @endif
 
-                                                            @if ($vproduct->cartItem)
-                                                                <div class="input-group">
-                                                                    <span class="input-group-addon cart_update_btn bg-white" data-action="remove">-</span>
-                                                                    
-                                                                    <input type="text" style="" class="form-control text-center cart_input"
-                                                                        id="quantity_{{ $i }}" value="{{ $vproduct->cartItem->quantity }}"
-                                                                        data-cart_id="{{  $vproduct->cartItem->id }}" />
-                                                                    
-                                                                        <span class="input-group-addon cart_update_btn bg-white" data-action="add">+</span>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12">
+                                                                                                    <h5 class="text-center"><span
+                                                                                                                class="color-7 ">{{ optional(optional($vproduct)->product)->name }}</span>
+                                                                                                    </h5>
+
+                                                                                                    <p id="innerP"
+                                                                                                       class="text-center"><span
+                                                                                                                class="color-7 ">{{ optional(optional($vproduct)->vendor)->name }}</span>
+                                                                                                    </p>
+
+
+                                                                                                </div>
+                                                                                                <div class="col-md-12">
+                                                                                                    <div class="container text-center"
+                                                                                                         style="padding-top:50px">
+                                                                                                        {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
+
+                                                                                                        @if ($vproduct->cartItem)
+                                                                                                            <div class="input-group count_now{{ $vproduct->product->id }}">
+                                                                                                                <span class="input-group-addon cart_update_btn bg-white"
+                                                                                                                      data-action="remove">-</span>
+
+                                                                                                                <input type="text"
+                                                                                                                       style=""
+                                                                                                                       class="form-control text-center cart_input"
+                                                                                                                       id="quantity_{{ $i }}"
+                                                                                                                       value="{{ $vproduct->cartItem->quantity }}"
+                                                                                                                       data-cart_id="{{  $vproduct->cartItem->id }}"/>
+
+                                                                                                                <span class="input-group-addon cart_update_btn bg-white"
+                                                                                                                      data-action="add">+</span>
+                                                                                                            </div>
+                                                                                                            <h5 class="text-center"
+                                                                                                                style="color:#616161"><span
+                                                                                                                        class=" color-7">£{{ optional($vproduct)->price_pounds }}</span>
+                                                                                                            </h5>
+                                                                                                            <a id="remove_button"
+                                                                                                               type="button"
+                                                                                                               data-button="remove_button"
+                                                                                                               data-product_id="{{ $vproduct->product->id }}"
+                                                                                                               data-vendor_id="{{ $vproduct->vendor->id }}"
+                                                                                                               class="btn btn-block btn-outline-info cart_btn"
+                                                                                                               style="border:1px solid #1E50A0;width: 100px;margin: auto;">
+                                                                                                                Remove
+                                                                                                                from
+                                                                                                                cart
+                                                                                                            </a>
+                                                                                                        @else
+
+                                                                                                            <div class="input-group count_now{{ $vproduct->product->id }}"
+                                                                                                                 style="display: none;">
+                                                                                                                <span class="input-group-addon cart_update_btn bg-white"
+                                                                                                                      data-action="remove">-</span>
+
+                                                                                                                <input type="text"
+                                                                                                                       style=""
+                                                                                                                       class="form-control text-center cart_input cart{{ $vproduct->product->id  }}"
+                                                                                                                       id="quantity_{{ $i }}"
+                                                                                                                       value="1"
+                                                                                                                       data-cart_id=""/>
+
+                                                                                                                <span class="input-group-addon cart_update_btn bg-white"
+                                                                                                                      data-action="add">+</span>
+                                                                                                            </div>
+
+                                                                                                            <h5 class="text-center"
+                                                                                                                style="color:#616161"><span
+                                                                                                                        class="color-7">£{{ optional($vproduct)->price_pounds }}</span>
+                                                                                                            </h5>
+                                                                                                            <a id="add_button"
+                                                                                                               type="button"
+                                                                                                               data-button="add_button"
+                                                                                                               style="width: 100px;margin: auto;"
+                                                                                                               data-product_id="{{ $vproduct->product->id }}"
+                                                                                                               data-vendor_id="{{ $vproduct->vendor->id }}"
+                                                                                                               class="btn btn-block btn-info cart_btn"
+                                                                                                            >
+                                                                                                                Add to
+                                                                                                                cart
+                                                                                                            </a>
+                                                                                                        @endif
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                </div>
+                                                                                <?php $i++; ?>
+                                                                                @endforeach
+
+                                                                        </div>
+                                                                        <div class="row"
+                                                                             style="margin-right:0px; margin-left:0px">
+
+                                                                            <div class="col-sm-12 text-center"><a
+                                                                                        id="go_button"
+                                                                                        href="{{ url('/view/cart') }}"
+                                                                                        type="button" class="btn bg-1">Go
+                                                                                    to cart <img
+                                                                                            src="https://img.icons8.com/fluency/20/000000/right.png"/></a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    @else
+                                                                        <div style="padding: 50px 50px 30px 50px">
+                                                                            <h4 class="text-center">No product available
+                                                                                for now</h4>
+                                                                        </div>
+                                                                    @endif
+
                                                                 </div>
-                                                                <h5 class="text-center" style="color:#616161"><span
-                                                                    class=" color-7">£{{ optional($vproduct)->price_pounds }}</span>
-                                                                </h5>
-                                                                <a id="remove_button" type="button"
-                                                                   data-product_id="{{ $vproduct->product->id }}"
-                                                                   data-vendor_id="{{ $vproduct->vendor->id }}"
-                                                                   class="btn btn-block btn-outline-info cart_btn"
-                                                                   style="border:1px solid #1E50A0;width: 100px;margin: auto;">
-                                                                    Remove from cart
-                                                                </a>
-                                                            @else
-                                                            <h5 class="text-center" style="color:#616161"><span
-                                                                    class="color-7">£{{ optional($vproduct)->price_pounds }}</span>
-                                                            </h5>
-                                                                <a id="add_button" type="button"
-                                                                   style="width: 100px;margin: auto;"
-                                                                   data-product_id="{{ $vproduct->product->id }}"
-                                                                   data-vendor_id="{{ $vproduct->vendor->id }}"
-                                                                   class="btn btn-block btn-info cart_btn"
-                                                                >
-                                                                    Add to cart
-                                                                </a>
-                                                            @endif
                                                         </div>
-                                                    </div>
-
                                                 </div>
-                                            </div>
                                         </div>
-                                        <?php $i ++; ?>
-                                    @endforeach
-
-                                </div>
-                                <div class="row" style="margin-right:0px; margin-left:0px">
-
-                                    <div class="col-sm-12 text-center"><a id="go_button" href="{{ url('/view/cart') }}"
-                                                                          type="button" class="btn bg-1">Go to cart <img
-                                                    src="https://img.icons8.com/fluency/20/000000/right.png"/></a></div>
-                                </div>
-
-                                @else
-                                    <div style="padding: 50px 50px 30px 50px">
-                                    <h4 class="text-center">No product available for now</h4>
-                                    </div>
-                                @endif
-
-                            </div>
-                        </div>
-                </div>
-            </div>
         </section>
 
         @if($type == "UK")
 
         @endif
         <section class="content bg-white" style="padding:0;">
-        <div class="container">
-        <h4 style="font-family: Nunito;
+            <div class="container">
+
+
+
+                <div class="row rul" style="padding: 0px 200px">
+                    <h4 style="font-family: Nunito;
 font-style: normal;
 font-weight: 600;
 font-size: 30px;
 line-height: 55px;
-
+margin-left: 18px;
 color: #1E50A0;">Product Rules & Information ____</h4>
-        </div>
-      
-            <div class="container" style="padding-top:20px">
-                <h6>Day 2 Test</h6>
-                <p>
-                    This test is a Government Mandatory test for those arriving from a Green List Country or an Amber List Country. This should be done on or before day 2 of arrival to the UK.</p>
+                    <div class="col-lg-12" style="padding-top:20px">
+                        <h6>Day 2 Test</h6>
+                        <p>
+                            This test is a Government Mandatory test for those arriving from a Green List Country or an
+                            Amber List Country. This should be done on or before day 2 of arrival to the UK.</p>
+                    </div>
+                    <div class="col-lg-12" style="padding-top:20px">
+                        <h6> Day 8 Test</h6>
+                        <p>
+
+                            This is a Government Mandatory test for those arriving for those arriving from an Amber List
+                            Country. This MUST be done on day 8 of arrival to the UK.
+                            You MUST NOT take this test before day 8 even if you have received your kit before then.
+                        </p>
+                    </div>
+                    <div class="col-lg-12" style="padding-top:20px">
+                        <h6>Day 2 and Day 8 Tests</h6>
+                        <p>
+
+                            This is a Government Mandatory test for those arriving from an Amber List Country and are
+                            unvaccinated by the UK NHS. The Day 2 test should be done on or before day 2 of arrival to
+                            the UK. The day 8 test should be done on day 8 of arrival to the UK.
+                            You MUST NOT take the tests on the same day.
+                        </p>
+                    </div>
+                    <div class="col-lg-12" style="padding-top:20px">
+                        <h6>Day 5 Test</h6>
+                        <p>
+                            This is NOT a Government Mandatory test, but it allows you to leave quarantine earlier if
+                            the test result is negative. This can only be done only after 5 full days after your arrival
+                            to the UK.</p>
+                    </div>
+                    <div class="col-lg-12" style="padding-top:20px;margin-bottom: 50px;">
+                        <h6>Day 2, Day 8 and Day 5 Tests</h6>
+                        <p>
+
+                            Day 2 and Day 8 tests are Government Mandatory tests for those arriving for an Amber List
+                            Country.
+                            The Day 2 test should be done on or before day 2 of arrival to the UK.
+                            The day 5 test should be done on day 5 of arrival to the UK.
+                            The day 8 test should be done on day 8 of arrival to the UK.
+                            You MUST NOT take the day 5 and day 8 tests before the appropriate days.
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div class="container"  style="padding-top:20px">
-                <h6> Day 8 Test</h6>
-                <p>
-               
-                This is a Government Mandatory test for those arriving for those arriving from an Amber List Country. This MUST be done on day 8 of arrival to the UK.
-                You MUST NOT take this test before day 8 even if you have received your kit before then.
-                </p>
-            </div>
-            <div class="container"  style="padding-top:20px">
-                <h6>Day 2 and Day 8 Tests</h6>
-                <p>
-                
-                This is a Government Mandatory test for those arriving from an Amber List Country and are unvaccinated by the UK NHS. The Day 2 test should be done on or before day 2 of arrival to the UK. The day 8 test should be done on day 8 of arrival to the UK.
-                You MUST NOT take the tests on the same day.
-                </p>
-            </div>
-            <div class="container"  style="padding-top:20px">
-                <h6>Day 5 Test</h6>
-                <p>
-                This is NOT a Government Mandatory test, but it allows you to leave quarantine earlier if the test result is negative. This can only  be done only after 5 full days after your arrival to the UK.</p>
-            </div>
-            <div class="container"  style="padding-top:20px">
-                <h6>Day 2, Day 8 and Day 5 Tests</h6>
-                <p>
-                
-                Day 2 and Day 8 tests are Government Mandatory tests for those arriving for an Amber List Country.
-                The Day 2 test should be done on or before day 2 of arrival to the UK.
-                The day 5 test should be done on day 5 of arrival to the UK.
-                The day 8 test should be done on day 8 of arrival to the UK.
-                You MUST NOT take the day 5 and day 8 tests before the appropriate days.
-                </p>
-            </div>
-            
+
         </section>
         <br>
         @if($faq == 1)
@@ -516,6 +572,8 @@ color: #1E50A0;">Product Rules & Information ____</h4>
             btn.attr("disabled", true);
             const product_id = btn.attr("data-product_id");
             const vendor_id = btn.attr("data-vendor_id");
+            const button = btn.attr("data-button");
+
             if (product_id && vendor_id) {
                 var url = '/add/cart/' + product_id + '/' + vendor_id;
                 $.ajaxSetup({
@@ -531,10 +589,11 @@ color: #1E50A0;">Product Rules & Information ____</h4>
                     dataType: 'json',
                     success: function (data) {
                         console.log(data);
-                        if(data.error == "yes"){
+                        if (data.error == "yes") {
                             toastr.warning(data.message);
                             btn.attr("disabled", false);
-                        }else {
+                            $(".count_now" + product_id).hide();
+                        } else {
                             toastr.success(data.message)
                             btn.html(data.btn_text)
                             btn.css({
@@ -543,6 +602,17 @@ color: #1E50A0;">Product Rules & Information ____</h4>
                             });
                             btn.removeAttr("disabled");
                             $(".cart_count_item").html(data.cart_items);
+                            console.log(button);
+                            if (button == "add_button") {
+                                $(".cart" + product_id).attr('data-cart_id', data.cart_id);
+                                btn.attr("data-button", "remove_button");
+                                console.log(".count_now" + product_id);
+                                $(".count_now" + product_id).show();
+                            } else {
+                                btn.attr("data-button", "add_button");
+
+                                $(".count_now" + product_id).hide();
+                            }
                         }
                     },
                     error: function (error) {
@@ -603,7 +673,7 @@ color: #1E50A0;">Product Rules & Information ____</h4>
             });
         }
 
-        $(".cart_update_btn").on("click", function() {
+        $(".cart_update_btn").on("click", function () {
             const btn = $(this);
             const input = btn.parent().find("input");
             if (input !== undefined) {
@@ -640,13 +710,13 @@ color: #1E50A0;">Product Rules & Information ____</h4>
                 url: url,
                 data: null,
                 dataType: 'json',
-                success: function(data) {
+                success: function (data) {
                     toastr.success('Successfully updated quantity in cart')
                     $("#totalCartPrice").html(data.total_price);
                     btn.removeAttr("disabled");
                     $("#cart_item_total_" + id).html(data.item_total);
                 },
-                error: function(error) {
+                error: function (error) {
                     toastr.error('Error', 'Unable to process request')
                     btn.removeAttr("disabled");
                 }

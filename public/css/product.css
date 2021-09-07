@@ -374,10 +374,20 @@ button {
 @media screen and (max-width: 468px) {
     #h9{
         text-align:center;
+        font-size: 20px !important;
+        line-height: 28px !important;
+    }
+
+    #h9_header{
+        margin-top: 45px;
     }
     section{
         padding:50px 20px;
     }
+    .rul{
+        padding: 0px 20px !important;
+    }
+
 
     button {
         display: block;

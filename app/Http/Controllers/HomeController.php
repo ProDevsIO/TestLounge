@@ -882,7 +882,7 @@ class HomeController extends Controller
                 ];
             } else {
 
-                Cart::create([
+                $cart__= Cart::create([
                     'ip' => $ip,
                     'quantity' => 1,
                     'vendor_product_id' => $v_product->id
@@ -894,7 +894,8 @@ class HomeController extends Controller
                     "btn_text" => "Remove from cart",
                     "btn_color" => "white",
                     "color" => "#1E50A0",
-                     "error" => "no"
+                     "error" => "no",
+                    "cart_id" => $cart__->id
                 ];
             }
         } else {
