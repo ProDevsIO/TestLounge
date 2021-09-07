@@ -1155,7 +1155,7 @@ class DashboardController extends Controller
 
     public function post_agent_buy($product_id, $vendor_id, $quantity)
     {
-        $product = VendorProduct::findorfail($product_id);
+        $product = VendorProduct::where('product_id',$product_id)->where('vendor_id',$vendor_id)->first();
 
         $country = auth()->user()->country;
 
@@ -1164,7 +1164,6 @@ class DashboardController extends Controller
 
         } else {
             $amount = $product->price_pounds * $quantity;
-
         }
 
         $transaction_ref = uniqid('voucher_') . rand(10000, 999999);

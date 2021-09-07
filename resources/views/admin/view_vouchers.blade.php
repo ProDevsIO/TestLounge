@@ -38,7 +38,7 @@
                                                 @endif
                                                 <th scope="col">Voucher Number</th>
                                                 <th>Amount</th>
-                                                <th>Qauntity</th>
+                                                <th>Quantity</th>
                                                 <th>Status</th>
                                                 <th scope="col">Date</th>
                                                 <!-- <th scope="col">Action</th> -->
@@ -47,7 +47,7 @@
                                             <tbody>
                                        
                                             @foreach($vouchers as $voucher)
-                                            
+                                                @if($voucher->status != 0)
                                                     <tr>
                                                        
                                                         @if(auth()->user()->type == 1)
@@ -81,6 +81,7 @@
                                                         @endif
                                                         <td>{{ $voucher->created_at }}</td>
                                                     </tr>
+                                                    @endif
                                                   
                                                
                                             @endforeach
