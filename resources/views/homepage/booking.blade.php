@@ -48,6 +48,7 @@
                                     <label>Phone number<span class="show_required"> *</span></label>
                                     <input id="phone" style="" type="text" value="{{ old('phone_no') }}" name="phone_no"
                                            class=" pr-5" placeholder="Phone No" required>
+                                           <input id="hidden_phone" type="hidden" name="phone_full">
                                 </div>
                                 <div class="col-md-6"
                                      style="margin-bottom: 20px">
@@ -271,8 +272,13 @@
         var input = document.querySelector("#phone");
         window.intlTelInput(input, {
             initialCountry: "gb",
+            separateDialCode: true,
             utilsScript: "/js/phone_lib/js/utils.js",
+            hiddenInput: "hidden_phone",
+            nationalMode: false,
+         
         });
+       
 
         $('.radio-group .radio').click(function () {
             $(this).parent().find('.radio').removeClass('selected');
@@ -290,6 +296,8 @@
             });
 
         });
+
+    
 
         function vaccination_check() {
             var check = $("#vaccination_status").val();

@@ -139,8 +139,7 @@ class HomeController extends Controller
 
 
         $request->vendor_id = 3;
-
-
+       
         $carts = Cart::where('ip', session()->get('ip'))->get();
 
         if ($carts->count() == 0) {
@@ -149,6 +148,13 @@ class HomeController extends Controller
         }
        
         $request_data = $request->all();
+
+        unset($request_data['phone_no']);
+        $request_data['phone_no'] = $request->hidden_phone;
+        unset($request_data['hidden_phone']);
+        unset($request_data['phone_full']);
+
+        
 
         if($request->voucher != null){
             $voucher = Voucher::where(['transaction_ref' => $request->voucher,'status' => 1] )->first();
