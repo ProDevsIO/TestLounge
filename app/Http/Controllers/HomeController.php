@@ -465,6 +465,7 @@ class HomeController extends Controller
                             $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                         }
                     } catch (\Exception $e) {
+                       \
                     }
                 }
                 if (!empty($booking->phone_no)) {
@@ -874,7 +875,7 @@ class HomeController extends Controller
 
             if ($check_at_all > 0) {
                 $data = [
-                    "message" => "You cannot add more than one product to the cart",
+                    "message" => "Please complete one booking at a time. You can book more products and packages as required",
                     "btn_text" => "Add from cart",
                     "btn_color" => "white",
                     "color" => "#1E50A0",

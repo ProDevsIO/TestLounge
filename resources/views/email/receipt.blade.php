@@ -310,7 +310,10 @@
                                         <p style="text-align: left;line-height: 25px">
                                             Hi {{ $booking->first_name }} {{ $booking->last_name }}<br/>
                                             Thank you for choosing to book with us. <br/>
-                                            Booking Reference: {{ $code }}.<br/>
+                                            Booking Reference: 
+                                            @foreach($code as $decode)
+                                            {{ $decode }}
+                                            @endforeach.<br/>
                                             Test Provider: {{ $booking_product->vendor->name }}
                                             <br/>
                                             Please take a note of the above as you will require these to complete your passenger locator form
