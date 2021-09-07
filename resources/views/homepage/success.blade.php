@@ -30,7 +30,7 @@
                                 $codes = json_decode($booking->booking_code);
                                 ?>
                                 
-@if($codes->count() > 1)
+@if(count($codes) > 1)
                                 Thank you for booking with us, Here are your
                                 codes
                                     @else
