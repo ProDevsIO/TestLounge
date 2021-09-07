@@ -59,7 +59,7 @@
             </div>
           <div class="container-fluid text-left"  style="width:80%; padding: 5px;">
               <div class="login_information">
-                     <p style="text-align: justify"><b>Are you a Travel Agent, a Company Travel Manager or frequent traveller? You can join our partnership network which gives you access to discounts and value added services. <a href="#">Learn More</a></b></p>
+                     <p style="text-align: justify"><b>Are you a Travel Agent, a company Travel Manager or a frequent traveller? You can join our partnership network which gives you access to discounts and value added services. <a href="#">Learn More</a></b></p>
               </div>
             
          </div>

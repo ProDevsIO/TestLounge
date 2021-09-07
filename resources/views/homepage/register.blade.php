@@ -205,7 +205,7 @@
                             </select>
                         </div>
                         <div class="col-lg-12 form-group">
-                            <small class="text-muted">if certified</small>
+                            <small class="text-muted">If certified</small>
                             <small style="color:red;"> (An IATA number is not a prerequisite to completing your
                                 registration and inclusion to the network)
                             </small>
