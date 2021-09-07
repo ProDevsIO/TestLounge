@@ -465,7 +465,7 @@ class HomeController extends Controller
                             $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                         }
                     } catch (\Exception $e) {
-                       \
+                       
                     }
                 }
                 if (!empty($booking->phone_no)) {
