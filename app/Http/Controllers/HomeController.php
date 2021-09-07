@@ -215,8 +215,7 @@ class HomeController extends Controller
 
         if (isset($request_data['ref'])) {
             $request_data_ = $this->bookingService->getSubAccountsByRefCode($request_data['ref']);
-
-            $request_data['sub_accounts'] = $request_data_->sub_accounts;
+            $request_data['subaccounts'] = $request_data_->sub_accounts;
             $request_data["referral_code"] = $request_data_->referral_code;
             $request_data["user_id"] = $request_data_->user_id;
         }

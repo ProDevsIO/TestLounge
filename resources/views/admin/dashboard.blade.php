@@ -295,14 +295,14 @@
                                                         <td>Product has been deleted</td>
                                                     @endif
 
-                                                    @if(isset($booking->product) && $booking->product->transaction != null)
+                                                    @if(isset($booking) && $booking->transaction != null)
                                                         <td>
-                                                            ₦ {{ optional($booking->product->transaction)->amount }} </td>
-                                                    @elseif(isset($booking->product) && $booking->product->ptransaction != null)
+                                                            ₦ {{ optional($booking->transaction)->amount }} </td>
+                                                    @elseif(isset($booking) && $booking->ptransaction != null)
                                                         <td>
-                                                            £ {{ optional($booking->product->ptransaction)->amount }} </td>
+                                                            £ {{ optional($booking->ptransaction)->amount }} </td>
                                                     @else
-                                                        <td> No Commision</td>
+                                                        <td> No Commission</td>
                                                     @endif
                                                 @endif
                                                 <td>@if($booking->status == 0)

@@ -50,7 +50,7 @@ class BookingService
         $super_agent_transaction_charge = (100 - $share_data["main_agent_share_percent"]) / 100;
 
         $this->sub_accounts[] = [
-            "id" => [$this->user->flutterwave_key],
+            "id" => $this->user->flutterwave_key,
             "transaction_charge_type" => "percentage",
             "transaction_charge" => $agent_transaction_charge
         ];
@@ -62,11 +62,53 @@ class BookingService
         ) {
             $this->superAgent = $superAgent;
             $this->sub_accounts[] = [
-                "id" => [$key],
+                "id" => $key,
                 "transaction_charge_type" => "percentage",
                 "transaction_charge" => $super_agent_transaction_charge
             ];
         }
+
+
+        return $this;
+
+    }
+
+    public function generateSubAccountData2()
+    {
+        $userService = new UserShare;
+        $agent_share = $userService->myShare($this->user);
+        $share_data = $userService->calculateMainAgentShare($this->user->main_agent_share_raw, $agent_share);
+
+
+        $agent_transaction_charge = (100 -  ($share_data["sub_agent_share"])  ) / 100;
+        $super_agent_transaction_charge = (100 - $share_data["main_agent_share_percent"]) / 100;
+
+        if(!$this->user->superAgent) {
+            $this->sub_accounts[] = [
+                "id" => $this->user->flutterwave_key,
+                "transaction_charge_type" => "percentage",
+                "transaction_charge" => $agent_transaction_charge
+            ];
+        }else{
+            $this->sub_accounts[] = [
+                "id" => $this->user->flutterwave_key,
+                "transaction_split_ratio" => $share_data["sub_agent_share"]
+            ];
+
+            if (
+                !empty($share_data["main_agent_share_raw"]) &&
+                !empty($superAgent = $this->user->superAgent) &&
+                !empty($key = $superAgent->flutterwave_key)
+            ) {
+                $this->superAgent = $superAgent;
+                $this->sub_accounts[] = [
+                    "id" => $key,
+                    "transaction_split_ratio" => $share_data["main_agent_share_percent"]
+                ];
+            }
+
+        }
+
 
         return $this;
 

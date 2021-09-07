@@ -50,6 +50,7 @@ class Controller extends BaseController
     }
     public function processFL(array $request = [])
     {
+        dd($request);
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
