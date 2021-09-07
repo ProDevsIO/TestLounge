@@ -65,6 +65,7 @@ Route::post('/register', [\App\Http\Controllers\HomeController::class,"register"
 
 
 Route::post('/post/booking', [\App\Http\Controllers\HomeController::class,"post_booking"]);
+Route::get('/post/booking', [\App\Http\Controllers\HomeController::class,"booking"]);
 Route::get('/booking2', [\App\Http\Controllers\HomeController::class,"booking2"]);
 Route::get('/booking/success', [\App\Http\Controllers\HomeController::class,"booking_success"])->name('booking_success');
 Route::get('/booking/code/failed', [\App\Http\Controllers\HomeController::class,"code_failed"])->name('code_failed');
