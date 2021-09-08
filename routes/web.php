@@ -76,7 +76,8 @@ Route::get('/testEmail', [\App\Http\Controllers\HomeController::class,"testEmail
 Route::get('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"make_payment"])->name('make_payment');
 Route::post('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"p_make_payment"])->name('make_payment');
 Route::get('/booking/failed', [\App\Http\Controllers\HomeController::class,"booking_failed"])->name('booking_failed');
-Route::get('/continue/registration/{referral_code}/{id}', [\App\Http\Controllers\HomeController::class,"verify_account"])->name('verify_account');
+Route::get('/sub/continue/registration/{referral_code}/{id}', [\App\Http\Controllers\HomeController::class,"sub_verify_account"])->name('verify_account');
+Route::get('/super/continue/registration/{referral_code}/{id}', [\App\Http\Controllers\HomeController::class,"super_verify_account"]);
 Route::post('/complete/register', [\App\Http\Controllers\HomeController::class,"complete_registration"])->name('complete_registration');
 
 

@@ -596,7 +596,9 @@ class HomeController extends Controller
 
         $request_data = $request->all();
 
+        $referral = generateReferralCode(6);
 
+        $request_data['referal_code'] = $referral;
         $request_data['password'] = Hash::make($request_data['password']);
         $request_data['type'] = 2;
         $request_data['status'] = 0;
@@ -617,9 +619,9 @@ class HomeController extends Controller
             Hi " . $request->first_name . ",
 
             Thank you for your interest to register as an Agent with Traveltestsltd,<br/><br/>Kindly click the button below<br/><br/>
-           <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
-                   Go to Login
-                  </a>
+            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "/super/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+            Continue Registration
+           </a>
 
                   <br/><br/>
                   Thank you.
@@ -628,6 +630,7 @@ class HomeController extends Controller
             ";
             Mail::to($request->email)->send(new BookingCreation($message, "Agent Registration"));
         } catch (\Exception $e) {
+            dd($e);
         }
 
         try {
@@ -675,7 +678,7 @@ class HomeController extends Controller
     }
 
 
-    public function verify_account($referral_code, $user)
+    public function sub_verify_account($referral_code, $user)
     {
 
         $user = User::where('id', $user)->where('referal_code', $referral_code)->first();
@@ -687,6 +690,24 @@ class HomeController extends Controller
             return redirect()->to('/login');
         }
     }
+
+    public function super_verify_account($referral_code, $user)
+    {
+
+        $user = User::where('id', $user)->where('referal_code', $referral_code)->first();
+       
+        if ($user && $user->verified == 0) {
+
+            $user->update([
+                'verified' => '1'
+            ]);
+
+        } else {
+            session()->flash('alert-success', "Kindly login into your account");
+            return redirect()->to('/login');
+        }
+    }
+
 
     public function complete_registration(Request $request){
 
