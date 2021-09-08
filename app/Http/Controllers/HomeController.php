@@ -348,7 +348,7 @@ class HomeController extends Controller
         curl_close($ch);
 
         $data_response = json_decode($response);
-
+dd($data_response);
         if (isset($data_response->data->status) && $data_response->data->status == "successful") {
 
             $booking = Booking::where('transaction_ref', $txRef)->first();
@@ -471,9 +471,11 @@ class HomeController extends Controller
                             $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                         }
                     } catch (\Exception $e) {
-                       
+                       dd($e);
                     }
+
                 }
+                dd($booking_products);
                 if (!empty($booking->phone_no)) {
 
                     $decode = implode(", ", json_decode($code));

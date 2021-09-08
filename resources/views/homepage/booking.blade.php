@@ -17,7 +17,6 @@
                         <!-- <div class="fw-700 fs-28 text-center">Travel Information</div> -->
 
                         @include('errors.showerrors')
-
                         @if($carts_count > 0)
                             <form action="{{ url('/post/booking') }}" method="post"
                                   class="bg-white">
