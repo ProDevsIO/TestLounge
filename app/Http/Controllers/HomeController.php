@@ -471,11 +471,11 @@ class HomeController extends Controller
                             $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                         }
                     } catch (\Exception $e) {
-                       dd($e);
+                      
                     }
 
                 }
-                dd($booking_products);
+              
                 if (!empty($booking->phone_no)) {
 
                     $decode = implode(", ", json_decode($code));
@@ -484,7 +484,7 @@ class HomeController extends Controller
                     $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
 
                 }
-
+dd($booking->phone_no);
                 //update wiith transaction code
                 $booking->update([
                     'vendor_id' => 3,
