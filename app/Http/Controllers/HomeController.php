@@ -348,7 +348,7 @@ class HomeController extends Controller
         curl_close($ch);
 
         $data_response = json_decode($response);
-dd($data_response);
+
         if (isset($data_response->data->status) && $data_response->data->status == "successful") {
 
             $booking = Booking::where('transaction_ref', $txRef)->first();
