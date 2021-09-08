@@ -311,7 +311,11 @@
                                             Hi {{ $booking->first_name }} {{ $booking->last_name }}<br/>
                                             Thank you for choosing to book with us. <br/>
                                             Booking Reference: 
-                                           {{dd($code)}}
+                                            <?php foreach($code as $decode){
+                                                echo $decode;
+                                                 }
+                                                 ?>
+                                          
                                             
                                             <br/>
                                             Test Provider: {{ $booking_product->vendor->name }}
