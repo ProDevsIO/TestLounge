@@ -312,7 +312,7 @@
                                             Thank you for choosing to book with us. <br/>
                                             Booking Reference: 
                                             
-                                            {{ code }}
+                                            {{ $code }}
                                             <br/>
                                             Test Provider: {{ $booking_product->vendor->name }}
                                             <br/>
