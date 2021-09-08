@@ -621,7 +621,7 @@ dd($data_response);
             Hi " . $request->first_name . ",
 
             Thank you for your interest to register as an Agent with Traveltestsltd,<br/><br/>Kindly click the button below<br/><br/>
-            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "/super/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "super/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
             Continue Registration
            </a>
 
@@ -632,7 +632,7 @@ dd($data_response);
             ";
             Mail::to($request->email)->send(new BookingCreation($message, "Agent Registration"));
         } catch (\Exception $e) {
-            dd($e);
+        
         }
 
         try {
