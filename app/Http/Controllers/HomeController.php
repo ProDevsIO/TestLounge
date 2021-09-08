@@ -482,7 +482,7 @@ class HomeController extends Controller
 
                     $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
                     $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
-
+dd($sms);
                 }
 dd($booking->phone_no);
                 //update wiith transaction code
