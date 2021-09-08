@@ -36,7 +36,7 @@ class VendorReceipt extends Mailable
 
         $this->subject = $subject;
         $this->from_ = $from;
-        $this->code = $code;
+        $this->code = json_decode($code);
     }
 
     /**
@@ -51,7 +51,7 @@ class VendorReceipt extends Mailable
         $product = $this->product;
         $vendor = $this->vendor;
         $booking_product = $this->booking_product;
-        $code = json_decode($this->code);
+        $code = $this->code;
 
         $data = [
             'booking' => $booking,
