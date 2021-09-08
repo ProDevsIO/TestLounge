@@ -68,6 +68,27 @@ class Controller extends BaseController
         return $server_output->data->link;
     }
 
+    public function processVAS(array $request = [])
+    {
+        unset($request['subaccounts']);
+        unset($request['currency']);
+        $ch = curl_init();
+        $headr = array();
+        $headr[] = 'Content-type: application/json';
+        curl_setopt($ch, CURLOPT_URL, "https://vastech.sevas.live/vastech/api/v1/ubank");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($request));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec($ch);
+
+        curl_close($ch);
+        $server_output = json_decode($server_output);
+        //dd($server_output);
+        return $server_output->data;
+    }
+
     function bank($country)
     {
         $ch = curl_init();
@@ -143,6 +164,23 @@ class Controller extends BaseController
                 ]
             ];
         }
+
+        return $data;
+    }
+
+    function getVasTechData($booking,$price,$transaction_ref,$price_pound = null, $card_type = null){
+        $data = [
+            "transactionRef" => $transaction_ref,
+            "amount" => $price,
+            "currency" => "NGN",
+            "channel" => "WEB",
+            "clientAppId" => "831553",
+            "clientId" => "238588",
+            "mobileNumber"=> "07039448968",
+            "paymentTypeId" => 2,
+            "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
+
+        ];
 
         return $data;
     }
