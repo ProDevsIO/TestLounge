@@ -215,8 +215,12 @@ class HomeController extends Controller
        
 
         unset($request_data['_token']);
+        if($request->payment_method == "vastech"){
+            $transaction_ref = rand(100000, 9999999);
+        }else{
+            $transaction_ref = uniqid('booking_') . rand(10000, 999999);
+        }
 
-        $transaction_ref = uniqid('booking_') . rand(10000, 999999);
         $external_ref = 'REF' . rand(10000, 99999);
 
         if (isset($request_data['ref'])) {
@@ -284,8 +288,11 @@ class HomeController extends Controller
         } catch (\Exception $e) {
         }
 
-        $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
-
+        if($request->payment_method == "vastech"){
+            $data = $this->getVasTechData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
+        }else {
+            $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
+        }
         //redirect to payment page
         if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
             $data['subaccounts'] = $sub_accounts;
@@ -312,25 +319,18 @@ class HomeController extends Controller
                 'stripe_session' => $response->id
             ]);
         } else {
+            if($request->payment_method == "vastech"){
+                $redirect_url = $this->processVas($data);
+            }else {
+                $redirect_url = $this->processFL($data);
+            }
 
-            $redirect_url = $this->processFL($data);
         }
 
         return redirect()->to($redirect_url);
     }
 
-    public function payment_confirmation(Request $request)
-    {
-        if (env('APP_ENV', "LIVE") == "LIVE") {
-            $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
-        } else {
-            $url = "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/verify";
-        }
-
-        $request_data = $request->all();
-
-        $txRef = $request->tx_ref;
-
+    function confirm_flutterwave($url,$txRef){
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -346,10 +346,49 @@ class HomeController extends Controller
         $response = curl_exec($ch);
 
         curl_close($ch);
+        return $response;
+    }
+
+    function confirm_vas($url){
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $response;
+    }
+
+    public function payment_confirmation(Request $request,$type = null)
+    {
+        if (env('APP_ENV', "LIVE") == "LIVE") {
+            $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
+        } else {
+            $url = "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/verify";
+        }
+
+        $request_data = $request->all();
+
+        $txRef = $request->tx_ref;
+
+        if($type == "vas"){
+            $txRef = $request->transactionRef;
+            $url = "https://vastech.sevas.live/vastech/api/v1/tstatus?transactionRef=".$txRef
+            $response = $this->confirm_vas($url,$txRef);
+
+        }else{
+            $response = $this->confirm_flutterwave($url,$txRef);
+        }
 
         $data_response = json_decode($response);
 
-        if (isset($data_response->data->status) && $data_response->data->status == "successful") {
+        if (isset($data_response->data->status) && ($data_response->data->status == "successful" || $data_response->data->status == "APPROVED")) {
 
             $booking = Booking::where('transaction_ref', $txRef)->first();
 
@@ -1535,7 +1574,7 @@ class HomeController extends Controller
                         }
                         DB::commit();
                     } catch (\Exception $e) {
-                        logger("An error occured while confirming payments", $request->all());
+                        logger("An error occured while confirming payments", $request_data);
                         DB::rollBack();
                     }
                 }

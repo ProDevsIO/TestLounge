@@ -174,7 +174,7 @@
                                 <div class="col-md-12">
                                     <div style="margin-top: 10px">
                                         <label class="">Select a Payment Method</label>
-                                        <div class="color-8"> All cardholders are advised to use Flutterwave</div>
+                                        <div class="color-8"> Kindly choose your payment method</div>
                                         <div class="radio-group">
                                             <div class='radio'
                                                  style="background:none;border:none;padding: 0px 20px;height: 86px;border-radius:25px;"
@@ -188,6 +188,14 @@
                                                  data-value="voucher" onclick ="voucherOption()">
                                                 <img src="https://img.icons8.com/fluency/32/000000/ticket-purchase.png"
                                                      style="padding-bottom: 0px;"/> <span><label> Pay with <b>voucher</b></label></span>
+
+                                            </div>
+
+                                            <div class='radio'
+                                                 style="background:none;border:none;padding: 8px 40px;height: 86px;border-radius:25px"
+                                                 data-value="vastech" onclick ="run()">
+                                                <img src="{{ url('/img/vas.svg') }}"
+                                                     style="padding-bottom: 0px;margin-left: -38px"/> <span><label>
 
                                             </div>
                                         </div>
