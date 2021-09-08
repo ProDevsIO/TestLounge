@@ -24,12 +24,13 @@
     <div class="content-wrapper">
         <div class="container-fluid">
             <div class="row">
+                <div class="container m-2"><h3>Purchase Product Vouchers here</h3></div>
             @include('errors.showerrors')
                 <?php $i =1 ?>
                 @foreach($vproducts as $product)
                     <div class="col-sm-3 m-2">
                         <div class="card">
-                            <img class="card-img-top" src="/img/hero11.jpg" alt="Card image">
+                            <!-- <img class="card-img-top" src="/img/hero11.jpg" alt="Card image"> -->
                             <div class="card-body text-center">
                                 <h4 class="card-title">{{ optional($product->product)->name }}</h4>
                                 <p class="card-text cart_item_total_{{ $product->id }}">

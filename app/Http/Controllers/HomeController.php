@@ -620,11 +620,9 @@ class HomeController extends Controller
             $message = "
             Hi " . $request->first_name . ",
 
-            Thank you for your interest to register as an Agent with Traveltestsltd,<br/><br/>Kindly click the button below<br/><br/>
-            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "super/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
-            Continue Registration
-           </a>
-
+            Thank you for your interest to register as an Agent with Traveltestsltd.<br/><br/>
+            Your profile is currently under review and will be activated shortly by our Admin. <br><br>
+            To facilitate this process, Kindly contact <a href='https://info@traveltestsltd.com'>INFO@TRAVELTESTSLTD.COM</a>
                   <br/><br/>
                   Thank you.
                   <br/><br/>
@@ -764,7 +762,7 @@ class HomeController extends Controller
                 Traveltestsltd Team
             ";
             Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Agent Registration"));
-            
+
         } catch (\Exception $e) {
         }
 
@@ -791,16 +789,45 @@ class HomeController extends Controller
             'status' => 1
         ]);
         $user = User::where('id', $id)->first();
+
+
         //send an email
         try {
-            $message = "Congratulations!,<br>
-            Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
-            You can now log in to your portal to complete your profile and set up your account. <br><br>
-            You will find your dedicated customer booking link on your portal <br><br>
-            Thank you for joining the  Traveltestsltd network!<br><br>
-
-            Traveltestsltd Team
-            ";
+            if($user->main_agent_share_raw == null)
+            {
+                $message = "Congratulations!,<br>
+                Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
+                You can now log in to your portal to complete your profile and set up your account. <br><br>
+                Kindly click the button below<br/><br/>
+                        <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "super/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                        Continue Registration
+                       </a>
+            
+                              <br/><br/>
+                You will find your dedicated customer booking link on your portal <br><br>
+                Thank you for joining the  Traveltestsltd network!<br><br>
+    
+                Traveltestsltd Team
+                ";
+            }else{
+                $message = "Congratulations!,<br>
+                Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
+                You can now log in to your portal to complete your profile and set up your account. <br><br>
+                You will find your dedicated customer booking link on your portal <br><br>
+                Kindly click the button below<br/><br/>
+                        <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "sub/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                        Continue Registration
+                       </a>
+            
+                              <br/><br/>
+                
+                Thank you for joining the  Traveltestsltd network!<br><br>
+    
+                Traveltestsltd Team
+                ";
+                
+            }
+           
             Mail::to($user->email)->send(new BookingCreation($message, 'Agent Activation'));
         } catch (\Exception $e) {
         }

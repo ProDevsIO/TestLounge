@@ -37,6 +37,7 @@
                                                 <th scope="col">Name</th>
                                                 @endif
                                                 <th scope="col">Voucher Number</th>
+                                                <th scope="col">Product</th>
                                                 <th>Amount</th>
                                                 <th>Quantity</th>
                                                 <th>Status</th>
@@ -65,7 +66,7 @@
                                                         @endif
                                                         <td>{{ $voucher->transaction_ref }}</td>
 
-                                                        
+                                                        <td>{{optional(optional(optional($voucher)->voucherProduct)->product)->name}}</td>
                                                         
                                                             @if(optional($voucher->voucherProduct)->currency == "NG")
                                                             <td>₦{{ number_format(optional($voucher->voucherProduct)->charged_amount) }}</td>

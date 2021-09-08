@@ -219,9 +219,9 @@
                             </a>
                             <ul class="sub">
                             @if(auth()->user()->type == "2")
-                                <li><a href="{{ url('/agent/view/products') }}">Products</a></li>
+                                <li><a href="{{ url('/agent/view/products') }}">Purchase Product Vouchers</a></li>
                             @endif
-                                <li><a href="{{ url('/view/vouchers') }}">Vouchers</a></li>
+                                <li><a href="{{ url('/view/vouchers') }}">Vouchers List</a></li>
                             
                             
                                 <!-- <li><a href="{{ url('/view/agent/booking') }}">Agent Bookings</a></li>

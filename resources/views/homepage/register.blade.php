@@ -212,7 +212,8 @@
 
                             <input type="text" value="{{ old('certified_no') }}" name="certified_no"
                                    class="form-control" id="exampleInputEmail1"
-                                   placeholder="please fill in your IATA number">
+                                   placeholder="
+                                   Please fill in your IATA number">
                         </div>
 
 

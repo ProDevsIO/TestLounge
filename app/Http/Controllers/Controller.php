@@ -356,7 +356,7 @@ class Controller extends BaseController
           
        } catch (Exception $e) {
           logger($e->getMessage());
-          dd($e);
+         
           return [
              'status' => false,
              'msg' => "An SMS error occurred",

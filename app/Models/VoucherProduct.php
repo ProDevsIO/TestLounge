@@ -25,4 +25,9 @@ class VoucherProduct extends Model
 	{
 		return $this->BelongsTo(Voucher::class);
 	}
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
