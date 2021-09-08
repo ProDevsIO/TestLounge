@@ -379,7 +379,7 @@ class HomeController extends Controller
 
         if($type == "vas"){
             $txRef = $request->transactionRef;
-            $url = "https://vastech.sevas.live/vastech/api/v1/tstatus?transactionRef=".$txRef
+            $url = "https://vastech.sevas.live/vastech/api/v1/tstatus?transactionRef=".$txRef;
             $response = $this->confirm_vas($url,$txRef);
 
         }else{
