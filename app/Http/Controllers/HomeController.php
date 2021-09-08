@@ -482,9 +482,9 @@ class HomeController extends Controller
 
                     $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
                     $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
-dd($sms);
+
                 }
-dd($booking->phone_no);
+
                 //update wiith transaction code
                 $booking->update([
                     'vendor_id' => 3,
@@ -740,6 +740,33 @@ dd($booking->phone_no);
         unset($request_data['file']);
 
         User::where('id',$request->user_id)->update($request_data);
+        $user =  User::where('id',$request->user_id)->first();
+
+        
+        try {
+
+            $message2 = "
+            Hi Admin,<br/>
+
+            We would like to inform you that a new Agent has registered with Traveltestsltd.<br/><br/>
+            Name: " . $user->first_name . " " . $user->last_name . " <br/>
+            Phone: " . $user->phone_no . "<br/>
+            Email: " . $user->email . "<br/>
+            Company Name: " . $user->company . "<br/>
+            <br/>Kindly click the button below to login and review<br/><br/>
+            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                   Go to Login
+                  </a>
+
+                  <br/><br/>
+                  Thank you.
+                  <br/><br/>
+                Traveltestsltd Team
+            ";
+            Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Agent Registration"));
+            
+        } catch (\Exception $e) {
+        }
 
         session()->flash('alert-success', "Thank you for completing your profile. Your profile is currently under review by our Admin. As soon as the review is completed, you will receive an email enabling you to access your account.");
 

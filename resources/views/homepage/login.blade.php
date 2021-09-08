@@ -77,7 +77,7 @@
                     </a>
                 </h2>
                 <h4 class="text-uppercase- text-purple mb-1 text-center">Login into your account</h4>
-                <p class="text-center">Are you trying to make a booking? Kindly click this <a href="/booking">link</a> to book</p>
+                <!-- <p class="text-center">Are you trying to make a booking? Kindly click this <a href="/booking">link</a> to book</p> -->
                 @include('errors.showerrors')
                 <form action="{{ url('/login') }}" method="post">
                     @csrf
