@@ -881,6 +881,7 @@ class HomeController extends Controller
            
             Mail::to($user->email)->send(new BookingCreation($message, 'Agent Activation'));
         } catch (\Exception $e) {
+            dd($e);
         }
 
         return back();
