@@ -840,7 +840,7 @@ class HomeController extends Controller
             'status' => 1
         ]);
         $user = User::where('id', $id)->first();
-
+        $referral = $user->referal_code;
 
         //send an email
         try {
