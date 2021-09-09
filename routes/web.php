@@ -127,10 +127,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit/profile/view', [\App\Http\Controllers\DashboardController::class, "edit_profile_view"]);
     Route::post('/edit/profile', [\App\Http\Controllers\DashboardController::class, "edit_profile"]);
     Route::get('/agent/view/products', [\App\Http\Controllers\DashboardController::class,"agent_view_product"]);
-    Route::get('/post/agent/buy/{product_id}/{vendor_id}/{quantity}', [\App\Http\Controllers\DashboardController::class,"post_agent_buy"]);
+    Route::get('/post/agent/buy/{product_id}/{vendor_id}/{quantity}/{type}', [\App\Http\Controllers\DashboardController::class,"post_agent_buy"]);
     Route::get('/process/price/{product_id}/{quantity}', [\App\Http\Controllers\DashboardController::class,"agent_process_price"]);
     Route::get('/voucher/payment/confirmation', [\App\Http\Controllers\DashboardController::class,"voucher_payment_confirmation"]);
     Route::get('/view/vouchers', [\App\Http\Controllers\DashboardController::class, "view_vouchers"]);
+    Route::post('/voucher/email/{id}', [\App\Http\Controllers\DashboardController::class, "email_vouchers"]);
 
     Route::post('/add/vendor', [\App\Http\Controllers\DashboardController::class,"add_vendor"]);
     Route::get('/admin/make/{id}', [\App\Http\Controllers\DashboardController::class,"admin_make"]);

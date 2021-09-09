@@ -57,6 +57,19 @@
                                                 <a class="dropdown-item" data-toggle="modal"
                                                     data-target="#edit_sub_agent_{{ $user->id }}"
                                                     href="javascript;;">Edit</a>
+                                                    @if($user->status == 0)
+
+                                                    <a href="javascript:;"
+                                                    onclick="confirmation('{{ url('/agent/activate/' .$user->id) }}')"
+                                                    class="dropdown-item">Activate</a>
+
+
+                                                    @elseif($user->status == 1)
+
+                                                    <a href="javascript:;"
+                                                    onclick="confirmation('{{ url('/agent/deactivate/'.$user->id) }}')"
+                                                    class="dropdown-item">Deactivate</a>
+                                                    @endif
                                             </div>
                                         </div>
                                     </td>

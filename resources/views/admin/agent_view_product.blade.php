@@ -41,11 +41,20 @@
                                     @endif
                                 </p>
                                 <div class="input-group">
-                                    <span class="input-group-addon cart_update_btn mb-3" data-action="add">+</span>
+                                    <span class="input-group-addon cart_update_btn mb-3" data-action="remove">-</span>
                                     <input type="text" class="bg-white form-control text-center cart_input"
                                         id="quantity_{{ $i }}" value="1"
                                         data-cart_id="{{ $product->id }}" readonly />
-                                    <span class="input-group-addon cart_update_btn mb-3" data-action="remove">-</span>
+                                    <span class="input-group-addon cart_update_btn mb-3" data-action="add">+</span>
+                                 
+                                </div>
+
+                                <div class="pb-2">
+                                    <select name="" class="form-control" id="type_{{$i}}">
+                                        <option value="0">Please choose a plan</option>
+                                        <option value="1">Family/ Group Plan</option>
+                                        <option value="2">Individual Plan</option>
+                                    </select>
                                 </div>
                                 <a href="javascript:;" onclick="run('{{$product->product_id}}','{{$product->vendor_id}}' ,'{{$i}}')" class="btn btn-primary btn-block">Buy</a>
                             </div>
@@ -111,15 +120,16 @@
 
         function run(product_id, vendor_id, count)
         {
-            console.log(product_id, count);
+            // console.log(product_id, count);
 
             var q = "quantity_" + count;
+            var t =  "type_" + count;
 
             var quantity = document.getElementById(q).value;
+            var type = document .getElementById(t).value;
+            console.log(type);
 
-            console.log(q, quantity);
-
-            window.location = '/post/agent/buy/' + product_id + '/' +vendor_id + '/'+ quantity; 
+            window.location = '/post/agent/buy/' + product_id + '/' +vendor_id + '/'+ quantity+ '/'+ type; 
         }
 </script>
 @endsection

@@ -13,8 +13,10 @@ class Voucher extends Model
 
 	protected $fillable = [
 		'agent',
+		'email',
         'quantity',
         'transaction_ref',
+		'type',
         'status'
 	];
 

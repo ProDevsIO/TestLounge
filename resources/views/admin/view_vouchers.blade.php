@@ -38,10 +38,12 @@
                                                 @endif
                                                 <th scope="col">Voucher Number</th>
                                                 <th scope="col">Product</th>
-                                                <th>Amount</th>
-                                                <th>Quantity</th>
-                                                <th>Status</th>
+                                                <th scope="col">Amount</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">type</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Date</th>
+                                                <th scope="col">Action</th>
                                                 <!-- <th scope="col">Action</th> -->
                                             </tr>
                                             </thead>
@@ -74,16 +76,82 @@
                                                             <td>£{{ number_format(optional($voucher->voucherProduct)->charged_amount) }}</td>
                                                             @endif
                                                         
-                                                        <td>{{ $voucher->quantity }}</td>
+                                                        <td>@if($voucher->quantity == 0)
+                                                            Quota has been used up
+                                                            @else
+                                                            {{ $voucher->quantity }}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($voucher->type == 1)
+                                                            <span class ="badge badge-success"> Family/Group plan</span>
+                                                            @elseif($voucher->typ == 2)
+                                                            <span class ="badge badge-success"> Individual plan</span>
+                                                            @else
+                                                            <span class ="badge badge-danger">Invalid</span>
+                                                            @endif
+                                                        </td>
                                                         @if($voucher->status == 0)
                                                         <td><span class ="badge badge-warning">Pending </span></td>
                                                         @else
                                                         <td> <span class ="badge badge-success"> Paid</span></td>
                                                         @endif
                                                         <td>{{ $voucher->created_at }}</td>
+                                                        <td>
+                                                            <div class="btn-group" role="group">
+                                                                <button id="btnGroupDrop1" type="button"
+                                                                        class="btn btn-primary dropdown-toggle"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                    Action
+                                                                </button>
+                                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                                   
+                                                                    @if($voucher->quantity == null)
+                                                                        <a class="dropdown-item" data-toggle="modal"
+                                                                        href="#refmodal{{$voucher->id}}">Send code via email</a>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                     @endif
-                                                  
+                                                   <!-- Modal -->
+
+                                            <div id="refmodal{{$voucher->id}}" class="modal fade" role="dialog">
+                                                <div class="modal-dialog">
+
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Email voucher code to Client</h4>
+                                                            <button type="button" class="close pull-left"
+                                                                    data-dismiss="modal">&times;
+                                                            </button>
+
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="{{ url('/voucher/email/'.$voucher->id) }}"
+                                                                  method="post">
+                                                                @csrf
+                                                        
+                                                                    <label for=""> Client Email</label>
+                                                                    <input type="email" name="email" class="form-control">
+                                                                    
+                                                        
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-sm btn-info">submit
+                                                            </button>
+                                                            </form>
+                                                            <button type="button" class="btn btn-sm btn-info"
+                                                                    data-dismiss="modal">Close
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                                
                                             @endforeach
                                         

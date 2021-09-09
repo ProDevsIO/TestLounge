@@ -1080,7 +1080,7 @@ class DashboardController extends Controller
                         <br/><br/>
                          Traveltestsltd Team
                     ";
-                    Mail::to('kelvin@prodevs.io')->send(new BookingCreation($message2, "Payment Notification"));
+                    Mail::to($user->email)->send(new BookingCreation($message2, "Payment Notification"));
 
 
                 } catch (\Exception $e) {
@@ -1153,8 +1153,13 @@ class DashboardController extends Controller
         return view('admin.agent_view_product')->with(compact('vproducts'));
     }
 
-    public function post_agent_buy($product_id, $vendor_id, $quantity)
+    public function post_agent_buy($product_id, $vendor_id, $quantity, $type)
     {
+        if($type == 0)
+        {
+            session()->flash('alert-danger', "please select a plan before you can proceed to make your purchase. Thank you");
+            return back();
+        }
         $product = VendorProduct::where('product_id',$product_id)->where('vendor_id',$vendor_id)->first();
 
         $country = auth()->user()->country;
@@ -1181,24 +1186,56 @@ class DashboardController extends Controller
 
         $vendorProduct = VendorProduct::where(['product_id' => $product_id, 'vendor_id' => $vendor_id])->first();
 
+        if( $type == 1){
+           
+            $voucher = Voucher::create([
+                'agent' => $agent_id,
+                'transaction_ref' => $transaction_ref,
+                'quantity' => $quantity,
+                'type' => $type
+            ]);
+    
+            $voucherProduct = VoucherProduct::Create([
+                'voucher_id' => $voucher->id,
+                'vendor_id' => $vendor_id,
+                'product_id' => $product_id,
+                'vendor_product_id' => $vendorProduct->id,
+                'quantity' => $quantity,
+                'charged_amount' => $amount,
+                'currency' => $country
+            ]);
+        }else{
+            if ($country = "NG") {
+                $amount2 = $product->price;
+    
+            } else {
+                $amount2 = $product->price_pounds;
+            }
 
-        $voucher = Voucher::create([
-            'agent' => $agent_id,
-            'transaction_ref' => $transaction_ref,
-            'quantity' => $quantity
-        ]);
+            for($i = 0; $i < $quantity ;$i++)
+            {
+                $code = $transaction_ref . '_' . $i;
 
-        $voucherProduct = VoucherProduct::Create([
-            'voucher_id' => $voucher->id,
-            'vendor_id' => $vendor_id,
-            'product_id' => $product_id,
-            'vendor_product_id' => $vendorProduct->id,
-            'quantity' => $quantity,
-            'charged_amount' => $amount,
-            'currency' => $country
-        ]);
+                $voucher = Voucher::create([
+                    'agent' => $agent_id,
+                    'transaction_ref' => $code,
+                    'quantity' => 1,
+                    'type' => $type
+                ]);
+        
+                $voucherProduct = VoucherProduct::Create([
+                    'voucher_id' => $voucher->id,
+                    'vendor_id' => $vendor_id,
+                    'product_id' => $product_id,
+                    'vendor_product_id' => $vendorProduct->id,
+                    'quantity' => 1,
+                    'charged_amount' => $amount2,
+                    'currency' => $country
+                ]); 
+            }
 
-
+        }
+     
         $redirect_url = $this->processFL($data);
 
         return redirect()->to($redirect_url);
@@ -1267,6 +1304,38 @@ class DashboardController extends Controller
         }
 
         return view('admin.view_vouchers')->with(compact('vouchers'));
+    }
+
+    public function email_vouchers(Request $request, $id){
+        $voucher = Voucher::where('id', $id)->first();
+        $email = $request->email;
+     
+      
+        try {
+
+            $message2 = "
+            Hi,<br/>".$voucher->user->name ." has sent you a voucher code :-$voucher->transaction_ref for ".optional(optional(optional($voucher)->voucherProduct)->product)->name." x  $voucher->quantity.<br/><br/>
+            Please endeavour to have the same items in your cart when booking.
+                <br/><br/>
+                Thank you.
+                <br/><br/>
+                 Traveltestsltd Team
+            ";
+            Mail::to($email)->send(new BookingCreation($message2, "Voucher notification"));
+
+
+        } catch (\Exception $e) {
+            
+            session()->flash('alert-danger', "Something went wrong");
+            return back();
+        }
+
+        Voucher::Update([
+            'email'=> $email
+        ]);
+        session()->flash('alert-success', "Successfully updated sent voucher via email");
+        return back();
+
     }
 
     public function agent_process_price($product_id, $quantity)

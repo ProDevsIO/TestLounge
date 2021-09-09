@@ -100,5 +100,12 @@
                 "order": []
             });
         });
+        function confirmation(url) {
+            var d = confirm("Are you sure, you want to perform this action?");
+
+            if (d) {
+                window.location = url;
+            }
+        }
     </script>
 @endsection
