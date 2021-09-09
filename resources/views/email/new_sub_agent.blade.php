@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-    <title>New Sub Agent</title>
+    <title>New Subagent</title>
 
     <style>
         body {
@@ -271,8 +271,7 @@
                                                                                                     width="400"
                                                                                                     align="left">
                                                                                                     <a href="/"
-                                                                                                        style="text-decoration: none; color: #464646;">UK
-                                                                                                        Travel Tests</a>
+                                                                                                        style="text-decoration: none; color: #464646;">TravelTestGlobal</a>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>
@@ -288,8 +287,7 @@
                                                                                                 <td style="font-family: Geneva, Tahoma, Verdana, sans-serif; font-size: 16px; line-height: 22px; color: #555555; padding-top: 16px;"
                                                                                                     align="left">
                                                                                                     {{ $main_agent_name }}
-                                                                                                    added you as a sub
-                                                                                                    agent!
+                                                                                                    added you as a sub-agent!
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tr>
@@ -311,11 +309,12 @@
                                                                                             </tr>
 
                                                                                             <tr>
-                                                                                                <td>
+                                                                                                <td style="font-family: Geneva, Tahoma, Verdana, sans-serif; font-size: 16px; line-height: 22px; color: #555555; padding-top: 16px;"
+                                                                                                >
                                                                                                     Kindly click the
                                                                                                     button
                                                                                                     below to complete
-                                                                                                    your registeration.
+                                                                                                    your registration.
                                                                                                     <br /><br />
                                                                                                     <a href="{{ $complete_link }}"
                                                                                                         style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
@@ -327,7 +326,7 @@
                                                                                                     Thank you.
                                                                                                     <br />
                                                                                                     <br />
-                                                                                                    UKTravelsTeam
+                                                                                                    TravelTestGlobal Team
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>

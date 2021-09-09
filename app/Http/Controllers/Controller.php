@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\CountryColor;
+use App\Models\BookingProduct;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -64,6 +66,27 @@ class Controller extends BaseController
         $server_output = json_decode($server_output);
         //dd($server_output);
         return $server_output->data->link;
+    }
+
+    public function processVAS(array $request = [])
+    {
+        unset($request['subaccounts']);
+        unset($request['currency']);
+        $ch = curl_init();
+        $headr = array();
+        $headr[] = 'Content-type: application/json';
+        curl_setopt($ch, CURLOPT_URL, "https://vastech.sevas.live/vastech/api/v1/ubank");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($request));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec($ch);
+
+        curl_close($ch);
+        $server_output = json_decode($server_output);
+        //dd($server_output);
+        return $server_output->data;
     }
 
     function bank($country)
@@ -145,8 +168,70 @@ class Controller extends BaseController
         return $data;
     }
 
+    function getVasTechData($booking,$price,$transaction_ref,$price_pound = null, $card_type = null){
+        $data = [
+            "transactionRef" => $transaction_ref,
+            "amount" => $price,
+            "currency" => "NGN",
+            "channel" => "WEB",
+            "clientAppId" => "831553",
+            "clientId" => "238588",
+            "mobileNumber"=> "07039448968",
+            "paymentTypeId" => 2,
+            "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
+
+        ];
+
+        return $data;
+    }
+
+    function processFlutterwaveVoucherData($price,$transaction_ref, $country, $agent_id){
+
+        $agent= User::where('id', $agent_id)->first();
+
+        if ($country == "NG") {
+
+            $data = [
+                //
+                "tx_ref" => $transaction_ref,
+                "amount" => $price,
+                "currency" => "NGN",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "voucher/payment/confirmation",
+                "customer" => [
+                    'email' => $agent->email,
+                    'phonenumber' => $agent->phone_no,
+                    'name' => $agent->first_name . " " . $agent->last_name
+                ],
+                "customizations" => [
+                    "title" => "Traveltestglobal Voucher payment"
+                ]
+            ];
+
+        } else {
+
+            $data = [
+                "tx_ref" => $transaction_ref,
+                "amount" => $price,
+                "currency" => "GBP",
+                "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "voucher/payment/confirmation",
+                "customer" => [
+                    'email' => $agent->email,
+                    'phonenumber' => $agent->phone_no,
+                    'name' => $agent->first_name . " " . $agent->last_name
+                ],
+                "customizations" => [
+                    "title" => "Traveltestglobal Voucher payment"
+                ]
+            ];
+
+        }
+
+        return $data;
+    }
+
     function sendData($booking)
     {
+       
         //ethnicity
         if ($booking->ethnicity == 0) {
             $ethnic = "white_other";
@@ -161,17 +246,17 @@ class Controller extends BaseController
         }
 
         //transportation means
-        if ($booking->method_of_transportation == 1) {
-            $transport = "Airline";
-        } elseif ($booking->method_of_transportation == 2) {
-            $transport = "Vessel";
-        } elseif ($booking->method_of_transportation == 3) {
-            $transport = "Train";
-        } elseif ($booking->method_of_transportation == 4) {
-            $transport = "Road Vehicle";
-        } elseif ($booking->method_of_transportation == 5) {
-            $transport = "Others";
-        }
+        // if ($booking->method_of_transportation == 1) {
+        //     $transport = "Airline";
+        // } elseif ($booking->method_of_transportation == 2) {
+        //     $transport = "Vessel";
+        // } elseif ($booking->method_of_transportation == 3) {
+        //     $transport = "Train";
+        // } elseif ($booking->method_of_transportation == 4) {
+        //     $transport = "Road Vehicle";
+        // } elseif ($booking->method_of_transportation == 5) {
+        //     $transport = "Others";
+        // }
 
         $color_code = CountryColor::where('country_id',$booking->country_travelling_from_id)->first();
         if($color_code == null)
@@ -215,25 +300,105 @@ class Controller extends BaseController
                 "postcode" => $booking->isolation_postal_code
             ];
 
-        $data_send['external_reference'] = "booking_".$booking->id;
+        // $data_send['external_reference'] = "booking_".$booking->id;
         $data_send['product'] = optional(optional($booking->product)->product)->name;
 
-        $ch = curl_init();
+        $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
 
-        curl_setopt($ch, CURLOPT_URL, "https://portal.ukhealthtesting.com/api/partner_orders");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,
-            http_build_query($data_send));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // dd($booking_products);
+        $code = [];
+        $z = 0;
+        $y = 0;
+        $i = 0;
+        ini_set('max_execution_time', 300);
+        foreach($booking_products as $booking_product)
+        {
+            $z = $z + $booking_product->quantity;
+        }
+            
+            while($y < $z){
+                $data_send['external_reference'] = "booking_".$booking->id."_".$y;
+                $i++;
+                $ch = curl_init();
 
-        $response = curl_exec($ch);
+                curl_setopt($ch, CURLOPT_URL, "https://portal.ukhealthtesting.com/api/partner_orders");
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS,
+                    http_build_query($data_send));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+                $response = curl_exec($ch);
+        
+                curl_close($ch);
+        
+                $data_response = json_decode($response);
+                $code[] = $data_response->reference;
+                $y++;
+                
+               
+            }
+         
+       
+        $formatted_data = json_encode($code);
 
-        curl_close($ch);
+        return $formatted_data;
 
-        $data_response = json_decode($response);
-
-        return $data_response->reference;
     }
 
-
+    function sendSMS($message = "", array $phone_numbers = [], int $forceSendDND = 4)
+    {
+       try {
+          
+             $numbersToString = "";
+             foreach ($phone_numbers as $number) {
+                if(strlen($number) == 11){
+                   $remove = ltrim($number, "0");
+                   //Remove leading zero
+                  $number_ = '234' . $remove;
+                }
+                else{
+                   $number_ = str_replace("+" , "", $number);
+                }
+    
+                $numbersToString .= $number_ . ',';
+             }
+    
+             $api_token = env("SMS_TOKEN", "FMvbeUayBAfg5lcrimO6Hhd1Jz3qJAjL2W8OiNESYL8BfCgPOMv2mm3S3N7F");
+             $message = $message;
+             $sender_name = env("SMS_SENDER_NAME", "Traveltest");
+             $recipients = $numbersToString;
+             $forcednd = $forceSendDND;
+    
+    
+             $data = array("api_token" => $api_token, "body" => $message, "from" => $sender_name, "to" => $recipients, "dnd" => $forcednd);
+             $data_string = json_encode($data);
+             $ch = curl_init('https://www.bulksmsnigeria.com/api/v1/sms/create');
+             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+             curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_string)));
+             $result = curl_exec($ch);
+             $res_array = json_decode($result);
+   
+             if ($res_array->data->status != "success") {
+                return [
+                   'status' => false,
+                   'msg' => $res_array->data->message,
+                ];
+             } else {
+                return [
+                   'status' => true,
+                   'msg' => "SMS sent successfully!",
+                ];
+             }
+          
+       } catch (Exception $e) {
+          logger($e->getMessage());
+         
+          return [
+             'status' => false,
+             'msg' => "An SMS error occurred",
+          ];
+       }
+    }
 }

@@ -82,7 +82,7 @@
                                             </select>
                                         </div>
                                     @endif
-                                    <input type="submit" class="btn btn-danger pull-left mt-2" value="Search">
+                                    <input type="submit" style="margin-left: 15px;" class="btn btn-danger pull-left mt-2" value="Search">
                                     @if(auth()->user()->type == 1)
                                     <div style="width:100%">
                                     <input type="submit" class="btn btn-warning pull-right  mt-2" name="export"
@@ -111,6 +111,7 @@
                         <div class="card-body p-0">
                         @include('errors.showerrors')
                             <div class="table-responsive">
+                                @if($bookings->count() > 0)
                                 <table class="table table-hover table-custom" id="data_table">
                                     <thead>
                                     <tr>
@@ -213,6 +214,17 @@
 
                                     </tbody>
                                 </table>
+                                @else
+                                    <div style="padding: 15px">
+                                        <div class="alert alert-danger">
+                                            @if(auth()->user()->referal_code)
+                                                No Booking has been created with your referral link
+                                            @else
+                                                No Booking has been created
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

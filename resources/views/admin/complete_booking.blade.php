@@ -24,21 +24,22 @@
                             </div>
                         </div>
                     </div>
-                    @if(auth()->user()->type = 1)
+                    @if(auth()->user()->type == 1)
                         @if($ven != null)
-                        <div class="card mb-4 bg-purple" title="Pending bookings">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_money"></i>
-                                    </div>
-                                    <div class="media-body text-light" title="Pending bookings">
-                                        <h4 class="text-uppercase mb-0 weight500">£ {{ number_format($vendorsTotalCost) }}</h4>
-                                        <span>{{$ven->vendor->name}}</span>
+                            <div class="card mb-4 bg-purple" title="Pending bookings">
+                                <div class="card-body">
+                                    <div class="media d-flex align-items-center ">
+                                        <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                            <i class="vl_money"></i>
+                                        </div>
+                                        <div class="media-body text-light" title="Pending bookings">
+                                            <h4 class="text-uppercase mb-0 weight500">
+                                                £ {{ number_format($vendorsTotalCost) }}</h4>
+                                            <span>{{$ven->vendor->name}}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         @endif
                     @endif
                 </div>
@@ -101,9 +102,9 @@
                                         </div>
                                     @endif
                                     <div style="width: 100%">
-                                        <input type="submit" class="btn btn-danger pull-right mt-2" value="Search">
+                                        <input type="submit" class="btn btn-danger pull-right mt-2" style="margin-left: 15px;" value="Search">
                                         @if(auth()->user()->type == 1)
-                                            <input type="submit" class="btn btn-warning pull-left mt-2" name="export"
+                                            <input type="submit" class="btn btn-warning pull-left mt-2"  name="export"
                                                    style="margin-left: 20px" value="Export">
                                         @endif
                                     </div>
@@ -128,178 +129,206 @@
                         <div class="card-body p-0">
                             @include('errors.showerrors')
                             <div class="table-responsive">
-                                <table class="table table-hover table-custom" id="data_table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Phone</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Date/Time</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Mode of Payment</th>
-                                        @if(auth()->user()->referal_code)
-                                            <th scope="col">Earnings</th>
-                                        @endif
-                                        @if(auth()->user()->type == "1")
-                                            <th scope="col">Vendor</th>
-                                            <th scope="col">Referral</th>
-                                            <th scope="col">Action</th>
-                                        @endif
-                                        @if(auth()->user()->vendor_id != "0")
-                                            <th scope="col">Action</th>
-                                        @endif
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($bookings as $booking)
+                                @if($bookings->count() > 0)
+                                    <table class="table table-hover table-custom" id="data_table">
+                                        <thead>
                                         <tr>
-                                            <td>
-                                                {{ $booking->first_name }} {{ $booking->last_name }}
-                                            </td>
-                                            <td>{{ $booking->phone_no }}</td>
-                                            <td>{{ $booking->email }}<br/>
-                                                @if(auth()->user()->type == "1")
-                                                <ul>
-                                                    <li>{{ optional(optional($booking->product)->product)->name }}
-                                                        ({{ optional($booking->product)->currency.number_format(optional($booking->product)->charged_amount,2)}}
-                                                        )
-                                                    </li>
-                                                </ul>
-                                                <br/>
-                                                @if($booking->booking_code)
-                                                    Reference Code: {{ $booking->booking_code }}
-                                                @endif
-                                                    @endif
-                                            </td>
-
-                                            <td> {{ $booking->created_at }} </td>
-                                            <td>@if($booking->status == 0)
-                                                    <span class="badge badge-warning">Not Paid</span>
-                                                @elseif($booking->status == 1)
-                                                    <span class="badge badge-success">Paid</span>
-                                                @endif</td>
-                                            <td>
-                                                @if($booking->mode_of_payment == 1)
-                                                    Flutterwave
-                                                @elseif($booking->mode_of_payment == 2)
-                                                    Stripe
-                                                @endif
-                                            </td>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Phone</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Date/Time</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Mode of Payment</th>
                                             @if(auth()->user()->referal_code)
-                                                <td> @php
-                                                        if($booking->transaction){
-                                                            echo "N".number_format($booking->transaction->amount,2);
-                                                        }
-                                                    @endphp</td>
+                                                <th scope="col">Earnings</th>
                                             @endif
                                             @if(auth()->user()->type == "1")
-                                                <td>
-                                                    {{ ($booking->vendor) ? $booking->vendor->name : "none" }}
-                                                </td>
-                                                <td>
-                                                    {{ ($booking->user) ? $booking->user->first_name." ".$booking->user->last_name : "none" }}
-                                                </td>
-                                                <td>
-                                                    <div class="btn-group" role="group">
-                                                        <button id="btnGroupDrop1" type="button"
-                                                                class="btn btn-primary dropdown-toggle"
-                                                                data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false">
-                                                            Action
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                            <a href="{{ url('/view/booking/'.$booking->id) }}" class="dropdown-item">View</a>
-                                                            <a href="{{ url('/booking/delete/'.$booking->id) }}" class="dropdown-item">Delete</a>
-                                                            <a href="javascript:;" data-toggle="modal"
-                                                               data-target="#editEmail{{ $booking->id }}"
-                                                               class="dropdown-item">Edit Email</a>
-                                                            <a href="javascript:;" onclick="resendReceipt('{{ $booking->id }}')"
-                                                               class="dropdown-item">Resend Receipt</a>
-                                                            @if($booking->user_id == null)
-                                                            <a class="dropdown-item" data-toggle="modal" href="#refmodal{{$booking->id}}">Add a referral</a>
-                                                            @endif 
-                                                        </div>
-                                                    </div>    
-                                                
-    
-
-                                                </td>
+                                                <th scope="col">Vendor</th>
+                                                <th scope="col">Referral</th>
+                                                <th scope="col">Action</th>
                                             @endif
-
                                             @if(auth()->user()->vendor_id != "0")
-                                                <td><a href="{{ url('/view/booking/'.$booking->id) }}"
-                                                       class="btn btn-info">View</a>
-                                                    <a href="{{ url('/send/booking/'.$booking->id) }}"
-                                                       class="btn btn-info">Send to Logistics Company</a>
-                                                </td>
+                                                <th scope="col">Action</th>
                                             @endif
                                         </tr>
-                                          <!-- Modal -->
-                                          <div id="refmodal{{$booking->id}}" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
+                                        </thead>
+                                        <tbody>
+                                        @foreach($bookings as $booking)
+                                            <tr>
+                                                <td>
+                                                    {{ $booking->first_name }} {{ $booking->last_name }}
+                                                </td>
+                                                <td>{{ $booking->phone_no }}</td>
+                                                <td>{{ $booking->email }}<br/>
+                                                    @if(auth()->user()->type == "1")
+                                                        <ul>
+                                                            <li>{{ optional(optional($booking->product)->product)->name }}
+                                                                ({{ optional($booking->product)->currency.number_format(optional($booking->product)->charged_amount,2)}}
+                                                                )
+                                                            </li>
+                                                        </ul>
+                                                        <br/>
+                                                        @if($booking->booking_code)
+                                                            Reference Code: {{ $booking->booking_code }}
+                                                        @endif
+                                                    @endif
+                                                </td>
 
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                    <h4 class="modal-title">Add a referral</h4>
-                                                        <button type="button" class="close pull-left" data-dismiss="modal">&times;</button>
-                                                        
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="{{ url('/add/referer/'.$booking->id) }}" method="post">
-                                                        @csrf
-                                                        <label for="">Referrers</label>
-                                                            <select name="referal_code" class="form-control" id="" required>
-                                                                <option value="">Select a referer</option>
-                                                                @foreach($refs as $ref)
-                                                                     <option value="{{$ref->referal_code}}">{{$ref->first_name}} {{$ref->last_name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                          
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-sm btn-info">submit</button>
-                                                        </form>
-                                                        <button type="button" class="btn btn-sm btn-info" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                          </div>
-
-
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="editEmail{{ $booking->id }}" tabindex="-1" role="dialog"
-                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <form action="{{ url('edit/email') }}" method="post">
-                                                        @csrf
-                                                        <input type="hidden" name="id" value="{{ $booking->id }}">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Email</h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
+                                                <td> {{ $booking->created_at }} </td>
+                                                <td>@if($booking->status == 0)
+                                                        <span class="badge badge-warning">Not Paid</span>
+                                                    @elseif($booking->status == 1)
+                                                        <span class="badge badge-success">Paid</span>
+                                                    @endif</td>
+                                                <td>
+                                                    @if($booking->mode_of_payment == 1)
+                                                        Flutterwave
+                                                    @elseif($booking->mode_of_payment == 2)
+                                                        Stripe
+                                                    @endif
+                                                </td>
+                                                @if(auth()->user()->referal_code)
+                                                    <td> @php
+                                                            if($booking->transaction){
+                                                                echo "N".number_format($booking->transaction->amount,2);
+                                                            }
+                                                        @endphp</td>
+                                                @endif
+                                                @if(auth()->user()->type == "1")
+                                                    <td>
+                                                        {{ ($booking->vendor) ? $booking->vendor->name : "none" }}
+                                                    </td>
+                                                    <td>
+                                                        {{ ($booking->user) ? $booking->user->first_name." ".$booking->user->last_name : "none" }}
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group" role="group">
+                                                            <button id="btnGroupDrop1" type="button"
+                                                                    class="btn btn-primary dropdown-toggle"
+                                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                                    aria-expanded="false">
+                                                                Action
                                                             </button>
+                                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                                <a href="{{ url('/view/booking/'.$booking->id) }}"
+                                                                   class="dropdown-item">View</a>
+                                                                <a href="{{ url('/booking/delete/'.$booking->id) }}"
+                                                                   class="dropdown-item">Delete</a>
+                                                                <a href="javascript:;" data-toggle="modal"
+                                                                   data-target="#editEmail{{ $booking->id }}"
+                                                                   class="dropdown-item">Edit Email</a>
+                                                                <a href="javascript:;"
+                                                                   onclick="resendReceipt('{{ $booking->id }}')"
+                                                                   class="dropdown-item">Resend Receipt</a>
+                                                                @if($booking->user_id == null)
+                                                                    <a class="dropdown-item" data-toggle="modal"
+                                                                       href="#refmodal{{$booking->id}}">Add a
+                                                                        referral</a>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+
+
+                                                    </td>
+                                                @endif
+
+                                                @if(auth()->user()->vendor_id != "0")
+                                                    <td><a href="{{ url('/view/booking/'.$booking->id) }}"
+                                                           class="btn btn-info">View</a>
+                                                        <a href="{{ url('/send/booking/'.$booking->id) }}"
+                                                           class="btn btn-info">Send to Logistics Company</a>
+                                                    </td>
+                                                @endif
+                                            </tr>
+                                            <!-- Modal -->
+                                            <div id="refmodal{{$booking->id}}" class="modal fade" role="dialog">
+                                                <div class="modal-dialog">
+
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Add a referral</h4>
+                                                            <button type="button" class="close pull-left"
+                                                                    data-dismiss="modal">&times;
+                                                            </button>
+
                                                         </div>
                                                         <div class="modal-body">
-                                                            <input type="email" name="email" value="{{ $booking->email }}" class="form-control"/>
+                                                            <form action="{{ url('/add/referer/'.$booking->id) }}"
+                                                                  method="post">
+                                                                @csrf
+                                                                <label for="">Referrers</label>
+                                                                <select name="referal_code" class="form-control" id=""
+                                                                        required>
+                                                                    <option value="">Select a referer</option>
+                                                                    @foreach($refs as $ref)
+                                                                        <option value="{{$ref->referal_code}}">{{$ref->first_name}} {{$ref->last_name}}</option>
+                                                                    @endforeach
+                                                                </select>
+
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
+                                                            <button type="submit" class="btn btn-sm btn-info">submit
+                                                            </button>
+                                                            </form>
+                                                            <button type="button" class="btn btn-sm btn-info"
                                                                     data-dismiss="modal">Close
                                                             </button>
-                                                            <button type="submit" class="btn btn-primary">Save changes
-                                                            </button>
                                                         </div>
-                                                    </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
 
-                                    </tbody>
-                                </table>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="editEmail{{ $booking->id }}" tabindex="-1"
+                                                 role="dialog"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <form action="{{ url('edit/email') }}" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="id" value="{{ $booking->id }}">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Edit
+                                                                    Email</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <input type="email" name="email"
+                                                                       value="{{ $booking->email }}"
+                                                                       class="form-control"/>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close
+                                                                </button>
+                                                                <button type="submit" class="btn btn-primary">Save
+                                                                    changes
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <div style="padding: 15px">
+                                        <div class="alert alert-danger">
+                                            @if(auth()->user()->referal_code)
+                                                No Booking has been created with your referral link
+                                            @else
+                                                No Booking has been created
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -324,10 +353,10 @@
             });
         });
 
-        function resendReceipt(id){
+        function resendReceipt(id) {
             var d = confirm("Are you sure you want to resend the receipt?");
-            if(d){
-                window.location = "/resend/receipt/"+ id;
+            if (d) {
+                window.location = "/resend/receipt/" + id;
             }
         }
     </script>

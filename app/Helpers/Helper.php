@@ -72,7 +72,7 @@ function getMyRefBarcode($user  = null)
         return null;
     }
     $barcodeHelper = new BarcodeHelper;
-    $content = url('/booking?ref=' . $user->referal_code);
+    $content = url('/?ref=' . $user->referal_code);
     return $barcodeHelper->generate($content);
 }
 
@@ -95,4 +95,16 @@ function generateReferralCode($length = 16)
 function shareHelper()
 {
     return new UserShare;
+}
+
+
+function myIP()
+{
+    if (!session()->has('ip')) {
+        $ip = uniqid('ip_') . rand(100, 999);
+        session(['ip' => $ip]);
+    } else {
+        $ip = session()->get('ip');
+    }
+    return $ip;
 }

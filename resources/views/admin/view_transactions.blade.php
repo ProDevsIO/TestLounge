@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
-                                            N{{ number_format($earned,0) }}</h4>
+                                            N{{ number_format($earned,2) }}</h4>
                                         <span>Expected Earning(Naira)</span>
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
-                                        £{{ number_format($earnedPounds,0) }}</h4>
+                                        £{{ number_format($earnedPounds,2) }}</h4>
                                         <span>Expected Earning(Pounds)</span>
                                     </div>
                                 </div>
@@ -68,30 +68,30 @@
                     <ul class="nav nav-tabs nav-justified ">
                     @if(auth()->user()->type == 1)
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#home">Booking Transaction((Naira)</a>
+                            <a class="nav-link active" data-toggle="tab" href="#home">Booking Transaction(Naira)</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#menu1">Paid Commission(Naira)</a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#poundB">Booking Transaction(Pounds)</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#poundP">Paid Commission(Pounds)</a>
-                        </li>
+                        </li> -->
                     @elseif(auth()->user()->type == 2)
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#home">Booking Transaction((Naira)</a>
+                            <a class="nav-link active" data-toggle="tab" href="#home">Booking Transaction(Naira)</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#menu1">Paid Commission((Naira)</a>
-                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#menu1">Paid Commission(Naira)</a>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#poundB">Booking Transaction(Pounds)</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#poundP">Paid Commission(Pounds)</a>
-                        </li>
+                        </li> -->
                     @endif
                     </ul>
                 </div>
@@ -104,7 +104,7 @@
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">
-                                        <div class="custom-title">Booking Transaction((Naira)</div>
+                                        <div class="custom-title">Booking Transaction(Naira)</div>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
@@ -143,8 +143,8 @@
                                                                 <td> <span class ="badge badge-danger"> Agent NULL</span></td>
                                                             @endif
                                                         @endif
-                                                        <td>₦{{ number_format($booking_tran->amount) }}</td>
-                                                        <td>₦{{ number_format($booking_tran->cost_config) }}</td>
+                                                        <td>₦{{ number_format($booking_tran->amount,2) }}</td>
+                                                        <td>₦{{ number_format($booking_tran->cost_config,2) }}</td>
                                                         <td>{{ $booking_tran->created_at }}</td>
                                                     </tr>
                                                   
@@ -193,8 +193,8 @@
                                                     @elseif(auth()->user()->type == 2)
                                                     <td>{{ $paid_tran->user->first_name }} {{ $paid_tran->user->last_name }}</td>
                                                     @endif
-                                                    <td>₦{{number_format($paid_tran->amount) }}</td>
-                                                    <td>₦{{number_format($paid_tran->cost_config)}}</td>
+                                                    <td>₦{{number_format($paid_tran->amount,2) }}</td>
+                                                    <td>₦{{number_format($paid_tran->cost_config,2)}}</td>
                                                     <td>{{ $paid_tran->created_at }}</td>
                                                   
                                                 </tr>
@@ -243,8 +243,8 @@
                                                         @elseif(auth()->user()->type == 2)
                                                         <td>{{ $booking_tran_p->user->first_name }} {{ $booking_tran_p->user->last_name }}</td>
                                                         @endif
-                                                        <td>₦{{ number_format($booking_tran_p->amount) }}</td>
-                                                        <td>₦{{ number_format($booking_tran_p->cost_config) }}</td>
+                                                        <td> £{{ number_format($booking_tran_p->amount,2) }}</td>
+                                                        <td> £{{ number_format($booking_tran_p->cost_config,2) }}</td>
                                                         <td>{{ $booking_tran_p->created_at }}</td>
                                                     </tr>
                                                   
@@ -285,7 +285,6 @@
                                             </thead>
                                             <tbody>
                                             @foreach($paid_trans_p as $paid_tran_p)
-                                            
                                                 <tr>
                                                    
                                                     @if(auth()->user()->type == 1)
@@ -293,8 +292,8 @@
                                                     @elseif(auth()->user()->type == 2)
                                                     <td>{{ $paid_tran_p->user->first_name }} {{ $paid_tran_p->user->last_name }}</td>
                                                     @endif
-                                                    <td>£{{number_format($paid_tran_p->amount) }}</td>
-                                                    <td>£{{number_format($paid_tran_p->cost_config)}}</td>
+                                                    <td>£{{number_format($paid_tran_p->amount,2) }}</td>
+                                                    <td>£{{number_format($paid_tran_p->cost_config,2)}}</td>
                                                     <td>{{ $paid_tran_p->created_at }}</td>
                                                   
                                                 </tr>

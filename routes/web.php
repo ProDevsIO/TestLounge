@@ -26,6 +26,7 @@ Route::get('/password',[\App\Http\Controllers\HomeController::class,"testing"]);
 Route::get('/login', [\App\Http\Controllers\HomeController::class,"login"]);
 Route::get('/country_bank/{country}', [\App\Http\Controllers\HomeController::class,"country_bank"]);
 Route::get('/account/name/{bank}/{no}', [\App\Http\Controllers\HomeController::class,"account_name"]);
+Route::get('/country/query/{id}', [\App\Http\Controllers\HomeController::class,"country_query"]);
 
 Route::get('/forgot/password', [\App\Http\Controllers\HomeController::class,"forgot_password"]);
 Route::post('/reset_password', [\App\Http\Controllers\HomeController::class,"reset_password"]);
@@ -41,11 +42,18 @@ Route::get('/next_steps', [\App\Http\Controllers\HomeController::class,"next_ste
 
 
 Route::get('/payment/confirmation', [\App\Http\Controllers\HomeController::class,"payment_confirmation"]);
+Route::get('/payment/{vas}/confirmation', [\App\Http\Controllers\HomeController::class,"payment_confirmation"]);
 Route::get('/pick', [\App\Http\Controllers\HomeController::class,"pick"])->name('pick');
 Route::get('/pricing', [\App\Http\Controllers\HomeController::class,"pricing"])->name('pricing');
 Route::get('/about', [\App\Http\Controllers\HomeController::class,"about"])->name('about');
+Route::get('/product/{type}', [\App\Http\Controllers\HomeController::class,"viewProducts"]);
+Route::get('/add/cart/{product_id}/{vendor_id}', [\App\Http\Controllers\HomeController::class,"addToCart"]);
+Route::get('/view/cart', [\App\Http\Controllers\HomeController::class,"viewCart"]);
+Route::get('/update/cart/{id}/{quantity}', [\App\Http\Controllers\HomeController::class,"updateCart"]);
+Route::get('/delete/cart/{id}', [\App\Http\Controllers\HomeController::class,"deleteCart"]);
 Route::get('/covid/testing', [\App\Http\Controllers\HomeController::class,"products"])->name('products_covid');
 Route::get('/check/price/{vendor_id}', [\App\Http\Controllers\HomeController::class,"check_price"])->name('check_price');
+Route::get('/view/uk', [\App\Http\Controllers\HomeController::class,"view_uk"]);
 
 Route::get('/check/{nationality}/price', [\App\Http\Controllers\HomeController::class,"check_product_price"])->name('check_product_price');
 
@@ -58,7 +66,8 @@ Route::post('/register', [\App\Http\Controllers\HomeController::class,"register"
 
 
 Route::post('/post/booking', [\App\Http\Controllers\HomeController::class,"post_booking"]);
-
+Route::get('/post/booking', [\App\Http\Controllers\HomeController::class,"booking"]);
+Route::get('/booking2', [\App\Http\Controllers\HomeController::class,"booking2"]);
 Route::get('/booking/success', [\App\Http\Controllers\HomeController::class,"booking_success"])->name('booking_success');
 Route::get('/booking/code/failed', [\App\Http\Controllers\HomeController::class,"code_failed"])->name('code_failed');
 Route::get('/booking/stripe/success', [\App\Http\Controllers\HomeController::class,"success_stripe"])->name('success_stripe');
@@ -68,7 +77,9 @@ Route::get('/testEmail', [\App\Http\Controllers\HomeController::class,"testEmail
 Route::get('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"make_payment"])->name('make_payment');
 Route::post('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"p_make_payment"])->name('make_payment');
 Route::get('/booking/failed', [\App\Http\Controllers\HomeController::class,"booking_failed"])->name('booking_failed');
-Route::get('/continue/registration/{referral_code}/{id}', [\App\Http\Controllers\HomeController::class,"verify_account"])->name('verify_account');
+Route::get('/sub/continue/registration/{referral_code}/{id}', [\App\Http\Controllers\HomeController::class,"sub_verify_account"])->name('verify_account');
+Route::get('/super/continue/registration/{referral_code}/{id}', [\App\Http\Controllers\HomeController::class,"super_verify_account"]);
+Route::post('/complete/register', [\App\Http\Controllers\HomeController::class,"complete_registration"])->name('complete_registration');
 
 
 
@@ -80,6 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/complete/booking', [\App\Http\Controllers\DashboardController::class,"complete_booking"]);
     Route::get('/view/individual/booking', [\App\Http\Controllers\DashboardController::class,"view_individual_booking"]);
     Route::get('/view/agent/booking', [\App\Http\Controllers\DashboardController::class,"view_agent_booking"]);
+    Route::get('/view/agent/details/{id}', [\App\Http\Controllers\DashboardController::class,"details"]);
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,"dashboard"]);
     Route::get('/view/booking/{id}', [\App\Http\Controllers\DashboardController::class,"view_booking"]);
     Route::get('/booking/delete/{id}', [\App\Http\Controllers\DashboardController::class,"delete_booking"]);
@@ -92,7 +104,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/imitate/account/{id}', [\App\Http\Controllers\DashboardController::class,"imitate_account"]);
     Route::get('/view/transactions', [\App\Http\Controllers\DashboardController::class,"view_transactions"]);
     Route::post('/update/country', [\App\Http\Controllers\DashboardController::class,"update_country"]);
-
+   
 
 
     Route::get('/users', [\App\Http\Controllers\DashboardController::class,"users"]);
@@ -114,6 +126,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [\App\Http\Controllers\DashboardController::class, "profile_view"]);
     Route::get('/edit/profile/view', [\App\Http\Controllers\DashboardController::class, "edit_profile_view"]);
     Route::post('/edit/profile', [\App\Http\Controllers\DashboardController::class, "edit_profile"]);
+    Route::get('/agent/view/products', [\App\Http\Controllers\DashboardController::class,"agent_view_product"]);
+    Route::get('/post/agent/buy/{product_id}/{vendor_id}/{quantity}/{type}', [\App\Http\Controllers\DashboardController::class,"post_agent_buy"]);
+    Route::get('/process/price/{product_id}/{quantity}', [\App\Http\Controllers\DashboardController::class,"agent_process_price"]);
+    Route::get('/voucher/payment/confirmation', [\App\Http\Controllers\DashboardController::class,"voucher_payment_confirmation"]);
+    Route::get('/view/vouchers', [\App\Http\Controllers\DashboardController::class, "view_vouchers"]);
+    Route::post('/voucher/email/{id}', [\App\Http\Controllers\DashboardController::class, "email_vouchers"]);
 
     Route::post('/add/vendor', [\App\Http\Controllers\DashboardController::class,"add_vendor"]);
     Route::get('/admin/make/{id}', [\App\Http\Controllers\DashboardController::class,"admin_make"]);

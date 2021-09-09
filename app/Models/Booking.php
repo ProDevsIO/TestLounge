@@ -130,7 +130,8 @@ class Booking extends Model
         'stripe_session',
         'stripe_intent',
 		'post_status',
-        'card_type'
+        'card_type',
+		'external_reference'
 	];
 
 	public function country()
@@ -175,4 +176,9 @@ class Booking extends Model
     {
         return $this->hasOne(BookingProduct::class, 'booking_id');
     }
+
+	public function symproduct()
+	{
+		return $this->hasMany(BookingProduct::class, 'booking_id');
+	}
 }

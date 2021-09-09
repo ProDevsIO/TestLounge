@@ -1,0 +1,227 @@
+@extends('layouts.login')
+@section('style')
+
+@endsection
+@section('content')
+    <style>
+        /* Mark input boxes that gets an error on validation: */
+        input.invalid {
+            background-color: #ffdddd;
+        }
+
+        /* Hide all steps by default: */
+        .tab {
+            display: none;
+        }
+
+        /* Make circles that indicate the steps of the form: */
+        .step {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbbbbb;
+            border: none;
+            border-radius: 50%;
+            display: inline-block;
+            opacity: 0.5;
+        }
+
+        /* Mark the active step: */
+        .step.active {
+            opacity: 1;
+        }
+
+        /* Mark the steps that are finished and valid: */
+        .step.finish {
+            background-color: #04AA6D;
+            float: none;
+        }
+
+        .iti--allow-dropdown {
+            width: 100%;
+        }
+        .no_padding{
+            padding: 0px !important;
+        }
+
+        #backbutton {
+            margin-bottom: 190px;
+        }
+
+        .login_information p {
+            font-weight: bolder;
+        }
+
+        @media screen and (max-width: 800px) {
+            #backbutton {
+                margin-bottom: 90px;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            #backbutton {
+                margin-bottom: 70px;
+            }
+
+            .rightHalf {
+                padding: 0 5%;
+            }
+        }
+
+        @media (max-width: 1500px) {
+            .leftHalf {
+                height: 1000px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .leftHalf {
+                height: 60px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .login_information {
+                margin-top: 30%;
+            }
+
+            .login_information p {
+                font-size: 30px;
+            }
+        }
+    </style>
+
+    <div class="leftHalf"
+         style="background-image: url('/img/travel.jpeg');background-size: cover;background-position: center; " s>
+
+        <div class="login-promo-txt" style="height:100%; top:0; width:100%">
+            <div class="container-fluid" id="backbutton" style="width:100%; margin-left: -20px;
+    margin-top: 10px;">
+                <a href="/" class="btn btn-purple btn-pill float-left">Home page</a>
+                <br>
+            </div>
+            <div class="container-fluid" style="width:70%;padding: 5px;">
+                <div class="login_information">
+                    <p style="text-align: justify;"><b>Are you a travel agent looking to grow your network of
+                            travelers?</b></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="rightHalf">
+        <div class="position-relative">
+            <!--login form-->
+            <div class="login-form " style="padding-top:0">
+                <h2 class="text-center">
+
+                    <a href="/">
+                        <img src="/img/logo-dark.png" srcset="/img/logo-dark.png" style="height: 80px;"
+                             alt="Uk Travel test">
+                    </a>
+                </h2>
+
+
+                @include('errors.showerrors')
+                <form action="{{ url('/complete/register') }}" style="margin-top: 20px" method="post" id="regForm"
+                      enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                    <div class="row">
+                        <h5>Hi, {{ $user->first_name }} {{  $user->last_name }}</h5><br/>
+                        <div class="col-lg-12 form-group no_padding">
+                            <small class="text-muted">Kindly fill the information below to proceed:</small>
+                        </div>
+
+                        <div class="col-lg-6 form-group no_padding">
+                            <label>Phone No:</label>
+                            <input id="phone" style="width:100%;margin-right:0px" type="text"
+                                   value="{{ old('phone_no') }}" name="phone_no" class="form-control pr-5"
+                                   placeholder="Phone No" required>
+                        </div>
+                        <div class="col-lg-6 form-group no_padding">
+                            <label class="text-left" style="width:100%">Country of residence</label>
+                            <select class="form-control select2 country_id__"
+                                    name="country" autocomplete="off"
+                                    id="travel_from" onchange="run()" onselect="selectCountry()" required>
+                                <option value="">Make a selection</option>
+                                @foreach($countries as $country)
+                                    <option value="{{ $country->iso }}"
+                                            @if(old('country_travelling_from_id') == $country->id) selected
+                                            @endif>{{ $country->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-lg-12 form-group no_padding" style="padding: 0px">
+                            <h5>Business Information</h5>
+
+                            <small class="text-muted">Please let us know what name you would like displayed on the UK
+                                Travel Test portal.
+                            </small>
+                        </div>
+                        <div class="col-lg-6 form-group no_padding">
+                            <label>Trading name: </label>
+                            <input type="text" value="{{ old('platform_name') }}" name="platform_name"
+                                   class="form-control" id="exampleInputEmail1" placeholder="Name on platform">
+                        </div>
+                        <div class="col-lg-6 form-group no_padding">
+                            <label>Company name: </label>
+                            <input type="text" value="{{ old('company') }}" name="company" class="form-control"
+                                   id="exampleInputEmail1" placeholder="Name of organization" required>
+                        </div>
+                        <div class="col-lg-6 form-group no_padding">
+                            <label>Name of MD: </label>
+                            <input type="text" value="{{ old('director') }}" name="director" class="form-control"
+                                   id="exampleInputEmail1" placeholder="Name of Managing Director" required>
+                        </div>
+                        <div class="col-lg-6 form-group no_padding">
+                            <label>CAC Document: </label>
+                            <input type="file" name="file" class="form-control">
+                        </div>
+                        <div class="col-lg-6  form-group no_padding">
+                            Certification:
+                            <select name="certified" class="form-control" id="">
+                                <option class="pl-5" value="">Are you IATA certified?</option>
+                                <option class="text-center" value="Yes">Yes</option>
+                                <option class="text-center" value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12 form-group no_padding">
+                            <small class="text-muted">if certified</small>
+                            <small style="color:red;"> (An IATA number is not a prerequisite to completing your
+                                registration and inclusion to the network)
+                            </small>
+
+                            <input type="text" value="{{ old('certified_no') }}" name="certified_no"
+                                   class="form-control" id="exampleInputEmail1"
+                                   placeholder="please fill in your IATA number">
+                        </div>
+
+
+                        <div class="col-lg-12 form-group clearfix">
+                            <button type="submit" class="btn btn-purple btn-pill pull-right">Complete Registration</button>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+@endsection
+@section('script')
+    <script>
+        var input = document.querySelector("#phone");
+        window.intlTelInput(input, {
+            initialCountry: "gb",
+            utilsScript: "/js/phone_lib/js/utils.js",
+        });
+
+
+    </script>
+
+@endsection

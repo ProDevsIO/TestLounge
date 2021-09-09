@@ -8,11 +8,11 @@ use App\Models\User;
 class BookingService
 {
 
-    public array $sub_accounts = [];
-    public int $user_id;
-    public String $referral_code;
-    public User $user;
-    public User $superAgent;
+    public $sub_accounts = [];
+    public $user_id;
+    public $referral_code;
+    public $user;
+    public $superAgent;
 
     public function getSubAccountsByRefCode($referal_code)
     {
@@ -22,6 +22,7 @@ class BookingService
             $this->user = $user;
             $this->referral_code = $user->referal_code;
             $this->user_id = $user->id;
+            
             if (!empty($user->flutterwave_key)) {
                 $this->generateSubAccountData();
             }
@@ -33,6 +34,8 @@ class BookingService
     {
         $data["referral_code"] = $this->referral_code;
         $data["user_id"] = $this->user_id;
+
+
         return $data;
     }
 
@@ -43,11 +46,11 @@ class BookingService
         $share_data = $userService->calculateMainAgentShare($this->user->main_agent_share_raw, $agent_share);
 
 
-        $agent_transaction_charge = (100 - $share_data["sub_agent_share"]) / 100;
+        $agent_transaction_charge = (100 -  ($share_data["sub_agent_share"])  ) / 100;
         $super_agent_transaction_charge = (100 - $share_data["main_agent_share_percent"]) / 100;
 
         $this->sub_accounts[] = [
-            "id" => [$this->user->flutterwave_key],
+            "id" => $this->user->flutterwave_key,
             "transaction_charge_type" => "percentage",
             "transaction_charge" => $agent_transaction_charge
         ];
@@ -59,12 +62,55 @@ class BookingService
         ) {
             $this->superAgent = $superAgent;
             $this->sub_accounts[] = [
-                "id" => [$key],
+                "id" => $key,
                 "transaction_charge_type" => "percentage",
                 "transaction_charge" => $super_agent_transaction_charge
             ];
         }
 
+
+        return $this;
+
+    }
+
+    public function generateSubAccountData2()
+    {
+        $userService = new UserShare;
+        $agent_share = $userService->myShare($this->user);
+        $share_data = $userService->calculateMainAgentShare($this->user->main_agent_share_raw, $agent_share);
+
+
+        $agent_transaction_charge = (100 -  ($share_data["sub_agent_share"])  ) / 100;
+        $super_agent_transaction_charge = (100 - $share_data["main_agent_share_percent"]) / 100;
+
+        if(!$this->user->superAgent) {
+            $this->sub_accounts[] = [
+                "id" => $this->user->flutterwave_key,
+                "transaction_charge_type" => "percentage",
+                "transaction_charge" => $agent_transaction_charge
+            ];
+        }else{
+            $this->sub_accounts[] = [
+                "id" => $this->user->flutterwave_key,
+                "transaction_split_ratio" => $share_data["sub_agent_share"]
+            ];
+
+            if (
+                !empty($share_data["main_agent_share_raw"]) &&
+                !empty($superAgent = $this->user->superAgent) &&
+                !empty($key = $superAgent->flutterwave_key)
+            ) {
+                $this->superAgent = $superAgent;
+                $this->sub_accounts[] = [
+                    "id" => $key,
+                    "transaction_split_ratio" => $share_data["main_agent_share_percent"]
+                ];
+            }
+
+        }
+
+
+        return $this;
 
     }
 }

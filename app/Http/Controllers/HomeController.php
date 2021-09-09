@@ -18,6 +18,9 @@ use App\Models\PoundTransaction;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorProduct;
+use App\Models\Voucher;
+use App\Models\VoucherProduct;
+use App\Models\Cart;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +34,7 @@ class HomeController extends Controller
 
     public $bookingService;
     public $bookConfirmationService;
+
     public function __construct()
     {
         $this->bookingService = new BookingService;
@@ -39,6 +43,25 @@ class HomeController extends Controller
 
     public function booking(Request $request)
     {
+
+        $countries = Country::all();
+        $products = Product::all();
+        $vendors = Vendor::all();
+        $user = "";
+
+        $carts_count = Cart::where('ip', session()->get('ip'))->count();
+
+        if ($request->ref) {
+            $user = User::where('referal_code', $request->ref)->first();
+        }
+
+
+        return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user','carts_count'));
+    }
+
+    public function booking2(Request $request)
+    {
+
         $countries = Country::all();
         $products = Product::all();
         $vendors = Vendor::all();
@@ -49,7 +72,7 @@ class HomeController extends Controller
         }
 
 
-        return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user'));
+        return view('homepage.booking2')->with(compact('countries', 'products', 'vendors', 'user'));
     }
 
     public function login()
@@ -102,75 +125,153 @@ class HomeController extends Controller
             'sex' => 'required',
             'dob' => 'required',
             'ethnicity' => 'required',
-            'vaccination_status' => 'required',
             'phone_no' => 'required',
             'email' => 'required',
-            'address_1' => 'required',
-            'home_town' => 'required',
-            'post_code' => 'required',
-            'home_country_id' => 'required',
             'isolation_address' => 'required',
             'isolation_town' => 'required',
             'isolation_postal_code' => 'required',
             'isolation_country_id' => 'required',
-            'document_id' => 'required',
             'arrival_date' => 'required',
             'country_travelling_from_id' => 'required',
-            'city_from' => 'required',
             'departure_date' => 'required',
-            'last_day_travel' => 'required',
-            'method_of_transportation' => 'required',
-            'transport_no' => 'required',
             'consent' => 'required'
         ]);
 
 
         $request->vendor_id = 3;
+       
+        $carts = Cart::where('ip', session()->get('ip'))->get();
 
-        if (empty($request->product_id)) {
-            session()->flash('alert-danger', "Kindly select a product");
+        if ($carts->count() == 0) {
+            session()->flash('alert-danger', "Kindly select a product and add to your cart");
             return back()->withInput();
         }
-
+       
         $request_data = $request->all();
 
-        unset($request_data['_token']);
+        unset($request_data['phone_no']);
+        $request_data['phone_no'] = $request->hidden_phone;
+        unset($request_data['hidden_phone']);
+        unset($request_data['phone_full']);
 
-        $transaction_ref = uniqid('booking_') . rand(10000, 999999);
+        
+
+        if($request->voucher != null){
+            $voucher = Voucher::where(['transaction_ref' => $request->voucher,'status' => 1] )->first();
+            
+            if($voucher != null)
+            {
+
+                if($voucher->email = null)
+                {
+                    session()->flash('alert-danger', "Sorry to inform you, but this voucher has not been assigned to anybody");
+                    return back()->withInput();
+                }
+
+                if($voucher->email != $request_data['email'])
+                {
+                    session()->flash('alert-danger', "Sorry to inform you, but this voucher has been assigned to somebody else");
+                    return back()->withInput();
+                }
+
+               if($voucher->quantity == 0)
+               {
+                    session()->flash('alert-danger', "Sorry to inform you, but the quota for this voucher has been used up");
+                    return back()->withInput();
+               }
+
+               $cart_item = Cart::where('ip', session()->get('ip'))->first();
+
+            
+               if($voucher->voucherProduct->product_id != $cart_item->vendorProduct->product_id)
+               {
+                    session()->flash('alert-danger', "Please the item selected in cart does not match the product in ther voucher");
+                    return back()->withInput();
+               }
+
+               if($voucher->quantity != $cart_item->quantity)
+               {
+                    session()->flash('alert-danger', "The quota for this voucher is $voucher->quantity, please your quantity in cart must be same");
+                    return back()->withInput();
+               }
+
+               unset($request_data['_token']);
+
+               $transaction_ref = uniqid('booking_') . rand(10000, 999999);
+               $external_ref =  $request->voucher;
+
+               if (isset($request_data['ref'])) {
+                    $request_data = $this->bookingService->getSubAccountsByRefCode($request_data['ref'])
+                    ->processRequestData($request_data);
+                }
+
+                unset($request_data['ref']);
+                unset($request_data['voucher']);
+
+                $request_data['transaction_ref'] = $transaction_ref;
+                $request_data['external_reference'] = $external_ref;
+        
+                unset($request_data['payment_method']);
+
+                $redirect_url = $this->voucherProcessing($request_data);
+                return redirect()->to($redirect_url);
+                
+                
+            }else{
+                session()->flash('alert-danger', "An invalid voucher number was provided, please kindly provide a valid one.");
+                return back()->withInput();
+            }
+        }
+
+       
+       
+
+        unset($request_data['_token']);
+        if($request->payment_method == "vastech"){
+            $transaction_ref = rand(100000, 9999999);
+        }else{
+            $transaction_ref = uniqid('booking_') . rand(10000, 999999);
+        }
+
+        $external_ref = 'REF' . rand(10000, 99999);
 
         if (isset($request_data['ref'])) {
-            $request_data = $this->bookingService->getSubAccountsByRefCode($request_data['ref'])
-                ->processRequestData($request_data);
+            $request_data_ = $this->bookingService->getSubAccountsByRefCode($request_data['ref']);
+            $request_data['subaccounts'] = $request_data_->sub_accounts;
+            $request_data["referral_code"] = $request_data_->referral_code;
+            $request_data["user_id"] = $request_data_->user_id;
         }
+
         unset($request_data['ref']);
 
 
         $request_data['transaction_ref'] = $transaction_ref;
-        $request_data['vaccination_date'] = Carbon::parse($request->vaccination_date);
-        $request_data['last_day_travel'] = Carbon::parse($request->last_day_travel);
+        $request_data['external_reference'] = $external_ref;
 
         unset($request_data['payment_method']);
 
-        $booking = Booking::create($request_data);
-
         $price = $price_pounds = 0;
-        $product_id[] = $request->product_id;
-        foreach ($product_id as $r_product) {
 
-            $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $r_product)->first();
+        $booking = Booking::create($request_data);
+        foreach ($carts as $cart) {
+            $product_id = $cart->vendorProduct->product_id;
+
+
+            $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $product_id)->first();
 
             BookingProduct::create([
                 'booking_id' => $booking->id,
-                'product_id' => $r_product,
-                'vendor_id' => $request->vendor_id,
+                'product_id' => $product_id,
+                'vendor_id' => $vendor_products->vendor_id,
                 'vendor_product_id' => $vendor_products->id,
-                'price' => $vendor_products->price,
-                'price_pounds' => $vendor_products->price_pounds,
-                'vendor_cost_price' => $vendor_products->cost_price
+                'price' => ($vendor_products->price * $cart->quantity),
+                'price_pounds' => ($vendor_products->price_pounds * $cart->quantity),
+                'vendor_cost_price' => ($vendor_products->cost_price * $cart->quantity),
+                'quantity' => $cart->quantity
             ]);
 
-            $price = $price + $vendor_products->price;
-            $price_pounds = $price_pounds + $vendor_products->price_pounds;
+            $price = $price + ($vendor_products->price * $cart->quantity);
+            $price_pounds = $price_pounds + ($vendor_products->price_pounds * $cart->quantity);
         }
 
         //send an email
@@ -199,8 +300,11 @@ class HomeController extends Controller
         } catch (\Exception $e) {
         }
 
-        $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
-
+        if($request->payment_method == "vastech"){
+            $data = $this->getVasTechData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
+        }else {
+            $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
+        }
         //redirect to payment page
         if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
             $data['subaccounts'] = $sub_accounts;
@@ -227,27 +331,18 @@ class HomeController extends Controller
                 'stripe_session' => $response->id
             ]);
         } else {
+            if($request->payment_method == "vastech"){
+                $redirect_url = $this->processVas($data);
+            }else {
+                $redirect_url = $this->processFL($data);
+            }
 
-            $redirect_url = $this->processFL($data);
         }
 
         return redirect()->to($redirect_url);
     }
 
-    public function payment_confirmation(Request $request)
-    {
-
-
-        if (env('APP_ENV', "LIVE") == "LIVE") {
-            $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
-        } else {
-            $url = "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/verify";
-        }
-
-        $request_data = $request->all();
-
-        $txRef = $request->tx_ref;
-
+    function confirm_flutterwave($url,$txRef){
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -263,94 +358,134 @@ class HomeController extends Controller
         $response = curl_exec($ch);
 
         curl_close($ch);
+        return $response;
+    }
+
+    function confirm_vas($url){
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $response;
+    }
+
+    public function payment_confirmation(Request $request,$type = null)
+    {
+        if (env('APP_ENV', "LIVE") == "LIVE") {
+            $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
+        } else {
+            $url = "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/verify";
+        }
+
+        $request_data = $request->all();
+
+        $txRef = $request->tx_ref;
+
+        if($type == "vas"){
+            $txRef = $request->transactionRef;
+            $url = "https://vastech.sevas.live/vastech/api/v1/tstatus?transactionRef=".$txRef;
+            $response = $this->confirm_vas($url,$txRef);
+
+        }else{
+            $response = $this->confirm_flutterwave($url,$txRef);
+        }
 
         $data_response = json_decode($response);
 
-        if (isset($data_response->data->status) && $data_response->data->status == "successful") {
+        if (isset($data_response->data->status) && ($data_response->data->status == "successful" || $data_response->data->status == "APPROVED")) {
 
             $booking = Booking::where('transaction_ref', $txRef)->first();
 
 
             if ($booking->status != 1) {
 
-                $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
+                $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
 
-                if ($booking->user_id) {
-                    try {
-                        DB::beginTransaction();
+                foreach ($booking_products as $booking_product) {
+                    if ($booking->user_id) {
+                        try {
+                            DB::beginTransaction();
 
-                        $userService = new UserShare;
-                        $user = User::where('id', $booking->user_id)->first();
-                        $agent_share = $userService->myShare($user);
-                        $share_data = $userService->calculateMainAgentShare($user->main_agent_share_raw, $agent_share);
+                            $userService = new UserShare;
+                            $user = User::where('id', $booking->user_id)->first();
+                            $agent_share = $userService->myShare($user);
+                            $share_data = $userService->calculateMainAgentShare($user->main_agent_share_raw, $agent_share);
 
-                        $agent_percentage = $share_data["sub_agent_share"];
+                            $agent_percentage = $share_data["sub_agent_share"];
 
-                        $cost_booking = $booking_product->price;
-
-
-                        if ($booking->card_type == null || $booking->card_type == 2) {
-
-                            //for international transaction in pounds
-                            $cost_booking = $booking_product->price_pounds;
-                            $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
-
-
-                            BookingConfirmationService::processPoundTransaction(
-                                $user,
-                                $booking->id,
-                                $agent_amount_credit,
-                                $cost_booking,
-                                $agent_percentage
-                            );
-
-                            if (!empty($superAgent = $user->superAgent)) {
-                                $super_agent_percentage = $share_data["main_agent_share_percent"];
-                                $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
-
-                                BookingConfirmationService::processPoundTransaction(
-                                    $superAgent,
-                                    $booking->id,
-                                    $super_agent_amount_credit,
-                                    $cost_booking,
-                                    $super_agent_percentage
-                                );
-                            }
-
-                        } elseif ($booking->card_type == 1) {
-                            //for local transaction in naira
                             $cost_booking = $booking_product->price;
 
-                            $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
 
-                            BookingConfirmationService::processNairaTransaction(
-                                $user,
-                                $booking->id,
-                                $agent_amount_credit,
-                                $cost_booking,
-                                $agent_percentage
-                            );
+                            if ($booking->card_type == null || $booking->card_type == 2) {
 
-                            if (!empty($superAgent = $user->superAgent)) {
-                                $super_agent_percentage = $share_data["main_agent_share_percent"];
-                                $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
+                                //for international transaction in pounds
+                                $cost_booking = $booking_product->price_pounds;
+                                $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
+
+
+                                BookingConfirmationService::processPoundTransaction(
+                                    $user,
+                                    $booking->id,
+                                    $agent_amount_credit,
+                                    $cost_booking,
+                                    $agent_percentage
+                                );
+
+                                if (!empty($superAgent = $user->superAgent)) {
+                                    $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                    $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
+
+                                    BookingConfirmationService::processPoundTransaction(
+                                        $superAgent,
+                                        $booking->id,
+                                        $super_agent_amount_credit,
+                                        $cost_booking,
+                                        $super_agent_percentage
+                                    );
+                                }
+                            } elseif ($booking->card_type == 1) {
+                                //for local transaction in naira
+                                $cost_booking = $booking_product->price;
+
+                                $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
 
                                 BookingConfirmationService::processNairaTransaction(
-                                    $superAgent,
+                                    $user,
                                     $booking->id,
-                                    $super_agent_amount_credit,
+                                    $agent_amount_credit,
                                     $cost_booking,
-                                    $super_agent_percentage
+                                    $agent_percentage
                                 );
-                            }
 
+                                if (!empty($superAgent = $user->superAgent)) {
+                                    $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                    $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
+
+                                    BookingConfirmationService::processNairaTransaction(
+                                        $superAgent,
+                                        $booking->id,
+                                        $super_agent_amount_credit,
+                                        $cost_booking,
+                                        $super_agent_percentage
+                                    );
+                                }
+                            }
+                            DB::commit();
+                        } catch (\Exception $e) {
+                            logger("An error occured while confirming payments", $request->all());
+                            DB::rollBack();
                         }
-                        DB::commit();
-                    } catch (\Exception $e) {
-                        logger("An error occured while confirming payments" , $request->all());
-                        DB::rollBack();
                     }
                 }
+
 
                 try {
 
@@ -367,30 +502,41 @@ class HomeController extends Controller
                     return redirect()->to('/booking/code/failed?b=' . $txRef);
                 }
 
-                if ($booking_product) {
 
-
+                foreach ($booking_products as $booking_product) {
                     try {
                         //check if a referral code exist
                         if ($booking->referral_code != null) {
                             //use the referral code to find the user
-                            $getUser =  User::where('referal_code', $booking->referral_code)->first();
+                            $getUser = User::where('referal_code', $booking->referral_code)->first();
 
                             //check the status set by the copy receipt
                             //if 1 :copy the agent else if 0: send normally
                             if ($getUser->copy_receipt == 1) {
                                 $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                             } elseif ($getUser->copy_receipt == 0) {
-                                $no =  Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                                $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                             }
                         } else {
                             //referral code doesnt exist
                             $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                         }
                     } catch (\Exception $e) {
+                      
                     }
+
+                }
+              
+                if (!empty($booking->phone_no)) {
+
+                    $decode = implode(", ", json_decode($code));
+
+                    $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
+                    $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
+
                 }
 
+                //update wiith transaction code
                 $booking->update([
                     'vendor_id' => 3,
                     'mode_of_payment' => 1,
@@ -398,11 +544,16 @@ class HomeController extends Controller
                     'status' => 1,
                     'booking_code' => $code
                 ]);
+
+                //to remove items from cart
+                $cart = Cart::where('ip', session()->get('ip'))->delete();
             }
+            //to remove items from cart
+            $cart = Cart::where('ip', session()->get('ip'))->delete();
 
             return redirect()->to('/booking/success?b=' . $txRef);
         }
-
+        // dd('not checking', $data_response);
         return redirect()->to('/booking/failed?b=' . $txRef);
     }
 
@@ -507,22 +658,22 @@ class HomeController extends Controller
 
         if ($request->file) {
 
-            $certificate =  time() . '.' . $request->file->extension();
+            $certificate = time() . '.' . $request->file->extension();
 
             $request->file->move(public_path('img/certificate'), $certificate);
 
             $request_data['c_o_i'] = "/img/certificate/" . $certificate;
         }
+
         $user = User::create($request_data);
+
         try {
             $message = "
-            Hi " . $request->first_name . ",
+            Hi " . $request->first_name . ",<br><br>
 
-            Thank you for your interest to register as an Agent with Traveltestsltd,<br/><br/>Kindly click the button below<br/><br/>
-            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
-                   Continue Registration
-                  </a>
-
+            Thank you for your interest to register as an Agent with Traveltestsltd.<br/><br/>
+            Your profile is currently under review and will be activated shortly by our Admin. <br><br>
+            To facilitate this process, Kindly contact <a href='https://info@traveltestsltd.com'>INFO@TRAVELTESTSLTD.COM</a>
                   <br/><br/>
                   Thank you.
                   <br/><br/>
@@ -530,6 +681,7 @@ class HomeController extends Controller
             ";
             Mail::to($request->email)->send(new BookingCreation($message, "Agent Registration"));
         } catch (\Exception $e) {
+        
         }
 
         try {
@@ -577,27 +729,102 @@ class HomeController extends Controller
     }
 
 
-    public function verify_account($referral_code, $user)
+    public function sub_verify_account($referral_code, $user)
     {
 
         $user = User::where('id', $user)->where('referal_code', $referral_code)->first();
-
+        $countries = Country::all();
         if ($user && $user->verified == 0) {
-            $user->update([
-                'verified' => '1'
-            ]);
-
-            session()->flash('alert-success', "Account has been verified. Kindly login into your account");
-
-            return redirect()->to('/login');
+            return view('users.sub_agents.continue_registration')->with(compact('user','countries'));
         } else {
             session()->flash('alert-success', "Kindly login into your account");
             return redirect()->to('/login');
         }
     }
 
+    public function super_verify_account($referral_code, $user)
+    {
+
+        $user = User::where('id', $user)->where('referal_code', $referral_code)->first();
+       
+        if ($user && $user->verified == 0) {
+
+            $user->update([
+                'verified' => '1'
+            ]);
+
+        } else {
+            session()->flash('alert-success', "Kindly login into your account");
+            return redirect()->to('/login');
+        }
+    }
+
+
+    public function complete_registration(Request $request){
+
+        $this->validate($request, [
+            'phone_no' => 'required',
+            'company' => 'required',
+            'platform_name' => 'required',
+            'director' => 'required',
+            'file' => 'file|mimes:csv,txt,xlx,xls,pdf|max:2048',
+            'certified' => 'required'
+        ]);
+
+        $request_data = $request->all();
+
+        $request_data['status'] = 0;
+        $request_data['verified'] = '1';
+
+        if ($request->file) {
+
+            $certificate = time() . '.' . $request->file->extension();
+
+            $request->file->move(public_path('img/certificate'), $certificate);
+
+            $request_data['c_o_i'] = "/img/certificate/" . $certificate;
+        }
+        unset($request_data['user_id']);
+        unset($request_data['_token']);
+        unset($request_data['file']);
+
+        User::where('id',$request->user_id)->update($request_data);
+        $user =  User::where('id',$request->user_id)->first();
+
+        
+        try {
+
+            $message2 = "
+            Hi Admin,<br/>
+
+            We would like to inform you that a new Agent has registered with Traveltestsltd.<br/><br/>
+            Name: " . $user->first_name . " " . $user->last_name . " <br/>
+            Phone: " . $user->phone_no . "<br/>
+            Email: " . $user->email . "<br/>
+            Company Name: " . $user->company . "<br/>
+            <br/>Kindly click the button below to login and review<br/><br/>
+            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                   Go to Login
+                  </a>
+
+                  <br/><br/>
+                  Thank you.
+                  <br/><br/>
+                Traveltestsltd Team
+            ";
+            Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Agent Registration"));
+
+        } catch (\Exception $e) {
+        }
+
+        session()->flash('alert-success', "Thank you for completing your profile. Your profile is currently under review by our Admin. As soon as the review is completed, you will receive an email enabling you to access your account.");
+
+        return redirect()->to('/login');
+    }
+
     public function about()
     {
+
         return view('homepage.about');
     }
 
@@ -613,18 +840,48 @@ class HomeController extends Controller
             'status' => 1
         ]);
         $user = User::where('id', $id)->first();
+        $referral = $user->referal_code;
+
         //send an email
         try {
-            $message = "Congratulations!,<br>
-            Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
-            You can now log in to your portal to complete your profile and set up your account. <br><br>
-            You will find your dedicated customer booking link on your portal <br><br>
-            Thank you for joining the  Traveltestsltd network!<br><br>
-
-            Traveltestsltd Team
-            ";
+            if($user->main_agent_share_raw == null)
+            {
+                $message = "Congratulations!,<br><br>
+                Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
+                You can now log in to your portal to complete your profile and set up your account. <br><br>
+                Kindly click the button below<br/><br/>
+                        <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "super/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                        Continue Registration
+                       </a>
+            
+                              <br/><br/>
+                You will find your dedicated customer booking link on your portal <br><br>
+                Thank you for joining the  Traveltestsltd network!<br><br>
+    
+                Traveltestsltd Team
+                ";
+            }else{
+                $message = "Congratulations!,<br><br>
+                Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
+                You can now log in to your portal to complete your profile and set up your account. <br><br>
+                You will find your dedicated customer booking link on your portal <br><br>
+                Kindly click the button below<br/><br/>
+                        <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "sub/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                        Continue Registration
+                       </a>
+            
+                              <br/><br/>
+                
+                Thank you for joining the  Traveltestsltd network!<br><br>
+    
+                Traveltestsltd Team
+                ";
+                
+            }
+           
             Mail::to($user->email)->send(new BookingCreation($message, 'Agent Activation'));
         } catch (\Exception $e) {
+            dd($e);
         }
 
         return back();
@@ -695,6 +952,137 @@ class HomeController extends Controller
         return view('homepage.products')->with(compact('products'));
     }
 
+    public function viewProducts($type)
+    {
+        $faq = 1;
+        $products = VendorProduct::where('vendor_id', 3);
+        if ($type == "all") {
+            $faq = 0;
+            $products = $products->get();
+        } elseif ($type == "Green") {
+            $products = $products->where('product_id', 1)->get();
+        } elseif ($type == "Amber_v") {
+            $products = $products->whereIn('product_id', [2, 10])->get();
+
+        } elseif ($type == "Amber_uv") {
+            $products = $products->whereIn('product_id', [2, 4, 3, 10])->get();
+        } elseif ($type == "Red") {
+            $products = $products->where('product_id', 5)->get();
+        } elseif ($type == "UK") {
+            $faq = 0;
+            $products = [];
+        }
+        return view('homepage.addProducts')->with(compact('products', 'faq', 'type'));
+    }
+
+    public function viewCart()
+    {
+        $carts = Cart::where('ip', myIP())->get();
+        $cartSum = 0;
+        foreach ($carts as $cart) {
+
+            $cartSum = $cartSum + ($cart->vendorProduct->price_pounds * $cart->quantity);
+        }
+
+        return view('homepage.cart')->with(compact('carts', 'cartSum'));
+    }
+
+    public function addToCart($p_id, $v_id)
+    {
+        $ip = myIP();
+        $v_product = VendorProduct::where([
+            'product_id' => $p_id,
+            'vendor_id' => $v_id
+        ])->first();
+
+        $check = Cart::where([
+            'ip' => $ip,
+            'vendor_product_id' => $v_product->id
+        ])->count();
+
+        $product = $v_product->product->name;
+        if ($check == 0) {
+
+            //check again
+            $check_at_all = Cart::where([
+                'ip' => $ip
+            ])->count();
+
+            if ($check_at_all > 0) {
+                $data = [
+                    "message" => "Please complete one booking at a time. You can book more products and packages as required",
+                    "btn_text" => "Add from cart",
+                    "btn_color" => "white",
+                    "color" => "#1E50A0",
+                    "error" => "yes"
+                ];
+            } else {
+
+                $cart__= Cart::create([
+                    'ip' => $ip,
+                    'quantity' => 1,
+                    'vendor_product_id' => $v_product->id
+                ]);
+
+
+                $data = [
+                    "message" => "Added $product to cart.",
+                    "btn_text" => "Remove from cart",
+                    "btn_color" => "white",
+                    "color" => "#1E50A0",
+                     "error" => "no",
+                    "cart_id" => $cart__->id
+                ];
+            }
+        } else {
+
+            Cart::where([
+                'ip' => $ip,
+                'vendor_product_id' => $v_product->id
+            ])->delete();
+
+            $data = [
+                "message" => "Removed $product from cart.",
+                "btn_text" => "Add to Cart",
+                "btn_color" => "#1E50A0",
+                "color" => "white",
+                "error" => "no"
+            ];
+            // return "$product has already been added to cart.";
+        }
+        $data["cart_items"] = Cart::where('ip', $ip)->count();
+        return response()->json($data);
+    }
+
+    public function updateCart($id, $quantity)
+    {
+        $singleCart = Cart::findorfail($id);
+        $singleCart->update(['quantity' => $quantity]);
+        $singleCart->refresh();
+
+        $cartSum = 0;
+        $carts = Cart::where('ip', myIP())->get();
+        foreach ($carts as $cart) {
+            $cartSum = $cartSum + ($cart->vendorProduct->price_pounds * $cart->quantity);
+        }
+
+        return response()->json([
+            "message" => "Quantity has been updated",
+            "item_total" => number_format($singleCart->quantity * $singleCart->vendorProduct->price_pounds, 2),
+            "total_price" => number_format($cartSum, 2)
+        ]);
+    }
+
+    public function deleteCart($id)
+    {
+        $carts = Cart::where('id', $id)->first();
+
+        $carts->delete();
+
+        session()->flash("alert-success", "Item removed from ");
+        return back();
+    }
+
     public function check_price($vendor_id)
     {
         $vendor_products = VendorProduct::where('vendor_id', $vendor_id)->get();
@@ -717,23 +1105,12 @@ class HomeController extends Controller
         foreach ($vendor_products as $vproduct) {
             $price = "£" . number_format($vproduct->price_pounds, 0);
 
-           if ($nationality == 81) {
-               // naira to ghanian cedis
-               $price = "GH₵" . number_format($vproduct->price * 0.014, 0);
-           }
-        //    else
-                if ($nationality == 156) {
+            if ($nationality == 81) {
+                $price = "GH₵" . number_format($vproduct->price * 0.014, 0);
+            }
+            if ($nationality == 156) {
                 $price = "₦" . number_format($vproduct->price, 0);
             }
-//                elseif ($nationality == 210) {
-//                // naira to tanzanian cedis
-//                $price = "TZS" . number_format($vproduct->price * 5.64, 0);
-//            } elseif ($nationality == 110) {
-//                $price = "KES" . number_format($vproduct->price * 0.26, 0);
-//            } elseif ($nationality == 197) {
-//                // naira to south african rand
-//                $price = "ZAR" . number_format($vproduct->price * 0.036, 0);
-//            }
 
             $product[] = [
                 'name' => $vproduct->product->name,
@@ -926,6 +1303,16 @@ class HomeController extends Controller
         Mail::to($booking->email)->send(new BookingCreation($message));
     }
 
+    public function country_query($id)
+    {
+        $query = CountryColor::where('country_id', $id)->first();
+        if ($query == null) {
+            return "No color code available for this country";
+        } else {
+            $color = $query->color->name;
+            return "The country selected is $color";
+        }
+    }
 
     public function country_bank($country)
     {
@@ -1052,7 +1439,7 @@ class HomeController extends Controller
                     //check if a referral code exist
                     if ($booking->referral_code != null) {
                         //use the referral code to find the user
-                        $getUser =  User::where('referal_code', $booking->referral_code)->first();
+                        $getUser = User::where('referal_code', $booking->referral_code)->first();
 
                         //check the status set by the copy receipt
                         //if 1 :copy the agent else if 0: send normally
@@ -1101,5 +1488,212 @@ class HomeController extends Controller
 
 
         return redirect()->to('/booking/failed?b=' . $txRef);
+    }
+
+    public function view_uk()
+    {
+        $countries = Country::all();
+        return view('homepage.uk_page')->with(compact('countries'));
+    }
+
+    public function voucherProcessing(array $request_data ){
+
+        $price = $price_pounds = 0;
+       
+
+        $booking = Booking::create($request_data);
+        $carts =  Cart::where('ip', session()->get('ip'))->get();
+        $voucher =  Voucher::where(['transaction_ref'=> $request_data['external_reference'], 'status' => 1])->first();
+        foreach ($carts as $cart) {
+            $product_id = $cart->vendorProduct->product_id;
+
+
+            $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $product_id)->first();
+
+            BookingProduct::create([
+                'booking_id' => $booking->id,
+                'product_id' => $product_id,
+                'vendor_id' => $vendor_products->vendor_id,
+                'vendor_product_id' => $vendor_products->id,
+                'price' => ($vendor_products->price * $cart->quantity),
+                'price_pounds' => ($vendor_products->price_pounds * $cart->quantity),
+                'vendor_cost_price' => ($vendor_products->cost_price * $cart->quantity),
+                'quantity' => $cart->quantity
+            ]);
+
+            $price = $price + ($vendor_products->price * $cart->quantity);
+            $price_pounds = $price_pounds + ($vendor_products->price_pounds * $cart->quantity);
+        }
+
+        $charged = $voucher->voucherProduct->charged_amount;
+        if($voucher->voucherProduct->currency == 'NG')
+        {
+          $currency = 'NGN';
+        }else{
+            $currency = 'GBP';
+        }
+
+        BookingProduct::where('booking_id', $booking->id)->update([
+            'charged_amount' => $charged, 'currency' => $currency
+        ]);
+
+        $txRef =  $request_data['transaction_ref'];
+         
+        if ($booking->status != 1) {
+
+            $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
+
+            foreach ($booking_products as $booking_product) {
+                if ($voucher != null) {
+                    try {
+                        DB::beginTransaction();
+
+                        $userService = new UserShare;
+                        $user = User::where('id', $voucher->agent)->first();
+                        $agent_share = $userService->myShare($user);
+                        $share_data = $userService->calculateMainAgentShare($user->main_agent_share_raw, $agent_share);
+
+                        $agent_percentage = $share_data["sub_agent_share"];
+
+                        $cost_booking = $booking_product->price;
+
+
+                        if ($voucher->currency != 'NG') {
+
+                            //for international transaction in pounds
+                            $cost_booking = $booking_product->price_pounds;
+                            $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
+
+
+                            BookingConfirmationService::processPoundTransaction(
+                                $user,
+                                $booking->id,
+                                $agent_amount_credit,
+                                $cost_booking,
+                                $agent_percentage
+                            );
+
+                            if (!empty($superAgent = $user->superAgent)) {
+                                $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
+
+                                BookingConfirmationService::processPoundTransaction(
+                                    $superAgent,
+                                    $booking->id,
+                                    $super_agent_amount_credit,
+                                    $cost_booking,
+                                    $super_agent_percentage
+                                );
+                            }
+                        } elseif ($voucher->currency == 'NG') {
+                            //for local transaction in naira
+                            $cost_booking = $booking_product->price;
+
+                            $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
+
+                            BookingConfirmationService::processNairaTransaction(
+                                $user,
+                                $booking->id,
+                                $agent_amount_credit,
+                                $cost_booking,
+                                $agent_percentage
+                            );
+
+                            if (!empty($superAgent = $user->superAgent)) {
+                                $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
+
+                                BookingConfirmationService::processNairaTransaction(
+                                    $superAgent,
+                                    $booking->id,
+                                    $super_agent_amount_credit,
+                                    $cost_booking,
+                                    $super_agent_percentage
+                                );
+                            }
+                        }
+                        DB::commit();
+                    } catch (\Exception $e) {
+                        logger("An error occured while confirming payments", $request_data);
+                        DB::rollBack();
+                    }
+                }
+            }
+
+
+            try {
+
+                $code = $this->sendData($booking);
+                $cart_item = Cart::where('ip', session()->get('ip'))->first();
+                $q = $voucher->quantity - $cart_item->quantity;
+
+                $voucher->update([
+                        'quantity' => $q
+                ]);
+
+            } catch (\Exception $e) {
+
+                $booking->update([
+                    'vendor_id' => 3,
+                    'mode_of_payment' => 1,
+                    'transaction_ref' => $txRef,
+                    'status' => 1
+                ]);
+              
+                $redirect = '/booking/code/failed?b=' . $txRef;
+                return $redirect;
+            }
+
+
+            foreach ($booking_products as $booking_product) {
+                try {
+                    //check if a referral code exist
+                    if ($booking->referral_code != null) {
+                        //use the referral code to find the user
+                        $getUser = User::where('referal_code', $booking->referral_code)->first();
+
+                        //check the status set by the copy receipt
+                        //if 1 :copy the agent else if 0: send normally
+                        if ($getUser->copy_receipt == 1) {
+                            $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                        } elseif ($getUser->copy_receipt == 0) {
+                            $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                        }
+                    } else {
+                        //referral code doesnt exist
+                        $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                    }
+                } catch (\Exception $e) {
+                }
+            }
+
+            if (!empty($booking->phone_no)) {
+
+                $decode = implode(", ", json_decode($code));
+
+                $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
+                $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
+
+            }
+
+            //update wiith transaction code
+            $booking->update([
+                'vendor_id' => 3,
+                'mode_of_payment' => 1,
+                'transaction_ref' => $txRef,
+                'status' => 1,
+                'booking_code' => $code
+            ]);
+            $redirect =  '/booking/success?b=' . $txRef;
+            return $redirect;
+            //to remove items from cart
+            $cart = Cart::where('ip', session()->get('ip'))->delete();
+        }
+        
+        //to remove items from cart
+        $cart = Cart::where('ip', session()->get('ip'))->delete();
+        $redirect ='/booking/success?b=' . $txRef;
+        return $redirect;
+      
     }
 }

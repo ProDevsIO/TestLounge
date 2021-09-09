@@ -30,10 +30,10 @@
             min-height: 300px;
         }
         .login_information{
-            margin-top: 30%;
+            margin-top: ;
         }
         .login_information p{
-            font-size: 30px;
+            font-size: 20px;
         }
     }
 </style>
@@ -59,9 +59,7 @@
             </div>
           <div class="container-fluid text-left"  style="width:80%; padding: 5px;">
               <div class="login_information">
-                     <p style="text-align: justify"><b>Are you a Travel agent , Company travel manager or frequent flier into the UK ?
-                You can join our partnership network which gives you access to discounts and value
-                    added services. <a href="#">Learn More</a></b></p>
+                     <p style="text-align: justify"><b>Are you a Travel Agent, a company Travel Manager or a frequent traveller? You can join our partnership network which gives you access to discounts and value added services. <a href="#">Learn More</a></b></p>
               </div>
             
          </div>
@@ -79,7 +77,7 @@
                     </a>
                 </h2>
                 <h4 class="text-uppercase- text-purple mb-1 text-center">Login into your account</h4>
-                <p class="text-center">Are you trying to make a booking? Kindly click this <a href="/booking">link</a> to book</p>
+                <!-- <p class="text-center">Are you trying to make a booking? Kindly click this <a href="/booking">link</a> to book</p> -->
                 @include('errors.showerrors')
                 <form action="{{ url('/login') }}" method="post">
                     @csrf

@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="media-body text-light" title="Pending bookings">
                                     <h4 class="text-uppercase mb-0 weight500">{{ $users->count() }}</h4>
-                                    <span>Sub Agents</span>
+                                    <span>Sub-Agents</span>
                                 </div>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                 @if (!auth()->user()->isAdmin())
                 <div class="col-12 text-right mb-3">
                     <a href="{{ route("sub-agents.create")}}" class="btn btn-primary">
-                        New Sub Agent
+                        New Sub-Agent
                     </a>
                 </div>
                 @endif
@@ -100,5 +100,12 @@
                 "order": []
             });
         });
+        function confirmation(url) {
+            var d = confirm("Are you sure, you want to perform this action?");
+
+            if (d) {
+                window.location = url;
+            }
+        }
     </script>
 @endsection

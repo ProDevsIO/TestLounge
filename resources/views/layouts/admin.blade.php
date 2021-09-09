@@ -111,7 +111,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-inline">
-                <input type="text" class="form-control" value="{{ url('/booking?ref='.auth()->user()->referal_code) }}" id="myInput">
+                <input type="text" style="width: 75%" class="form-control" value="{{ url('/?ref='.auth()->user()->referal_code) }}" id="myInput">
                 <button onclick="copyText()" class="btn btn-primary">Copy Link</button></div>
 
                 <div class="barcode text-center m-3">
@@ -127,17 +127,17 @@
                     </a>
 
                     <!-- Facebook -->
-                    <a href="http://www.facebook.com/sharer.php?u={{ url('/booking?ref='.auth()->user()->referal_code) }}" target="_blank">
+                    <a href="http://www.facebook.com/sharer.php?u={{ url('/?ref='.auth()->user()->referal_code) }}" target="_blank">
                         <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook"  style="height: 50px; width: 50px;"/>
                     </a>
 
                     <!-- LinkedIn -->
-                    <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ url('/booking?ref='.auth()->user()->referal_code) }}"
+                    <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ url('/?ref='.auth()->user()->referal_code) }}"
                        target="_blank">
                         <img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" style="height: 50px; width: 50px;"/>
                     </a>
 
-                    <a href="whatsapp://send?text=Are you travelling to the UK, Book your travel test here,follow this link: {{ url('/booking?ref='.auth()->user()->referal_code) }}"
+                    <a href="whatsapp://send?text=Are you travelling to the UK, Book your travel test here,follow this link: {{ url('/?ref='.auth()->user()->referal_code) }}"
                        target="_blank">
                         <img src="https://platform-cdn.sharethis.com/img/whatsapp.svg" alt="Whatsapp" style="
                         height: 50px;
@@ -147,7 +147,16 @@
                         padding: 5px;"/>
                     </a>
                 </div>
-
+<br/>
+                <div class=" alert alert-warning">
+                    @if(auth()->user()->agent_show_name == 0)
+                        If you would like company name to show on the booking page through the referral link, Kindly click the button to enable it.
+                        <a  class="btn btn-md btn-success text-white" href="javascript:;"  onclick="enable(' {{auth()->user()->id}}')">Enable</a>
+                    @else
+                        If you would like company name not to show on the booking page through the referral link, Kindly click the button to disable it.
+                        <a href="javascript:;"  class="btn btn-md btn-warning  text-white"  onclick="disable('{{auth()->user()->id}}')">Disable</a>
+                    @endif
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -155,6 +164,8 @@
         </div>
     </div>
 </div>
+
+
 
 <div class="app-body">
     <!--left sidebar start-->
@@ -179,23 +190,47 @@
                             <li><a href="{{ url('/pending/booking') }}">Unpaid Bookings</a></li>
                             <li><a href="{{ url('complete/booking') }}">Paid Bookings</a></li>
                             @if(auth()->user()->type == "1")
+                           
                             <li><a href="{{ url('/view/agent/booking') }}">Agent Bookings</a></li>
                             <li><a href="{{ url('/view/individual/booking') }}">Individual Bookings</a></li>
                             @endif
                         </ul>
                     </li>
+                    @if(auth()->user()->main_agent_id == null && auth()->user()->type == 2)
                     <li>
                       <a href="{{ route("sub-agents.index") }}">
                             <i class="icon-calculator"></i>
-                            <span>Sub agents</span>
+                            <span>Sub-agents</span>
                         </a>
                     </li>
+                    @endif
                     <li>
                       <a href="{{ url('/view/transactions') }}">
                             <i class="icon-calculator"></i>
                             <span>View transactions</span>
                         </a>
                     </li>
+                    
+                   
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class=" icon-book-open"></i>
+                                <span>Vouchers</span>
+                            </a>
+                            <ul class="sub">
+                            @if(auth()->user()->type == "2")
+                                <li><a href="{{ url('/agent/view/products') }}">Purchase Product Vouchers</a></li>
+                            @endif
+                                <li><a href="{{ url('/view/vouchers') }}">Vouchers List</a></li>
+                            
+                            
+                                <!-- <li><a href="{{ url('/view/agent/booking') }}">Agent Bookings</a></li>
+                                <li><a href="{{ url('/view/individual/booking') }}">Individual Bookings</a></li> -->
+                        
+                            </ul>
+                        </li>
+                  
+
                     @if(auth()->user()->type == "2")
                    <li>
                       <a href="{{ url('/user/bank') }}">

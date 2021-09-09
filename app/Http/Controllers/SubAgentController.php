@@ -58,12 +58,6 @@ class SubAgentController extends Controller
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'email' => 'required|string|unique:users,email',
-            'phone_no' => 'required|string',
-            'company' => 'required|string',
-            'platform_name' => 'required|string',
-            'director' => 'required|string',
-            'file' => 'file|mimes:csv,txt,xlx,xls,pdf,docx|max:2048',
-            'certified' => 'required|string',
             'my_share' => 'required|gt:0',
         ]);
 
@@ -81,21 +75,20 @@ class SubAgentController extends Controller
         $data["password"] = bcrypt($password);
         $data["main_agent_id"] = $main_agent->id;
 
-        $share_data = $this->userShareHelper->calculateMainAgentShare($data["my_share"]);
+        $data["main_agent_share_raw"] = $data["my_share"];
         $data['referal_code'] = $referral;
         $data['type'] = 2;
         $data['status'] = 0;
 
-        unset($share_data["sub_agent_share"]);
         unset($data["my_share"]);
         unset($data["file"]);
-        $user = User::create(array_merge($data, $share_data));
+        $user = User::create($data);
 
         Mail::to($user->email)->send(new NewSubAgent([
             "email" => $user->email,
             "password" => $password,
             "main_agent_name" => $main_agent->first_name . " " . $main_agent->last_name,
-            "complete_link" => env('APP_URL', "https://uktraveltest.prodevs.io") . "/continue/registration/" . $referral . "/" . $user->id
+            "complete_link" => env('APP_URL', "https://uktraveltest.prodevs.io") . "/sub/continue/registration/" . $referral . "/" . $user->id
         ]));
 
         return redirect()->route("sub-agents.index")->with('alert-success', "Successfully created sub-agent");
