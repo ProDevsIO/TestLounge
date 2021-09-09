@@ -65,15 +65,17 @@
                                                                                            class="btn btn-danger">Add
                         Bank</a>
                 </div>@else
-                <div class="alert alert-success">
-                    <p>This is your dedicated client booking link . Share this with your clients to make bookings and
-                        payments which are tied to the bank account you have provided.<br/><a href="javascript:;"
-                                                                                         data-toggle="modal"
-                                                                                         data-target="#referralModal">Referral
-                            Code: {{ url('/?ref='.auth()->user()->referal_code) }}</a></p>
+                @if(auth()->user()->type != 1)
+                    <div class="alert alert-success">
+                        <p>This is your dedicated client booking link . Share this with your clients to make bookings and
+                            payments which are tied to the bank account you have provided.<br/><a href="javascript:;"
+                                                                                            data-toggle="modal"
+                                                                                            data-target="#referralModal">Referral
+                                Code: {{ url('/?ref='.auth()->user()->referal_code) }}</a></p>
 
-                </div>
-        @endif
+                    </div>
+                @endif
+            @endif
         <!--states start-->
             <div class=" d-block d-sm-none text-center">
                 <img src="/img/slide_sideways.gif" style="height: 65px;margin-left: 10px;">

@@ -162,6 +162,18 @@ class HomeController extends Controller
             if($voucher != null)
             {
 
+                if($voucher->email = null)
+                {
+                    session()->flash('alert-danger', "Sorry to inform you, but this voucher has not been assigned to anybody");
+                    return back()->withInput();
+                }
+
+                if($voucher->email != $request_data['email'])
+                {
+                    session()->flash('alert-danger', "Sorry to inform you, but this voucher has been assigned to somebody else");
+                    return back()->withInput();
+                }
+
                if($voucher->quantity == 0)
                {
                     session()->flash('alert-danger', "Sorry to inform you, but the quota for this voucher has been used up");
@@ -173,13 +185,13 @@ class HomeController extends Controller
             
                if($voucher->voucherProduct->product_id != $cart_item->vendorProduct->product_id)
                {
-                    session()->flash('alert-danger', "Please the item selected in cart do not match the product in ther voucher");
+                    session()->flash('alert-danger', "Please the item selected in cart does not match the product in ther voucher");
                     return back()->withInput();
                }
 
-               if($voucher->quantity < $cart_item->quantity)
+               if($voucher->quantity != $cart_item->quantity)
                {
-                    session()->flash('alert-danger', "The quota for this voucher is $voucher->quantity, please your quantity in cart cannot be greater than $voucher->quantity");
+                    session()->flash('alert-danger', "The quota for this voucher is $voucher->quantity, please your quantity in cart must be same");
                     return back()->withInput();
                }
 

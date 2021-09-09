@@ -33,11 +33,10 @@
                                             <tr>
                                                 @if(auth()->user()->type == 1)
                                                 <th> Agent</th>
-                                                @elseif(auth()->user()->type == 2)
-                                                <th scope="col">Name</th>
                                                 @endif
+                                                <th> Assigned</th>
                                                 <th scope="col">Voucher Number</th>
-                                                <th scope="col">Product</th>
+                                                <th scope="col" style="padding-left:70px; padding-right:70px">Test package</th>
                                                 <th scope="col">Amount</th>
                                                 <th scope="col">Quantity</th>
                                                 <th scope="col">type</th>
@@ -50,7 +49,7 @@
                                             <tbody>
                                        
                                             @foreach($vouchers as $voucher)
-                                                @if($voucher->status != 0)
+                                                
                                                     <tr>
                                                        
                                                         @if(auth()->user()->type == 1)
@@ -59,12 +58,11 @@
                                                             @else
                                                             <td> <span class ="badge badge-danger"> Agent NULL</span></td>
                                                             @endif
-                                                        @elseif(auth()->user()->type == 2)
-                                                            @if(!empty($voucher->user))
-                                                                <td>{{ $voucher->user->first_name }} {{$voucher->user->last_name}}</td>
-                                                            @else
-                                                                <td> <span class ="badge badge-danger"> Agent NULL</span></td>
-                                                            @endif
+                                                        @endif
+                                                        @if($voucher->email != null)
+                                                            <td>{{ $voucher->user->email }}</td>
+                                                         @else
+                                                            <td> <span class ="badge badge-warning text-white"> UNASSIGNED</span></td>
                                                         @endif
                                                         <td>{{ $voucher->transaction_ref }}</td>
 
@@ -100,14 +98,15 @@
                                                         <td>
                                                             <div class="btn-group" role="group">
                                                                 <button id="btnGroupDrop1" type="button"
-                                                                        class="btn btn-primary dropdown-toggle"
+                                                                        class="btn btn-primary dropdown-toggle btn-sm"
                                                                         data-toggle="dropdown" aria-haspopup="true"
                                                                         aria-expanded="false">
                                                                     Action
                                                                 </button>
                                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                                    
-                                                                    @if($voucher->quantity == null)
+                                                                    @if($voucher->email == null)
+                                                                   
                                                                         <a class="dropdown-item" data-toggle="modal"
                                                                         href="#refmodal{{$voucher->id}}">Send code via email</a>
                                                                     @endif
@@ -115,7 +114,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                    @endif
+                                                    
                                                    <!-- Modal -->
 
                                             <div id="refmodal{{$voucher->id}}" class="modal fade" role="dialog">
@@ -131,6 +130,9 @@
 
                                                         </div>
                                                         <div class="modal-body">
+                                                                    <div class="alert alert-warning">
+                                                                        <p><span class="badge badge-danger">Notice!</span> Once this code is sent, it will be assigned to the email address that this email has been sent to, meaning that this code can only be used by the assigned email for booking. </p>
+                                                                    </div>
                                                             <form action="{{ url('/voucher/email/'.$voucher->id) }}"
                                                                   method="post">
                                                                 @csrf
