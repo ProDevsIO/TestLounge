@@ -46,4 +46,9 @@ class Product extends Model
 					->withPivot('id', 'price')
 					->withTimestamps();
 	}
+
+	public function voucherCount()
+	{
+		return $this->hasOne(VoucherCount::class, 'product_id')->where('agent' ,auth()->user()->id);
+	}
 }

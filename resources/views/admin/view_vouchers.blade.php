@@ -17,7 +17,87 @@
     <div class="content-wrapper">
         <div class="container-fluid">
             <div class="row">
-                
+            @foreach($products as $product)
+                <div class="col-xl-4 col-sm-4">
+                        <div class="card mb-4 bg-purple" title="Revenue">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Revenue">
+                                        <h6 class="text-uppercase mb-0 weight500">{{$product->name}}</h6>
+                                        <span>Quota: 
+                                            @if($product->voucherCount)
+                                            {{$product->voucherCount->quantity}}
+                                              @else  
+                                              0
+                                            @endif</span>
+                                            
+                                           
+                                    </div>
+                                    
+                                </div>
+                                <br>
+                                @if($product->voucherCount)
+                                <button class="btn btn-outline-dark text-white btn-block"data-toggle="modal"
+                                                                        href="#refmodal{{$product->id}}">generate voucher</button>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                        <!-- Modal -->
+
+                        <div id="refmodal{{$product->id}}" class="modal fade" role="dialog">
+                                                <div class="modal-dialog">
+
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Assign voucher code to Client</h4>
+                                                            <button type="button" class="close pull-left"
+                                                                    data-dismiss="modal">&times;
+                                                            </button>
+
+                                                        </div>
+                                                        <div class="modal-body">
+                                                                    <div class="alert alert-warning">
+                                                                        <p><span class="badge badge-danger">Notice!</span> Once this code is generated, it will be assigned to this email address and email will be sent out with the booking link for the voucher, This simply means that the code generated can only be used by the assigned email for booking. </p>
+                                                                    </div>
+                                                            <form action="{{ url('/voucher/email/'.$product->id) }}"
+                                                                  method="post">
+                                                                @csrf
+                                                        
+                                                                    <label for=""> Client Email</label>
+                                                                    <input type="email" name="email" class="form-control">
+                                                                    <br>
+                                                                    <label for=""> Please select a Quantity</label>
+                                                                    <select name="quantity" id="" class="form-control">
+                                                                        
+                                                                    @if($product->voucherCount)
+                                                                        @for($i=1; $i <= $product->voucherCount->quantity; $i++)
+                                                                            <option value="{{$i}}">{{$i}}</option>
+                                                                        @endfor
+                                                                    @endif
+                                                                    </select>
+                                                                    
+                                                        
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-sm btn-info">submit
+                                                            </button>
+                                                            </form>
+                                                            <button type="button" class="btn btn-sm btn-info"
+                                                                    data-dismiss="modal">Close
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                               
+                @endforeach
                 <div class="col-xl-12">
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
@@ -37,19 +117,19 @@
                                                 <th> Assigned</th>
                                                 <th scope="col">Voucher Number</th>
                                                 <th scope="col" style="padding-left:70px; padding-right:70px">Test package</th>
-                                                <th scope="col">Amount</th>
+                                                <!-- <th scope="col">Amount</th> -->
                                                 <th scope="col">Quantity</th>
-                                                <th scope="col">type</th>
+                                                
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Date</th>
-                                                <th scope="col">Action</th>
+                                               
                                                 <!-- <th scope="col">Action</th> -->
                                             </tr>
                                             </thead>
                                             <tbody>
                                        
                                             @foreach($vouchers as $voucher)
-                                                
+                                        
                                                     <tr>
                                                        
                                                         @if(auth()->user()->type == 1)
@@ -60,19 +140,15 @@
                                                             @endif
                                                         @endif
                                                         @if($voucher->email != null)
-                                                            <td>{{ $voucher->user->email }}</td>
+                                                            <td>{{ $voucher->email }}</td>
                                                          @else
                                                             <td> <span class ="badge badge-warning text-white"> UNASSIGNED</span></td>
                                                         @endif
-                                                        <td>{{ $voucher->transaction_ref }}</td>
+                                                        <td><a href="/booking/voucher/{{ $voucher->voucher }}">{{ $voucher->voucher }}</a></td>
 
-                                                        <td>{{optional(optional(optional($voucher)->voucherProduct)->product)->name}}</td>
+                                                        <td>{{optional(optional(optional($voucher)->voucherCount)->product)->name}}</td>
                                                         
-                                                            @if(optional($voucher->voucherProduct)->currency == "NG")
-                                                            <td>₦{{ number_format(optional($voucher->voucherProduct)->charged_amount) }}</td>
-                                                            @else
-                                                            <td>£{{ number_format(optional($voucher->voucherProduct)->charged_amount) }}</td>
-                                                            @endif
+                            
                                                         
                                                         <td>@if($voucher->quantity == 0)
                                                             Quota has been used up
@@ -80,22 +156,14 @@
                                                             {{ $voucher->quantity }}
                                                             @endif
                                                         </td>
-                                                        <td>
-                                                            @if($voucher->type == 1)
-                                                            <span class ="badge badge-success"> Family/Group plan</span>
-                                                            @elseif($voucher->typ == 2)
-                                                            <span class ="badge badge-success"> Individual plan</span>
-                                                            @else
-                                                            <span class ="badge badge-danger">Invalid</span>
-                                                            @endif
-                                                        </td>
+                                                        
                                                         @if($voucher->status == 0)
                                                         <td><span class ="badge badge-warning">Pending </span></td>
                                                         @else
-                                                        <td> <span class ="badge badge-success"> Paid</span></td>
+                                                        <td> <span class ="badge badge-success"> Used</span></td>
                                                         @endif
                                                         <td>{{ $voucher->created_at }}</td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <div class="btn-group" role="group">
                                                                 <button id="btnGroupDrop1" type="button"
                                                                         class="btn btn-primary dropdown-toggle btn-sm"
@@ -112,48 +180,9 @@
                                                                     @endif
                                                                 </div>
                                                             </div>
-                                                        </td>
+                                                        </td> -->
                                                     </tr>
                                                     
-                                                   <!-- Modal -->
-
-                                            <div id="refmodal{{$voucher->id}}" class="modal fade" role="dialog">
-                                                <div class="modal-dialog">
-
-                                                    <!-- Modal content-->
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Email voucher code to Client</h4>
-                                                            <button type="button" class="close pull-left"
-                                                                    data-dismiss="modal">&times;
-                                                            </button>
-
-                                                        </div>
-                                                        <div class="modal-body">
-                                                                    <div class="alert alert-warning">
-                                                                        <p><span class="badge badge-danger">Notice!</span> Once this code is sent, it will be assigned to the email address that this email has been sent to, meaning that this code can only be used by the assigned email for booking. </p>
-                                                                    </div>
-                                                            <form action="{{ url('/voucher/email/'.$voucher->id) }}"
-                                                                  method="post">
-                                                                @csrf
-                                                        
-                                                                    <label for=""> Client Email</label>
-                                                                    <input type="email" name="email" class="form-control">
-                                                                    
-                                                        
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-sm btn-info">submit
-                                                            </button>
-                                                            </form>
-                                                            <button type="button" class="btn btn-sm btn-info"
-                                                                    data-dismiss="modal">Close
-                                                            </button>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
                                                
                                             @endforeach
                                         

@@ -72,6 +72,7 @@ Route::get('/booking/success', [\App\Http\Controllers\HomeController::class,"boo
 Route::get('/booking/code/failed', [\App\Http\Controllers\HomeController::class,"code_failed"])->name('code_failed');
 Route::get('/booking/stripe/success', [\App\Http\Controllers\HomeController::class,"success_stripe"])->name('success_stripe');
 Route::get('/booking/stripe/failed', [\App\Http\Controllers\HomeController::class,"success_failed"])->name('failed_stripe');
+Route::get('/booking/voucher/{code}', [\App\Http\Controllers\HomeController::class,"voucher_booking"]);
 
 Route::get('/testEmail', [\App\Http\Controllers\HomeController::class,"testEmail"])->name('testEmail');
 Route::get('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"make_payment"])->name('make_payment');
@@ -127,7 +128,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit/profile/view', [\App\Http\Controllers\DashboardController::class, "edit_profile_view"]);
     Route::post('/edit/profile', [\App\Http\Controllers\DashboardController::class, "edit_profile"]);
     Route::get('/agent/view/products', [\App\Http\Controllers\DashboardController::class,"agent_view_product"]);
-    Route::get('/post/agent/buy/{product_id}/{vendor_id}/{quantity}/{type}', [\App\Http\Controllers\DashboardController::class,"post_agent_buy"]);
+    Route::get('/post/agent/buy/{product_id}/{vendor_id}/{quantity}', [\App\Http\Controllers\DashboardController::class,"post_agent_buy"]);
     Route::get('/process/price/{product_id}/{quantity}', [\App\Http\Controllers\DashboardController::class,"agent_process_price"]);
     Route::get('/voucher/payment/confirmation', [\App\Http\Controllers\DashboardController::class,"voucher_payment_confirmation"]);
     Route::get('/view/vouchers', [\App\Http\Controllers\DashboardController::class, "view_vouchers"]);

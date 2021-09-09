@@ -17,7 +17,7 @@
                         <!-- <div class="fw-700 fs-28 text-center">Travel Information</div> -->
 
                         @include('errors.showerrors')
-                        @if($carts_count > 0)
+                        @if($carts_count > 0 || isset($voucher))
                             <form action="{{ url('/post/booking') }}" method="post"
                                   class="bg-white">
                                 @csrf
@@ -40,8 +40,14 @@
                                     <label>Contact Email: <span class="show_required"> *</span></label>
                                     <small class="text-muted" style="color:red"> Please provide only ONE email address
                                     </small>
+                                    @if(isset($voucher))
+                                    <input type="text" name="email" value="{{ $voucher->email }}" required/>
+
+                                    @else
 
                                     <input type="text" name="email" value="{{ old('email') }}" required/>
+                                    @endif
+
                                 </div>
                                 <div class="col-md-12 " style="margin-top: 20px">
                                     <label>Phone number<span class="show_required"> *</span></label>
@@ -139,7 +145,7 @@
                                                 class="show_required"> *</span></label>
                                     <select class="select-2 select2 country_id__"
                                             name="country_travelling_from_id" autocomplete="off"
-                                            id="travel_from" onchange="run()" onselect="selectCountry()">
+                                            id="travel_from"  onselect="selectCountry()">
                                         <option value="">Make a selection</option>
                                         @foreach($countries as $country)
                                             <option value="{{ $country->id }}"
@@ -174,8 +180,21 @@
                                 <div class="col-md-12">
                                     <div style="margin-top: 10px">
                                         <label class="">Select a Payment Method</label>
+                                        @if(isset($voucher))
+                                        <div class="color-3"> Kindly click on the payment method(PAY WITH VOUCHER)</div>
+                                        @else
                                         <div class="color-8"> Kindly choose your payment method</div>
+                                        @endif
                                         <div class="radio-group">
+                                            @if(isset($voucher))
+                                                <div class='radio'
+                                                    style="background:none;border:none;padding: 25px 40px;height: 86px;border-radius:25px"
+                                                    data-value="voucher" onclick ="voucherOption()">
+                                                    <img src="https://img.icons8.com/fluency/32/000000/ticket-purchase.png"
+                                                        style="padding-bottom: 0px;"/> <span><label> Pay with <b>voucher</b></label></span>
+
+                                                </div>
+                                            @else
                                             <div class='radio'
                                                  style="background:none;border:none;padding: 0px 20px;height: 86px;border-radius:25px;"
                                                  data-value="flutterwave" onclick ="run()">
@@ -183,13 +202,7 @@
                                                      style="padding-bottom: 0px;width: 200px;">
                                             </div>
 
-                                            <div class='radio'
-                                                 style="background:none;border:none;padding: 25px 40px;height: 86px;border-radius:25px"
-                                                 data-value="voucher" onclick ="voucherOption()">
-                                                <img src="https://img.icons8.com/fluency/32/000000/ticket-purchase.png"
-                                                     style="padding-bottom: 0px;"/> <span><label> Pay with <b>voucher</b></label></span>
-
-                                            </div>
+                                            
 
                                             <div class='radio'
                                                  style="background:none;border:none;padding: 8px 40px;height: 86px;border-radius:25px"
@@ -198,6 +211,7 @@
                                                      style="padding-bottom: 0px;margin-left: -38px"/> <span><label>
 
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -207,7 +221,11 @@
                                         <label>Voucher Number<span class="show_required"> *</span></label>
                                         <small class="text-muted" style="color:red"> Please provide a valid voucher number given to you by an agent
                                         </small>
+                                        @if(isset($voucher))
+                                        <input class="" type="text" name="voucher" value="{{ $voucher->voucher }}" readonly/>
+                                        @else
                                         <input class="" type="text" name="voucher" value="{{ old('voucher') }}" />
+                                        @endif
                                     </div>
                                     <div id="card" style="margin-top:20px;display:none;">
                                         <label>Select Card types <span class="show_required"> *</span></label>
