@@ -669,7 +669,7 @@ class HomeController extends Controller
 
         try {
             $message = "
-            Hi " . $request->first_name . ",
+            Hi " . $request->first_name . ",<br><br>
 
             Thank you for your interest to register as an Agent with Traveltestsltd.<br/><br/>
             Your profile is currently under review and will be activated shortly by our Admin. <br><br>
@@ -846,7 +846,7 @@ class HomeController extends Controller
         try {
             if($user->main_agent_share_raw == null)
             {
-                $message = "Congratulations!,<br>
+                $message = "Congratulations!,<br><br>
                 Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
                 You can now log in to your portal to complete your profile and set up your account. <br><br>
                 Kindly click the button below<br/><br/>
@@ -861,7 +861,7 @@ class HomeController extends Controller
                 Traveltestsltd Team
                 ";
             }else{
-                $message = "Congratulations!,<br>
+                $message = "Congratulations!,<br><br>
                 Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
                 You can now log in to your portal to complete your profile and set up your account. <br><br>
                 You will find your dedicated customer booking link on your portal <br><br>
