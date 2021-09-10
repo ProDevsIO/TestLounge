@@ -40,7 +40,7 @@
 </head>
 <body>
 <?php
-$ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_covid', "next_steps", "make_payment", "code_failed"];
+$ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_covid', "next_steps", "make_payment", "code_failed", "voucher_booking"];
 ?>
 <div class="nav-container">
     <nav class="top-bar

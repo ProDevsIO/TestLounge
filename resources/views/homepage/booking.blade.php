@@ -18,6 +18,7 @@
 
                         @include('errors.showerrors')
                         @if($carts_count > 0 || isset($voucher))
+                    
                             <form action="{{ url('/post/booking') }}" method="post"
                                   class="bg-white">
                                 @csrf

@@ -72,7 +72,7 @@ Route::get('/booking/success', [\App\Http\Controllers\HomeController::class,"boo
 Route::get('/booking/code/failed', [\App\Http\Controllers\HomeController::class,"code_failed"])->name('code_failed');
 Route::get('/booking/stripe/success', [\App\Http\Controllers\HomeController::class,"success_stripe"])->name('success_stripe');
 Route::get('/booking/stripe/failed', [\App\Http\Controllers\HomeController::class,"success_failed"])->name('failed_stripe');
-Route::get('/booking/voucher/{code}', [\App\Http\Controllers\HomeController::class,"voucher_booking"]);
+Route::get('/booking/voucher/{code}', [\App\Http\Controllers\HomeController::class,"voucher_booking"])->name('voucher_booking');
 
 Route::get('/testEmail', [\App\Http\Controllers\HomeController::class,"testEmail"])->name('testEmail');
 Route::get('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"make_payment"])->name('make_payment');
