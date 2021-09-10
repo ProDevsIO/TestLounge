@@ -72,6 +72,7 @@ class Controller extends BaseController
     {
         unset($request['subaccounts']);
         unset($request['currency']);
+        dd($request);
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
@@ -85,7 +86,7 @@ class Controller extends BaseController
 
         curl_close($ch);
         $server_output = json_decode($server_output);
-        dd($server_output);
+
         //dd($server_output);
         return $server_output->data;
     }
