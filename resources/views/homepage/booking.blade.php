@@ -205,13 +205,13 @@
 
                                             
 
-                                            <div class='radio'
-                                                 style="background:none;border:none;padding: 8px 40px;height: 86px;border-radius:25px"
-                                                 data-value="vastech" onclick ="run()">
-                                                <img src="{{ url('/img/vas.svg') }}"
-                                                     style="padding-bottom: 0px;margin-left: -38px"/> <span><label>
+                                            {{--<div class='radio'--}}
+                                                 {{--style="background:none;border:none;padding: 8px 40px;height: 86px;border-radius:25px"--}}
+                                                 {{--data-value="vastech" onclick ="run()">--}}
+                                                {{--<img src="{{ url('/img/vas.svg') }}"--}}
+                                                     {{--style="padding-bottom: 0px;margin-left: -38px"/> <span><label>--}}
 
-                                            </div>
+                                            {{--</div>--}}
                                             @endif
                                         </div>
                                     </div>
