@@ -1250,8 +1250,8 @@ class DashboardController extends Controller
                 {
                       VoucherCount::create([
                          'agent' => $voucherpay->agent_id,
-                         'product_id' => $product->id,
-                         'quantity' => $voucher->quantity
+                         'product_id' => $voucherpay->product_id,
+                         'quantity' => $voucherpay->quantity
                          
                      ]);
      
