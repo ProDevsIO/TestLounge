@@ -70,8 +70,11 @@ class Controller extends BaseController
 
     public function processVAS(array $request = [])
     {
+        echo json_encode($request);
         unset($request['subaccounts']);
         unset($request['currency']);
+
+
 
         $ch = curl_init();
         $headr = array();
@@ -87,7 +90,7 @@ class Controller extends BaseController
         curl_close($ch);
         $server_output = json_decode($server_output);
 
-        //dd($server_output);
+        dd($server_output);
         return $server_output->data;
     }
 
