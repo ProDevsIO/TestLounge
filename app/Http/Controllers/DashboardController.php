@@ -1271,7 +1271,7 @@ class DashboardController extends Controller
 
             }
 
-            session()->flash('alert-success', "Transaction completed. The voucher code generated can be used for your clients booking. Your voucher code is $txRef");
+            session()->flash('alert-success', "Transaction completed. Your account has been topped up");
             return redirect()->to('/view/vouchers');
         }
 
@@ -1310,11 +1310,10 @@ class DashboardController extends Controller
             'status' => 0
         ]);
         
-      
         try {
 
             $message2 = "
-            Hi,<br><br>".$voucherCount->user->name ." has sent you a voucher code :-$voucher for ".optional(optional(optional($v_generate)->voucherProduct)->product)->name." x  $v_generate->quantity.<br/><br/>
+            Hi,<br><br>".$voucherCount->user->first_name." ".$voucherCount->user->last_name ." has sent you a voucher code :-$voucher for ".optional(optional(optional($v_generate)->voucherCount)->product)->name." x  $v_generate->quantity.<br/><br/>
             Kindly click the button below<br/><br/>
                         <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "booking/voucher/" . $voucher . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                         Book with voucher
@@ -1324,6 +1323,8 @@ class DashboardController extends Controller
                 <br/><br/>
                  Traveltestsltd Team
             ";
+
+            dd($message);
             Mail::to($email)->send(new BookingCreation($message2, "Voucher notification"));
 
 
