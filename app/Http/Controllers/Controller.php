@@ -177,6 +177,7 @@ class Controller extends BaseController
                 "amount" => $price,
                 "approvedCurrency" => "566",
                 "channel" => "WEB",
+                "currency" => "NGN",
                 "clientAppId" => "831553",
                 "clientId" => "238588",
                 "mobileNumber"=> "07039448968",
@@ -189,6 +190,7 @@ class Controller extends BaseController
             $data = [
                 "transactionRef" => $transaction_ref,
                 "amount" => $price_pound,
+                "current" => "GBP",
                 "approvedCurrency" => "826",
                 "channel" => "WEB",
                 "clientAppId" => "831553",
