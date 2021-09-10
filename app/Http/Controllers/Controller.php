@@ -70,15 +70,13 @@ class Controller extends BaseController
 
     public function processVAS(array $request = [])
     {
-        echo json_encode($request);
         unset($request['subaccounts']);
         unset($request['currency']);
-
-
 
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
+        $headr[] = 'X-API-Key:'.env('VASTECH-KEY');
         curl_setopt($ch, CURLOPT_URL, "https://vastech.sevas.live/vastech/api/v1/ubank");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -90,7 +88,6 @@ class Controller extends BaseController
         curl_close($ch);
         $server_output = json_decode($server_output);
 
-        dd($server_output);
         return $server_output->data;
     }
 
