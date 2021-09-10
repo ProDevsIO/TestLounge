@@ -1314,7 +1314,7 @@ class DashboardController extends Controller
 
             $message2 = "
             Hi,<br><br>".$voucherCount->user->first_name." ".$voucherCount->user->last_name ." has sent you a voucher code :-$voucher for ".optional(optional(optional($v_generate)->voucherCount)->product)->name." x  $v_generate->quantity.<br/><br/>
-            Kindly click the button below<br/><br/>
+            Kindly click the button below to booking with this voucher.<br/><br/>
                         <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "booking/voucher/" . $voucher . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                         Book with voucher
                        </a>
