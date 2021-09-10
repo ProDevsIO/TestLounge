@@ -49,7 +49,7 @@
                                  
                                 </div>
 
-                                <a href="javascript:;" onclick="run('{{$product->product_id}}','{{$product->vendor_id}}' ,'{{$i}}')" class="btn btn-primary btn-block">Buy</a>
+                                <a href="javascript:;" onclick="run('{{$product->product_id}}','{{$product->vendor_id}}' ,'{{$i}}')" class="btn bg-purple text-white btn-block">Buy</a>
                             </div>
                         </div>
                     </div>
