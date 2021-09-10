@@ -87,6 +87,7 @@ class Controller extends BaseController
 
         curl_close($ch);
         $server_output = json_decode($server_output);
+        dd($server_output);
 
         return $server_output->data;
     }
