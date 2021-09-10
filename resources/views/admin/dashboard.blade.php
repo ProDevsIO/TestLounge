@@ -61,7 +61,7 @@
 
             @if(auth()->user()->referal_code && !auth()->user()->flutterwave_key)
                 <div class="alert alert-danger">
-                    Kindly setup your bank account to gain access to your referral link.<a href="/user/bank"
+                    Kindly setup your bank account to gain access to your referral link and also recieve payment via voucher payment.<a href="/user/bank"
                                                                                            class="btn btn-danger">Add
                         Bank</a>
                 </div>@else
