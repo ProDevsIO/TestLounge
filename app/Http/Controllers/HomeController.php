@@ -20,6 +20,9 @@ use App\Models\Vendor;
 use App\Models\VendorProduct;
 use App\Models\Voucher;
 use App\Models\VoucherProduct;
+use App\Models\VoucherCount;
+use App\Models\VoucherGenerate;
+use App\Models\VoucherPayment;
 use App\Models\Cart;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -140,12 +143,7 @@ class HomeController extends Controller
 
         $request->vendor_id = 3;
        
-        $carts = Cart::where('ip', session()->get('ip'))->get();
-
-        if ($carts->count() == 0) {
-            session()->flash('alert-danger', "Kindly select a product and add to your cart");
-            return back()->withInput();
-        }
+       
        
         $request_data = $request->all();
 
@@ -155,14 +153,14 @@ class HomeController extends Controller
         unset($request_data['phone_full']);
 
         
+       
 
         if($request->voucher != null){
-            $voucher = Voucher::where(['transaction_ref' => $request->voucher,'status' => 1] )->first();
-            
+            $voucher = VoucherGenerate::where(['voucher' => $request->voucher, 'status' => 0] )->first();
+           
             if($voucher != null)
             {
-
-                if($voucher->email = null)
+                if($voucher->email == null)
                 {
                     session()->flash('alert-danger', "Sorry to inform you, but this voucher has not been assigned to anybody");
                     return back()->withInput();
@@ -170,6 +168,7 @@ class HomeController extends Controller
 
                 if($voucher->email != $request_data['email'])
                 {
+                    
                     session()->flash('alert-danger', "Sorry to inform you, but this voucher has been assigned to somebody else");
                     return back()->withInput();
                 }
@@ -181,19 +180,6 @@ class HomeController extends Controller
                }
 
                $cart_item = Cart::where('ip', session()->get('ip'))->first();
-
-            
-               if($voucher->voucherProduct->product_id != $cart_item->vendorProduct->product_id)
-               {
-                    session()->flash('alert-danger', "Please the item selected in cart does not match the product in ther voucher");
-                    return back()->withInput();
-               }
-
-               if($voucher->quantity != $cart_item->quantity)
-               {
-                    session()->flash('alert-danger', "The quota for this voucher is $voucher->quantity, please your quantity in cart must be same");
-                    return back()->withInput();
-               }
 
                unset($request_data['_token']);
 
@@ -214,16 +200,22 @@ class HomeController extends Controller
                 unset($request_data['payment_method']);
 
                 $redirect_url = $this->voucherProcessing($request_data);
+
                 return redirect()->to($redirect_url);
                 
                 
             }else{
-                session()->flash('alert-danger', "An invalid voucher number was provided, please kindly provide a valid one.");
+                session()->flash('alert-danger', "This voucher code has been used. Kindly reach out to an Agent to provide a new one.");
                 return back()->withInput();
             }
         }
 
-       
+        $carts = Cart::where('ip', session()->get('ip'))->get();
+
+        if ($carts->count() == 0) {
+            session()->flash('alert-danger', "Kindly select a product and add to your cart");
+            return back()->withInput();
+        }
        
 
         unset($request_data['_token']);
@@ -570,6 +562,21 @@ class HomeController extends Controller
         $booking = Booking::where('transaction_ref', $request->b)->first();
 
         return view('homepage.failed')->with(compact('booking'));
+    }
+
+    public function voucher_booking($voucher)
+    {
+        
+    
+        $countries = Country::all();
+        $products = Product::all();
+        $vendors = Vendor::all();
+        $user = "";
+
+        $carts_count = Cart::where('ip', session()->get('ip'))->count();
+        $voucher = VoucherGenerate::where('voucher', $voucher)->first();
+        return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user','carts_count', 'voucher'));
+
     }
 
     public function p_make_payment(Request $request, $booking_ref)
@@ -1499,14 +1506,15 @@ class HomeController extends Controller
     public function voucherProcessing(array $request_data ){
 
         $price = $price_pounds = 0;
+    
+
+        $voucher =  VoucherGenerate::where(['voucher' => $request_data['external_reference'], 'status' => 0])->first();
        
-
         $booking = Booking::create($request_data);
-        $carts =  Cart::where('ip', session()->get('ip'))->get();
-        $voucher =  Voucher::where(['transaction_ref'=> $request_data['external_reference'], 'status' => 1])->first();
-        foreach ($carts as $cart) {
-            $product_id = $cart->vendorProduct->product_id;
-
+       
+       
+       if($voucher != null){
+            $product_id = $voucher->voucherCount->product_id;
 
             $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $product_id)->first();
 
@@ -1515,28 +1523,31 @@ class HomeController extends Controller
                 'product_id' => $product_id,
                 'vendor_id' => $vendor_products->vendor_id,
                 'vendor_product_id' => $vendor_products->id,
-                'price' => ($vendor_products->price * $cart->quantity),
-                'price_pounds' => ($vendor_products->price_pounds * $cart->quantity),
-                'vendor_cost_price' => ($vendor_products->cost_price * $cart->quantity),
-                'quantity' => $cart->quantity
+                'price' => ($vendor_products->price * $voucher->quantity),
+                'price_pounds' => ($vendor_products->price_pounds * $voucher->quantity),
+                'vendor_cost_price' => ($vendor_products->cost_price * $voucher->quantity),
+                'quantity' => $voucher->quantity
             ]);
 
-            $price = $price + ($vendor_products->price * $cart->quantity);
-            $price_pounds = $price_pounds + ($vendor_products->price_pounds * $cart->quantity);
+            $price = $price + ($vendor_products->price * $voucher->quantity);
+            $price_pounds = $price_pounds + ($vendor_products->price_pounds * $voucher->quantity);
+
+            if($voucher->user->country == 'NG')
+            {
+              $currency = 'NGN';
+              $charged = $vendor_products->price;
+            }else{
+                $currency = 'GBP';
+                $charged = $vendor_products->price_pounds;
+            }
+    
+            BookingProduct::where('booking_id', $booking->id)->update([
+                'charged_amount' => $charged, 'currency' => $currency
+            ]);
         }
 
-        $charged = $voucher->voucherProduct->charged_amount;
-        if($voucher->voucherProduct->currency == 'NG')
-        {
-          $currency = 'NGN';
-        }else{
-            $currency = 'GBP';
-        }
-
-        BookingProduct::where('booking_id', $booking->id)->update([
-            'charged_amount' => $charged, 'currency' => $currency
-        ]);
-
+       
+       
         $txRef =  $request_data['transaction_ref'];
          
         if ($booking->status != 1) {
@@ -1558,7 +1569,7 @@ class HomeController extends Controller
                         $cost_booking = $booking_product->price;
 
 
-                        if ($voucher->currency != 'NG') {
+                        if ($voucher->user->country != 'NG') {
 
                             //for international transaction in pounds
                             $cost_booking = $booking_product->price_pounds;
@@ -1614,6 +1625,7 @@ class HomeController extends Controller
                         }
                         DB::commit();
                     } catch (\Exception $e) {
+                        dd($e);
                         logger("An error occured while confirming payments", $request_data);
                         DB::rollBack();
                     }
@@ -1623,12 +1635,10 @@ class HomeController extends Controller
 
             try {
 
-                $code = $this->sendData($booking);
-                $cart_item = Cart::where('ip', session()->get('ip'))->first();
-                $q = $voucher->quantity - $cart_item->quantity;
-
+                $code = $this->sendData($booking);     
                 $voucher->update([
-                        'quantity' => $q
+                        'quantity' => 0,
+                        'status' =>1
                 ]);
 
             } catch (\Exception $e) {
@@ -1686,12 +1696,9 @@ class HomeController extends Controller
             ]);
             $redirect =  '/booking/success?b=' . $txRef;
             return $redirect;
-            //to remove items from cart
-            $cart = Cart::where('ip', session()->get('ip'))->delete();
+            
         }
         
-        //to remove items from cart
-        $cart = Cart::where('ip', session()->get('ip'))->delete();
         $redirect ='/booking/success?b=' . $txRef;
         return $redirect;
       

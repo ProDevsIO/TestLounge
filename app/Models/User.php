@@ -73,9 +73,9 @@ class User extends Authenticatable
         return $this->belongsTo(Country::class);
     }
 
-    public function voucher()
+    public function voucherCount()
 	{
-		return $this->hasOne(Voucher::class);
+		return $this->hasOne(VoucherCount::class);
 	}
 
     public function cbookings()

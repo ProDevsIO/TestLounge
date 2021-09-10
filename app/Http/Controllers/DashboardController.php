@@ -8,6 +8,9 @@ use App\Helpers\BarcodeHelper;
 use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
 use App\Models\Voucher;
+use App\Models\VoucherCount;
+use App\Models\VoucherGenerate;
+use App\Models\VoucherPayment;
 use App\Models\VoucherProduct;
 use App\Models\Booking;
 use App\Models\BookingProduct;
@@ -1153,13 +1156,9 @@ class DashboardController extends Controller
         return view('admin.agent_view_product')->with(compact('vproducts'));
     }
 
-    public function post_agent_buy($product_id, $vendor_id, $quantity, $type)
+    public function post_agent_buy($product_id, $vendor_id, $quantity)
     {
-        if($type == 0)
-        {
-            session()->flash('alert-danger', "please select a plan before you can proceed to make your purchase. Thank you");
-            return back();
-        }
+       
         $product = VendorProduct::where('product_id',$product_id)->where('vendor_id',$vendor_id)->first();
 
         $country = auth()->user()->country;
@@ -1174,6 +1173,7 @@ class DashboardController extends Controller
         $transaction_ref = uniqid('voucher_') . rand(10000, 999999);
 
         $agent_id = auth()->user()->id;
+        
 
         $data = $this->processFlutterwaveVoucherData($amount, $transaction_ref, $country, $agent_id);
 
@@ -1184,58 +1184,22 @@ class DashboardController extends Controller
             $data['subaccounts'] = $sub_accounts;
         }
 
-        $vendorProduct = VendorProduct::where(['product_id' => $product_id, 'vendor_id' => $vendor_id])->first();
+           $vendorProduct = VendorProduct::where(['product_id' => $product_id, 'vendor_id' => $vendor_id])->first();
 
-        if( $type == 1){
-           
-            $voucher = Voucher::create([
-                'agent' => $agent_id,
-                'transaction_ref' => $transaction_ref,
-                'quantity' => $quantity,
-                'type' => $type
-            ]);
     
-            $voucherProduct = VoucherProduct::Create([
-                'voucher_id' => $voucher->id,
+            $voucherProduct = VoucherPayment::Create([
+                'agent'=> $agent_id,
+                'transaction_ref' => $transaction_ref,
                 'vendor_id' => $vendor_id,
                 'product_id' => $product_id,
                 'vendor_product_id' => $vendorProduct->id,
                 'quantity' => $quantity,
                 'charged_amount' => $amount,
-                'currency' => $country
+                'currency' => $country,
+                'status' => 0
             ]);
-        }else{
-            if ($country = "NG") {
-                $amount2 = $product->price;
+      
     
-            } else {
-                $amount2 = $product->price_pounds;
-            }
-
-            for($i = 0; $i < $quantity ;$i++)
-            {
-                $code = $transaction_ref . '_' . $i;
-
-                $voucher = Voucher::create([
-                    'agent' => $agent_id,
-                    'transaction_ref' => $code,
-                    'quantity' => 1,
-                    'type' => $type
-                ]);
-        
-                $voucherProduct = VoucherProduct::Create([
-                    'voucher_id' => $voucher->id,
-                    'vendor_id' => $vendor_id,
-                    'product_id' => $product_id,
-                    'vendor_product_id' => $vendorProduct->id,
-                    'quantity' => 1,
-                    'charged_amount' => $amount2,
-                    'currency' => $country
-                ]); 
-            }
-
-        }
-     
         $redirect_url = $this->processFL($data);
 
         return redirect()->to($redirect_url);
@@ -1276,18 +1240,38 @@ class DashboardController extends Controller
         //check if succesful
         if (isset($data_response->data->status) && $data_response->data->status == "successful") {
 
-            $voucher = Voucher::where('transaction_ref', $txRef)->first();
+            $voucherpay = VoucherPayment::where('transaction_ref', $txRef)->first();
 
-            if ($voucher->status != 1) {
+            if ($voucherpay->status != 1) {
 
+                $count_check = VoucherCount::where(['agent' => $voucherpay->agent_id, 'product_id' => $voucherpay->product_id])->first();
+
+                if($count_check == null)
+                {
+                      VoucherCount::create([
+                         'agent' => $voucherpay->agent,
+                         'product_id' => $voucherpay->product_id,
+                         'quantity' => $voucherpay->quantity
+                         
+                     ]);
+     
+                }else{
+     
+                     $voucher_quantity = $count_check->quantity + $quantity;
+     
+                     $count_check->update([
+                         'quantity' => $voucher_quantity
+                     ]);
+     
+                }
                 //update voucher payment status
-                $voucher->update([
+                $voucherpay->update([
                     'status' => 1,
                 ]);
 
             }
 
-            session()->flash('alert-success', "Transaction completed. The voucher code generated can be used for your clients booking. Your voucher code is $txRef");
+            session()->flash('alert-success', "Transaction completed. Your account has been topped up");
             return redirect()->to('/view/vouchers');
         }
 
@@ -1298,29 +1282,49 @@ class DashboardController extends Controller
     public function view_vouchers()
     {
         if (auth()->user()->type == 1) {
-            $vouchers = Voucher::all();
+            $vouchers = VoucherGenerate::all();
         } else {
-            $vouchers = Voucher::where('agent', auth()->user()->id)->get();
+            $vouchers = VoucherGenerate::where('agent', auth()->user()->id)->get();
         }
+       
+        $products = Product::all();
 
-        return view('admin.view_vouchers')->with(compact('vouchers'));
+        return view('admin.view_vouchers')->with(compact('vouchers', 'products'));
     }
 
-    public function email_vouchers(Request $request, $id){
-        $voucher = Voucher::where('id', $id)->first();
-        $email = $request->email;
-     
+    public function email_vouchers($id, $email, $quantity){
       
+        
+        $voucherCount = VoucherCount::where(['product_id'=> $id, 'agent' => auth()->user()->id])->first();
+    
+        $email = $email;
+        $quantity = $quantity;
+
+        $voucher =  uniqid('voucher_') ."_". $voucherCount->id;
+        $v_generate = VoucherGenerate::create([
+            'agent' => auth()->user()->id,
+            'voucher_count_id' => $voucherCount->id,
+            'email' => $email,
+            'voucher' => $voucher,
+            'quantity' =>$quantity,
+            'status' => 0
+        ]);
+        
         try {
 
             $message2 = "
-            Hi,<br/>".$voucher->user->name ." has sent you a voucher code :-$voucher->transaction_ref for ".optional(optional(optional($voucher)->voucherProduct)->product)->name." x  $voucher->quantity.<br/><br/>
-            Please endeavour to have the same items in your cart when booking.
+            Hi,<br><br>".$voucherCount->user->first_name." ".$voucherCount->user->last_name ." has sent you a voucher code :-$voucher for ".optional(optional(optional($v_generate)->voucherCount)->product)->name." x  $v_generate->quantity.<br/><br/>
+            Kindly click the button below to booking with this voucher.<br/><br/>
+                        <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "booking/voucher/" . $voucher . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                        Book with voucher
+                       </a>
                 <br/><br/>
                 Thank you.
                 <br/><br/>
                  Traveltestsltd Team
             ";
+
+           
             Mail::to($email)->send(new BookingCreation($message2, "Voucher notification"));
 
 
@@ -1330,10 +1334,15 @@ class DashboardController extends Controller
             return back();
         }
 
-        Voucher::Update([
-            'email'=> $email
+       
+
+        $new_v_quantity =  $voucherCount->quantity -  $quantity; 
+
+        $voucherCount->update([
+            'quantity' => $new_v_quantity
         ]);
-        session()->flash('alert-success', "Successfully updated sent voucher via email");
+      
+        session()->flash('alert-success', "Successfully created a voucher and sent via email");
         return back();
 
     }

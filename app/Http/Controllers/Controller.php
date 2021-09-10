@@ -72,7 +72,7 @@ class Controller extends BaseController
     {
         unset($request['subaccounts']);
         unset($request['currency']);
-        
+
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
@@ -171,18 +171,35 @@ class Controller extends BaseController
     }
 
     function getVasTechData($booking,$price,$transaction_ref,$price_pound = null, $card_type = null){
-        $data = [
-            "transactionRef" => $transaction_ref,
-            "amount" => $price,
-            "currency" => "NGN",
-            "channel" => "WEB",
-            "clientAppId" => "831553",
-            "clientId" => "238588",
-            "mobileNumber"=> "07039448968",
-            "paymentTypeId" => 2,
-            "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
+        if ($booking->country_travelling_from_id == 156 && $card_type = 1) {
+            $data = [
+                "transactionRef" => $transaction_ref,
+                "amount" => $price,
+                "approvedCurrency" => "566",
+                "channel" => "WEB",
+                "clientAppId" => "831553",
+                "clientId" => "238588",
+                "mobileNumber"=> "07039448968",
+                "paymentTypeId" => 2,
+                "redirectURL" => env("VASTECH_URL"),
+                "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
-        ];
+            ];
+            }else{
+            $data = [
+                "transactionRef" => $transaction_ref,
+                "amount" => $price_pound,
+                "approvedCurrency" => "826",
+                "channel" => "WEB",
+                "clientAppId" => "831553",
+                "clientId" => "238588",
+                "mobileNumber"=> "07039448968",
+                "paymentTypeId" => 2,
+                "redirectURL" => env("VASTECH_URL"),
+                "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
+
+            ];
+        }
 
         return $data;
     }

@@ -412,7 +412,7 @@
                                         Now that you have made your booking, you can read more about the next steps <a
                                                 href="{{ url(env("APP_URL")."next_steps") }}">here</a>
 
-                                        UK Travel Tests
+                                        TravelTestGlobal
                                     </td>
                                 </tr>
                                 </tbody>

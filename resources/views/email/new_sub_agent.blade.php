@@ -223,7 +223,7 @@
                                                                 align="left">
                                                                 <a href="/"><img class="header__logo"
                                                                         src="{{ env('APP_URL', 'https://uktraveltest.prodevs.io/') }}img/logo-dark.png"
-                                                                        alt="UktravelTest"
+                                                                        alt="TravelTestGlobal"
                                                                         style="display: block; border: 0;" width="158"
                                                                         height="59"></a>
                                                             </td>

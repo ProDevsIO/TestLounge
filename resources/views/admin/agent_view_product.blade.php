@@ -49,14 +49,7 @@
                                  
                                 </div>
 
-                                <div class="pb-2">
-                                    <select name="" class="form-control" id="type_{{$i}}">
-                                        <option value="0">Please choose a plan</option>
-                                        <option value="1">Family/ Group Plan</option>
-                                        <option value="2">Individual Plan</option>
-                                    </select>
-                                </div>
-                                <a href="javascript:;" onclick="run('{{$product->product_id}}','{{$product->vendor_id}}' ,'{{$i}}')" class="btn btn-primary btn-block">Buy</a>
+                                <a href="javascript:;" onclick="run('{{$product->product_id}}','{{$product->vendor_id}}' ,'{{$i}}')" class="btn bg-purple text-white btn-block">Buy</a>
                             </div>
                         </div>
                     </div>
@@ -123,13 +116,11 @@
             // console.log(product_id, count);
 
             var q = "quantity_" + count;
-            var t =  "type_" + count;
+           
 
             var quantity = document.getElementById(q).value;
-            var type = document .getElementById(t).value;
-            console.log(type);
-
-            window.location = '/post/agent/buy/' + product_id + '/' +vendor_id + '/'+ quantity+ '/'+ type; 
+   
+            window.location = '/post/agent/buy/' + product_id + '/' +vendor_id + '/'+ quantity; 
         }
 </script>
 @endsection
