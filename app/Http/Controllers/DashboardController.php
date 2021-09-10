@@ -1249,7 +1249,7 @@ class DashboardController extends Controller
                 if($count_check == null)
                 {
                       VoucherCount::create([
-                         'agent' => $voucherpay->agent_id,
+                         'agent' => $voucherpay->agent,
                          'product_id' => $voucherpay->product_id,
                          'quantity' => $voucherpay->quantity
                          
