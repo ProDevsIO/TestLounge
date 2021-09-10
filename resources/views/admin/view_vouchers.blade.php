@@ -45,8 +45,10 @@
                                 </div>
                                 <br>
                                 @if($product->voucherCount)
-                                <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
-                                                                        href="#refmodal{{$product->id}}">generate voucher</button>
+                                    @if($product->voucherCount->quantity > 0)
+                                        <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
+                                                                                href="#refmodal{{$product->id}}">generate voucher</button>
+                                    @endif
                                 @endif
                             </div>
                         </div>
