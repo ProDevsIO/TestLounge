@@ -205,7 +205,7 @@ class HomeController extends Controller
                 
                 
             }else{
-                session()->flash('alert-danger', "An invalid voucher number was provided, please kindly provide a valid one.");
+                session()->flash('alert-danger', "This voucher code has been used. Kindly reach out to an Agent to provide a new one.");
                 return back()->withInput();
             }
         }
