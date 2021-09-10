@@ -2,6 +2,10 @@
 @section('style')
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
+        #generate_button:hover{
+            background-color:white;
+            color:black !important;
+        }
        
         /* .dataTables_length{
             display:flex;
@@ -17,15 +21,16 @@
     <div class="content-wrapper">
         <div class="container-fluid">
             <div class="row">
+                <?php $j =1;?>
             @foreach($products as $product)
                 <div class="col-xl-4 col-sm-4">
-                        <div class="card mb-4 bg-purple" title="Revenue">
+                        <div class="card mb-4 bg-purple" title="Generate voucher">
                             <div class="card-body">
                                 <div class="media d-flex align-items-center ">
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
                                         <i class="vl_book"></i>
                                     </div>
-                                    <div class="media-body text-light" title="Revenue">
+                                    <div class="media-body text-light" title="Generate voucher">
                                         <h6 class="text-uppercase mb-0 weight500">{{$product->name}}</h6>
                                         <span>Quota: 
                                             @if($product->voucherCount)
@@ -40,7 +45,7 @@
                                 </div>
                                 <br>
                                 @if($product->voucherCount)
-                                <button class="btn btn-outline-dark text-white btn-block"data-toggle="modal"
+                                <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
                                                                         href="#refmodal{{$product->id}}">generate voucher</button>
                                 @endif
                             </div>
@@ -65,15 +70,13 @@
                                                                     <div class="alert alert-warning">
                                                                         <p><span class="badge badge-danger">Notice!</span> Once this code is generated, it will be assigned to this email address and email will be sent out with the booking link for the voucher, This simply means that the code generated can only be used by the assigned email for booking. </p>
                                                                     </div>
-                                                            <form action="{{ url('/voucher/email/'.$product->id) }}"
-                                                                  method="post">
-                                                                @csrf
+                                                            
                                                         
                                                                     <label for=""> Client Email</label>
-                                                                    <input type="email" name="email" class="form-control">
+                                                                    <input type="email" name="email" id="email_{{$j}}"class="form-control">
                                                                     <br>
                                                                     <label for=""> Please select a Quantity</label>
-                                                                    <select name="quantity" id="" class="form-control">
+                                                                    <select name="quantity" id="quantity_{{$j}}" class="form-control">
                                                                         
                                                                     @if($product->voucherCount)
                                                                         @for($i=1; $i <= $product->voucherCount->quantity; $i++)
@@ -85,10 +88,9 @@
                                                         
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-sm btn-info">submit
-                                                            </button>
-                                                            </form>
-                                                            <button type="button" class="btn btn-sm btn-info"
+                                                            <button type="submit" onclick="sendGenerateData('{{$product->id}}','{{$j}}')" class="btn btn-sm bg-purple text-white">submit</button>
+                                                        
+                                                            <button type="button" class="btn btn-sm bg-purple text-white"
                                                                     data-dismiss="modal">Close
                                                             </button>
                                                         </div>
@@ -96,7 +98,7 @@
 
                                                 </div>
                                             </div>
-                                               
+                                      <?php $j++; ?>         
                 @endforeach
                 <div class="col-xl-12">
                             <div class="card card-shadow mb-4 ">
@@ -200,6 +202,21 @@
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendor/data-tables/dataTables.bootstrap4.min.js"></script>
     <script>
+
+        function sendGenerateData(id, count) {
+            var e = 'email_' + count;
+            var q = 'quantity_' + count;
+            var d = confirm("Are you sure you want to generate a voucher for a client?");
+            var email = document.getElementById(e).value;
+            var quantity = document.getElementById(q).value;
+            // console.log(email, quantity);
+            if (d) {
+
+                window.location = '/voucher/email/'+ id + '/' + email + '/' +quantity;
+            }
+        }
+
+
         $(document).ready(function () {
             $('#data_table').DataTable({
                 "order": []

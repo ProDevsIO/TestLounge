@@ -1292,13 +1292,13 @@ class DashboardController extends Controller
         return view('admin.view_vouchers')->with(compact('vouchers', 'products'));
     }
 
-    public function email_vouchers(Request $request, $id){
-       
+    public function email_vouchers($id, $email, $quantity){
+      
         
-        $voucherCount = VoucherCount::where(['product_id'=> $id, 'agent' => auth()->user()->id] )->first();
+        $voucherCount = VoucherCount::where(['product_id'=> $id, 'agent' => auth()->user()->id])->first();
     
-        $email = $request->email;
-        $quantity = $request->quantity;
+        $email = $email;
+        $quantity = $quantity;
 
         $voucher =  uniqid('voucher_') ."_". $voucherCount->id;
         $v_generate = VoucherGenerate::create([
