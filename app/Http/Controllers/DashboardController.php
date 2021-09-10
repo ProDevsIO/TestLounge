@@ -1324,7 +1324,7 @@ class DashboardController extends Controller
                  Traveltestsltd Team
             ";
 
-            dd($message);
+           
             Mail::to($email)->send(new BookingCreation($message2, "Voucher notification"));
 
 
