@@ -716,7 +716,7 @@ class HomeController extends Controller
         }
 
 
-        session()->flash('alert-success', "Thank you for your registration, kindly click the link sent to your email to continue your registration");
+        session()->flash('alert-success', "Thank you for your registration, Your profile is currently under review and will be activated shortly by our Admin.");
 
         return back();
     }

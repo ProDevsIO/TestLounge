@@ -154,7 +154,7 @@
                                 <option value="">Make a selection</option>
                                 @foreach($countries as $country)
                                     <option value="{{ $country->iso }}"
-                                            @if(old('country_travelling_from_id') == $country->id) selected
+                                            @if(old('country') == $country->id) selected
                                             @endif>{{ $country->name }}
                                     </option>
                                 @endforeach
@@ -198,10 +198,12 @@
                         </div>
                         <div class="col-lg-6  form-group">
                             Certification:
-                            <select name="certified" class="form-control" id="">
+                            <select name="certified" class="form-control" id="" required>
                                 <option class="pl-5" value="">Are you IATA certified?</option>
-                                <option class="text-center" value="Yes">Yes</option>
-                                <option class="text-center" value="No">No</option>
+                                <option class="text-center" @if(old('certified') == "Yes") selected
+                                        @endif value="Yes">Yes</option>
+                                <option class="text-center" @if(old('certified') == "No") selected
+                                        @endif value="No">No</option>
                             </select>
                         </div>
                         <div class="col-lg-12 form-group">
