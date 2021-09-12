@@ -1506,10 +1506,14 @@ class HomeController extends Controller
     public function voucherProcessing(array $request_data ){
 
         $price = $price_pounds = 0;
-    
+   
 
         $voucher =  VoucherGenerate::where(['voucher' => $request_data['external_reference'], 'status' => 0])->first();
-       
+        $referer = User::where('id', $voucher->agent)->first();
+        $request_data['referral_code'] = $referer->referal_code;
+        $request_data['user_id'] = $voucher->agent;
+      
+
         $booking = Booking::create($request_data);
        
        
@@ -1596,7 +1600,7 @@ class HomeController extends Controller
                                     $super_agent_percentage
                                 );
                             }
-                        } elseif ($voucher->currency == 'NG') {
+                        } elseif ($voucher->user->country == 'NG') {
                             //for local transaction in naira
                             $cost_booking = $booking_product->price;
 
@@ -1632,7 +1636,7 @@ class HomeController extends Controller
                 }
             }
 
-
+           
             try {
 
                 $code = $this->sendData($booking);     
