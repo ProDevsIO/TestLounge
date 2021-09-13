@@ -122,7 +122,7 @@
                                         <li>Address2: {{ $booking->address_2 }}</li>
                                         <li>Home City: {{ $booking->home_town }}</li>
                                         <li>Home PostCode: {{ $booking->post_code }}</li>
-                                        <li>Home Country: {{ $booking->homeCountry->name }}</li>
+                                        <li>Home Country: {{ optional($booking->homeCountry)->name }}</li>
                                     </ul>
 
                                     </p>
