@@ -84,7 +84,20 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userNav">
                 <div class="dropdown-item- px-3 py-2">
                     <img class="rounded-circle mr-2" src="/assets/img/avatar/avatar2.jpeg" width="35" alt=""/>
-                    <span class="text-muted">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>
+                    <span class="text-muted">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span><br>
+                    @if(auth()->user()->type == 1)
+                        <span class="text-muted" style="padding-left:50px">Role: Admin</span>
+                    @elseif(auth()->user()->vendor_id != 0)
+                    <span class="text-muted " style="padding-left:50px">Role: Vendor</span>
+                        
+                    @elseif(auth()->user()->type == 2)
+                        @if(auth()->user()->main_agent_id == null)
+                            <span class="text-muted " style="padding-left:50px">Role: Super Agent</span>
+                        @else
+                            <span class="text-muted" style="padding-left:50px">Role: Sub Agent</span>
+                        @endif
+                    @endif
+                    <span></span>
                 </div>
                 <div class="dropdown-divider"></div>
                 @if(auth()->user()->type == "2")
