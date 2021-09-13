@@ -204,10 +204,10 @@
                                             </div>
 
                                             <div class='radio'
-                                                 style="background:none;border:none;padding: 8px 40px;height: 86px;border-radius:25px"
+                                                 style="background:none;border:none;padding: 8px 40px;height: 180px;border-radius:25px"
                                                  data-value="vastech" onclick ="run()">
-                                                <img src="{{ url('/img/vas.svg') }}"
-                                                     style="padding-bottom: 0px;margin-left: -38px"/> <span><label>
+                                                <img src="{{ url('/img/vastech.jpg') }}"
+                                                     style="padding-bottom: 0px;width: 200px;"/> <span><label>
 
                                             </div>
                                             
