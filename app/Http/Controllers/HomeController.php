@@ -908,7 +908,8 @@ class HomeController extends Controller
         $user_id = $id;
         $user = User::where('id', $id)->first();
         // dd($user);
-        return view('admin.percent')->with(compact('user'));
+        $settings = Setting::where('id', 2)->first();
+        return view('admin.percent')->with(compact('user', 'settings'));
     }
 
     public function UpdatePercent(Request $request, $id)
