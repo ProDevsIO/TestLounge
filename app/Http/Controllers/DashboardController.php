@@ -456,9 +456,11 @@ class DashboardController extends Controller
             abort(403);
         }
         $users = User::orderby('created_at', 'desc')->where('type', 2)->get();
+        $active = User::where('status', 1)->count();
+        $not_active = User::where('status', 0)->count();
         $setting = Setting::where('id', 2)->first();
 
-        return view('admin.users')->with(compact('users', 'setting'));
+        return view('admin.users')->with(compact('users', 'setting', 'active', 'not_active'));
     }
 
     public function admins()

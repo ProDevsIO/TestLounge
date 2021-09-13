@@ -25,6 +25,39 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card mb-4 bg-info" title="Pending bookings">
+                        <div class="card-body">
+                            <div class="media d-flex align-items-center ">
+                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                    <i class="vl_book"></i>
+                                </div>
+                                <div class="media-body text-light" title="Pending bookings">
+                                    <h4 class="text-uppercase mb-0 weight500">{{ $active }}</h4>
+                                    <span>Acive Users</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card mb-4 bg-danger" title="Pending bookings">
+                        <div class="card-body">
+                            <div class="media d-flex align-items-center ">
+                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                    <i class="vl_book"></i>
+                                </div>
+                                <div class="media-body text-light" title="Pending bookings">
+                                    <h4 class="text-uppercase mb-0 weight500">{{ $not_active }}</h4>
+                                    <span>Not Acive Users</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
 
             <!--employee data table-->
