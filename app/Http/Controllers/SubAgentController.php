@@ -84,12 +84,12 @@ class SubAgentController extends Controller
         unset($data["file"]);
         $user = User::create($data);
 
-        Mail::to($user->email)->send(new NewSubAgent([
-            "email" => $user->email,
-            "password" => $password,
-            "main_agent_name" => $main_agent->first_name . " " . $main_agent->last_name,
-            "complete_link" => env('APP_URL', "https://uktraveltest.prodevs.io") . "/sub/continue/registration/" . $referral . "/" . $user->id
-        ]));
+        // Mail::to($user->email)->send(new NewSubAgent([
+        //     "email" => $user->email,
+        //     "password" => $password,
+        //     "main_agent_name" => $main_agent->first_name . " " . $main_agent->last_name,
+        //     "complete_link" => env('APP_URL', "https://uktraveltest.prodevs.io") . "/sub/continue/registration/" . $referral . "/" . $user->id
+        // ]));
 
         return redirect()->route("sub-agents.index")->with('alert-success', "Successfully created sub-agent");
     }
