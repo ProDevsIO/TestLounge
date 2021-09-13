@@ -80,7 +80,8 @@ class Controller extends BaseController
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
-        $headr[] = 'X-API-Key:'.env('VASTECHKEY');
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY');
+//        dd($headr);
         curl_setopt($ch, CURLOPT_URL, "https://vastech.sevas.live/vastech/api/v1/ubank");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
         curl_setopt($ch, CURLOPT_POST, 1);
