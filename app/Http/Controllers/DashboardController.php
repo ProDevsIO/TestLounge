@@ -1249,7 +1249,7 @@ class DashboardController extends Controller
 
             if ($voucherpay->status != 1) {
 
-                $count_check = VoucherCount::where(['agent' => $voucherpay->agent_id, 'product_id' => $voucherpay->product_id])->first();
+                $count_check = VoucherCount::where(['agent' => $voucherpay->agent, 'product_id' => $voucherpay->product_id])->first();
 
                 if($count_check == null)
                 {
@@ -1262,7 +1262,7 @@ class DashboardController extends Controller
      
                 }else{
      
-                     $voucher_quantity = $count_check->quantity + $quantity;
+                     $voucher_quantity = $count_check->quantity + $voucherpay->quantity;
      
                      $count_check->update([
                          'quantity' => $voucher_quantity
