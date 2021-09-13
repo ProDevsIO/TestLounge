@@ -17,7 +17,7 @@
                             <th scope="col">Status</th>
                             <th scope="col">My Share</th>
                             <th scope="col">My Percentage</th>
-                            <th scope="col">Agent Percentage</th>
+                            <th scope="col">Sub-agent Percentage</th>
                             <th scope="col">Referral Code</th>
                             <th scope="col">Action</th>
                         </tr>
