@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="media-body text-light" title="Pending bookings">
                                     <h4 class="text-uppercase mb-0 weight500">{{ $active }}</h4>
-                                    <span>Acive Users</span>
+                                    <span>Active Users</span>
                                 </div>
                             </div>
                         </div>
