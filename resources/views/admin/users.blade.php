@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="media-body text-light" title="Pending bookings">
                                     <h4 class="text-uppercase mb-0 weight500">{{ $not_active }}</h4>
-                                    <span>Not Acive Users</span>
+                                    <span>Not Active Users</span>
                                 </div>
                             </div>
                         </div>
