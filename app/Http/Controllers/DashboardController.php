@@ -54,6 +54,7 @@ class DashboardController extends Controller
             $users = User::count();
             $payment_codes = PaymentCode::count();
             $refs = User::wherenotNull('referal_code')->get();
+            $sub = User::wherenotNull('main_agent_id')->count();
 
 
         } elseif (auth()->user()->vendor_id != 0) {
@@ -64,6 +65,7 @@ class DashboardController extends Controller
             $users = 0;
             $payment_codes = 0;
             $refs = [];
+            $sub = 0;
 
         } else {
             $earned = Transaction::where([
@@ -82,9 +84,10 @@ class DashboardController extends Controller
             $users = 0;
             $payment_codes = 0;
             $refs = [];
+            $sub = user::where('main_agent_id', auth()->user()->id)->count();
         }
         $countries = Country::all();
-        return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking', 'refs', 'countries', 'earned', 'earnedPounds'));
+        return view('admin.dashboard')->with(compact('bookings', 'pending_booking', 'users', 'payment_codes', 'complete_booking', 'refs', 'countries', 'earned', 'earnedPounds','sub'));
     }
 
 
@@ -453,9 +456,11 @@ class DashboardController extends Controller
             abort(403);
         }
         $users = User::orderby('created_at', 'desc')->where('type', 2)->get();
+        $active = User::where('status', 1)->count();
+        $not_active = User::where('status', 0)->count();
         $setting = Setting::where('id', 2)->first();
 
-        return view('admin.users')->with(compact('users', 'setting'));
+        return view('admin.users')->with(compact('users', 'setting', 'active', 'not_active'));
     }
 
     public function admins()

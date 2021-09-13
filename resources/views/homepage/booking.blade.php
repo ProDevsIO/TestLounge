@@ -187,7 +187,15 @@
                                         <div class="color-8"> Kindly choose your payment method</div>
                                         @endif
                                         <div class="radio-group">
-                        
+                                            @if(isset($voucher))
+                                                <div class='radio'
+                                                    style="background:none;border:none;padding: 25px 40px;height: 86px;border-radius:25px"
+                                                    data-value="voucher" onclick ="voucherOption()">
+                                                    <img src="https://img.icons8.com/fluency/32/000000/ticket-purchase.png"
+                                                        style="padding-bottom: 0px;"/> <span><label> Pay with <b>voucher</b></label></span>
+
+                                                </div>
+                                            @else
                                             <div class='radio'
                                                  style="background:none;border:none;padding: 0px 20px;height: 86px;border-radius:25px;"
                                                  data-value="flutterwave" onclick ="run()">
@@ -201,7 +209,7 @@
                                                     <img src="https://img.icons8.com/fluency/32/000000/ticket-purchase.png"
                                                         style="padding-bottom: 0px;"/> <span><label> Pay with <b>voucher</b></label></span>
 
-                                            </div>
+                                                </div>
 
                                             <div class='radio'
                                                  style="background:none;border:none;padding: 8px 40px;height: 180px;border-radius:25px"

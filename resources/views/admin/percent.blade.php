@@ -21,7 +21,7 @@
                            <form action="{{ url('/update/percent/'. $user->id) }}" method="post">
                                @csrf
                                <label>Percentage value</label>
-                               <input type="number" name="amount" class="form-control" value="{{$user->percentage_split}}"/>
+                               <input type="number" name="amount" class="form-control" value="{{$user->percentage_split ?? $settings->value}}"/>
                                
                                <br/>
                                <input type="submit" value="Update" class="btn btn-primary"/>

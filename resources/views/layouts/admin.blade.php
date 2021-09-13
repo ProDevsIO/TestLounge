@@ -53,16 +53,18 @@
     <div class="branding-wrap">
         <!--left nav toggler start-->
         <a class="nav-link mt-2 float-left js_left-nav-toggler pos-fixed" href="javaScript:;">
+        
             <i class=" ti-align-right"></i>
         </a>
         <!--left nav toggler end-->
 
         <!--brand start-->
-        <div class="navbar-brand pos-fixed">
+        <div class="navbar-brand pos-fixed" style="padding-left:0px; padding-top:5px;">
             <a class="" href="{{ url('/dashboard') }}">
-                <img src="/img/logo-dark.png" style="height: 40px;" srcset="/img/logo-dark.png 2x" alt="Traveltestsltd">
+                <img src="/img/logo-dark.png" style="height: 47px;" srcset="/img/logo-dark.png 2x" alt="Traveltestsltd">
             </a>
         </div>
+       
         <!--brand end-->
     </div>
 
@@ -70,10 +72,12 @@
     <ul class="header-links hide-arrow navbar">
 
 
-        <li class="nav-item dropdown ">
-            <a class="nav-link dropdown-toggle" id="userNav" href="#" data-toggle="dropdown" aria-haspopup="true"
+        <li class="nav-item dropdown pt-2">
+            <a class="nav-link dropdown-toggle " id="userNav" href="#" data-toggle="dropdown" aria-haspopup="true"
                aria-expanded="false">
                 <div class="user-thumb">
+
+                 <span class="text-muted"><b>{{ auth()->user()->first_name }}</b> </span>	&nbsp;
                     <img class="rounded-circle" src="/assets/img/avatar/avatar2.jpeg" alt=""/>
                 </div>
             </a>
