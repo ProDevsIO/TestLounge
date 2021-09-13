@@ -85,7 +85,12 @@
                         <input type="email" value="{{ old('email') }}" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                     </div>
                     <div class="form-group mb-4">
-                        <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter Password">
+                    <div class="input-group">
+                                 <span class="input-group-addon p-2 "  style="border:1px solid #ced4da; border-radius:10px 0px 0px 10px;cursor: pointer;" onclick="myFunction()"> <i><img src="https://img.icons8.com/ios-glyphs/20/000000/visible.png"/></i></span>
+                                <input type="password" class="form-control" name="password" id="exampleInputPassword1"
+                                   placeholder="Enter Password" style="border-radius:0px 10px 10px 0px" required>
+                            </div>
+                       
                     </div>
                     <p class="text-center">Don't have an account? <a href="/register/agent"> Register Now</a></p>
                     <div class="form-group clearfix">
@@ -98,4 +103,16 @@
            
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        function myFunction() {
+            var x = document.getElementById("exampleInputPassword1");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
 @endsection

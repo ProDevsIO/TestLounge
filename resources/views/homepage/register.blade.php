@@ -167,8 +167,11 @@
                         </div>
                         <div class="col-lg-6 form-group mb-4">
                             <label>Password:</label>
-                            <input type="password" class="form-control" name="password" id="exampleInputPassword1"
-                                   placeholder="Enter Password" required>
+                            <div class="input-group">
+                                 <span class="input-group-addon p-2 "  style="border:1px solid #ced4da; border-radius:10px 0px 0px 10px;cursor: pointer;" onclick="myFunction()"> <i><img src="https://img.icons8.com/ios-glyphs/20/000000/visible.png"/></i></span>
+                                <input type="password" class="form-control" name="password" id="exampleInputPassword1"
+                                   placeholder="Enter Password" style="border-radius:0px 10px 10px 0px" required>
+                            </div>
                         </div>
                         <div class="col-lg-12 form-group" style="padding: 0px">
                             <h5>Business Information</h5>
@@ -239,7 +242,16 @@
             utilsScript: "/js/phone_lib/js/utils.js",
         });
 
-
+        function myFunction() {
+            var x = document.getElementById("exampleInputPassword1");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
     </script>
+
+
 
 @endsection
