@@ -406,7 +406,7 @@ class Controller extends BaseController
              $result = curl_exec($ch);
              $res_array = json_decode($result);
    
-             if ($res_array->data->status != "success") {
+             if (isset($res_array->data) && $res_array->data->status != "success") {
                 return [
                    'status' => false,
                    'msg' => $res_array->data->message,
