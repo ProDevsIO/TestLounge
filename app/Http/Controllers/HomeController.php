@@ -353,15 +353,25 @@ class HomeController extends Controller
         return $response;
     }
 
-    function confirm_vas($url){
+    function confirm_vas($url,$txRef){
         $ch = curl_init();
+        $headr = array();
+        $headr[] = 'Content-type: application/json';
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY');
+
 
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
+
         curl_setopt($ch, CURLOPT_POST, 1);
 
+        curl_setopt(
+            $ch,
+            CURLOPT_POSTFIELDS,
+            json_encode(['transactionRef'=> $txRef ,"clientId"=>238588])
+        );
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
         $response = curl_exec($ch);
 
         curl_close($ch);
@@ -385,7 +395,6 @@ class HomeController extends Controller
             $txRef = $request->transactionRef;
             $url = "https://vastech.sevas.live/vastech/api/v1/tstatus?transactionRef=".$txRef;
             $response = $this->confirm_vas($url,$txRef);
-
         }else{
             $response = $this->confirm_flutterwave($url,$txRef);
         }
