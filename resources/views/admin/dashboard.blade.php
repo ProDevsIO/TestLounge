@@ -155,7 +155,7 @@
                                                 </div>
                                                 <div class="media-body text-white">
                                                     <h4 class="text-uppercase mb-0 weight500">
-                                                        N{{ number_format(auth()->user()->wallet_balance,0) }}</h4>
+                                                        N{{ number_format(auth()->user()->wallet_balance,2) }}</h4>
                                                     <span>Wallet Balance(Naira)</span>
                                                 </div>
                                             </div>
@@ -171,7 +171,7 @@
                                                 </div>
                                                 <div class="media-body text-white">
                                                     <h4 class="text-uppercase mb-0 weight500">
-                                                        N{{ number_format($earned,0) }}</h4>
+                                                        N{{ number_format($earned,2) }}</h4>
                                                     <span>Total Earnings(Naira)</span>
                                                 </div>
                                             </div>
@@ -189,7 +189,7 @@
                                         </div>
                                         <div class="media-body text-white">
                                             <h4 class="text-uppercase mb-0 weight500">
-                                                £ {{ number_format(auth()->user()->pounds_wallet_balance,0) }}</h4>
+                                                £ {{ number_format(auth()->user()->pounds_wallet_balance,2) }}</h4>
                                             <span> Wallet Balance(Pounds)</span>
                                         </div>
                                     </div>
@@ -205,7 +205,7 @@
                                         </div>
                                         <div class="media-body text-white">
                                             <h4 class="text-uppercase mb-0 weight500">
-                                                £ {{ number_format($earnedPounds,0) }}</h4>
+                                                £ {{ number_format($earnedPounds,2) }}</h4>
                                             <span>Total Earnings(Pounds)</span>
                                         </div>
                                     </div>

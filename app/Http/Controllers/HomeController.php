@@ -856,21 +856,25 @@ class HomeController extends Controller
                 $message = "Congratulations!,<br><br>
                 Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
                 You can now log in to your portal to complete your profile and set up your account. <br><br>
+                You will find your dedicated customer booking link on your portal <br><br>
                 Kindly click the button below<br/><br/>
                         <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "super/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                         Continue Registration
                        </a>
             
                               <br/><br/>
-                You will find your dedicated customer booking link on your portal <br><br>
                 Thank you for joining the  Traveltestsltd network!<br><br>
     
                 Traveltestsltd Team
                 ";
             }else{
+               $password = bcrypt($user->password);
                 $message = "Congratulations!,<br><br>
                 Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
                 You can now log in to your portal to complete your profile and set up your account. <br><br>
+                Kindly find your login details below:<br><br>
+                Email: $user->email<br><br>
+                Password: $password <br><br>
                 You will find your dedicated customer booking link on your portal <br><br>
                 Kindly click the button below<br/><br/>
                         <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "sub/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
@@ -1506,10 +1510,14 @@ class HomeController extends Controller
     public function voucherProcessing(array $request_data ){
 
         $price = $price_pounds = 0;
-    
+   
 
         $voucher =  VoucherGenerate::where(['voucher' => $request_data['external_reference'], 'status' => 0])->first();
-       
+        $referer = User::where('id', $voucher->agent)->first();
+        $request_data['referral_code'] = $referer->referal_code;
+        $request_data['user_id'] = $voucher->agent;
+      
+
         $booking = Booking::create($request_data);
        
        
@@ -1596,7 +1604,7 @@ class HomeController extends Controller
                                     $super_agent_percentage
                                 );
                             }
-                        } elseif ($voucher->currency == 'NG') {
+                        } elseif ($voucher->user->country == 'NG') {
                             //for local transaction in naira
                             $cost_booking = $booking_product->price;
 
@@ -1632,7 +1640,7 @@ class HomeController extends Controller
                 }
             }
 
-
+           
             try {
 
                 $code = $this->sendData($booking);     

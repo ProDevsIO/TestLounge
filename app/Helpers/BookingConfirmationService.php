@@ -28,7 +28,7 @@ class BookingConfirmationService
 
         $total_amount = $user->pounds_wallet_balance + $amount_credit;
 
-        User::where('id', $user->id)->update([
+        $user->update([
             'pounds_wallet_balance' => $total_amount,
             'total_credit_pounds' => $transactions
         ]);
@@ -37,10 +37,10 @@ class BookingConfirmationService
         {
             PoundTransaction::create([
                 'amount' => $amount_credit,
-                'booking_id' => $booking->id,
+                'booking_id' => $booking_id,
                 'user_id' => $user->id,
                 'cost_config' => $cost_booking,
-                'pecentage_config' => $pecentage,
+                'pecentage_config' => $percentage,
                 'type' => "2"
             ]);
 
@@ -54,6 +54,7 @@ class BookingConfirmationService
 
     public static function processNairaTransaction(User $user , $booking_id , $amount_credit , $cost_booking , $percentage)
     {
+      
         Transaction::create([
             'amount' => $amount_credit,
             'booking_id' => $booking_id,
@@ -63,32 +64,35 @@ class BookingConfirmationService
             'type' => "1"
         ]);
 
-
         $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
 
         $total_amount = $user->wallet_balance + $amount_credit;
 
-        User::where('id', $user->id)->update([
+        $user->update([
             'wallet_balance' => $total_amount,
             'total_credit' => $transactions
         ]);
 
         if($user->flutterwave_key)
         {
+            
             Transaction::create([
                 'amount' => $amount_credit,
-                'booking_id' => $booking->id,
+                'booking_id' => $booking_id,
                 'user_id' => $user->id,
                 'cost_config' => $cost_booking,
-                'pecentage_config' => $pecentage,
+                'pecentage_config' => $percentage,
                 'type' => "2"
             ]);
 
-            $wallet_balance = $user->pounnds_wallet_balance - $amount_credit;
+            $wallet_balance = $user->wallet_balance - $amount_credit;
 
-            $user->update([
+            $jjk = $user->update([
                 'wallet_balance' => $wallet_balance
             ]);
+
+           
         }
+       
     }
 }
