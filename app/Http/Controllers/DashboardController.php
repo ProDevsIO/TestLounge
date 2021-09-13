@@ -1262,7 +1262,7 @@ class DashboardController extends Controller
      
                 }else{
      
-                     $voucher_quantity = $count_check->quantity + $$voucherpay->quantity;
+                     $voucher_quantity = $count_check->quantity + $voucherpay->quantity;
      
                      $count_check->update([
                          'quantity' => $voucher_quantity
