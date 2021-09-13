@@ -312,7 +312,7 @@
                                             Thank you for choosing to book with us. <br/>
                                             Booking Reference: 
                                             <?php foreach($code as $decode){
-                                                echo $decode .",";
+                                                echo $decode .",<br>";
                                                  }
                                                  ?>
                                           
