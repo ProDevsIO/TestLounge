@@ -40,7 +40,7 @@
                                 @foreach($codes as $code)
                                     {{$code}},
                                 @endforeach
-                                An email has also been sent to you. Be sure to also check your junk mail also.<br/>
+                                An email has also been sent to you. please also check your junk mail.<br/>
                                 To fill your passenger location form <a
                                         href="https://provide-journey-contact-details.homeoffice.gov.uk/passengerLocatorFormUserAccountHolderQuestion"
                                         target="_blank" style="color: blue">Click here.</a>

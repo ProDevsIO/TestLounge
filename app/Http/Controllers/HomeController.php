@@ -771,6 +771,7 @@ class HomeController extends Controller
 
         $this->validate($request, [
             'phone_no' => 'required',
+            'password' => 'required',
             'company' => 'required',
             'platform_name' => 'required',
             'director' => 'required',
@@ -780,7 +781,7 @@ class HomeController extends Controller
 
         $request_data = $request->all();
 
-        $request_data['status'] = 0;
+        $request_data['status'] = 1;
         $request_data['verified'] = '1';
 
         if ($request->file) {
@@ -824,7 +825,7 @@ class HomeController extends Controller
         } catch (\Exception $e) {
         }
 
-        session()->flash('alert-success', "Thank you for completing your profile. Your profile is currently under review by our Admin. As soon as the review is completed, you will receive an email enabling you to access your account.");
+        session()->flash('alert-success', "Thank you for completing your profile. Your can now login to your account.");
 
         return redirect()->to('/login');
     }
@@ -868,13 +869,13 @@ class HomeController extends Controller
                 Traveltestsltd Team
                 ";
             }else{
-               $password = bcrypt($user->password);
+
                 $message = "Congratulations!,<br><br>
                 Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
                 You can now log in to your portal to complete your profile and set up your account. <br><br>
                 Kindly find your login details below:<br><br>
                 Email: $user->email<br><br>
-                Password: $password <br><br>
+               
                 You will find your dedicated customer booking link on your portal <br><br>
                 Kindly click the button below<br/><br/>
                         <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "sub/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>

@@ -46,7 +46,7 @@
                                 <label>Account Name</label>
                                 <input type="text" name="account_name" class="form-control" id="account_name"
                                         readonly/>
-                                        <label>Password <span class="text-danger">*</span> </label>
+                                        <label>Platform login password <span class="text-danger">*</span> </label>
                                 <input type="password" name="password" class="form-control"  required><br>
                                 <input type="submit" value="Add Bank Account" class="btn btn-primary"/>
                                
