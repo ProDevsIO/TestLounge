@@ -434,13 +434,14 @@ class HomeController extends Controller
                                 if (!empty($superAgent = $user->superAgent)) {
                                     $super_agent_percentage = $share_data["main_agent_share_percent"];
                                     $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
-
+                                    $descript = 1;
                                     BookingConfirmationService::processPoundTransaction(
                                         $superAgent,
                                         $booking->id,
                                         $super_agent_amount_credit,
                                         $cost_booking,
-                                        $super_agent_percentage
+                                        $super_agent_percentage,
+                                        $descript
                                     );
                                 }
                             } elseif ($booking->card_type == 1) {
@@ -460,13 +461,14 @@ class HomeController extends Controller
                                 if (!empty($superAgent = $user->superAgent)) {
                                     $super_agent_percentage = $share_data["main_agent_share_percent"];
                                     $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
-
+                                    $descript = 1;
                                     BookingConfirmationService::processNairaTransaction(
                                         $superAgent,
                                         $booking->id,
                                         $super_agent_amount_credit,
                                         $cost_booking,
-                                        $super_agent_percentage
+                                        $super_agent_percentage,
+                                        $descript
                                     );
                                 }
                             }

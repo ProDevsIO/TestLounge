@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id
  * @property float|null $amount
+ * @property int|null $description
  * @property int|null $booking_id
  * @property int|null $user_id
  * @property float|null $cost_config
@@ -29,6 +30,7 @@ class Transaction extends Model
 
 	protected $casts = [
 		'amount' => 'float',
+		'description' => 'int',
 		'booking_id' => 'int',
 		'user_id' => 'int',
 		'cost_config' => 'float',
@@ -37,6 +39,7 @@ class Transaction extends Model
 
 	protected $fillable = [
 		'amount',
+		'description',
 		'booking_id',
 		'user_id',
 		'type',

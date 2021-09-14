@@ -15,17 +15,17 @@
                             <div class="custom-title-wrap border-0 position-relative pb-2">
                                 <div class="custom-title pull-left">
                                            @if($currency == 'naira')
-                                            Naira
+                                           Total Revenue(Naira)
                                             @elseif($currency == 'pounds')
-                                            Pounds
+                                            Total Revenue(Pounds)
                                             @elseif($currency == 'cedis')
-                                             Ghana cedis
+                                            Total Revenue(Ghana cedis)
                                             @elseif($currency == 'tzs')
-                                            Tanzanian Shilling
+                                            Total Revenue(Tanzanian Shilling)
                                             @elseif($currency == 'kes')
-                                            Kenyan Shilling
+                                            Total Revenue(Kenyan Shilling)
                                             @elseif($currency == 'zar')
-                                            South African Rand 
+                                            Total Revenue(South African Rand) 
                                             @endif
                                 </div>
                                 <div class="pull-right"> <a href="{{ url('/currency/export/'.$currency.'/'.$startDate .'/'. $endDate) }}" class="btn btn-md btn-warning text-white">Export</a></div>
@@ -40,6 +40,7 @@
                                     <tr>
                                         <th scope="col">Name</th>
                                         <th scope="col">Product</th>
+                                        <th scope="col">Qunatity</th>
                                         <th scope="col">vendor</th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">Date</th>
@@ -53,6 +54,9 @@
                                             </td>
                                             <td>
                                                 {{$transact->product->name}}
+                                            </td>
+                                            <td>
+                                                {{$transact->quantity}}
                                             </td>
                                             <td> {{$transact->vendor->name}}</td>
                                             @if($transact->currency == 'NGN')

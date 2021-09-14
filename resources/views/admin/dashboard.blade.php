@@ -82,21 +82,6 @@
             </div>
             <div class="row default_dash">
                 <div class="col-xl-3 col-sm-6 col-xs-4">
-                    <div class="card mb-4 bg-purple" title="Pending bookings">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Pending bookings">
-                                    <h4 class="text-uppercase mb-0 weight500">{{ $pending_booking }}</h4>
-                                    <span>Unpaid Bookings</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-xs-4">
                     <div class="card mb-4 bg-primary" title="Completed bookings">
                         <div class="card-body">
                             <div class="media d-flex align-items-center">
@@ -111,6 +96,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-xl-3 col-sm-6 col-xs-4">
+                    <div class="card mb-4 bg-purple" title="Pending bookings">
+                        <div class="card-body">
+                            <div class="media d-flex align-items-center ">
+                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                    <i class="vl_book"></i>
+                                </div>
+                                <div class="media-body text-light" title="Pending bookings">
+                                    <h4 class="text-uppercase mb-0 weight500">{{ $pending_booking }}</h4>
+                                    <span>Unpaid Bookings</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 @if(auth()->user()->type == "1")
                     <div class="col-xl-3 col-sm-6 col-xs-4">
                         <div class="card mb-4 bg-danger">
