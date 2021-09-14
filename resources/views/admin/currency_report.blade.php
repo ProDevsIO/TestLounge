@@ -40,7 +40,7 @@
                                     <tr>
                                         <th scope="col">Name</th>
                                         <th scope="col">Product</th>
-                                        <th scope="col">Qunatity</th>
+                                        <th scope="col">Quantity</th>
                                         <th scope="col">vendor</th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">Date</th>
