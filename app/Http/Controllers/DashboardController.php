@@ -1168,7 +1168,7 @@ class DashboardController extends Controller
 
         $country = auth()->user()->country;
 
-        if ($country = "NG") {
+        if ($country == "NG") {
             $amount = $product->price * $quantity;
 
         } else {
