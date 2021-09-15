@@ -58,7 +58,7 @@
                                     </small>
                                   
 
-                                    <input type="text" id="verify_email" onkeyUp ="veriy()" name="verify_email" value="{{ old('verify_email') }}" required/>
+                                    <input type="text" id="verify_email" onkeyUp ="veriy()" name="verify_email" value="{{ old('verify_email') }}" autocomplete="off" required/>
                                     
 
                                 </div>
