@@ -1379,15 +1379,17 @@ class DashboardController extends Controller
         $id = Auth()->user()->id;
         $users = User::where('id', $id)->first();
 
-        return view('admin.profile')->with(compact('users'));
+        $country = Country::where('iso', $users->country)->first()->nicename;
+
+        return view('admin.profile')->with(compact('users', 'country'));
     }
 
     function edit_profile_view()
     {
         $id = Auth()->user()->id;
         $users = User::where('id', $id)->first();
-
-        return view('admin.edit_profile')->with(compact('users'));
+        $countries = Country::all();
+        return view('admin.edit_profile')->with(compact('users', 'countries'));
     }
 
     function edit_profile(Request $request)

@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     public function country_residence()
     {
-        return $this->belongsTo(Country::class);
+       return $this->hasOne(Country::class, 'iso', 'country');
     }
 
     public function voucherCount()

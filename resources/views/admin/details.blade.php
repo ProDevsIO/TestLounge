@@ -32,7 +32,7 @@
                             <div class="row f12 mb-3">
                                 <div class="col-6">Country</div>
                                 <div class="col-6">
-                                    {{ optional($user->country_residence)->name }}
+                                    {{ optional($user->country_residence)->nicename }}
                                 </div>
                             </div>
                             <div class="row f12 mb-3">

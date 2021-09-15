@@ -19,25 +19,46 @@
                             <form action="{{ url('/edit/profile') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
+                                    <label for="">First name</label>
                                     <input type="text" value="{{ $users->first_name}}" name="first_name" class="form-control" placeholder="First Name" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Last name</label>
                                     <input type="text" value="{{ $users->last_name }}" name="last_name" class="form-control"  placeholder="Last Name" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Pnone number</label>
                                     <input id="phone" style="width:100%;margin-right:0px" type="text" value="{{ $users->phone_no}}" name="phone_no" class="form-control pr-5"  placeholder="Phone No" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Email</label>
                                     <input type="email" value="{{ $users->email}}" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Email" required>
                                 </div>
                                 <div class="form-group">
-                                    <small class="text-muted">Please let us know what name you would like displayed on the UK Travel Test portal.  </small>
-                                <input type="text" value="{{ $users->platform_name}}" name="platform_name" class="form-control" id="exampleInputEmail1" placeholder="Name on platform">
+                                    <label class="text-left" style="width:100%">Country of residence</label>
+                                    <select class="form-control select2 country_id__"
+                                            name="country" autocomplete="off"
+                                            id="travel_from" onchange="run()" onselect="selectCountry()" required>
+                                        <option value="">Make a selection</option>
+                                        @foreach($countries as $country)
+                                            <option value="{{ $country->iso }}"
+                                                    @if($users->country == $country->iso) selected
+                                                    @endif>{{ $country->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Name on platform</label><br>
+                                    <small class="text-muted">Please let us know what name you would like displayed on the UK Travel Test portal.  </small>
+                                    <input type="text" value="{{ $users->platform_name}}" name="platform_name" class="form-control" id="exampleInputEmail1" placeholder="Name on platform">
+                                </div>
+                                <div class="form-group">
+                                    <label for=""> Name of Organization</label>
                                     <input type="text" value="{{ $users->company}}" name="company" class="form-control" id="exampleInputEmail1" placeholder="Name of organization" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Name of Managing Director</label>
                                     <input type="text" value="{{ $users->director}}" name="director" class="form-control" id="exampleInputEmail1" placeholder="Name of managing director" required>
                                 </div> 
                                 <div class="form-group">
@@ -46,6 +67,7 @@
                                 <input type="file"  name="file" class="form-control" >
                                 </div>
                                 <div class="form-group " >
+                                    <label for="">IATA certiied</label>
                                     <select name="certified" class="form-control" id="">
                                         <option  class="pl-5" value="">Are you IATA certified?</option>
                                         <option class="text-center" value="Yes" @if($users->certified == "Yes") selected @endif >Yes</option>
@@ -53,7 +75,7 @@
                                     </select>   
                                 </div>
                                 <div class="form-group">
-                                    <small class="text-muted">If certified</small>
+                                    <small class="text-muted">If certified, please fill in your IATA number</small>
                                 <input type="text" value="{{ $users->certified_no}}" name="certified_no" class="form-control" id="exampleInputEmail1" placeholder="Please fill in your IATA number">
                                 </div>
                                 
