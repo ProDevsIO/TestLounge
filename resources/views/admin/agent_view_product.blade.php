@@ -34,11 +34,9 @@
                             <div class="card-body text-center">
                                 <h4 class="card-title">{{ optional($product->product)->name }}</h4>
                                 <p class="card-text cart_item_total_{{ $product->id }}">
-                                    @if(auth()->user()->country == 'NG')   
-                                     N {{ number_format($product->price,2) }}
-                                    @else
+                                   
                                     £ {{ number_format($product->price_pounds) }}
-                                    @endif
+                                
                                 </p>
                                 <div class="input-group">
                                     <span class="input-group-addon cart_update_btn mb-3" data-action="remove">-</span>

@@ -1356,13 +1356,9 @@ class DashboardController extends Controller
     {
         $product = VendorProduct::findorfail($product_id);
 
-        if (auth()->user()->country = "NG") {
-            $amount = $product->price * $quantity;
-            $price = "N " . number_format($amount, 2);
-        } else {
             $amount = $product->price_pounds * $quantity;
             $price = "£ " . number_format($amount, 2);
-        }
+        
 
         return response()->json([
 
