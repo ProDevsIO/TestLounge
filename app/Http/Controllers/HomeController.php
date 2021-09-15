@@ -130,6 +130,7 @@ class HomeController extends Controller
             'ethnicity' => 'required',
             'phone_no' => 'required',
             'email' => 'required',
+            'verify_email' => 'required',
             'isolation_address' => 'required',
             'isolation_town' => 'required',
             'isolation_postal_code' => 'required',
@@ -142,15 +143,20 @@ class HomeController extends Controller
 
 
         $request->vendor_id = 3;
-       
-       
-       
+     
+       if($request->email != $request->verify_email)
+       {
+        session()->flash('alert-danger', "Please you have provided two different emails, the emails must match in order to make booking");
+        return back()->withInput();
+       }
+
         $request_data = $request->all();
 
         unset($request_data['phone_no']);
         $request_data['phone_no'] = $request->hidden_phone;
         unset($request_data['hidden_phone']);
         unset($request_data['phone_full']);
+        unset($request_data['verify_email']);
 
         
        

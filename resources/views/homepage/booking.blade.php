@@ -50,6 +50,16 @@
                                     @endif
 
                                 </div>
+                                <div class="col-md-12" style="margin-top: 20px">
+                                    <label>Confirm Email: <span class="show_required"> *</span></label>
+                                    
+                                    </small>
+                                  
+
+                                    <input type="text" name="verify_email" value="{{ old('verify_email') }}" required/>
+                                    
+
+                                </div>
                                 <div class="col-md-12 " style="margin-top: 20px">
                                     <label>Phone number<span class="show_required"> *</span></label>
                                     <input id="phone" style="" type="text" value="{{ old('phone_no') }}" name="phone_no"
