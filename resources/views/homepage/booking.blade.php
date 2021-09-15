@@ -42,7 +42,7 @@
                                     <small class="text-muted" style="color:red"> Please provide only ONE email address
                                     </small>
                                     @if(isset($voucher))
-                                    <input type="text" name="email" value="{{ $voucher->email }}" required/>
+                                    <input type="text" name="email" value="{{ $voucher->email }}" id="email" required/>
 
                                     @else
 
@@ -52,11 +52,13 @@
                                 </div>
                                 <div class="col-md-12" style="margin-top: 20px">
                                     <label>Confirm Email: <span class="show_required"> *</span></label>
-                                    
+                                    <div class="answer">
+
+                                    </div>
                                     </small>
                                   
 
-                                    <input type="text" name="verify_email" value="{{ old('verify_email') }}" required/>
+                                    <input type="text" id="verify_email" onkeyUp ="veriy()" name="verify_email" value="{{ old('verify_email') }}" required/>
                                     
 
                                 </div>
@@ -382,6 +384,24 @@
             }
 
 
+        }
+
+        function veriy()
+        {
+            var email = document.getElementById('email').value;
+            var email2 = document.getElementById('verify_email').value;
+            var answer = $(".answer");
+            console.log(email, email2);
+            if(email == email2)
+            {
+                answer.empty();
+                answer.append($("<small class='text-muted' style='color:green'>CORRECT! THE EMAILS MATCH</small>"));
+                $answer.show();
+            }else{
+                answer.empty();
+                answer.append($("<small class='text-muted' style='color:red'>INCORRECT! THE EMAILS DO NOT MATCH</small>"));
+                answer.show();
+            }
         }
 
     </script>
