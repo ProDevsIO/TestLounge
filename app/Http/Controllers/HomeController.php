@@ -800,7 +800,7 @@ class HomeController extends Controller
         
         unset($request_data['password']);
 
-        $request_data['password'] = bcrypr($request->password);
+        $request_data['password'] = bcrypt($request->password);
 
         User::where('id',$request->user_id)->update($request_data);
         $user =  User::where('id',$request->user_id)->first();
