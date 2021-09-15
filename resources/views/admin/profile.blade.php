@@ -33,6 +33,14 @@
                     <div class="card card-shadow mb-4">
                         <div class="card-body">
                             <div class="row f12 mb-3">
+                                <div class="col-6">Country</div>
+                                <div class="col-6">
+                                    
+                                    {{$country}}
+                                  
+                                </div>
+                            </div>
+                            <div class="row f12 mb-3">
                                 <div class="col-6">Phone number</div>
                                 <div class="col-6">
                                     @if($users->phone_no != null)
