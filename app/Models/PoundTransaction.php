@@ -13,6 +13,7 @@ class PoundTransaction extends Model
 
 	protected $casts = [
 		'amount' => 'float',
+		'description'=> 'int',
 		'booking_id' => 'int',
 		'user_id' => 'int',
 		'cost_config' => 'float',
@@ -21,6 +22,7 @@ class PoundTransaction extends Model
 
 	protected $fillable = [
 		'amount',
+		'description',
 		'booking_id',
 		'user_id',
 		'type',

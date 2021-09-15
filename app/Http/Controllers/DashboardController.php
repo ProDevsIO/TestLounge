@@ -1356,13 +1356,9 @@ class DashboardController extends Controller
     {
         $product = VendorProduct::findorfail($product_id);
 
-        if (auth()->user()->country = "NG") {
-            $amount = $product->price * $quantity;
-            $price = "N " . number_format($amount, 2);
-        } else {
             $amount = $product->price_pounds * $quantity;
             $price = "£ " . number_format($amount, 2);
-        }
+        
 
         return response()->json([
 
@@ -1468,22 +1464,22 @@ class DashboardController extends Controller
         if (auth()->user()->type == 1) {
 
             //money from bookings
-            $booking_trans = Transaction::where([
+            $booking_trans = Transaction::orderBy('id', 'desc')->where([
                 'type' => 1
             ])->get();
 
             //money from paid commision
-            $paid_trans = Transaction::where([
+            $paid_trans = Transaction::orderBy('id', 'desc')->where([
                 'type' => 2
             ])->get();
 
             //money from Pound bookings
-            $booking_trans_p = PoundTransaction::where([
+            $booking_trans_p = PoundTransaction::orderBy('id', 'desc')->where([
                 'type' => 1
             ])->get();
 
             //money from pounds paid commision
-            $paid_trans_p = PoundTransaction::where([
+            $paid_trans_p = PoundTransaction::orderBy('id', 'desc')->where([
                 'type' => 2
             ])->get();
 
@@ -1511,25 +1507,25 @@ class DashboardController extends Controller
 
 
             //money from bookings
-            $booking_trans = Transaction::where([
+            $booking_trans = Transaction::orderBy('id', 'desc')->where([
                 'user_id' => $id,
                 'type' => 1
             ])->get();
 
             //money from paid commision
-            $paid_trans = Transaction::where([
+            $paid_trans = Transaction::orderBy('id', 'desc')->where([
                 'user_id' => $id,
                 'type' => 2
             ])->get();
 
             //money from pounds bookings
-            $booking_trans_p = PoundTransaction::where([
+            $booking_trans_p = PoundTransaction::orderBy('id', 'desc')->where([
                 'user_id' => $id,
                 'type' => 1
             ])->get();
 
             //money from pounds paid commision
-            $paid_trans_p = PoundTransaction::where([
+            $paid_trans_p = PoundTransaction::orderBy('id', 'desc')->where([
                 'user_id' => $id,
                 'type' => 2
             ])->get();
@@ -1561,33 +1557,34 @@ class DashboardController extends Controller
             $end = Carbon::parse($endDate)->endOfDay();
             //if a date range exist
             if ($currency == "naira") {
-                $transact = BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->get();
+                
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "pounds") {
-                $transact = BookingProduct::where('currency', 'GBP')->wherebetween('created_at', [$start, $end])->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'GBP')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "cedis") {
-                $transact = BookingProduct::where('currency', 'GHS')->wherebetween('created_at', [$start, $end])->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'GHS')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "tzs") {
-                $transact = BookingProduct::where('currency', 'TZS')->wherebetween('created_at', [$start, $end])->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'TZS')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "kes") {
-                $transact = BookingProduct::where('currency', 'KES')->wherebetween('created_at', [$start, $end])->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'KES')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "zar") {
-                $transact = BookingProduct::where('currency', 'ZAR')->wherebetween('created_at', [$start, $end])->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'ZAR')->wherebetween('created_at', [$start, $end])->get();
             }
         } else {
 
             //if no date range exist
             if ($currency == "naira") {
-                $transact = BookingProduct::where('currency', 'NGN')->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'NGN')->get();
             } elseif ($currency == "pounds") {
-                $transact = BookingProduct::where('currency', 'GBP')->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'GBP')->get();
             } elseif ($currency == "cedis") {
-                $transact = BookingProduct::where('currency', 'GHS')->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'GHS')->get();
             } elseif ($currency == "tzs") {
-                $transact = BookingProduct::where('currency', 'TZS')->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'TZS')->get();
             } elseif ($currency == "kes") {
-                $transact = BookingProduct::where('currency', 'KES')->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'KES')->get();
             } elseif ($currency == "zar") {
-                $transact = BookingProduct::where('currency', 'ZAR')->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'ZAR')->get();
             }
         }
 

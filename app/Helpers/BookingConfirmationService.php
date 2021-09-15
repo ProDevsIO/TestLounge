@@ -11,17 +11,29 @@ use App\Models\User;
 class BookingConfirmationService
 {
 
-    public static function processPoundTransaction(User $user , $booking_id , $amount_credit , $cost_booking , $percentage)
+    public static function processPoundTransaction(User $user , $booking_id , $amount_credit , $cost_booking , $percentage, $descript = null)
     {
+        if($descript != null){
+            PoundTransaction::create([
+                'amount' => $amount_credit,
+                'description' => "1",
+                'booking_id' => $booking_id,
+                'user_id' => $user->id,
+                'cost_config' => $cost_booking,
+                'pecentage_config' => $percentage,
+                'type' => "1"
+            ]);
+        }else{
 
-        PoundTransaction::create([
-            'amount' => $amount_credit,
-            'booking_id' => $booking_id,
-            'user_id' => $user->id,
-            'cost_config' => $cost_booking,
-            'pecentage_config' => $percentage,
-            'type' => "1"
-        ]);
+            PoundTransaction::create([
+                'amount' => $amount_credit,
+                'booking_id' => $booking_id,
+                'user_id' => $user->id,
+                'cost_config' => $cost_booking,
+                'pecentage_config' => $percentage,
+                'type' => "1"
+            ]);
+        }
 
 
         $transactions =  PoundTransaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
@@ -35,6 +47,7 @@ class BookingConfirmationService
 
         if($user->flutterwave_key)
         {
+            
             PoundTransaction::create([
                 'amount' => $amount_credit,
                 'booking_id' => $booking_id,
@@ -52,17 +65,28 @@ class BookingConfirmationService
         }
     }
 
-    public static function processNairaTransaction(User $user , $booking_id , $amount_credit , $cost_booking , $percentage)
+    public static function processNairaTransaction(User $user , $booking_id , $amount_credit , $cost_booking , $percentage, $descript = null)
     {
-      
-        Transaction::create([
-            'amount' => $amount_credit,
-            'booking_id' => $booking_id,
-            'user_id' => $user->id,
-            'cost_config' => $cost_booking,
-            'pecentage_config' => $percentage,
-            'type' => "1"
-        ]);
+        if($descript != null){
+            Transaction::create([
+                'amount' => $amount_credit,
+                'description' => "1",
+                'booking_id' => $booking_id,
+                'user_id' => $user->id,
+                'cost_config' => $cost_booking,
+                'pecentage_config' => $percentage,
+                'type' => "1"
+            ]);
+        }else{
+            Transaction::create([
+                'amount' => $amount_credit,
+                'booking_id' => $booking_id,
+                'user_id' => $user->id,
+                'cost_config' => $cost_booking,
+                'pecentage_config' => $percentage,
+                'type' => "1"
+            ]);
+        }
 
         $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
 

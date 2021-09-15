@@ -120,6 +120,9 @@
                                                 @endif
                                                 <th scope="col">Commission</th>
                                                 <th>Booking Amount</th>
+                                                @if(auth()->user()->type == 1)
+                                                <th>User Role</th>
+                                                @endif
                                                 <th scope="col">Date</th>
                                                 <!-- <th scope="col">Action</th> -->
                                             </tr>
@@ -145,6 +148,17 @@
                                                         @endif
                                                         <td>₦{{ number_format($booking_tran->amount,2) }}</td>
                                                         <td>₦{{ number_format($booking_tran->cost_config,2) }}</td>
+                                                        @if(auth()->user()->type == 1)
+                                                            <td>
+                                                                @if($booking_tran->user != null)
+                                                                    @if($booking_tran->user->main_agent_id == null)
+                                                                        Super agent
+                                                                    @else
+                                                                        Sub agent
+                                                                    @endif
+                                                                @endif
+                                                            </td>
+                                                       @endif
                                                         <td>{{ $booking_tran->created_at }}</td>
                                                     </tr>
                                                   
@@ -229,6 +243,9 @@
                                                 @endif
                                                 <th scope="col">Commission</th>
                                                 <th>Booking Amount</th>
+                                                @if(auth()->user()->type == 1)
+                                                <th>User Role</th>
+                                                @endif
                                                 <th scope="col">Date</th>
                                                 <!-- <th scope="col">Action</th> -->
                                             </tr>
@@ -245,6 +262,18 @@
                                                         @endif
                                                         <td> £{{ number_format($booking_tran_p->amount,2) }}</td>
                                                         <td> £{{ number_format($booking_tran_p->cost_config,2) }}</td>
+                                                        @if(auth()->user()->type == 1)
+                                                            <td>
+                                                                @if($booking_tran->user != null)
+                                                                    @if($booking_tran->user->main_agent_id == null)
+                                                                        Super agent
+                                                                    @else
+                                                                        Sub agent
+                                                                    @endif
+                                                                @endif
+                                                            </td>
+                                                       @endif
+                                                       
                                                         <td>{{ $booking_tran_p->created_at }}</td>
                                                     </tr>
                                                   

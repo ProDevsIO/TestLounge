@@ -208,7 +208,7 @@
         function sendGenerateData(id, count) {
             var e = 'email_' + count;
             var q = 'quantity_' + count;
-            var d = confirm("Are you sure you want to generate a voucher for a client?");
+            var d = confirm("Are you sure you want to generate a voucher for this client?");
             var email = document.getElementById(e).value;
             var quantity = document.getElementById(q).value;
             // console.log(email, quantity);
