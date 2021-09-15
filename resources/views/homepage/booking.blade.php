@@ -211,13 +211,13 @@
 
                                                 </div>
 
-                                            <div class='radio'
-                                                 style="background:none;border:none;padding: 8px 40px;height: 180px;border-radius:25px"
-                                                 data-value="vastech" onclick ="run()">
-                                                <img src="{{ url('/img/vastech.jpg') }}"
-                                                     style="padding-bottom: 0px;width: 200px;"/> <span><label>
+                                            {{--<div class='radio'--}}
+                                                 {{--style="background:none;border:none;padding: 8px 40px;height: 180px;border-radius:25px"--}}
+                                                 {{--data-value="vastech" onclick ="run()">--}}
+                                                {{--<img src="{{ url('/img/vastech.jpg') }}"--}}
+                                                     {{--style="padding-bottom: 0px;width: 200px;"/> <span><label>--}}
 
-                                            </div>
+                                            {{--</div>--}}
                                         @endif    
                                         </div>
                                     </div>
@@ -357,7 +357,7 @@
             var nationality = document.getElementById("travel_from").value;
             var $vouch = $(".voucher_input");
 
-            if (nationality == 156) {
+            // if (nationality == 156) {
                 var $card = $(".card_type");
                
                 $card.empty(); // remove old options
@@ -366,10 +366,10 @@
                 $card.append($("<option></option>").attr("value", 2).text("Non-Nigerian Card"));
                 $("#card").show();
                 $vouch.hide();
-            } else {
-                $("#card").hide();
-                $vouch.hide();
-            }
+            // } else {
+            //     $("#card").hide();
+            //     $vouch.hide();
+            // }
 
 
         }
