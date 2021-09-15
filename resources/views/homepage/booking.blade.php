@@ -46,7 +46,7 @@
 
                                     @else
 
-                                    <input type="text" name="email" value="{{ old('email') }}" required/>
+                                    <input type="text" name="email" value="{{ old('email') }}" id="email" required/>
                                     @endif
 
                                 </div>
