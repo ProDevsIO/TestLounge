@@ -221,15 +221,22 @@
                                                     <img src="https://img.icons8.com/fluency/32/000000/ticket-purchase.png"
                                                         style="padding-bottom: 0px;"/> <span><label> Pay with <b>voucher</b></label></span>
 
-                                                </div>
-
+                                            </div>
                                             <div class='radio'
-                                                 style="background:none;border:none;padding: 8px 40px;height: 86px;border-radius:25px"
-                                                 data-value="vastech" onclick ="run()">
-                                                <img src="{{ url('/img/vas.svg') }}"
-                                                     style="padding-bottom: 0px;margin-left: -38px"/> <span><label>
+                                                 style="background:none;border:none;padding: 8px 100px;height: 86px;border-radius:25px; width:300px;"
+                                                 data-value="paystack" onclick ="run()">
+                                                 <img  style="padding-bottom: 0px;width:100%;" src="https://tukuz.com/wp-content/uploads/2020/10/paystack-logo-vector.png" />
 
                                             </div>
+
+                                            <div class='radio'
+                                                 style="background:none;border:none;padding: 20px 40px 20px 40px;height: 86px;border-radius:25px"
+                                                 data-value="vastech" onclick ="run()">
+                                                <img src="{{ url('/img/vas.svg') }}"
+                                                     style="padding-bottom: 0px;margin-left: -38px;width:200px"/> <span><label>
+
+                                            </div>
+                                           
                                         @endif    
                                         </div>
                                     </div>
