@@ -48,6 +48,38 @@ class Controller extends BaseController
         return $checkout_session;
 
     }
+
+    public function processPaystack(array $request = [])
+    {
+        
+        $url = "https://api.paystack.co/transaction/initialize";
+           
+            $fields_string = http_build_query($request);
+           
+            //open connection
+            $ch = curl_init();
+            
+            //set the url, number of POST vars, POST data
+            curl_setopt($ch,CURLOPT_URL, $url);
+            curl_setopt($ch,CURLOPT_POST, true);
+            curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                "Authorization: Bearer " .env('PAYSTACK_SECRET_KEY', 'sk_test_a888f85236f4da1b0bd204ad8f8c96b6e010a7e9'),
+                "Cache-Control: application/json",
+            ));
+            
+            //So that curl_exec returns the contents of the cURL; rather than echoing it
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+            
+            //execute post
+            $response = curl_exec($ch);
+            
+          $server_output = json_decode($response);
+         return $server_output->data->authorization_url;
+            
+        
+    }
+
     public function processFL(array $request = [])
     {
         $ch = curl_init();
@@ -136,6 +168,34 @@ class Controller extends BaseController
         return $server_output;
     }
 
+    function getPaystackData($booking,$price,$transaction_ref,$price_pound = null, $card_type = null)
+    {
+       
+        if ($booking->country_travelling_from_id == 156 && $card_type = 1) {
+            $price = $price * 100;
+            $data = [
+                //
+                "email" => $booking->email,
+                "reference" => $transaction_ref,
+                "amount" => $price,
+                "currency" => "NGN",
+                "callback_url" => env('APP_URL', 'http://127.0.0.1:8000/') . "payment/paystack/confirmation",
+            ];
+
+        } else {
+            $price_usd = $price * 411 * 100;
+            $data = [
+                "email" => $booking->email,
+                "reference" => $transaction_ref,
+                "amount" => $price_usd,
+                "currency" => "USD",
+                "callback_url" => env('APP_URL', 'http://127.0.0.1:8000/') . "payment/paystack/confirmation",
+            ];
+        }
+
+        return $data;
+    }
+    
     function getFlutterwaveData($booking,$price,$transaction_ref,$price_pound = null, $card_type = null){
 
         if ($booking->country_travelling_from_id == 156 && $card_type = 1) {

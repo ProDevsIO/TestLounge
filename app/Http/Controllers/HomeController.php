@@ -227,6 +227,9 @@ class HomeController extends Controller
         unset($request_data['_token']);
         if($request->payment_method == "vastech"){
             $transaction_ref = rand(100000, 9999999);
+        }elseif($request->payment_method == "paystack"){
+            //paystack doesnt allow underscrore in their reference
+            $transaction_ref = uniqid('pay-') . rand(10000, 999999);
         }else{
             $transaction_ref = uniqid('booking_') . rand(10000, 999999);
         }
@@ -249,7 +252,7 @@ class HomeController extends Controller
         unset($request_data['payment_method']);
 
         $price = $price_pounds = 0;
-
+     
         $booking = Booking::create($request_data);
         foreach ($carts as $cart) {
             $product_id = $cart->vendorProduct->product_id;
@@ -273,36 +276,41 @@ class HomeController extends Controller
         }
 
         //send an email
-        try {
-            $message = "
-                Hi " . $request->first_name . ",
+        // try {
+        //     $message = "
+        //         Hi " . $request->first_name . ",
 
-                Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
-                For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktraveltest.prodevs.io/#popular' >Here</a> <br>
-             <br/>
-                <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "make/payment/" . $transaction_ref . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
-                       Make Payment
-                      </a>
-                      <br/>
-                      <p style='color: red'>
-                     *** If you have made payment, you will receive your receipt shortly. <br/>
+        //         Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
+        //         For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktraveltest.prodevs.io/#popular' >Here</a> <br>
+        //      <br/>
+        //         <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "make/payment/" . $transaction_ref . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+        //                Make Payment
+        //               </a>
+        //               <br/>
+        //               <p style='color: red'>
+        //              *** If you have made payment, you will receive your receipt shortly. <br/>
 
-                        If you are yet to make payment or need to reprocess a failed payment you can click below to continue to the payment page ***
-                        </p>
+        //                 If you are yet to make payment or need to reprocess a failed payment you can click below to continue to the payment page ***
+        //                 </p>
 
 
-                      <br/><br/>
-                      Thank you.
-                ";
-            Mail::to($booking->email)->send(new BookingCreation($message));
-        } catch (\Exception $e) {
-        }
+        //               <br/><br/>
+        //               Thank you.
+        //         ";
+        //     Mail::to($booking->email)->send(new BookingCreation($message));
+        // } catch (\Exception $e) {
+        // }
 
         if($request->payment_method == "vastech"){
             $data = $this->getVasTechData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
+        }elseif($request->payment_method == "paystack"){
+            $data = $this->getPaystackData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
+         
         }else {
             $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
         }
+
+       
         //redirect to payment page
         if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
             $data['subaccounts'] = $sub_accounts;
@@ -331,6 +339,10 @@ class HomeController extends Controller
         } else {
             if($request->payment_method == "vastech"){
                 $redirect_url = $this->processVas($data);
+            } elseif($request->payment_method == "paystack"){
+
+                $redirect_url = $this->processPaystack($data);
+             
             }else {
                 $redirect_url = $this->processFL($data);
             }
@@ -359,7 +371,41 @@ class HomeController extends Controller
         return $response;
     }
 
+<<<<<<< HEAD
     function confirm_vas($url,$txRef){
+=======
+    function confirm_paystack($txRef){
+       
+        $curl = curl_init();
+        $url = "https://api.paystack.co/transaction/verify/$txRef";
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+            "Authorization: Bearer ". env('PAYSTACK_SECRET_KEY', 'sk_test_a888f85236f4da1b0bd204ad8f8c96b6e010a7e9'),
+            "Cache-Control: application/json",
+            ),
+        ));
+        
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+        return $response;
+       
+        // if ($err) {
+        //     echo "cURL Error #:" . $err;
+        // } else {
+        //     echo $response;
+        // }
+    }
+
+    function confirm_vas($url){
+>>>>>>> 272acf6ef2b2dc93b5eafffc8e31bc9e3d7f772d
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
@@ -387,6 +433,7 @@ class HomeController extends Controller
 
     public function payment_confirmation(Request $request,$type = null)
     {
+        
         if (env('APP_ENV', "LIVE") == "LIVE") {
             $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
         } else {
@@ -401,13 +448,26 @@ class HomeController extends Controller
             $txRef = $request->transactionRef;
             $url = "https://vastech.sevas.live/vastech/api/v1/tstatus?transactionRef=".$txRef;
             $response = $this->confirm_vas($url,$txRef);
+<<<<<<< HEAD
         }else{
+=======
+
+        }elseif($type == "paystack")
+        {
+            $txRef = $request->trxref;
+         
+            $response = $this->confirm_paystack($txRef);
+        }
+        else{
+>>>>>>> 272acf6ef2b2dc93b5eafffc8e31bc9e3d7f772d
             $response = $this->confirm_flutterwave($url,$txRef);
         }
 
+       
+
         $data_response = json_decode($response);
 
-        if (isset($data_response->data->status) && ($data_response->data->status == "successful" || $data_response->data->status == "APPROVED")) {
+        if (isset($data_response->data->status) && ($data_response->data->status == "successful" || $data_response->data->status == "APPROVED" || $data_response->data->status == "success")) {
 
             $booking = Booking::where('transaction_ref', $txRef)->first();
 

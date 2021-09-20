@@ -14,7 +14,8 @@
         "livewire/livewire": "^2.5",
         "milon/barcode": "^8.0",
         "niklasravnsborg/laravel-pdf": "^4.1",
-        "stripe/stripe-php": "^7.92"
+        "stripe/stripe-php": "^7.92",
+        "unicodeveloper/laravel-paystack": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

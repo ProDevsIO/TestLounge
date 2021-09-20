@@ -82,7 +82,8 @@ Route::get('/sub/continue/registration/{referral_code}/{id}', [\App\Http\Control
 Route::get('/super/continue/registration/{referral_code}/{id}', [\App\Http\Controllers\HomeController::class,"super_verify_account"]);
 Route::post('/complete/register', [\App\Http\Controllers\HomeController::class,"complete_registration"])->name('complete_registration');
 
-
+Route::post('/pay', [\App\Http\Controllers\PaymentController::class, 'redirectToGateway']);
+Route::get('/payment/callback', [\App\Http\Controllers\PaymentController::class, 'handleGatewayCallback']);
 
 Route::get('/booking',[\App\Http\Controllers\HomeController::class,"booking"])->name('booking');
 Route::middleware('auth')->group(function () {

@@ -664,7 +664,7 @@ class DashboardController extends Controller
             'business_name' => auth()->user()->first_name . " " . auth()->user()->last_name,
             'business_email' => auth()->user()->email,
             'business_mobile' => auth()->user()->phone_no,
-            'country' => "NG",
+            'country' => $request->country,
             "split_type" => "percentage",
             "split_value" => (auth()->user()->percentage_split) ? (100 - auth()->user()->percentage_split) / 100 : (100 - $settings->value) / 100
         ];
