@@ -371,9 +371,6 @@ class HomeController extends Controller
         return $response;
     }
 
-<<<<<<< HEAD
-    function confirm_vas($url,$txRef){
-=======
     function confirm_paystack($txRef){
        
         $curl = curl_init();
@@ -405,7 +402,6 @@ class HomeController extends Controller
     }
 
     function confirm_vas($url){
->>>>>>> 272acf6ef2b2dc93b5eafffc8e31bc9e3d7f772d
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
@@ -448,9 +444,6 @@ class HomeController extends Controller
             $txRef = $request->transactionRef;
             $url = "https://vastech.sevas.live/vastech/api/v1/tstatus?transactionRef=".$txRef;
             $response = $this->confirm_vas($url,$txRef);
-<<<<<<< HEAD
-        }else{
-=======
 
         }elseif($type == "paystack")
         {
@@ -459,7 +452,6 @@ class HomeController extends Controller
             $response = $this->confirm_paystack($txRef);
         }
         else{
->>>>>>> 272acf6ef2b2dc93b5eafffc8e31bc9e3d7f772d
             $response = $this->confirm_flutterwave($url,$txRef);
         }
 
