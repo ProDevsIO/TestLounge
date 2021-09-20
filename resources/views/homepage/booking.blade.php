@@ -222,12 +222,12 @@
                                                         style="padding-bottom: 0px;"/> <span><label> Pay with <b>voucher</b></label></span>
 
                                             </div>
-                                            <div class='radio'
+                                            <!-- <div class='radio'
                                                  style="background:none;border:none;padding: 8px 100px;height: 86px;border-radius:25px; width:300px;"
                                                  data-value="paystack" onclick ="run()">
                                                  <img  style="padding-bottom: 0px;width:100%;" src="https://tukuz.com/wp-content/uploads/2020/10/paystack-logo-vector.png" />
 
-                                            </div>
+                                            </div> -->
 
                                             <div class='radio'
                                                  style="background:none;border:none;padding: 20px 40px 20px 40px;height: 86px;border-radius:25px"
