@@ -1742,6 +1742,9 @@ class HomeController extends Controller
 
             foreach ($booking_products as $booking_product) {
                 try {
+                    $yes = "";
+                    $no ="";
+                    
                     //check if a referral code exist
                     if ($booking->referral_code != null) {
                         //use the referral code to find the user
@@ -1758,7 +1761,7 @@ class HomeController extends Controller
                         //referral code doesnt exist
                         $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                     }
-                    dd($maybe, $yes, $no, $getUser);
+                    dd($yes, $no, $getUser);
                 } catch (\Exception $e) {
 
                     dd($e);
