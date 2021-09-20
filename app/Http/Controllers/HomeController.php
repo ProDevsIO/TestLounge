@@ -1734,7 +1734,7 @@ class HomeController extends Controller
                     'transaction_ref' => $txRef,
                     'status' => 1
                 ]);
-              dd('no');
+              
                 $redirect = '/booking/code/failed?b=' . $txRef;
                 return $redirect;
             }
@@ -1742,9 +1742,6 @@ class HomeController extends Controller
 
             foreach ($booking_products as $booking_product) {
                 try {
-                    $yes = "";
-                    $no ="";
-
                     //check if a referral code exist
                     if ($booking->referral_code != null) {
                         //use the referral code to find the user
@@ -1753,7 +1750,7 @@ class HomeController extends Controller
                         //check the status set by the copy receipt
                         //if 1 :copy the agent else if 0: send normally
                         if ($getUser->copy_receipt == 1) {
-                            $yes = Mail::to(["$booking->email", "edimabassey2@gmail.com"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+                            $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                         } elseif ($getUser->copy_receipt == 0) {
                             $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                         }
@@ -1761,10 +1758,7 @@ class HomeController extends Controller
                         //referral code doesnt exist
                         $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                     }
-                    dd($yes, $getUser);
                 } catch (\Exception $e) {
-
-                    dd($e);
                 }
             }
 
