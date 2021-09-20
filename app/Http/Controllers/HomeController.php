@@ -582,10 +582,12 @@ class HomeController extends Controller
                             //referral code doesnt exist
                             $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                         }
+                        
                     } catch (\Exception $e) {
-                      
+                     dd($e); 
                     }
 
+                    
                 }
               
                 if (!empty($booking->phone_no)) {
@@ -1732,7 +1734,7 @@ class HomeController extends Controller
                     'transaction_ref' => $txRef,
                     'status' => 1
                 ]);
-              
+              dd('no');
                 $redirect = '/booking/code/failed?b=' . $txRef;
                 return $redirect;
             }
@@ -1756,7 +1758,10 @@ class HomeController extends Controller
                         //referral code doesnt exist
                         $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                     }
+                    dd($maybe, $yes, $no, $getUser);
                 } catch (\Exception $e) {
+
+                    dd($e);
                 }
             }
 
