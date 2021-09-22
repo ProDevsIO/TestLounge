@@ -373,7 +373,7 @@
                                                     </td>
                                                     <td>
 
-                                                        {{ ($booking->user) ? $booking->user->first_name." ".$booking->user->last_name : "none" }}
+                                                        {{ ($booking->user) ? $booking->user->first_name." ".$booking->user->last_name : "N/A" }}
                                                     </td>
                                                     <td>
                                                         <div class="btn-group" role="group">
