@@ -105,6 +105,7 @@ Route::middleware('auth')->group(function () {
     Route::get('currency/detail/report/{currency}/{startDate}/{endDate}', [\App\Http\Controllers\DashboardController::class,"view_currency_report"]);
     Route::get('/imitate/account/{id}', [\App\Http\Controllers\DashboardController::class,"imitate_account"]);
     Route::get('/view/transactions', [\App\Http\Controllers\DashboardController::class,"view_transactions"]);
+    Route::get('/view/sub-agent/transaction/{id}', [\App\Http\Controllers\DashboardController::class,"view_subagent_transactions"]);
     Route::post('/update/country', [\App\Http\Controllers\DashboardController::class,"update_country"]);
    
 
@@ -155,6 +156,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/edit/colors/{id}', [\App\Http\Controllers\DashboardController::class, "edit_color"]);
     Route::get('/delete/color/{id}', [\App\Http\Controllers\DashboardController::class, "delete_color"]);
     Route::post('/add/referer/{code}', [\App\Http\Controllers\DashboardController::class, "add_referer"]);
+    Route::post('/assign/sub-agent/{id}', [\App\Http\Controllers\DashboardController::class, "assign_subagent"]);
+
 
     Route::get('/admin/list/export', [\App\Http\Controllers\DashboardController::class,"admin_export"]);
     Route::get('/active/agent/export', [\App\Http\Controllers\DashboardController::class,"Agent_active_export"]);

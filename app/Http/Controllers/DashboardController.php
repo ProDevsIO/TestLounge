@@ -1538,6 +1538,134 @@ class DashboardController extends Controller
         return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p', 'earned', 'earnedPounds'));
     }
 
+    public function view_subagent_transactions(Request $request,$id)
+    {
+        if ($request->start) {
+            
+            $start = Carbon::parse($request->start)->startOfDay();
+            $end = Carbon::parse($request->end)->endOfDay();
+            $earned = Transaction::where([
+                'user_id' => $id,
+                'type' => 1
+            ])->wherebetween('created_at', [$start, $end])->sum('amount');
+
+            $earnedPounds = PoundTransaction::where([
+                'user_id' => $id,
+                'type' => 1
+            ])->wherebetween('created_at', [$start, $end])->sum('amount');
+
+
+            //money from bookings
+            $booking_trans = Transaction::orderBy('id', 'desc')->where([
+                'user_id' => $id,
+                'type' => 1
+            ])->wherebetween('created_at', [$start, $end])->get();
+
+           
+            //money from pounds bookings
+            $booking_trans_p = PoundTransaction::orderBy('id', 'desc')->where([
+                'user_id' => $id,
+                'type' => 1
+            ])->wherebetween('created_at', [$start, $end])->get();
+
+            
+        }else{  
+
+                $earned = Transaction::where([
+                    'user_id' => $id,
+                    'type' => 1
+                ])->sum('amount');
+
+                $earnedPounds = PoundTransaction::where([
+                    'user_id' => $id,
+                    'type' => 1
+                ])->sum('amount');
+
+
+                //money from bookings
+                $booking_trans = Transaction::orderBy('id', 'desc')->where([
+                    'user_id' => $id,
+                    'type' => 1
+                ])->get();
+
+               
+                //money from pounds bookings
+                $booking_trans_p = PoundTransaction::orderBy('id', 'desc')->where([
+                    'user_id' => $id,
+                    'type' => 1
+                ])->get();
+
+        
+        }
+        $user = User::where('id', $id)->first();
+
+        if ($request->export) {
+            
+            $fileName = 'subagents_transaction_reports.csv';
+
+            $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $columns = array('Name', 'Commission', 'Booking Amount', 'Date');
+            $columnEarning = array('Earned Naira', 'Earned Pounds');
+
+            $callback = function () use ( $columns, $columnEarning, $booking_trans, $booking_trans_p, $earned, $earnedPounds) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+                if($booking_trans->count() > 0){
+                    foreach ($booking_trans as $trans) {
+
+                        $row['Name'] = optional(optional($trans)->user)->first_name  . " " .optional(optional($trans)->user)->last_name;
+                        $row['Commission'] = 'N'. number_format($trans->amount,2) ;
+                        $row['Booking Amount'] ='N'. number_format($trans->cost_config,2);
+                        $row['Date'] = $trans->created_at;
+                        
+
+
+                        fputcsv($file, array($row['Name'], $row['Commission'], $row['Booking Amount'], $row['Date']));
+
+                    }
+                }
+                fputcsv($file, array(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '));
+
+                
+                if($booking_trans_p->count() > 0){
+                    fputcsv($file, $column);
+                    foreach ($booking_trans_p as $trans) {
+
+                        $row['Name'] = optional(optional($trans)->user)->first_name  . " " .optional(optional($trans)->user)->last_name;
+                        $row['Commission'] = '#'. number_format($trans->amount,2) ;
+                        $row['Booking Amount'] ='#'. number_format($trans->cost_config,2);
+                        $row['Date'] = $trans->created_at;
+                        
+
+
+                        fputcsv($file, array($row['Name'], $row['Commission'], $row['Booking Amount'], $row['Date']));
+
+                    }
+                }
+
+                fputcsv($file, array(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '));
+                fputcsv($file, $columnEarning);
+                $row['Naira'] = 'N' . number_format($earned);
+                $row['Pound'] = '# ' . number_format($earnedPounds);
+
+                fputcsv($file, array($row['Naira'], $row['Pound']));
+                fclose($file);
+            };
+
+            return response()->stream($callback, 200, $headers);
+        }
+
+        return view('admin.view_subagent_transactions')->with(compact('booking_trans', 'booking_trans_p', 'earned', 'earnedPounds', 'user'));
+    }
+
     public function update_country(Request $request)
     {
 
@@ -1845,15 +1973,39 @@ class DashboardController extends Controller
 
     public function details($id)
     {
-        if (auth()->user()->type != 1) {
-            abort(404);
-        }
+            // if (auth()->user()->type != 1) {
+            
+            //     abort(404);
+            // }
+            
         $user = User::where('id', $id)->first();
 
         $builder = User::where("main_agent_id", $id)->orderby("created_at", "desc");
         $agents = $builder->paginate(20);
 
+        $earned = Transaction::where([
+            'user_id' => $user->id,
+            'type' => 2
+        ])->sum('amount');
 
-        return view('admin.details')->with(compact('user', 'agents'));
+        $earnedPounds = PoundTransaction::where([
+            'user_id' => $user->id,
+            'type' => 2
+        ])->sum('amount');
+// dd($user, $earned, $earnedPounds);
+
+        return view('admin.details')->with(compact('user', 'agents', 'earnedPounds', 'earned'));
     }
+
+    public function assign_subagent(Request $request, $id){
+
+        User::where('id', $request->agent)->update([
+            'main_agent_id'=> $id,
+            'main_agent_share_raw' => $request->my_share
+        ]);
+
+        session()->flash('alert-success', "Successfully assigned a sub agent");
+        return back();
+    }
+
 }

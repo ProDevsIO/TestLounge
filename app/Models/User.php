@@ -120,6 +120,13 @@ class User extends Authenticatable
         }
     }
 
+    public function superAgentPercent()
+    {
+        if(!empty($main = $this->main_agent_share_raw)){
+            return shareHelper()->calculateMainAgentPercent( $main , $this->myPercent());
+        }
+    }
+
     public function isAdmin()
     {
        return $this->type == 1;

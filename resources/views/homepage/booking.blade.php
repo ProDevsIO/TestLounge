@@ -229,13 +229,13 @@
 
                                             </div> -->
 
-                                            <div class='radio'
+                                            <!-- <div class='radio'
                                                  style="background:none;border:none;padding: 20px 40px 20px 40px;height: 86px;border-radius:25px"
                                                  data-value="vastech" onclick ="run()">
                                                 <img src="{{ url('/img/vas.svg') }}"
                                                      style="padding-bottom: 0px;margin-left: -38px;width:200px"/> <span><label>
 
-                                            </div>
+                                            </div> -->
                                            
                                         @endif    
                                         </div>
@@ -376,7 +376,7 @@
             var nationality = document.getElementById("travel_from").value;
             var $vouch = $(".voucher_input");
 
-            if (nationality == 156) {
+            // if (nationality == 156) {
                 var $card = $(".card_type");
                
                 $card.empty(); // remove old options
@@ -385,10 +385,10 @@
                 $card.append($("<option></option>").attr("value", 2).text("Non-Nigerian Card"));
                 $("#card").show();
                 $vouch.hide();
-            } else {
-                $("#card").hide();
-                $vouch.hide();
-            }
+            // } else {
+            //     $("#card").hide();
+            //     $vouch.hide();
+            // }
 
 
         }

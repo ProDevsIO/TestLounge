@@ -30,12 +30,12 @@
                                     <input type="email" value="{{ old('email') }}" name="email" class="form-control" id="exampleInputEmail1"
                                         placeholder="Enter Email" required>
                                 </div>
+                                <p> Super Agent has {{ $user->percentage_split ?? $setting->value}} %</p>
 
                                 <div class="form-group">
                                     <small class="text-muted">Your Percentage Share</small>
-                                    <input type="range" value="{{ old('my_share') }}" name="my_share" class="form-control" min="0" max="30"
-                                        id="exampleInputEmail1" placeholder="How much percent would you take for yourself?"  onInput="$('#rangeval').html($(this).val())" required>
-                                    <span id="rangeval">{{ old('my_share') }}</span>%
+                                    <input type="number" class="form-control" step="0.25" value="{{ old('my_share') }}" name="my_share">
+                                    
                                 </div>
 
 

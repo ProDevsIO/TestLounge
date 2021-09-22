@@ -172,6 +172,10 @@
                                                                                             </div>
                                                                                         </div>
                                                                                 </div>
+                                                                            @if($i %2  == 0)
+                                                                                    <div class="clearfix"></div>
+                                                                                @endif
+
                                                                                 <?php $i++; ?>
                                                                                 @endforeach
 
@@ -206,7 +210,6 @@
         @endif
         <section class="content bg-white" style="padding:0;">
             <div class="container">
-
 
 
                 <div class="row rul" style="padding: 0px 200px">

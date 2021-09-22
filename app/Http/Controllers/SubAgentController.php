@@ -43,7 +43,8 @@ class SubAgentController extends Controller
      */
     public function create()
     {
-        return view("users.sub_agents.create");
+        $setting = Setting::where('id', 2)->first();
+        return view("users.sub_agents.create")->with(compact('setting'));
     }
 
     /**
@@ -90,6 +91,28 @@ class SubAgentController extends Controller
         //     "main_agent_name" => $main_agent->first_name . " " . $main_agent->last_name,
         //     "complete_link" => env('APP_URL', "https://uktraveltest.prodevs.io") . "/sub/continue/registration/" . $referral . "/" . $user->id
         // ]));
+        try {
+
+            $message2 = "
+            Hi Admin,<br/>
+
+            We would like to inform you that a new sub Agent has been created on Traveltestsltd.<br/><br/>
+            Name: " . $requet->first_name . " " . $request->last_name . " <br/>
+            Email: " . $request->email . "<br/>
+            Main agent name:". $main_agent->first_name . " " . $main_agent->last_name."<br/>
+            <br/>Kindly click the button below to login and review/activate<br/><br/>
+            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                   Go to Login
+                  </a>
+
+                  <br/><br/>
+                  Thank you.
+                  <br/><br/>
+                Traveltestsltd Team
+            ";
+            Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Agent Registration"));
+        } catch (\Exception $e) {
+        }
 
         return redirect()->route("sub-agents.index")->with('alert-success', "Successfully created sub-agent");
     }

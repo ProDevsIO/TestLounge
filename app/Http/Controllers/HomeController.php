@@ -403,13 +403,23 @@ class HomeController extends Controller
 
     function confirm_vas($url){
         $ch = curl_init();
+        $headr = array();
+        $headr[] = 'Content-type: application/json';
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY');
+
 
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
+
         curl_setopt($ch, CURLOPT_POST, 1);
 
+        curl_setopt(
+            $ch,
+            CURLOPT_POSTFIELDS,
+            json_encode(['transactionRef'=> $txRef ,"clientId"=>238588])
+        );
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
         $response = curl_exec($ch);
 
         curl_close($ch);
@@ -572,10 +582,12 @@ class HomeController extends Controller
                             //referral code doesnt exist
                             $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
                         }
+                        
                     } catch (\Exception $e) {
-                      
+                     dd($e); 
                     }
 
+                    
                 }
               
                 if (!empty($booking->phone_no)) {
@@ -775,7 +787,7 @@ class HomeController extends Controller
         }
 
 
-        session()->flash('alert-success', "Thank you for your registration, kindly click the link sent to your email to continue your registration");
+        session()->flash('alert-success', "Thank you for your registration, Your profile is currently under review and will be activated shortly by our Admin.");
 
         return back();
     }
@@ -868,7 +880,7 @@ class HomeController extends Controller
             $message2 = "
             Hi Admin,<br/>
 
-            We would like to inform you that a new Agent has registered with Traveltestsltd.<br/><br/>
+            We would like to inform you that a sub Agent has completed registerion with Traveltestsltd.<br/><br/>
             Name: " . $user->first_name . " " . $user->last_name . " <br/>
             Phone: " . $user->phone_no . "<br/>
             Email: " . $user->email . "<br/>

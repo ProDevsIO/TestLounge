@@ -11,10 +11,13 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <small class="text-muted">My Percentage Share</small>
-                    <input type="range" value="{{ $user->main_agent_share_raw }}" name="my_share" class="form-control" min="0" max="30"
-                        id="exampleInputEmail1" placeholder="How much percent would you take for yourself?"  onInput="$('#rangeval_{{ $user->id }}').html($(this).val())" required>
-                    <span id="rangeval_{{ $user->id }}">{{ $user->main_agent_share_raw }}</span>%
+                    
+                    <p> Super Agent has {{ $user->percentage_split ?? $setting->value}} %</p>
+                    <p>{{ $user->main_agent_share_raw ?? 0}} % share of the commission to the super agent</p>
+                    <p> {{ $shareData["sub_agent_share"] ?? 0 }} % share of the commission to the sub agent</p>
+
+                    <label class="text-muted">My Percentage Share</label>
+                    <input type="number" class="form-control" step="0.25" value="{{ $user->main_agent_share_raw }}" name="my_share">
                 </div>
             </div>
             <div class="modal-footer">

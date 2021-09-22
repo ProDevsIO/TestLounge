@@ -95,9 +95,13 @@ class Controller extends BaseController
         $server_output = curl_exec($ch);
 
         curl_close($ch);
-        $server_output = json_decode($server_output);
-        //dd($server_output);
-        return $server_output->data->link;
+        try {
+            $server_output = json_decode($server_output);
+            //dd($server_output);
+            return $server_output->data->link;
+        }catch (\Exception $e){
+            dd(json_decode($server_output));
+        }
     }
 
     public function processVAS(array $request = [])
@@ -108,6 +112,8 @@ class Controller extends BaseController
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY');
+//        dd($headr);
         curl_setopt($ch, CURLOPT_URL, "https://vastech.sevas.live/vastech/api/v1/ubank");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -118,7 +124,7 @@ class Controller extends BaseController
 
         curl_close($ch);
         $server_output = json_decode($server_output);
-        //dd($server_output);
+
         return $server_output->data;
     }
 
@@ -236,6 +242,7 @@ class Controller extends BaseController
                 "amount" => $price,
                 "approvedCurrency" => "566",
                 "channel" => "WEB",
+                "currency" => "NGN",
                 "clientAppId" => "831553",
                 "clientId" => "238588",
                 "mobileNumber"=> "07039448968",
@@ -248,6 +255,7 @@ class Controller extends BaseController
             $data = [
                 "transactionRef" => $transaction_ref,
                 "amount" => $price_pound,
+                "current" => "GBP",
                 "approvedCurrency" => "826",
                 "channel" => "WEB",
                 "clientAppId" => "831553",

@@ -15,8 +15,8 @@
                             <th scope="col">Phone</th>
                             <th scope="col">Email</th>
                             <th scope="col">Status</th>
-                            <th scope="col">My Share</th>
-                            <th scope="col">My Percentage</th>
+                            <!-- <th scope="col">My Share</th> -->
+                            <th scope="col">Superagent Percentage</th>
                             <th scope="col">Sub-agent Percentage</th>
                             <th scope="col">Referral Code</th>
                             <th scope="col">Action</th>
@@ -25,7 +25,7 @@
                     <tbody>
                         @foreach ($users as $user)
                         @php
-                            $shareData = $user->superAgentShare();
+                            $shareData = $user->superAgentPercent();
                         @endphp
                             @if ($user->status == $table_status)
                                 <tr>
@@ -40,7 +40,7 @@
                                     @elseif($user->status == 0)
                                         <td><span class="badge badge-warning">Not Active</span></td>
                                     @endif
-                                    <td>{{ $shareData["main_agent_share_raw"] ?? "N/A" }}%</td>
+                                    <!-- <td>{{ $shareData["main_agent_share_raw"] ?? "N/A" }}%</td> -->
                                     <td>{{ $shareData["main_agent_share_percent"] ?? "N/A" }}%</td>
                                     <td>{{ $shareData["sub_agent_share"] ?? "N/A" }}%</td>
                                     <td>
@@ -54,6 +54,8 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-item" href="{{ url('/view/agent/details/'.$user->id) }}">View </a>
+                                            <a class="dropdown-item" href="{{ url('/view/sub-agent/transaction/'.$user->id) }}">View transaction</a>
                                                 <a class="dropdown-item" data-toggle="modal"
                                                     data-target="#edit_sub_agent_{{ $user->id }}"
                                                     href="javascript;;">Edit</a>
