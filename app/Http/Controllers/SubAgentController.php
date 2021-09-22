@@ -43,7 +43,8 @@ class SubAgentController extends Controller
      */
     public function create()
     {
-        return view("users.sub_agents.create");
+        $setting = Setting::where('id', 2)->first();
+        return view("users.sub_agents.create")->with(compact('setting'));
     }
 
     /**
