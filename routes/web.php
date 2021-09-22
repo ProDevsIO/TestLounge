@@ -155,6 +155,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/edit/colors/{id}', [\App\Http\Controllers\DashboardController::class, "edit_color"]);
     Route::get('/delete/color/{id}', [\App\Http\Controllers\DashboardController::class, "delete_color"]);
     Route::post('/add/referer/{code}', [\App\Http\Controllers\DashboardController::class, "add_referer"]);
+    Route::post('/assign/sub-agent/{id}', [\App\Http\Controllers\DashboardController::class, "assign_subagent"]);
+
 
     Route::get('/admin/list/export', [\App\Http\Controllers\DashboardController::class,"admin_export"]);
     Route::get('/active/agent/export', [\App\Http\Controllers\DashboardController::class,"Agent_active_export"]);

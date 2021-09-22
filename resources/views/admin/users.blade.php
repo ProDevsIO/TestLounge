@@ -199,6 +199,9 @@
                                                                            data-target="#changeReferral{{ $user->id }}"
                                                                            class="dropdown-item">Change Referral
                                                                             Code</a>
+                                                                            <a href="javascript:;" data-toggle="modal"
+                                                                           data-target="#assign{{ $user->id }}"
+                                                                           class="dropdown-item">Assign a sub agent</a>
 
                                                                         @if($user->copy_receipt == 0)
 
@@ -257,6 +260,48 @@
                                                                         <input type="text" name="referal_code"
                                                                                class="form-control"
                                                                                value="{{ $user->referal_code }}">
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                                data-dismiss="modal">Close
+                                                                        </button>
+                                                                        <button type="submit" class="btn btn-primary">
+                                                                            Save changes
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal fade" id="assign{{ $user->id }}"
+                                                         tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                         aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <form action="{{ url('/assign/sub-agent/'.$user->id) }}"
+                                                                      method="post">
+                                                                    @csrf
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                                            Assign a sub agent</h5>
+                                                                        <button type="button" class="close"
+                                                                                data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <label class="text-muted">Agents</label>
+                                                                        <select name="agent" class="form-control" id="">
+                                                                            @foreach($users as $agent)
+                                                                             <option value="{{$agent->id}}"> {{$agent->first_name}} {{$agent->last_name}}</option>
+                                                                            @endforeach
+                                                                        </select>
+
+                                                                        <label class="text-muted">Your Percentage Share</label>
+                                                                        <input type="range" value="{{ $user->main_agent_share_raw }}" name="my_share" class="form-control" min="0" max="99"
+                                                                            id="exampleInputEmail1" placeholder="How much percent would you take for yourself?"  onInput="$('#rangeval_{{ $user->id }}').html($(this).val())" required>
+                                                                        <span id="rangeval_{{ $user->id }}">{{ $user->main_agent_share_raw }}</span>%
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"

@@ -1856,4 +1856,16 @@ class DashboardController extends Controller
 
         return view('admin.details')->with(compact('user', 'agents'));
     }
+
+    public function assign_subagent(Request $request, $id){
+
+        User::where('id', $request->agent)->update([
+            'main_agent_id'=> $id,
+            'main_agent_share_raw' => $request->my_share
+        ]);
+
+        session()->flash('alert-success', "Successfully assigned a sub agent");
+        return back();
+    }
+
 }
