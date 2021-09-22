@@ -299,9 +299,8 @@
                                                                         </select>
 
                                                                         <label class="text-muted">Your Percentage Share</label>
-                                                                        <input type="range" value="{{ $user->main_agent_share_raw }}" name="my_share" class="form-control" min="0" max="99"
-                                                                            id="exampleInputEmail1" placeholder="How much percent would you take for yourself?"  onInput="$('#rangeval_{{ $user->id }}').html($(this).val())" required>
-                                                                        <span id="rangeval_{{ $user->id }}">{{ $user->main_agent_share_raw }}</span>%
+                                                                        <input type="number" class="form-control" step="0.25" value="{{ $user->main_agent_share_raw }}" name="my_share">
+                                                                        
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"

@@ -63,6 +63,10 @@ class SubAgentController extends Controller
         ]);
 
         $main_agent = auth()->user();
+        if ($request->my_share > 99 || $request->my_share < 0) {
+            session()->flash('alert-danger', "Super agent share cannot be greater than 99 % or less than 1%");
+            return back()->withInput();
+        }
 
         if ($request->file) {
             $certificate =  time() . '.' . $request->file->extension();
@@ -152,6 +156,10 @@ class SubAgentController extends Controller
         $data = $request->validate([
             'my_share' => 'required|gt:0',
         ]);
+        if ($data["my_share"] > 99 || $data["my_share"] < 0) {
+            session()->flash('alert-danger', "Super agent share cannot be greater than 99 % or less than 1%");
+            return back()->withInput();
+        }
         $user->update([
             "main_agent_share_raw" => $data["my_share"]
         ]);

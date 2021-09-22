@@ -2003,6 +2003,12 @@ class DashboardController extends Controller
             'main_agent_id'=> $id,
             'main_agent_share_raw' => $request->my_share
         ]);
+        
+        if ($request->my_share > 99 || $request->my_share < 0) {
+            session()->flash('alert-danger', "Super agent share cannot be greater than 99 % or less than 1%");
+            return back()->withInput();
+        }
+        
 
         session()->flash('alert-success', "Successfully assigned a sub agent");
         return back();
