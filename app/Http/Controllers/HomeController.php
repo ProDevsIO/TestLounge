@@ -880,7 +880,7 @@ class HomeController extends Controller
             $message2 = "
             Hi Admin,<br/>
 
-            We would like to inform you that a new Agent has registered with Traveltestsltd.<br/><br/>
+            We would like to inform you that a sub Agent has completed registerion with Traveltestsltd.<br/><br/>
             Name: " . $user->first_name . " " . $user->last_name . " <br/>
             Phone: " . $user->phone_no . "<br/>
             Email: " . $user->email . "<br/>

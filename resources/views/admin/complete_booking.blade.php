@@ -190,7 +190,9 @@
                                                 @if(auth()->user()->referal_code)
                                                     <td> @php
                                                             if($booking->transaction){
-                                                                echo "N".number_format($booking->transaction->amount,2);
+                                                                echo "₦".number_format($booking->transaction->amount,2);
+                                                            }elseif($booking->ptransaction){
+                                                                echo "£".number_format($booking->ptransaction->amount,2);
                                                             }
                                                         @endphp</td>
                                                 @endif
