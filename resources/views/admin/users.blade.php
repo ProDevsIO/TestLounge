@@ -385,20 +385,20 @@
                                                             <td><span class="badge badge-warning">Not Active</span></td>
                                                         @endif
                                                         @if($user->percentage_split == null)
-                                                            <td>{{$setting->value}}%
+                                                            <td>Total: {{$setting->value}}%
 
                                                                 @if($user->main_agent_id)
                                                                     <br/>
-                                                                    Super Agent: {{ $user->main_agent_share_raw }}%<br/>
-                                                                    Me:: {{ 100 - $user->main_agent_share_raw }}%<br/>
+                                                                    (Super Agent: {{ $user->main_agent_share_raw }}%)<br/>
+                                                                    (Subagent: {{ 100 - $user->main_agent_share_raw }}%)<br/>
                                                                 @endif
                                                             </td>
                                                         @else
-                                                            <td>{{$user->percentage_split}}%
+                                                            <td>Total: {{$user->percentage_split}}%
                                                                 @if($user->main_agent_id)
                                                                     <br/>
-                                                                    Super Agent: {{ $user->main_agent_share_raw }}%<br/>
-                                                                    Me:: {{ 100 - $user->main_agent_share_raw }}%<br/>
+                                                                    (Super Agent: {{ $user->main_agent_share_raw }}%)<br/>
+                                                                    (Sub Agent:: {{ 100 - $user->main_agent_share_raw }}%)<br/>
                                                                 @endif
                                                             </td>
                                                         @endif

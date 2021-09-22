@@ -12,9 +12,9 @@
             <div class="modal-body">
                 <div class="form-group">
                     
-                    <p> Super Agent has {{ $user->percentage_split ?? $setting->value}} %</p>
-                    <p>{{ $user->main_agent_share_raw ?? 0}} % share of the commission to the super agent</p>
-                    <p> {{ $shareData["sub_agent_share"] ?? 0 }} % share of the commission to the sub agent</p>
+                    <p> Super Agent has {{ $user->percentage_split ?? $setting->value}}%</p>
+                    <p>{{ $user->main_agent_share_raw ?? 0}}% share of the commission to the super agent</p>
+                    <p> {{ $shareData["sub_agent_share"] ?? 0 }}% share of the commission to the sub agent</p>
 
                     <label class="text-muted">My Percentage Share</label>
                     <input type="number" class="form-control" step="0.25" value="{{ $user->main_agent_share_raw }}" name="my_share">
