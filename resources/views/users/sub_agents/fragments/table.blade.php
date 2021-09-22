@@ -54,6 +54,8 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-item" href="{{ url('/view/agent/details/'.$user->id) }}">View </a>
+                                            <a class="dropdown-item" href="{{ url('/view/sub-agent/transaction/'.$user->id) }}">View transaction</a>
                                                 <a class="dropdown-item" data-toggle="modal"
                                                     data-target="#edit_sub_agent_{{ $user->id }}"
                                                     href="javascript;;">Edit</a>

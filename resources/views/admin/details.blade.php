@@ -79,6 +79,7 @@
                 </div>
 
                 <div class="col-xl-8 col-md-6">
+                    @if(auth()->user()->type == 1)
                     <div class="card">
                         <div class="card-body">
                             <div class="card">
@@ -120,8 +121,81 @@
 
                         </div>
                     </div>
-
+                    @else
+                    @if($user->country == 'NG')
+                                <div class="col-xl-6 col-sm-12  col-xs-4">
+                                    <div class="card mb-4 bg-success">
+                                        <div class="card-body">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                                    <i class="vl_money"></i>
+                                                </div>
+                                                <div class="media-body text-white">
+                                                    <h4 class="text-uppercase mb-0 weight500">
+                                                        N{{ number_format($user->wallet_balance,2) }}</h4>
+                                                    <span>Due Amount(Naira)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-sm-12 col-xs-4">
+                                    <div class="card mb-4 bg-success">
+                                        <div class="card-body">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                                    <i class="vl_money"></i>
+                                                </div>
+                                                <div class="media-body text-white">
+                                                    <h4 class="text-uppercase mb-0 weight500">
+                                                        N{{ number_format($earned,2) }}</h4>
+                                                    <span>Total Earnings(Naira)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="col-xl-6 col-sm-12 col-xs-4">
+                                    <div class="card mb-4 bg-success">
+                                        <div class="card-body">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                                    <i class="vl_money"></i>
+                                                </div>
+                                                <div class="media-body text-white">
+                                                    <h4 class="text-uppercase mb-0 weight500">
+                                                       
+                                                        £ {{ number_format($user->pounds_wallet_balance,2) }}</h4>
+                                                    <span> Due amount(Pounds)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-sm-12 col-xs-4">
+                                    <div class="card mb-4 bg-success">
+                                        <div class="card-body">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                                    <i class="vl_money"></i>
+                                                </div>
+                                                <div class="media-body text-white">
+                                                    <h4 class="text-uppercase mb-0 weight500">
+                                                        £ {{ number_format($earnedPounds,2) }}</h4>
+                                                    <span>Total Earnings(Pounds)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                    @endif
                 </div>
+            </div>
+
+            <div class="row">
+                            
             </div>
         </div>
         <!--footer-->
