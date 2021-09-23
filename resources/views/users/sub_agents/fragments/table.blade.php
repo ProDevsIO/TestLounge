@@ -8,6 +8,9 @@
     height: 0% !important;
     background-color: #000;
 }
+.modal{
+    top:30%;
+}
 </style>
 <div class="col-xl-12">
     <div class="card card-shadow mb-4 ">
