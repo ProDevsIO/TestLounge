@@ -113,6 +113,11 @@ class User extends Authenticatable
         return $this->belongsTo(User::class , "main_agent_id" , "id");
     }
 
+    public function subAgent()
+    {
+        return $this->hasMany(User::class , "main_agent_id" , "id");
+    }
+
     public function superAgentShare()
     {
         if(!empty($main = $this->main_agent_share_raw)){

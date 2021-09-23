@@ -102,6 +102,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/make/pay', [\App\Http\Controllers\DashboardController::class,"make_pay"]);
     Route::get('/resend/receipt/{id}', [\App\Http\Controllers\DashboardController::class,"resend_receipt"]);
     Route::get('/finance/report', [\App\Http\Controllers\DashboardController::class,"financial_report"]);
+    Route::get('/view/subagent/report', [\App\Http\Controllers\DashboardController::class,"subagent_report"]);
     Route::get('currency/detail/report/{currency}/{startDate}/{endDate}', [\App\Http\Controllers\DashboardController::class,"view_currency_report"]);
     Route::get('/imitate/account/{id}', [\App\Http\Controllers\DashboardController::class,"imitate_account"]);
     Route::get('/view/transactions', [\App\Http\Controllers\DashboardController::class,"view_transactions"]);

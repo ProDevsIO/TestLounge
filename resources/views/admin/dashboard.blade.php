@@ -262,7 +262,12 @@
                     <div class="card card-shadow mb-4">
                         <div class="card-header border-0">
                             <div class="custom-title-wrap border-0 position-relative pb-2">
-                                <div class="custom-title">Bookings</div>
+                                <div class="custom-title">Bookings 
+                                    @if(auth()->user()->type == 2)
+                                        @if(auth()->user()->subagent->count() > 0)
+                                        <a href="{{ url('/view/subagent/report') }}" class="btn btn-sm btn-info pull-right">Sub agent report</a></div>
+                                        @endif
+                                    @endif
                             </div>
                         </div>
                         <div class="card-body p-0">
