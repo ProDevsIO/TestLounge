@@ -1,3 +1,14 @@
+<style>
+    .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100vw;
+    height: 0% !important;
+    background-color: #000;
+}
+</style>
 <div class="col-xl-12">
     <div class="card card-shadow mb-4 ">
         <div class="card-header border-0">
