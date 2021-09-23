@@ -220,6 +220,7 @@
                             <span>Sub-agents</span>
                         </a>
                     </li>
+                   
                     @endif
                     <li>
                       <a href="{{ url('/view/transactions') }}">
@@ -227,8 +228,16 @@
                             <span>View transactions</span>
                         </a>
                     </li>
-                    
-                   
+                    @if(auth()->user()->main_agent_id == null && auth()->user()->type == 2)
+                        @if(auth()->user()->subagent->count() > 0)
+                        <li>
+                            <a href="{{ url('/view/subagent/report') }}">
+                                <i class="ti-receipt"></i>
+                                <span>Report</span>
+                            </a>
+                        </li>
+                        @endif
+                    @endif
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class=" icon-book-open"></i>
