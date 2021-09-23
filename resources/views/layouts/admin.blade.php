@@ -233,7 +233,7 @@
                         <li>
                             <a href="{{ url('/view/subagent/report') }}">
                                 <i class="ti-receipt"></i>
-                                <span>Report</span>
+                                <span>Financial Report</span>
                             </a>
                         </li>
                         @endif
