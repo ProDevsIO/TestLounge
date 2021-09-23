@@ -213,7 +213,7 @@
                             @endif
                         </ul>
                     </li>
-                    @if(auth()->user()->type == 2)
+                    @if(auth()->user()->main_agent_id == null && auth()->user()->type == 2)
                     <li>
                       <a href="{{ route("sub-agents.index") }}">
                             <i class="icon-calculator"></i>

@@ -928,6 +928,85 @@ class DashboardController extends Controller
         return back();
     }
 
+    public function subagent_report(Request $request)
+    {
+        $getAgents = User::where('main_agent_id', auth()->user()->id)->orderby('created_at')->get();
+        $duePounds = User::where('main_agent_id', auth()->user()->id)->sum('pounds_wallet_balance');
+        $dueNaira = User::where('main_agent_id', auth()->user()->id)->sum('wallet_balance');
+        $agentsId = array();
+        foreach($getAgents as $agent)
+        {
+            $agentsId[] = $agent->id;
+        }
+
+
+        if ($request->start && $request->end) {
+            $start = $request->start;
+            $end = $request->end;
+            $start = Carbon::parse($request->start)->startOfDay();
+            $end = Carbon::parse($request->end)->endOfDay();
+            $commission = Transaction::whereIn('user_id', $agentsId)->wherebetween('created_at', [$start, $end])->sum('amount');
+            $pcommission = PoundTransaction::whereIn('user_id', $agentsId)->wherebetween('created_at', [$start, $end])->sum('amount');
+        }else{
+            $start = 1;
+            $end = 1;
+            $commission = Transaction::whereIn('user_id', $agentsId)->sum('amount');
+            $pcommission  = PoundTransaction::whereIn('user_id', $agentsId)->sum('amount');
+        }
+
+        $users = $getAgents;
+
+        if ($request->export) {
+            $fileName = 'financial_reports.csv';
+
+            $headers = array(
+                "Content-type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma" => "no-cache",
+                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+                "Expires" => "0"
+            );
+
+            $columns = array('Name', 'Referral Code', 'Total C.booking', 'Wallet Balance', 'Account Details');
+            $columnMoney = array('Total Revenue(Naira)', 'Total Revenue(Pound)', 'Amount due(N)', 'Amount due(#)');
+
+            $callback = function () use ($users, $columns, $columnMoney, $dueNaira, $duePounds, $commission, $pcommission) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+
+                foreach ($users as $user) {
+
+                    $row['Name'] = $user->first_name . " " . $user->last_name;
+                    $row['Referral Code'] = $user->referal_code . ", " . $user->email . ", " . $user->phone;
+                    $row['Total C.booking'] = $user->cbookings->count();
+                    $row['Wallet Balance'] = "N" . number_format($user->wallet_balance, 2);
+                    $row['Account Details'] = "Country:" . $user->country . ", " . "Bank:" . $user->bank . "Account No:" . $user->account_no . ", "
+                        . "Account Name:" . $user->account_name;
+
+
+                    fputcsv($file, array($row['Name'], $row['Referral Code'], $row['Total C.booking'], $row['Wallet Balance'], $row['Account Details']));
+
+                }
+                fputcsv($file, array(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '));
+
+                fputcsv($file, $columnMoney);
+                $row['rNaira'] = 'N' . number_format($commission);
+                $row['rPound'] = '# ' . number_format($pcommission);
+                $row['dueNaira'] = 'N' . number_format($dueNaira);
+                $row['duePound'] = '# ' . number_format($duePounds);
+
+
+                fputcsv($file, array($row['rNaira'], $row['rPound'],$row['dueNaira'],$row['duePound']));
+                fclose($file);
+            };
+
+            return response()->stream($callback, 200, $headers);
+        }
+        return view('admin.subagent_report')->with(compact('duePounds','dueNaira', 'users', 'start', 'end', 'commission', 'pcommission'));
+
+    }
+
     public function financial_report(Request $request)
     {
         if (auth()->user()->type == 0) {
@@ -961,7 +1040,7 @@ class DashboardController extends Controller
         $due_amount = User::sum("wallet_balance");
 
         $users = User::where('type', '!=', '1')->whereNotNull('wallet_balance')->orderby('wallet_balance', 'desc')->get();
-// dd('₦'. number_format($total_ngn));
+
         if ($request->export) {
             $fileName = 'financial_reports.csv';
 
@@ -2003,6 +2082,12 @@ class DashboardController extends Controller
             'main_agent_id'=> $id,
             'main_agent_share_raw' => $request->my_share
         ]);
+        
+        if ($request->my_share > 99 || $request->my_share < 0) {
+            session()->flash('alert-danger', "Super agent share cannot be greater than 99 % or less than 1%");
+            return back()->withInput();
+        }
+        
 
         session()->flash('alert-success', "Successfully assigned a sub agent");
         return back();

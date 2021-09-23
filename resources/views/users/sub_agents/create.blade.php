@@ -30,7 +30,7 @@
                                     <input type="email" value="{{ old('email') }}" name="email" class="form-control" id="exampleInputEmail1"
                                         placeholder="Enter Email" required>
                                 </div>
-                                <p> Super Agent has {{ $user->percentage_split ?? $setting->value}} %</p>
+                                <p> Super Agent has {{ $user->percentage_split ?? $setting->value}}%</p>
 
                                 <div class="form-group">
                                     <small class="text-muted">Your Percentage Share</small>

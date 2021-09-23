@@ -299,9 +299,8 @@
                                                                         </select>
 
                                                                         <label class="text-muted">Your Percentage Share</label>
-                                                                        <input type="range" value="{{ $user->main_agent_share_raw }}" name="my_share" class="form-control" min="0" max="99"
-                                                                            id="exampleInputEmail1" placeholder="How much percent would you take for yourself?"  onInput="$('#rangeval_{{ $user->id }}').html($(this).val())" required>
-                                                                        <span id="rangeval_{{ $user->id }}">{{ $user->main_agent_share_raw }}</span>%
+                                                                        <input type="number" class="form-control" step="0.25" value="{{ $user->main_agent_share_raw }}" name="my_share">
+                                                                        
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"
@@ -386,20 +385,20 @@
                                                             <td><span class="badge badge-warning">Not Active</span></td>
                                                         @endif
                                                         @if($user->percentage_split == null)
-                                                            <td>{{$setting->value}}%
+                                                            <td>Total: {{$setting->value}}%
 
                                                                 @if($user->main_agent_id)
                                                                     <br/>
-                                                                    Super Agent: {{ $user->main_agent_share_raw }}%<br/>
-                                                                    Me:: {{ 100 - $user->main_agent_share_raw }}%<br/>
+                                                                    (Super Agent: {{ $user->main_agent_share_raw }}%)<br/>
+                                                                    (Subagent: {{ 100 - $user->main_agent_share_raw }}%)<br/>
                                                                 @endif
                                                             </td>
                                                         @else
-                                                            <td>{{$user->percentage_split}}%
+                                                            <td>Total: {{$user->percentage_split}}%
                                                                 @if($user->main_agent_id)
                                                                     <br/>
-                                                                    Super Agent: {{ $user->main_agent_share_raw }}%<br/>
-                                                                    Me:: {{ 100 - $user->main_agent_share_raw }}%<br/>
+                                                                    (Super Agent: {{ $user->main_agent_share_raw }}%)<br/>
+                                                                    (Sub Agent:: {{ 100 - $user->main_agent_share_raw }}%)<br/>
                                                                 @endif
                                                             </td>
                                                         @endif
