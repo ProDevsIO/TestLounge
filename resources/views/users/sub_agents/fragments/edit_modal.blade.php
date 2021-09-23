@@ -1,4 +1,4 @@
-<div class="modal fade" id="edit_sub_agent_{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+<div class="modal fade" id="edit_sub_agent_{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="z-index:999;">
     <div class="modal-dialog ">
         <div class="modal-content">
             <form action="{{ route("sub-agents.update" , $user->id) }}" method="post">
