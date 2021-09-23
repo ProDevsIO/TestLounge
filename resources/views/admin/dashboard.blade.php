@@ -334,8 +334,7 @@
                                                         <td> GHS {{ $booking->product->charged_amount }} </td>
                                                     @elseif(isset($booking->product) && $booking->product->currency == "KES")
                                                         <td> KES {{ $booking->product->charged_amount }} </td>
-                                                        @elseifisset($booking->product) && ($booking->product->currency
-                                                        == "ZAR")
+                                                    @elseif(isset($booking->product) && ($booking->product->currency == "ZAR"))
                                                         <td> ZAR {{ $booking->product->charged_amount }} </td>
                                                     @else
                                                         <td>Product has been deleted</td>
