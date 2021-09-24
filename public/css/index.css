@@ -116,10 +116,12 @@
     #hide2 {
         display: none;
     }
+   
 }
 
 .badge-cart {
-    background: #1e50a0;
+    background: #eeeff1;
+    color:#1e50a0;
     position: relative;
     top: -10px;
     left: -5px;

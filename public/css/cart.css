@@ -253,7 +253,8 @@ th:first-child, td:first-child{
     opacity: 8 !important;
 }
 .background-image-holder.parallax-background {
-    height: 140%;
+    background:#1E50A0 50% 0% !important  ;
+    height: 100%;
     top: -33%;
 }
 .content{

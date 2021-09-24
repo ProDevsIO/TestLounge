@@ -767,7 +767,7 @@ class HomeController extends Controller
             $message2 = "
             Hi Admin,<br/>
 
-            We would like to inform you that a new Agent has registered with Traveltestsltd.<br/><br/>
+            We would like to inform you that a new SuperAgent has registered with Traveltestsltd.<br/><br/>
             Name: " . $request->first_name . " " . $request->last_name . " <br/>
             Phone: " . $request->phone_no . "<br/>
             Email: " . $request->email . "<br/>
@@ -782,7 +782,7 @@ class HomeController extends Controller
                   <br/><br/>
                 Traveltestsltd Team
             ";
-            Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Agent Registration"));
+            Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Superagent Registration"));
         } catch (\Exception $e) {
         }
 
@@ -880,7 +880,7 @@ class HomeController extends Controller
             $message2 = "
             Hi Admin,<br/>
 
-            We would like to inform you that a sub Agent has completed registerion with Traveltestsltd.<br/><br/>
+            We would like to inform you that a Subagent has completed registraion with Traveltestsltd.<br/><br/>
             Name: " . $user->first_name . " " . $user->last_name . " <br/>
             Phone: " . $user->phone_no . "<br/>
             Email: " . $user->email . "<br/>
@@ -895,7 +895,7 @@ class HomeController extends Controller
                   <br/><br/>
                 Traveltestsltd Team
             ";
-            Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Agent Registration"));
+            Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Subagent Registration"));
 
         } catch (\Exception $e) {
         }
