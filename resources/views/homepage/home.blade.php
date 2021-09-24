@@ -35,7 +35,7 @@
                                     <div class="col-sm 2"></div>
                                 </div>
                             </div>
-                            <div class="col-md-6 pull-right" id="banner-writeup2" style=" top:-178px">
+                            <div class="col-md-6 pull-right" id="banner-writeup2" style=" top:-200px">
                                 <img class="background-image" alt="Background Image" src="/img/globe.png"  style="background-repeat: no-repeat;background-size: 100% 100%">
                             </div>
                         </div>
