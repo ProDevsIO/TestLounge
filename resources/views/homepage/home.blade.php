@@ -9,7 +9,7 @@
 
     <div class="main-container">
         <header class="page-header">
-            <div class="background-image-holder parallax-background">
+            <div class="background-image-holder parallax-background" style=" background:#1E50A0 50% 0% !important;height: 98% !important;top: -33% !important;">
                 <img class="background-image" alt="Background Image"  >
             </div>
             <div class="container">
