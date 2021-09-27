@@ -199,10 +199,11 @@
                                                                            data-target="#changeReferral{{ $user->id }}"
                                                                            class="dropdown-item">Change Referral
                                                                             Code</a>
-                                                                            <a href="javascript:;" data-toggle="modal"
-                                                                           data-target="#assign{{ $user->id }}"
-                                                                           class="dropdown-item">Assign a sub agent</a>
-
+                                                                            @if($user->main_agent_id == null)
+                                                                                <a href="javascript:;" data-toggle="modal"
+                                                                                data-target="#assign{{ $user->id }}"
+                                                                                class="dropdown-item">Assign a sub agent</a>
+                                                                            @endif
                                                                         @if($user->copy_receipt == 0)
 
                                                                             <a href="javascript:;"

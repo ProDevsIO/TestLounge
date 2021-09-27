@@ -64,7 +64,6 @@
 @media only screen and (min-width: 320px) and (max-width: 767px) {
     .align-vertical {
         width: 100% !important;
-
         align: center;
     }
 
@@ -98,7 +97,15 @@
 
 }
 
+.page-header{
+    height:600px !important;
+    /* position: none !important; */
+}
+
 @media screen and (max-width: 800px) {
+    .page-header{
+        height:900px !important;
+    }
     #hide {
         display: block;
     }
@@ -116,10 +123,12 @@
     #hide2 {
         display: none;
     }
+   
 }
 
 .badge-cart {
-    background: #1e50a0;
+    background: #eeeff1;
+    color:#1e50a0;
     position: relative;
     top: -10px;
     left: -5px;

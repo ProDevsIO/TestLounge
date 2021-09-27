@@ -127,7 +127,7 @@ h1{
 /* start laptop version */
 @media screen and (max-width: 800px) {
     #banner-writeup2{
-        display:none;
+        top: -40px !important;
     }
 }
 
@@ -253,9 +253,15 @@ th:first-child, td:first-child{
     opacity: 8 !important;
 }
 .background-image-holder.parallax-background {
-    height: 140%;
+    background:#1E50A0 50% 0% !important  ;
+    /* height: 98%; */
     top: -33%;
 }
+
+/* #b-contain{
+    height: 28% !important;
+    position:none !important;
+} */
 .content{
     width:80vw;
     margin:auto;
@@ -365,6 +371,11 @@ th:first-child, td:first-child{
 
 /* mobile version */
 @media screen and (max-width: 800px) {
+    .background-image-holder.parallax-background {
+        background:#1E50A0 50% 0% !important  ;
+        /* height: 128% !important; */
+        top: -33% !important;
+    }
 
     .inner{
         display:flex;

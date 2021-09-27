@@ -7,14 +7,14 @@
  <link href="/css/cart.css" rel="stylesheet"/>
 @endsection
 
-    <div class="main-container">
-        <header class="page-header">
+    <div class="main-container" >
+        <header class="page-header" style="padding-bottom:0;">
             <div class="background-image-holder parallax-background">
-                <img class="background-image" alt="Background Image" src="/img/bg.jpeg" >
+                <img class="background-image" alt="Background Image"  >
             </div>
-            <div class="container">
+            <div class="container" >
                 <div class="row">
-                    <div class="col-md-12 text-center" id="banner-writeup-container">
+                    <div class="col-md-12 text-center" id="banner-writeup-container" >
                         <div class="row">
                             <div class="col-md-6 "style=" padding-top:10px">
                                 <h2 class="text-white space-bottom-medium" id="banner-writeup">We simplify the process of booking and making payments for COVID-19 Travel Tests for both travellers and travel agents. You’ll get up to date information on travel requirements and access to test providers in the country of destination. This ensures you have a hassle free travel experience.</h2>
@@ -35,8 +35,8 @@
                                     <div class="col-sm 2"></div>
                                 </div>
                             </div>
-                            <div class="col-md-6 pull-right" id="banner-writeup2" style="left:10%;top:100px ">
-                                <img class="background-image" alt="Background Image" src="/img/Group 6.png"  style="background-repeat: no-repeat;background-size: 100% 100%">
+                            <div class="col-md-6 pull-right" id="banner-writeup2" style=" top:-200px ">
+                                <img class="background-image" alt="Background Image" src="/img/globe.png"  style="background-repeat: no-repeat;background-size: 100% 100%">
                             </div>
                         </div>
 
@@ -45,7 +45,7 @@
                 </div><!--end of row-->
             </div><!--end of co-->
         </header>
-        <section class="clients-2" style="padding-bottom:20px">
+        <section class="clients-2" style="padding-bottom:20px;">
 				<div class="container">
 					<div class="row">
                         <div class="col-md-3 col-sm-4" style="margin-top:40px">
