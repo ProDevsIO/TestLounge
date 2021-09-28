@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 @section('style')
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        .nav-link.active{
+            background-color: #1e50a0 !important;
+            color:white !important;
+        }
+    </style>
 @endsection
 @section('content')
 

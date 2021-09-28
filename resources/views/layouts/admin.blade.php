@@ -370,7 +370,7 @@
     }
     function signOut() {
 
-            var d = confirm("Are you sure, you want to sign out?");
+            var d = confirm("Are you sure you want to sign out?");
 
             if (d) {
 

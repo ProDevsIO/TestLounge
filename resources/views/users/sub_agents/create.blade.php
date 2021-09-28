@@ -33,7 +33,7 @@
                                 <p> Super Agent has {{ $user->percentage_split ?? $setting->value}}%</p>
 
                                 <div class="form-group">
-                                    <small class="text-muted">Your Percentage Share</small>
+                                    <small class="text-muted">Your Percentage Share(1-99)%</small>
                                     <input type="number" class="form-control" step="0.25" value="{{ old('my_share') }}" name="my_share">
                                     
                                 </div>
