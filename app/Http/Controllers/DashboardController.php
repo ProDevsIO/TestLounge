@@ -427,7 +427,9 @@ class DashboardController extends Controller
     //deleting an agent
     public function delete_user($users_id)
     {
-        User::where('id', $users_id)->delete();
+        $user = User::where('id', $users_id)->first();
+        $booking = Booking::where('user_id', $users_id)->update(['user_id' => null]);
+        $user->delete();
 
         session()->flash('alert-success', "Agent deleted successfully.");
         return back();

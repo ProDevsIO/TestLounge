@@ -118,7 +118,7 @@ class SubAgentController extends Controller
         } catch (\Exception $e) {
         }
 
-        return redirect()->route("sub-agents.index")->with('alert-success', "Successfully created sub-agent");
+        return redirect()->route("sub-agents.index")->with('alert-success', "Subagent successfully created. Kindly click the Not Active tab and activate your Subagent(s) in order for them to complete their registration.");
     }
 
     /**
