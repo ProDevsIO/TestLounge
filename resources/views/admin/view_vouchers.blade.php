@@ -109,6 +109,7 @@
                                         <div class="custom-title">Vouchers</div>
                                     </div>
                                 </div>
+                                <div class="alert alert-info"> Hint: Complete customer booking by clicking on their voucher number</div>
                                 <div class="card-body p-0">
                                     @include('errors.showerrors')
                                     <div class="table-responsive">
