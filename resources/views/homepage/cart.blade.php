@@ -76,7 +76,7 @@
                     @endforeach
                     </div>
                     <div class="text-center fw-700 " id="cart-total">
-                        TOTAL: <b class="color-1 price">£ <span
+                        TOTAL: <b class="color-1 price">$ <span
                                 id="totalCartPrice">{{ number_format($cartSum, 2) }}</span></b>
                     </div>
                     <div class="button-container">
