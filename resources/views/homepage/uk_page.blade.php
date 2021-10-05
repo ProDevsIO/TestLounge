@@ -48,11 +48,7 @@
                     
                     <div class="card-container double-container fs-20 text-center">
                     
-                        <!-- <a href="/product/Green" class="link text-white">
-                            <div class="card bg-2 fw-700" style="">
-                                    <div class="inner"><v>Purchase Test if you are Fully Vaccinated</v></div>
-                            </div>
-                        </a> -->
+                       
                         <a href="/product/Amber_v" class="link">
                             <div class="card bg-6 fw-700">
                                     <div class="inner">
@@ -66,9 +62,14 @@
                             <div class="card bg-4 fw-700">
                                     <div class="inner">
                                         <v>
-                                        Purchase test if you are Unvaccinated or Not Fully Vaccinated
+                                        Purchase test if you are travelling from a green country
                                         </v>
                                     </div>
+                            </div>
+                        </a>
+                        <a href="/product/Green" class="link text-white">
+                            <div class="card bg-2 fw-700" style="">
+                                    <div class="inner"><v>Purchase Test if you are Fully Vaccinated</v></div>
                             </div>
                         </a>
                         <a href="/product/Red" class="link text-white">
