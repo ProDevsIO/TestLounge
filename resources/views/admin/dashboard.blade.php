@@ -221,7 +221,7 @@
                                                 </div>
                                                 <div class="media-body text-white">
                                                     <h4 class="text-uppercase mb-0 weight500">
-                                                        £ {{ number_format(auth()->user()->pounds_wallet_balance,2) }}</h4>
+                                                        $ {{ number_format(auth()->user()->pounds_wallet_balance,2) }}</h4>
                                                     <span> Wallet Balance(Pounds)</span>
                                                 </div>
                                             </div>
@@ -237,7 +237,7 @@
                                                 </div>
                                                 <div class="media-body text-white">
                                                     <h4 class="text-uppercase mb-0 weight500">
-                                                        £ {{ number_format($earnedPounds,2) }}</h4>
+                                                        $ {{ number_format($earnedPounds,2) }}</h4>
                                                     <span>Total Earnings(Pounds)</span>
                                                 </div>
                                             </div>
@@ -325,7 +325,7 @@
                                                         <td> ₦ {{ $booking->product->price }} </td>
                                                     @elseif(isset($booking->product) && $booking->product->currency == "GBP")
 
-                                                        <td> £ {{ $booking->product->charged_amount }} </td>
+                                                        <td> $ {{ $booking->product->charged_amount }} </td>
                                                     @elseif(isset($booking->product) && $booking->product->currency == "GHS")
                                                         <td> GHS {{ $booking->product->charged_amount }} </td>
                                                     @elseif(isset($booking->product) && $booking->product->currency == "KES")
@@ -341,7 +341,7 @@
                                                             ₦ {{ optional($booking->transaction)->amount }} </td>
                                                     @elseif(isset($booking) && $booking->ptransaction != null)
                                                         <td>
-                                                            £ {{ optional($booking->ptransaction)->amount }} </td>
+                                                            $ {{ optional($booking->ptransaction)->amount }} </td>
                                                     @else
                                                         <td> No Commission</td>
                                                     @endif
@@ -363,7 +363,7 @@
                                                             if($booking->transaction){
                                                                  echo "N".number_format($booking->transaction->amount,2);
                                                             }else if($booking->ptransaction){
-                                                                 echo "£".number_format($booking->ptransaction->amount,2);
+                                                                 echo "$".number_format($booking->ptransaction->amount,2);
                                                             }
                                                         @endphp</td>
                                                 @endif

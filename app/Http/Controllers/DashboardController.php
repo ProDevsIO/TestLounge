@@ -970,7 +970,7 @@ class DashboardController extends Controller
             );
 
             $columns = array('Name', 'Referral Code', 'Total C.booking', 'Wallet Balance', 'Account Details');
-            $columnMoney = array('Total Revenue(Naira)', 'Total Revenue(Pound)', 'Amount due(N)', 'Amount due(#)');
+            $columnMoney = array('Total Revenue(Naira)', 'Total Revenue(Dollar)', 'Amount due(N)', 'Amount due(#)');
 
             $callback = function () use ($users, $columns, $columnMoney, $dueNaira, $duePounds, $commission, $pcommission) {
                 $file = fopen('php://output', 'w');
@@ -1022,7 +1022,7 @@ class DashboardController extends Controller
             $end = Carbon::parse($request->end)->endOfDay();
 
             $total_ngn = BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
-            $total_gbp = BookingProduct::where('currency', 'GBP')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
+            $total_gbp = BookingProduct::where('currency', 'USD')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
             $total_ghs = BookingProduct::where('currency', 'GHS')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
             $total_tzs = BookingProduct::where('currency', 'TZS')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
             $total_kes = BookingProduct::where('currency', 'KES')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
@@ -1031,7 +1031,7 @@ class DashboardController extends Controller
             $start = 1;
             $end = 1;
             $total_ngn = BookingProduct::where('currency', 'NGN')->sum('charged_amount');
-            $total_gbp = BookingProduct::where('currency', 'GBP')->sum('charged_amount');
+            $total_gbp = BookingProduct::where('currency', 'USD')->sum('charged_amount');
             $total_ghs = BookingProduct::where('currency', 'GHS')->sum('charged_amount');
             $total_tzs = BookingProduct::where('currency', 'TZS')->sum('charged_amount');
             $total_kes = BookingProduct::where('currency', 'KES')->sum('charged_amount');
@@ -1055,7 +1055,7 @@ class DashboardController extends Controller
             );
 
             $columns = array('Name', 'Referral Code', 'Total C.booking', 'Wallet Balance', 'Account Details');
-            $columnMoney = array('Total Revenue(Naira)', 'Total Revenue(Pound)', 'Total Revenue(cedis)', 'Total Revenue(TZS)', 'Total Revenue(KES)', 'Total Revenue(ZAR)', 'Amount due(Referrals');
+            $columnMoney = array('Total Revenue(Naira)', 'Total Revenue(Dollar)', 'Total Revenue(cedis)', 'Total Revenue(TZS)', 'Total Revenue(KES)', 'Total Revenue(ZAR)', 'Amount due(Referrals');
 
             $callback = function () use ($users, $columns, $columnMoney, $total_ngn, $total_gbp, $total_ghs, $total_tzs, $total_kes, $total_zar, $due_amount) {
                 $file = fopen('php://output', 'w');
@@ -1438,7 +1438,7 @@ class DashboardController extends Controller
         $product = VendorProduct::findorfail($product_id);
 
             $amount = $product->price_pounds * $quantity;
-            $price = "£ " . number_format($amount, 2);
+            $price = "$ " . number_format($amount, 2);
         
 
         return response()->json([
@@ -1771,7 +1771,7 @@ class DashboardController extends Controller
                 
                 $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "pounds") {
-                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'GBP')->wherebetween('created_at', [$start, $end])->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'USD')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "cedis") {
                 $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'GHS')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "tzs") {
@@ -1787,7 +1787,7 @@ class DashboardController extends Controller
             if ($currency == "naira") {
                 $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'NGN')->get();
             } elseif ($currency == "pounds") {
-                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'GBP')->get();
+                $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'USD')->get();
             } elseif ($currency == "cedis") {
                 $transact = BookingProduct::orderBy('id', 'desc')->where('currency', 'GHS')->get();
             } elseif ($currency == "tzs") {
@@ -1814,7 +1814,7 @@ class DashboardController extends Controller
             if ($currency == "naira") {
                 $transact = BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "pounds") {
-                $transact = BookingProduct::where('currency', 'GBP')->wherebetween('created_at', [$start, $end])->get();
+                $transact = BookingProduct::where('currency', 'USD')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "cedis") {
                 $transact = BookingProduct::where('currency', 'GHS')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "tzs") {
@@ -1830,7 +1830,7 @@ class DashboardController extends Controller
             if ($currency == "naira") {
                 $transact = BookingProduct::where('currency', 'NGN')->get();
             } elseif ($currency == "pounds") {
-                $transact = BookingProduct::where('currency', 'GBP')->get();
+                $transact = BookingProduct::where('currency', 'USD')->get();
             } elseif ($currency == "cedis") {
                 $transact = BookingProduct::where('currency', 'GHS')->get();
             } elseif ($currency == "tzs") {
@@ -1863,8 +1863,8 @@ class DashboardController extends Controller
             foreach ($transact as $transact) {
                 if ($transact->currency == 'NGN') {
                     $amount = 'N' . number_format($transact->charged_amount, 2);
-                } elseif ($transact->currency == 'GBP') {
-                    $amount = '£' . number_format($transact->charged_amount, 2);
+                } elseif ($transact->currency == 'USD') {
+                    $amount = '$' . number_format($transact->charged_amount, 2);
                 } elseif ($transact->currency = 'GHS') {
                     $amount = 'GHS' . number_format($transact->charged_amount, 2);
                 } elseif ($transact->currency = 'TZS') {

@@ -34,8 +34,20 @@
                                         <h6 class="text-uppercase mb-0 weight500">{{$product->name}}</h6>
                                         <span>Quota: 
                                             @if($product->voucherCount)
-                                            {{$product->voucherCount->quantity}}
-                                              @else  
+                                                @if(auth()->user()->type == 1)
+
+                                                    <?php $pcount = 0;
+                                                        foreach($product->voucherCount as $count){
+                                                            
+                                                            $pcount = $pcount + $count->quantity;
+                                                        }
+                                                    ?>
+                                                    {{$pcount}}
+                                                @else
+                                                    {{$product->voucherCount->quantity}}
+                                                @endif
+                                                    
+                                            @else  
                                               0
                                             @endif</span>
                                             
@@ -44,7 +56,8 @@
                                     
                                 </div>
                                 <br>
-                                @if($product->voucherCount)
+
+                                @if($product->voucherCount && auth()->user()->type == 2)
                                     @if($product->voucherCount->quantity > 0)
                                         <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
                                                                                 href="#refmodal{{$product->id}}">generate voucher</button>
@@ -80,11 +93,7 @@
                                                                     <label for=""> Please select a Quantity</label>
                                                                     <select name="quantity" id="quantity_{{$j}}" class="form-control">
                                                                         
-                                                                    @if($product->voucherCount)
-                                                                        @for($i=1; $i <= $product->voucherCount->quantity; $i++)
-                                                                            <option value="{{$i}}">{{$i}}</option>
-                                                                        @endfor
-                                                                    @endif
+                                                                   
                                                                     </select>
                                                                     
                                                         
