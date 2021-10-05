@@ -199,7 +199,7 @@ class Controller extends BaseController
     
     function getFlutterwaveData($booking,$price,$transaction_ref,$price_pound = null, $card_type = null){
 
-        if ($booking->country_travelling_from_id == 156 && $card_type = 1) {
+        if ($booking->country_travelling_from_id == 156 && $card_type == 1) {
             $data = [
                 //
                 "tx_ref" => $transaction_ref,
@@ -237,7 +237,7 @@ class Controller extends BaseController
     }
 
     function getVasTechData($booking,$price,$transaction_ref,$price_pound = null, $card_type = null){
-        if ($booking->country_travelling_from_id == 156 && $card_type = 1) {
+        if ($booking->country_travelling_from_id == 156 && $card_type == 1) {
             $data = [
                 "transactionRef" => $transaction_ref,
                 "amount" => $price,
