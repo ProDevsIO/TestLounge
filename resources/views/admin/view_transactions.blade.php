@@ -264,8 +264,8 @@
                                                         <td> ${{ number_format($booking_tran_p->cost_config,2) }}</td>
                                                         @if(auth()->user()->type == 1)
                                                             <td>
-                                                                @if($booking_tran->user != null)
-                                                                    @if($booking_tran->user->main_agent_id == null)
+                                                                @if($booking_tran_p->user != null)
+                                                                    @if($booking_tran_p->user->main_agent_id == null)
                                                                         Super agent
                                                                     @else
                                                                         Sub agent
