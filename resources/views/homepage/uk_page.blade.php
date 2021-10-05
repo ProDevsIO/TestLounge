@@ -19,8 +19,8 @@
                         <div class="col-md-6 "style=" padding-top:10px">
                             <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>UNITED KINGDOM</b></h2>
                             <p style="color: #fff;text-align: left">
-                            The mandatory COVID-19 tests for UK travellers are determined by a <b>Traffic Light System</b> which is based on the country you are travelling from.</p>
-                            <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
+                                The Mandatory Covid-19 Tests for entry into the UK, depend on your vaccinations status and what Country you are travelling from.
+                                <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
                             <div id="show-result">
 
                             </div>
@@ -48,16 +48,16 @@
                     
                     <div class="card-container double-container fs-20 text-center">
                     
-                        <a href="/product/Green" class="link text-white">
+                        <!-- <a href="/product/Green" class="link text-white">
                             <div class="card bg-2 fw-700" style="">
-                                    <div class="inner"><v>Purchase test if you are travelling from a Green country to the UK</v></div>
+                                    <div class="inner"><v>Purchase Test if you are Fully Vaccinated</v></div>
                             </div>
-                        </a>
+                        </a> -->
                         <a href="/product/Amber_v" class="link">
                             <div class="card bg-6 fw-700">
                                     <div class="inner">
                                         <v>
-                                        Purchase test if you are travelling from an Amber country (Vaccinated) to the UK
+                                        Purchase Test if you are Fully Vaccinated
                                         </v>
                                     </div>
                             </div>
@@ -66,7 +66,7 @@
                             <div class="card bg-4 fw-700">
                                     <div class="inner">
                                         <v>
-                                        Purchase test if you are travelling from an Amber country (UnVaccinated) to the UK
+                                        Purchase test if you are Unvaccinated or Not Fully Vaccinated
                                         </v>
                                     </div>
                             </div>
@@ -105,18 +105,15 @@
             <table className="font-16" style="overflow-x:auto !important;">
                 <thead>
                     <th class="bg-sky text-center">MEASURE REQUIRED</th>
-                    <th class="bg-2 text-center">GREEN</th>
-                    <th class="bg-6 text-center">AMBER(Vaccinated) **</th>
-                    <th class="bg-4 text-center">AMBER(Unvaccinated)</th>
-                    <th class="bg-5 text-center">RED</th>
+                    <th class="bg-6 text-center">Vaccinated **</th>
+                    <th class="bg-4 text-center">Unvaccinated</th>
+                    <th class="bg-5 text-center">TRAVELLING FROM A RED COUNTRY</th>
                 </thead>
                 <tr>
-                    <td class="bg-sky" width="25%"><h6>COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</h6></td>
-                    <td class="bg-2" width="25%">
-                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
-                    </td>
+                     <td class="bg-sky" width="25%"><h6>PRE-DEPARTURE TEST AT DESTINATION WITHIN 72 HOURS OF TRAVEL</h6></td>
+                    
                     <td class="bg-6" width="25%">
-                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
+                    <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                     </td>
                     <td class="bg-4" width="25%">
                     <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
@@ -126,10 +123,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="bg-sky" width="25%"><h6>PRE-DEPARTURE TEST AT DESTINATION WITHIN 72 HOURS OF TRAVEL</h6></td>
-                    <td class="bg-2" width="25%">
-                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
-                    </td>
+                    <td class="bg-sky" width="25%"><h6>COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</h6></td>
+                   
                     <td class="bg-6" width="25%">
                     <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
@@ -142,9 +137,7 @@
                 </tr>
                 <tr>
                     <td class="bg-sky" width="25%"><h6>MANDATORY PCR TEST UPON ENTRY TO UK ON/BEFORE DAY 2</h6></td>
-                    <td class="bg-2" width="25%">
-                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
-                    </td>
+                    
                     <td class="bg-6" width="25%">
                     <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
@@ -157,24 +150,20 @@
                 </tr>
                 <tr>
                     <td class="bg-sky" width="25%"><h6>MANDATORY ADDITIONAL PCR TESTING ON DAY 8 OF ARRIVAL INTO THE UK</h6></td>
-                    <td class="bg-2" width="25%">
-                    <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
-                    </td>
+                
                     <td class="bg-6" width="25%">
                     <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>  
                     </td>
                     <td class="bg-4" width="25%">
-                        <h6>Required on day 8</h6>
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-5" width="25%">
-                        <h6>Required on day 8</h6>
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                 </tr>
                 <tr>
                     <td class="bg-sky" width="25%"><h6 >OPTIONAL DAY 5 PCR TEST<br>( Test to Release )</h6></td>
-                    <td class="bg-2" width="25%">
-                    <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
-                    </td>
+                    
                     <td class="bg-6" width="25%">
                     <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/> 
                     </td>
@@ -187,9 +176,7 @@
                 </tr>
                 <tr>
                     <td class="bg-sky" width="25%"><h6>SELF ISOLATION</h6></td>
-                    <td class="bg-2" width="25%">
-                    <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
-                    </td>
+                   
                     <td class="bg-6"  width="25%">
                     <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                      </td>
@@ -203,9 +190,7 @@
                 </tr>
                 <tr>
                     <td class="bg-sky" width="25%"><h6>FIT TO FLY( PCR Test Taken before travel out of the UK  if required by destination country) </h6></td>
-                    <td class="bg-2" width="25%">
-                    <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
-                    </td>
+                   
                     <td class="bg-6" width="25%">
                     <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
@@ -218,7 +203,6 @@
                 </tr>
                 <tr>
                     <td class="bg-sky"></td>
-                    <td class="bg-2">  <a href="{{ url('/product/Green') }}" style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td class="bg-6">  <a href="{{ url('/product/Amber_v') }}" style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td class="bg-4">  <a href="{{ url('/product/Amber_uv') }}" style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td class="bg-5"> Unavailable</td>
@@ -259,10 +243,10 @@
                     </tr>
                     <tr>
                         <th class="bg-sky">Ages (years)</th>
-                        <th class="bg-2">0 - 4</th>
+                        <th class="bg-6">0 - 4</th>
                         <th class="bg-4">5 - 10</th>
                         <th class="bg-5">11 - 17</th>
-                        <th class="bg-2">0 - 4</th>
+                        <th class="bg-6">0 - 4</th>
                         <th class="bg-4">5 - 10</th>
                         <th class="bg-5">11 - 17</th>
                     </tr>
