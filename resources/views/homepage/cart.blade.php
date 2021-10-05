@@ -61,7 +61,7 @@
                                 </div>
                                 
                             </div>
-                            <div class="card-item text-center cart-p" id="cart-text">£
+                            <div class="card-item text-center cart-p" id="cart-text">$
                                 <span id="cart_item_total_{{ $cart->id }}" >
                                     {{ number_format($cart->quantity * $cart->vendorProduct->price_pounds, 2) }}</span>
                             </div>
