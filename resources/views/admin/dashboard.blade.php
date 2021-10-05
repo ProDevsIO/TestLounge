@@ -222,7 +222,7 @@
                                                 <div class="media-body text-white">
                                                     <h4 class="text-uppercase mb-0 weight500">
                                                         $ {{ number_format(auth()->user()->pounds_wallet_balance,2) }}</h4>
-                                                    <span> Wallet Balance(Pounds)</span>
+                                                    <span> Wallet Balance(Dollars)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -238,7 +238,7 @@
                                                 <div class="media-body text-white">
                                                     <h4 class="text-uppercase mb-0 weight500">
                                                         $ {{ number_format($earnedPounds,2) }}</h4>
-                                                    <span>Total Earnings(Pounds)</span>
+                                                    <span>Total Earnings(Dollars)</span>
                                                 </div>
                                             </div>
                                         </div>
