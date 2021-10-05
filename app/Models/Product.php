@@ -49,6 +49,12 @@ class Product extends Model
 
 	public function voucherCount()
 	{
-		return $this->hasOne(VoucherCount::class, 'product_id')->where('agent' ,auth()->user()->id);
+		if(auth()->user()->type == 1){
+			return $this->hasMany(VoucherCount::class, 'product_id');
+		
+		}else{
+			return $this->hasOne(VoucherCount::class, 'product_id')->where('agent' ,auth()->user()->id);
+		}
 	}
+	
 }
