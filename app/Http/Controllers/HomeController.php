@@ -1050,7 +1050,7 @@ class HomeController extends Controller
         } elseif ($type == "Green") {
             $products = $products->where('product_id', 1)->get();
         } elseif ($type == "Amber_v") {
-            $products = $products->whereIn('product_id', [2, 10])->get();
+            $products = $products->whereIn('product_id', 1)->get();
 
         } elseif ($type == "Amber_uv") {
             $products = $products->whereIn('product_id', [2, 4, 3, 10])->get();

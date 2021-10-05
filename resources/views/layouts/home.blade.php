@@ -154,7 +154,7 @@ $ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_co
                     <span class="text-white" style="font-size: 16px !important;line-height: 33px;">If you have further questions call us on<br>
                     Phone number: +44 20 8087 2262<br>
                     WhatsApp: +44 74 3687 5938<br>
-                    Email us at:info@traveltestsltd.com
+                    Email us at: info@traveltestsltd.com
                     <br>
                   {{--Powered by <a href="https://www.medburymedicals.com/" target="_blank">MMS</a>--}}
                 </span>
