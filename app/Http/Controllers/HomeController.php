@@ -304,8 +304,9 @@ class HomeController extends Controller
         if($request->payment_method == "vastech"){
             $data = $this->getVasTechData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
         }elseif($request->payment_method == "paystack"){
+           
             $data = $this->getPaystackData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
-         
+           
         }else {
             $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
         }
@@ -315,10 +316,16 @@ class HomeController extends Controller
         if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
             $data['subaccounts'] = $sub_accounts;
         }
-
-        BookingProduct::where('booking_id', $booking->id)->update([
-            'charged_amount' => $data['amount'], 'currency' => $data['currency']
-        ]);
+        if($request->payment_method == "paystack"){
+            $paystackNerf = $data['amount'] / 100;
+            BookingProduct::where('booking_id', $booking->id)->update([
+                'charged_amount' =>  $paystackNerf, 'currency' => $data['currency']
+            ]);
+        }else{
+            BookingProduct::where('booking_id', $booking->id)->update([
+                'charged_amount' => $data['amount'], 'currency' => $data['currency']
+            ]);
+        }
 
 
         $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $request->product_id)->first();
