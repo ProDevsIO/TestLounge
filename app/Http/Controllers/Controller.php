@@ -75,7 +75,6 @@ class Controller extends BaseController
             $response = curl_exec($ch);
             
           $server_output = json_decode($response);
-          dd($server_output);
          return $server_output->data->authorization_url;
             
         
