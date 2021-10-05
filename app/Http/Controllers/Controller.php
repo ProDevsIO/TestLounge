@@ -171,7 +171,8 @@ class Controller extends BaseController
     function getPaystackData($booking,$price,$transaction_ref,$price_pound = null, $card_type = null)
     {
        
-        if ($booking->country_travelling_from_id == 156 && $card_type = 1) {
+    
+        if ($booking->country_travelling_from_id == 156 && $card_type == 1) {
             $price = $price * 100;
             $data = [
                 //
