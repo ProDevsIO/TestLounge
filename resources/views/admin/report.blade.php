@@ -69,8 +69,8 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Revenue">
-                                        <h4 class="text-uppercase mb-0 weight500">£{{ number_format($total_gbp) }}</h4>
-                                        <span>Total Revenue(Pound)</span>
+                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($total_gbp) }}</h4>
+                                        <span>Total Revenue(Dollars)</span>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                                     <i class="vl_book"></i>
                                 </div>
                                 <div class="media-body text-light" title="Revenue">
-                                    <h4 class="text-uppercase mb-0 weight500">£{{ number_format($pcommission) }}</h4>
+                                    <h4 class="text-uppercase mb-0 weight500">${{ number_format($pcommission) }}</h4>
                                     <span>Amount due(Referrals)</span>
                                 </div>
                             </div>
@@ -212,7 +212,7 @@
                                         <th scope="col">Referral Code</th>
                                         <th scope="col">Total C.Bookings</th>
                                         <th scope="col">Naira Wallet Balance</th>
-                                        <th scope="col">Pounds Wallet Balance</th>
+                                        <th scope="col">Dollars Wallet Balance</th>
                                         <th scope="col">Account Details</th>
                                         <!-- <th scope="col">Action</th> -->
                                     </tr>
@@ -231,7 +231,7 @@
                                             </td>
                                             <td>{{ $user->cbookings->count() }}</td>
                                             <td>N{{ number_format($user->wallet_balance,2) }}</td>
-                                            <td>£{{ number_format($user->pounds_wallet_balance,2) }}</td>
+                                            <td>${{ number_format($user->pounds_wallet_balance,2) }}</td>
                                             <td>
                                                 <ul>
                                                     <li>Country: {{ $user->country }}</li>
@@ -280,7 +280,7 @@
                                                             <select name="type" class="form-control" id="" required>
                                                                 <option value="">Please Select a Currency</option>
                                                                 <option value="1">Naira</option>
-                                                                <option value="2">Pounds</option>
+                                                                <option value="2">Dollars</option>
                                                             </select>
                                                         </div>
                                                         <div class="modal-footer">

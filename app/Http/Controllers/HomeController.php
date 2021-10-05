@@ -485,7 +485,7 @@ class HomeController extends Controller
 
                             if ($booking->card_type == null || $booking->card_type == 2) {
 
-                                //for international transaction in pounds
+                                //for international transaction in dollars(please the pounds was converted to dollars)
                                 $cost_booking = $booking_product->price_pounds;
                                 $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
 
@@ -1504,7 +1504,7 @@ class HomeController extends Controller
 
             $booking_product->update([
                 'charged_amount' => $vendor_p->price_pounds,
-                'currency' => "GBP"
+                'currency' => "USD"
             ]);
 
             try {
@@ -1621,7 +1621,7 @@ class HomeController extends Controller
               $currency = 'NGN';
               $charged = $vendor_products->price;
             }else{
-                $currency = 'GBP';
+                $currency = 'USD';
                 $charged = $vendor_products->price_pounds;
             }
     

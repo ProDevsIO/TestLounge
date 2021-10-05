@@ -17,7 +17,7 @@
                                            @if($currency == 'naira')
                                            Total Revenue(Naira)
                                             @elseif($currency == 'pounds')
-                                            Total Revenue(Pounds)
+                                            Total Revenue(Dollars)
                                             @elseif($currency == 'cedis')
                                             Total Revenue(Ghana cedis)
                                             @elseif($currency == 'tzs')
@@ -61,8 +61,8 @@
                                             <td> {{$transact->vendor->name}}</td>
                                             @if($transact->currency == 'NGN')
                                             <td>N{{ number_format($transact->charged_amount,2) }}</td>
-                                            @elseif($transact->currency == 'GBP')
-                                            <td>£{{ number_format($transact->charged_amount,2) }}</td>
+                                            @elseif($transact->currency == 'USD')
+                                            <td>${{ number_format($transact->charged_amount,2) }}</td>
                                             @elseif($transact->currency = 'GHS')
                                             <td>GHS{{ number_format($transact->charged_amount,2) }}</td>
                                             @elseif($transact->currency = 'TZS')

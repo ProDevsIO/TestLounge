@@ -54,8 +54,8 @@
                                     </div>
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
-                                        £{{ number_format($earnedPounds,2) }}</h4>
-                                        <span>Expected Earning(Pounds)</span>
+                                        ${{ number_format($earnedPounds,2) }}</h4>
+                                        <span>Expected Earning(Dollars)</span>
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                             <a class="nav-link" data-toggle="tab" href="#menu1">Paid Commission(Naira)</a>
                         </li> -->
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#poundB">Booking Transaction(Pounds)</a>
+                            <a class="nav-link" data-toggle="tab" href="#poundB">Booking Transaction(Dollars)</a>
                         </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#poundP">Paid Commission(Pounds)</a>
@@ -87,7 +87,7 @@
                             <a class="nav-link" data-toggle="tab" href="#menu1">Paid Commission(Naira)</a>
                         </li> -->
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#poundB">Booking Transaction(Pounds)</a>
+                            <a class="nav-link" data-toggle="tab" href="#poundB">Booking Transaction(Dollars)</a>
                         </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#poundP">Paid Commission(Pounds)</a>
@@ -227,7 +227,8 @@
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">
-                                        <div class="custom-title">Booking Transaction(£)</div>
+                                        <div class="custom-title">Booking Transaction($
+)</div>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
@@ -260,8 +261,10 @@
                                                         @elseif(auth()->user()->type == 2)
                                                         <td>{{ $booking_tran_p->user->first_name }} {{ $booking_tran_p->user->last_name }}</td>
                                                         @endif
-                                                        <td> £{{ number_format($booking_tran_p->amount,2) }}</td>
-                                                        <td> £{{ number_format($booking_tran_p->cost_config,2) }}</td>
+                                                        <td> $
+{{ number_format($booking_tran_p->amount,2) }}</td>
+                                                        <td> $
+{{ number_format($booking_tran_p->cost_config,2) }}</td>
                                                         @if(auth()->user()->type == 1)
                                                             <td>
                                                                 @if($booking_tran->user != null)
@@ -292,7 +295,8 @@
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">
-                                        <div class="custom-title">Paid Commision(£)</div>
+                                        <div class="custom-title">Paid Commision($
+)</div>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
@@ -321,8 +325,8 @@
                                                     @elseif(auth()->user()->type == 2)
                                                     <td>{{ $paid_tran_p->user->first_name }} {{ $paid_tran_p->user->last_name }}</td>
                                                     @endif
-                                                    <td>£{{number_format($paid_tran_p->amount,2) }}</td>
-                                                    <td>£{{number_format($paid_tran_p->cost_config,2)}}</td>
+                                                    <td>${{number_format($paid_tran_p->amount,2) }}</td>
+                                                    <td>${{number_format($paid_tran_p->cost_config,2)}}</td>
                                                     <td>{{ $paid_tran_p->created_at }}</td>
                                                   
                                                 </tr>

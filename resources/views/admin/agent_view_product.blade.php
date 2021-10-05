@@ -35,7 +35,7 @@
                                 <h4 class="card-title">{{ optional($product->product)->name }}</h4>
                                 <p class="card-text cart_item_total_{{ $product->id }}">
                                    
-                                    £ {{ number_format($product->price_pounds) }}
+                                    $ {{ number_format($product->price_pounds) }}
                                 
                                 </p>
                                 <div class="input-group">

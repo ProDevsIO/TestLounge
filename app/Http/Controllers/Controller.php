@@ -183,7 +183,7 @@ class Controller extends BaseController
             ];
 
         } else {
-            $price_usd = $price * 411 * 100;
+            $price_usd = $price_pound * 100;
             $data = [
                 "email" => $booking->email,
                 "reference" => $transaction_ref,
@@ -219,7 +219,7 @@ class Controller extends BaseController
             $data = [
                 "tx_ref" => $transaction_ref,
                 "amount" => $price_pound,
-                "currency" => "GBP",
+                "currency" => "USD",
                 "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "payment/confirmation",
                 "customer" => [
                     'email' => $booking->email,
@@ -298,7 +298,7 @@ class Controller extends BaseController
             $data = [
                 "tx_ref" => $transaction_ref,
                 "amount" => $price,
-                "currency" => "GBP",
+                "currency" => "USD",
                 "redirect_url" => env('APP_URL', "https://uktraveltest.prodevs.io/") . "voucher/payment/confirmation",
                 "customer" => [
                     'email' => $agent->email,

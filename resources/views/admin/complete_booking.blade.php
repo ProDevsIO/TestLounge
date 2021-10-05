@@ -34,7 +34,7 @@
                                         </div>
                                         <div class="media-body text-light" title="Pending bookings">
                                             <h4 class="text-uppercase mb-0 weight500">
-                                                £ {{ number_format($vendorsTotalCost) }}</h4>
+                                                $ {{ number_format($vendorsTotalCost) }}</h4>
                                             <span>{{$ven->vendor->name}}</span>
                                         </div>
                                     </div>
@@ -164,7 +164,7 @@
                                                         <ul>
                                                             <li>{{ optional(optional($booking->product)->product)->name }}
                                                                 ({{ optional($booking->product)->currency.number_format(optional($booking->product)->charged_amount,2)}}
-                                                                )
+                                                                ) 
                                                             </li>
                                                         </ul>
                                                         <br/>
@@ -192,7 +192,7 @@
                                                             if($booking->transaction){
                                                                 echo "₦".number_format($booking->transaction->amount,2);
                                                             }elseif($booking->ptransaction){
-                                                                echo "£".number_format($booking->ptransaction->amount,2);
+                                                                echo "$".number_format($booking->ptransaction->amount,2);
                                                             }
                                                         @endphp</td>
                                                 @endif
