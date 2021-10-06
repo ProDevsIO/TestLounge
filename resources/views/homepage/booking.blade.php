@@ -381,8 +381,8 @@
                
                 $card.empty(); // remove old options
                 $card.append($("<option value=''>Select type of card</option>"));
-                $card.append($("<option></option>").attr("value", 1).text("Nigerian Card"));
-                $card.append($("<option></option>").attr("value", 2).text("Non-Nigerian Card"));
+                $card.append($("<option></option>").attr("value", 1).text("Local Card"));
+                $card.append($("<option></option>").attr("value", 2).text("International Card"));
                 $("#card").show();
                 $vouch.hide();
             // } else {
