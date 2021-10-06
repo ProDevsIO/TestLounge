@@ -97,15 +97,10 @@
 
 }
 
-.page-header{
-    height:600px !important;
-    /* position: none !important; */
-}
+
 
 @media screen and (max-width: 800px) {
-    /* .page-header{
-        height:900px !important;
-    } */
+   
     #hide {
         display: block;
     }
@@ -168,6 +163,7 @@
 }
 
 @media screen and (max-width: 600px) {
+    
     .page-header{
         padding-top: 100px !important;
     }

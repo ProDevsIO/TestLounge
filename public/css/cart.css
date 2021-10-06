@@ -58,6 +58,10 @@ h1{
     line-height: 55px !important;
     color: #636363 !important;
 }
+.page-header{
+    height:600px !important;
+    /* position: none !important; */
+}
 .menu li a{
     font-family: nunito !important;
     font-size: 14px !important;
@@ -126,8 +130,12 @@ h1{
 
 /* start laptop version */
 @media screen and (max-width: 800px) {
+   
+        .page-header{
+           height:900px !important;
+       }
     #banner-writeup2{
-        top: 130px !important;
+        top: 20px !important;
     }
 }
 
