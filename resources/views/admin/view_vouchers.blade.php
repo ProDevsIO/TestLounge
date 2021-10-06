@@ -92,7 +92,11 @@
                                                                     <br>
                                                                     <label for=""> Please select a Quantity</label>
                                                                     <select name="quantity" id="quantity_{{$j}}" class="form-control">
-                                                                        
+                                                                    @if($product->voucherCount)
+                                                                        @for($i=1; $i <= $product->voucherCount->quantity; $i++)
+                                                                            <option value="{{$i}}">{{$i}}</option>
+                                                                        @endfor
+                                                                    @endif
                                                                    
                                                                     </select>
                                                                     
