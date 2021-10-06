@@ -21,7 +21,7 @@
                                 <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
                                <p style="color: #fff;text-align: left" class="learn_more">Choose the Country you are travelling to: </p>
 
-                                <div class="row" id="country-section" style="padding:0 !important;">
+                                <div class="row" id="country-section" style="padding:0 !important">
 
                                     <div class="col-sm-12" style=""> <br><div id="show-result">
 
