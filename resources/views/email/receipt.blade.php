@@ -426,7 +426,7 @@
                         <tbody>
                         <tr>
                             <td class="aligncenter content-block">Questions? Email <a
-                                        href="mailto:">{{ $booking_product->vendor->email }}</a></td>
+                                        href="mailto:">info@traveltestsltd.com</a></td>
                         </tr>
                         <tr>for more information and guidelines,click <a
                                     href="https://www.gov.uk/guidance/coronavirus-covid-19-getting-tested">Here</a></tr>
