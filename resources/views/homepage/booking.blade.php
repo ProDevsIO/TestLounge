@@ -376,7 +376,7 @@
             var nationality = document.getElementById("travel_from").value;
             var $vouch = $(".voucher_input");
 
-            // if (nationality == 156) {
+            if (nationality == 156) {
                 var $card = $(".card_type");
                
                 $card.empty(); // remove old options
@@ -385,10 +385,10 @@
                 $card.append($("<option></option>").attr("value", 2).text("International Card"));
                 $("#card").show();
                 $vouch.hide();
-            // } else {
-            //     $("#card").hide();
-            //     $vouch.hide();
-            // }
+            } else {
+                $("#card").hide();
+                $vouch.hide();
+            }
 
 
         }
