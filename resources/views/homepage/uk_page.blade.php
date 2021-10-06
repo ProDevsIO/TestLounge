@@ -106,14 +106,14 @@
             <table className="font-16" style="overflow-x:auto !important;">
                 <thead>
                     <th class="bg-sky text-center">MEASURE REQUIRED</th>
-                    <th class="bg-6 text-center">Vaccinated **</th>
+                    <th class="bg-2 text-center">Vaccinated **</th>
                     <th class="bg-4 text-center">Unvaccinated</th>
                     <th class="bg-5 text-center">TRAVELLING FROM A RED COUNTRY</th>
                 </thead>
                 <tr>
                      <td class="bg-sky" width="25%"><h6>PRE-DEPARTURE TEST AT DESTINATION WITHIN 72 HOURS OF TRAVEL</h6></td>
                     
-                    <td class="bg-6" width="25%">
+                    <td class="bg-2" width="25%">
                     <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                     </td>
                     <td class="bg-4" width="25%">
@@ -126,7 +126,7 @@
                 <tr>
                     <td class="bg-sky" width="25%"><h6>COMPLETE A PASSENGER LOCATOR FORM WITHIN 48 HOURS OF ARRIVAL</h6></td>
                    
-                    <td class="bg-6" width="25%">
+                    <td class="bg-2" width="25%">
                     <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-4" width="25%">
@@ -139,7 +139,7 @@
                 <tr>
                     <td class="bg-sky" width="25%"><h6>MANDATORY PCR TEST UPON ENTRY TO UK ON/BEFORE DAY 2</h6></td>
                     
-                    <td class="bg-6" width="25%">
+                    <td class="bg-2" width="25%">
                     <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-4" width="25%">
@@ -152,7 +152,7 @@
                 <tr>
                     <td class="bg-sky" width="25%"><h6>MANDATORY ADDITIONAL PCR TESTING ON DAY 8 OF ARRIVAL INTO THE UK</h6></td>
                 
-                    <td class="bg-6" width="25%">
+                    <td class="bg-2" width="25%">
                     <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>  
                     </td>
                     <td class="bg-4" width="25%">
@@ -165,7 +165,7 @@
                 <tr>
                     <td class="bg-sky" width="25%"><h6 >OPTIONAL DAY 5 PCR TEST<br>( Test to Release )</h6></td>
                     
-                    <td class="bg-6" width="25%">
+                    <td class="bg-2" width="25%">
                     <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/> 
                     </td>
                     <td class="bg-4" width="25%">
@@ -178,7 +178,7 @@
                 <tr>
                     <td class="bg-sky" width="25%"><h6>SELF ISOLATION</h6></td>
                    
-                    <td class="bg-6"  width="25%">
+                    <td class="bg-2"  width="25%">
                     <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                      </td>
                     <td class="bg-4" width="25%">
@@ -192,7 +192,7 @@
                 <tr>
                     <td class="bg-sky" width="25%"><h6>FIT TO FLY( PCR Test Taken before travel out of the UK  if required by destination country) </h6></td>
                    
-                    <td class="bg-6" width="25%">
+                    <td class="bg-2" width="25%">
                     <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                     </td>
                     <td class="bg-4" width="25%">
@@ -204,7 +204,7 @@
                 </tr>
                 <tr>
                     <td class="bg-sky"></td>
-                    <td class="bg-6">  <a href="{{ url('/product/Amber_v') }}" style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" class="btn btn-primary btn-filled">Book Now</a></td>
+                    <td class="bg-2">  <a href="{{ url('/product/Amber_v') }}" style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td class="bg-4">  <a href="{{ url('/product/Amber_uv') }}" style="font-family: Nunito;font-style: normal;font-weight: lighter;font-size: 13.625px;line-height: 19px;" class="btn btn-primary btn-filled">Book Now</a></td>
                     <td class="bg-5"> Unavailable</td>
                 </tr>
@@ -244,10 +244,10 @@
                     </tr>
                     <tr>
                         <th class="bg-sky">Ages (years)</th>
-                        <th class="bg-6">0 - 4</th>
+                        <th class="bg-2">0 - 4</th>
                         <th class="bg-4">5 - 10</th>
                         <th class="bg-5">11 - 17</th>
-                        <th class="bg-6">0 - 4</th>
+                        <th class="bg-2">0 - 4</th>
                         <th class="bg-4">5 - 10</th>
                         <th class="bg-5">11 - 17</th>
                     </tr>
