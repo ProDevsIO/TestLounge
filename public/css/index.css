@@ -103,9 +103,9 @@
 }
 
 @media screen and (max-width: 800px) {
-    .page-header{
+    /* .page-header{
         height:900px !important;
-    }
+    } */
     #hide {
         display: block;
     }
