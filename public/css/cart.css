@@ -127,7 +127,7 @@ h1{
 /* start laptop version */
 @media screen and (max-width: 800px) {
     #banner-writeup2{
-        top: -40px !important;
+        top: 100px !important;
     }
 }
 
