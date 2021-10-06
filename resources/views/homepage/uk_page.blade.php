@@ -10,7 +10,7 @@
 
     <header class="page-header" style="height: 450px;padding-top: 50px">
         <div class="background-image-holder parallax-background">
-            <img class="background-image" alt="Background Image" src="/img/bg.jpeg" >
+            <img class="background-image" alt="Background Image" src="/img/bigben.jpg" >
         </div>
         <div class="container">
             <div class="row">
@@ -32,9 +32,9 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-6 pull-right" id="banner-writeup2" style="left:10%;top:100px ">
+                        <!-- <div class="col-md-6 pull-right" id="banner-writeup2" style="left:10%;top:100px ">
                             <img class="background-image" alt="Background Image" src="/img/Group 6.png"  style="background-repeat: no-repeat;background-size: 100% 100%">
-                        </div>
+                        </div> -->
                     </div>
 
 
@@ -48,12 +48,16 @@
                     
                     <div class="card-container double-container fs-20 text-center">
                     
-                       
+                    <a href="/product/all" class="link ">
+                            <div class="card" style="color:black">
+                                <div class="inner"><v>PURCHASE OR VIEW ALL TESTS </v></div>
+                            </div>
+                        </a>
                         <a href="/product/Amber_v" class="link">
-                            <div class="card bg-6 fw-700">
+                            <div class="card bg-2 fw-700">
                                     <div class="inner">
                                         <v>
-                                        Purchase Test if you are Fully Vaccinated
+                                        Purchase Tests for fully vaccinated
                                         </v>
                                     </div>
                             </div>
@@ -62,31 +66,27 @@
                             <div class="card bg-4 fw-700">
                                     <div class="inner">
                                         <v>
-                                        Purchase test if you are Unvaccinated or Not Fully Vaccinated
+                                        Purchase Tests for unvaccinated /Not fully vaccinated
                                         </v>
                                     </div>
                             </div>
                         </a>
-                         <a href="/product/Green" class="link text-white">
+                         <!-- <a href="/product/Green" class="link text-white">
                             <div class="card bg-2 fw-700" style="">
                                     <div class="inner"><v>Purchase Test if you are travelling from a green country</v></div>
                             </div>
-                        </a>
+                        </a> -->
                         <a href="/product/Red" class="link text-white">
                             <div class="card bg-5 fw-700">
-                                    <div class="inner"><v>Purchase test if you are travelling from a Red country to the UK</v></div>
+                                    <div class="inner"><v>Information for Red List countries</v></div>
                             </div>
                         </a>
-                        <a href="{{url('/product/UK')}}"  class="link text-white">
+                        <!-- <a href="{{url('/product/UK')}}"  class="link text-white">
                             <div class="card bg-3 fw-700">
                                 <div class="inner"><v>Purchase test if you are travelling from the UK</v></div>
                             </div>
-                        </a>
-                        <a href="/product/all" class="link text-white ">
-                            <div class="card" style="border:none;">
-                                <div class="inner"><v>  <button type="button" class="btn btn-md" style="border-radius:25px; padding:14px 20px 13px 20px;color:white; background:#1E50A0"> PURCHASE OR VIEW ALL TESTS</button> </v></div>
-                            </div>
-                        </a>
+                        </a> -->
+                       
                     </div>
                 </div>
             </div>

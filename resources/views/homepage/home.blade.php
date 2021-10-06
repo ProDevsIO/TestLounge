@@ -45,24 +45,31 @@
                 </div><!--end of row-->
             </div><!--end of co-->
         </header>
-        <section class="clients-2" style="padding-bottom:20px;">
+        <section class="clients-2" style="padding-bottom:50px;">
 				<div class="container">
 					<div class="row">
-                        <div class="col-md-3 col-sm-4" style="margin-top:40px">
+                        <div class="col-md-2 col-sm-4" style="margin-top:5px; margin-bottom:30px;">
                             <h1>Our Partners</h1>
                         </div>
 
-                        <div class="col-md-3 col-sm-4">
-							<h1><img alt="Client Logo" src="/img/london_test.png" style="max-width:200px;max-height:200px"></h1>
+                        <div class="col-md-2 col-sm-4" style="margin-top:20px">
+							<h1><img alt="Client Logo" src="/img/UKHT-logo-grey.png" style="max-width:120px;max-height:100px"></h1>
 						</div>
 						
-						<div class="col-md-3 col-sm-4">
-							<img alt="Client Logo" src="img/pexpo.png" style="max-width:180px;max-height:200px">
+						<div class="col-md-2 col-sm-4" style="margin-top:10px">
+							<img alt="Client Logo" src="img/aims-logo-01.svg" style="max-width:150px;max-height:100px">
 						</div>
 						
-						<div class="col-md-3 col-sm-4" style="margin-top:30px">
-                            
-							<img alt="Client Logo" src="img/allhealth.png" style="max-width:200px;max-height:200px">
+						<div class="col-md-2 col-sm-4" style="margin-top:10px">
+							<img alt="Client Logo" src="img/MedburyMedicaLogo.png" style="max-width:150px;max-height:100px">
+						</div>
+
+                        <div class="col-md-2 col-sm-4" style="margin-top:10px">
+							<img alt="Client Logo" src="img/dam-health-logo.png" style="max-width:150px;max-height:100px">
+						</div>
+
+                        <div class="col-md-2 col-sm-4" style="margin-top:10px">
+							<img alt="Client Logo" src="img/gebelablogo.png" style="max-width:150px;max-height:100px">
 						</div>
 						
 						{{--<div class="col-md-2 col-sm-4">--}}

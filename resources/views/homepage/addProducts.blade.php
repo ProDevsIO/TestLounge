@@ -18,14 +18,14 @@
                                                                                                            style="background-color:#258C48;padding:10px">G</span>
                             </h5>
                         @elseif($type=="Amber_v")
-                            <h5 id="h9" class="text-white">Travelling from an Amber country(Vaccinated) to the UK <span
-                                        class="badge bg-6" style="color:black;padding:10px">A</span>
+                            <h5 id="h9" class="text-white">Tests for fully vaccinated <span
+                                        class="badge" style="color:white;padding:10px;background-color:#258C48;">G</span>
                             </h5>
                         @elseif($type == "Amber_uv")
-                            <h5 id="h9" class="text-white">Travelling from an Amber country(Unvaccinated) to the UK
+                            <h5 id="h9" class="text-white">Tests for unvaccinated /Not fully vaccinated
                                 <span class="badge bg-4" style="padding:10px">A</span></h5>
                         @elseif($type=="Red")
-                            <h5 id="h9" class="text-white">Travelling from a Red country to the UK<span class="badge"
+                            <h5 id="h9" class="text-white"> Information for Red List countries<span class="badge"
                                                                                                         style="background-color:#E73636;padding:10px">R</span>
                             </h5>
                         @elseif($type == "UK")
@@ -63,8 +63,8 @@
                                                      style="padding:30px;margin-bottom:20px;min-height: 378px; border-radius:10px; background-color:#258C48;">
 
                                                     @elseif($type=="Amber_v")
-                                                        <div class="container bg-6"
-                                                             style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;">
+                                                        <div class="container"
+                                                             style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px; background-color:#258C48;">
 
                                                             @elseif($type == "Amber_uv")
                                                                 <div class="container bg-4"

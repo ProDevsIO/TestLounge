@@ -344,7 +344,10 @@ line-height: 150% !important;
 
     /* mobile version */
     @media screen and (max-width: 800px) {
-       
+        .background-image-holder.parallax-background {
+            height: 90%;
+            top: -33%;
+            }
         .inner{
             display:flex;
             flex-wrap:nowrap;
@@ -379,6 +382,10 @@ line-height: 150% !important;
 
     /* mobile version */
     @media screen and (max-width: 468px) {
+        .background-image-holder.parallax-background {
+            height: 90%;
+            top: -33%;
+            }
     }
 
 
