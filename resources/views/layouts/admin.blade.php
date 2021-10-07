@@ -225,7 +225,7 @@
                     <li>
                       <a href="{{ url('/view/transactions') }}">
                             <i class="icon-calculator"></i>
-                            <span>View transactions</span>
+                            <span>Agent Commission</span>
                         </a>
                     </li>
                     @if(auth()->user()->main_agent_id == null && auth()->user()->type == 2)
@@ -233,7 +233,7 @@
                         <li>
                             <a href="{{ url('/view/subagent/report') }}">
                                 <i class="ti-receipt"></i>
-                                <span>Financial Report</span>
+                                <span>Sub Agent Report</span>
                             </a>
                         </li>
                         @endif

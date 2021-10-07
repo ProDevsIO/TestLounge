@@ -559,13 +559,31 @@ class HomeController extends Controller
 
                     $code = $this->sendData($booking);
                 } catch (\Exception $e) {
+                    if($type == "paystack"){
 
-                    $booking->update([
-                        'vendor_id' => 3,
-                        'mode_of_payment' => 1,
-                        'transaction_ref' => $txRef,
-                        'status' => 1
-                    ]);
+                        $booking->update([
+                            'vendor_id' => 3,
+                            'mode_of_payment' => 4,
+                            'transaction_ref' => $txRef,
+                            'status' => 1
+                        ]);
+
+                    } elseif($type == "vas"){
+
+                        $booking->update([
+                            'vendor_id' => 3,
+                            'mode_of_payment' => 5,
+                            'transaction_ref' => $txRef,
+                            'status' => 1
+                        ]);
+                    }else{
+                        $booking->update([
+                            'vendor_id' => 3,
+                            'mode_of_payment' => 1,
+                            'transaction_ref' => $txRef,
+                            'status' => 1
+                        ]);
+                    }
 
                     return redirect()->to('/booking/code/failed?b=' . $txRef);
                 }
@@ -607,13 +625,35 @@ class HomeController extends Controller
                 }
 
                 //update wiith transaction code
-                $booking->update([
-                    'vendor_id' => 3,
-                    'mode_of_payment' => 1,
-                    'transaction_ref' => $txRef,
-                    'status' => 1,
-                    'booking_code' => $code
-                ]);
+
+                if($type == "paystack"){
+
+                    $booking->update([
+                        'vendor_id' => 3,
+                        'mode_of_payment' => 4,
+                        'transaction_ref' => $txRef,
+                        'status' => 1,
+                        'booking_code' => $code
+                    ]);
+
+                } elseif($type == "vas"){
+
+                    $booking->update([
+                        'vendor_id' => 3,
+                        'mode_of_payment' => 5,
+                        'transaction_ref' => $txRef,
+                        'status' => 1,
+                        'booking_code' => $code
+                    ]);
+                }else{
+                    $booking->update([
+                        'vendor_id' => 3,
+                        'mode_of_payment' => 1,
+                        'transaction_ref' => $txRef,
+                        'status' => 1,
+                        'booking_code' => $code
+                    ]);
+                }
 
                 //to remove items from cart
                 $cart = Cart::where('ip', session()->get('ip'))->delete();
@@ -1736,7 +1776,7 @@ class HomeController extends Controller
 
                 $booking->update([
                     'vendor_id' => 3,
-                    'mode_of_payment' => 1,
+                    'mode_of_payment' => 3,
                     'transaction_ref' => $txRef,
                     'status' => 1
                 ]);
@@ -1780,7 +1820,7 @@ class HomeController extends Controller
             //update wiith transaction code
             $booking->update([
                 'vendor_id' => 3,
-                'mode_of_payment' => 1,
+                'mode_of_payment' => 3,
                 'transaction_ref' => $txRef,
                 'status' => 1,
                 'booking_code' => $code

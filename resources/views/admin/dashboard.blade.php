@@ -280,10 +280,11 @@
                                             @endif
                                             <th scope="col">Email</th>
                                             <th scope="col">Date/Time</th>
-                                            @if(auth()->user()->type == 1)
-                                                <th scope="col" style="padding-left:70px; padding-right:70px">Product
+                                            <th scope="col" style="padding-left:70px; padding-right:70px">Product
                                                 </th>
                                                 <th scope="col">Product Price</th>
+                                            @if(auth()->user()->type == 1)
+                                                
                                                 <th scope="col">Commission</th>
                                             @endif
                                             <th scope="col">Status</th>
@@ -310,8 +311,7 @@
                                                 @endif
                                                 <td>{{ $booking->email }}</td>
                                                 <td> {{ $booking->created_at }} </td>
-                                                @if(auth()->user()->type == 1)
-                                                    <td><b style="font-size:11px;">
+                                                <td><b style="font-size:11px;">
                                                             @foreach($booking->symproduct as $name)
                                                                 {{optional(optional($name)->product)->name}} x
                                                                 ({{ $name->quantity}})
@@ -323,18 +323,16 @@
 
                                                     @if(isset($booking->product) && $booking->product->currency == "NGN")
                                                         <td> ₦ {{ $booking->product->price }} </td>
-                                                    @elseif(isset($booking->product) && $booking->product->currency == "GBP")
+                                                    @elseif(isset($booking->product) && $booking->product->currency == "USD")
 
                                                         <td> $ {{ $booking->product->charged_amount }} </td>
-                                                    @elseif(isset($booking->product) && $booking->product->currency == "GHS")
-                                                        <td> GHS {{ $booking->product->charged_amount }} </td>
-                                                    @elseif(isset($booking->product) && $booking->product->currency == "KES")
-                                                        <td> KES {{ $booking->product->charged_amount }} </td>
-                                                    @elseif(isset($booking->product) && ($booking->product->currency == "ZAR"))
-                                                        <td> ZAR {{ $booking->product->charged_amount }} </td>
+        
                                                     @else
                                                         <td>Product has been deleted</td>
                                                     @endif
+                                                    
+                                                @if(auth()->user()->type == 1)
+                                                   
 
                                                     @if(isset($booking) && $booking->transaction != null)
                                                         <td>
@@ -356,6 +354,12 @@
                                                         Flutterwave
                                                     @elseif($booking->mode_of_payment == 2)
                                                         Stripe
+                                                    @elseif($booking->mode_of_payment == 3)
+                                                        Voucher Payment
+                                                    @elseif($booking->mode_of_payment == 4)
+                                                        Paystack
+                                                    @elseif($booking->mode_of_payment == 5)
+                                                        Vas
                                                     @endif
                                                 </td>
                                                 @if(auth()->user()->referal_code)

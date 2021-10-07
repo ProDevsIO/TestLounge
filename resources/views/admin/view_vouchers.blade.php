@@ -68,8 +68,8 @@
                     </div>
 
                         <!-- Modal -->
-
-                        <div id="refmodal{{$product->id}}" class="modal fade" role="dialog">
+                                        @if(auth()->user()->type ==2)
+                                             <div id="refmodal{{$product->id}}" class="modal fade" role="dialog">
                                                 <div class="modal-dialog">
 
                                                     <!-- Modal content-->
@@ -113,6 +113,7 @@
 
                                                 </div>
                                             </div>
+                                        @endif
                                       <?php $j++; ?>         
                 @endforeach
                 <div class="col-xl-12">

@@ -7,7 +7,9 @@
 
     <div class="content-wrapper">
         <div class="container-fluid">
-
+            <div>
+                <h4>All Agent Transactions</h4>
+            </div>
             <!--states start-->
             <div class="row">
                 <div class="col-xl-12 col-sm-12">
@@ -51,7 +53,7 @@
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
                                         <i class="vl_book"></i>
                                     </div>
-                                    <div class="media-body text-light" title="Revenue">
+                                    <div class="media-body text-light" title="Total Revenue in naira from bookings">
                                         <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($total_ngn) }}</h4>
                                         <span>Total Revenue(Naira)</span>
                                     </div>
@@ -68,7 +70,7 @@
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
                                         <i class="vl_book"></i>
                                     </div>
-                                    <div class="media-body text-light" title="Revenue">
+                                    <div class="media-body text-light" title="Total Revenue in dollars from bookings">
                                         <h4 class="text-uppercase mb-0 weight500">${{ number_format($total_gbp) }}</h4>
                                         <span>Total Revenue(Dollars)</span>
                                     </div>
@@ -93,19 +95,21 @@
                     </div>
                 </div> -->
                 <div class="col-xl-3 col-sm-3">
+                
                     <div class="card mb-4 bg-purple" title="Revenue">
                         <div class="card-body">
                             <div class="media d-flex align-items-center ">
                                 <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
                                     <i class="vl_book"></i>
                                 </div>
-                                <div class="media-body text-light" title="Revenue">
-                                    <h4 class="text-uppercase mb-0 weight500">${{ number_format($pcommission) }}</h4>
+                                <div class="media-body text-light" title="Amount owed to agent via dollar transaction">
+                                    <h4 class="text-uppercase mb-0 weight500">${{ number_format($p_due_amount, 2) }}</h4>
                                     <span>Amount due(Referrals)</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                
                 </div>
                 <!-- <div class="col-xl-3 col-sm-3">
                     <a href="{{  url('currency/detail/report/cedis/'.$start.'/'.$end) }}">
@@ -176,19 +180,21 @@
                     </a>
                 </div> -->
                 <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-purple" title="Revenue">
+                
+                    <div class="card mb-4 bg-purple" title="Amount owed to agent via Naira transaction">
                         <div class="card-body">
                             <div class="media d-flex align-items-center ">
                                 <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
                                     <i class="vl_book"></i>
                                 </div>
-                                <div class="media-body text-light" title="Revenue">
-                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($due_amount) }}</h4>
+                                <div class="media-body text-light" title="Amount owed to agent via Naira transaction">
+                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($due_amount, 2) }}</h4>
                                     <span>Amount due(Referrals)</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
             </div>
