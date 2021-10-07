@@ -3,14 +3,62 @@
 @section('content')
 @section('style')
   
-   
  <link href="/css/cart.css" rel="stylesheet"/>
+ <style>
+    @media all and (max-width: 1050px) {
+  
+     #myCarousel{
+         position: absolute;
+         top: 280px;
+     }
+
+     .carousel-img{
+        width: 100%;
+        height:70vh !important;
+        object-fit: cover;
+    
+     }
+    }
+ </style>
 @endsection
 
     <div class="main-container" >
         <header class="page-header" style="padding-bottom:0;">
             <div class="background-image-holder parallax-background">
-                <img class="background-image" alt="Background Image"  >
+                <!-- <img class="background-image" alt="Background Image" src="/img/pass2.jpg"  > -->
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    
+                    <!-- <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol> -->
+
+                  
+                    <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="img/pass1.jpg" alt="Los Angeles" class="carousel-img">
+                    </div>
+
+                    <div class="item">
+                        <img src="img/pass2.jpg" alt="Chicago"  class="carousel-img">>
+                    </div>
+                    
+                    <div class="item">
+                        <img src="img/pass3.jpg" alt="New york" class="carousel-img">
+                    </div>
+                    </div>
+
+                    
+                    <!-- <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next</span>
+                    </a> -->
+                </div>
             </div>
             <div class="container" >
                 <div class="row">
@@ -21,7 +69,7 @@
                                 <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
                                <p style="color: #fff;text-align: left" class="learn_more">Choose the Country you are travelling to: </p>
 
-                                <div class="row" id="country-section" style="padding:0 !important">
+                                <div class="row" id="country-section" style="padding:0 !important;margin-top:10px;">
 
                                     <div class="col-sm-12" style=""> <br><div id="show-result">
 
@@ -35,9 +83,9 @@
                                     <div class="col-sm 2"></div>
                                 </div>
                             </div>
-                            <div class="col-md-6 pull-right" id="banner-writeup2" style=" top:-200px ">
+                            <!-- <div class="col-md-6 pull-right" id="banner-writeup2" style=" top:-200px ">
                                 <img class="background-image" alt="Background Image" src="/img/globe.png"  style="background-repeat: no-repeat;background-size: 100% 100%">
-                            </div>
+                            </div> -->
                         </div>
 
 
