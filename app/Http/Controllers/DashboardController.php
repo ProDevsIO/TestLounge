@@ -1581,12 +1581,12 @@ class DashboardController extends Controller
 
             $earned = Transaction::where([
                 'user_id' => $id,
-                'type' => 1
+                'type' => 2
             ])->sum('amount');
 
             $earnedPounds = PoundTransaction::where([
                 'user_id' => $id,
-                'type' => 1
+                'type' => 2
             ])->sum('amount');
 
 
@@ -1615,7 +1615,7 @@ class DashboardController extends Controller
             ])->get();
 
         }
-dd($earned, $earnedPounds);
+
 
         return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p', 'earned', 'earnedPounds'));
     }
