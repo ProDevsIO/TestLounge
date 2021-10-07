@@ -29,7 +29,11 @@
 
             <!--employee data table-->
             <div class="">
+                @if(auth()->user()->type == 1)
                 <h4>All Agent Commissions</h4>
+                @else
+                <h4>Agent Commissions</h4>
+                @endif
             </div>
             <br>
             <div class="row">
