@@ -49,13 +49,13 @@
 
                 <div class="col-xl-3 col-sm-3">
                    
-                        <div class="card mb-4 bg-purple" title="Revenue">
+                        <div class="card mb-4 bg-purple" title="Total commission gained by subagents">
                             <div class="card-body">
                                 <div class="media d-flex align-items-center ">
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
                                         <i class="vl_book"></i>
                                     </div>
-                                    <div class="media-body text-light" title="Revenue">
+                                    <div class="media-body text-light">
                                         <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($pcommission) }}</h4>
                                         <span>Total Revenue(Naira)</span>
                                     </div>
@@ -66,15 +66,15 @@
                 </div>
                 <div class="col-xl-3 col-sm-3">
                   
-                        <div class="card mb-4 bg-purple" title="Revenue">
+                        <div class="card mb-4 bg-purple" title="Total commission gained by subagents in dollars">
                             <div class="card-body">
                                 <div class="media d-flex align-items-center ">
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
                                         <i class="vl_book"></i>
                                     </div>
-                                    <div class="media-body text-light" title="Revenue">
+                                    <div class="media-body text-light">
                                         <h4 class="text-uppercase mb-0 weight500">${{ number_format($commission) }}</h4>
-                                        <span>Total Revenue(Pound)</span>
+                                        <span>Total Revenue(Dollars)</span>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                 </div>
                
                 <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-purple" title="Revenue">
+                    <div class="card mb-4 bg-purple" title="Total amount due to subagents in pounds">
                         <div class="card-body">
                             <div class="media d-flex align-items-center ">
                                 <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
@@ -100,13 +100,13 @@
                
 
                 <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-purple" title="Revenue">
+                    <div class="card mb-4 bg-purple" title="Total amount due to subagents in naira">
                         <div class="card-body">
                             <div class="media d-flex align-items-center ">
                                 <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
                                     <i class="vl_book"></i>
                                 </div>
-                                <div class="media-body text-light" title="Revenue">
+                                <div class="media-body text-light">
                                     <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($dueNaira) }}</h4>
                                     <span>Amount due(Referrals)</span>
                                 </div>

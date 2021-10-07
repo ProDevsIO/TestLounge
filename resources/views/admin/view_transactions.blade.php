@@ -39,15 +39,15 @@
             <div class="row">
                 <div class="col-sm-6">
                 <div class="card mb-4 bg-success">
-                            <div class="card-body">
+                            <div class="card-body" title="Total money earned from bookings naira">
                                 <div class="media d-flex align-items-center">
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
                                         <i class="vl_money"></i>
                                     </div>
-                                    <div class="media-body text-white">
+                                    <div class="media-body text-white" title="Total money earned from bookings">
                                         <h4 class="text-uppercase mb-0 weight500">
                                             N{{ number_format($gained,5) }}</h4>
-                                        <span> Total Wallet Balance(Naira)</span>
+                                        <span> Total Credit transactions(Naira)</span>
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="col-sm-6">
                 <div class="card mb-4 bg-success">
-                            <div class="card-body" title="">
+                            <div class="card-body" title="Total money earned from bookings">
                                 <div class="media d-flex align-items-center">
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
                                         <i class="vl_money"></i>
@@ -63,7 +63,7 @@
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
                                         ${{ number_format($gainedPounds,5) }}</h4>
-                                        <span>Total Wallet Balance(Dollars)</span>
+                                        <span>Total Credit transactions(Dollars)</span>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="col-sm-6">
                 <div class="card mb-4 bg-purple">
-                            <div class="card-body">
+                            <div class="card-body" title="Total money paid from wallet Balance(N)">
                                 <div class="media d-flex align-items-center">
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
                                         <i class="vl_money"></i>
@@ -79,7 +79,7 @@
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
                                             N{{ number_format($earned,5) }}</h4>
-                                        <span>Expected Earning(Naira)</span>
+                                        <span>Expected Earnings(Naira)</span>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                 </div>
                 <div class="col-sm-6">
                 <div class="card mb-4 bg-purple">
-                            <div class="card-body">
+                            <div class="card-body" title="Total money paid from wallet balance($)">
                                 <div class="media d-flex align-items-center">
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
                                         <i class="vl_money"></i>
@@ -95,7 +95,7 @@
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
                                         ${{ number_format($earnedPounds,5) }}</h4>
-                                        <span>Expected Earning(Dollars)</span>
+                                        <span>Expected Earnings(Dollars)</span>
                                     </div>
                                 </div>
                             </div>
