@@ -281,6 +281,27 @@
                         <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                         </td>
                         <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
+                        </td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
+                        </td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
+                        </td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bg-sky" width="35.5%"><h6>Mandatory PCR test on Day 2 of arrival into the UK. </h6></td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
+                        </td>
+                        <td class="bg-sky" width="10%">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
+                        </td>
+                        <td class="bg-sky" width="10%">
                         <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
                         </td>
                         <td class="bg-sky" width="10%">
@@ -294,28 +315,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="bg-sky" width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
-                        <td class="bg-sky" width="10%">
-                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
-                        </td>
-                        <td class="bg-sky" width="10%">
-                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
-                        </td>
-                        <td class="bg-sky" width="10%">
-                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
-                        </td>
-                        <td class="bg-sky" width="10%">
-                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
-                        </td>
-                        <td class="bg-sky" width="10%">
-                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
-                        </td>
-                        <td class="bg-sky" width="10%">
-                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="bg-sky" width="35.5%"><h6>Pre-departure test within 72 hours of travel. </h6></td>
+                        <td class="bg-sky" width="35.5%"><h6>Mandatory PCR test on Day 2 of arrival into the UK. </h6></td>
                         <td class="bg-sky" width="10%">
                         <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                         </td>
@@ -323,7 +323,7 @@
                         <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                         </td>
                         <td class="bg-sky" width="10%">
-                        <img src="https://img.icons8.com/ios-glyphs/30/000000/checkmark--v1.png"/>
+                        <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
                         </td>
                         <td class="bg-sky" width="10%">
                         <img src="https://img.icons8.com/material-sharp/24/000000/delete-sign.png"/>
