@@ -217,7 +217,7 @@
                     <li>
                       <a href="{{ route("sub-agents.index") }}">
                             <i class="icon-calculator"></i>
-                            <span>Sub-agents</span>
+                            <span>Sub-agents</span> <span class="badge badge-warning text-white">{{auth()->user()->subAgent->count()}} </span>
                         </a>
                     </li>
                    
