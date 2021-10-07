@@ -46,7 +46,7 @@
                                     </div>
                                     <div class="media-body text-white" title="Total money earned from bookings">
                                         <h4 class="text-uppercase mb-0 weight500">
-                                            N{{ number_format($gained,5) }}</h4>
+                                            N{{ number_format($gained,3) }}</h4>
                                         <span> Total Credit transactions(Naira)</span>
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                     </div>
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
-                                        ${{ number_format($gainedPounds,5) }}</h4>
+                                        ${{ number_format($gainedPounds,3) }}</h4>
                                         <span>Total Credit transactions(Dollars)</span>
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
-                                            N{{ number_format($earned,5) }}</h4>
+                                            N{{ number_format($earned,3) }}</h4>
                                         <span>Expected Earnings(Naira)</span>
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
-                                        ${{ number_format($earnedPounds,5) }}</h4>
+                                        ${{ number_format($earnedPounds,3) }}</h4>
                                         <span>Expected Earnings(Dollars)</span>
                                     </div>
                                 </div>
@@ -186,8 +186,8 @@
                                                                 <td> <span class ="badge badge-danger"> Agent NULL</span></td>
                                                             @endif
                                                         @endif
-                                                        <td>₦{{ number_format($booking_tran->amount,5) }}</td>
-                                                        <td>₦{{ number_format($booking_tran->cost_config,5) }}</td>
+                                                        <td>₦{{ number_format($booking_tran->amount,3) }}</td>
+                                                        <td>₦{{ number_format($booking_tran->cost_config,3) }}</td>
                                                         @if(auth()->user()->type == 1)
                                                             <td>
                                                                 @if($booking_tran->user != null)
@@ -247,8 +247,8 @@
                                                 @else
                                                 <td>Agent Null</td>
                                                 @endif
-                                                    <td>₦{{number_format($paid_tran->amount,5) }}</td>
-                                                    <td>₦{{number_format($paid_tran->cost_config,5)}}</td>
+                                                    <td>₦{{number_format($paid_tran->amount,3) }}</td>
+                                                    <td>₦{{number_format($paid_tran->cost_config,3)}}</td>
                                                     <td>{{ $paid_tran->created_at }}</td>
                                                   
                                                 </tr>
@@ -300,8 +300,8 @@
                                                     @else
                                                         <td>Agent null</td>
                                                     @endif
-                                                        <td> ${{ number_format($booking_tran_p->amount,5) }}</td>
-                                                        <td> ${{ number_format($booking_tran_p->cost_config,5) }}</td>
+                                                        <td> ${{ number_format($booking_tran_p->amount,3) }}</td>
+                                                        <td> ${{ number_format($booking_tran_p->cost_config,3) }}</td>
                                                         @if(auth()->user()->type == 1)
                                                             <td>
                                                                 @if($booking_tran_p->user != null)
@@ -361,8 +361,8 @@
                                                 @else
                                                     <td>Agent null</td>
                                                 @endif
-                                                    <td>${{number_format($paid_tran_p->amount,5) }}</td>
-                                                    <td>${{number_format($paid_tran_p->cost_config,5)}}</td>
+                                                    <td>${{number_format($paid_tran_p->amount,3) }}</td>
+                                                    <td>${{number_format($paid_tran_p->cost_config,3)}}</td>
                                                     <td>{{ $paid_tran_p->created_at }}</td>
                                                   
                                                 </tr>
