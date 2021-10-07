@@ -982,7 +982,7 @@ class DashboardController extends Controller
                     $row['Name'] = $user->first_name . " " . $user->last_name;
                     $row['Referral Code'] = $user->referal_code . ", " . $user->email . ", " . $user->phone;
                     $row['Total C.booking'] = $user->cbookings->count();
-                    $row['Wallet Balance'] = "N" . number_format($user->wallet_balance, 2);
+                    $row['Wallet Balance'] = "N" . number_format($user->wallet_balance, 5);
                     $row['Account Details'] = "Country:" . $user->country . ", " . "Bank:" . $user->bank . "Account No:" . $user->account_no . ", "
                         . "Account Name:" . $user->account_name;
 
@@ -993,10 +993,10 @@ class DashboardController extends Controller
                 fputcsv($file, array(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '));
 
                 fputcsv($file, $columnMoney);
-                $row['rNaira'] = 'N' . number_format($commission);
-                $row['rPound'] = '# ' . number_format($pcommission);
-                $row['dueNaira'] = 'N' . number_format($dueNaira);
-                $row['duePound'] = '# ' . number_format($duePounds);
+                $row['rNaira'] = 'N' . number_format($commission, 5);
+                $row['rPound'] = '# ' . number_format($pcommission, 5);
+                $row['dueNaira'] = 'N' . number_format($dueNaira, 5);
+                $row['duePound'] = '# ' . number_format($duePounds, 5);
 
 
                 fputcsv($file, array($row['rNaira'], $row['rPound'],$row['dueNaira'],$row['duePound']));
@@ -1068,7 +1068,7 @@ class DashboardController extends Controller
                     $row['Name'] = $user->first_name . " " . $user->last_name;
                     $row['Referral Code'] = $user->referal_code . ", " . $user->email . ", " . $user->phone;
                     $row['Total C.booking'] = $user->cbookings->count();
-                    $row['Wallet Balance'] = "N" . number_format($user->wallet_balance, 2);
+                    $row['Wallet Balance'] = "N" . number_format($user->wallet_balance, 5);
                     $row['Account Details'] = "Country:" . $user->country . ", " . "Bank:" . $user->bank . "Account No:" . $user->account_no . ", "
                         . "Account Name:" . $user->account_name;
 
@@ -1079,13 +1079,13 @@ class DashboardController extends Controller
                 fputcsv($file, array(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '));
 
                 fputcsv($file, $columnMoney);
-                $row['Naira'] = 'N' . number_format($total_ngn);
-                $row['Pound'] = '# ' . number_format($total_gbp);
-                $row['cedis'] = 'GH' . number_format($total_ghs);
-                $row['tzs'] = 'TZS ' . number_format($total_tzs);
-                $row['kes'] = 'KES ' . number_format($total_kes);
-                $row['zar'] = 'ZAR ' . number_format($total_zar);
-                $row['due'] = 'N ' . number_format($due_amount);
+                $row['Naira'] = 'N' . number_format($total_ngn, 5);
+                $row['Pound'] = '# ' . number_format($total_gbp, 5);
+                $row['cedis'] = 'GH' . number_format($total_ghs, 5);
+                $row['tzs'] = 'TZS ' . number_format($total_tzs, 5);
+                $row['kes'] = 'KES ' . number_format($total_kes, 5);
+                $row['zar'] = 'ZAR ' . number_format($total_zar, 5);
+                $row['due'] = 'N ' . number_format($due_amount, 5);
 
 
                 fputcsv($file, array($row['Naira'], $row['Pound'], $row['cedis'], $row['tzs'], $row['kes'], $row['zar'], $row['due']));
@@ -1575,6 +1575,14 @@ class DashboardController extends Controller
                 'type' => 2
             ])->sum('amount');
 
+            $gained = Transaction::where([
+                'type' => 1
+            ])->sum('amount');
+
+            $gainedPounds = PoundTransaction::where([
+                'type' => 1
+            ])->sum('amount');
+
         } elseif (auth()->user()->type == 2) {
 
             $id = auth()->user()->id;
@@ -1587,6 +1595,16 @@ class DashboardController extends Controller
             $earnedPounds = PoundTransaction::where([
                 'user_id' => $id,
                 'type' => 2
+            ])->sum('amount');
+
+            $gained = Transaction::where([
+                'user_id' => $id,
+                'type' => 1
+            ])->sum('amount');
+
+            $gainedPounds = PoundTransaction::where([
+                'user_id' => $id,
+                'type' => 1
             ])->sum('amount');
 
 
@@ -1617,7 +1635,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p', 'earned', 'earnedPounds'));
+        return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p', 'earned', 'earnedPounds','gained', 'gainedPounds'));
     }
 
     public function view_subagent_transactions(Request $request,$id)
@@ -1704,8 +1722,8 @@ class DashboardController extends Controller
                     foreach ($booking_trans as $trans) {
 
                         $row['Name'] = optional(optional($trans)->user)->first_name  . " " .optional(optional($trans)->user)->last_name;
-                        $row['Commission'] = 'N'. number_format($trans->amount,2) ;
-                        $row['Booking Amount'] ='N'. number_format($trans->cost_config,2);
+                        $row['Commission'] = 'N'. number_format($trans->amount, 5) ;
+                        $row['Booking Amount'] ='N'. number_format($trans->cost_config,5);
                         $row['Date'] = $trans->created_at;
                         
 
@@ -1722,8 +1740,8 @@ class DashboardController extends Controller
                     foreach ($booking_trans_p as $trans) {
 
                         $row['Name'] = optional(optional($trans)->user)->first_name  . " " .optional(optional($trans)->user)->last_name;
-                        $row['Commission'] = '#'. number_format($trans->amount,2) ;
-                        $row['Booking Amount'] ='#'. number_format($trans->cost_config,2);
+                        $row['Commission'] = '#'. number_format($trans->amount,5) ;
+                        $row['Booking Amount'] ='#'. number_format($trans->cost_config,5);
                         $row['Date'] = $trans->created_at;
                         
 
@@ -1735,8 +1753,8 @@ class DashboardController extends Controller
 
                 fputcsv($file, array(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '));
                 fputcsv($file, $columnEarning);
-                $row['Naira'] = 'N' . number_format($earned);
-                $row['Pound'] = '# ' . number_format($earnedPounds);
+                $row['Naira'] = 'N' . number_format($earned, 5);
+                $row['Pound'] = '# ' . number_format($earnedPounds, 5);
 
                 fputcsv($file, array($row['Naira'], $row['Pound']));
                 fclose($file);
@@ -1863,17 +1881,17 @@ class DashboardController extends Controller
 
             foreach ($transact as $transact) {
                 if ($transact->currency == 'NGN') {
-                    $amount = 'N' . number_format($transact->charged_amount, 2);
+                    $amount = 'N' . number_format($transact->charged_amount, 5);
                 } elseif ($transact->currency == 'USD') {
-                    $amount = '$' . number_format($transact->charged_amount, 2);
+                    $amount = '$' . number_format($transact->charged_amount, 5);
                 } elseif ($transact->currency = 'GHS') {
-                    $amount = 'GHS' . number_format($transact->charged_amount, 2);
+                    $amount = 'GHS' . number_format($transact->charged_amount, 5);
                 } elseif ($transact->currency = 'TZS') {
-                    $amount = 'TZS' . number_format($transact->charged_amount, 2);
+                    $amount = 'TZS' . number_format($transact->charged_amount, 5);
                 } elseif ($transact->currency = 'KES') {
-                    $amount = 'KES' . number_format($transact->charged_amount, 2);
+                    $amount = 'KES' . number_format($transact->charged_amount, 5);
                 } elseif ($transact->currency = 'ZAR') {
-                    $amount = 'ZAR' . number_format($transact->charged_amount, 2);
+                    $amount = 'ZAR' . number_format($transact->charged_amount, 5);
                 }
 
                 $row['Name'] = $transact->booking->first_name . " " . $transact->booking->last_name;

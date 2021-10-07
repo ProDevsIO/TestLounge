@@ -16,7 +16,6 @@ class BookingConfirmationService
         if($descript != null){
             PoundTransaction::create([
                 'amount' => $amount_credit,
-                'description' => "1",
                 'booking_id' => $booking_id,
                 'user_id' => $user->id,
                 'cost_config' => $cost_booking,
@@ -40,7 +39,7 @@ class BookingConfirmationService
 
         $total_amount = $user->pounds_wallet_balance + $amount_credit;
 
-        $user->update([
+        User::where('id', $booking->user_id)->update([
             'pounds_wallet_balance' => $total_amount,
             'total_credit_pounds' => $transactions
         ]);
@@ -70,7 +69,6 @@ class BookingConfirmationService
         if($descript != null){
             Transaction::create([
                 'amount' => $amount_credit,
-                'description' => "1",
                 'booking_id' => $booking_id,
                 'user_id' => $user->id,
                 'cost_config' => $cost_booking,
@@ -92,7 +90,7 @@ class BookingConfirmationService
 
         $total_amount = $user->wallet_balance + $amount_credit;
 
-        $user->update([
+        User::where('id', $booking->user_id)->update([
             'wallet_balance' => $total_amount,
             'total_credit' => $transactions
         ]);

@@ -29,7 +29,7 @@
 
             <!--employee data table-->
             <div class="">
-                <h4>Super Agent Commissions</h4>
+                <h4>All Agent Commissions</h4>
             </div>
             <br>
             <div class="row">
@@ -42,8 +42,8 @@
                                     </div>
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
-                                            N{{ number_format($earned,2) }}</h4>
-                                        <span>Expected Earning(Naira)</span>
+                                            N{{ number_format($gained,5) }}</h4>
+                                        <span> Total Wallet Balance(Naira)</span>
                                     </div>
                                 </div>
                             </div>
@@ -51,6 +51,22 @@
                 </div>
                 <div class="col-sm-6">
                 <div class="card mb-4 bg-success">
+                            <div class="card-body" title="">
+                                <div class="media d-flex align-items-center">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                        <i class="vl_money"></i>
+                                    </div>
+                                    <div class="media-body text-white">
+                                        <h4 class="text-uppercase mb-0 weight500">
+                                        ${{ number_format($gainedPounds,5) }}</h4>
+                                        <span>Total Wallet Balance(Dollars)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-sm-6">
+                <div class="card mb-4 bg-purple">
                             <div class="card-body">
                                 <div class="media d-flex align-items-center">
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
@@ -58,7 +74,23 @@
                                     </div>
                                     <div class="media-body text-white">
                                         <h4 class="text-uppercase mb-0 weight500">
-                                        ${{ number_format($earnedPounds,2) }}</h4>
+                                            N{{ number_format($earned,5) }}</h4>
+                                        <span>Expected Earning(Naira)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-sm-6">
+                <div class="card mb-4 bg-purple">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                        <i class="vl_money"></i>
+                                    </div>
+                                    <div class="media-body text-white">
+                                        <h4 class="text-uppercase mb-0 weight500">
+                                        ${{ number_format($earnedPounds,5) }}</h4>
                                         <span>Expected Earning(Dollars)</span>
                                     </div>
                                 </div>
@@ -74,28 +106,28 @@
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#home">Booking Transaction(Naira)</a>
                         </li>
-                        <!-- <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#menu1">Paid Commission(Naira)</a>
-                        </li> -->
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#poundB">Booking Transaction(Dollars)</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#poundP">Paid Commission(Pounds)</a>
-                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#poundP">Paid Commission(Dollars)</a>
+                        </li>
                     @elseif(auth()->user()->type == 2)
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#home">Booking Transaction(Naira)</a>
                         </li>
-                        <!-- <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#menu1">Paid Commission(Naira)</a>
-                        </li> -->
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#poundB">Booking Transaction(Dollars)</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#poundP">Paid Commission(Pounds)</a>
-                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#poundP">Paid Commission(Dollars)</a>
+                        </li>
                     @endif
                     </ul>
                 </div>
@@ -150,8 +182,8 @@
                                                                 <td> <span class ="badge badge-danger"> Agent NULL</span></td>
                                                             @endif
                                                         @endif
-                                                        <td>₦{{ number_format($booking_tran->amount,2) }}</td>
-                                                        <td>₦{{ number_format($booking_tran->cost_config,2) }}</td>
+                                                        <td>₦{{ number_format($booking_tran->amount,5) }}</td>
+                                                        <td>₦{{ number_format($booking_tran->cost_config,5) }}</td>
                                                         @if(auth()->user()->type == 1)
                                                             <td>
                                                                 @if($booking_tran->user != null)
@@ -211,8 +243,8 @@
                                                 @else
                                                 <td>Agent Null</td>
                                                 @endif
-                                                    <td>₦{{number_format($paid_tran->amount,2) }}</td>
-                                                    <td>₦{{number_format($paid_tran->cost_config,2)}}</td>
+                                                    <td>₦{{number_format($paid_tran->amount,5) }}</td>
+                                                    <td>₦{{number_format($paid_tran->cost_config,5)}}</td>
                                                     <td>{{ $paid_tran->created_at }}</td>
                                                   
                                                 </tr>
@@ -264,8 +296,8 @@
                                                     @else
                                                         <td>Agent null</td>
                                                     @endif
-                                                        <td> ${{ number_format($booking_tran_p->amount,2) }}</td>
-                                                        <td> ${{ number_format($booking_tran_p->cost_config,2) }}</td>
+                                                        <td> ${{ number_format($booking_tran_p->amount,5) }}</td>
+                                                        <td> ${{ number_format($booking_tran_p->cost_config,5) }}</td>
                                                         @if(auth()->user()->type == 1)
                                                             <td>
                                                                 @if($booking_tran_p->user != null)
@@ -325,8 +357,8 @@
                                                 @else
                                                     <td>Agent null</td>
                                                 @endif
-                                                    <td>${{number_format($paid_tran_p->amount,2) }}</td>
-                                                    <td>${{number_format($paid_tran_p->cost_config,2)}}</td>
+                                                    <td>${{number_format($paid_tran_p->amount,5) }}</td>
+                                                    <td>${{number_format($paid_tran_p->cost_config,5)}}</td>
                                                     <td>{{ $paid_tran_p->created_at }}</td>
                                                   
                                                 </tr>
