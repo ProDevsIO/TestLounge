@@ -36,17 +36,23 @@
 
                   
                     <div class="carousel-inner">
-                    <div class="item active">
-                        <img src="img/pass1.jpg" alt="Los Angeles" class="carousel-img">
-                    </div>
-
-                    <div class="item">
-                        <img src="img/pass2.jpg" alt="Chicago"  class="carousel-img">>
-                    </div>
-                    
-                    <div class="item">
-                        <img src="img/pass3.jpg" alt="New york" class="carousel-img">
-                    </div>
+                        <div class="item active">
+                            <img src="img/pass1.jpg" alt="Los Angeles" class="carousel-img">
+                        </div>
+                        
+                        <div class="item ">
+                            <img src="img/pass5.jpg" alt="Los Angeles" class="carousel-img">
+                        </div>
+                        <div class="item ">
+                            <img src="img/pass4.jpg" alt="Los Angeles" class="carousel-img">
+                        </div>
+                        <div class="item">
+                            <img src="img/pass2.jpg" alt="Chicago"  class="carousel-img">>
+                        </div>
+                        
+                        <div class="item">
+                            <img src="img/pass3.jpg" alt="New york" class="carousel-img">
+                        </div>
                     </div>
 
                     
