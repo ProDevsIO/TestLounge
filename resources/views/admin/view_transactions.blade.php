@@ -238,7 +238,7 @@
                                 <div class="card-body p-0">
                                     @include('errors.showerrors')
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-custom" id="data_table">
+                                        <table class="table table-hover table-custom" id="data_table2">
                                             <thead>
                                             <tr>
                                                 @if(auth()->user()->type == 1)
@@ -364,6 +364,11 @@
         });
         $(document).ready(function () {
             $('#data_table1').DataTable({
+                "order": []
+            });
+        });
+        $(document).ready(function () {
+            $('#data_table2').DataTable({
                 "order": []
             });
         });
