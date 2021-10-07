@@ -9,12 +9,12 @@
   
      #myCarousel{
          position: absolute;
-         top: 280px;
+         top: 200px;
      }
 
      .carousel-img{
         width: 100%;
-        height:70vh !important;
+        height:100vh !important;
         object-fit: cover;
     
      }
