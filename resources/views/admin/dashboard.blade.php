@@ -68,10 +68,10 @@
                 @if(auth()->user()->type != 1)
                     <div class="alert alert-success">
                         <p>This is your dedicated client booking link . Share this with your clients to make bookings and
-                            payments which are tied to the bank account you have provided.<br/><a href="javascript:;"
+                            payments which are tied to the bank account you have provided.Referral
+                                Code:<br/><a href="javascript:;"
                                                                                             data-toggle="modal"
-                                                                                            data-target="#referralModal">Referral
-                                Code: {{ url('/?ref='.auth()->user()->referal_code) }}</a></p>
+                                                                                            data-target="#referralModal"> {{ url('/?ref='.auth()->user()->referal_code) }}</a></p>
 
                     </div>
                 @endif
