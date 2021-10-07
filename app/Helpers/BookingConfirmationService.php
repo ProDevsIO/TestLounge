@@ -38,7 +38,7 @@ class BookingConfirmationService
         $transactions =  PoundTransaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
 
         $total_amount = $user->pounds_wallet_balance + $amount_credit;
-
+        $booking =  Booking::where('id', $booking_id )->first();
         User::where('id', $booking->user_id)->update([
             'pounds_wallet_balance' => $total_amount,
             'total_credit_pounds' => $transactions
@@ -89,7 +89,7 @@ class BookingConfirmationService
         $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
 
         $total_amount = $user->wallet_balance + $amount_credit;
-
+        $booking =  Booking::where('id', $booking_id )->first();
         User::where('id', $booking->user_id)->update([
             'wallet_balance' => $total_amount,
             'total_credit' => $transactions
