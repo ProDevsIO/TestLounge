@@ -54,7 +54,7 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Revenue in naira from bookings">
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($total_ngn, 5) }}</h4>
+                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($total_ngn, 3) }}</h4>
                                         <span>Total Revenue(Naira)</span>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Revenue in dollars from bookings">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($total_gbp, 5) }}</h4>
+                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($total_gbp, 3) }}</h4>
                                         <span>Total Revenue(Dollars)</span>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@
                                     <i class="vl_book"></i>
                                 </div>
                                 <div class="media-body text-light" title="Amount owed to agent via dollar transaction">
-                                    <h4 class="text-uppercase mb-0 weight500">${{ number_format($p_due_amount, 5) }}</h4>
+                                    <h4 class="text-uppercase mb-0 weight500">${{ number_format($p_due_amount, 3) }}</h4>
                                     <span>Amount due(Referrals)</span>
                                 </div>
                             </div>
@@ -188,7 +188,7 @@
                                     <i class="vl_book"></i>
                                 </div>
                                 <div class="media-body text-light" title="Amount owed to agent via Naira transaction">
-                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($due_amount, 5) }}</h4>
+                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($due_amount, 3) }}</h4>
                                     <span>Amount due(Referrals)</span>
                                 </div>
                             </div>
@@ -236,8 +236,8 @@
                                                 {{ $user->email }}
                                             </td>
                                             <td>{{ $user->cbookings->count() }}</td>
-                                            <td>N{{ number_format($user->wallet_balance,5) }}</td>
-                                            <td>${{ number_format($user->pounds_wallet_balance,5) }}</td>
+                                            <td>N{{ number_format($user->wallet_balance,3) }}</td>
+                                            <td>${{ number_format($user->pounds_wallet_balance,3) }}</td>
                                             <td>
                                                 <ul>
                                                     <li>Country: {{ $user->country }}</li>
