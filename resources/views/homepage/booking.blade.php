@@ -24,6 +24,9 @@
                                 @csrf
 
                                 <h5>Fill the Booking form Below</h5>
+                                @if(isset($voucher))
+                                    <p><b>{{optional(optional(optional($voucher)->voucherCount)->product)->name}} x {{$voucher->quantity}}</b></p>
+                                @endif
                                 <div class="col-md-6">
                                     <label>First Name <span class="show_required"> *</span>
                                     </label>

@@ -1039,6 +1039,7 @@ class DashboardController extends Controller
         }
         $commission = Transaction::where('type', 1)->sum('amount');
         $pcommission = PoundTransaction::where('type', 1)->sum('amount');
+        $p_due_amount = User::sum("pounds_wallet_balance");
         $due_amount = User::sum("wallet_balance");
 
         $users = User::where('type', '!=', '1')->whereNotNull('wallet_balance')->orderby('wallet_balance', 'desc')->get();
@@ -1095,7 +1096,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'pcommission'));
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount'));
 
     }
 
@@ -1614,7 +1615,7 @@ class DashboardController extends Controller
             ])->get();
 
         }
-
+dd($earned, $earnedPounds);
 
         return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p', 'earned', 'earnedPounds'));
     }
