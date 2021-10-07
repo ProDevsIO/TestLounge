@@ -28,6 +28,10 @@
                                     <p><b>{{optional(optional(optional($voucher)->voucherCount)->product)->name}} x {{$voucher->quantity}}</b></p>
                                 @endif
 
+                                @if($carts_count > 0)
+
+                                   <p><b>{{optional(optional($cart->vendorProduct)->product)->name}} x {{$cart->quantity}} </b> </p> 
+                                @endif
                                 
                                 <div class="col-md-6">
                                     <label>First Name <span class="show_required"> *</span>

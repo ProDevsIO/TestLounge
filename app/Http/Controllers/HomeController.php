@@ -54,12 +54,13 @@ class HomeController extends Controller
 
         $carts_count = Cart::where('ip', session()->get('ip'))->count();
 
+        $cart = Cart::where('ip', session()->get('ip'))->first();
         if ($request->ref) {
             $user = User::where('referal_code', $request->ref)->first();
         }
 
 
-        return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user','carts_count'));
+        return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user','carts_count', 'cart'));
     }
 
     public function booking2(Request $request)

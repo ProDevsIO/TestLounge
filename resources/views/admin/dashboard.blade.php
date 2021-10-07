@@ -181,7 +181,7 @@
                             @if(auth()->user()->country == 'NG')
                                 <div class="col-xl-3 col-sm-6 col-xs-4">
                                     <div class="card mb-4 bg-success">
-                                        <div class="card-body" title="Total Credit Transactions - Expected Earnings">
+                                        <div class="card-body" title="Total Credit Transactions minus Expected Earnings">
                                             <div class="media d-flex align-items-center">
                                                 <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
                                                     <i class="vl_money"></i>
@@ -214,7 +214,7 @@
                             @else
                                 <div class="col-xl-3 col-sm-6 col-xs-4">
                                     <div class="card mb-4 bg-success">
-                                        <div class="card-body" title="Total Credit Transactions - Expected Earnings">
+                                        <div class="card-body" title="Total Credit Transactions minus Expected Earnings">
                                             <div class="media d-flex align-items-center">
                                                 <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
                                                     <i class="vl_money"></i>
