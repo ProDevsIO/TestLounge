@@ -83,7 +83,7 @@
                 </div>
                
                 <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-purple" title="Total amount due to subagents in pounds">
+                    <div class="card mb-4 bg-purple" title="Total amount to be paid to subagents">
                         <div class="card-body">
                             <div class="media d-flex align-items-center ">
                                 <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
@@ -100,7 +100,7 @@
                
 
                 <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-purple" title="Total amount due to subagents in naira">
+                    <div class="card mb-4 bg-purple" title="Total amount to be paid to subagents">
                         <div class="card-body">
                             <div class="media d-flex align-items-center ">
                                 <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">

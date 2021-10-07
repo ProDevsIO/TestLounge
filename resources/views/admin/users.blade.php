@@ -537,7 +537,7 @@
 
         function makeAdmin(id) {
 
-            var d = confirm("Are you sure, you want to make this user an Admin?");
+            var d = confirm("Are you sure you want to make this user an Admin?");
 
             if (d) {
 
@@ -546,7 +546,7 @@
         }
 
         function makeAgent(id) {
-            var d = confirm("Are you sure, you want to make this user an Agent?");
+            var d = confirm("Are you sure you want to make this user an Agent?");
 
             if (d) {
                 window.location = "/agent/make/".id;
@@ -554,7 +554,7 @@
         }
 
         function confirmation(url) {
-            var d = confirm("Are you sure, you want to perform this action?");
+            var d = confirm("Are you sure you want to perform this action?");
 
             if (d) {
                 window.location = url;
@@ -562,7 +562,7 @@
         }
 
         function imitate(id) {
-            var d = confirm("Are you sure, you want to imitate account?");
+            var d = confirm("Are you sure you want to imitate account?");
 
             if (d) {
                 window.location = "/imitate/account/" + id;
