@@ -131,9 +131,9 @@ h1{
 /* start laptop version */
 @media screen and (max-width: 800px) {
    
-        .page-header{
+        /* .page-header{
            height:900px !important;
-       }
+       } */
     #banner-writeup2{
         top: 20px !important;
     }
@@ -261,7 +261,7 @@ th:first-child, td:first-child{
     opacity: 8 !important;
 }
 .background-image-holder.parallax-background {
-    background:#1E50A0 50% 0% !important  ;
+    /* background:#1E50A0 50% 0% !important  ; */
     /* height: 98%; */
     top: -33%;
 }
@@ -380,7 +380,7 @@ th:first-child, td:first-child{
 /* mobile version */
 @media screen and (max-width: 800px) {
     .background-image-holder.parallax-background {
-        background:#1E50A0 50% 0% !important  ;
+        /* background:#1E50A0 50% 0% !important  ; */
         /* height: 128% !important; */
         top: -33% !important;
     }
