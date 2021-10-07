@@ -19,7 +19,7 @@
                         <div class="col-md-6 "style=" padding-top:10px">
                             <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>UNITED KINGDOM</b></h2>
                             <p style="color: #fff;text-align: left">
-                                The Mandatory Covid-19 Tests for entry into the UK, depend on your vaccinations status and what Country you are travelling from.
+                                The Mandatory Covid-19 Tests for entry into the UK, depend on your vaccination status and what Country you are travelling from.
                                 <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
                             <div id="show-result">
 
