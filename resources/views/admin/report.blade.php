@@ -79,6 +79,74 @@
                         </div>
                     </a>
                 </div>
+                <div class="col-xl-3 col-sm-3">
+                    <a href="{{  url('currency/detail/report/pounds/'.$start.'/'.$end) }}">
+                        <div class="card mb-4 bg-dark" title="Total Vendor Cost">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Total Vendor Cost">
+                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($vendor_cost_ngn, 3) }}</h4>
+                                        <span>Total Vendor Cost(Naira)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-3">
+                    <a href="{{  url('currency/detail/report/pounds/'.$start.'/'.$end) }}">
+                        <div class="card mb-4 bg-dark" title="Total Vendor Cost">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Total Vendor Cost">
+                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($vendor_cost_dollars, 3) }}</h4>
+                                        <span>Total Vendor Cost(Dollars)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-3">
+                    <a href="{{  url('currency/detail/report/pounds/'.$start.'/'.$end) }}">
+                        <div class="card mb-4 bg-purple" title="Total Vendor Cost">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Total Commission">
+                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($commission, 3) }}</h4>
+                                        <span>Total Commission(Naira)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-3">
+                    <a href="{{  url('currency/detail/report/pounds/'.$start.'/'.$end) }}">
+                        <div class="card mb-4 bg-purple" title="Total Commission">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Total Commission">
+                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($pcommission, 3) }}</h4>
+                                        <span>Total Commission(Dollars)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
                 <!-- <div class="col-xl-3 col-sm-3">
                     <div class="card mb-4 bg-purple" title="Revenue">
                         <div class="card-body">
@@ -96,7 +164,7 @@
                 </div> -->
                 <div class="col-xl-3 col-sm-3">
                 
-                    <div class="card mb-4 bg-purple" title="Revenue">
+                    <div class="card mb-4 bg-danger" title="Revenue">
                         <div class="card-body">
                             <div class="media d-flex align-items-center ">
                                 <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
@@ -181,7 +249,7 @@
                 </div> -->
                 <div class="col-xl-3 col-sm-3">
                 
-                    <div class="card mb-4 bg-purple" title="Amount owed to agent via Naira transaction">
+                    <div class="card mb-4 bg-danger" title="Amount owed to agent via Naira transaction">
                         <div class="card-body">
                             <div class="media d-flex align-items-center ">
                                 <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
@@ -198,7 +266,7 @@
                 </div>
                 <div class="col-xl-3 col-sm-3">
                 <a href="{{  url('profit/report/naira/'.$start.'/'.$end) }}">
-                    <div class="card mb-4 bg-purple"  title="Revenue minus Vendors cost minus commission">
+                    <div class="card mb-4 bg-success"  title="Revenue - Vendors cost - Commission">
                         <div class="card-body">
                             <div class="media d-flex align-items-center ">
                                 <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
@@ -215,14 +283,14 @@
             </div>
             <div class="col-xl-3 col-sm-3">
                 <a href="{{  url('profit/report/dollars/'.$start.'/'.$end) }}">
-                <div class="card mb-4 bg-purple" title="Revenue minus Vendors cost minus commission">
+                <div class="card mb-4 bg-success" title="Revenue - Vendors cost - Commission">
                     <div class="card-body">
                         <div class="media d-flex align-items-center ">
                             <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
                                 <i class="vl_book"></i>
                             </div>
-                            <div class="media-body text-light"  title="Revenue minus Vendors cost - commission">
-                                <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($profit_dollars, 3) }}</h4>
+                            <div class="media-body text-light"  title="Revenue - Vendors cost - Commission">
+                                <h4 class="text-uppercase mb-0 weight500">${{ number_format($profit_dollars, 3) }}</h4>
                                 <span>Profit</span>
                             </div>
                         </div>
