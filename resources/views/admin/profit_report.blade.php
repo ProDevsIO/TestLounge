@@ -14,9 +14,10 @@
                         <div class="card-header border-0">
                             <div class="custom-title-wrap border-0 position-relative pb-2">
                                 <div class="custom-title pull-left">
+                                 
                                            @if($currency == 'naira')
                                            Total Revenue(Naira)
-                                            @elseif($currency == 'pounds')
+                                            @elseif($currency == 'dollars')
                                             Total Revenue(Dollars)
                                             @elseif($currency == 'cedis')
                                             Total Revenue(Ghana cedis)
@@ -28,8 +29,8 @@
                                             Total Revenue(South African Rand) 
                                             @endif
                                 </div>
-                                <div class="pull-right"> <a href="{{ url('/currency/export/'.$currency.'/'.$startDate .'/'. $endDate) }}" class="btn btn-md btn-warning text-white">Export</a></div>
-                                  
+                                <!-- <div class="pull-right"> <a href="{{ url('/currency/export/'.$currency.'/'.$startDate .'/'. $endDate) }}" class="btn btn-md btn-warning text-white">Export</a></div>
+                                   -->
                             </div>
                         </div>
                         <div class="card-body p-0">
@@ -48,28 +49,27 @@
                                     </thead>
                                     <tbody>
                                     @foreach($transact as $transact)
-                                         @if($transact->booking)
                                         <tr>
                                             <td>
-                                            {{ optional(optional($transact)->booking)->first_name }}   {{ optional(optional($transact)->booking)->last_name }}
+                                                {{ optional(optional($transact)->booking)->first_name }}   {{ optional(optional($transact)->booking)->last_name }}
                                             </td>
                                             <td>
-                                            {{optional(optional(optional(optional($transact)->booking)->product)->product)->name}}
+                                                {{optional(optional(optional(optional($transact)->booking)->product)->product)->name}}
                                             </td>
                                             <td>
-                                            {{optional(optional(optional($transact)->booking)->product)->quantity}}
+                                                {{optional(optional(optional($transact)->booking)->product)->quantity}}
                                             </td>
                                             <td> {{optional(optional(optional($transact)->booking)->vendor)->name}}</td>
                                             @if($currency == 'naira')
 
-                                                <td>N{{ number_format(optional(optional(optional($transact)->booking)->product)->charged_amount, 3) }}</td>
-                                            @elseif($currency == 'pounds')
-                                                <td>${{number_format(optional(optional(optional($transact)->booking)->product)->charged_amount, 3) }} </td>
+                                            <td>N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  - $transact->amount }}</td>
+                                            @elseif($currency == 'dollars')
+                                            <td>${{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  - $transact->amount }} </td>
                                             @endif
                                             <td>{{$transact->created_at}}</td>
                                         </tr>
 
-                                        @endif
+                                        
                                     @endforeach
 
                                     </tbody>
