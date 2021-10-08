@@ -95,7 +95,7 @@
                                                                                                                 class="color-7 ">{{ optional(optional($vproduct)->vendor)->name }}</span>
                                                                                                     </p>
 
-                                                                                                             <small class="text-danger"><b>{{optional(optional($vproduct)->product)->hint}}</b></small>       
+                                                                                                             <p id="innerP"><b class="color-5">{{optional(optional($vproduct)->product)->hint}}</b></p>       
                                                                                                 </div>
                                                                                                 <div class="col-md-12">
                                                                                                     <div class="container text-center"
