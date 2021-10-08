@@ -118,7 +118,7 @@
                 </div>
                 <div class="col-xl-3 col-sm-3">
                     <a href="{{  url('view/transactions') }}">
-                        <div class="card mb-4 bg-purple" title="Total Commission">
+                        <div class="card mb-4 bg-danger" title="Total Commission">
                             <div class="card-body">
                                 <div class="media d-flex align-items-center ">
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
@@ -135,7 +135,7 @@
                 </div>
                 <div class="col-xl-3 col-sm-3">
                     <a href="{{  url('view/transactions') }}">
-                        <div class="card mb-4 bg-purple" title="Total Commission">
+                        <div class="card mb-4 bg-danger" title="Total Commission">
                             <div class="card-body">
                                 <div class="media d-flex align-items-center ">
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
