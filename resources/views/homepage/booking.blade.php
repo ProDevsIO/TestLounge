@@ -270,7 +270,24 @@
 
                                         </select>
                                     </div>
-
+                                    <div class="form-section color-9">
+                                        <label>Fully Vaccinated <span class="color-10">*</span></label>
+                                        <select class="select-2 select2" name="vaccinated" required>
+                                            <option value="">Please Select an answer</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                        
+                                    </div>
+                                    <div class="form-section color-9">
+                                        <label>Proof of vaccination shown <span class="color-10">*</span></label>
+                                        <select class="select-2 select2" name="proof_vaccine" required>
+                                            <option value="">Please Select an answer</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                        
+                                    </div>
                                     <div class="col-md-12 color-9">
                                         <label>Consent to Test <span class="color-10">*</span></label>
                                         <div class="color-8"><input type="checkbox" name="consent" value="1"

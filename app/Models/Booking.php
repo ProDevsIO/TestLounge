@@ -97,6 +97,8 @@ class Booking extends Model
 		'nhs_number',
 		'vaccination_status',
 		'vaccination_type',
+		'vaccinated',
+		'proof_vaccine',
 		'vaccination_date',
 		'document_id',
 		'address_1',
