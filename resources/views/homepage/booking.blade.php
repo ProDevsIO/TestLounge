@@ -271,7 +271,7 @@
                                         </select>
                                     </div>
                                     <div class="form-section color-9">
-                                        <label>Fully Vaccinated <span class="color-10">*</span></label>
+                                        <label>Fully vaccinated <span class="color-10">*</span></label>
                                         <select class="select-2 select2" name="vaccinated" required>
                                             <option value="">Please Select an answer</option>
                                             <option value="yes">Yes</option>

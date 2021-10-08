@@ -220,7 +220,7 @@
                                         <th scope="col">Naira Wallet Balance</th>
                                         <th scope="col">Dollars Wallet Balance</th>
                                         <th scope="col">Account Details</th>
-                                        <!-- <th scope="col">Action</th> -->
+                                        <th scope="col">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -246,7 +246,7 @@
                                                     <li>Account Name: {{ $user->account_name }}</li>
                                                 </ul>
                                             </td>
-                                            <!-- <td>
+                                            <td>
                                                 <div class="btn-group" role="group">
                                                     <button id="btnGroupDrop1" type="button"
                                                             class="btn btn-secondary dropdown-toggle"
@@ -257,11 +257,16 @@
                                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                         <a href="javascript:;" data-toggle="modal" data-target="#makePayment{{ $user->id }}"
                                                            class="dropdown-item">Pay Commissiion</a>
+                                                           @if(auth()->user()->type == 1)
+                                                                            <a href="javascript:;"
+                                                                               onclick="confirmation('{{ url('/users/delete/' .$user->id) }}')"
+                                                                               class="dropdown-item">Delete</a>
+                                                                        @endif
                                                     </div>
                                                 </div>
 
 
-                                            </td> -->
+                                            </td>
                                         </tr>
 
                                         <div class="modal fade" id="makePayment{{ $user->id }}" tabindex="-1" role="dialog"
@@ -332,6 +337,13 @@
             var d = confirm("Are you sure you want to resend the receipt?");
             if (d) {
                 window.location = "/resend/receipt/" + id;
+            }
+        }
+        function confirmation(url) {
+            var d = confirm("Are you sure you want to perform this action?");
+
+            if (d) {
+                window.location = url;
             }
         }
     </script>
