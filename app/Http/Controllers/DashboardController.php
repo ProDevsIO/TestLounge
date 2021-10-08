@@ -602,7 +602,9 @@ class DashboardController extends Controller
 
     public function product_vendor($id, $price, $priceStripe, $costPrice)
     {
+        $pounds_value = Setting::first();
         VendorProduct::where('id', $id)->update([
+            'price' => $price * $pounds_value->pounds,
             'price_pounds' => $price,
             'price_stripe' => $priceStripe,
             'cost_price' => $costPrice

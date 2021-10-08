@@ -20,7 +20,7 @@
                             @include('errors.showerrors')
                            <form action="{{ url('/settings') }}" method="post">
                                @csrf
-                               <label>Pounds ()</label>
+                               <label>Exchange rate in Dollars</label>
                                <input type="number" name="amount" class="form-control" value="{{ $amount->pounds }}"/>
                                
                                <br/>
