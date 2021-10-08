@@ -15,27 +15,30 @@
                 <div class="col-xl-12 col-sm-12">
                     <div class="card mb-4 bg-primary" title="Completed bookings">
                         <div class="card-body">
-                            <h3>Filter</h3>
 
-                            <form class="form-inline">
+                            <form class="form">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label>Start Date</label>
                                         <input type="date" name="start" class="form-control"
                                                value="{{ (isset($_GET['start']) ? $_GET['start'] : "")  }}" required/>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label>End Date</label>
                                         <input type="date" name="end" class="form-control"
                                                value="{{ (isset($_GET['end']) ? $_GET['end'] : "")  }}" required/>
                                     </div>
-                                    <div style="width: 100%">
-                                        <input type="submit" class="btn btn-danger pull-right mt-2" value="Search">
-                                    
-                                    @if(auth()->user()->type == 1)
-                                            <input type="submit" class="btn btn-warning pull-left mt-2" name="export"
+                                    <div clas="col-md-2">
+                                        <br>
+                                    <input type="submit" class="btn btn-danger pull-right mt-2" value="Search">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <br>
+                                    <input type="submit" class="btn btn-warning pull-left mt-2" name="export"
                                                    style="margin-left: 20px" value="Export">
-                                        @endif
+                                    </div>
+                                    <div style="width: 100%">
+                                       
                                     @csrf
                                     </div>
                                 </div>
@@ -80,7 +83,7 @@
                     </a>
                 </div>
                 <div class="col-xl-3 col-sm-3">
-                    <a href="{{  url('currency/detail/report/pounds/'.$start.'/'.$end) }}">
+                   
                         <div class="card mb-4 bg-dark" title="Total Vendor Cost">
                             <div class="card-body">
                                 <div class="media d-flex align-items-center ">
@@ -88,16 +91,16 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Vendor Cost">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($vendor_cost_ngn, 3) }}</h4>
+                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($vendor_cost_ngn, 3) }}</h4>
                                         <span>Total Vendor Cost(Naira)</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </a>
+                    
                 </div>
                 <div class="col-xl-3 col-sm-3">
-                    <a href="{{  url('currency/detail/report/pounds/'.$start.'/'.$end) }}">
+                   
                         <div class="card mb-4 bg-dark" title="Total Vendor Cost">
                             <div class="card-body">
                                 <div class="media d-flex align-items-center ">
@@ -111,11 +114,11 @@
                                 </div>
                             </div>
                         </div>
-                    </a>
+                
                 </div>
                 <div class="col-xl-3 col-sm-3">
-                    <a href="{{  url('currency/detail/report/pounds/'.$start.'/'.$end) }}">
-                        <div class="card mb-4 bg-purple" title="Total Vendor Cost">
+                    <a href="{{  url('view/transactions') }}">
+                        <div class="card mb-4 bg-purple" title="Total Commission">
                             <div class="card-body">
                                 <div class="media d-flex align-items-center ">
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
@@ -131,7 +134,7 @@
                     </a>
                 </div>
                 <div class="col-xl-3 col-sm-3">
-                    <a href="{{  url('currency/detail/report/pounds/'.$start.'/'.$end) }}">
+                    <a href="{{  url('view/transactions') }}">
                         <div class="card mb-4 bg-purple" title="Total Commission">
                             <div class="card-body">
                                 <div class="media d-flex align-items-center ">
@@ -162,23 +165,7 @@
                         </div>
                     </div>
                 </div> -->
-                <div class="col-xl-3 col-sm-3">
                 
-                    <div class="card mb-4 bg-danger" title="Revenue">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Amount owed to agent via dollar transaction">
-                                    <h4 class="text-uppercase mb-0 weight500">${{ number_format($p_due_amount, 3) }}</h4>
-                                    <span>Amount due(Referrals)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                
-                </div>
                 <!-- <div class="col-xl-3 col-sm-3">
                     <a href="{{  url('currency/detail/report/cedis/'.$start.'/'.$end) }}">
                         <div class="card mb-4 bg-purple" title="Revenue">
@@ -263,6 +250,23 @@
                         </div>
                     </div>
 
+                </div>
+                <div class="col-xl-3 col-sm-3">
+                
+                    <div class="card mb-4 bg-danger" title="Revenue">
+                        <div class="card-body">
+                            <div class="media d-flex align-items-center ">
+                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                    <i class="vl_book"></i>
+                                </div>
+                                <div class="media-body text-light" title="Amount owed to agent via dollar transaction">
+                                    <h4 class="text-uppercase mb-0 weight500">${{ number_format($p_due_amount, 3) }}</h4>
+                                    <span>Amount due(Referrals)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
                 </div>
                 <div class="col-xl-3 col-sm-3">
                 <a href="{{  url('profit/report/naira/'.$start.'/'.$end) }}">
