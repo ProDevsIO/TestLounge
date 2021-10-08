@@ -15,27 +15,30 @@
                 <div class="col-xl-12 col-sm-12">
                     <div class="card mb-4 bg-primary" title="Completed bookings">
                         <div class="card-body">
-                            <h3>Filter</h3>
 
-                            <form class="form-inline">
+                            <form class="form">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label>Start Date</label>
                                         <input type="date" name="start" class="form-control"
                                                value="{{ (isset($_GET['start']) ? $_GET['start'] : "")  }}" required/>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label>End Date</label>
                                         <input type="date" name="end" class="form-control"
                                                value="{{ (isset($_GET['end']) ? $_GET['end'] : "")  }}" required/>
                                     </div>
-                                    <div style="width: 100%">
-                                        <input type="submit" class="btn btn-danger pull-right mt-2" value="Search">
-                                    
-                                    @if(auth()->user()->type == 1)
-                                            <input type="submit" class="btn btn-warning pull-left mt-2" name="export"
+                                    <div clas="col-md-2">
+                                        <br>
+                                    <input type="submit" class="btn btn-danger pull-right mt-2" value="Search">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <br>
+                                    <input type="submit" class="btn btn-warning pull-left mt-2" name="export"
                                                    style="margin-left: 20px" value="Export">
-                                        @endif
+                                    </div>
+                                    <div style="width: 100%">
+                                       
                                     @csrf
                                     </div>
                                 </div>
