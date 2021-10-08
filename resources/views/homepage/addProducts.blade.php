@@ -85,7 +85,7 @@
                                                                                             @endif
 
                                                                                             <div class="row">
-                                                                                                <div class="col-md-12">
+                                                                                                <div class="col-md-12 text-center">
                                                                                                     <h5 class="text-center"><span
                                                                                                                 class="color-7 ">{{ optional(optional($vproduct)->product)->name }}</span>
                                                                                                     </h5>
@@ -95,7 +95,7 @@
                                                                                                                 class="color-7 ">{{ optional(optional($vproduct)->vendor)->name }}</span>
                                                                                                     </p>
 
-
+                                                                                                             <small class="text-danger"><b>{{optional(optional($vproduct)->product)->hint}}</b></small>       
                                                                                                 </div>
                                                                                                 <div class="col-md-12">
                                                                                                     <div class="container text-center"
