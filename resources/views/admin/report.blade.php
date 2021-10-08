@@ -8,7 +8,7 @@
     <div class="content-wrapper">
         <div class="container-fluid">
             <div>
-                <h4>All Agent Transactions</h4>
+                <h4>Financial Report</h4>
             </div>
             <!--states start-->
             <div class="row">

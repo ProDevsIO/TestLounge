@@ -58,9 +58,11 @@ class BookingConfirmationService
 
             $wallet_balance = $user->pounnds_wallet_balance - $amount_credit;
 
-            $user->update([
+            User::where('id', $booking->user_id)->update([
                 'pounds_wallet_balance' => $wallet_balance
+                
             ]);
+           
         }
     }
 
@@ -109,8 +111,9 @@ class BookingConfirmationService
 
             $wallet_balance = $user->wallet_balance - $amount_credit;
 
-            $jjk = $user->update([
+            User::where('id', $booking->user_id)->update([
                 'wallet_balance' => $wallet_balance
+                
             ]);
 
            
