@@ -313,10 +313,11 @@ class HomeController extends Controller
         }
 
        
-        //redirect to payment page
-        if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
-            $data['subaccounts'] = $sub_accounts;
-        }
+        //deactivating subaccount
+        // if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
+        //     $data['subaccounts'] = $sub_accounts;
+        // }
+
         if($request->payment_method == "paystack"){
             $paystackNerf = $data['amount'] / 100;
             BookingProduct::where('booking_id', $booking->id)->update([
