@@ -1023,14 +1023,18 @@ class DashboardController extends Controller
 
             $total_ngn = 0;
             $total_gbp = 0;
+            $vendor_cost_ngn = 0;
+            $vendor_cost_gbp = 0;
             $check = Booking::where('status', '1')->wherebetween('created_at', [$start, $end])->get();
 
+            
             foreach($check as $ch){
                 // dump( $check->product);
                 $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
                if($book_p_n != null)
                {
                 $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
+                $vendor_cost_dollars = $vendor_cost_ngn + ($book_p_n->vendor_cost_price/410.81);
                }
                
             }
@@ -1041,14 +1045,15 @@ class DashboardController extends Controller
                if($book_p_n != null)
                {
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
+                $vendor_cost_dollars = $vendor_cost_gbp + $book_p_n->vendor_cost_price;
                }
                
             }
 
             // $total_ngn = BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
-            $vendor_cost_ngn =  BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->sum('vendor_cost_price');
+            // $vendor_cost_ngn =  BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->sum('vendor_cost_price');
             // $total_gbp = BookingProduct::where('currency', 'USD')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
-            $vendor_cost_dollars =  BookingProduct::where('currency', 'USD')->wherebetween('created_at', [$start, $end])->sum('vendor_cost_price');
+            // $vendor_cost_dollars =  BookingProduct::where('currency', 'USD')->wherebetween('created_at', [$start, $end])->sum('vendor_cost_price');
             $total_ghs = BookingProduct::where('currency', 'GHS')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
             $total_tzs = BookingProduct::where('currency', 'TZS')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
             $total_kes = BookingProduct::where('currency', 'KES')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
@@ -1058,6 +1063,8 @@ class DashboardController extends Controller
             $end = 1;
             $total_ngn = 0;
             $total_gbp = 0;
+            $vendor_cost_ngn = 0;
+            $vendor_cost_gbp = 0;
             $check = Booking::where('status', '1')->get();
 
             foreach($check as $ch){
@@ -1066,6 +1073,7 @@ class DashboardController extends Controller
                if($book_p_n != null)
                {
                 $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
+                $vendor_cost_ngn = $vendor_cost_ngn + ($book_p_n->vendor_cost_price/410.81);
                }
                
             }
@@ -1076,14 +1084,15 @@ class DashboardController extends Controller
                if($book_p_n != null)
                {
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
+                $vendor_cost_dollars = $vendor_cost_gbp + $book_p_n->vendor_cost_price;
                }
                
             }
           
             // $total_ngn = BookingProduct::where('currency', 'NGN')->sum('charged_amount');
-            $vendor_cost_ngn = BookingProduct::where('currency', 'NGN')->sum('vendor_cost_price');
+            // $vendor_cost_ngn = BookingProduct::where('currency', 'NGN')->sum('vendor_cost_price');
             // $total_gbp = BookingProduct::where('currency', 'USD')->sum('charged_amount');
-            $vendor_cost_dollars = BookingProduct::where('currency', 'USD')->sum('vendor_cost_price');
+            // $vendor_cost_dollars = BookingProduct::where('currency', 'USD')->sum('vendor_cost_price');
             $total_ghs = BookingProduct::where('currency', 'GHS')->sum('charged_amount');
             $total_tzs = BookingProduct::where('currency', 'TZS')->sum('charged_amount');
             $total_kes = BookingProduct::where('currency', 'KES')->sum('charged_amount');
@@ -1154,7 +1163,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars'));
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn'));
 
     }
 

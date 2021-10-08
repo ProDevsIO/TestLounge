@@ -49,6 +49,7 @@
                                     </thead>
                                     <tbody>
                                     @foreach($transact as $transact)
+                                        @if($transact->booking)
                                         <tr>
                                             <td>
                                                 {{ optional(optional($transact)->booking)->first_name }}   {{ optional(optional($transact)->booking)->last_name }}
@@ -68,8 +69,7 @@
                                             @endif
                                             <td>{{$transact->created_at}}</td>
                                         </tr>
-
-                                        
+                                        @endif                                       
                                     @endforeach
 
                                     </tbody>
