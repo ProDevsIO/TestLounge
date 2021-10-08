@@ -12,13 +12,24 @@
          top: 200px;
      }
 
+
      .carousel-img{
         width: 100%;
         height:100vh !important;
         object-fit: cover;
     
      }
+        .travel_agent_form{
+            margin-top: 0px;
+        }
     }
+    .page-header{
+        height: 100% !important;
+    }
+
+     .travel_agent_form{
+         margin-top: 15px;
+     }
  </style>
 @endsection
 
@@ -77,16 +88,13 @@
 
                                 <div class="row" id="country-section" style="padding:0 !important;margin-top:10px;">
 
-                                    <div class="col-sm-12" style=""> <br><div id="show-result">
-
-                                        </div>
-                                        <br>
+                                    <div class="col-sm-11" style="margin-bottom: 100px;">
                                         <select name="" class="form-control" id="country" onchange="ukDirect()">
                                             <option value="">Select a country</option>
                                             <option value="225">United Kingdom</option>
                                         </select>
                                     </div>
-                                    <div class="col-sm 2"></div>
+
                                 </div>
                             </div>
                             <!-- <div class="col-md-6 pull-right" id="banner-writeup2" style=" top:-200px ">
@@ -99,30 +107,30 @@
                 </div><!--end of row-->
             </div><!--end of co-->
         </header>
-        <section class="clients-2" style="padding-bottom:50px;">
+        <section class="clients-2" style="padding-bottom:50px;padding-top:50px;">
 				<div class="container">
 					<div class="row">
-                        <div class="col-md-2 col-sm-4" style="margin-top:5px; margin-bottom:30px;">
-                            <h1>Our Partners</h1>
+                        <div class="col-md-2 col-sm-4" style="margin-top:5px;">
+                            <h1 class="partner_heading">Our Partners</h1>
                         </div>
 
-                        <div class="col-md-2 col-sm-4" style="margin-top:20px">
+                        <div class="col-md-2 col-sm-4 col-xs-6" style="margin-top:10px">
 							<h1><img alt="Client Logo" src="/img/UKHT-logo-grey.png" style="max-width:120px;max-height:100px"></h1>
 						</div>
 						
-						<div class="col-md-2 col-sm-4" style="margin-top:10px">
+						<div class="col-md-2 col-sm-4 col-xs-6" style="margin-top:10px">
 							<img alt="Client Logo" src="img/aims-logo-01.svg" style="max-width:150px;max-height:100px">
 						</div>
-						
-						<div class="col-md-2 col-sm-4" style="margin-top:10px">
+
+						<div class="col-md-2 col-sm-4 col-xs-6" style="margin-top:10px">
 							<img alt="Client Logo" src="img/MedburyMedicaLogo.png" style="max-width:150px;max-height:100px">
 						</div>
 
-                        <div class="col-md-2 col-sm-4" style="margin-top:10px">
+                        <div class="col-md-2 col-sm-4 col-xs-6" style="margin-top:10px">
 							<img alt="Client Logo" src="img/dam-health-logo.png" style="max-width:150px;max-height:100px">
 						</div>
 
-                        <div class="col-md-2 col-sm-4" style="margin-top:10px">
+                        <div class="col-md-2 col-sm-4 col-xs-6" style="margin-top:10px">
 							<img alt="Client Logo" src="img/gebelablogo.png" style="max-width:150px;max-height:100px">
 						</div>
 						
@@ -141,8 +149,8 @@
 				</div><!--end of container-->
 			</section>
                 <div class="container-fluid" style="padding:0">
-                    <div class="text-center bg-1 ct" style="padding:59px;">
-                        <div class="row" id="calculator">
+                    <div class="text-center bg-1 check_calculator" style="padding:59px;">
+                        <div class="row" id="calculator" style="margin-top: 20px;">
                         <div class="col-sm-2"></div>
                         <div class="col-sm-4 text-center">
 
@@ -176,9 +184,9 @@
                         <br>
                         <div class="row" >
                             <div class="container" id="banner2">
-                                <div class="card-container"  style="padding:70px; background-color:#1B1B1B"id="country-section" style="">
+                                <div class="card-container"  style="padding:70px; background-color:#1B1B1B" id="country-section">
                                         <div class="row">
-                                            <div class="col-md-6">  <p style="font-weight:200px;font-size:30px;line-height: 41px;color:white" class=" fs-20 text-center">Are you a travel agent? Join our network.</a></p>
+                                            <div class="col-md-6">  <p style="font-weight:200px;font-size:30px;line-height: 41px;color:white" class="travel_agent_form fs-20 text-center">Are you a travel agent? Join our network.</a></p>
                                             </div>
                                             <div class="col-md-6 text-center">
                                             <p><a href="{{ url('/register/agent') }}" type="button" class="btn btn-md bg-primary" style="margin-bottom: 30px;border-radius:25px; padding:14px 28px 13px 28px;font-family: Nunito;font-style: normal;font-weight: bolder;font-size: 16px;line-height: 19px;color: #1E50A0 !important;background-color:white !important;">Join our network</a></p>
@@ -202,9 +210,12 @@
                             {{--<div class="col-sm 2"></div>--}}
                         </div>
                 </div>
-                <div class="card-container bg-sky"  style="padding:100px" id="banner2">
-                         <div class="container ">
-                               <p style="font-weight:600px;font-size:20px;line-height: 41px;" class="fw-600 fs-20 text-center">The travel test requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
+                <div class="card-container bg-sky"  style="padding:100px" id="banner3">
+                         <div class="container check_calculator_p">
+                               <p style="    font-weight: 600;
+    font-size: 20px;
+    line-height: 41px;
+    color: #524f4f;" class="fw-600 fs-20 text-center ">The travel test requirements are different for every country. It is important to check what these are when you’re planning your trip.</a></p>
                          </div>
                  </div>
      

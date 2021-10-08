@@ -189,8 +189,9 @@
     }
     #banner2 p{
         text-align: center !important;
-        font-size: 16px !important;
+        font-size: 25px !important;
         line-height: 31px !important;
+        margin-bottom: 10px;
     }
     #country-section{
         padding: 15px !important;
