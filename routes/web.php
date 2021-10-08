@@ -104,6 +104,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/finance/report', [\App\Http\Controllers\DashboardController::class,"financial_report"]);
     Route::get('/view/subagent/report', [\App\Http\Controllers\DashboardController::class,"subagent_report"]);
     Route::get('currency/detail/report/{currency}/{startDate}/{endDate}', [\App\Http\Controllers\DashboardController::class,"view_currency_report"]);
+    Route::get('profit/report/{currency}/{startDate}/{endDate}', [\App\Http\Controllers\DashboardController::class,"view_profit_report"]);
     Route::get('/imitate/account/{id}', [\App\Http\Controllers\DashboardController::class,"imitate_account"]);
     Route::get('/view/transactions', [\App\Http\Controllers\DashboardController::class,"view_transactions"]);
     Route::get('/view/sub-agent/transaction/{id}', [\App\Http\Controllers\DashboardController::class,"view_subagent_transactions"]);

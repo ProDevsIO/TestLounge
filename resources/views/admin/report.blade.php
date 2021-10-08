@@ -196,6 +196,40 @@
                     </div>
 
                 </div>
+                <div class="col-xl-3 col-sm-3">
+                <a href="{{  url('profit/report/naira/'.$start.'/'.$end) }}">
+                    <div class="card mb-4 bg-purple"  title="Revenue minus Vendors cost minus commission">
+                        <div class="card-body">
+                            <div class="media d-flex align-items-center ">
+                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                    <i class="vl_book"></i>
+                                </div>
+                                <div class="media-body text-light" >
+                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($profit_naira, 3) }}</h4>
+                                    <span>Profit</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xl-3 col-sm-3">
+                <a href="{{  url('profit/report/dollars/'.$start.'/'.$end) }}">
+                <div class="card mb-4 bg-purple" title="Revenue minus Vendors cost minus commission">
+                    <div class="card-body">
+                        <div class="media d-flex align-items-center ">
+                            <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                <i class="vl_book"></i>
+                            </div>
+                            <div class="media-body text-light"  title="Revenue minus Vendors cost - commission">
+                                <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($profit_dollars, 3) }}</h4>
+                                <span>Profit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
 
             </div>
 
