@@ -1326,19 +1326,19 @@ class DashboardController extends Controller
             $amount = $product->price_pounds * $quantity;
         }
 
-        $transaction_ref = uniqid('voucher_') . rand(10000, 999999);
+        $transaction_ref = uniqid('voucher-') . rand(10000, 999999);
 
         $agent_id = auth()->user()->id;
         
 
-        $data = $this->processFlutterwaveVoucherData($amount, $transaction_ref, $country, $agent_id);
+        $data = $this->processPaystackVoucherData($amount, $transaction_ref, $country, $agent_id);
 
         $this->bookingService->getSubAccountsByRefCode(auth()->user()->referral_code);
 
         //redirect to payment page
-        if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
-            $data['subaccounts'] = $sub_accounts;
-        }
+        // if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
+        //     $data['subaccounts'] = $sub_accounts;
+        // }
 
            $vendorProduct = VendorProduct::where(['product_id' => $product_id, 'vendor_id' => $vendor_id])->first();
 
@@ -1356,45 +1356,40 @@ class DashboardController extends Controller
             ]);
       
     
-        $redirect_url = $this->processFL($data);
+        $redirect_url = $this->processPaystack($data);
 
         return redirect()->to($redirect_url);
     }
 
     public function voucher_payment_confirmation(Request $request)
     {
-
-
-        if (env('APP_ENV', "LIVE") == "LIVE") {
-            $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
-        } else {
-            $url = "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/verify";
-        }
-
         $request_data = $request->all();
-
-        $txRef = $request->tx_ref;
+        $txRef = $request->trxref;
 
         //run some curl commands to verify
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt(
-            $ch,
-            CURLOPT_POSTFIELDS,
-            "txref=" . $txRef . "&SECKEY=" . env('RAVE_SECRET_KEY', 'FLWSECK_TEST-516babb36b12f7f60ae0a118dcc9482a-X')
-        );
-
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        curl_close($ch);
-
+        $curl = curl_init();
+        $url = "https://api.paystack.co/transaction/verify/$txRef";
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+            "Authorization: Bearer ". env('PAYSTACK_SECRET_KEY', 'sk_test_a888f85236f4da1b0bd204ad8f8c96b6e010a7e9'),
+            "Cache-Control: application/json",
+            ),
+        ));
+        
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
         $data_response = json_decode($response);
 
-
         //check if succesful
-        if (isset($data_response->data->status) && $data_response->data->status == "successful") {
+        if (isset($data_response->data->status) && $data_response->data->status == "success") {
 
             $voucherpay = VoucherPayment::where('transaction_ref', $txRef)->first();
 

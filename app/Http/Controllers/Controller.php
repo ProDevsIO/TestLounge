@@ -75,6 +75,7 @@ class Controller extends BaseController
             $response = curl_exec($ch);
             
           $server_output = json_decode($response);
+          
          return $server_output->data->authorization_url;
             
         
@@ -311,6 +312,35 @@ class Controller extends BaseController
                 ]
             ];
 
+        }
+
+        return $data;
+    }
+
+    function processPaystackVoucherData($price,$transaction_ref, $country, $agent_id)
+    {
+        $agent= User::where('id', $agent_id)->first();
+    
+        if ($country == "NG") {
+            $price = $price * 100;
+            $data = [
+                //
+                "email" => $agent->email,
+                "reference" => $transaction_ref,
+                "amount" => $price,
+                "currency" => "NGN",
+                "callback_url" => env('APP_URL', 'http://127.0.0.1:8000/') . "voucher/payment/confirmation",
+            ];
+
+        } else {
+            $price_usd = $price * 100;
+            $data = [
+                "email" => $agent->email,
+                "reference" => $transaction_ref,
+                "amount" => $price_usd,
+                "currency" => "USD",
+                "callback_url" => env('APP_URL', 'http://127.0.0.1:8000/') . "voucher/payment/confirmation",
+            ];
         }
 
         return $data;
