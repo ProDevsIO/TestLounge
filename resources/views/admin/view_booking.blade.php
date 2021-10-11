@@ -61,7 +61,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="row f12">
+                            <!-- <div class="row f12">
                                 <div class="col-6">Vaccination Status</div>
                                 <div class="col-6">
                                     @if($booking->vaccination_status == "1")
@@ -72,15 +72,21 @@
                                         Has received both first and second dose.
                                     @endif
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row f12">
                                 <div class="col-6">Payment Method</div>
                                 <div class="col-6">
-                                    @if($booking->mode_of_payment == "1")
-                                        Online
-                                    @elseif($booking->mode_of_payment == "2")
-                                        Payment Code
-                                    @endif
+                                @if($booking->mode_of_payment == 1)
+                                                        Flutterwave
+                                                    @elseif($booking->mode_of_payment == 2)
+                                                        Stripe
+                                                    @elseif($booking->mode_of_payment == 3)
+                                                        Voucher Payment
+                                                    @elseif($booking->mode_of_payment == 4)
+                                                        Paystack
+                                                    @elseif($booking->mode_of_payment == 5)
+                                                        Vas
+                                                    @endif
                                 </div>
                             </div>
                             <div class="row f12">
@@ -113,7 +119,7 @@
                 <div class="col-xl-8 col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <div class="card" >
+                            <!-- <div class="card" >
                                 <div class="card-body">
                                     <h5 class="card-title">Home Address</h5>
                                     <p class="card-text">
@@ -127,7 +133,7 @@
 
                                     </p>
                                 </div>
-                            </div>
+                            </div> -->
                             <br>
                             <div class="card" >
                                 <div class="card-body">
@@ -150,12 +156,12 @@
                                     <h5 class="card-title">Travel Details</h5>
                                     <p class="card-text">
                                     <ul>
-                                        <li>Document ID number: {{ $booking->document_id }}</li>
+                                        <!-- <li>Document ID number: {{ $booking->document_id }}</li> -->
                                         <li>Arrival Date: {{ $booking->arrival_date }}</li>
                                         <li>Country Traveling From: {{ $booking->travelingFrom->name }}</li>
-                                        <li>City From: {{ $booking->city_from }}</li>
+                                        <!-- <li>City From: {{ $booking->city_from }}</li> -->
                                         <li>Departure Date: {{ $booking->departure_date }}</li>
-                                        <li>Last day you were in a country/territory that was not in a travel corridor arrangement with the UK: {{ $booking->last_day_travel }}</li>
+                                        <!-- <li>Last day you were in a country/territory that was not in a travel corridor arrangement with the UK: {{ $booking->last_day_travel }}</li>
                                         <li>Mode of Transportation: {{ $booking->method_of_transportation }}
 
                                             @if($booking->method_of_transportation == "1")
@@ -170,7 +176,7 @@
                                                 Other
                                             @endif
                                         </li>
-                                        <li>Flight Number / Coach Number / Vessel Name: {{ $booking->transport_no }}</li>
+                                        <li>Flight Number / Coach Number / Vessel Name: {{ $booking->transport_no }}</li> -->
 
                                     </ul>
 
@@ -178,6 +184,29 @@
                                 </div>
                             </div>
                             <br>
+                            <div class="card" >
+                                <div class="card-body">
+                                    <h5 class="card-title"></h5>
+                                    <p class="card-text">
+                                    <p>
+                                            I understand that I am purchasing this test in line with the UK Government's travel requirements because<br><br>
+                                         
+                                            @if($booking->vaccinated == 'yes')
+                                            
+                                            I am fully Vaccinated but unable to show evidence of this
+                                            
+                                            @else
+                                            
+                                         
+                                            I am not fully vaccinated
+                                          
+                                            @endif
+</p>
+                                        
+                                       <p>I understand that this service I am about to purchase is non refundable and I am about to purchase it of my own free will.</p>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

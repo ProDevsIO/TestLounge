@@ -309,7 +309,7 @@
                                                     <td>{{ $booking->phone_no }}</td>
 
                                                 @endif
-                                                <td>{{ $booking->email }}</td>
+                                                <td>{{ $booking->email }}<br>{{$booking->booking_code}}</td>
                                                 <td> {{ $booking->created_at }} </td>
                                                 <td><b style="font-size:11px;">
                                                             @foreach($booking->symproduct as $name)
