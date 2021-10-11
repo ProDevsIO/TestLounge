@@ -86,7 +86,7 @@
                                                 {{ $product->name }}
                                             </td>
                                             <td>
-                                                {{ $product->description }}
+                                                {!! $product->description !!}
                                             </td>
                                             <td>{{ $product->bookings->count() }}</td>
                                             @if(auth()->user()->type == "1")
