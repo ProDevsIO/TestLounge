@@ -12,7 +12,7 @@
             </div>
             <!--states start-->
             <div class="row">
-                <div class="col-xl-12 col-sm-12">
+                <div class="col-xl-12 col-sm-12 p-0">
                     <div class="card mb-4 bg-primary" title="Completed bookings">
                         <div class="card-body">
 

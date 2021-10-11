@@ -14,7 +14,7 @@
             <!--states start-->
             <div class="row">
                 <div class="col-xl-4"></div>
-                <div class="col-xl-8 col-sm-8 col-lg-8">
+                <div class="col-xl-8 col-sm-8 col-lg-8 p-0">
                     <div class="card mb-4 bg-primary" title="Completed bookings">
                         <div class="card-body">
                             <h3>Filter</h3>

@@ -62,7 +62,7 @@
                                         <th scope="col">Date/Time</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Mode of Payment</th>
-                                        @if(auth()->user()->referal_code)
+                                        @if(auth()->user()->referal_code && auth()->user()->id != 55)
                                             <th scope="col">Earnings</th>
                                         @endif
                                         @if(auth()->user()->type == "1")
@@ -87,13 +87,19 @@
                                                     <span class="badge badge-success">Paid</span>
                                                 @endif</td>
                                             <td>
-                                                @if($booking->mode_of_payment == 1)
-                                                    Flutterwave
-                                                @elseif($booking->mode_of_payment == 2)
-                                                    Stripe
-                                                @endif
+                                            @if($booking->mode_of_payment == 1)
+                                                        Flutterwave
+                                                    @elseif($booking->mode_of_payment == 2)
+                                                        Stripe
+                                                    @elseif($booking->mode_of_payment == 3)
+                                                        Voucher Payment
+                                                    @elseif($booking->mode_of_payment == 4)
+                                                        Paystack
+                                                    @elseif($booking->mode_of_payment == 5)
+                                                        Vas
+                                                    @endif
                                             </td>
-                                            @if(auth()->user()->referal_code)
+                                            @if(auth()->user()->referal_code && auth()->user()->id != 55)
                                                 <td> @php
                                                     if($booking->transaction){
                                                     echo "N".number_format($booking->transaction->amount,2);

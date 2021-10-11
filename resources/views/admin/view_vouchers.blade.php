@@ -116,7 +116,7 @@
                                         @endif
                                       <?php $j++; ?>         
                 @endforeach
-                <div class="col-xl-12">
+                <div class="col-xl-12 p-0">
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">

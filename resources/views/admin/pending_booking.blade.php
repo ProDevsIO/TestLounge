@@ -10,7 +10,7 @@
 
             <!--states start-->
             <div class="row">
-                <div class="col-xl-3 col-sm-6">
+                <div class="col-xl-3 col-sm-6 p-0">
                     <div class="card mb-4 bg-purple" title="Pending bookings">
                         <div class="card-body">
                             <div class="media d-flex align-items-center ">

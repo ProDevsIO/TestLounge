@@ -43,7 +43,7 @@
 
             <!--employee data table-->
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-xl-12 p-0">
                     <div class="card card-shadow mb-4 ">
                         <div class="card-header border-0">
                             <div class="custom-title-wrap border-0 position-relative pb-2">
@@ -87,13 +87,19 @@
                                                     <span class="badge badge-success">Paid</span>
                                                 @endif</td>
                                             <td>
-                                                @if($booking->mode_of_payment == 1)
-                                                    Flutterwave
-                                                @elseif($booking->mode_of_payment == 2)
-                                                    Stripe
-                                                @endif
+                                            @if($booking->mode_of_payment == 1)
+                                                        Flutterwave
+                                                    @elseif($booking->mode_of_payment == 2)
+                                                        Stripe
+                                                    @elseif($booking->mode_of_payment == 3)
+                                                        Voucher Payment
+                                                    @elseif($booking->mode_of_payment == 4)
+                                                        Paystack
+                                                    @elseif($booking->mode_of_payment == 5)
+                                                        Vas
+                                                    @endif
                                             </td>
-                                            @if(auth()->user()->referal_code)
+                                            @if(auth()->user()->referal_code && auth()->user()->id != 55)
                                                 <td> @php
                                                     if($booking->transaction){
                                                     echo "N".number_format($booking->transaction->amount,2);
