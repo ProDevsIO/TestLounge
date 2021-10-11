@@ -43,7 +43,7 @@
                                                 <td>
                                                     <a href="{{ url('complete/booking?vendor_id='.$vendor->id) }}"
                                                        class="btn btn-info">View Bookings</a>
-                                                    <a href="javascript:;"
+                                                    <a href="#"
                                                        data-toggle="modal" data-target="#viewProductModal{{ $vendor->id }}" class="btn btn-danger">View Products</a>
                                                 </td>
                                             </tr>
