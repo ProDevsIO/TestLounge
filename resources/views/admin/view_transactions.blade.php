@@ -135,7 +135,7 @@
             </div>
 
             <div class="row">
-                <div class="col-xl-12 container">
+                <div class="col-xl-12 container p-0">
                     <ul class="nav nav-tabs nav-justified ">
                     @if(auth()->user()->type == 1)
                         <li class="nav-item">
@@ -171,7 +171,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content col-xl-12 p-0">
                     <div class="tab-pane active" id="home">
-                       <div class="col-xl-12">
+                       <div class="col-xl-12 p-0">
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">
@@ -244,7 +244,7 @@
                       </div>
                     </div>
                     <div class="tab-pane fade" id="menu1">
-                      <div class="col-xl-12">
+                      <div class="col-xl-12 p-0">
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">
@@ -294,7 +294,7 @@
                       </div>
                     </div>
                     <div class="tab-pane" id="poundB">
-                       <div class="col-xl-12">
+                       <div class="col-xl-12 p-0">
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">
@@ -359,7 +359,7 @@
                       </div>
                     </div>
                     <div class="tab-pane fade" id="poundP">
-                      <div class="col-xl-12">
+                      <div class="col-xl-12 p-0">
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">

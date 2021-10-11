@@ -44,7 +44,30 @@
     <script src="/assets/vendor/html5shiv.js"></script>
     <script src="/assets/vendor/respond.min.js"></script>
     <![endif]-->
+<style>
+    body.modal-open {
+    position: fixed;
+    top:    0;
+    right:  0;
+    bottom: 0;
+    left:   0;
+    }
 
+    .modal {
+        will-change: display;
+    }
+
+    .modal-dialog {
+        will-change: transform;
+    }
+    modal-body {
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    @supports (-webkit-overflow-scrolling: touch) {
+    /* CSS specific to iOS devices */ 
+    }
+</style>
     @yield('style')
 </head>
 
