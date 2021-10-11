@@ -220,50 +220,15 @@ font-size: 30px;
 line-height: 55px;
 margin-left: 18px;
 color: #1E50A0;">Product Rules & Information ____</h4>
+                    @foreach ($products as $vproduct)
                     <div class="col-lg-12" style="padding-top:20px">
-                        <h6>Day 2 Test</h6>
+                        <h6>{{ optional(optional($vproduct)->product)->name }}</h6>
                         <p>
-                            This test is a Government Mandatory test for those arriving from a Green List Country or an
-                            Amber List Country. This should be done on or before day 2 of arrival to the UK.</p>
-                    </div>
-                    <div class="col-lg-12" style="padding-top:20px">
-                        <h6> Day 8 Test</h6>
-                        <p>
-
-                            This is a Government Mandatory test for those arriving for those arriving from an Amber List
-                            Country. This MUST be done on day 8 of arrival to the UK.
-                            You MUST NOT take this test before day 8 even if you have received your kit before then.
+                           {!! optional(optional($vproduct)->product)->description !!}
                         </p>
                     </div>
-                    <div class="col-lg-12" style="padding-top:20px">
-                        <h6>Day 2 and Day 8 Tests</h6>
-                        <p>
-
-                            This is a Government Mandatory test for those arriving from an Amber List Country and are
-                            unvaccinated by the UK NHS. The Day 2 test should be done on or before day 2 of arrival to
-                            the UK. The day 8 test should be done on day 8 of arrival to the UK.
-                            You MUST NOT take the tests on the same day.
-                        </p>
-                    </div>
-                    <div class="col-lg-12" style="padding-top:20px">
-                        <h6>Day 5 Test</h6>
-                        <p>
-                            This is NOT a Government Mandatory test, but it allows you to leave quarantine earlier if
-                            the test result is negative. This can only be done only after 5 full days after your arrival
-                            to the UK.</p>
-                    </div>
-                    <div class="col-lg-12" style="padding-top:20px;margin-bottom: 50px;">
-                        <h6>Day 2, Day 8 and Day 5 Tests</h6>
-                        <p>
-
-                            Day 2 and Day 8 tests are Government Mandatory tests for those arriving for an Amber List
-                            Country.
-                            The Day 2 test should be done on or before day 2 of arrival to the UK.
-                            The day 5 test should be done on day 5 of arrival to the UK.
-                            The day 8 test should be done on day 8 of arrival to the UK.
-                            You MUST NOT take the day 5 and day 8 tests before the appropriate days.
-                        </p>
-                    </div>
+                    @endforeach
+                   
                 </div>
             </div>
 
@@ -372,190 +337,152 @@ color: #1E50A0;">Product Rules & Information ____</h4>
                             <h1><strong>FAQs</strong></h1>
 
                             <ul class="accordion">
-                                <li class="active">
-                                    <div class="title"><span>WHY SHOULD I TAKE THE TEST?</span></div>
-                                    <div class="text">
-                                        <p style="font-size:18px;">
-                                            All visitors to the United Kingdom, including British nationals, must show
-                                            proof
-                                            of a negative Covid test within 72 hours of arrival.</p>
-                                        <p style="font-size:18px;"> Residents of the United Kingdom traveling from the
-                                            "red list," including South
-                                            Africa, India, Namibia, and the United Arab Emirates, are allowed to enter
-                                            the
-                                            country but must quarantine and undergo testing upon arrival.
-                                        </p>
-                                    </div>
-                                </li>
+                            <li class="active">
+                                <div class="title"><span>WHY SHOULD I TAKE THE TEST?</span></div>
+                                <div class="text">
+                                    <p style="font-size:18px;">
+                                        It is important to know what test you should do before you travel and when you arrive in the UK
+                                       </p>
+                                    <p style="font-size:18px;"> 
+                                        What you do depends o whether you qualify as fully vaccinated or unvaccinated under the Uk travel rules.
+                                        To avoid any delays to your travel plans, check what tests you might need <b><a class="text-info" href="https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19" style="text-decoration:underline">here</a></b>
+                                    </p>
+                                </div>
+                            </li>
 
-                                <li>
-                                    <div class="title"><span>WHAT ARE THE CONSTRAINTS?</span></div>
-                                    <div class="text">
-                                        <p style="font-size:18px;">
-                                            Before entering the UK, all visitors must provide a negative test within the
-                                            last 72 hours and fill out a Passenger Locator Form.</p>
-                                        <p style="font-size:18px;"> In England, Scotland, Wales, and Northern Ireland, a
-                                            traffic light-based
-                                            transport system (red, amber, and green) is presently in operation.</p>
-                                        <p style="font-size:18px;"> Non-UK residents from countries on the red list are
-                                            now denied access to the
-                                            United Kingdom.</p>
-                                        <p style="font-size:18px;"> Residents returning from destinations on the red
-                                            list, such as South Africa and
-                                            India, must stay in a hotel for ten days.</p>
-                                        <p style="font-size:18px;"> These passengers must purchase a "quarantine
-                                            package" before arriving in the UK
-                                            - which covers their stay in hotel quarantine, food, and drink while there
-                                            (Personal expenses).
-
-                                        </p>
-
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="title"><span>WHAT ARE THE THINGS I MUST DO IF I’M COMING FROM AN AMBER COUNTRY?</span>
-                                    </div>
-                                    <div class="text">
-                                        <p style="font-size:18px;">
-                                            These are the things you must do if you have spent more than ten days in an
-                                            amber country or territory before arriving in the United Kingdom.</p>
-                                        <p style="font-size:18px;"> Before Visiting the United Kingdom</p>
-                                        <p style="font-size:18px;">It would help if you accomplish the following before
-                                            visiting the United
-                                            Kingdom:</p>
+                            <li>
+                                <div class="title"><span>WHO QUALIFIES AS FULLY VACCINATED?</span></div>
+                                <div class="text">
+                                    <p style="font-size:18px;">
+                                        From 4am Monday 4 October, you will qualify as fully vaccinated if you are vaccinated either:<br>
+                                    </p>
                                         <ul style="font-size:18px;">
-
-
-                                            <li>- Take a COVID-19 test to see if you're at risk.</li>
-                                            <li>- Book and pay for COVID-19 travel tests on days 2 and 8 after arriving
-                                                in the
-                                                United Kingdom.
-                                            </li>
-                                            <li>- Fill out a passenger location form.</li>
+                                            <li>- under an <a href="https://www.gov.uk/guidance/how-to-quarantine-when-you-arrive-in-england" style="text-decoration:underline"> approved vaccination programme in the UK, Europe, USA or UK vaccine programme overseas</a></li>
+                                            <li>-  with a full course of the Oxford/AstraZeneca, Pfizer BioNTech, Moderna or Janssen vaccines from a relevant public health body in Australia, Antigua and Barbuda, Barbados, Bahrain, Brunei, Canada, Dominica, Israel, Japan, Kuwait, Malaysia, New Zealand, Qatar, Saudi Arabia, Singapore, South Korea, Taiwan or the United Arab Emirates (UAE)
+                                                    Formulations of the 4 listed vaccines, such as AstraZeneca Covishield, AstraZeneca Vaxzevria and Moderna Takeda, qualify as approved vaccines.<br>
+                                                    </li>
                                         </ul>
+                                    <p style="font-size:18px;"><br>
 
-                                        </p>
-                                    </div>
-                                </li>
+                                        You must have had a complete course of an approved vaccine at least 14 days before you arrive in England.
+                                    </p>
+                                </div>
+                            </li>
 
-                                <li>
-                                    <div class="title"><span>WHEN YOU ARRIVE IN THE UK, YOU MUST:</span></div>
-                                    <div class="text">
+                            <li>
+                                <div class="title"><span>WHAT ARE THE CONSTRAINTS?</span></div>
+                                <div class="text">
+                                    <p style="font-size:18px;">
+                                        Before entering the UK, all visitors must provide a negative test within the
+                                        last 72 hours and fill out a Passenger Locator Form.</p>
+                                    <p style="font-size:18px;"> In England, Scotland, Wales, and Northern Ireland, a traffic light-based
+                                        transport system (red, amber, and green) is presently in operation.</p>
+                                    <p style="font-size:18px;"> Non-UK residents from countries on the red list are now denied access to the
+                                        United Kingdom.</p>
+                                    <p style="font-size:18px;"> Residents returning from destinations on the red list, such as South Africa and
+                                        India, must stay in a hotel for ten days.</p>
+                                    <p style="font-size:18px;"> These passengers must purchase a "quarantine package" before arriving in the UK
+                                        - which covers their stay in hotel quarantine, food, and drink while there
+                                        (Personal expenses).
 
-                                        <p style="font-size:18px;"> For ten days, quarantine at home or wherever you are
-                                            staying.</p>
-                                        <ul style="font-size:18px">
-                                            <li>- On or before Day 2 and on or after Day 8, take a COVID-19 test</li>
-                                            <li> - Read up on quarantine and COVID-19 testing.</li>
-                                            <li> - The day two and day eight tests are not required for children under
-                                                the
-                                                age of four.
-                                            </li>
-                                            <li> - If you pay for a private COVID-19 exam under the Test to Release
-                                                scheme,
-                                                you could be able to get out of quarantine sooner.
-                                            </li>
-                                        </ul>
-                                        <br/>
-                                        <p style="font-size:18px;"> The amber list isn't all-inclusive. You should not
-                                            presume that a country or
-                                            territory is on the green or red list if it is not on this list.
+                                    </p>
 
-                                        </p>
+                                </div>
+                            </li>
 
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="title">
-                                        <span>WHAT ARE THE THINGS I MUST DO IF I’M COMING FROM A RED COUNTRY?</span>
-                                    </div>
-                                    <div class="text">
+                            <li>
+                                <div class="title"><span>WHAT MUST I DO IF I AM FULLY VACCINATED?</span>
+                                </div>
+                                <div class="text" >
+                                    <p style="font-size:18px;"> Book and pay for a day 2 COVID-19 test – to be taken after arrival in England.</p>
+                                    <p style="font-size:18px;"> Complete your passenger locator form – any time in the 48 hours before you arrive in England.</p>
+                                    <p style="font-size:18px;"> Take a COVID-19 test on or before day 2 after you arrive in England Under the new rules, you will not need to:</p>
+                                    <ul style="font-size:18px;">
+                                        <li>- Take a pre-departure test.</li>
+                                        <li>- Take a day 8 COVID-19 test.</li>
+                                        <li>- Quarantine at home or in the place you are staying for 10 days after you arrive in England.</li>
+                                    </ul>
 
-                                        <p style="font-size:18px;"> These are the things you must do if you visited a
-                                            nation or territory on the red
-                                            list in the 10 days leading up to your arrival in England.</p>
-                                        <p style="font-size:18px;"> If you have spent the previous 10 days in a country
-                                            or territory on the red
-                                            list, you will be allowed to enter the UK only if you are a British or Irish
-                                            national or have residency rights in the UK.</p>
-                                        <p style="font-size:18px;"> Even if you have been fully vaccinated, you must
-                                            observe these regulations.</p>
-                                        <br/>
-                                        <p><b>Before Departure for England</b></p>
-                                        <p style="font-size:18px;">It would help if you did the following before going
-                                            to England:
+                                    </p>
+                                </div>
+                            </li>
+                            <!-- 
+                            <li>
+                                <div class="title"><span>WHEN YOU ARRIVE IN THE UK, YOU MUST:</span></div>
+                                <div class="text">
+
+                                    <p style="font-size:18px;"> For ten days, quarantine at home or wherever you are staying.</p>
+                                    <ul style="font-size:18px">
+                                        <li>- On or before Day 2 and on or after Day 8, take a COVID-19 test</li>
+                                        <li> - Read up on quarantine and COVID-19 testing.</li>
+                                        <li> - The day two and day eight tests are not required for children under the
+                                            age of four.
+                                        </li>
+                                        <li> - If you pay for a private COVID-19 exam under the Test to Release scheme,
+                                            you could be able to get out of quarantine sooner.
+                                        </li>
+                                    </ul><br/>
+                                    <p style="font-size:18px;"> The amber list isn't all-inclusive. You should not presume that a country or
+                                        territory is on the green or red list if it is not on this list.
+
+                                    </p>
+
+                                </div>
+                            </li> -->
+                            <li>
+                                <div class="title">
+                                    <span>WHAT TO DO IF AM NOT FULLY VACCINATED?</span></div>
+                                <div class="text">
+
+                                    <p style="font-size:18px;"> From 4am Monday 4 October, you must follow these rules if you:.</p>
+                                    
                                         <ul style="font-size:18px;">
-                                            <li> - COVID-19 Test</li>
-                                            <li> - Book a hotel package that includes two COVID-19 examinations.</li>
-                                            <li> - You should fill out a passenger locator form</li>
+                                            <li>- Do not qualify under the fully vaccinated rules, </li>
+                                            <li>- Are partially vaccinated or .</li>
+                                            <li>- Are not vaccinated. </li>
+                                           
                                         </ul>
-                                        </p><br/>
-                                        <p><b>When you get to England</b></p>
-                                        <p>It would be best if you did the following when you arrive in England:</p>
+                                    <p style="font-size:18px;">Before you travel to England you must:</p>
                                         <ul style="font-size:18px;">
-                                            <li>- 2 COVID-19 tests during quarantine in a managed hotel</li>
+                                            <li>- Take a pre-departure COVID-19 test – to be taken in the 3 days before you travel to England.</li>
+                                            <li>- Book and pay for day 2 and day 8 COVID-19 tests – to be taken after arrival in England.</li>
+                                            <li>- Complete your passenger locator form – any time in the 48 hours before you arrive in England. </li>
                                         </ul>
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="title">
-                                        <span>WHAT ARE THE THINGS I MUST DO IF I’M COMING FROM A GREEN COUNTRY?</span>
-                                    </div>
+                                    <p style="font-size:18px;">After you arrive in England you must:</p>   
+                                        <ul style="font-size:18px;">
+                                            <li>- Quarantine at home or in the place you are staying for 10 days.</li>
+                                            <li>- Take a COVID-19 test on or before day 2 and on or after day 8.</li>
+                                            <li>- You may be able to end quarantine early if you pay for a private COVID-19 test through the Test to Release scheme. </li>
+                                        </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="title" >
+                                    <span>HOW DO I PROVE THAT I AM FULLY VACCINATED?</span></div>
                                     <div class="text">
 
-                                        <p style="font-size:15px;"> This section explains what you'll need to do if
-                                            you're coming to England from one of the countries or territories on the
-                                            green list. In the past 10 days, you must have only visited or traveled
-                                            through a green list nation or the United Kingdom, Ireland, the Channel
-                                            Islands, or the Isle of Man.
+                                        <p style="font-size:18px;"> You must be able to prove that you have been fully 
+                                                    vaccinated (plus 14 days) with a document (digital or paper-based) 
+                                                    from a national or state-level public health body that includes, as a minimum:
                                         </p>
-                                        <p style="font-size:15px;">Even if you have been fully vaccinated, you must
-                                            observe these regulations</p>
-                                        <br/>
-                                        <p><b> Before Going to England</b></p>
-                                        <p style="font-size:15px;"> It would help if you did the following before
-                                            visiting England:</p>
-                                        <ul style="font-size:15px;">
-                                            <li>- Take a COVID-19 test to see if you're at risk.</li>
-                                            <li> - Make a reservation and pay for a Day 2 COVID-19 test – to be taken
-                                                once in England.
-                                            </li>
-                                            <li> - Fill out a passenger locator form.</li>
+                                        <ul style="font-size:18px;">
+                                            <li>-	Forename and surname(s).</li>
+                                            <li>-	Date of birth.</li>
+                                            <li>-	Vaccine brand and manufacturer.</li>
+                                            <li>-   Date of vaccination for every dose.</li>
+                                            <li>-   Country or territory of vaccination and/or certificate issuer.</li>
+                                         
                                         </ul>
+                                        <p style="font-size:18px;">If your document from a public health body does not include all of these, you must follow the non-vaccinated rules. If not, you may be denied boarding.</p>
                                         <br/>
-                                        <p><b>When you arrive in England</b></p>
-                                        <ul style="font-size:15px;">
-                                            <li> - On or before the second day after your arrival, you must take a
-                                                COVID-19 test.
-                                            </li>
-                                            <li> - This test is not required for children under the age of four.</li>
-                                            <li> - Unless the test result is positive, you do not need to quarantine.
-                                            </li>
-                                            <li> - If NHS Test & Trace informs you that you traveled to England with
-                                                someone who tested positive for COVID-19, you must quarantine.
-                                            </li>
-                                        </ul>
-                                        <p style="font-size:15px;"> If you've visited one of the countries or
-                                            territories on the red list, or If you visited or passed through a nation or
-                                            territory on the red list in the ten days leading up to your arrival in
-                                            England, you must adhere to the red list requirements.</p>
-                                        <p style="font-size:15px;"> If you have been in or through an amber list nation
-                                            or territory in the ten days leading up to your arrival in England and have
-                                            not visited a red list country, you must observe the amber list
-                                            guidelines.</p>
-                                        <p style="font-size:15px;"> A country or territory can be changed from the green
-                                            list to the amber or red list if conditions change.</p>
-                                        <p style="font-size:15px;">If a country or territory on the green list is on the
-                                            verge of being demoted to amber, it will be added to the green watch
-                                            list.</p>
-                                        <p style="font-size:15px;"> A country or territory may be shifted between lists
-                                            without warning if situations change suddenly.</p>
+                                        <p style="font-size:18px;"> If you are fully vaccinated in the USA, you will need to show a CDC card showing you’ve had a full course of an FDA-approved vaccine in the USA. You’ll also need to prove that you are a resident of the USA.</p>
+                                        <p style="font-size:18px;"> If you are fully vaccinated in Europe, you will need to show an EU Digital COVID Certificate (EU DCC), showing you’ve had a full course of an EMA or Swissmedic-approved vaccine.</p>                                        
+                                        <br/>
+                                        <p style="font-size:18px;">If you are fully vaccinated, but do not qualify under these fully vaccinated rules, you must follow the <a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england#not-vaccinated" style="text-decoration:underline;color:#136480"> non-vaccinated rules.</a></p>
 
                                     </div>
-                        </div>
-                        </li>
+                                </div>
+                            </li>
                         </ul><!--end of accordion-->
 
                     </div>

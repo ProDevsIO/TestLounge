@@ -217,12 +217,12 @@
 
                                                 </div>
                                             @else
-                                            <div class='radio'
+                                            <!-- <div class='radio'
                                                  style="background:none;border:none;padding: 0px 20px;height: 86px;border-radius:25px;"
                                                  data-value="flutterwave" onclick ="run()">
                                                 <img src="{{ url('/img/Flutterwave.png') }}"
                                                      style="padding-bottom: 0px;width: 200px;">
-                                            </div>
+                                            </div> -->
 
                                             <div class='radio'
                                                     style="background:none;border:none;padding: 25px 40px;height: 86px;border-radius:25px"
@@ -262,7 +262,7 @@
                                         <input class="" type="text" name="voucher" value="{{ old('voucher') }}" />
                                         @endif
                                     </div>
-                                    <div id="card" style="margin-top:20px;display:none;">
+                                    <div id="card" class="form-section" style="margin-top:20px;display:none;">
                                         <label>Select Card types <span class="show_required"> *</span></label>
                                         <small class="text-muted" style="color:red"><b>Please select a card payment
                                                 option</b></small>
@@ -270,24 +270,31 @@
 
                                         </select>
                                     </div>
-                                    <div class="form-section color-9">
-                                        <label>Fully vaccinated <span class="color-10">*</span></label>
-                                        <select class="select-2 select2" name="vaccinated" required>
-                                            <option value="">Please Select an answer</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
+
+                                    <div class="form-section">
+                                        
+                                            
+                                    </div>
+
+                                    <div class="col-md-12 color-9">
+                                        <p>
+                                            <br> I understand that I am purchasing this test in line with the UK Government's travel requirements because</p>
+                                            <p>(Tick as appropriate)</p>
+                                        <div class="color-8"><input type="checkbox" name="vaccinated" value="yes"
+                                                                    class="bg-1"/>
+                                           I am fully Vaccinated but unable to show evidence of this
+                                        </div>
+                                        <br>
+                                        <div class="color-8"><input type="checkbox" name="proof_vaccine" value="yes"
+                                                                    class="bg-1"/>
+                                           I am not fully vaccinated
+
+                                        </div>
+                                        <br>
+                                       <p>I understand tat this service I am about to purchase is non refundable and I am about to purchase it of my own free will.</p>
                                         
                                     </div>
-                                    <div class="form-section color-9">
-                                        <label>Proof of vaccination shown <span class="color-10">*</span></label>
-                                        <select class="select-2 select2" name="proof_vaccine" required>
-                                            <option value="">Please Select an answer</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
-                                        
-                                    </div>
+                                
                                     <div class="col-md-12 color-9">
                                         <label>Consent to Test <span class="color-10">*</span></label>
                                         <div class="color-8"><input type="checkbox" name="consent" value="1"
