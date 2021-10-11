@@ -212,38 +212,40 @@
                                     </div>
                                 </div>
                             @else
-                                <div class="col-xl-3 col-sm-6 col-xs-4">
-                                    <div class="card mb-4 bg-success">
-                                        <div class="card-body" title="Total Credit Transactions minus Expected Earnings">
-                                            <div class="media d-flex align-items-center">
-                                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
-                                                    <i class="vl_money"></i>
-                                                </div>
-                                                <div class="media-body text-white">
-                                                    <h4 class="text-uppercase mb-0 weight500">
-                                                        $ {{ number_format(auth()->user()->pounds_wallet_balance,2) }}</h4>
-                                                    <span> Wallet Balance</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-sm-6 col-xs-4">
-                                    <div class="card mb-4 bg-success">
-                                        <div class="card-body" title="Total money paid from Wallet Balance($)">
-                                            <div class="media d-flex align-items-center">
-                                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
-                                                    <i class="vl_money"></i>
-                                                </div>
-                                                <div class="media-body text-white">
-                                                    <h4 class="text-uppercase mb-0 weight500">
-                                                        $ {{ number_format($earnedPounds,2) }}</h4>
-                                                    <span>Expected Earnings</span>
+                                @if(auth()->user()->country == 'NG' && auth()->user()->id != 55)
+                                    <div class="col-xl-3 col-sm-6 col-xs-4">
+                                        <div class="card mb-4 bg-success">
+                                            <div class="card-body" title="Total Credit Transactions minus Expected Earnings">
+                                                <div class="media d-flex align-items-center">
+                                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                                        <i class="vl_money"></i>
+                                                    </div>
+                                                    <div class="media-body text-white">
+                                                        <h4 class="text-uppercase mb-0 weight500">
+                                                            $ {{ number_format(auth()->user()->pounds_wallet_balance,2) }}</h4>
+                                                        <span> Wallet Balance</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="col-xl-3 col-sm-6 col-xs-4">
+                                        <div class="card mb-4 bg-success">
+                                            <div class="card-body" title="Total money paid from Wallet Balance($)">
+                                                <div class="media d-flex align-items-center">
+                                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                                        <i class="vl_money"></i>
+                                                    </div>
+                                                    <div class="media-body text-white">
+                                                        <h4 class="text-uppercase mb-0 weight500">
+                                                            $ {{ number_format($earnedPounds,2) }}</h4>
+                                                        <span>Expected Earnings</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             @endif
                         @endif
                        
