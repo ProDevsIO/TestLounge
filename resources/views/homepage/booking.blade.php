@@ -271,27 +271,23 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-section">
-                                        
-                                            
-                                    </div>
 
                                     <div class="col-md-12 color-9">
                                         <p>
-                                            <br> I understand that I am purchasing this test in line with the UK Government's travel requirements because</p>
-                                            <p>(Tick as appropriate)</p>
-                                        <div class="color-8"><input type="checkbox" name="vaccinated" value="yes"
+                                            I understand that I am purchasing this service in line with the <b><a class="text-info" href="https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19" style="text-decoration:underline">UK Government's travel requirements </a></b> because</p>
+                                          
+                                        <div class="color-8"><input type="radio" name="vaccinated" value="yes"
                                                                     class="bg-1"/>
                                            I am fully Vaccinated but unable to show evidence of this
                                         </div>
                                         <br>
-                                        <div class="color-8"><input type="checkbox" name="proof_vaccine" value="yes"
+                                        <div class="color-8"><input type="radio" name="vaccinated" value="no"
                                                                     class="bg-1"/>
                                            I am not fully vaccinated
 
                                         </div>
                                         <br>
-                                       <p>I understand tat this service I am about to purchase is non refundable and I am about to purchase it of my own free will.</p>
+                                       <p>I understand that this service I am about to purchase is non refundable and I am about to purchase it of my own free will.</p>
                                         
                                     </div>
                                 
