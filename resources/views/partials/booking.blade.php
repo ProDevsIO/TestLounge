@@ -86,19 +86,43 @@
                                                                    class="dropdown-item">View</a>
                                                                 <a href="{{ url('/booking/delete/'.$booking->id) }}"
                                                                    class="dropdown-item">Delete</a>
-                                                                <a href="javascript:;" data-toggle="modal"
-                                                                   data-target="#editEmail{{ $booking->id }}"
-                                                                   class="dropdown-item">Edit Email</a>
-                                                                <a href="javascript:;"
-                                                                   onclick="resendReceipt('{{ $booking->id }}')"
-                                                                   class="dropdown-item">Resend Receipt</a>
-                                                                @if($booking->user_id == null)
-                                                                    <a class="dropdown-item" data-toggle="modal"
-                                                                       href="#refmodal{{$booking->id}}">Add a
-                                                                        referral</a>
+                                                                @if($booking->status== 1)
+                                                                    <a href="javascript:;" data-toggle="modal"
+                                                                    data-target="#editEmail{{ $booking->id }}"
+                                                                    class="dropdown-item">Edit Email</a>
+                                                                    <a href="javascript:;"
+                                                                    onclick="resendReceipt('{{ $booking->id }}')"
+                                                                    class="dropdown-item">Resend Receipt</a>
+                                                               
+                                                                    @if($booking->user_id == null)
+                                                                        <a class="dropdown-item" data-toggle="modal"
+                                                                        href="#refmodal{{$booking->id}}">Add a
+                                                                            referral</a>
+                                                                    @endif
                                                                 @endif
+                                                                @if($booking->status== 0)
+                                                                <a href="javascript:;" class="dropdown-item" target="_blank" data-toggle="modal" data-target="#bookingModal{{ $booking->id }}">Check for Payment</a>
+                                                                @endif
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <div class="modal fade" id="bookingModal{{ $booking->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Verify Payment</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <a href="{{ url('/booking/stripe/success?b='.encrypt_decrypt("encrypt",$booking->id)) }}" target="_blank" class="btn btn-danger">Stripe</a>
+                                                                <a href="{{ url('/payment/confirmation?tx_ref='.$booking->transaction_ref) }}" target="_blank" class="btn btn-danger">Flutterwave</a>
+                                                                <a href="{{ url('/payment/paystack/confirmation?trxref='.$booking->transaction_ref) }}" target="_blank" class="btn btn-danger">Paystack</a>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
 
 
                                                     </td>
@@ -133,9 +157,11 @@
                                                                 <select name="referal_code" class="form-control" id=""
                                                                         required>
                                                                     <option value="">Select a referer</option>
-                                                                    @foreach($refs as $ref)
-                                                                        <option value="{{$ref->referal_code}}">{{$ref->first_name}} {{$ref->last_name}}</option>
-                                                                    @endforeach
+                                                                    @if(isset($refs))
+                                                                        @foreach($refs as $ref)
+                                                                            <option value="{{$ref->referal_code}}">{{$ref->first_name}} {{$ref->last_name}}</option>
+                                                                        @endforeach
+                                                                    @endif
                                                                 </select>
 
                                                         </div>

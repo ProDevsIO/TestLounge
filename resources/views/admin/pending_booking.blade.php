@@ -110,7 +110,7 @@
                         </div>
                         <div class="card-body p-0">
                         @include('errors.showerrors')
-                          @include('partials.booking', ['bookings' => $bookings])
+                        @include('partials.booking', ['bookings' => $bookings])
                         </div>
                     </div>
                 </div>
