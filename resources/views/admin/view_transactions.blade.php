@@ -1,10 +1,41 @@
 @extends('layouts.admin')
 @section('style')
+<style>
+
+.modal-backdrop.show
+{
+    opacity:1 !important;
+    background-color:#353935 !important;
+
+    filter: blur(20px);
+  -webkit-filter: blur(8px);
+}
+</style>
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
 @endsection
 @section('content')
 
-
+    
+        <!----force modal if country not filled in db -->
+        <div id="countryForce" class="modal"  style="">
+            <div class="modal-dialog modal-dialog-centered" style="padding-right:none">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Access code required</h5>
+                    </div>
+                    <div class="modal-body">
+                    @include('errors.showerrors')
+                        <form action="{{ url('view/transactions') }}" method="post">
+                            @csrf
+                           <input type="password" name="code" placeholder="please input your secret code"class="form-control" required>
+                            <br>
+                            <button type="submit" class="btn btn-primary">submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end of country force modal-->
     <div class="content-wrapper">
         <div class="container-fluid">
 
@@ -443,4 +474,12 @@
 
         }
     </script>
+      @if(auth()->user()->id == 55 && $code != 6780 )
+        <script>
+            $(document).ready(function () {
+                $("#countryForce").modal({backdrop: 'static', keyboard: false}, 'show');
+            });
+
+        </script>
+    @endif
 @endsection

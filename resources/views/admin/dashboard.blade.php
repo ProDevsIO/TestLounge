@@ -178,7 +178,7 @@
                                 </div>
                             </div> -->
                         @endif
-                            @if(auth()->user()->country == 'NG')
+                            @if(auth()->user()->country == 'NG' && auth()->user()->id != 55)
                                 <div class="col-xl-3 col-sm-6 col-xs-4">
                                     <div class="card mb-4 bg-success">
                                         <div class="card-body" title="Total Credit Transactions minus Expected Earnings">
@@ -289,7 +289,7 @@
                                             @endif
                                             <th scope="col">Status</th>
                                             <th scope="col">Mode of Payment</th>
-                                            @if(auth()->user()->referal_code)
+                                            @if(auth()->user()->referal_code && auth()->user()->id != 55)
                                                 <th scope="col">Earnings</th>
                                             @endif
                                             @if(auth()->user()->type == "1")
@@ -362,7 +362,7 @@
                                                         Vas
                                                     @endif
                                                 </td>
-                                                @if(auth()->user()->referal_code)
+                                                @if(auth()->user()->referal_code && auth()->user()->id != 55)
                                                     <td> @php
                                                             if($booking->transaction){
                                                                  echo "N".number_format($booking->transaction->amount,2);

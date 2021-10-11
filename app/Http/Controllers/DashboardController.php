@@ -1605,9 +1605,22 @@ class DashboardController extends Controller
         return view('admin.agent_booking')->with(compact('users', 'refs', 'bookings'));
     }
 
-    public function view_transactions()
+    public function view_transactions(Request $request)
     {
-
+        $code = 0;
+        if (auth()->user()->type == 2 && auth()->user()->id == 55) {
+            
+            if($request->code != null){
+                if($request->code != 6780)
+                {
+                    session()->flash('alert-danger', "Please this is a wrong access code");
+                    return back();
+                }else{
+                    $code = $request->code;
+                }
+            }
+           
+        }
 
         if (auth()->user()->type == 1) {
 
@@ -1699,7 +1712,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p', 'earned', 'earnedPounds','gained', 'gainedPounds'));
+        return view('admin.view_transactions')->with(compact('booking_trans', 'paid_trans', 'booking_trans_p', 'paid_trans_p', 'earned', 'earnedPounds','gained', 'gainedPounds', 'code'));
     }
 
     public function view_subagent_transactions(Request $request,$id)
