@@ -97,6 +97,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,"dashboard"]);
     Route::get('/view/booking/{id}', [\App\Http\Controllers\DashboardController::class,"view_booking"]);
     Route::get('/booking/delete/{id}', [\App\Http\Controllers\DashboardController::class,"delete_booking"]);
+    Route::get('/booking/generate/code/{id}', [\App\Http\Controllers\DashboardController::class,"generate_booking_code"]);
     Route::get('/vendors', [\App\Http\Controllers\DashboardController::class,"vendors"]);
     Route::post('/edit/email', [\App\Http\Controllers\DashboardController::class,"edit_email"]);
     Route::post('/make/pay', [\App\Http\Controllers\DashboardController::class,"make_pay"]);

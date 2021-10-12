@@ -106,6 +106,10 @@
                                                                             referral</a>
                                                                     @endif
                                                                 @endif
+                                                                @if($booking->status == 1)
+                                                                    <a href="{{ url('/booking/generate/code/'.$booking->id) }}"
+                                                                        class="dropdown-item">Generate booking code</a>
+                                                                @endif
                                                                 @if($booking->status== 0)
                                                                 <a href="javascript:;" class="dropdown-item" target="_blank" data-toggle="modal" data-target="#bookingModal{{ $booking->id }}">Check for Payment</a>
                                                                 @endif
