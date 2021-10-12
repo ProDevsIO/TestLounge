@@ -61,22 +61,7 @@
                                                 </td>
                                             </tr>
 
-                                            <div class="modal fade" id="viewProductModal{{ $vendor->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">View Products</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            @livewire('add-product-vendor',['vendor_id' => $vendor->id])
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                           
                                         @endforeach
 
                                         </tbody>
@@ -118,6 +103,27 @@
                 </div>
             </div>
         </div>
+
+        @if($vendors->count() > 0)
+             @foreach($vendors as $vendor)
+             <div class="modal fade" id="viewProductModal{{ $vendor->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">View Products</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            @livewire('add-product-vendor',['vendor_id' => $vendor->id])
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+             @endforeach
+        @endif
         <!--footer-->
     @include('includes.footer ')
     <!--/footer-->
