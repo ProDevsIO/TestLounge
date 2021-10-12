@@ -9,7 +9,7 @@
     background-color: #000;
 }
 .modal{
-    top:30%;
+    
 }
 </style>
 <div class="col-xl-12">
@@ -90,7 +90,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                @include("users.sub_agents.fragments.edit_modal" , ["user" => $user])
+                               
                             @endif
                         @endforeach
 
@@ -100,3 +100,12 @@
         </div>
     </div>
 </div>
+
+                    @foreach ($users as $user)
+                        @php
+                            $shareData = $user->superAgentPercent();
+                        @endphp
+                            @if ($user->status == $table_status)
+                                 @include("users.sub_agents.fragments.edit_modal" , ["user" => $user])
+                            @endif
+                    @endforeach
