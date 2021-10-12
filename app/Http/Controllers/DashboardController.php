@@ -1547,7 +1547,7 @@ class DashboardController extends Controller
 
     public function voucher_transactions()
     {
-        $vouchers = VoucherPayment::where('status', 1)->get();
+        $vouchers = VoucherPayment::where('status', 1)->orderby('id', 'desc')->get();
         $products = Product::all();
 
         return view('admin.voucher_transactions')->with(compact('vouchers', 'products'));
