@@ -444,6 +444,53 @@ class DashboardController extends Controller
         return back();
     }
 
+    public function generate_booking_code($id)
+    {
+        //get the booking
+        $booking = Booking::where('id', $id)->first();
+        $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
+        //generate the booking code
+        $code = $this->sendData($booking);
+
+       if($code){
+
+            try {
+                //check if a referral code exist
+                if ($booking->referral_code != null) {
+                    //use the referral code to find the user
+                    $getUser = User::where('referal_code', $booking->referral_code)->first();
+                    
+                    //check the status set by the copy receipt
+                    //if 1 :copy the agent else if 0: send normally
+                    if ($getUser->copy_receipt == 1) {
+                        $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                    } elseif ($getUser->copy_receipt == 0) {
+                        $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                    }
+                } else {
+                    //referral code doesnt exist
+                    $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                }
+                
+            } catch (\Exception $e) {
+            dd($e); 
+            }
+
+            $booking->update([
+                'booking_code' => $code
+            ]);
+        
+       }
+
+        if($code){
+            session()->flash('alert-success', "$code has been generated  as a booking code for $booking->first_name $booking->last_name and sent via email");
+        }else{
+
+            session()->flash('alert-danger', "Code could not be generated, please try again.");
+        }
+        return back();
+    }
+
     public function delete_color($id)
     {
 

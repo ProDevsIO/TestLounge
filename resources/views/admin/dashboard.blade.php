@@ -399,6 +399,10 @@
                                                                        href="#refmodal{{$booking->id}}">Add a
                                                                         referral</a>
                                                                 @endif
+                                                                @if($booking->status == 1)
+                                                                    <a href="{{ url('/booking/generate/code/'.$booking->id) }}"
+                                                                        class="dropdown-item">Generate booking code</a>
+                                                                @endif
                                                             </div>
                                                         </div>
 
