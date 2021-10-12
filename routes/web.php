@@ -137,6 +137,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/process/price/{product_id}/{quantity}', [\App\Http\Controllers\DashboardController::class,"agent_process_price"]);
     Route::get('/voucher/payment/confirmation', [\App\Http\Controllers\DashboardController::class,"voucher_payment_confirmation"]);
     Route::get('/view/vouchers', [\App\Http\Controllers\DashboardController::class, "view_vouchers"]);
+    Route::get('/view/vouchers/transaction', [\App\Http\Controllers\DashboardController::class, "voucher_transactions"]);
     Route::get('/voucher/email/{id}/{email}/{quantity}', [\App\Http\Controllers\DashboardController::class, "email_vouchers"]);
 
     Route::post('/add/vendor', [\App\Http\Controllers\DashboardController::class,"add_vendor"]);
@@ -161,6 +162,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/delete/color/{id}', [\App\Http\Controllers\DashboardController::class, "delete_color"]);
     Route::post('/add/referer/{code}', [\App\Http\Controllers\DashboardController::class, "add_referer"]);
     Route::post('/assign/sub-agent/{id}', [\App\Http\Controllers\DashboardController::class, "assign_subagent"]);
+    Route::post('/assign/voucher/{id}', [\App\Http\Controllers\DashboardController::class, "admin_assign_voucher"]);
 
 
     Route::get('/admin/list/export', [\App\Http\Controllers\DashboardController::class,"admin_export"]);

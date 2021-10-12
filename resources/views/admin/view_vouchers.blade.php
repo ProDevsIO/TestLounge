@@ -22,8 +22,8 @@
         <div class="container-fluid">
             <div class="row">
                 <?php $j =1;?>
-            @foreach($products as $product)
-                <div class="col-xl-4 col-sm-4">
+                @foreach($products as $product)
+                 <div class="col-xl-4 col-sm-4">
                         <div class="card mb-4 bg-purple" title="Generate voucher">
                             <div class="card-body">
                                 <div class="media d-flex align-items-center ">
@@ -116,7 +116,7 @@
                                         @endif
                                       <?php $j++; ?>         
                 @endforeach
-                <div class="col-xl-12 p-0">
+                     <div class="col-xl-12 p-0">
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">
