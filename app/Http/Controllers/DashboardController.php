@@ -1545,6 +1545,14 @@ class DashboardController extends Controller
 
     }
 
+    public function voucher_transactions()
+    {
+        $vouchers = VoucherPayment::where('status', 1)->get();
+        $products = Product::all();
+
+        return view('admin.voucher_transactions')->with(compact('vouchers', 'products'));
+    }
+
     public function agent_process_price($product_id, $quantity)
     {
         $product = VendorProduct::findorfail($product_id);

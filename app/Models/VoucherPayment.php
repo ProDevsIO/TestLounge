@@ -32,4 +32,9 @@ class VoucherPayment extends Model
 	{
 		return $this->hasOne(VoucherProduct::class);
 	}
+
+    public function product()
+	{
+		return $this->hasOne(Product::class, 'id', 'product_id');
+	}
 }
