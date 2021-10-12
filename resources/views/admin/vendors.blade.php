@@ -55,9 +55,9 @@
                                                 <td>{{ $vendor->bookings->count() }}</td>
                                                 <td>
                                                     <a href="{{ url('complete/booking?vendor_id='.$vendor->id) }}"
-                                                       class="btn btn-info">View Bookings</a>
+                                                       class="btn btn-info btn-sm">View Bookings</a>
                                                     <a href="#"
-                                                       data-toggle="modal" data-target="#viewProductModal{{ $vendor->id }}" class="btn btn-danger">View Products</a>
+                                                       data-toggle="modal" data-target="#viewProductModal{{ $vendor->id }}" class="btn btn-danger btn-sm">View Products</a>
                                                 </td>
                                             </tr>
 
