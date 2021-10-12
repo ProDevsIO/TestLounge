@@ -11,9 +11,7 @@
     height: 0% !important;
     background-color: #000;
 }
-.modal{
-    position:absolute;
-}
+
     </style>
 @endsection
 @section('content')
@@ -120,7 +118,20 @@
                                             @endif
                                         </tr>
 
-                                        <div class="modal fade" id="editModal{{ $product->id }}" tabindex="-1"
+                                        
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        @foreach($products as $product)
+        <div class="modal fade" id="editModal{{ $product->id }}" tabindex="-1"
                                              role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog " role="document">
                                                 <div class="modal-content">
@@ -156,17 +167,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        @endforeach
         <!--footer-->
     @include('includes.footer ')
     <!--/footer-->
