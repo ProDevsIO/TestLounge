@@ -11,6 +11,9 @@
     height: 0% !important;
     background-color: #000;
 }
+.modal{
+    position:absolute;
+}
     </style>
 @endsection
 @section('content')
@@ -119,7 +122,7 @@
 
                                         <div class="modal fade" id="editModal{{ $product->id }}" tabindex="-1"
                                              role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
+                                            <div class="modal-dialog " role="document">
                                                 <div class="modal-content">
                                                     <form action="/edit/product" method="post">
                                                         @csrf

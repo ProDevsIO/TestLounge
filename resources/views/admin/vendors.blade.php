@@ -12,6 +12,9 @@
     height: 0% !important;
     background-color: #000;
 }
+.modal{
+    position:absolute;
+}
 </style>
     @livewireStyles
 @endsection
