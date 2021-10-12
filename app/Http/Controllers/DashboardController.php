@@ -508,8 +508,8 @@ class DashboardController extends Controller
         $active = User::where('status', 1)->count();
         $not_active = User::where('status', 0)->count();
         $setting = Setting::where('id', 2)->first();
-
-        return view('admin.users')->with(compact('users', 'setting', 'active', 'not_active'));
+        $products = Product::all();
+        return view('admin.users')->with(compact('users', 'setting', 'active', 'not_active', 'products'));
     }
 
     public function admins()
@@ -1551,6 +1551,77 @@ class DashboardController extends Controller
         $products = Product::all();
 
         return view('admin.voucher_transactions')->with(compact('vouchers', 'products'));
+    }
+
+    public function admin_assign_voucher(Request $request, $id)
+    {
+        
+        //get data from vendor products table
+        $v_rate = VendorProduct::where([
+                    'product_id' => $request->product_id,
+                    'vendor_id' => 3
+        ])->first(); 
+
+       
+        //get the user collection
+        $user = User::where('id', $id)->first();
+
+        //get the users country to get the currency and charge rate
+        if($user->country == 'NG'){
+            $currency = "NG";
+            $charged = $v_rate->price;
+        }else{
+
+            if($user->country == null)
+            {
+                session()->flash('alert-danger', "Sorry but this transaction couldnt be completed because the agent has completed his profile details");
+                return back();
+            }
+            $currency = "USD";
+            $charged = $v_rate->price_pounds;
+        }
+
+       
+        //create the voucher payment transaction for record keeping
+        $voucherpay= VoucherPayment::Create([
+            'agent' => $id,
+            'vendor_id' => 3,
+            'product_id' => $request->product_id,
+            'vendor_product_id' => $v_rate->id,
+            'charged_amount' => $charged,
+            'quantity' => $request->number,
+            'currency' => $currency,
+            'status' => 1
+        ]);
+
+        //check if this user already has wallet for this product
+        $count_check = VoucherCount::where(['agent' => $id, 'product_id' => $request->product_id])->first();
+
+        //if user has a wallet , update else create a wallet to store 
+        if($count_check == null)
+        {
+              VoucherCount::create([
+                 'agent' => $id,
+                 'product_id' => $request->product_id,
+                 'quantity' => $request->number
+                 
+             ]);
+
+        }else{
+
+             $voucher_quantity = $count_check->quantity + $request->number;
+
+             $count_check->update([
+                 'quantity' => $voucher_quantity
+             ]);
+
+        }
+
+        // dd($request->product_id,$request->number, $id, $v_rate, $currency, $charged, $voucherpay, $count_check);
+        session()->flash('alert-success', "Transaction successfull, $request->number voucher has been added to $user->first_name's account");
+               
+        return back();
+
     }
 
     public function agent_process_price($product_id, $quantity)

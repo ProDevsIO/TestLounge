@@ -233,6 +233,13 @@
                                                                                onclick="confirmation('{{ url('/agent/deactivate/'.$user->id) }}')"
                                                                                class="dropdown-item">Deactivate</a>
                                                                         @endif
+
+                                                                        @if($user->status == 1)
+                                                                        <a href="javascript:;" data-toggle="modal"
+                                                                                data-target="#assignVoucher{{ $user->id }}"
+                                                                                class="dropdown-item">Assign vouchers</a>
+                                                                           
+                                                                        @endif
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -513,6 +520,54 @@
             </div>
 
         </div>
+
+                                                @foreach($users as $user)
+                                                    <div class="modal fade" id="assignVoucher{{ $user->id }}"
+                                                         tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                         aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <form action="{{ url('/assign/voucher/'.$user->id) }}"
+                                                                      method="post">
+                                                                    @csrf
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                                            Assign Voucher</h5>
+                                                                        <button type="button" class="close"
+                                                                                data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <label class="text-muted">Products</label>
+                                                                        <select name="product_id" class="form-control" id="" required>
+                                                                            @foreach($products as $product)
+                                                                             <option value="{{$product->id}}"> {{$product->name}}</option>
+                                                                            @endforeach
+                                                                        </select>
+
+                                                                        <label class="text-muted">Number to be assigned</label>
+                                                                       <select name="number" class="form-control" id="" required>
+                                                                           <option value="">Select a number to be assigned</option>
+                                                                           @for($i=0; $i < 31; $i++)
+                                                                                <option value="{{$i}}">{{$i}}</option>
+                                                                           @endfor
+                                                                       </select>
+                                                                        
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                                data-dismiss="modal">Close
+                                                                        </button>
+                                                                        <button type="submit" class="btn btn-primary">
+                                                                            Assign
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
         <!--footer-->
     @include('includes.footer')
     <!--/footer-->
