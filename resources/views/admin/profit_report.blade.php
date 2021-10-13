@@ -40,12 +40,13 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">Name</th>
-                                        <th scope="col">vendor</th>
+                                        <th scope="col">Agent</th>
+                                        <th scope="col">Vendor</th>
                                         <th scope="col">Product</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Selling Price</th>
                                         <th scope="col">Vendor's Cost Price</th>
-                                        <th scope="col">Commision</th>
+                                        <th scope="col">Commission</th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">Date</th>
                                     </tr>
@@ -57,6 +58,7 @@
                                             <td>
                                                 {{ optional(optional($transact)->booking)->first_name }}   {{ optional(optional($transact)->booking)->last_name }}
                                             </td>
+                                            <td>{{ optional(optional($transact)->user)->first_name }} {{ optional(optional($transact)->user)->last_name }}</td>
                                             <td> {{optional(optional(optional($transact)->booking)->vendor)->name}}</td>
                                             <td>
                                                 {{optional(optional(optional(optional($transact)->booking)->product)->product)->name}}
@@ -67,25 +69,25 @@
                                             <td>
                                                 @if($currency == 'naira')
 
-                                                 N{{ optional(optional(optional($transact)->booking)->product)->charged_amount }}
+                                                 N{{ number_format(optional(optional(optional($transact)->booking)->product)->charged_amount, 2) }}
                                                 @elseif($currency == 'dollars')
-                                                ${{ optional(optional(optional($transact)->booking)->product)->charged_amount}} </td>
+                                                ${{ number_format(optional(optional(optional($transact)->booking)->product)->charged_amount, 2) }}</td>
                                                 @endif
                                             </td>
                                             <td>
                                             @if($currency == 'naira')
 
-                                            N{{ optional(optional(optional($transact)->booking)->product)->vendor_cost_price }}
+                                            N{{ number_format(optional(optional(optional($transact)->booking)->product)->vendor_cost_price, 2) }}
                                             @elseif($currency == 'dollars')
-                                            ${{ optional(optional(optional($transact)->booking)->product)->vendor_cost_price}} </td>
+                                            ${{ number_format(optional(optional(optional($transact)->booking)->product)->vendor_cost_price, 2) }} </td>
                                             @endif
                                             </td>
                                             <td>
                                             @if($currency == 'naira')
 
-                                            N{{ $transact->amount }}
+                                            N{{ number_format($transact->amount, 2) }}
                                             @elseif($currency == 'dollars')
-                                            ${{ $transact->amount}} </td>
+                                            ${{ number_format($transact->amount, 2) }}</td>
                                             @endif
                                             </td>
                                             @if($currency == 'naira')
