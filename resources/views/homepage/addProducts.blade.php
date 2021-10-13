@@ -119,7 +119,7 @@
                                                                                                             </div>
                                                                                                             <h5 class="text-center"
                                                                                                                 style="color:#616161"><span
-                                                                                                                        class=" color-7">${{ optional($vproduct)->price_pounds }}/ £{{ number_format(optional($vproduct)->price * 0.0018)}}</span>
+                                                                                                                        class=" color-7">${{ optional($vproduct)->price_pounds }} / £{{ number_format(optional($vproduct)->price / 720)}}</span>
                                                                                                             </h5>
                                                                                                             <a id="remove_button"
                                                                                                                type="button"
@@ -152,7 +152,7 @@
 
                                                                                                             <h5 class="text-center"
                                                                                                                 style="color:#616161"><span
-                                                                                                                        class="color-7">${{ optional($vproduct)->price_pounds }}/ £{{ number_format(optional($vproduct)->price * 0.0018)}}</span>
+                                                                                                                        class="color-7">${{ optional($vproduct)->price_pounds }} / £{{ number_format(optional($vproduct)->price / 720)}}</span>
                                                                                                             </h5>
                                                                                                             <a id="add_button"
                                                                                                                type="button"
