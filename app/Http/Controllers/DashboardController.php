@@ -1482,7 +1482,7 @@ class DashboardController extends Controller
     public function view_vouchers()
     {
         if (auth()->user()->type == 1) {
-            $vouchers = VoucherGenerate::orderBy('id', 'desc')->all();
+            $vouchers = VoucherGenerate::orderBy('id', 'desc')->get();
         } else {
             $vouchers = VoucherGenerate::where('agent', auth()->user()->id)->orderBy('id', 'desc')->get();
         }
