@@ -16,9 +16,9 @@
                                 <div class="custom-title pull-left">
                                  
                                            @if($currency == 'naira')
-                                           Total Revenue(Naira)
+                                            Profit(Naira)
                                             @elseif($currency == 'dollars')
-                                            Total Revenue(Dollars)
+                                            Profit(Dollars)
                                             @elseif($currency == 'cedis')
                                             Total Revenue(Ghana cedis)
                                             @elseif($currency == 'tzs')
@@ -40,9 +40,12 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">Name</th>
+                                        <th scope="col">vendor</th>
                                         <th scope="col">Product</th>
                                         <th scope="col">Quantity</th>
-                                        <th scope="col">vendor</th>
+                                        <th scope="col">Selling Price</th>
+                                        <th scope="col">Vendor's Cost Price</th>
+                                        <th scope="col">Commision</th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">Date</th>
                                     </tr>
@@ -54,18 +57,49 @@
                                             <td>
                                                 {{ optional(optional($transact)->booking)->first_name }}   {{ optional(optional($transact)->booking)->last_name }}
                                             </td>
+                                            <td> {{optional(optional(optional($transact)->booking)->vendor)->name}}</td>
                                             <td>
                                                 {{optional(optional(optional(optional($transact)->booking)->product)->product)->name}}
                                             </td>
                                             <td>
                                                 {{optional(optional(optional($transact)->booking)->product)->quantity}}
                                             </td>
-                                            <td> {{optional(optional(optional($transact)->booking)->vendor)->name}}</td>
+                                            <td>
+                                                @if($currency == 'naira')
+
+                                                 N{{ optional(optional(optional($transact)->booking)->product)->charged_amount }}
+                                                @elseif($currency == 'dollars')
+                                                ${{ optional(optional(optional($transact)->booking)->product)->charged_amount}} </td>
+                                                @endif
+                                            </td>
+                                            <td>
                                             @if($currency == 'naira')
 
-                                            <td>N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  - $transact->amount }}</td>
+                                            N{{ optional(optional(optional($transact)->booking)->product)->vendor_cost_price }}
                                             @elseif($currency == 'dollars')
-                                            <td>${{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  - $transact->amount }} </td>
+                                            ${{ optional(optional(optional($transact)->booking)->product)->vendor_cost_price}} </td>
+                                            @endif
+                                            </td>
+                                            <td>
+                                            @if($currency == 'naira')
+
+                                            N{{ $transact->amount }}
+                                            @elseif($currency == 'dollars')
+                                            ${{ $transact->amount}} </td>
+                                            @endif
+                                            </td>
+                                            @if($currency == 'naira')
+                                                  @if( optional(optional(optional($transact)->booking)->product)->charged_amount >= (optional(optional(optional($transact)->booking)->product)->vendor_cost_price  + $transact->amount))  
+                                                    <td class="text-success">N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  - $transact->amount }}
+                                                  @else
+                                                   <td class="text-danger">N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  - $transact->amount }}
+                                                   @endif
+                                            @elseif($currency == 'dollars')
+                                                @if( optional(optional(optional($transact)->booking)->product)->charged_amount >= (optional(optional(optional($transact)->booking)->product)->vendor_cost_price  + $transact->amount))   
+                                                    <td class="text-success">${{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  - $transact->amount }} 
+                                                @else
+                                                   <td class="text-danger">${{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  - $transact->amount }}
+                                                @endif
                                             @endif
                                             <td>{{$transact->created_at}}</td>
                                         </tr>

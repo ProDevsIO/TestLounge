@@ -1482,9 +1482,9 @@ class DashboardController extends Controller
     public function view_vouchers()
     {
         if (auth()->user()->type == 1) {
-            $vouchers = VoucherGenerate::all();
+            $vouchers = VoucherGenerate::orderBy('id', 'desc')->all();
         } else {
-            $vouchers = VoucherGenerate::where('agent', auth()->user()->id)->get();
+            $vouchers = VoucherGenerate::where('agent', auth()->user()->id)->orderBy('id', 'desc')->get();
         }
        
         $products = Product::all();
@@ -1552,8 +1552,8 @@ class DashboardController extends Controller
         $vouchers = VoucherPayment::orderby('id', 'desc')->get();
         $products = Product::all();
 
-        $voucherpaid = VoucherPayment::where('status', 1)->count();
-        $voucherunpaid = VoucherPayment::where('status', 0)->count();
+        $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->count();
+        $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->count();
         return view('admin.voucher_transactions')->with(compact('vouchers', 'products', 'voucherpaid', 'voucherunpaid'));
     }
 
