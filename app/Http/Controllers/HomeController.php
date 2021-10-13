@@ -1108,7 +1108,8 @@ class HomeController extends Controller
             $faq = 0;
             $products = [];
         }
-        return view('homepage.addProducts')->with(compact('products', 'faq', 'type'));
+        $setting = Setting::first();
+        return view('homepage.addProducts')->with(compact('products', 'faq', 'type', 'setting'));
     }
 
     public function viewCart()
