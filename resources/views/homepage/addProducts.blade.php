@@ -67,8 +67,8 @@
                                                              style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px; background-color:#258C48;">
 
                                                             @elseif($type == "Amber_uv")
-                                                                <div class="container bg-6"
-                                                                     style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;">
+                                                                <div class="container"
+                                                                     style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px; background-color:#efb918;">
 
                                                                     @elseif($type=="Red")
                                                                         <div class="container"
@@ -119,7 +119,7 @@
                                                                                                             </div>
                                                                                                             <h5 class="text-center"
                                                                                                                 style="color:#616161"><span
-                                                                                                                        class=" color-7">${{ optional($vproduct)->price_pounds }}</span>
+                                                                                                                        class=" color-7">${{ optional($vproduct)->price_pounds }}/ £{{ number_format(optional($vproduct)->price * 0.0018)}}</span>
                                                                                                             </h5>
                                                                                                             <a id="remove_button"
                                                                                                                type="button"
@@ -152,7 +152,7 @@
 
                                                                                                             <h5 class="text-center"
                                                                                                                 style="color:#616161"><span
-                                                                                                                        class="color-7">${{ optional($vproduct)->price_pounds }}</span>
+                                                                                                                        class="color-7">${{ optional($vproduct)->price_pounds }}/ £{{ number_format(optional($vproduct)->price * 0.0018)}}</span>
                                                                                                             </h5>
                                                                                                             <a id="add_button"
                                                                                                                type="button"
