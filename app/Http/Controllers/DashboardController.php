@@ -408,7 +408,9 @@ class DashboardController extends Controller
     public function vendors()
     {
         $vendors = Vendor::all();
-        return view('admin.vendors')->with(compact('vendors'));
+        $setting = Setting::first();
+        $amount = $setting;
+        return view('admin.vendors')->with(compact('vendors','setting','amount'));
     }
 
     public function add_vendor(Request $request)
@@ -1547,10 +1549,12 @@ class DashboardController extends Controller
 
     public function voucher_transactions()
     {
-        $vouchers = VoucherPayment::where('status', 1)->orderby('id', 'desc')->get();
+        $vouchers = VoucherPayment::orderby('id', 'desc')->get();
         $products = Product::all();
 
-        return view('admin.voucher_transactions')->with(compact('vouchers', 'products'));
+        $voucherpaid = VoucherPayment::where('status', 1)->count();
+        $voucherunpaid = VoucherPayment::where('status', 0)->count();
+        return view('admin.voucher_transactions')->with(compact('vouchers', 'products', 'voucherpaid', 'voucherunpaid'));
     }
 
     public function admin_assign_voucher(Request $request, $id)
@@ -1618,7 +1622,7 @@ class DashboardController extends Controller
         }
 
         // dd($request->product_id,$request->number, $id, $v_rate, $currency, $charged, $voucherpay, $count_check);
-        session()->flash('alert-success', "Transaction successfull, $request->number voucher has been added to $user->first_name's account");
+        session()->flash('alert-success', "Transaction successful, $request->number voucher has been added to $user->first_name's account");
                
         return back();
 

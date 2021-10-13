@@ -22,6 +22,36 @@
                        </div>
                    </div>
            </div>
+           <div class="col-xl-3 col-sm-3">
+                <div class="card mb-4 bg-info" title="Total Vendor Cost">
+                       <div class="card-body">
+                           <div class="media d-flex align-items-center ">
+                               <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                   <i class="vl_book"></i>
+                               </div>
+                               <div class="media-body text-light" title="Total Vendor Cost">
+                                   <h4 class="text-uppercase mb-0 weight500">{{$voucherpaid}}</h4>
+                                   <span>Paid Transactions</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+           </div>
+           <div class="col-xl-3 col-sm-3">
+                <div class="card mb-4 bg-danger" title="Total Vendor Cost">
+                       <div class="card-body">
+                           <div class="media d-flex align-items-center ">
+                               <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                   <i class="vl_book"></i>
+                               </div>
+                               <div class="media-body text-light" title="Total Vendor Cost">
+                                   <h4 class="text-uppercase mb-0 weight500">{{$voucherunpaid}}</h4>
+                                   <span>Unpaid Transactions</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+           </div>
          </div>
          <div class="row">
                 <div class="col-xl-12 p-0">
@@ -44,7 +74,7 @@
                                                 <th scope> Acquired</th>
                                                 <!-- <th scope="col">Amount</th> -->
                                                 <th scope="col">Quantity</th>
-                                                
+                                                <th scope="col">Amount</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Date</th>
                                                
@@ -67,7 +97,13 @@
                                                         
                                                         
 
-                                                            <td>{{optional(optional($voucher)->product)->name}}</td>
+                                                            <td>{{optional(optional($voucher)->product)->name}}<br>
+                                                            @if($voucher->currency == "NG")
+                                                                (N {{$voucher->charged_amount}})
+                                                            @else
+                                                              ($ {{$voucher->charged_amount}})
+                                                            @endif
+                                                            </td>
                                                             @if($voucher->transaction_ref != null)
                                                             <td><span class ="badge badge-info"> Bought</span></td>
                                                             @else
@@ -80,6 +116,14 @@
                                                                 @else
                                                                 {{ $voucher->quantity }}
                                                                 @endif
+                                                            </td>
+                                                            <td>
+                                                            @if($voucher->currency == "NG")
+                                                                N  {{number_format($voucher->charged_amount * $voucher->quantity, 2)}}
+                                                            @else
+                                                              $  {{number_format($voucher->charged_amount * $voucher->quantity, 2)}}
+                                                            @endif
+                                                                
                                                             </td>
                                                             
                                                             @if($voucher->status == 0)

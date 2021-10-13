@@ -16,6 +16,7 @@ class AddProductVendor extends Component
     public $product_id;
     public $price_stripe;
     public $costPrice;
+    public $pound_price;
 
     protected $listeners = ['deleteProduct' => 'deleteProduct',"productVendor" => '$refresh'];
 
@@ -24,8 +25,9 @@ class AddProductVendor extends Component
         $products = Product::all();
         $vendor_products = VendorProduct::where('vendor_id', $this->vendor_id)->get();
         $vendor_products_array = VendorProduct::where('vendor_id', $this->vendor_id)->pluck('product_id')->toArray();
+        $pound_price = $this->pound_price;
 
-        return view('livewire.add-product-vendor')->with(compact('products', 'vendor_products', 'vendor_products_array'));
+        return view('livewire.add-product-vendor')->with(compact('products', 'vendor_products', 'vendor_products_array', 'pound_price'));
     }
 
     public function add_product()
