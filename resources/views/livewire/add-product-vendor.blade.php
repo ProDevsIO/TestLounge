@@ -8,10 +8,10 @@
             @endif
         @endforeach
     </select>
-    <label>Selling Price in Dollars</label>
-    <input type="number" wire:model="price" class="form-control" placeholder="$40">
-    <label>Vendor's Cost Price</label>
-    <input type="number" wire:model="costPrice" class="form-control" placeholder="Please fill out in dollars">
+    <label>Selling Price($)</label>
+    <input type="number" wire:model="price" class="form-control" placeholder="Input number">
+    <label>Vendor's Cost Price($)</label>
+    <input type="number" wire:model="costPrice" class="form-control" placeholder="Input number">
     <!-- <label>Price Stripe</label> -->
     <input type="hidden" value="{{$pound_price}}" wire:model="price_stripe" class="form-control" placeholder="Price_">
     </select>
@@ -26,30 +26,33 @@
     @if($vendor_products->count() > 0)
         <h3>Added Products</h3>
 
-        <ul>
+        
 
             @foreach($vendor_products as $vendor_product)
-                <li>
+                
                     {{ optional($vendor_product->product)->name }}:
-                    ${{ number_format($vendor_product->price_pounds,2) }} - (N{{number_format($vendor_product->price,2) }})<br>Cost price:  (${{number_format($vendor_product->cost_price,2) }}) - (N{{number_format(($vendor_product->cost_price * $pound_price),2) }})||   ----
-                    <a href="javascript:;" onclick="change_product('{{ $vendor_product->id }}')"><i
-                                    class="fa fa-edit"></i></a>
-                        <a href="javascript:;" onclick="closeProduct('{{ $vendor_product->id }}')"><i
-                                    class="fa fa-close"></i></a>
-                </li>
+                    ${{ number_format($vendor_product->price_pounds,2) }} - (N{{number_format($vendor_product->price,2) }})<br>Cost price:  (${{number_format($vendor_product->cost_price,2) }}) - (N{{number_format(($vendor_product->cost_price * $pound_price),2) }})<br>
+                    <a href="javascript:;" class="btn btn-sm btn-info" onclick="change_product('{{ $vendor_product->id }}')"><i
+                                    class="fa fa-edit"></i> edit</a>
+                        <a href="javascript:;" class="btn btn-danger btn-sm"onclick="closeProduct('{{ $vendor_product->id }}')"><i
+                                    class="fa fa-close"></i> Delete</a>
+                
+<br>
                 <div class="vendor_product_{{ $vendor_product->id }}" style="display: none">
-                    <label> Selling Price</label>
+                    <label> Selling Price($)</label>
                     <input type="number" class="form-control" id="price{{ $vendor_product->id }}">
-                    <label>Vendor's Cost Price</label>
+                    <label>Vendor's Cost Price($)</label>
                     <input type="text" class="form-control" id="costPrice{{ $vendor_product->id }}">
                     <!-- <label>Price Stripe</label> -->
                     <input type="hidden" value="{{ $vendor_product->price_pounds}}" class="form-control" id="priceStripe{{ $vendor_product->id }}">
 <br/>
                     <input type="submit" class="btn btn-primary pull-right" value="update" onclick="productUpdate('{{ $vendor_product->id }}')">
                 </div>
+                <br>
+                <hr>
             @endforeach
 
-        </ul>
+        
 
     @endif
 </div>
