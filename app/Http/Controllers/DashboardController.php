@@ -1549,12 +1549,13 @@ class DashboardController extends Controller
 
     public function voucher_transactions()
     {
-        $vouchers = VoucherPayment::orderby('id', 'desc')->get();
+        $vouchers = VoucherPayment::wherenotNull('transaction_ref')->orderby('id', 'desc')->get();
+        $voucherboughts = VoucherPayment::whereNull('transaction_ref')->orderby('id', 'desc')->get();
         $products = Product::all();
 
         $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->count();
         $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->count();
-        return view('admin.voucher_transactions')->with(compact('vouchers', 'products', 'voucherpaid', 'voucherunpaid'));
+        return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid'));
     }
 
     public function admin_assign_voucher(Request $request, $id)
@@ -1595,7 +1596,7 @@ class DashboardController extends Controller
             'charged_amount' => $charged,
             'quantity' => $request->number,
             'currency' => $currency,
-            'status' => 1
+            'status' => 0
         ]);
 
         //check if this user already has wallet for this product
@@ -1626,6 +1627,16 @@ class DashboardController extends Controller
                
         return back();
 
+    }
+
+    public function mark_paid_voucher($id)
+    {
+        $voucherpay= VoucherPayment::where('id', $id)->update([
+            'status' =>  1
+        ]);
+
+        session()->flash('alert-success', 'This transaction has been marked as paid');
+        return back();
     }
 
     public function agent_process_price($product_id, $quantity)

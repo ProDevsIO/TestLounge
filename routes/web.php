@@ -163,7 +163,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/add/referer/{code}', [\App\Http\Controllers\DashboardController::class, "add_referer"]);
     Route::post('/assign/sub-agent/{id}', [\App\Http\Controllers\DashboardController::class, "assign_subagent"]);
     Route::post('/assign/voucher/{id}', [\App\Http\Controllers\DashboardController::class, "admin_assign_voucher"]);
-
+    Route::get('/mark/voucher/{id}', [\App\Http\Controllers\DashboardController::class, "mark_paid_voucher"]);
 
     Route::get('/admin/list/export', [\App\Http\Controllers\DashboardController::class,"admin_export"]);
     Route::get('/active/agent/export', [\App\Http\Controllers\DashboardController::class,"Agent_active_export"]);
