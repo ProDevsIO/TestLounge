@@ -23,7 +23,7 @@
                             </h5>
                         @elseif($type == "Amber_uv")
                             <h5 id="h9" class="text-white">Tests for unvaccinated /Not fully vaccinated
-                                <span class="badge bg-4" style="padding:10px">A</span></h5>
+                                <span class="badge bg-6" style="padding:10px">A</span></h5>
                         @elseif($type=="Red")
                             <h5 id="h9" class="text-white"> Information for Red List countries<span class="badge"
                                                                                                         style="background-color:#E73636;padding:10px">R</span>
@@ -67,7 +67,7 @@
                                                              style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px; background-color:#258C48;">
 
                                                             @elseif($type == "Amber_uv")
-                                                                <div class="container bg-4"
+                                                                <div class="container bg-6"
                                                                      style="padding:30px;margin-bottom:20px;min-height: 378px;  border-radius:10px;">
 
                                                                     @elseif($type=="Red")
