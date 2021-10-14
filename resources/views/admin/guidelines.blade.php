@@ -28,24 +28,25 @@
                     <img src="/img/Mail.png" class="mx-auto d-block img-fluid" alt="">
                 @elseif($stepper == 3)
                     <h5 for="">On the dashboard, when you login, you get to put in your bank details. With the bank details, you can be able to purchase product vouchers on behalf of your clients. Whenever your account gets credited, you recieve a voucher code which will be used to book a test for the supposed client.</h5>
+                   <br>
                     <img src="/img/subagent.png" class="mx-auto d-block img-fluid"  alt="">    
                 @elseif($stepper == 4)
                     <h5 for="">To  purchase a voucher, click on “purchase product vouchers” which takes you to a page that a list of products to buy which you do via flutterwave after which your account is then credited. </h5>
                     <br>
                     <img src="/img/purchase product.png" class="mx-auto d-block img-fluid"  alt="">
-                    <br>
+                    @elseif($stepper == 5)
                     <h5 class="pt-5"for="">After making the necessary transactions and payment, you will be redirected to a voucher’s list where test products purchased and their quotas are displayed.</h5>
                     <br>
                     <img src="/img/voucher list.png" class="mx-auto d-block img-fluid" alt="">
-                @elseif($stepper == 5)
+                @elseif($stepper == 6)
                     <h5 for="">As an agent you can also decide to generate vouchers for a client by clicking on the generate button that brings out a modal that tells you to fill in the client’s email and the number of product of that category, an email will be sent to the client telling them that the agent has given them access to the test products. Also attached to the email is a link that the agent or client can fill to confirm payment for the booking that will generate the passenger locator booking codes. Agents can also fill the booking form for clients after generating voucher code by clicking on the voucher number on the page.</h5>
                     <br>
                     <img src="/img/Vouchers.png" class="mx-auto d-block img-fluid" alt="">              
-                @elseif($stepper == 6)
+                @elseif($stepper == 7)
                     <h5 for="">As an agent; you get the opportunity to earn 5% each time you purchase a test product for your client. you also have the liberty to have agents under you, and they are called sub-agents. When you register sub-agents under you, you become a super-agent.</h5>
                     <br>
                     <img src="/img/subagents.png" class="mx-auto d-block img-fluid" alt="">    
-                @elseif($stepper == 7)
+                @elseif($stepper == 8)
                     <h5 for="">For registration of a sub-agent, the full name, email address, and a percentage share that they are  supposed to get for each booking is filled out by the super-agent and activated on their (super-agent’s) dashboard which sends an auto message to the sub-agents with a link to complete their registration by going to the sign up page to complete registration and login.   </h5>
                    <br>
                     <img src="/img/create subagent account.png" class="mx-auto d-block img-fluid" alt="">
@@ -61,7 +62,7 @@
                         <a class="btn btn-primary btn-md " href="/view/guidelines/{{$stepper - 1}}"><i class="fa fa-angle-left"></i></a>
                         @endif
 
-                        @if($stepper < 7)
+                        @if($stepper < 8)
                         <a class="btn btn-primary btn-md " href="/view/guidelines/{{$stepper + 1}}"><i class="fa fa-angle-right"></i></a>
                         @endif
                     </div>
