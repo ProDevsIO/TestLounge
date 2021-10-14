@@ -230,7 +230,7 @@
                             <span>Agent Commission</span>
                         </a>
                     </li>
-                    @if(auth()->user()->type == 1)
+                    @if(auth()->user()->type == 2)
                     <li>
                       <a href="{{ url('/view/guidelines/1') }}">
                             <i class="icon-book-open"></i>
