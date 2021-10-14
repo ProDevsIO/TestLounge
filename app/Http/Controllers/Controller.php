@@ -382,7 +382,7 @@ class Controller extends BaseController
         }else{
              $c_type = (optional($color_code->color)->name) ? optional($color_code->color)->name : "Amber";
         }
-        
+        dd($booking, $ethnic);
         $data_send["test_kit_properties"] = [
             'first_name' => $booking->first_name,
             'last_name' => $booking->last_name,
