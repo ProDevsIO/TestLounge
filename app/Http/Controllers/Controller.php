@@ -350,18 +350,18 @@ class Controller extends BaseController
     {
        
         //ethnicity
-        if ($booking->ethnicity == 0) {
+        if ($booking->ethnicity == 1) {
             $ethnic = "white_other";
-        } elseif ($booking->ethnicity == 1) {
-            $ethnic = "other_mixed";
         } elseif ($booking->ethnicity == 2) {
             $ethnic = "other_mixed";
         } elseif ($booking->ethnicity == 3) {
-            $ethnic = "black_other";
+            $ethnic = "other_mixed";
         } elseif ($booking->ethnicity == 4) {
+            $ethnic = "black_other";
+        } elseif ($booking->ethnicity == 5) {
             $ethnic = "Other_mixed";
         }
-        dd($booking);
+       
         //transportation means
         // if ($booking->method_of_transportation == 1) {
         //     $transport = "Airline";
