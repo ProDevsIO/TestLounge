@@ -231,12 +231,12 @@
                         </a>
                     </li>
                     @if(auth()->user()->type == 2)
-                    <li>
+                    <!-- <li>
                       <a href="{{ url('/view/guidelines/1') }}">
                             <i class="icon-book-open"></i>
                             <span>Guidelines</span>
                         </a>
-                    </li>
+                    </li> -->
                     @endif
                     @if(auth()->user()->main_agent_id == null && auth()->user()->type == 2)
                         @if(auth()->user()->subagent->count() > 0)
