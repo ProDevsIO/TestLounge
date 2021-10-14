@@ -2343,4 +2343,10 @@ class DashboardController extends Controller
         return back();
     }
 
+    public function view_guidelines($stepper)
+    {
+
+        return view('admin.guidelines')->with(compact('stepper'));
+    }
+
 }

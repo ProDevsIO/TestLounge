@@ -222,7 +222,7 @@
                                                     </div>
                                                     <div class="media-body text-white">
                                                         <h4 class="text-uppercase mb-0 weight500">
-                                                            $ {{ number_format(auth()->user()->pounds_wallet_balance,2) }}</h4>
+                                                            ${{ number_format(auth()->user()->pounds_wallet_balance,2) }}</h4>
                                                         <span> Wallet Balance</span>
                                                     </div>
                                                 </div>
@@ -238,7 +238,7 @@
                                                     </div>
                                                     <div class="media-body text-white">
                                                         <h4 class="text-uppercase mb-0 weight500">
-                                                            $ {{ number_format($earnedPounds,2) }}</h4>
+                                                            ${{ number_format($earnedPounds,2) }}</h4>
                                                         <span>Expected Earnings</span>
                                                     </div>
                                                 </div>
@@ -324,10 +324,10 @@
                                                     </td>
 
                                                     @if(isset($booking->product) && $booking->product->currency == "NGN")
-                                                        <td> ₦ {{ $booking->product->price }} </td>
+                                                        <td> ₦{{ $booking->product->price }} </td>
                                                     @elseif(isset($booking->product) && $booking->product->currency == "USD")
 
-                                                        <td> $ {{ $booking->product->charged_amount }} </td>
+                                                        <td> ${{ $booking->product->charged_amount }} </td>
         
                                                     @else
                                                         <td>Product has been deleted</td>
@@ -338,10 +338,10 @@
 
                                                     @if(isset($booking) && $booking->transaction != null)
                                                         <td>
-                                                            ₦ {{ optional($booking->transaction)->amount }} </td>
+                                                            ₦{{ optional($booking->transaction)->amount }} </td>
                                                     @elseif(isset($booking) && $booking->ptransaction != null)
                                                         <td>
-                                                            $ {{ optional($booking->ptransaction)->amount }} </td>
+                                                            ${{ optional($booking->ptransaction)->amount }} </td>
                                                     @else
                                                         <td> No Commission</td>
                                                     @endif

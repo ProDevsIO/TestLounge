@@ -97,9 +97,9 @@
 
                                                                                                              <p<span class="color-7 ">{{optional(optional($vproduct)->product)->hint}}</span></p>       
                                                                                                 </div>
-                                                                                                <div class="col-md-12">
+                                                                                                <div class="col-md-12" style="padding:0;">
                                                                                                     <div class="container text-center"
-                                                                                                         style="padding-top:50px">
+                                                                                                         style="padding-top:50px; padding-left:0; padding-right:0;">
                                                                                                         {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
 
                                                                                                         @if ($vproduct->cartItem)
@@ -126,12 +126,12 @@
                                                                                                                data-button="remove_button"
                                                                                                                data-product_id="{{ $vproduct->product->id }}"
                                                                                                                data-vendor_id="{{ $vproduct->vendor->id }}"
-                                                                                                               class="btn btn-block btn-outline-info cart_btn"
-                                                                                                               style="border:1px solid #1E50A0;width: 100px;margin: auto;">
+                                                                                                               class="btn btn-outline-info cart_btn"
+                                                                                                               style="border:1px solid #1E50A0;">
                                                                                                                 Remove
-                                                                                                                from
-                                                                                                                cart
+                                                                                                                
                                                                                                             </a>
+                                                                                                            
                                                                                                         @else
 
                                                                                                             <div class="input-group count_now{{ $vproduct->product->id }}"
@@ -157,15 +157,17 @@
                                                                                                             <a id="add_button"
                                                                                                                type="button"
                                                                                                                data-button="add_button"
-                                                                                                               style="width: 100px;margin: auto;"
+                                                                                                               style="align:center;"
                                                                                                                data-product_id="{{ $vproduct->product->id }}"
                                                                                                                data-vendor_id="{{ $vproduct->vendor->id }}"
-                                                                                                               class="btn btn-block btn-info cart_btn"
+                                                                                                               class="btn btn-info cart_btn "
                                                                                                             >
                                                                                                                 Add to
                                                                                                                 cart
                                                                                                             </a>
+                                                                                                           
                                                                                                         @endif
+                                                                                                        <a href="/view/cart" id="add_button" class="btn btn-info">Go to cart</a>
                                                                                                     </div>
                                                                                                 </div>
 
