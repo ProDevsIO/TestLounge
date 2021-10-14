@@ -5,7 +5,6 @@
     <style>
         h5{
             font-size:20px !important;
-            color:red;
         }
     </style>
 @endsection
