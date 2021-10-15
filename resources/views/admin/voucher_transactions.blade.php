@@ -114,9 +114,9 @@
 
                                                             <td>{{optional(optional($voucher)->product)->name}}<br>
                                                             @if($voucher->currency == "NG")
-                                                                (N {{$voucher->charged_amount}})
+                                                                (N{{$voucher->charged_amount}})
                                                             @else
-                                                              ($ {{$voucher->charged_amount}})
+                                                              (${{$voucher->charged_amount}})
                                                             @endif
                                                             </td>
                                                             @if($voucher->transaction_ref != null)
@@ -142,7 +142,7 @@
                                                             </td>
                                                             
                                                             @if($voucher->status == 0)
-                                                            <td class="text-center"><span class ="badge badge-warning">unpaid </span></td>
+                                                            <td class="text-center"><span class ="badge badge-warning">Unpaid </span></td>
 
                                                             @else
                                                             <td> <span class ="badge badge-success"> Paid</span></td>
@@ -151,7 +151,7 @@
                                                             @if($voucher->status == 0)
                                                             <td class="text-center"><a href="javascript:;"
                                                                                onclick="confirmation('{{ url('/mark/voucher/' .$voucher->id) }}')"
-                                                                               class="bg-success text-white p-2">mark as paid</a></td>
+                                                                               class="bg-success text-white p-2">Mark as paid</a></td>
 
                                                             @else
                                                             <td> </td>
@@ -231,9 +231,9 @@
 
                                                             <td>{{optional(optional($voucher)->product)->name}}<br>
                                                             @if($voucher->currency == "NG")
-                                                                (N {{$voucher->charged_amount}})
+                                                                (N{{$voucher->charged_amount}})
                                                             @else
-                                                              ($ {{$voucher->charged_amount}})
+                                                              (${{$voucher->charged_amount}})
                                                             @endif
                                                             </td>
                                                             @if($voucher->transaction_ref != null)

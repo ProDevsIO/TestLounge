@@ -151,7 +151,7 @@ class DashboardController extends Controller
                 "Expires" => "0"
             );
 
-            $columns = array('Name', 'Email', 'PhoneNo', 'Sex', 'DOB', 'Ethnicity', 'Vaccination Status', 'Products', 'Home Address', "Isolation Address", "Document Id", "Arrival Date", "Country From", "Departure Date", "Mode of Transportation", "Flight Number");
+            $columns = array('Name', 'Email', 'PhoneNo', 'Sex', 'DOB', 'Ethnicity', 'Products', 'Home Address', "Isolation Address", "Arrival Date", "Country From", "Departure Date");
 
             $callback = function () use ($bookings, $columns) {
                 $file = fopen('php://output', 'w');
@@ -172,13 +172,7 @@ class DashboardController extends Controller
                         $row['Ethnicity'] = "Other Ethnic Group";
                     }
 
-                    if ($booking->vaccination_status == "1") {
-                        $row['Vaccination Status'] = "Has not been vaccinated";
-                    } elseif ($booking->vaccination_status == "2") {
-                        $row['Vaccination Status'] = "Has received the first dose, but not the second";
-                    } elseif ($booking->vaccination_status == "3") {
-                        $row['Vaccination Status'] = "Has received both first and second dose";
-                    }
+                   
                     $p = [];
                     foreach ($booking->products as $product) {
                         $p[] = $product->name;
@@ -193,35 +187,24 @@ class DashboardController extends Controller
                     $row['Home Address'] = "Address1: {$booking->address_1}\n
                                         Address2: {$booking->address_2}\n
                                         Home City: {$booking->home_town}\n
-                                        Home PostCode: {$booking->post_code}\n
-                                        Home Country: {$booking->homeCountry->name}\n";
+                                        Home PostCode: {$booking->post_code}\n";
+                                       
 
                     $row['Isolation Address'] = "Address1: {$booking->isolation_address }\n
                                         Address2: {$booking->isolation_addres2}\n
                                         Home City: {$booking->isolation_town}\n
-                                        Home PostCode: {$booking->isolation_postal_code }\n
-                                        Home Country: {$booking->country->name}\n";
+                                        Home PostCode: {$booking->isolation_postal_code }\n";
+                                      
 
-                    $row['Document Id'] = $booking->document_id;
+           
 
                     $row['Arrival Date'] = $booking->arrival_date;
 
                     $row['Country From'] = $booking->travelingFrom->name;
                     $row['Departure Date'] = $booking->departure_date;
-                    if ($booking->method_of_transportation == "1") {
-                        $row['Mode of Transportation'] = "Airplane";
-                    } elseif ($booking->method_of_transportation == "2") {
-                        $row['Mode of Transportation'] = "Vessel";
-                    } elseif ($booking->method_of_transportation == "3") {
-                        $row['Mode of Transportation'] = "Train";
-                    } elseif ($booking->method_of_transportation == "4") {
-                        $row['Mode of Transportation'] = "Road Vehicle";
-                    } elseif ($booking->method_of_transportation == "5") {
-                        $row['Mode of Transportation'] = "Other";
-                    }
-                    $row['Flight Number'] = $booking->transport_no;
+                   
 
-                    fputcsv($file, array($row['Name'], $row['Email'], $row['PhoneNo'], $row['Sex'], $row['DOB'], $row['Ethnicity'], $row['Vaccination Status'], $row['Products'], $row['Home Address'], $row['Isolation Address'], $row['Document Id'], $row['Arrival Date'], $row['Country From'], $row['Departure Date'], $row['Mode of Transportation'], $row['Flight Number']));
+                    fputcsv($file, array($row['Name'], $row['Email'], $row['PhoneNo'], $row['Sex'], $row['DOB'], $row['Ethnicity'], $row['Products'], $row['Home Address'], $row['Isolation Address'], $row['Arrival Date'], $row['Country From'], $row['Departure Date']));
                 }
 
                 fclose($file);
@@ -304,7 +287,7 @@ class DashboardController extends Controller
                 "Expires" => "0"
             );
 
-            $columns = array('Name', 'Email', 'PhoneNo', 'Sex', 'DOB', 'Ethnicity', 'Vaccination Status', 'Products', 'Home Address', "Isolation Address", "Document Id", "Arrival Date", "Country From", "Departure Date", "Mode of Transportation", "Flight Number");
+            $columns = array('Name', 'Email', 'PhoneNo', 'Sex', 'DOB', 'Ethnicity', 'Products', 'Home Address', "Isolation Address", "Arrival Date", "Country From", "Departure Date", 'Amount');
 
             $callback = function () use ($bookings, $columns) {
                 $file = fopen('php://output', 'w');
@@ -325,13 +308,7 @@ class DashboardController extends Controller
                         $row['Ethnicity'] = "Other Ethnic Group";
                     }
 
-                    if ($booking->vaccination_status == "1") {
-                        $row['Vaccination Status'] = "Has not been vaccinated";
-                    } elseif ($booking->vaccination_status == "2") {
-                        $row['Vaccination Status'] = "Has received the first dose, but not the second";
-                    } elseif ($booking->vaccination_status == "3") {
-                        $row['Vaccination Status'] = "Has received both first and second dose";
-                    }
+                   
                     $p = [];
                     foreach ($booking->products as $product) {
                         $p[] = $product->name;
@@ -346,35 +323,25 @@ class DashboardController extends Controller
                     $row['Home Address'] = "Address1: {$booking->address_1}\n
                                         Address2: {$booking->address_2}\n
                                         Home City: {$booking->home_town}\n
-                                        Home PostCode: {$booking->post_code}\n
-                                        Home Country: {$booking->homeCountry->name}\n";
+                                        Home PostCode: {$booking->post_code}\n";
+                                       
 
                     $row['Isolation Address'] = "Address1: {$booking->isolation_address }\n
                                         Address2: {$booking->isolation_addres2}\n
                                         Home City: {$booking->isolation_town}\n
-                                        Home PostCode: {$booking->isolation_postal_code }\n
-                                        Home Country: {$booking->country->name}\n";
+                                        Home PostCode: {$booking->isolation_postal_code }\n";
+                                       
 
-                    $row['Document Id'] = $booking->document_id;
+                   
 
                     $row['Arrival Date'] = $booking->arrival_date;
 
                     $row['Country From'] = $booking->travelingFrom->name;
                     $row['Departure Date'] = $booking->departure_date;
-                    if ($booking->method_of_transportation == "1") {
-                        $row['Mode of Transportation'] = "Airplane";
-                    } elseif ($booking->method_of_transportation == "2") {
-                        $row['Mode of Transportation'] = "Vessel";
-                    } elseif ($booking->method_of_transportation == "3") {
-                        $row['Mode of Transportation'] = "Train";
-                    } elseif ($booking->method_of_transportation == "4") {
-                        $row['Mode of Transportation'] = "Road Vehicle";
-                    } elseif ($booking->method_of_transportation == "5") {
-                        $row['Mode of Transportation'] = "Other";
-                    }
-                    $row['Flight Number'] = $booking->transport_no;
+                   $row['Amount'] = optional($booking->product)->currency.number_format(optional($booking->product)->charged_amount,2);
+                    
 
-                    fputcsv($file, array($row['Name'], $row['Email'], $row['PhoneNo'], $row['Sex'], $row['DOB'], $row['Ethnicity'], $row['Vaccination Status'], $row['Products'], $row['Home Address'], $row['Isolation Address'], $row['Document Id'], $row['Arrival Date'], $row['Country From'], $row['Departure Date'], $row['Mode of Transportation'], $row['Flight Number']));
+                    fputcsv($file, array($row['Name'], $row['Email'], $row['PhoneNo'], $row['Sex'], $row['DOB'], $row['Ethnicity'], $row['Products'], $row['Home Address'], $row['Isolation Address'], $row['Arrival Date'], $row['Country From'], $row['Departure Date'],$row['Amount']));
                 }
 
                 fclose($file);
