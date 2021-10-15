@@ -79,16 +79,16 @@
   background: none;
   border: none;
   box-shadow: none;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
 }
 .font-body {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Nunito";
 }
 .font-heading {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Nunito";
 }
 body {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Nunito";
   -webkit-font-smoothing: antialiased;
   color: #777777;
   font-size: 14px;
@@ -101,13 +101,13 @@ h4,
 h5,
 h5,
 h6 {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Nunito";
   font-weight: 300;
   color: #333333;
   margin: 0px;
 }
 .alt-font {
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Nunito";
   font-weight: bold;
   font-size: 11px;
   text-transform: uppercase;
@@ -159,8 +159,8 @@ h5 {
   margin-bottom: 16px;
 }
 h6 {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 400;
   margin-bottom: 16px;
 }
 strong {
@@ -387,7 +387,7 @@ section:nth-of-type(even) {
   border-color: rgba(0, 0, 0, 0);
 }
 .link-text {
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   font-weight: bold;
   font-size: 11px;
   text-transform: uppercase;
@@ -407,7 +407,7 @@ nav hr {
   bottom: 3px;
 }
 .has-dropdown:after {
-  font-family: ElegantIcons;
+  font-family: Nunito;
   speak: none;
   font-style: normal;
   font-weight: 400;
@@ -507,7 +507,7 @@ nav hr {
   margin-right: 0px;
 }
 .menu li a {
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   font-weight: bold;
   font-size: 11px;
   text-transform: uppercase;
@@ -1531,7 +1531,7 @@ img.phone-portrait {
   font-size: 18px;
 }
 .testimonials-slider .author {
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   font-weight: bold;
   font-size: 11px;
   text-transform: uppercase;
@@ -1618,7 +1618,7 @@ img.phone-portrait {
   background: none;
   border: none;
   box-shadow: none;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   float: left;
   color: #fff;
   min-width: 400px;
@@ -1976,7 +1976,7 @@ blockquote {
 .filters li {
   float: left;
   margin-right: 16px;
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   font-weight: bold;
   font-size: 11px;
   text-transform: uppercase;
@@ -2187,7 +2187,7 @@ blockquote {
   background: none;
   border: none;
   box-shadow: none;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   width: 100%;
   padding: 16px;
 }
@@ -2301,7 +2301,7 @@ input[type="submit"] {
   border: 2px solid #1E50A0;
   color: #1E50A0;
   max-width: 155px;
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   font-weight: bold;
   font-size: 11px;
   text-transform: uppercase;
@@ -2352,7 +2352,7 @@ input[type="submit"] {
   background: none;
   border: none;
   box-shadow: none;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   background: rgba(255, 255, 255, 0.85);
   border-radius: 50px;
   padding: 14px 24px 14px 24px;
@@ -2368,7 +2368,7 @@ input[type="submit"] {
 }
 .photo-form-wrapper input[type="submit"] {
   color: #fff !important;
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   font-weight: bold;
   font-size: 11px;
   text-transform: uppercase;
@@ -2514,7 +2514,7 @@ input[type="submit"] {
   top: 42px;
 }
 .social-bar span {
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   font-weight: bold;
   font-size: 11px;
   text-transform: uppercase;
@@ -3721,7 +3721,7 @@ footer.short-2 .contact-action:hover {
 .blog-filters li {
   float: left;
   margin-right: 16px;
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   font-weight: bold;
   font-size: 11px;
   text-transform: uppercase;
@@ -4013,7 +4013,7 @@ footer.short-2 .contact-action:hover {
   color: #fff;
   font-size: 32px;
   font-weight: 300;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   text-transform: none;
   padding-bottom: 0px;
 }
@@ -4149,7 +4149,7 @@ footer.short-2 .contact-action:hover {
   padding: 14px 28px 13px 28px;
   line-height: 1;
   border: 2px solid #1E50A0;
-  font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Nunito;
   font-weight: bold;
   font-size: 11px;
   text-transform: uppercase;

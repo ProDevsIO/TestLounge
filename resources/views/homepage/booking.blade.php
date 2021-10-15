@@ -5,7 +5,16 @@
           integrity="sha512-aEe/ZxePawj0+G2R+AaIxgrQuKT68I28qh+wgLrcAJOz3rxCP+TwrK5SPN+E5I+1IQjNtcfvb96HDagwrKRdBw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="/css/booking.css">
-
+<style>
+    #glow{
+        box-shadow:
+    inset 0 0 100px #1E50A0,
+    
+    inset 
+    -10px 0 50px #f0f;
+   
+    }
+</style>
 @endsection
 @section('content')
 
@@ -25,12 +34,15 @@
 
                                 <h5>Fill the Booking form Below</h5>
                                 @if(isset($voucher))
-                                    <p><b>{{optional(optional(optional($voucher)->voucherCount)->product)->name}} x {{$voucher->quantity}}</b></p>
+                                <div>
+                                   <span id="glow" class="badge badge-danger">{{optional(optional(optional($voucher)->voucherCount)->product)->name}} x {{$voucher->quantity}} </span> 
+                                </div>
                                 @endif
 
                                 @if($carts_count > 0)
-
-                                   <p><b>{{optional(optional($cart->vendorProduct)->product)->name}} x {{$cart->quantity}} </b> </p> 
+                                <div>
+                                   <span id="glow" class="badge badge-danger">{{optional(optional($cart->vendorProduct)->product)->name}} x {{$cart->quantity}}  </span> 
+                                </div>
                                 @endif
                                 
                                 <div class="col-md-6">
@@ -276,14 +288,14 @@
                                         <p>
                                             I understand that I am purchasing this service in line with the <b><a class="text-info" href="https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19" style="text-decoration:underline">UK Government's travel requirements </a></b> because</p>
                                           
-                                        <div class="color-8"><input type="radio" name="vaccinated" value="yes"
+                                        <div class="color-8"> <p class="text-muted"><input type="radio" name="vaccinated" value="yes"
                                                                     class="bg-1"/>
-                                           I am fully Vaccinated but unable to show evidence of this
+                                           I am fully Vaccinated but unable to show evidence of this</p>
                                         </div>
                                         <br>
-                                        <div class="color-8"><input type="radio" name="vaccinated" value="no"
+                                        <div class="color-8"> <p class="text-muted"><input type="radio" name="vaccinated" value="no"
                                                                     class="bg-1"/>
-                                           I am not fully vaccinated
+                                           I am not fully vaccinated</p>
 
                                         </div>
                                         <br>
@@ -293,11 +305,11 @@
                                 
                                     <div class="col-md-12 color-9">
                                         <label>Consent to Test <span class="color-10">*</span></label>
-                                        <div class="color-8"><input type="checkbox" name="consent" value="1"
+                                        <div class="color-8"><p class="text-muted"><input type="checkbox" name="consent" value="1"
                                                                     class="bg-1"/>
                                             I consent to this test being done, or if this test
                                             is for a child, I confirm I am a legal guardian of the child and consent to
-                                            this test being done.
+                                            this test being done.</p>
 
                                         </div>
                                     </div>
