@@ -318,7 +318,7 @@
                                             class="color-10" style="margin-left: 17px;margin-top: 10px">Bookings can’t be cancelled or refunded</span>
 
                                 </div>
-                                <input type="hidden" name="payment_method" value="flutterwave" id="payment_method"/>
+                                <input type="hidden" name="payment_method" value="paystack" id="payment_method"/>
 
                                 <input type="submit" class="btn btn-primary pull-right" style="margin-top: 0px;" value="Make Payment">
 
