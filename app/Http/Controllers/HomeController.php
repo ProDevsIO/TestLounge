@@ -145,6 +145,7 @@ class HomeController extends Controller
 
         $request->vendor_id = 3;
      
+
        if($request->email != $request->verify_email)
        {
         session()->flash('alert-danger', "Please you have provided two different emails, the emails must match in order to make booking");
