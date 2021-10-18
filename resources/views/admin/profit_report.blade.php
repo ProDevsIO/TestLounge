@@ -69,7 +69,7 @@
                                             </td>
                                             <td>
                                                 @if($currency == 'naira')
-
+                                              
                                                  N{{ number_format(optional(optional(optional($transact)->booking)->product)->charged_amount, 2) }}
                                                 @elseif($currency == 'dollars')
                                                 ${{ number_format(optional(optional(optional($transact)->booking)->product)->charged_amount, 2) }}</td>
@@ -77,8 +77,12 @@
                                             </td>
                                             <td>
                                             @if($currency == 'naira')
+                                            <?php
 
-                                            N{{ number_format(optional(optional(optional($transact)->booking)->product)->vendor_cost_price, 2) }}
+                                            $Exchange_rate =   optional(optional(optional($transact)->booking)->product)->price /  (optional(optional(optional($transact)->booking)->product)->price_pounds ?? 1);
+                                            $value = optional(optional(optional($transact)->booking)->product)->vendor_cost_price * $Exchange_rate;
+                                            ?>
+                                            N{{ number_format($value, 2) }}
                                             @elseif($currency == 'dollars')
                                             ${{ number_format(optional(optional(optional($transact)->booking)->product)->vendor_cost_price, 2) }} </td>
                                             @endif
