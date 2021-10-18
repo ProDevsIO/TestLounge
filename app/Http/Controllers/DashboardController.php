@@ -1052,7 +1052,8 @@ class DashboardController extends Controller
                if($book_p_n != null)
                {
                 $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
-                $vendor_cost_dollars = $vendor_cost_ngn + ($book_p_n->vendor_cost_price/410.81);
+                $rate = $book_p_n->charged_amount/ $book_p_n->price;
+                $vendor_cost_dollars = $vendor_cost_ngn + ($book_p_n->vendor_cost_price * $rate);
                }
                
             }
@@ -1067,6 +1068,7 @@ class DashboardController extends Controller
                }
                
             }
+
 
             // $total_ngn = BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
             // $vendor_cost_ngn =  BookingProduct::where('currency', 'NGN')->wherebetween('created_at', [$start, $end])->sum('vendor_cost_price');
@@ -1091,7 +1093,8 @@ class DashboardController extends Controller
                if($book_p_n != null)
                {
                 $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
-                $vendor_cost_ngn = $vendor_cost_ngn + ($book_p_n->vendor_cost_price/410.81);
+                $rate = $book_p_n->charged_amount/ $book_p_n->price;
+                $vendor_cost_ngn = $vendor_cost_ngn + ($book_p_n->vendor_cost_price * $rate);
                }
                
             }

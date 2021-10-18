@@ -97,9 +97,9 @@
                                             </td>
                                             @if($currency == 'naira')
                                                   @if( optional(optional(optional($transact)->booking)->product)->charged_amount >= (optional(optional(optional($transact)->booking)->product)->vendor_cost_price  + $transact->amount))  
-                                                    <td class="text-success">N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  - $transact->amount }}
+                                                    <td class="text-success">N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  $value  - $transact->amount }}
                                                   @else
-                                                   <td class="text-danger">N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  - $transact->amount }}
+                                                   <td class="text-danger">N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  $value  - $transact->amount }}
                                                    @endif
                                             @elseif($currency == 'dollars')
                                                 @if( optional(optional(optional($transact)->booking)->product)->charged_amount >= (optional(optional(optional($transact)->booking)->product)->vendor_cost_price  + $transact->amount))   
