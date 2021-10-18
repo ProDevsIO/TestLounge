@@ -1042,7 +1042,7 @@ class DashboardController extends Controller
             $total_ngn = 0;
             $total_gbp = 0;
             $vendor_cost_ngn = 0;
-            $vendor_cost_gbp = 0;
+            $vendor_cost_dollars = 0;
             $check = Booking::where('status', '1')->wherebetween('created_at', [$start, $end])->get();
 
             
@@ -1064,7 +1064,7 @@ class DashboardController extends Controller
                if($book_p_n != null)
                {
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
-                $vendor_cost_dollars = $vendor_cost_gbp + $book_p_n->vendor_cost_price;
+                $vendor_cost_dollars = $vendor_cost_dollars + $book_p_n->vendor_cost_price;
                }
                
             }
@@ -1084,7 +1084,7 @@ class DashboardController extends Controller
             $total_ngn = 0;
             $total_gbp = 0;
             $vendor_cost_ngn = 0;
-            $vendor_cost_gbp = 0;
+            $vendor_cost_dollars = 0;
             $check = Booking::where('status', '1')->get();
 
             foreach($check as $ch){
@@ -1105,7 +1105,7 @@ class DashboardController extends Controller
                if($book_p_n != null)
                {
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
-                $vendor_cost_dollars = $vendor_cost_gbp + $book_p_n->vendor_cost_price;
+                $vendor_cost_dollars = $vendor_cost_dollars + $book_p_n->vendor_cost_price;
                }
                
             }
