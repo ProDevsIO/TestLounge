@@ -1042,11 +1042,12 @@ class DashboardController extends Controller
             $total_ngn = 0;
             $total_gbp = 0;
             $vendor_cost_ngn = 0;
-            $vendor_cost_gbp = 0;
-            $check = Booking::where('status', '1')->wherebetween('created_at', [$start, $end])->get();
-
+            $vendor_cost_dollars = 0;
+           
+            $checkn = Transaction::where('type', 1)->wherebetween('created_at', [$start, $end])->get();
+            $checkb = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->get();
             
-            foreach($check as $ch){
+            foreach($checkn as $ch){
                 // dump( $check->product);
                 $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
                if($book_p_n != null)
@@ -1058,13 +1059,13 @@ class DashboardController extends Controller
                
             }
 
-            foreach($check as $ch){
+            foreach($checkb as $ch){
                 // dump( $check->product);
                 $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
                if($book_p_n != null)
                {
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
-                $vendor_cost_dollars = $vendor_cost_gbp + $book_p_n->vendor_cost_price;
+                $vendor_cost_dollars = $vendor_cost_dollars + $book_p_n->vendor_cost_price;
                }
                
             }
@@ -1084,28 +1085,32 @@ class DashboardController extends Controller
             $total_ngn = 0;
             $total_gbp = 0;
             $vendor_cost_ngn = 0;
-            $vendor_cost_gbp = 0;
-            $check = Booking::where('status', '1')->get();
+            $vendor_cost_dollars = 0;
+            $checkn = Transaction::where('type', 1)->get();
+            $checkb = PoundTransaction::where('type', 1)->get();
+          
 
-            foreach($check as $ch){
+            foreach($checkn as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'NGN'])->first();
                if($book_p_n != null)
                {
                 $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
-                $rate = $book_p_n->charged_amount/ $book_p_n->price;
+                $rate = $book_p_n->price/ $book_p_n->price_pounds;
                 $vendor_cost_ngn = $vendor_cost_ngn + ($book_p_n->vendor_cost_price * $rate);
                }
                
             }
+           
 
-            foreach($check as $ch){
+            foreach($checkb as $ch){
                 // dump( $check->product);
                 $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
+        
                if($book_p_n != null)
                {
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
-                $vendor_cost_dollars = $vendor_cost_gbp + $book_p_n->vendor_cost_price;
+                $vendor_cost_dollars = $vendor_cost_dollars + $book_p_n->vendor_cost_price;
                }
                
             }
@@ -1123,7 +1128,7 @@ class DashboardController extends Controller
         $pcommission = PoundTransaction::where('type', 1)->sum('amount');
         $p_due_amount = User::sum("pounds_wallet_balance");
         $due_amount = User::sum("wallet_balance");
-
+     
         $profit_naira =  $total_ngn - $commission - $vendor_cost_ngn;
         // dd($profit_naira, $total_ngn ,$commission , $vendor_cost_ngn );
         $profit_dollars = $total_gbp - $pcommission - $vendor_cost_dollars;
