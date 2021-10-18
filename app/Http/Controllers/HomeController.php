@@ -1634,6 +1634,18 @@ class HomeController extends Controller
         return view('homepage.uk_page')->with(compact('countries'));
     }
 
+    public function view_uae()
+    {
+        return view('homepage.uae_option_page');
+    }
+
+    public function view_to_uae($where)
+    {
+        
+        $countries = Country::all();
+        return view('homepage.travel_to_uae')->with(compact('countries','where'));
+    }
+
     public function voucherProcessing(array $request_data ){
 
         $price = $price_pounds = 0;

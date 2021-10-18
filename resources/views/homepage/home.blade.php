@@ -84,6 +84,7 @@
                                         <select name="" class="form-control" id="country" onchange="ukDirect()">
                                             <option value="">Select a country</option>
                                             <option value="225">United Kingdom</option>
+                                            <option value="224">United Arab Emirates</option>
                                         </select>
                                     </div>
                                     <div class="col-sm 2"></div>
@@ -152,6 +153,7 @@
                             <select name="" class="form-control" id="country" onchange="ukDirect()">
                                 <option value="">Select a country</option>
                                 <option value="225">United Kingdom</option>
+                                <option value="224">United Arab Emirates</option>
                             </select>
                         </div>
                         <div class="col-sm 2"></div>
@@ -237,7 +239,16 @@
     }
     function ukDirect()
     {
-        window.location = '/view/uk/';
+        var country_id = document.getElementById("country").value;
+        console.log(country_id);
+        if(country_id == 225){
+            window.location = '/view/uk/';
+        }
+
+        if(country_id == 224){
+            window.location = '/view/UAE/';
+        }
+       
     }
     function countryQuery()
     {
