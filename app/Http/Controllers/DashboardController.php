@@ -372,6 +372,24 @@ class DashboardController extends Controller
         return view('admin.view_booking')->with(compact('booking', 'booking_products'));
     }
 
+    public function view_bookings($id)
+    {
+        if (auth()->user()->type != 1) {
+            if (!auth()->user()->vendor_id) {
+                abort(403);
+            }
+        }
+        if (auth()->user()->vendor_id != 0) {
+            $check_vendor = BookingProduct::where('vendor_id', auth()->user()->vendor_id)->where('booking_id', $id)->first();
+            if (!$check_vendor) {
+                abort(403);
+            }
+        }
+
+        $booking_products = BookingProduct::where('product_id', $id)->get();
+        return view('admin.view_bookings')->with(compact('booking_products'));
+    }
+
     public function vendors()
     {
         $vendors = Vendor::all();

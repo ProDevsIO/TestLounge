@@ -288,6 +288,11 @@
                                         <p>
                                             I understand that I am purchasing this service in line with the <b><a class="text-info" href="https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19" style="text-decoration:underline">UK Government's travel requirements </a></b> because</p>
                                           
+                                        <div class="color-8"> <p class="text-muted"><input type="radio" name="vaccinated" value="fully"
+                                                                    class="bg-1"/>
+                                           I am fully Vaccinated </p>
+                                        </div>
+                                        <br>
                                         <div class="color-8"> <p class="text-muted"><input type="radio" name="vaccinated" value="yes"
                                                                     class="bg-1"/>
                                            I am fully Vaccinated but unable to show evidence of this</p>
