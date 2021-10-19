@@ -5,7 +5,8 @@
 @section('content')
 
 <div class="content-wrapper">
-<div class="row">
+        <div class="container-fluid">
+            <div class="row">
                 <div class="col-xl-12 p-0">
                     <div class="card card-shadow mb-4">
                         <div class="card-header border-0">
@@ -154,6 +155,7 @@
                     </div>
                 </div>
             </div>
+        </div>
 </div>
 @endsection
 @section('script')
