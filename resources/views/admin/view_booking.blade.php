@@ -195,9 +195,9 @@
                                             
                                             I am fully Vaccinated but unable to show evidence of this
                                             
-                                            @else
-                                            
-                                         
+                                            @elseif($booking->vaccinated == 'fully')
+                                            I am fully Vaccinated
+                                             @else
                                             I am not fully vaccinated
                                           
                                             @endif
