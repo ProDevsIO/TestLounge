@@ -1451,7 +1451,7 @@ class DashboardController extends Controller
         }
 
         session()->flash('alert-danger', "Sorry but this transaction wasnt successful");
-        return redirect()->to('agent/view/products');
+        return redirect()->to('/view/vouchers');
     }
 
     public function view_vouchers()
