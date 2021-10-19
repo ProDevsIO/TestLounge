@@ -209,6 +209,7 @@
                                                 <th scope="col">Amount</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Date</th>
+                                                <th scope="col">Action</th>
                                                
                                                 <!-- <th scope="col">Action</th> -->
                                             </tr>
@@ -251,9 +252,9 @@
                                                             </td>
                                                             <td>
                                                             @if($voucher->currency == "NG")
-                                                                N  {{$voucher->charged_amount * $voucher->quantity}}
+                                                                N  {{$voucher->charged_amount / $voucher->quantity}}
                                                             @else
-                                                              $  {{$voucher->charged_amount * $voucher->quantity}}
+                                                              $  {{$voucher->charged_amount / $voucher->quantity}}
                                                             @endif
                                                             
                                                                
@@ -265,6 +266,11 @@
                                                             <td> <span class ="badge badge-success"> Paid</span></td>
                                                             @endif
                                                             <td>{{ $voucher->created_at }}</td>
+                                                            <td>
+                                                            @if($voucher->status == 0)
+                                                             <a href="{{ url('/voucher/payment/confirmation?trxref='.$voucher->transaction_ref) }}" class="btn btn-sm btn-info"> check payment</a>
+                                                            @endif
+                                                            </td>
                                                             <!-- <td>
                                                                 <div class="btn-group" role="group">
                                                                     <button id="btnGroupDrop1" type="button"
