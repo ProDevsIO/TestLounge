@@ -108,7 +108,7 @@
                                                            data-target="#editModal{{ $product->id }}"
                                                            href="javascript:;"
                                                            class="btn btn-info">Edit</a>
-                                                        <a href="{{ url('/view/booking/'.$product->id) }}"
+                                                        <a href="{{ url('/view/bookings/'.$product->id) }}"
                                                            class="btn btn-info">View Booking</a>
                                                     @if($product->bookings->count() == 0)
                                                         <a href="#" onclick="delete_product('{{ $product->id }}')"
