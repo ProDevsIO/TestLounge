@@ -232,9 +232,9 @@
 
                                                             <td>{{optional(optional($voucher)->product)->name}}<br>
                                                             @if($voucher->currency == "NG")
-                                                                (N{{$voucher->charged_amount}})
+                                                                (N{{$voucher->charged_amount / $voucher->quantity}})
                                                             @else
-                                                              (${{$voucher->charged_amount}})
+                                                              (${{$voucher->charged_amount / $voucher->quantity}})
                                                             @endif
                                                             </td>
                                                             @if($voucher->transaction_ref != null)
@@ -252,9 +252,9 @@
                                                             </td>
                                                             <td>
                                                             @if($voucher->currency == "NG")
-                                                                N  {{$voucher->charged_amount / $voucher->quantity}}
+                                                                N  {{$voucher->charged_amount}}
                                                             @else
-                                                              $  {{$voucher->charged_amount / $voucher->quantity}}
+                                                              $  {{$voucher->charged_amount}}
                                                             @endif
                                                             
                                                                
