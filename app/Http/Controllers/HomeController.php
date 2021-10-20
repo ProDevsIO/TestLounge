@@ -591,6 +591,43 @@ class HomeController extends Controller
                     return redirect()->to('/booking/code/failed?b=' . $txRef);
                 }
 
+                foreach ($booking_products as $booking_product) {
+                    try {
+
+                        if($booking_product->product_id == 2 || $booking_product->product_id == 10)
+                        {
+                            $message = "
+                            Dear " . $booking->first_name . ",<br><br>
+                
+                            Thank you for booking with us. If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory Test or The Unvaccinated Day 2 & Day 8 Mandatory Tests.<br/><br/>
+
+                            Your purchase would be for one of the following reasons:<br><br>
+
+                            1. You are Unvaccinated or Not Fully Vaccinated. Read more <a href='https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19#check-if-you-qualify-as-fully-vaccinated'>here</a><br><br>
+                            2. The Vaccination you got is not approved by the UK. Read more <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
+                            3. You are Fully Vaccinated but unable to show an approved COVID-19 proof of vaccination before your travel. 
+                            Read more about the approved proof of vaccination  <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
+
+                            If you are fully vaccinated under an approved vaccination programme accepted in the UK (check if your vaccination is approved <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a
+                             but were unable to show the approved COVID-19 proof of vaccination before your travel you might be eligible for a partial refund. <br><br>
+
+                             We have a no-refund policy as indicated before your purchase. However, we are able to consider partial refunds on a case by case basis within 24 hours of your purchase. We ask that you send an email with your approved proof of vaccination. <br><br>
+
+                             Click here for the <a href='https://docs.google.com/forms/d/1pWjJjGEaBZn9BaOss-hFI9xV_DQ_HRREBG6kTszb3hw/edit'>Partial Refund Request</a> form.
+
+                                  <br/><br/>
+                                  Thank you.
+                                  <br/><br/>
+                                Traveltestsltd Team
+                            ";
+                            Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Day 8 test"));
+                        }
+                       
+                    } catch (\Exception $e) {
+                     dd($e);
+                    }
+
+                }
 
                 foreach ($booking_products as $booking_product) {
                     try {
