@@ -150,10 +150,10 @@
                             <label for="">Choose the country you’re travelling to</label>
                         </div>
                         <div class="col-sm-4" style="margin-bottom: 35px;">
-                            <select name="" class="form-control" id="country" onchange="ukDirect()">
+                            <select name="" class="form-control" id="country2" onchange="ukDirect2()">
                                 <option value="">Select a country</option>
                                 <option value="225">United Kingdom</option>
-                                <option value="224">United Arab Emirates</option>
+                                <option value="224">United Arab Emirates 1</option>
                             </select>
                         </div>
                         <div class="col-sm 2"></div>
@@ -240,6 +240,19 @@
     function ukDirect()
     {
         var country_id = document.getElementById("country").value;
+        console.log(country_id);
+        if(country_id == 225){
+            window.location = '/view/uk/';
+        }
+
+        if(country_id == 224){
+            window.location = '/view/UAE/';
+        }
+       
+    }
+    function ukDirect2()
+    {
+        var country_id = document.getElementById("country2").value;
         console.log(country_id);
         if(country_id == 225){
             window.location = '/view/uk/';

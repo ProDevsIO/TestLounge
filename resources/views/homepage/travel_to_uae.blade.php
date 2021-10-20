@@ -17,7 +17,7 @@
                         @if($where == 'to')
                             <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now travelling to United <br>Arab Emirates</b></h2>
                         @elseif($where == 'from')
-                        <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now from to United <br>Arab Emirates</b></h2>
+                        <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now Departing from United <br>Arab Emirates</b></h2>
                         @elseif($where == 'through')
                         <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now transiting through United <br>Arab Emirates</b></h2>
                         @elseif($where == 'from_o_uae')
@@ -44,7 +44,7 @@
                             <div class="col-sm-6 text-left">
 
                                 <p>All travellers to the UAE (vaccinated or unvaccinated) must hold a negative COVID 19 PCR test report at the departure airport.</p>
-                                <small class="color-1">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</small>
+                                <p class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</p>
                             </div>
                             <div class="col-sm-6" style="margin-top: 35px;">
                                 <select name="" class="form-control" id="country" onchange="getPerequisite()">
@@ -61,8 +61,9 @@
             <div class="container support " style="display:none">
                 <div class="row" style="">
                     <h3><b>Testing before you depart</b></h3>
+                    <br>
                     <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
-
+                    <br>
                     <div class="col-lg-4"> 
                         <div class="panel" id="UAE_depart"> 
                             <div class="panel-body">
@@ -104,7 +105,8 @@
                        
                             <div class="col-sm-6 text-left">
                             <h3><b>Testing on Arrival</b></h3>
-                                <small class="color-1">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</small>
+                            <br>
+                                <p class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</p>
                             </div>
                             <div class="col-sm-6" style="margin-top: 35px;">
                                 <select name="" class="form-control" id="countryAfter" onchange="getPerequisiteAfter()">
@@ -119,7 +121,7 @@
 
                     <div class="text-left after_others" style="margin-top:100px; display:none">
                         <p><label class="text-danger">You are <b>NOT</b> required to:</label><br>
-                        Take another COVID-19 PCR test on arrival at Dubia international airports.
+                        Take another COVID-19 PCR test on arrival at Dubai international airports.
                         </p>
                     </div>
 
@@ -130,15 +132,15 @@
                     </div>
                     <br>
                     <div class="text-left" style="margin-top:100px">
-                        <p class="text-danger" data-toggle="collapse" data-target="#demo"><label>Click to find out if your are exempted</label></p>
+                        <p class="text-danger" data-toggle="collapse" data-target="#demo"><label>Click to find out if you are exempted</label></p>
                         <div id="demo" class="collapse">
                             <p>You willl be exempted from testing at departure airport if:</p>
                             <ol>
-                                <li>You are a UAE national.</li>
-                                <li> A passenger accompanying a first degree UAE national’s relative or domestic workers.</li>
-                                <li>Domestic workers escorting a UAE national sponsor during travel. A</li>
-                                <li>A child under the age of 12 and passengers who have a moderate or severe disability except visual impairment. <a href="">See List</a></li>
-                                <li>There are specific test exemptions as per your country of origin and final desination.</li>
+                                <li><p>You are a UAE national.</p></li>
+                                <li><p>A passenger accompanying a first degree UAE national’s relative or domestic workers.</p></li>
+                                <li><p>Domestic workers escorting a UAE national sponsor during travel.</p></li>
+                                <li><p>A child under the age of 12 and passengers who have a moderate or severe disability except visual impairment. <a>See List</a> </p></li>
+                                <li><p>There are specific test exemptions as per your country of origin and final desination.</p></li>
                             </ol>
                         </div>
                     </div>
@@ -148,8 +150,9 @@
              <div class="container othersb4 " style="display:none">
                 <div class="row" style="">
                     <h3><b>Testing before you depart</b></h3>
+                    <br>
                     <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
-
+                    <br>
                     <div class="col-lg-4"> 
                         <div class="panel" id="UAE_depart"> 
                             <div class="panel-body">
@@ -182,7 +185,8 @@
                        
                             <div class="col-sm-6 text-left">
                             <h3><b>Testing on Arrival</b></h3>
-                                <small class="color-1">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</small>
+                            <br>
+                                <p class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</p>
                             </div>
                             <div class="col-sm-6" style="margin-top: 35px;">
                                 <select name="" class="form-control" id="countryAfter2" onchange="getPerequisiteAfter2()">
@@ -203,24 +207,24 @@
 
                     <div class="text-left after_others" style="margin-top:100px;display:none;">
                         <p><label class="text-danger">You are <b>NOT</b> required to:</label><br>
-                        Take another COVID-19 PCR test on arrival at Dubia international airports.
+                        Take another COVID-19 PCR test on arrival at Dubai international airports.
                         </p>
                     </div>
 
                     <br>
                     
                     <div class="text-left" style="margin-top:100px">
-                        <p class="text-danger" data-toggle="collapse" data-target="#demo"><label>  Click to find out if your are exempted</label></p>
+                        <p class="text-danger" data-toggle="collapse" data-target="#demo2"><label>  Click to find out if you are exempted</label></p>
                         
-                        <div id="demo" class="collapse"> 
+                        <div id="demo2" class="collapse"> 
                              <p>You willl be exempted from testing at departure airport if:</p>
                         
                             <ol>
-                                <li>You are a UAE national.</li>
-                                <li> A passenger accompanying a first degree UAE national’s relative or domestic workers.</li>
-                                <li>Domestic workers escorting a UAE national sponsor during travel. A</li>
-                                <li>A child under the age of 12 and passengers who have a moderate or severe disability except visual impairment. <a href="">See List</a></li>
-                                <li>There are specific test exemptions as per your country of origin and final desination.</li>
+                                <li><p>You are a UAE national.</p></li>
+                                <li><p>A passenger accompanying a first degree UAE national’s relative or domestic workers.</p></li>
+                                <li><p>Domestic workers escorting a UAE national sponsor during travel.</p></li>
+                                <li><p>A child under the age of 12 and passengers who have a moderate or severe disability except visual impairment. <a>See List</a> </p></li>
+                                <li><p>There are specific test exemptions as per your country of origin and final desination.</p></li>
                             </ol>
                         </div>
                     </div>
@@ -234,7 +238,7 @@
                             <div class="col-sm-6 text-left">
 
                                 <p>All travellers to the UAE (vaccinated or unvaccinated) must hold a negative COVID 19 PCR test report at the departure airport.</p>
-                                <small class="color-1">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</small>
+                                <p class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</p>
                             </div>
                             <div class="col-sm-6" style="margin-top: 35px;">
                                 <select name="" class="form-control" id="country" onchange="getPerequisite()">
@@ -249,8 +253,9 @@
                 <div class="container support " style="display:none">
                     <div class="row" style="">
                         <h3><b>Testing before you depart</b></h3>
+                        <br>
                         <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
-
+                        <br>
                         <div class="col-lg-4"> 
                             <div class="panel" id="UAE_depart"> 
                                 <div class="panel-body">
@@ -287,7 +292,8 @@
                        
                             <div class="col-sm-6 text-left">
                             <h3><b>Testing on Arrival</b></h3>
-                                <small class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</small>
+                            <br>
+                                <p class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</p>
                             </div>
                             
                         </div>              
@@ -323,7 +329,7 @@
 
                     <div class="text-left after_others" style="margin-top:100px; display:none">
                         <p><label class="text-danger">You are <b>NOT</b> required to:</label><br>
-                        Take another COVID-19 PCR test on arrival at Dubia international airports.
+                        Take another COVID-19 PCR test on arrival at Dubai international airports.
                         </p>
                     </div>
 
@@ -334,19 +340,19 @@
                     </div>
                     <br>
                     <div class="text-left" style="margin-top:100px">
-                        <p class="text-danger" data-toggle="collapse" data-target="#demo"><label>Click to find out if your are exempted</label></p>
+                        <p class="text-danger" data-toggle="collapse" data-target="#demo"><label>Click to find out if you are exempted</label></p>
                         <div id="demo" class="collapse">
                             <p> <b>You willl be exempted from uploading at pre-departure PCR test on NITP if:</b></p>
                             <div class="container">
                                 <ul style="list-style-type: circle">
-                                    <li>You are a child under the age of 10.</li> 
+                                    <li><p>You are a child under the age of 10.</p></li> 
                                  </ul>
                             </div>
                             <p> <b>You willl be exempted from paying for repeat PCR test 7 days after arrival if you are:</b></p>
                             <div class="container">
                                 <ul style="list-style-type: circle">
-                                    <li>You are a child under the age of 10.</li> 
-                                    <li>A Diplomat</li>
+                                    <li><p>You are a child under the age of 10.</p></li> 
+                                    <li><p>A Diplomat</p></li>
                                 </ul>
                             </div>
                         </div>
@@ -376,8 +382,9 @@
                 <div class="container support " style="display:none">
                     <div class="row" style="">
                         <h3><b>Testing before you depart</b></h3>
+                        <br>
                         <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
-
+                        <br>
                         <div class="col-lg-4"> 
                             <div class="panel" id="UAE_depart"> 
                                 <div class="panel-body">
@@ -407,7 +414,7 @@
                             <div class="col-sm-6 text-left">
 
                                 <p>All travellers to the UAE (vaccinated or unvaccinated) must hold a negative COVID 19 PCR test report at the departure airport.</p>
-                                <small class="color-1">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</small>
+                                <p class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</p>
                             </div>
                             <div class="col-sm-6" style="margin-top: 35px;">
                                 <select name="" class="form-control" id="country" onchange="getPerequisite()">
@@ -425,7 +432,7 @@
                         <h3><b>Testing before you depart</b></h3>
                         <br>
                         <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
-
+                        <br>
                         <div class="col-lg-4"> 
                             <div class="panel" id="UAE_depart"> 
                                 <div class="panel-body">
@@ -500,7 +507,7 @@
                             <div class="col-lg-4"> 
                                 <div class="panel" id="UAE_depart"> 
                                     <div class="panel-body">
-                                        <p>1. Take another COVID-19 PCR test on arrival at Dubia international airport.</p>
+                                        <p>1. Take another COVID-19 PCR test on arrival at Dubai international airport.</p>
                                     </div>
                                     <center>
                                     <a type="button" class="btn bg-1 btn-md ">Book this test</a>
@@ -586,15 +593,15 @@
                     </div>
                     <br>
                     <div class="text-left" style="margin-top:100px">
-                        <p class="text-danger" data-toggle="collapse" data-target="#demo"><label>Click to find out if your are exempted</label></p>
+                        <p class="text-danger" data-toggle="collapse" data-target="#demo"><label>Click to find out if you are exempted</label></p>
                         <div id="demo" class="collapse">
                             <p>You willl be exempted from testing at departure airport if:</p>
                             <ol>
-                                <li>You are a UAE national.</li>
-                                <li> A passenger accompanying a first degree UAE national’s relative or domestic workers.</li>
-                                <li>Domestic workers escorting a UAE national sponsor during travel. A</li>
-                                <li>A child under the age of 12 and passengers who have a moderate or severe disability except visual impairment. <a href="">See List</a></li>
-                                <li>There are specific test exemptions as per your country of origin and final desination.</li>
+                                <li><p>You are a UAE national.</p></li>
+                                <li><p>A passenger accompanying a first degree UAE national’s relative or domestic workers.</p></li>
+                                <li><p>Domestic workers escorting a UAE national sponsor during travel.</p></li>
+                                <li><p>A child under the age of 12 and passengers who have a moderate or severe disability except visual impairment. <a>See List</a> </p></li>
+                                <li><p>There are specific test exemptions as per your country of origin and final desination.</p></li>
                             </ol>
                         </div>
                     </div>
