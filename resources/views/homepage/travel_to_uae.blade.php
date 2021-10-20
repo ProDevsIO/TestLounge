@@ -43,8 +43,8 @@
                        
                             <div class="col-sm-6 text-left">
 
-                                <p>All travellers to the UAE (vaccinated or unvaccinated) must hold a negative COVID 19 PCR test report at the departure airport.</p>
-                                <p class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</p>
+                                <p>All travellers to the UAE (vaccinated or unvaccinated) must hold a negative COVID-19 PCR test report at the departure airport.</p>
+                                <p class="color-5">To see the COVID-19 testing requirements applicable to you, please select the country you are travelling from.</p>
                             </div>
                             <div class="col-sm-6" style="margin-top: 35px;">
                                 <select name="" class="form-control" id="country" onchange="getPerequisite()">
@@ -108,7 +108,7 @@
                             <div class="col-sm-6 text-left">
                             <h3><b>Testing on Arrival</b></h3>
                             <br>
-                                <p class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</p>
+                                <p class="color-5">To see the COVID-19 testing requirements applicable to you, please select the country you are travelling from.</p>
                             </div>
                             <div class="col-sm-6" style="margin-top: 35px;">
                                 <select name="" class="form-control" id="countryAfter" onchange="getPerequisiteAfter()">
@@ -192,7 +192,7 @@
                             <div class="col-sm-6 text-left">
                             <h3><b>Testing on Arrival</b></h3>
                             <br>
-                                <p class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</p>
+                                <p class="color-5">To see the COVID-19 testing requirements applicable to you, please select the country you are travelling from.</p>
                             </div>
                             <div class="col-sm-6" style="margin-top: 35px;">
                                 <select name="" class="form-control" id="countryAfter2" onchange="getPerequisiteAfter2()">
@@ -243,8 +243,8 @@
                        
                             <div class="col-sm-6 text-left">
 
-                                <p>All travellers to the UAE (vaccinated or unvaccinated) must hold a negative COVID 19 PCR test report at the departure airport.</p>
-                                <p class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</p>
+                                <p>All travellers to the UAE (vaccinated or unvaccinated) must hold a negative COVID-19 PCR test report at the departure airport.</p>
+                                <p class="color-5">To see the COVID-19 testing requirements applicable to you, please select the country you are travelling from.</p>
                             </div>
                             <div class="col-sm-6" style="margin-top: 35px;">
                                 <select name="" class="form-control" id="country" onchange="getPerequisite()">
@@ -282,7 +282,7 @@
                             <div class="panel" id="UAE_depart"> 
                                 <div class="panel-body" >
                                     <p>2. Register via online national travel portal(Nigeria International Travel Portal ( <a href="https://nitp.ncdcgov.ng" style="color:red; text-decoration:underline;"> https://nitp.ncdcgov.ng </a>) and proceed to fill in the online Health Declaration / Self-Reporting form located on the portal. On this portal, passengers must do the following: <br>
-                                    a. Upload your negative COVID 19 PCR test on the portal<br>
+                                    a. Upload your negative COVID-19 PCR test on the portal<br>
                                     b. Select your preferred Sample/Laboratory Collection Center for your PCR test to be done after arrival.<br>
                                     c. Download the permit to Travel Certificate QR code using the  “Get Permit to Travel” button</p>
                                 </div>
@@ -301,7 +301,7 @@
                             <div class="col-sm-6 text-left">
                             <h3><b>Testing on Arrival</b></h3>
                             <br>
-                                <p class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</p>
+                                <p class="color-5">To see the COVID-19 testing requirements applicable to you, please select the country you are travelling from.</p>
                             </div>
                             
                         </div>              
@@ -311,7 +311,7 @@
                         <div class="col-lg-4"> 
                             <div class="panel" id="UAE_depart"> 
                                 <div class="panel-body">
-                                    <p>1. You do not need to observe the mandatory 7 day self-isolation period. However, you are required to take a COVID 19 PCR test on Day 2 after arrival.</p>
+                                    <p>1. You do not need to observe the mandatory 7 day self-isolation period. However, you are required to take a COVID-19 PCR test on Day 2 after arrival.</p>
                                 </div>
                                 <center>
                                 <a type="button" class="btn bg-1 btn-md ">Book this test</a>
@@ -325,7 +325,7 @@
                         <div class="col-lg-4">
                             <div class="panel bg-1" id="UAE_depart1"> 
                                 <div class="panel-body" >
-                                    <p>2. If vaccinated or Not fully vaccinated: you are required to observe a 7 day self isolation and take two COVID 19 test on Day 2 and Day 7 after arrival.</p>
+                                    <p>2. If vaccinated or Not fully vaccinated: you are required to observe a 7 day self isolation and take two COVID-19 test on Day 2 and Day 7 after arrival.</p>
                                 </div>
                                 <center>
                                 
@@ -373,7 +373,7 @@
                        
                             <div class="col-sm-6 text-left">
 
-                                <p class="color-1">Choose the Country you are travelling from to get information about COVID 19 travel and testing requirements.</p>
+                                <p class="color-1">Choose the Country you are travelling from to get information about COVID-19 travel and testing requirements.</p>
                                
                             </div>
                             <div class="col-sm-6" style="margin-top: 10px;">
@@ -423,8 +423,8 @@
                        
                             <div class="col-sm-6 text-left">
 
-                                <p>All travellers to the UAE (vaccinated or unvaccinated) must hold a negative COVID 19 PCR test report at the departure airport.</p>
-                                <p class="color-5">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</p>
+                                <p>All travellers to the UAE (vaccinated or unvaccinated) must hold a negative COVID-19 PCR test report at the departure airport.</p>
+                                <p class="color-5">To see the COVID-19 testing requirements applicable to you, please select the country you are travelling from.</p>
                             </div>
                             <div class="col-sm-6" style="margin-top: 35px;">
                                 <select name="" class="form-control" id="country" onchange="getPerequisite()">
@@ -629,7 +629,7 @@
                             <div class="panel" id="UAE_depart"> 
                                 <div class="panel-body">
                                     <p><b>CITIZENS, RESIDENTS, TOURISTS & VISITORS TO DUBAI & OTHER EMIRATES</b><br><br>
-                                        It is no longer mandatory to hold a negative COVID 19 test report if you are travelling from Dubai and other Emirates to Abu Dhabi. However, you will be required to hold a negative COVID 19 test report if you are:
+                                        It is no longer mandatory to hold a negative COVID-19 test report if you are travelling from Dubai and other Emirates to Abu Dhabi. However, you will be required to hold a negative COVID-19 test report if you are:
                                         <ul style="list-style-type: circle">
                                         <li>Unvaccinated or not fully vaccinated with the same type of vaccine.</li>
                                         <li> Do not have a <span class="text-success">‘green status’ </span>  on the Al Hosn App</li>

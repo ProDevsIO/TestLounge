@@ -35,7 +35,7 @@
                 
                 <div class="country-category">
                     <div class="container-fluid" style="margin-top:50px">
-                        <p class="text-danger">Please Note that there are additional COVID 19 <br>
+                        <p class="text-danger">Please Note that there are additional COVID-19 <br>
                          requirements for people travelling into Abu Dhabi.</p>
                     </div>
                     <div class="container-fluid" style="margin-top:50px">
