@@ -55,6 +55,7 @@ Route::get('/covid/testing', [\App\Http\Controllers\HomeController::class,"produ
 Route::get('/check/price/{vendor_id}', [\App\Http\Controllers\HomeController::class,"check_price"])->name('check_price');
 Route::get('/view/uk', [\App\Http\Controllers\HomeController::class,"view_uk"]);
 Route::get('/view/UAE', [\App\Http\Controllers\HomeController::class,"view_uae"]);
+Route::get('/view/abudhabi', [\App\Http\Controllers\HomeController::class,"view_abudabi"]);
 Route::get('/view/{where}/UAE', [\App\Http\Controllers\HomeController::class,"view_to_uae"]);
 
 

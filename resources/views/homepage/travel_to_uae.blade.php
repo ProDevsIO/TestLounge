@@ -20,6 +20,10 @@
                         <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now from to United <br>Arab Emirates</b></h2>
                         @elseif($where == 'through')
                         <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now transiting through United <br>Arab Emirates</b></h2>
+                        @elseif($where == 'from_o_uae')
+                        <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now travelling to Abu Dhabi<br> from outside United Arab <br>Emirates</b></h2>
+                        @elseif($where == 'from_within_uae')
+                        <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now travelling to Abu Dhabi<br> from within United Arab <br>Emirates</b></h2>
                         @endif
                         </div>
                         <!-- <div class="col-md-6 pull-right" id="banner-writeup2" style="left:10%;top:100px ">
@@ -65,7 +69,7 @@
                                 <p>1. A valid COVID-19 PCR test certificate with a QR code for a test conducted within 48 hours, validity should be calculated from the time the sample was collected, prior to departure from an approved health facility.</p>
                             </div>
                             <center>
-                              <a type="button" class="btn bg-1 btn-md ">Book this test $95</a>
+                              <a type="button" class="btn bg-1 btn-md ">Book this test </a>
                             </center>
                         </div>
                     </div>
@@ -76,7 +80,7 @@
                                 <p>2. A rapid PCR test report with a QR code for a test conducted at the departure airport within 6 hours of departure.</p>
                             </div>
                             <center>
-                            <a type="button" class="btn bg-1 btn-md ">Book this test $95</a>
+                            <a type="button" class="btn bg-1 btn-md ">Book this test</a>
                             </center>
                         </div>
                     </div>
@@ -87,7 +91,7 @@
                             </div>
                             <center>
                               
-                            <a type="button" class="btn bg-white btn-md" style="color:black !important; ">Book this test $180</a>
+                            <a type="button" class="btn bg-white btn-md" style="color:black !important; ">Book this test</a>
                             </center>
                         </div>
                     </div>
@@ -395,6 +399,239 @@
                         </div> 
                     </div>
                 </div>
+    @elseif($where == 'from_o_uae')
+                <div class="container" style="padding:0">
+                    <div class="text-center" style="padding-top:59px;padding-bottom:59px;">
+                        <div class="row" id="calculator">
+                       
+                            <div class="col-sm-6 text-left">
+
+                                <p>All travellers to the UAE (vaccinated or unvaccinated) must hold a negative COVID 19 PCR test report at the departure airport.</p>
+                                <small class="color-1">To see the COVID 19 testing requirements applicable to you, please select the country you are travelling from.</small>
+                            </div>
+                            <div class="col-sm-6" style="margin-top: 35px;">
+                                <select name="" class="form-control" id="country" onchange="getPerequisite()">
+                                    <option value="">Select a country</option>
+                                    @foreach($countries as $country)
+                                    <option value="{{$country->id}}"> {{$country->nicename}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>              
+                    </div>
+                </div>
+                <div class="container support " style="display:none">
+                    <div class="row" style="">
+                        <h3><b>Testing before you depart</b></h3>
+                        <br>
+                        <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+
+                        <div class="col-lg-4"> 
+                            <div class="panel" id="UAE_depart"> 
+                                <div class="panel-body">
+                                    <p>A valid negative COVID-19 PCR test certificate with a QR code for a test conducted within 72 hours, validity should be calculated from the time the sample was collected, prior to departure from an approved health facility.</p>
+                                </div>
+                                <center>
+                                <a type="button" class="btn bg-1 btn-md ">Book this test</a>
+                                </center>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="panel" id="UAE_depart"> 
+                                <div class="panel-body">
+                                    <p>A rapid PCR test report with a QR code for a test conducted at the departure airport within 6 hours of departure.</p>
+                                </div>
+                                <center>
+                                <a type="button" class="btn bg-1 btn-md ">Book this test</a>
+                                </center>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="panel bg-1" id="UAE_depart1"> 
+                                <div class="panel-body" >
+                                    <p>Do you know you can do both tests at a discounted price ?</p>
+                                </div>
+                                <center>
+                                
+                                <a type="button" class="btn bg-white btn-md" style="color:black !important; ">Book this test</a>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+               
+                </div>
+                <div class="container support"  style="margin-top:100px;display:none">
+                    <div class="text-center" style="padding-top:59px;padding-bottom:59px;">
+                        <div class="row" id="calculator">
+                            <div class="col-sm-6 text-left">
+                                
+                            </div>
+                            <div class="col-sm-6 text-left">
+                                <div id="show-result">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6 text-left">
+                                
+                            <h3><b>Testing After Arrival</b></h3>
+                                <p class="color-5">You are required to hold verifiable reports for the following tests:</p>
+                            </div>
+                            <div class="col-sm-6" style="">
+                                 <div id="show-result">
+
+                                </div>
+
+                                <select name="" class="form-control" id="countryAfter" onchange="getPerequisiteAfter()">
+                                    <option value="">Select a country</option>
+                                    @foreach($countries as $country)
+                                    <option value="{{$country->id}}"> {{$country->nicename}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>              
+                    </div>
+
+                    <div class="text-left after_others" style="margin-top:100px; display:none">
+                        <div class="row" style="">
+                            
+                            <p class="text-danger">If Vaccinated, You are required to:</p>
+
+                            <div class="col-lg-4"> 
+                                <div class="panel" id="UAE_depart"> 
+                                    <div class="panel-body">
+                                        <p>1. Take another COVID-19 PCR test on arrival at Dubia international airport.</p>
+                                    </div>
+                                    <center>
+                                    <a type="button" class="btn bg-1 btn-md ">Book this test</a>
+                                    </center>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                            
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="panel" id="UAE_depart"> 
+                                    <div class="panel-body" >
+                                        <p>2. Take repeat PCR test while within Abu Dhabi on 6th day after arrival.</p>
+                                    </div>
+                                    <center>
+                                        <a type="button" class="btn bg-1 btn-md">Book this test</a>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style=" margin-top:100px">
+                            
+                            <p class="text-danger">If Vaccinated, You are required to:</p>
+
+                            <div class="col-lg-4"> 
+                                <div class="panel" id="UAE_depart"> 
+                                    <div class="panel-body">
+                                        <p>1. Take another COVID-19 PCR test on arrival at Abu Dhabi international airport. This test is provided free of charge by UAE government.</p>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                            
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="panel" id="UAE_depart"> 
+                                    <div class="panel-body" >
+                                        <p>2. Take repeat PCR test while within Abu Dhabi on 6th and 9th day after arrival.</p>
+                                    </div>
+                                    <center>
+                                        <a type="button" class="btn bg-1 btn-md">Book this test</a>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-left after_support" style="margin-top:100px;display:none">
+                          <div class="row" style="">
+
+                            <div class="col-lg-4"> 
+                             <p class="text-danger">If Vaccinated, You are required to:</p>
+                                <div class="panel" id="UAE_depart"> 
+                                    <div class="panel-body">
+                                        <p>1. Take another COVID-19 PCR test on arrival at Abu Dhabi international airport.</p>
+                                        <p>2.  Repeat tests are required while within Abu Dhabi on 6th and 9th day.</p>
+                                    </div>
+                                    <center>
+                                    <a type="button" class="btn bg-1 btn-md ">Book this test</a>
+                                    </center>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                            
+                            </div>
+                            <div class="col-lg-4">
+                                <p class="text-danger">If Not Vaccinated, You are required to:</p>
+                                <div class="panel" id="UAE_depart"> 
+                                    <div class="panel-body" >
+                                        <p>1. Take another COVID-19 PCR test on arrival at Abu Dhabi international airport</p>
+                                        <p>2. Repeat tests are required while within Abu Dhabi on 6th and 9th day.</p>
+                                    </div>
+                                    <center>
+                                        <a type="button" class="btn bg-1 btn-md">Book this test</a>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="text-left" style="margin-top:100px">
+                        <p class="text-danger" data-toggle="collapse" data-target="#demo"><label>Click to find out if your are exempted</label></p>
+                        <div id="demo" class="collapse">
+                            <p>You willl be exempted from testing at departure airport if:</p>
+                            <ol>
+                                <li>You are a UAE national.</li>
+                                <li> A passenger accompanying a first degree UAE national’s relative or domestic workers.</li>
+                                <li>Domestic workers escorting a UAE national sponsor during travel. A</li>
+                                <li>A child under the age of 12 and passengers who have a moderate or severe disability except visual impairment. <a href="">See List</a></li>
+                                <li>There are specific test exemptions as per your country of origin and final desination.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+    @elseif($where == 'from_within_uae')
+                <div class="container">
+                    <div class="row" style="">
+                        
+                        <br>
+                      
+
+                        <div class="col-lg-4"> 
+                            <div class="panel" id="UAE_depart"> 
+                                <div class="panel-body">
+                                    <p><b>CITIZENS, RESIDENTS, TOURISTS & VISITORS TO DUBAI & OTHER EMIRATES</b><br><br>
+                                        It is no longer mandatory to hold a negative COVID 19 test report if you are travelling from Dubai and other Emirates to Abu Dhabi. However, you will be required to hold a negative COVID 19 test report if you are:
+                                        <ul style="list-style-type: circle">
+                                        <li>Unvaccinated or not fully vaccinated with the same type of vaccine.</li>
+                                        <li> Do not have a <span class="text-success">‘green status’ </span>  on the Al Hosn App</li>
+                                        <li> Unvaccinated and staying longer than 6 days.</li>
+                                        
+                                        </ul></p>
+                                </div>
+                                <center>
+                                <a type="button" class="btn bg-1 btn-md ">Book this test</a>
+                                </center>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                           
+                        </div>
+                        <div class="col-lg-4">
+                            
+                        </div>
+                    </div>
+                 </div>
     @endif
 </div>
 @endsection
@@ -518,5 +755,69 @@
                 }
             }
     </script>
+    @elseif($where == 'from_o_uae')
+    <script>
+            function getPerequisite()
+            {
+                var country_id = document.getElementById("country").value;
+                console.log(country_id);
+                if(country_id != null  ){
+                    var $uae = $(".support");
+                    var $uaeO = $(".othersb4");
+                    $uaeO.hide();
+                    $uae.show();
+                }else{
+                    var $uaeO = $(".othersb4");
+                    var $uae = $(".support");
+                    $uae.hide();
+                    $uaeO.show();
+                    
+                }
+            }
+
+            function getPerequisiteAfter()
+        {
+            var country_id = document.getElementById("countryAfter").value;
+            console.log(country_id);
+            if(country_id == 13 || country_id == 14 || country_id == 17 || country_id == 21 || country_id == 38 ||
+            country_id == 44 || country_id == 73 || country_id == 80 || country_id == 83 || country_id == 100 || country_id == 104
+            || country_id == 99 || country_id == 100 || country_id == 101 || country_id == 102 || country_id == 104 || country_id == 108
+            || country_id == 105 || country_id == 107 || country_id == 108 || country_id == 114 || country_id == 130 || country_id == 144 
+            || country_id == 150 || country_id == 161 || country_id == 174 || country_id == 177 || country_id == 187 || country_id == 190
+            || country_id == 192 || country_id == 197 || country_id == 199 || country_id == 206 || country_id == 123 || country_id == 211
+            || country_id == 225)
+            {
+                var $uae = $(".after_support");
+                var $uaeO = $(".after_others");
+                $uaeO.hide();
+                $uae.show();
+
+                $("#show-result")
+                    .find('p')
+                    .remove()
+                    .end();
+
+                    var holder = document.getElementById("show-result");
+                    var newNode = document.createElement('p');
+                    var close =  document.createElement('a');
+                    newNode.innerHTML = "According to Abu Dhabi, this is a Green List country";
+                    close.innerHTML = "X";
+                    holder.appendChild(newNode);
+                    newNode.appendChild(close);
+                    $("#show-result p a").addClass('close')
+                    $("#show-result p a").attr("data-dismiss","alert")
+                    $("#show-result p").addClass('alert')
+                    $("#show-result p").addClass('p-2')
+                    $("#show-result p").attr("style", "background-color: #258C48;color:white;margin-bottom: 5px;")
+            }else{
+                var $uae = $(".after_support");
+                var $uaeO = $(".after_others");
+                $uae.hide();
+                $uaeO.show();
+            }
+    
+        }
+    </script>
+
     @endif
 @endsection

@@ -1639,6 +1639,11 @@ class HomeController extends Controller
         return view('homepage.uae_option_page');
     }
 
+    public function view_abudabi()
+    {
+        return view('homepage.abudhabi_option_page');
+    }
+
     public function view_to_uae($where)
     {
         
