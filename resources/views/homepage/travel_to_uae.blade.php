@@ -15,15 +15,15 @@
                     <div class="row">
                         <div class="col-md-6 "style=" padding-top:200px">
                         @if($where == 'to')
-                            <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now travelling to United <br>Arab Emirates</b></h2>
+                            <h2 id="h9" class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now travelling to United Arab Emirates</b></h2>
                         @elseif($where == 'from')
-                        <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now Departing from United <br>Arab Emirates</b></h2>
+                        <h2 id="h9" class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now Departing from United Arab Emirates</b></h2>
                         @elseif($where == 'through')
-                        <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now transiting through United <br>Arab Emirates</b></h2>
+                        <h2 id="h9" class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now transiting through United Arab Emirates</b></h2>
                         @elseif($where == 'from_o_uae')
-                        <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now travelling to Abu Dhabi<br> from outside United Arab <br>Emirates</b></h2>
+                        <h2 id="h9" class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now travelling to Abu Dhabi from outside United Arab Emirates</b></h2>
                         @elseif($where == 'from_within_uae')
-                        <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now travelling to Abu Dhabi<br> from within United Arab <br>Emirates</b></h2>
+                        <h2 id="h9" class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>Now travelling to Abu Dhabi from within United Arab Emirates</b></h2>
                         @endif
                         </div>
                         <!-- <div class="col-md-6 pull-right" id="banner-writeup2" style="left:10%;top:100px ">
@@ -37,7 +37,7 @@
         </div><!--end of co-->
     </header>
     @if($where == 'to')
-            <div class="container" style="padding:0">
+            <div class="container">
                     <div class="text-center" style="padding-top:59px;padding-bottom:59px;">
                         <div class="row" id="calculator">
                        
@@ -60,9 +60,11 @@
             <!-- info for supported countries testing b4 u depart -->
             <div class="container support " style="display:none">
                 <div class="row" style="">
-                    <h3><b>Testing before you depart</b></h3>
-                    <br>
-                    <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                    <div class="container">
+                        <h3><b>Testing before you depart</b></h3>
+                        <br>
+                        <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                    </div>
                     <br>
                     <div class="col-lg-4"> 
                         <div class="panel" id="UAE_depart"> 
@@ -121,7 +123,7 @@
 
                     <div class="text-left after_others" style="margin-top:100px; display:none">
                         <p><label class="text-danger">You are <b>NOT</b> required to:</label><br>
-                        Take another COVID-19 PCR test on arrival at Dubai international airports.
+                        Take another COVID-19 PCR test on arrival at Dubai International Airports.
                         </p>
                     </div>
 
@@ -147,11 +149,15 @@
             </div>
              <!-- end of info for supported countries testing b4 u depart -->
             <!-- info for supported countries testing on arrival -->
-             <div class="container othersb4 " style="display:none">
+             <div class="container othersb4 " style="display:none;">
                 <div class="row" style="">
-                    <h3><b>Testing before you depart</b></h3>
-                    <br>
-                    <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                    <div class="container">
+                        <h3><b>Testing before you depart</b></h3>
+                        <br>
+                        <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                    </div>
+                    
+                    
                     <br>
                     <div class="col-lg-4"> 
                         <div class="panel" id="UAE_depart"> 
@@ -159,7 +165,7 @@
                                 <p>1. A negative COVID-19 RT-PCR test certificate for a test taken more than 72 hours before departure.</p>
                             </div>
                             <center>
-                              <a type="button" class="btn bg-1 btn-md ">Book this test $95</a>
+                              <a type="button" class="btn bg-1 btn-md ">Book this test</a>
                             </center>
                         </div>
                     </div>
@@ -207,7 +213,7 @@
 
                     <div class="text-left after_others" style="margin-top:100px;display:none;">
                         <p><label class="text-danger">You are <b>NOT</b> required to:</label><br>
-                        Take another COVID-19 PCR test on arrival at Dubai international airports.
+                        Take another COVID-19 PCR test on arrival at Dubai International Airports.
                         </p>
                     </div>
 
@@ -231,7 +237,7 @@
             </div>
             <!-- end of info for supported countries testing on arrival -->
     @elseif($where == 'from')
-                 <div class="container" style="padding:0">
+                 <div class="container" >
                     <div class="text-center" style="padding-top:59px;padding-bottom:59px;">
                         <div class="row" id="calculator">
                        
@@ -252,9 +258,11 @@
                  </div>
                 <div class="container support " style="display:none">
                     <div class="row" style="">
-                        <h3><b>Testing before you depart</b></h3>
-                        <br>
-                        <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                        <div class="container">
+                            <h3><b>Testing before you depart</b></h3>
+                            <br>
+                            <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>  
+                        </div>
                         <br>
                         <div class="col-lg-4"> 
                             <div class="panel" id="UAE_depart"> 
@@ -329,7 +337,7 @@
 
                     <div class="text-left after_others" style="margin-top:100px; display:none">
                         <p><label class="text-danger">You are <b>NOT</b> required to:</label><br>
-                        Take another COVID-19 PCR test on arrival at Dubai international airports.
+                        Take another COVID-19 PCR test on arrival at Dubai International Airports.
                         </p>
                     </div>
 
@@ -359,7 +367,7 @@
                     </div>
                 </div>
     @elseif($where == 'through')
-                <div class="container" style="padding:0">
+                <div class="container">
                     <div class="text-center" style="padding-top:59px;padding-bottom:59px;">
                         <div class="row" id="calculator">
                        
@@ -381,9 +389,11 @@
                 </div>
                 <div class="container support " style="display:none">
                     <div class="row" style="">
-                        <h3><b>Testing before you depart</b></h3>
-                        <br>
-                        <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                        <div class="container">
+                            <h3><b>Testing before you depart</b></h3>
+                            <br>
+                            <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                        </div>
                         <br>
                         <div class="col-lg-4"> 
                             <div class="panel" id="UAE_depart"> 
@@ -407,7 +417,7 @@
                     </div>
                 </div>
     @elseif($where == 'from_o_uae')
-                <div class="container" style="padding:0">
+                <div class="container">
                     <div class="text-center" style="padding-top:59px;padding-bottom:59px;">
                         <div class="row" id="calculator">
                        
@@ -429,9 +439,11 @@
                 </div>
                 <div class="container support " style="display:none">
                     <div class="row" style="">
-                        <h3><b>Testing before you depart</b></h3>
-                        <br>
-                        <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                         <div class="container">
+                            <h3><b>Testing before you depart</b></h3>
+                            <br>
+                            <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                        </div>
                         <br>
                         <div class="col-lg-4"> 
                             <div class="panel" id="UAE_depart"> 

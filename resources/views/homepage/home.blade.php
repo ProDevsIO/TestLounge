@@ -153,7 +153,7 @@
                             <select name="" class="form-control" id="country2" onchange="ukDirect2()">
                                 <option value="">Select a country</option>
                                 <option value="225">United Kingdom</option>
-                                <option value="224">United Arab Emirates 1</option>
+                                <option value="224">United Arab Emirates</option>
                             </select>
                         </div>
                         <div class="col-sm 2"></div>

@@ -17,7 +17,7 @@
                 <div class="col-md-12 text-center" id="banner-writeup-container">
                     <div class="row">
                         <div class="col-md-6 "style=" padding-top:200px">
-                            <h2 class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>UNITED ARAB EMIRATES</b></h2>
+                            <h2 id="h9" class="text-white space-bottom-medium text-left" style="margin-top: 20px" id="banner-writeup"><b>UNITED ARAB EMIRATES</b></h2>
                            
                         </div>
                         <!-- <div class="col-md-6 pull-right" id="banner-writeup2" style="left:10%;top:100px ">
