@@ -1707,10 +1707,10 @@ class HomeController extends Controller
             if($voucher->user->country == 'NG')
             {
               $currency = 'NGN';
-              $charged = $vendor_products->price;
+              $charged = $price;
             }else{
                 $currency = 'USD';
-                $charged = $vendor_products->price_pounds;
+                $charged = $price_pounds;
             }
     
             BookingProduct::where('booking_id', $booking->id)->update([
