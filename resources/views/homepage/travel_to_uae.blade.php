@@ -7,7 +7,7 @@
 
     <header class="page-header" style="height: 450px;padding-top: 50px">
         <div class="background-image-holder parallax-background">
-            
+
             @if($where == 'to')
             <img class="background-image" alt="Background Image" src="/img/abudabi1.jpg">
             @elseif($where == 'from')
@@ -73,7 +73,7 @@
                     <div class="container">
                         <h3><b>Testing before you depart</b></h3>
                         <br>
-                        <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                        <p class="color-5">You are required to hold verifiable reports of the following tests:</p>
                     </div>
                     <br>
                     <div class="col-lg-4"> 
@@ -111,7 +111,7 @@
                 </div>
                
             </div>
-            <div class="container support"  style="margin-top:100px;display:none">
+            <div class="container support"  style="margin-top:20px;display:none">
                     <div class="text-center" style="padding-top:59px;padding-bottom:59px;">
                         <div class="row" id="calculator">
                        
@@ -132,19 +132,19 @@
                     </div>
 
                     <div class="text-left after_others" style="margin-top:100px; display:none">
-                        <p><label class="text-danger">You are <b>NOT</b> required to:</label><br>
+                        <p><label class="color-5">You are <b>NOT</b> required to:</label><br>
                         Take another COVID-19 PCR test on arrival at Dubai International Airports.
                         </p>
                     </div>
 
                     <div class="text-left after_support" style="margin-top:100px;display:none">
-                        <p><label class="text-danger">You are required to:</label><br>
+                        <p><label class="color-5">You are required to:</label><br>
                         Take another COVID-19 PCR test on arrival at UAE airports.<br> This test is provided free of charge by UAE government.
                         </p>
                     </div>
                     <br>
                     <div class="text-left" style="margin-top:100px">
-                        <p class="text-danger" data-toggle="collapse" data-target="#demo"><label>Click to find out if you are exempted</label></p>
+                        <p class="color-5" data-toggle="collapse" data-target="#demo"><label>Click to find out if you are exempted</label></p>
                         <div id="demo" class="collapse">
                             <p>You willl be exempted from testing at departure airport if:</p>
                             <ol>
@@ -164,7 +164,7 @@
                     <div class="container">
                         <h3><b>Testing before you depart</b></h3>
                         <br>
-                        <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                        <p class="color-5">You are required to hold verifiable reports of the following tests:</p>
                     </div>
                     
                     
@@ -195,7 +195,7 @@
                 </div>
                
             </div>
-            <div class="container othersb4"  style="margin-top:100px;display:none">
+            <div class="container othersb4"  style="margin-top:20px;display:none">
                     <div class="text-center" style="padding-top:59px;padding-bottom:59px;">
                         <div class="row" id="calculator">
                        
@@ -216,13 +216,13 @@
                     </div>
 
                     <div class="text-left after_support" style="margin-top:100px;display:none;">
-                        <p><label class="text-danger">You are required to:</label><br>
+                        <p><label class="color-5">You are required to:</label><br>
                         Take another COVID-19 PCR test on arrival at UAE airports.<br> This test is provided free of charge by UAE government.
                         </p>
                     </div>
 
                     <div class="text-left after_others" style="margin-top:100px;display:none;">
-                        <p><label class="text-danger">You are <b>NOT</b> required to:</label><br>
+                        <p><label class="color-5">You are <b>NOT</b> required to:</label><br>
                         Take another COVID-19 PCR test on arrival at Dubai International Airports.
                         </p>
                     </div>
@@ -230,7 +230,7 @@
                     <br>
                     
                     <div class="text-left" style="margin-top:100px">
-                        <p class="text-danger" data-toggle="collapse" data-target="#demo2"><label>  Click to find out if you are exempted</label></p>
+                        <p class="color-5" data-toggle="collapse" data-target="#demo2"><label>  Click to find out if you are exempted</label></p>
                         
                         <div id="demo2" class="collapse"> 
                              <p>You willl be exempted from testing at departure airport if:</p>
@@ -271,7 +271,7 @@
                         <div class="container">
                             <h3><b>Testing before you depart</b></h3>
                             <br>
-                            <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>  
+                            <p class="color-5">You are required to hold verifiable reports of the following tests:</p>  
                         </div>
                         <br>
                         <div class="col-lg-4"> 
@@ -304,7 +304,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="container support"  style="margin-top:100px;display:none">
+                <div class="container support"  style="margin-top:20px;display:none">
                     <div class="text-center" style="padding-top:59px;padding-bottom:59px;">
                         <div class="row" id="calculator">
                        
@@ -346,29 +346,29 @@
                     </div>
 
                     <div class="text-left after_others" style="margin-top:100px; display:none">
-                        <p><label class="text-danger">You are <b>NOT</b> required to:</label><br>
+                        <p><label class="color-5">You are <b>NOT</b> required to:</label><br>
                         Take another COVID-19 PCR test on arrival at Dubai International Airports.
                         </p>
                     </div>
 
                     <div class="text-left after_support" style="margin-top:100px;display:none">
-                        <p><label class="text-danger">You are required to:</label><br>
+                        <p><label class="color-5">You are required to:</label><br>
                         Take another COVID-19 PCR test on arrival at UAE airports.<br> This test is provided free of charge by UAE government.
                         </p>
                     </div>
                     <br>
                     <div class="text-left" style="margin-top:100px">
-                        <p class="text-danger" data-toggle="collapse" data-target="#demo"><label>Click to find out if you are exempted</label></p>
+                        <p class="color-5" data-toggle="collapse" data-target="#demo"><label>Click to find out if you are exempted</label></p>
                         <div id="demo" class="collapse">
                             <p> <b>You willl be exempted from uploading at pre-departure PCR test on NITP if:</b></p>
                             <div class="container">
-                                <ul style="list-style-type: circle">
+                                <ul style="list-style-type: square">
                                     <li><p>You are a child under the age of 10.</p></li> 
                                  </ul>
                             </div>
                             <p> <b>You willl be exempted from paying for repeat PCR test 7 days after arrival if you are:</b></p>
                             <div class="container">
-                                <ul style="list-style-type: circle">
+                                <ul style="list-style-type: square">
                                     <li><p>You are a child under the age of 10.</p></li> 
                                     <li><p>A Diplomat</p></li>
                                 </ul>
@@ -402,7 +402,7 @@
                         <div class="container">
                             <h3><b>Testing before you depart</b></h3>
                             <br>
-                            <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                            <p class="color-5">You are required to hold verifiable reports of the following tests:</p>
                         </div>
                         <br>
                         <div class="col-lg-4"> 
@@ -422,7 +422,7 @@
                 <div class="container othersb4 " style="display:none">
                     <div class="row" style="">
                         <div class="col-lg-6"> 
-                        <p class="text-danger">Transit passengers from this country are not required to present this certificate during transit through UAE airports unless it is mandated by their destination.</p>
+                        <p class="color-5">Transit passengers from this country are not required to present this certificate during transit through UAE airports unless it is mandated by their destination.</p>
                         </div> 
                     </div>
                 </div>
@@ -452,7 +452,7 @@
                          <div class="container">
                             <h3><b>Testing before you depart</b></h3>
                             <br>
-                            <p class="text-danger">You are required to hold verifiable reports of the following tests:</p>
+                            <p class="color-5">You are required to hold verifiable reports of the following tests:</p>
                         </div>
                         <br>
                         <div class="col-lg-4"> 
@@ -523,8 +523,9 @@
 
                     <div class="text-left after_others" style="margin-top:100px; display:none">
                         <div class="row" style="">
-                            
-                            <p class="text-danger">If Vaccinated, You are required to:</p>
+                            <div class="container-fluid">
+                                 <p class="color-5">If vaccinated, You are required to:</p>
+                            </div>
 
                             <div class="col-lg-4"> 
                                 <div class="panel" id="UAE_depart"> 
@@ -552,8 +553,10 @@
                             </div>
                         </div>
                         <div class="row" style=" margin-top:100px">
-                            
-                            <p class="text-danger">If Vaccinated, You are required to:</p>
+                            <div class="container-fluid">
+                                 <p class="color-5">If vaccinated, You are required to:</p>
+                            </div>
+                           
 
                             <div class="col-lg-4"> 
                                 <div class="panel" id="UAE_depart"> 
@@ -584,7 +587,7 @@
                           <div class="row" style="">
 
                             <div class="col-lg-4"> 
-                             <p class="text-danger">If Vaccinated, You are required to:</p>
+                             <p class="color-5">If Vaccinated, You are required to:</p>
                                 <div class="panel" id="UAE_depart"> 
                                     <div class="panel-body">
                                         <p>1. Take another COVID-19 PCR test on arrival at Abu Dhabi international airport.</p>
@@ -600,7 +603,7 @@
                             
                             </div>
                             <div class="col-lg-4">
-                                <p class="text-danger">If Not Vaccinated, You are required to:</p>
+                                <p class="color-5">If Not Vaccinated, You are required to:</p>
                                 <div class="panel" id="UAE_depart"> 
                                     <div class="panel-body" >
                                         <p>1. Take another COVID-19 PCR test on arrival at Abu Dhabi international airport</p>
@@ -615,7 +618,7 @@
                     </div>
                     <br>
                     <div class="text-left" style="margin-top:100px">
-                        <p class="text-danger" data-toggle="collapse" data-target="#demo"><label>Click to find out if you are exempted</label></p>
+                        <p class="color-5" data-toggle="collapse" data-target="#demo"><label>Click to find out if you are exempted</label></p>
                         <div id="demo" class="collapse">
                             <p>You willl be exempted from testing at departure airport if:</p>
                             <ol>
@@ -640,10 +643,10 @@
                                 <div class="panel-body">
                                     <p><b>CITIZENS, RESIDENTS, TOURISTS & VISITORS TO DUBAI & OTHER EMIRATES</b><br><br>
                                         It is no longer mandatory to hold a negative COVID-19 test report if you are travelling from Dubai and other Emirates to Abu Dhabi. However, you will be required to hold a negative COVID-19 test report if you are:
-                                        <ul style="list-style-type: circle">
-                                        <li>Unvaccinated or not fully vaccinated with the same type of vaccine.</li>
-                                        <li> Do not have a <span class="text-success">‘green status’ </span>  on the Al Hosn App</li>
-                                        <li> Unvaccinated and staying longer than 6 days.</li>
+                                        <ul style="list-style-type: square">
+                                        <li><p>Unvaccinated or not fully vaccinated with the same type of vaccine.</p></li>
+                                        <li><p> Do not have a <b class="text-success">‘green status’ </b>  on the Al Hosn App</p></li>
+                                        <li><p> Unvaccinated and staying longer than 6 days.</p></li>
                                         
                                         </ul></p>
                                 </div>
