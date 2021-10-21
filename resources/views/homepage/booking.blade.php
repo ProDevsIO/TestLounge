@@ -211,6 +211,38 @@
                                     <input type="hidden" name="ref" value="{{ $_GET['ref'] }}">
                                 @endif
 
+                                @if($carts_count > 0)
+                                    
+                                    @if(optional(optional($cart->vendorProduct)->product)->id == 15)
+                                    <div class="col-md-12">
+                                    @for($x =0; $x < $cart->quantity; $x++)
+                                        @if($cart->quantity > 1)
+                                            <label>Test kit number {{$x + 1}}</label>
+                                        @else
+                                            <label>Test kit number {{$x}}</label>
+                                        @endif
+                                        <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required><br>
+                                        @endfor
+                                    </div>
+                                    @endif
+
+                                @elseif(isset($voucher))
+
+                                    @if($voucher->voucher_count->product_id == 15)
+                                    <div class="col-md-12">
+                                    @for($x =0; $x < $voucher->quantity; $x++)
+                                        @if($cart->quantity > 1)
+                                            <label>Test kit number {{$x + 1}}</label>
+                                        @else
+                                            <label>Test kit number {{$x}}</label>
+                                        @endif
+                                        <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required ><br>
+                                        @endfor
+                                    </div>
+                                    @endif
+                                    
+                                @endif
+
                                 <div class="col-md-12">
                                     <div style="margin-top: 10px">
                                         <label class="">Select a Payment Method</label>
@@ -262,7 +294,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                
                                 <div class="form-section">
                                     <div class="voucher_input" style="margin-top:20px;display:none;" >
                                         <label>Voucher Number<span class="show_required"> *</span></label>
@@ -283,19 +315,19 @@
                                         </select>
                                     </div>
 
-
+                                   
                                     <div class="col-md-12 color-9">
                                         <p>
                                             I understand that I am purchasing this service in line with the <b><a class="text-info" href="https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19" style="text-decoration:underline">UK Government's travel requirements </a></b> because</p>
                                           
                                         <div class="color-8"> <p class="text-muted"><input type="radio" name="vaccinated" value="fully"
                                                                     class="bg-1"/>
-                                           I am fully Vaccinated </p>
+                                           I am fully vaccinated </p>
                                         </div>
                                         <br>
                                         <div class="color-8"> <p class="text-muted"><input type="radio" name="vaccinated" value="yes"
                                                                     class="bg-1"/>
-                                           I am fully Vaccinated but unable to show evidence of this</p>
+                                           I am fully vaccinated but unable to show evidence of this</p>
                                         </div>
                                         <br>
                                         <div class="color-8"> <p class="text-muted"><input type="radio" name="vaccinated" value="no"
