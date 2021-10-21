@@ -106,14 +106,32 @@
                                 <div class="col-6">
                                     <ul>
                                     @foreach($booking_products as $booking_product)
-<li>{{ $booking_product->product->name }}</li>
+                                        <li>{{ $booking_product->product->name }}</li>
                                         @endforeach
                                     </ul>
                                 </div>
                             </div>
+                           
                         </div>
                     </div>
-
+                    @if($booking->test_kit != null)
+                    <div class="card card-shadow mb-4 ">
+                        <div class="card-body">
+                           
+                                <div class="row f12 mt-3">
+                                    <div class="container">Test Kit Numbers</div>
+                                    <div class="container">
+                                        <ul>
+                                        @foreach(json_decode($booking->test_kit) as $kit)
+                                        <li>{{ $kit }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    @endif
                 </div>
 
                 <div class="col-xl-8 col-md-6">

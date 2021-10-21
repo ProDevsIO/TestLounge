@@ -133,7 +133,8 @@ class Booking extends Model
         'stripe_intent',
 		'post_status',
         'card_type',
-		'external_reference'
+		'external_reference',
+		'test_kit'
 	];
 
 	public function country()

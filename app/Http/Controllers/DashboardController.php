@@ -1527,8 +1527,7 @@ class DashboardController extends Controller
             return back();
         }
 
-       
-
+    
         $new_v_quantity =  $voucherCount->quantity -  $quantity; 
 
         $voucherCount->update([
