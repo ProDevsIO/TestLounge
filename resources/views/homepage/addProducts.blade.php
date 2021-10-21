@@ -177,20 +177,22 @@
                                                                                             </div>
                                                                                         </div>
                                                                                 </div>
-                                                                            @if($i %2  == 0)
+                                                                                 @if($i %2  == 0)
                                                                                     <div class="clearfix"></div>
                                                                                 @endif
 
                                                                                 <?php $i++; ?>
                                                                                 @endforeach
-
-                                                                                <div class="card bg-3 col-md-4" style="padding:30px;margin-bottom:20px; border-radius:10px; background-color:black; cursor: pointer;">
-                                                                                    <div class="card-body "  data-toggle="collapse" data-target="#demo">
-                                                                                        <h5 class="text-white">Day 2 Vaccinated Antigen</h5>
-                                                                                        <p>Click to find out more</p>
-                                                                                        <div id="demo" class="collapse">
-                                                                                            <p> <b>Coming soon from October 22nd 2021</b></p>
-                                                                                        
+                                                                                <div class="col-md-4" id="con" data-toggle="collapse" data-target="#demo">
+                                                                                    <div class="card bg-3" style="padding:30px;margin-bottom:20px; border-radius:10px; background-color:black; cursor: pointer;">
+                                                                                        <div class="card-body " >
+                                                                                            <h4 class="text-white">Day 2 Vaccinated Antigen</h4>
+                                                                                            <br>
+                                                                                            <span class="">Click to find out more</span>
+                                                                                            <div id="demo" class="collapse">
+                                                                                                <span> <b>Coming soon from October 22nd 2021</b></span>
+                                                                                            
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
