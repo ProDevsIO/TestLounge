@@ -10,7 +10,7 @@
 
     <header class="page-header" style="height: 450px;padding-top: 50px">
         <div class="background-image-holder parallax-background">
-            <img class="background-image" alt="Background Image" src="/img/abudabi1.jpg">
+            <img class="background-image" alt="Background Image" src="/img/abudabi3.jpg">
         </div>
         <div class="container">
             <div class="row">
