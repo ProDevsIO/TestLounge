@@ -100,7 +100,7 @@
                     <div class="col-lg-4">
                         <div class="panel bg-1" id="UAE_depart1"> 
                             <div class="panel-body" >
-                                <p>Do you know you can do both tests now at a discounted price ?</p>
+                                <p class="text-white">Do you know you can do both tests now at a discounted price ?</p>
                             </div>
                             <center>
                               
@@ -479,7 +479,7 @@
                         <div class="col-lg-4">
                             <div class="panel bg-1" id="UAE_depart1"> 
                                 <div class="panel-body" >
-                                    <p>Do you know you can do both tests at a discounted price ?</p>
+                                    <p class="tetx-white">Do you know you can do both tests at a discounted price ?</p>
                                 </div>
                                 <center>
                                 
