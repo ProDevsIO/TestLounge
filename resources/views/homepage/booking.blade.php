@@ -228,7 +228,7 @@
 
                                 @elseif(isset($voucher))
 
-                                    @if($voucher->voucher_count->product_id == 15)
+                                    @if($voucher->voucherCount->product_id == 15)
                                     <div class="col-md-12">
                                     @for($x =0; $x < $voucher->quantity; $x++)
                                         @if($cart->quantity > 1)
