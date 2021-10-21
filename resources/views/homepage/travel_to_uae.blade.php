@@ -7,7 +7,17 @@
 
     <header class="page-header" style="height: 450px;padding-top: 50px">
         <div class="background-image-holder parallax-background">
-            <img class="background-image" alt="Background Image" src="/img/abudabi.jpg">
+            
+            @if($where == 'to')
+            <img class="background-image" alt="Background Image" src="/img/abudabi1.jpg">
+            @elseif($where == 'from')
+            <img class="background-image" alt="Background Image" src="/img/abudabi2.jpg">
+            @elseif($where == 'through')
+            <img class="background-image" alt="Background Image" src="/img/abudabi3.jpg">
+            @else
+            <img class="background-image" alt="Background Image" src="/img/abudabi4.jpg">
+            @endif
+            
         </div>
         <div class="container">
             <div class="row">
