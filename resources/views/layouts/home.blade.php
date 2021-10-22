@@ -31,7 +31,7 @@
           rel='stylesheet' type='text/css'>
     <script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <link rel="stylesheet" href="/js/phone_lib/css/intlTelInput.css">
-    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <link rel="icon" type="image/png" href="/img/logo-dark.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
     <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
 
@@ -77,7 +77,7 @@ $ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_co
             <div class="row nav-menu">
                 <div class="col-sm-3 col-md-2 columns">
                     <a href="{{ url('/') }}">
-                        <img class="logo logo-light" alt="Logo" src="/img/logo-light.png">
+                        <img class="logo logo-light" alt="Logo" src="/img/logo-dark.png">
                         <img class="logo logo-dark" alt="Logo" src="/img/logo-dark.png">
                     </a>
                 </div>
