@@ -7,7 +7,7 @@
 
     <div class="content-wrapper">
         <div class="container-fluid">
-<a href="{{ url()->previous()  }}"><< Back</a>
+            <a href="{{ url()->previous()  }}"><< Back</a>
             <!--states start-->
             <div class="row">
                 <div class="col-xl-4 col-md-6 profile-info-position">
@@ -114,6 +114,13 @@
                            
                         </div>
                     </div>
+                    @if($booking->test_kit == null)
+                        @if($booking->product != null)
+                            @if($booking->product->product_id == 15)
+                            <button class="btn btn-info" data-toggle="modal" data-target="#myModal">Update test kits</button>
+                            @endif
+                        @endif
+                    @endif
                     @if($booking->test_kit != null)
                     <div class="card card-shadow mb-4 ">
                         <div class="card-body">
@@ -219,7 +226,7 @@
                                             I am not fully vaccinated
                                           
                                             @endif
-</p>
+                                    </p>
                                         
                                        <p>I understand that this service I am about to purchase is non refundable and I am about to purchase it of my own free will.</p>
                                     </p>
@@ -236,7 +243,46 @@
     <!--/footer-->
     </div>
 
+    @if($booking->test_kit == null)
+         @if($booking->product != null)
+            @if($booking->product->product_id == 15)
+                <!-- Modal -->
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
 
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                        <div class="modal-header">
+                        <h4 class="modal-title">Add test kit numner</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ url('/add/test_kit') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$booking->product->id}}">
+                            @for($x =0; $x < $booking->product->quantity; $x++)
+                                @if($booking->product->quantity > 1)
+                                    <label><b>Test kit number {{$x + 1}}</b></label>
+                                @else
+                                    <label><b>Test kit number</b></label>
+                                @endif
+                                                            <p>please click <a target="_blank" class="color-1" href="https://www.onlinebarcodereader.com/"> here </a>to be able to scan the barcode and get the generated number</p>
+                                                            <input class="form-control" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required ><br>
+                            @endfor    
+                            <button type="submit" class="btn btn-outline-info"> submit</button>        
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                        </div>
+                        </div>
+
+                    </div>
+                </div>
+            @endif
+        @endif
+    @endif
 @endsection
 @section('script')
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>

@@ -112,6 +112,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/view/transactions', [\App\Http\Controllers\DashboardController::class,"view_transactions"]);
     Route::get('/view/sub-agent/transaction/{id}', [\App\Http\Controllers\DashboardController::class,"view_subagent_transactions"]);
     Route::post('/update/country', [\App\Http\Controllers\DashboardController::class,"update_country"]);
+    Route::post('/add/test_kit', [\App\Http\Controllers\DashboardController::class,"add_test_kit"]);
    
 
 

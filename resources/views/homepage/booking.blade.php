@@ -37,11 +37,11 @@
                                 <div>
                                    <span id="glow" class="badge badge-danger">{{optional(optional(optional($voucher)->voucherCount)->product)->name}} x {{$voucher->quantity}} </span> 
                                 </div>
-                                @endif
+                                
 
-                                @if($carts_count > 0)
+                                @elseif($carts_count > 0)
                                 <div>
-                                   <span id="glow" class="badge badge-danger">{{optional(optional($cart->vendorProduct)->product)->name}} x {{$cart->quantity}}  </span> 
+                                   <span id="glow" class="badge badge-danger">{{optional(optional(optional($cart)->vendorProduct)->product)->name}} x {{$cart->quantity}}  </span> 
                                 </div>
                                 @endif
                                 
@@ -211,34 +211,21 @@
                                     <input type="hidden" name="ref" value="{{ $_GET['ref'] }}">
                                 @endif
 
-                                @if($carts_count > 0)
-                                    
-                                    @if(optional(optional($cart->vendorProduct)->product)->id == 15)
-                                    <div class="col-md-12">
-                                    @for($x =0; $x < $cart->quantity; $x++)
-                                        @if($cart->quantity > 1)
-                                            <label>Test kit number {{$x + 1}}</label>
-                                        @else
-                                            <label>Test kit number {{$x}}</label>
-                                        @endif
-                                        <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required><br>
-                                        @endfor
-                                    </div>
-                                    @endif
 
-                                @elseif(isset($voucher))
+                                @if(isset($voucher))
 
                                     @if($voucher->voucherCount->product_id == 15)
-                                    <div class="col-md-12">
-                                    @for($x =0; $x < $voucher->quantity; $x++)
-                                        @if($cart->quantity > 1)
-                                            <label>Test kit number {{$x + 1}}</label>
-                                        @else
-                                            <label>Test kit number {{$x}}</label>
-                                        @endif
-                                        <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required ><br>
-                                        @endfor
-                                    </div>
+                                        <div class="col-md-12">
+                                            @for($x =0; $x < $voucher->quantity; $x++)
+                                                @if($voucher->quantity > 1)
+                                                    <label>Test kit number {{$x + 1}}</label>
+                                                @else
+                                                    <label>Test kit number</label>
+                                                @endif
+                                                <p>please click <a target="_blank" class="color-1" href="https://www.onlinebarcodereader.com/"> here </a>to be able to scan the barcode and get the generated number</p>
+                                                <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required ><br>
+                                            @endfor
+                                        </div>
                                     @endif
                                     
                                 @endif
@@ -318,7 +305,7 @@
                                    
                                     <div class="col-md-12 color-9">
                                         <p>
-                                            I understand that I am purchasing this service in line with the <b><a class="text-info" href="https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19" style="text-decoration:underline">UK Government's travel requirements </a></b> because</p>
+                                            I understand that I am purchasing this service in line with the <b><a target="_blank" class="text-info" href="https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19" style="text-decoration:underline">UK Government's travel requirements </a></b> because</p>
                                           
                                         <div class="color-8"> <p class="text-muted"><input type="radio" name="vaccinated" value="fully"
                                                                     class="bg-1"/>
@@ -372,7 +359,7 @@
                                     Kindly add an item to you cart to continue
                                 </div><br/>
                                 <div class="error-actions">
-                                    <a href="{{ url('/') }}" class="btn btn-primary btn-lg"><span
+                                    <a target="_blank" href="{{ url('/') }}" class="btn btn-primary btn-lg"><span
                                                 class="glyphicon glyphicon-home"></span>
                                         Take Me Home </a>
                                 </div>

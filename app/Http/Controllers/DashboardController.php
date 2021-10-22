@@ -372,6 +372,39 @@ class DashboardController extends Controller
         return view('admin.view_booking')->with(compact('booking', 'booking_products'));
     }
 
+    public function add_test_kit(Request $request)
+    {
+        //to mnually add the test kits after booking
+        try{
+            $booking_p = BookingProduct::where('id', $request->id)->first();
+            $test_kit = array();
+
+            for($n = 0; $n < $booking_p->quantity; $n++)
+            {
+                $test_kit[] = $request->{'test_kit'.$n};
+                
+            }
+
+            // encode the testkit in json format
+            $test_kit = json_encode($test_kit); 
+            
+        
+
+            Booking::where('id', $booking_p->booking_id)
+            ->update([
+                    'test_kit' => $test_kit
+            ]);
+            session()->flash('alert-success', "Successfully added test kit numbers.");
+            return back();
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            session()->flash('alert-danger', "Something went wrong.");
+            return back()->withInputs();
+        }
+
+    }
+
     public function view_bookings($id)
     {
         if (auth()->user()->type != 1) {
@@ -1494,16 +1527,18 @@ class DashboardController extends Controller
         $quantity = $quantity;
 
         $voucher =  uniqid('voucher_') ."_". $voucherCount->id;
-        $v_generate = VoucherGenerate::create([
-            'agent' => auth()->user()->id,
-            'voucher_count_id' => $voucherCount->id,
-            'email' => $email,
-            'voucher' => $voucher,
-            'quantity' =>$quantity,
-            'status' => 0
-        ]);
         
         try {
+            $v_generate = VoucherGenerate::create([
+                'agent' => auth()->user()->id,
+                'voucher_count_id' => $voucherCount->id,
+                'email' => $email,
+                'voucher' => $voucher,
+                'quantity' =>$quantity,
+                'status' => 0
+            ]);
+        
+        
 
             $message2 = "
             Hi,<br><br> You have been sent a voucher code.<br><br> Voucher code :-$voucher for ".optional(optional(optional($v_generate)->voucherCount)->product)->name." x  $v_generate->quantity.<br/><br/>
@@ -1522,7 +1557,7 @@ class DashboardController extends Controller
 
 
         } catch (\Exception $e) {
-            
+            DB::rollBack();
             session()->flash('alert-danger', "Something went wrong");
             return back();
         }

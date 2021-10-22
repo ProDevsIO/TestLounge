@@ -202,17 +202,20 @@ class HomeController extends Controller
                 unset($request_data['ref']);
                 unset($request_data['voucher']);
 
-                
+                if($voucher->voucherCount->product_id == 15)
+                {
                     for($n = 0; $n < $voucher->quantity; $n++)
                     {
                         $test_kit[] = $request->{'test_kit'.$n};
                         unset($request_data['test_kit'.$n]);
                     }
-            
-                // encode the testkit in json format
-                $test_kit = json_encode($test_kit); 
+                    // encode the testkit in json format
+                    $test_kit = json_encode($test_kit); 
+                    
+                    $request_data['test_kit'] = $test_kit;
+                }
                 
-                $request_data['test_kit'] = $test_kit;
+
                 $request_data['transaction_ref'] = $transaction_ref;
                 $request_data['external_reference'] = $external_ref;
         
@@ -236,23 +239,7 @@ class HomeController extends Controller
             return back()->withInput();
         }
        
-       //apply test kit
-        $cart1 = Cart::where('ip', session()->get('ip'))->first();
-
-        if($cart1 != null){
-            // loop into an array of test kit
-            for($n = 0; $n < $cart1->quantity; $n++)
-            {
-                $test_kit[] = $request->{'test_kit'.$n};
-                unset($request_data['test_kit'.$n]);
-                
-
-            }
-        } 
-        // encode the testkit in json format
-        $test_kit = json_encode($test_kit); 
-
-        $request_data['test_kit'] = $test_kit;
+       
 
         unset($request_data['_token']);
         if($request->payment_method == "vastech"){
