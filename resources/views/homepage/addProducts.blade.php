@@ -184,9 +184,9 @@
                                                                                 <?php $i++; ?>
                                                                                 @endforeach
                                                                                 <div class="col-md-4" id="con" data-toggle="collapse" data-target="#demo">
-                                                                                    <div class="card bg-3" style="padding:30px;margin-bottom:20px; border-radius:10px; background-color:black; cursor: pointer;">
+                                                                                    <div class="card bg-3" style="padding:30px;margin-bottom:20px;padding-top:70px;padding-bottom:70px; border-radius:10px; background-color:black; cursor: pointer;">
                                                                                         <div class="card-body " >
-                                                                                            <h4 class="text-white">Day 2 Vaccinated Antigen</h4>
+                                                                                            <h5 class="text-white">Day 2 Vaccinated Antigen</h5>
                                                                                             <br>
                                                                                             <span class="">Click to find out more</span>
                                                                                             <div id="demo" class="collapse">
