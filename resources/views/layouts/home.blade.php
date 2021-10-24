@@ -78,7 +78,7 @@ $ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_co
                 <div class="col-sm-3 col-md-2 columns" style="margin-bottom:20px;">
                     <a href="{{ url('/') }}" >
                         <img class="logo logo-light" alt="Logo" src="/img/logo-dark.png">
-                        <img class="logo logo-dark" alt="Logo" style="width:50px" src="/img/logo-dark.png">
+                        <img class="logo logo-dark" alt="Logo" style="width:100px" src="/img/logo-dark.png">
                         
                     </a>
                 </div>
