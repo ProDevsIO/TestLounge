@@ -63,7 +63,7 @@
                                     <small class="text-muted" style="color:red"> Please provide only ONE email address
                                     </small>
                                     @if(isset($voucher))
-                                    <input type="text" name="email" value="{{ $voucher->email }}" id="email" required/>
+                                    <input type="text" name="email" readonly value="{{ $voucher->email }}" id="email" required/>
 
                                     @else
 
