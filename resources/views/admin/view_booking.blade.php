@@ -289,12 +289,12 @@
                                     <label><b>Test kit number</b></label>
                                 @endif
                                 
-                                <div class="input-group mb-3">
+                                <!-- <div class="input-group mb-3"> -->
                                     <input class="form-control" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required >
-                                    <div class="input-group-append" data-toggle="modal" data-target="#barcodeModal">
+                                    <!-- <div class="input-group-append" data-toggle="modal" data-target="#barcodeModal">
                                          <span class="input-group-text">Scan barcode</span>
                                     </div>
-                                </div>
+                                </div> -->
                             @endfor 
                             
                             

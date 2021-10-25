@@ -227,12 +227,12 @@
                                                 @else
                                                     <label>Test kit number</label>
                                                 @endif
-                                                <div class="input-group mb-3">
-                                                <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required ><br>
-                                                    <div class="input-group-append" data-toggle="modal" data-target="#myModal">
+                                                <!-- <div class="input-group mb-3"> -->
+                                                    <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required ><br>
+                                                    <!-- <div class="input-group-append" data-toggle="modal" data-target="#myModal">
                                                         <span class="input-group-text">Scan barcode</span>
                                                     </div>
-                                                </div>
+                                                </div> -->
 
                                             @endfor
                                         </div>
