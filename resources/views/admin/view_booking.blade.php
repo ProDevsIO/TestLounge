@@ -89,7 +89,9 @@
                                                     @endif
                                 </div>
                             </div>
+                            <br>
                             <div class="row f12">
+                                
                                 <div class="col-6">Status</div>
                                 <div class="col-6">
                                     @if($booking->status == "1")
@@ -102,8 +104,8 @@
                             </div>
 
                             <div class="row f12 mt-3">
-                                <div class="col-6">Products</div>
-                                <div class="col-6">
+                                <div class="col-5">Products</div>
+                                <div class="col-7">
                                     <ul>
                                     @foreach($booking_products as $booking_product)
                                         <li>{{ $booking_product->product->name }}</li>
@@ -111,7 +113,17 @@
                                     </ul>
                                 </div>
                             </div>
-                           
+                            <div class="row f12 mt-3">
+                                <div class="col-5">Booking Code</div>
+                                <div class="col-7">
+                                    <ul>
+                                        
+                                    @foreach(json_decode($booking->booking_code) as $code)
+                                        <li>{{ $code}}</li>
+                                     @endforeach
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     @if($booking->test_kit == null)
