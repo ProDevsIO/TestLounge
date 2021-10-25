@@ -1527,7 +1527,7 @@ class DashboardController extends Controller
         $quantity = $quantity;
 
         $voucher =  uniqid('voucher_') ."_". $voucherCount->id;
-        
+        DB::beginTransaction();
         try {
             $v_generate = VoucherGenerate::create([
                 'agent' => auth()->user()->id,
@@ -1538,7 +1538,11 @@ class DashboardController extends Controller
                 'status' => 0
             ]);
         
-        
+            $new_v_quantity =  $voucherCount->quantity -  $quantity; 
+
+            $voucherCount->update([
+                'quantity' => $new_v_quantity
+            ]);
 
             $message2 = "
             Hi,<br><br> You have been sent a voucher code.<br><br> Voucher code :-$voucher for ".optional(optional(optional($v_generate)->voucherCount)->product)->name." x  $v_generate->quantity.<br/><br/>
@@ -1554,7 +1558,7 @@ class DashboardController extends Controller
 
            
             Mail::to($email)->send(new BookingCreation($message2, "Voucher notification"));
-
+            DB::commit();
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -1562,13 +1566,7 @@ class DashboardController extends Controller
             return back();
         }
 
-    
-        $new_v_quantity =  $voucherCount->quantity -  $quantity; 
-
-        $voucherCount->update([
-            'quantity' => $new_v_quantity
-        ]);
-      
+        
         session()->flash('alert-success', "Successfully created a voucher and sent via email");
         return back();
 

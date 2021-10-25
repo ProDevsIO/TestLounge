@@ -121,7 +121,9 @@
                             @endif
                         @endif
                     @endif
-                    @if($booking->test_kit != null)
+                   
+                    @if($booking->test_kit != null )
+                    @if($booking->test_kit != "[null]")
                     <div class="card card-shadow mb-4 ">
                         <div class="card-body">
                            
@@ -138,6 +140,7 @@
                             
                         </div>
                     </div>
+                    @endif
                     @endif
                 </div>
 
