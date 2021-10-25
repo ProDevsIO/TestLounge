@@ -75,10 +75,10 @@ $ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_co
 
 
             <div class="row nav-menu">
-                <div class="col-sm-3 col-md-2 columns" style="margin-bottom:20px;">
+                <div class="col-sm-3 col-md-2 columns">
                     <a href="{{ url('/') }}" >
-                        <img class="logo logo-light" alt="Logo" src="/img/logo-dark.png">
-                        <img class="logo logo-dark" alt="Logo" style="width:100px" src="/img/logo-dark.png">
+                        <img class="logo logo-light" alt="Logo" style=" max-width: 150px;max-height:80px;top:-38px;" src="/img/logo-dark.png">
+                        <img class="logo logo-dark" alt="Logo" style=" max-width: 150px;max-height:100px;top:-37px;left: -20px;" src="/img/logo-dark.png">
                         
                     </a>
                 </div>
