@@ -32,9 +32,9 @@ class AddProductVendor extends Component
 
     public function add_product()
     {
-        if (!$this->product_id || !$this->price || !$this->price_stripe || !$this->costPrice) {
+        if (!$this->product_id || !$this->price || !$this->costPrice) {
             $this->dispatchBrowserEvent(
-                'toastMessage', ['type' => 'error', 'heading' => "Error", 'message' => 'Enter a price or Select a Product']);
+                'toastMessage', ['type' => 'error', 'heading' => "Error", 'message' => "Enter a price or Select a Product $this->price_stripe"]);
 
             return;
         }

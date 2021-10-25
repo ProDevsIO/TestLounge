@@ -6,6 +6,10 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="/css/booking.css">
 <style>
+    video {
+        max-width: 100%;
+        height: auto;
+        }
     #glow{
         box-shadow:
     inset 0 0 100px #1E50A0,
@@ -216,14 +220,20 @@
 
                                     @if($voucher->voucherCount->product_id == 15)
                                         <div class="col-md-12">
+                                            
                                             @for($x =0; $x < $voucher->quantity; $x++)
                                                 @if($voucher->quantity > 1)
                                                     <label>Test kit number {{$x + 1}}</label>
                                                 @else
                                                     <label>Test kit number</label>
                                                 @endif
-                                                <p>please click <a target="_blank" class="color-1" href="https://www.onlinebarcodereader.com/"> here </a>to be able to scan the barcode and get the generated number</p>
-                                                <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required ><br>
+                                                <!-- <div class="input-group mb-3"> -->
+                                                    <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required ><br>
+                                                    <!-- <div class="input-group-append" data-toggle="modal" data-target="#myModal">
+                                                        <span class="input-group-text">Scan barcode</span>
+                                                    </div>
+                                                </div> -->
+
                                             @endfor
                                         </div>
                                     @endif
@@ -326,7 +336,7 @@
                                        <p>I understand that this service I am about to purchase is non refundable and I am about to purchase it of my own free will.</p>
                                         
                                     </div>
-                                
+
                                     <div class="col-md-12 color-9">
                                         <label>Consent to Test <span class="color-10">*</span></label>
                                         <div class="color-8"><p class="text-muted"><input type="checkbox" name="consent" value="1"
@@ -372,6 +382,35 @@
         </section>
     </div>
 
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Scan your barcode</h4>
+      </div>
+      <div class="modal-body">
+      <video id="preview"></video>
+
+        <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
+            <label class="btn btn-primary">
+                <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" value="2" autocomplete="off" checked> Back Camera
+            </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 @endsection
 
 @section('script')
@@ -383,8 +422,43 @@
             integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" rel="nofollow"></script>
+    <script type="text/javascript">
+        var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
+        scanner.addListener('scan',function(content){
+            alert(content);
+            //window.location.href=content;
+        });
 
-    <script>
+        Instascan.Camera.getCameras().then(function (cameras){
+            if(cameras.length>0){
+                
+                $('[name="options"]').on('change',function(){
+                
+                    if($(this).val()==1){
+                        if(cameras[0]!=undefined){
+                            scanner.start(cameras[0]);
+                        }else{
+                            alert('No Front camera found!');
+                        }
+                    }else if($(this).val()==2){
+                       
+                        if(cameras[1]!=undefined){
+                            scanner.start(cameras[1]);
+                        }else{
+                            alert('No Back camera found!');
+                        }
+                    }
+                });
+            }else{
+                console.error('No cameras found.');
+                alert('No cameras found.');
+            }
+        }).catch(function(e){
+            console.error(e);
+            alert(e);
+        });
+
         var input = document.querySelector("#phone");
         window.intlTelInput(input, {
             initialCountry: "gb",

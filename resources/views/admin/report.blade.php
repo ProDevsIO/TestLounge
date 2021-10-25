@@ -57,7 +57,7 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Revenue in naira from bookings">
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($total_ngn, 3) }}</h4>
+                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($total_ngn, 2) }}</h4>
                                         <span>Total Revenue(Naira)</span>
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Revenue in dollars from bookings">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($total_gbp, 3) }}</h4>
+                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($total_gbp, 2) }}</h4>
                                         <span>Total Revenue(Dollars)</span>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Vendor Cost">
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($vendor_cost_ngn, 3) }}</h4>
+                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($vendor_cost_ngn, 2) }}</h4>
                                         <span>Total Vendor Cost(Naira)</span>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Vendor Cost">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($vendor_cost_dollars, 3) }}</h4>
+                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($vendor_cost_dollars, 2) }}</h4>
                                         <span>Total Vendor Cost(Dollars)</span>
                                     </div>
                                 </div>
@@ -125,7 +125,7 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Commission">
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($commission, 3) }}</h4>
+                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($commission, 2) }}</h4>
                                         <span>Total Commission(Naira)</span>
                                     </div>
                                 </div>
@@ -142,7 +142,7 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Commission">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($pcommission, 3) }}</h4>
+                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($pcommission, 2) }}</h4>
                                         <span>Total Commission(Dollars)</span>
                                     </div>
                                 </div>
@@ -243,7 +243,7 @@
                                     <i class="vl_book"></i>
                                 </div>
                                 <div class="media-body text-light" title="Amount owed to agent via Naira transaction">
-                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($due_amount, 3) }}</h4>
+                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($due_amount, 2) }}</h4>
                                     <span>Amount due(Referrals)</span>
                                 </div>
                             </div>
@@ -260,7 +260,7 @@
                                     <i class="vl_book"></i>
                                 </div>
                                 <div class="media-body text-light" title="Amount owed to agent via dollar transaction">
-                                    <h4 class="text-uppercase mb-0 weight500">${{ number_format($p_due_amount, 3) }}</h4>
+                                    <h4 class="text-uppercase mb-0 weight500">${{ number_format($p_due_amount, 2) }}</h4>
                                     <span>Amount due(Referrals)</span>
                                 </div>
                             </div>
@@ -277,7 +277,7 @@
                                     <i class="vl_book"></i>
                                 </div>
                                 <div class="media-body text-light" >
-                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($profit_naira, 3) }}</h4>
+                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($profit_naira, 2) }}</h4>
                                     <span>Profit</span>
                                 </div>
                             </div>
@@ -294,7 +294,7 @@
                                 <i class="vl_book"></i>
                             </div>
                             <div class="media-body text-light"  title="Revenue - Vendors cost - Commission">
-                                <h4 class="text-uppercase mb-0 weight500">${{ number_format($profit_dollars, 3) }}</h4>
+                                <h4 class="text-uppercase mb-0 weight500">${{ number_format($profit_dollars, 2) }}</h4>
                                 <span>Profit</span>
                             </div>
                         </div>
@@ -343,7 +343,7 @@
                                             </td>
                                             <td>{{ $user->cbookings->count() }}</td>
                                             <td>N{{ number_format($user->wallet_balance,3) }}</td>
-                                            <td>${{ number_format($user->pounds_wallet_balance,3) }}</td>
+                                            <td>${{ number_format($user->pounds_wallet_balance,2) }}</td>
                                             <td>
                                                 <ul>
                                                     <li>Country: {{ $user->country }}</li>

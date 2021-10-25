@@ -13,7 +13,7 @@
     <label>Vendor's Cost Price($)</label>
     <input type="number" wire:model="costPrice" class="form-control" placeholder="Input number">
     <!-- <label>Price Stripe</label> -->
-    <input type="hidden" value="{{$pound_price}}" wire:model="price_stripe" class="form-control" placeholder="Price_">
+    <input type="hidden" value="123" wire:model="price_stripe" class="form-control" placeholder="Price_">
     </select>
     <br/>
     <div wire:loading wire:target="add_product" class="pull-right">

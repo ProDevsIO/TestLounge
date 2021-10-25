@@ -549,7 +549,7 @@
                                                                         <label class="text-muted">Number to be assigned</label>
                                                                        <select name="number" class="form-control" id="" required>
                                                                            <option value="">Select a number to be assigned</option>
-                                                                           @for($i=0; $i < 31; $i++)
+                                                                           @for($i=0; $i < 100; $i++)
                                                                                 <option value="{{$i}}">{{$i}}</option>
                                                                            @endfor
                                                                        </select>
