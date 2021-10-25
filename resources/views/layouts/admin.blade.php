@@ -63,7 +63,7 @@
         <!--brand start-->
         <div class="navbar-brand pos-fixed" style="padding-left:0px; padding-top:5px;">
             <a class="" href="{{ url('/dashboard') }}">
-                <img src="/img/logo-dark.png" style="height: 47px;" srcset="/img/logo-dark.png 2x" alt="Traveltestsltd">
+                <img src="/img/logo-dark.png" style="height: 55px;" srcset="/img/logo-dark.png 2x" alt="Traveltestsltd">
             </a>
         </div>
        
