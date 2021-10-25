@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 @section('style')
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        video {
+        max-width: 100%;
+        height: auto;
+        }
+    </style>
 @endsection
 @section('content')
 
@@ -126,7 +132,7 @@
                             </div>
                         </div>
                     </div>
-                    @if($booking->test_kit == null)
+                    @if($booking->test_kit == null || $booking->test_kit == "[null]")
                         @if($booking->product != null)
                             @if($booking->product->product_id == 15)
                             <button class="btn btn-info" data-toggle="modal" data-target="#myModal">Update test kits</button>
@@ -258,7 +264,7 @@
     <!--/footer-->
     </div>
 
-    @if($booking->test_kit == null)
+    @if($booking->test_kit == null || $booking->test_kit == "[null]")
          @if($booking->product != null)
             @if($booking->product->product_id == 15)
                 <!-- Modal -->
@@ -282,10 +288,17 @@
                                 @else
                                     <label><b>Test kit number</b></label>
                                 @endif
-                                                            <p>please click <a target="_blank" class="color-1" href="https://www.onlinebarcodereader.com/"> here </a>to be able to scan the barcode and get the generated number</p>
-                                                            <input class="form-control" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required ><br>
-                            @endfor    
-                            <button type="submit" class="btn btn-outline-info"> submit</button>        
+                                
+                                <div class="input-group mb-3">
+                                    <input class="form-control" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required >
+                                    <div class="input-group-append" data-toggle="modal" data-target="#barcodeModal">
+                                         <span class="input-group-text">Scan</span>
+                                    </div>
+                                </div>
+                            @endfor 
+                            
+                            
+                            <button type="submit" class="btn btn-outline-info"> submit</button>  
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -298,13 +311,79 @@
             @endif
         @endif
     @endif
+
+    <!-- Modal -->
+    <div id="barcodeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+             <h4 class="modal-title">Scan your barcode</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            
+        </div>
+        <div class="modal-body">
+            <P>Plaese select a camera of your choice</p>
+        <video id="preview"></video>
+
+            <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
+                <label class="btn btn-primary">
+                    <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="options" value="2" autocomplete="off" checked> Back Camera
+                </label>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+
+    </div>
+    </div>
 @endsection
 @section('script')
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendor/data-tables/dataTables.bootstrap4.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#data_table').DataTable();
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" rel="nofollow"></script>
+    <script type="text/javascript">
+        var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
+        scanner.addListener('scan',function(content){
+            alert(content);
+            //window.location.href=content;
         });
+
+        Instascan.Camera.getCameras().then(function (cameras){
+            if(cameras.length>0){
+                
+                $('[name="options"]').on('change',function(){
+                    scanner.start(cameras[0]);
+                    if($(this).val()==1){
+                        if(cameras[0]!=undefined){
+                            scanner.start(cameras[0]);
+                        }else{
+                            alert('No Front camera found!');
+                        }
+                    }else if($(this).val()==2){
+                       
+                        if(cameras[1]!=undefined){
+                            scanner.start(cameras[1]);
+                        }else{
+                            alert('No Back camera found!');
+                        }
+                    }
+                });
+            }else{
+                console.error('No cameras found.');
+                alert('No cameras found.');
+            }
+        }).catch(function(e){
+            console.error(e);
+            alert(e);
+        });
+
     </script>
+    
 @endsection
