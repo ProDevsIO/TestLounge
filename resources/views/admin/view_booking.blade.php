@@ -146,8 +146,8 @@
                         <div class="card-body">
                            
                                 <div class="row f12 mt-3">
-                                    <div class="container">Test Kit Numbers</div>
-                                    <div class="container">
+                                    <div class="col-md-5">Test Kit Numbers</div>
+                                    <div class="col-md-7">
                                         <ul>
                                         @foreach(json_decode($booking->test_kit) as $kit)
                                         <li>{{ $kit }}</li>
@@ -274,7 +274,7 @@
                         <!-- Modal content-->
                         <div class="modal-content">
                         <div class="modal-header">
-                        <h4 class="modal-title">Add test kit numner</h4>
+                        <h4 class="modal-title">Add test kit number</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             
                         </div>
@@ -292,7 +292,7 @@
                                 <div class="input-group mb-3">
                                     <input class="form-control" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required >
                                     <div class="input-group-append" data-toggle="modal" data-target="#barcodeModal">
-                                         <span class="input-group-text">Scan</span>
+                                         <span class="input-group-text">Scan barcode</span>
                                     </div>
                                 </div>
                             @endfor 
@@ -359,7 +359,7 @@
             if(cameras.length>0){
                 
                 $('[name="options"]').on('change',function(){
-                    scanner.start(cameras[0]);
+                   
                     if($(this).val()==1){
                         if(cameras[0]!=undefined){
                             scanner.start(cameras[0]);

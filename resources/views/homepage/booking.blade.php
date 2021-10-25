@@ -220,15 +220,20 @@
 
                                     @if($voucher->voucherCount->product_id == 15)
                                         <div class="col-md-12">
-                                            <p>please click <a class="color-1" data-toggle="modal" data-target="#myModal"> here </a>to be able to scan the barcode and get the generated number</p>
+                                            
                                             @for($x =0; $x < $voucher->quantity; $x++)
                                                 @if($voucher->quantity > 1)
                                                     <label>Test kit number {{$x + 1}}</label>
                                                 @else
                                                     <label>Test kit number</label>
                                                 @endif
-                                                
+                                                <div class="input-group mb-3">
                                                 <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required ><br>
+                                                    <div class="input-group-append" data-toggle="modal" data-target="#myModal">
+                                                        <span class="input-group-text">Scan barcode</span>
+                                                    </div>
+                                                </div>
+
                                             @endfor
                                         </div>
                                     @endif
@@ -429,7 +434,7 @@
             if(cameras.length>0){
                 
                 $('[name="options"]').on('change',function(){
-                    scanner.start(cameras[0]);
+                
                     if($(this).val()==1){
                         if(cameras[0]!=undefined){
                             scanner.start(cameras[0]);
