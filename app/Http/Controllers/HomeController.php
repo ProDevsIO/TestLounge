@@ -1874,7 +1874,8 @@ class HomeController extends Controller
                         $message = "
                         Dear " . $booking->first_name . ",<br><br>
             
-                        Thank you for booking with us. If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory Test or The Unvaccinated Day 2 & Day 8 Mandatory Tests.<br/><br/>
+                        Thank you for booking with us.<br><br>
+                         If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory Test or The Unvaccinated Day 2 & Day 8 Mandatory Tests.<br/><br/>
 
                         Your purchase would be for one of the following reasons:<br><br>
 
@@ -1884,18 +1885,26 @@ class HomeController extends Controller
                         Read more about the approved proof of vaccination  <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
 
                         If you are fully vaccinated under an approved vaccination programme accepted in the UK (check if your vaccination is approved <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a>)
-                         but were unable to show the approved COVID-19 proof of vaccination before your travel you might be eligible for a partial refund. <br><br>
+                        but were unable to show the approved COVID-19 proof of vaccination before your travel you might be eligible for a partial refund. <br><br>
 
-                         We have a no-refund policy as indicated before your purchase. However, we are able to consider partial refunds on a case by case basis within 24 hours of your purchase. We ask that you send an email with your approved proof of vaccination. <br><br>
+                        We have a no-refund policy as indicated before your purchase.<br><br>
+                         
+                        However, we are able to consider partial refunds on a case by case basis specifically if you are now able  to show valid proof of your vaccination status within 24 hours of your purchase.  <br><br>
 
-                         Click here for the <a href='https://docs.google.com/forms/d/1pWjJjGEaBZn9BaOss-hFI9xV_DQ_HRREBG6kTszb3hw/edit'>Partial Refund Request</a> form.
+                        Do kindly note that you will be informed if you are eligible for a partial refund following the review of your submission. <br><br>
+
+                        This may take up to 2 weeks. <br><br>
+
+                        Partial refunds range from 10 -30% of  the value of your test and can take 4 - 6 weeks for a partial refund to be paid . <br><br>
+
+                        Click here for the <a href='https://docs.google.com/forms/d/1pWjJjGEaBZn9BaOss-hFI9xV_DQ_HRREBG6kTszb3hw/edit'>Partial Refund Request</a> form.
 
                               <br/><br/>
                               Thank you.
                               <br/><br/>
                             Traveltestsltd Team
                         ";
-                        Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Day 8 test"));
+                        Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
                     }
                    
                 } catch (\Exception $e) {
