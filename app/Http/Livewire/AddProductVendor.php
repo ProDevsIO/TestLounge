@@ -34,7 +34,7 @@ class AddProductVendor extends Component
     {
         if (!$this->product_id || !$this->price || !$this->price_stripe || !$this->costPrice) {
             $this->dispatchBrowserEvent(
-                'toastMessage', ['type' => 'error', 'heading' => "Error", 'message' => 'Enter a price or Select a Product']);
+                'toastMessage', ['type' => 'error', 'heading' => "Error", 'message' => "Enter a price or Select a Product $this->price_stripe"]);
 
             return;
         }
