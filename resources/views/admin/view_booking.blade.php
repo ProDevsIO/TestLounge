@@ -113,6 +113,7 @@
                                 <div class="col-5">Products</div>
                                 <div class="col-7">
                                     <ul>
+                                        
                                     @foreach($booking_products as $booking_product)
                                         <li>{{ $booking_product->product->name }}</li>
                                         @endforeach
@@ -120,14 +121,19 @@
                                 </div>
                             </div>
                             <div class="row f12 mt-3">
-                                <div class="col-5">Booking Code</div>
-                                <div class="col-7">
+                                <div class="col-6">Booking Code</div>
+                                <div class="col-6">
+                                @if($booking->booking_code != null)
                                     <ul>
-                                        
-                                    @foreach(json_decode($booking->booking_code) as $code)
-                                        <li>{{ $code}}</li>
-                                     @endforeach
+                                   
+                                            @foreach(json_decode($booking->booking_code) as $code)
+                                                <li>{{ $code}}</li>
+                                            @endforeach
+                                   
                                     </ul>
+                                    @else
+                                    <span class="badge badge-danger">None</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
