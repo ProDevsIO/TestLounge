@@ -31,7 +31,7 @@
           rel='stylesheet' type='text/css'>
     <script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <link rel="stylesheet" href="/js/phone_lib/css/intlTelInput.css">
-    <link rel="icon" type="image/png" href="/img/TTG.png">
+    <link rel="icon" type="image/png" href="/img/fav.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
     <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
 
