@@ -155,6 +155,10 @@ class HomeController extends Controller
        }
 
         $request_data = $request->all();
+        
+        if(!$request->hidden_phone){
+            $request->hidden_phone = $request_data['phone_no'];
+        }
 
         unset($request_data['phone_no']);
         $request_data['phone_no'] = $request->hidden_phone;
