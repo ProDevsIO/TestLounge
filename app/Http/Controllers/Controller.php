@@ -452,7 +452,7 @@ class Controller extends BaseController
                 $response = curl_exec($ch);
         
                 curl_close($ch);
-        
+                dd($response);
                 $data_response = json_decode($response);
                 $code[] = $data_response->reference;
                 $y++;
