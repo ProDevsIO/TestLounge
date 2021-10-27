@@ -7,7 +7,7 @@
     <meta name="author" content="ProDevs Outsourcing Ltd">
 
     <!--favicon icon-->
-    <link rel="icon" type="image/png" href="/img/TTG.png">
+    <link rel="icon" type="image/png" href="/img/fav.png">
 
     <title>Traveltestsltd</title>
 
