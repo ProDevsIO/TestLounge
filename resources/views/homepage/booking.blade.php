@@ -429,7 +429,7 @@
             integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" rel="nofollow"></script>
+    <!-- <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" rel="nofollow"></script> -->
     <script type="text/javascript">
         var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
         scanner.addListener('scan',function(content){
