@@ -425,7 +425,7 @@ class Controller extends BaseController
             $data_send["barcode"] = json_decode($booking->test_kit);
 
         }else{
-            $data_send["barcode"] == [];
+            $data_send["barcode"] = [];
         }
 
         $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
