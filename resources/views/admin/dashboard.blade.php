@@ -178,7 +178,7 @@
                                 </div>
                             </div> -->
                         @endif
-                            @if(auth()->user()->country == 'NG' && auth()->user()->id != 55)
+                            @if(auth()->user()->country == 'NG' && (auth()->user()->id != 55  || auth()->user()->main_agent_id != 70) )
                                 <div class="col-xl-3 col-sm-6 col-xs-4">
                                     <div class="card mb-4 bg-success">
                                         <div class="card-body" title="Total Credit Transactions minus Expected Earnings">
@@ -212,7 +212,7 @@
                                     </div>
                                 </div>
                             @else
-                                @if(auth()->user()->country == 'NG' && auth()->user()->id != 55)
+                                @if(auth()->user()->country == 'NG' && (auth()->user()->id != 55 || auth()->user()->main_agent_id != 70) )
                                     <div class="col-xl-3 col-sm-6 col-xs-4">
                                         <div class="card mb-4 bg-success">
                                             <div class="card-body" title="Total Credit Transactions minus Expected Earnings">

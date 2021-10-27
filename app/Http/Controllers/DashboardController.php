@@ -1380,6 +1380,35 @@ class DashboardController extends Controller
 
     }
 
+    public function barcode_status($id, $status)
+    {
+        
+
+        if ($status == 0) {
+
+            User::where('id', $id)->update(['enable_barcode' => 1]);
+
+            session()->flash('alert-success', "Successfully activated this agent's ability to scan barcode.");
+
+            return back();
+
+        } elseif ($status == 1) {
+
+            User::where('id', $id)->update(['enable_barcode' => 0]);
+
+            session()->flash('alert-success', "Successfully deactivated this agents ability to scan barcode.");
+
+            return back();
+
+        } else {
+
+            session()->flash('alert-danger', "Something went wrong is processing this request");
+
+            return back();
+        }
+
+    }
+
     public function agent_view_product()
     {
         $vproducts = VendorProduct::where('vendor_id', 3)->get();
