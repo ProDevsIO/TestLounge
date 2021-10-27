@@ -220,6 +220,20 @@
 
                                                                         @endif
 
+                                                                        @if($user->enable_barcode == 0)
+
+                                                                            <a href="javascript:;"
+                                                                            onclick="confirmation('{{ url('/barcode/process/' .$user->id. '/0') }}')"
+                                                                            class="dropdown-item">Enable barcode scanner</a>
+
+                                                                        @elseif($user->enable_barcode == 1)
+
+                                                                            <a href="javascript:;"
+                                                                            onclick="confirmation('{{ url('/barcode/process/' .$user->id.'/1') }}')"
+                                                                            class="dropdown-item">Disable barcode scanner</a>
+
+                                                                        @endif
+
                                                                         @if($user->status == 0)
 
                                                                             <a href="javascript:;"

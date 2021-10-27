@@ -131,6 +131,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('sub-agents', \App\Http\Controllers\SubAgentController::class);
     Route::post('/update/percent/{id}', [\App\Http\Controllers\HomeController::class, "UpdatePercent"]);
     Route::get('/agent/copy/{id}', [\App\Http\Controllers\DashboardController::class, "agent_copy_receipt"]);
+    Route::get('/barcode/process/{id}/{stat}', [\App\Http\Controllers\DashboardController::class, "barcode_status"]);
     Route::get('/profile', [\App\Http\Controllers\DashboardController::class, "profile_view"]);
     Route::get('/edit/profile/view', [\App\Http\Controllers\DashboardController::class, "edit_profile_view"]);
     Route::post('/edit/profile', [\App\Http\Controllers\DashboardController::class, "edit_profile"]);

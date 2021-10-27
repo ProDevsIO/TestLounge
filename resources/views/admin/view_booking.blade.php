@@ -320,34 +320,34 @@
 
     <!-- Modal -->
     <div id="barcodeModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+        <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-        <div class="modal-header">
-             <h4 class="modal-title">Scan your barcode</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            
-        </div>
-        <div class="modal-body">
-            <P>Plaese select a camera of your choice</p>
-        <video id="preview"></video>
-
-            <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
-                <label class="btn btn-primary">
-                    <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="options" value="2" autocomplete="off" checked> Back Camera
-                </label>
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Scan your barcode</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                
             </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-        </div>
+            <div class="modal-body">
+                <P>Plaese select a camera of your choice</p>
+            <video id="preview"></video>
 
-    </div>
+                <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
+                    <label class="btn btn-primary">
+                        <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="options" value="2" autocomplete="off" checked> Back Camera
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+
+        </div>
     </div>
 @endsection
 @section('script')

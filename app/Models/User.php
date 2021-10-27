@@ -59,7 +59,8 @@ class User extends Authenticatable
         "main_agent_share_percent",
         "main_agent_share_raw",
         "main_agent_id",
-        "percentage_split"
+        "percentage_split",
+        "enable_barcode"
 
 	];
 

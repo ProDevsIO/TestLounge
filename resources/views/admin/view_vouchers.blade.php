@@ -6,6 +6,12 @@
             background-color:white;
             color:black !important;
         }
+        
+        video {
+        max-width: 100%;
+        height: auto;
+        }
+
        
         /* .dataTables_length{
             display:flex;
@@ -91,7 +97,7 @@
                                                                 <label for=""> Client Email</label>
                                                                     <input type="email" name="email" id="email_{{$j}}"class="form-control" required>
                                                                     <br>
-                                                                    <label for=""> Please select a Quantity</label>
+                                                                    <label for=""> Please select a quantity</label>
                                                                     <select name="quantity" id="quantity_{{$j}}" class="form-control" required @if($product->id == 15) onchange="generateKitField('{{$product->id}}', '{{$j}}')" @endif>
                                                                         <option value=""> Select a quantity</option>
                                                                     @if($product->voucherCount)
@@ -101,7 +107,7 @@
                                                                     @endif
                                                                    
                                                                     </select>
-                                                                    
+                                                                    <br>
                                                                     @if($product->id == 15)
                                                                         <div class="div_kit{{$j}}">
 
@@ -222,11 +228,80 @@
             </div>
         </div>
     </div>
+
+     <!-- Modal -->
+     <div id="barcodeModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Scan your barcode</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                
+            </div>
+            <div class="modal-body">
+                <P>Plaese select a camera of your choice</p>
+            <video id="preview"></video>
+
+                <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
+                    <label class="btn btn-primary">
+                        <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="options" value="2" autocomplete="off" checked> Back Camera
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+
+        </div>
+    </div>
 @endsection
 @section('script')
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendor/data-tables/dataTables.bootstrap4.min.js"></script>
-    <script>
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" rel="nofollow"></script>
+    <script type="text/javascript">
+        var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
+        scanner.addListener('scan',function(content){
+            alert(content);
+            //window.location.href=content;
+        });
+
+        Instascan.Camera.getCameras().then(function (cameras){
+            if(cameras.length>0){
+                
+                $('[name="options"]').on('change',function(){
+                   
+                    if($(this).val()==1){
+                        if(cameras[0]!=undefined){
+                            scanner.start(cameras[0]);
+                        }else{
+                            alert('No Front camera found!');
+                            scanner.stop();
+                        }
+                    }else if($(this).val()==2){
+                       
+                        if(cameras[1]!=undefined){
+                            scanner.start(cameras[1]);
+                        }else{
+                            alert('No Back camera found!');
+                            scanner.stop();
+                        }
+                    }
+                });
+            }else{
+                console.error('No cameras found.');
+                alert('No cameras found.');
+            }
+        }).catch(function(e){
+            console.error(e);
+            alert(e);
+        });
 
         function sendGenerateData(id, count) {
             var e = 'email_' + count;
@@ -255,7 +330,7 @@
                $card.empty(); // remove old options
                 for(i = 0 ; i< quantity; i++){
                     $card.append($("<label>Test kit number</label><br>"))
-                    $card.append($("<input type='text' class='form-control' placeholder='please put in test kit number' name='test_kit"+ i + "' required><br>")); 
+                    $card.append($("<div class='input-group mb-3'><input type='text' class='form-control' placeholder='please put in test kit number' name='test_kit"+ i + "' required><div class='input-group-append' data-toggle='modal' data-target='#barcodeModal'><span class='input-group-text'>Scan barcode</span></div></div>")); 
                    
                 }
               
