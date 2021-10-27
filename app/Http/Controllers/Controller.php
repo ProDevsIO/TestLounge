@@ -420,7 +420,14 @@ class Controller extends BaseController
         // $data_send['external_reference'] = "booking_".$booking->id;
         $data_send['product'] = optional(optional($booking->product)->product)->name;
 
-        
+        if($booking->test_kit != null){
+            //test json format to array passed as barcode
+            $data_send["barcode"] = json_decode($booking->test_kit);
+
+        }else{
+            $data_send["barcode"] = [];
+        }
+
         $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
 
         // dd($booking_products);
