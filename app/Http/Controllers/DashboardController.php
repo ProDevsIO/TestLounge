@@ -1518,25 +1518,57 @@ class DashboardController extends Controller
         return view('admin.view_vouchers')->with(compact('vouchers', 'products'));
     }
 
-    public function email_vouchers($id, $email, $quantity){
+    public function email_vouchers(request $request ,$id){
       
         
+        if($request->test_kit0 != null){
+            $test_kit = [];
+
+            for($n = 0; $n < $request->quantity; $n++)
+            {
+                $test_kit[] = $request->{'test_kit'.$n};
+               
+            
+            }
+
+        }
+       
+        
+        // encode the testkit in json format
+        $test_kit = json_encode($test_kit);
+     
         $voucherCount = VoucherCount::where(['product_id'=> $id, 'agent' => auth()->user()->id])->first();
     
-        $email = $email;
-        $quantity = $quantity;
+        $email = $request->email;
+        $quantity = $request->quantity;
 
         $voucher =  uniqid('voucher_') ."_". $voucherCount->id;
+       
         DB::beginTransaction();
         try {
+        if($request->test_kit0 != null){
+
+            $v_generate = VoucherGenerate::create([
+                'agent' => auth()->user()->id,
+                'voucher_count_id' => $voucherCount->id,
+                'email' => $email,
+                'voucher' => $voucher,
+                'quantity' => $quantity,
+                'status' => 0,
+                'test_kit'=> $test_kit
+            ]);
+
+        }else{
+
             $v_generate = VoucherGenerate::create([
                 'agent' => auth()->user()->id,
                 'voucher_count_id' => $voucherCount->id,
                 'email' => $email,
                 'voucher' => $voucher,
                 'quantity' =>$quantity,
-                'status' => 0
+                'status' => 0  
             ]);
+        }
         
             $new_v_quantity =  $voucherCount->quantity -  $quantity; 
 
@@ -1562,11 +1594,12 @@ class DashboardController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+        
             session()->flash('alert-danger', "Something went wrong");
             return back();
         }
 
-        
+
         session()->flash('alert-success', "Successfully created a voucher and sent via email");
         return back();
 
@@ -1786,7 +1819,20 @@ class DashboardController extends Controller
                 }
             }
            
+        }elseif (auth()->user()->type == 2 && auth()->user()->main_agent_id == 70) {
+            
+            if($request->code != null){
+                if($request->code != 9009)
+                {
+                    session()->flash('alert-danger', "Please this is a wrong access code");
+                    return back();
+                }else{
+                    $code = $request->code;
+                }
+            }
+           
         }
+
 
         if (auth()->user()->type == 1) {
 

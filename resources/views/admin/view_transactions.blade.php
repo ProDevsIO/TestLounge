@@ -481,5 +481,14 @@
             });
 
         </script>
+     @endif
+
+     @if(auth()->user()->main_agent_id == 70 && $code != 9009 )
+        <script>
+            $(document).ready(function () {
+                $("#countryForce").modal({backdrop: 'static', keyboard: false}, 'show');
+            });
+
+        </script>
     @endif
 @endsection
