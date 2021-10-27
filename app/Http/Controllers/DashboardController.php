@@ -375,7 +375,9 @@ class DashboardController extends Controller
     public function add_test_kit(Request $request)
     {
         //to mnually add the test kits after booking
+        
         try{
+            DB::beginTransaction();
             $booking_p = BookingProduct::where('id', $request->id)->first();
             $test_kit = array();
 
@@ -394,6 +396,8 @@ class DashboardController extends Controller
             ->update([
                     'test_kit' => $test_kit
             ]);
+
+            DB::commit();
             session()->flash('alert-success', "Successfully added test kit numbers.");
             return back();
 
@@ -1541,10 +1545,11 @@ class DashboardController extends Controller
         } else {
             $vouchers = VoucherGenerate::where('agent', auth()->user()->id)->orderBy('id', 'desc')->get();
         }
-       
+       $sub_agents = User::where('main_agent_id' , auth()->user()->id)->get();
+
         $products = Product::all();
 
-        return view('admin.view_vouchers')->with(compact('vouchers', 'products'));
+        return view('admin.view_vouchers')->with(compact('vouchers', 'products', 'sub_agents'));
     }
 
     public function email_vouchers(request $request ,$id){
@@ -1559,12 +1564,13 @@ class DashboardController extends Controller
                
             
             }
+              // encode the testkit in json format
+             $test_kit = json_encode($test_kit);
 
         }
        
         
-        // encode the testkit in json format
-        $test_kit = json_encode($test_kit);
+      
      
         $voucherCount = VoucherCount::where(['product_id'=> $id, 'agent' => auth()->user()->id])->first();
     
@@ -1573,8 +1579,9 @@ class DashboardController extends Controller
 
         $voucher =  uniqid('voucher_') ."_". $voucherCount->id;
        
-        DB::beginTransaction();
+       
         try {
+            DB::beginTransaction();
         if($request->test_kit0 != null){
 
             $v_generate = VoucherGenerate::create([
@@ -1712,6 +1719,100 @@ class DashboardController extends Controller
         // dd($request->product_id,$request->number, $id, $v_rate, $currency, $charged, $voucherpay, $count_check);
         session()->flash('alert-success', "Transaction successful, $request->number voucher has been added to $user->first_name's account");
                
+        return back();
+
+    }
+
+    public function agent_assign_voucher(Request $request, $id)
+    {
+       
+        
+        //get data from vendor products table
+        $v_rate = VendorProduct::where([
+                    'product_id' => $id,
+                    'vendor_id' => 3
+        ])->first(); 
+
+       
+        //get the user collection
+        $user = User::where('id', $request->agent)->first();
+
+        //get the users country to get the currency and charge rate
+       
+        if($user->country == 'NG'){
+            $currency = "NG";
+            $charged = $v_rate->price;
+        }else{
+
+            if($user->country == null)
+            {
+                session()->flash('alert-danger', "Sorry but this transaction couldnt be completed because the agent has completed his profile details");
+                return back();
+            }
+            $currency = "USD";
+            $charged = $v_rate->price_pounds;
+        }
+
+       
+       try{
+             DB::beginTransaction();
+            //create the voucher payment transaction for record keeping
+            $voucherpay= VoucherPayment::Create([
+                'agent' => $request->agent,
+                'assignee' => auth()->user()->id,
+                'vendor_id' => 3,
+                'product_id' => $id,
+                'vendor_product_id' => $v_rate->id,
+                'charged_amount' => $charged,
+                'quantity' => $request->quantity,
+                'currency' => $currency,
+                'status' => 1
+            ]);
+
+            //check if this user already has wallet for this product
+            $count_check = VoucherCount::where(['agent' => $request->agent, 'product_id' => $id])->first();
+
+            //if user has a wallet , update else create a wallet to store 
+            if($count_check == null)
+            {
+                VoucherCount::create([
+                    'agent' => $request->agent,
+                    'product_id' => $id,
+                    'quantity' => $request->quantity
+                    
+                ]);
+
+            }else{
+
+                $voucher_quantity = $count_check->quantity + $request->number;
+
+                $count_check->update([
+                    'quantity' => $voucher_quantity
+                ]);
+
+            }
+
+            //deduct amount from super agent account
+            $super_voucher = VoucherCount::where(['agent' => auth()->user()->id, 'product_id' => $id])->first();
+            $super_agent_quantity = $super_voucher->quantity -  $request->quantity;
+
+            VoucherCount::where(['agent' => auth()->user()->id, 'product_id' => $id])
+            ->update([
+                'quantity' => $super_agent_quantity
+            ]);
+
+            DB::commit();
+            // dd($request->product_id,$request->number, $id, $v_rate, $currency, $charged, $voucherpay, $count_check);
+            session()->flash('alert-success', "Transaction successful, $request->quantity vouchers has been added to $user->first_name's account");
+                
+           
+        }catch(\Exception $e){
+            DB::rollback();
+            dd($e);
+            session()->flash('alert-danger', "Something went wrong. Please reach out to Admin.");
+                
+        }
+
         return back();
 
     }

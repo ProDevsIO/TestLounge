@@ -20,12 +20,18 @@ class VoucherPayment extends Model
         'quantity',
         'charged_amount',
         'currency',
-        'status'
+        'status',
+        'assignee'
 	];
 
     public function user()
 	{
 		return $this->BelongsTo(User::class, 'agent');
+	}
+
+    public function assignee()
+	{
+		return $this->BelongsTo(User::class, 'assignee');
 	}
     
     public function voucherProduct()

@@ -26,7 +26,9 @@
 @section('content')
     <div class="content-wrapper">
         <div class="container-fluid">
+        @include('errors.showerrors')
             <div class="row">
+
                 <?php $j =1;?>
                 @foreach($products as $product)
                  <div class="col-xl-4 col-sm-4">
@@ -67,6 +69,8 @@
                                     @if($product->voucherCount->quantity > 0)
                                         <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
                                                                                 href="#refmodal{{$product->id}}">generate voucher</button>
+                                        <!-- <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
+                                                                                href="#assign{{$product->id}}">Assign to sub agent</button> -->
                                     @endif
                                 @endif
                             </div>
@@ -139,7 +143,7 @@
                                 </div>
                                 <div class="alert alert-info"> Hint: Complete customer booking by clicking on their voucher number below once generated</div>
                                 <div class="card-body p-0">
-                                    @include('errors.showerrors')
+                                  
                                     <div class="table-responsive">
                                         <table class="table table-hover table-custom" id="data_table">
                                             <thead>
@@ -260,6 +264,57 @@
 
         </div>
     </div>
+
+    @foreach($products as $product)
+                                                    <div class="modal fade" id="assign{{ $product->id }}"
+                                                         tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                         aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <form action="{{ url('/agent/assign/voucher/'.$product->id) }}"
+                                                                      method="post">
+                                                                    @csrf
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                                            Assign voucher to sub agent</h5>
+                                                                        <button type="button" class="close"
+                                                                                data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <label class="text-muted">Agents</label>
+                                                                        <select name="agent" class="form-control" id="" required>
+                                                                           @foreach($sub_agents as $subagent)
+                                                                                <option value="{{$subagent->id}}"> {{ $subagent->first_name }} {{ $subagent->last_name }}</option>
+                                                                           @endforeach
+                                                                        </select>
+
+                                                                        <label for=""> Please select a quantity</label>
+                                                                        <select name="quantity" class="form-control" required >
+                                                                            <option value=""> Select a quantity</option>
+                                                                            @if($product->voucherCount)
+                                                                                @for($i=1; $i <= $product->voucherCount->quantity; $i++)
+                                                                                    <option value="{{$i}}">{{$i}}</option>
+                                                                                @endfor
+                                                                            @endif
+                                                                    
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="submit" class="btn btn-primary">
+                                                                            Assign
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                                data-dismiss="modal">Close
+                                                                        </button>
+                                                                        
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    @endforeach
 @endsection
 @section('script')
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
