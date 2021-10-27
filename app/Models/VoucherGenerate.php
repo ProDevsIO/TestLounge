@@ -17,7 +17,8 @@ class VoucherGenerate extends Model
 		'email',
         'voucher',
         'quantity',
-        'status'
+        'status',
+		'test_kit'
 	];
 
     public function user()

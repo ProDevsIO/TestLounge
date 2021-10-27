@@ -220,15 +220,22 @@
 
                                     @if($voucher->voucherCount->product_id == 15)
                                         <div class="col-md-12">
-                                            
+                                        <?php $decode = json_decode($voucher->test_kit); ?>
+   
                                             @for($x =0; $x < $voucher->quantity; $x++)
+                                                
+                                           
                                                 @if($voucher->quantity > 1)
                                                     <label>Test kit number {{$x + 1}}</label>
                                                 @else
                                                     <label>Test kit number</label>
                                                 @endif
                                                 <!-- <div class="input-group mb-3"> -->
+                                                    @if($decode != null)
+                                                    <input class="" type="text" name="test_kit{{$x}}" value="{{ $decode[$x] }}" readonly required ><br>
+                                                    @else
                                                     <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required ><br>
+                                                    @endif
                                                     <!-- <div class="input-group-append" data-toggle="modal" data-target="#myModal">
                                                         <span class="input-group-text">Scan barcode</span>
                                                     </div>

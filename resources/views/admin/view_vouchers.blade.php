@@ -86,12 +86,14 @@
                                                                         <p><span class="badge badge-danger">Notice!</span> Once this code is generated, it will be assigned to this email address and email will be sent out with the booking link for the voucher, This simply means that the code generated can only be used by the assigned email for booking. </p>
                                                                     </div>
                                                             
-                                                        
-                                                                    <label for=""> Client Email</label>
-                                                                    <input type="email" name="email" id="email_{{$j}}"class="form-control">
+                                                            <form action="{{ url('/voucher/email/' . $product->id) }}" method="post">
+                                                                @csrf    
+                                                                <label for=""> Client Email</label>
+                                                                    <input type="email" name="email" id="email_{{$j}}"class="form-control" required>
                                                                     <br>
                                                                     <label for=""> Please select a Quantity</label>
-                                                                    <select name="quantity" id="quantity_{{$j}}" class="form-control">
+                                                                    <select name="quantity" id="quantity_{{$j}}" class="form-control" required @if($product->id == 15) onchange="generateKitField('{{$product->id}}', '{{$j}}')" @endif>
+                                                                        <option value=""> Select a quantity</option>
                                                                     @if($product->voucherCount)
                                                                         @for($i=1; $i <= $product->voucherCount->quantity; $i++)
                                                                             <option value="{{$i}}">{{$i}}</option>
@@ -100,11 +102,17 @@
                                                                    
                                                                     </select>
                                                                     
+                                                                    @if($product->id == 15)
+                                                                        <div class="div_kit{{$j}}">
+
+                                                                        </div>
+
+                                                                    @endif
                                                         
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="submit" onclick="sendGenerateData('{{$product->id}}','{{$j}}')" class="btn btn-sm bg-purple text-white">submit</button>
-                                                        
+                                                            <button type="submit" class="btn btn-sm bg-purple text-white">submit</button>
+                                                            </form>
                                                             <button type="button" class="btn btn-sm bg-purple text-white"
                                                                     data-dismiss="modal">Close
                                                             </button>
@@ -229,8 +237,30 @@
             // console.log(email, quantity);
             if (d) {
 
-                window.location = '/voucher/email/'+ id + '/' + email + '/' +quantity;
+                // window.location = '/voucher/email/'+ id + '/' + email + '/' +quantity;
             }
+        }
+
+        function generateKitField(id, count) {
+
+            var q = 'quantity_' + count;
+            var id = id;
+            var kit_n = ".div_kit" + count;
+            var quantity = document.getElementById(q).value;
+            // console.log(email, quantity);
+            console.log(q, id, quantity, count);
+            if (id == 15) {
+                var $card = $(kit_n);
+               
+               $card.empty(); // remove old options
+                for(i = 0 ; i< quantity; i++){
+                    $card.append($("<label>Test kit number</label><br>"))
+                    $card.append($("<input type='text' class='form-control' placeholder='please put in test kit number' name='test_kit"+ i + "' required><br>")); 
+                   
+                }
+              
+            }
+           
         }
 
 
