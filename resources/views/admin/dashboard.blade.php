@@ -178,41 +178,45 @@
                                 </div>
                             </div> -->
                         @endif
-                            @if(auth()->user()->country == 'NG' && (auth()->user()->id != 55  || auth()->user()->main_agent_id != 70) )
-                                <div class="col-xl-3 col-sm-6 col-xs-4">
-                                    <div class="card mb-4 bg-success">
-                                        <div class="card-body" title="Total Credit Transactions minus Expected Earnings">
-                                            <div class="media d-flex align-items-center">
-                                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
-                                                    <i class="vl_money"></i>
-                                                </div>
-                                                <div class="media-body text-white">
-                                                    <h4 class="text-uppercase mb-0 weight500">
-                                                        N{{ number_format(auth()->user()->wallet_balance,2) }}</h4>
-                                                    <span>Wallet Balance</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-sm-6 col-xs-4">
-                                    <div class="card mb-4 bg-success">
-                                        <div class="card-body" title="Total money paid from Wallet Balance(N)">
-                                            <div class="media d-flex align-items-center">
-                                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
-                                                    <i class="vl_money"></i>
-                                                </div>
-                                                <div class="media-body text-white">
-                                                    <h4 class="text-uppercase mb-0 weight500">
-                                                        N{{ number_format($earned,2) }}</h4>
-                                                    <span>Expected Earnings</span>
+                        
+                            @if(auth()->user()->country == 'NG' && auth()->user()->id != 55)
+                                @if( auth()->user()->main_agent_id != 70)
+                                    <div class="col-xl-3 col-sm-6 col-xs-4">
+                                        <div class="card mb-4 bg-success">
+                                            <div class="card-body" title="Total Credit Transactions minus Expected Earnings">
+                                                <div class="media d-flex align-items-center">
+                                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                                        <i class="vl_money"></i>
+                                                    </div>
+                                                    
+                                                    <div class="media-body text-white">
+                                                        <h4 class="text-uppercase mb-0 weight500">
+                                                            N{{ number_format(auth()->user()->wallet_balance,2) }}</h4>
+                                                        <span>Wallet Balance 1</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="col-xl-3 col-sm-6 col-xs-4">
+                                        <div class="card mb-4 bg-success">
+                                            <div class="card-body" title="Total money paid from Wallet Balance(N)">
+                                                <div class="media d-flex align-items-center">
+                                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-success">
+                                                        <i class="vl_money"></i>
+                                                    </div>
+                                                    <div class="media-body text-white">
+                                                        <h4 class="text-uppercase mb-0 weight500">
+                                                            N{{ number_format($earned,2) }}</h4>
+                                                        <span>Expected Earnings</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            @endif
                             @else
-                                @if(auth()->user()->country == 'NG' && (auth()->user()->id != 55 || auth()->user()->main_agent_id != 70) )
+                                @if(auth()->user()->country == 'NG' && auth()->user()->id != 55 )
                                     <div class="col-xl-3 col-sm-6 col-xs-4">
                                         <div class="card mb-4 bg-success">
                                             <div class="card-body" title="Total Credit Transactions minus Expected Earnings">
@@ -291,8 +295,10 @@
                                             @endif
                                             <th scope="col">Status</th>
                                             <th scope="col">Mode of Payment</th>
-                                            @if(auth()->user()->referal_code && (auth()->user()->id != 55 || auth()->user()->main_agent_id != 70) )
-                                                <th scope="col">Earnings</th>
+                                            @if(auth()->user()->referal_code && auth()->user()->id != 55 )
+                                                @if(auth()->user()->main_agent_id != 70)
+                                                    <th scope="col">Earnings</th>
+                                                @endif
                                             @endif
                                             @if(auth()->user()->type == "1")
                                                 <th scope="col">Vendor</th>
@@ -364,14 +370,16 @@
                                                         Vas
                                                     @endif
                                                 </td>
-                                                @if(auth()->user()->referal_code && (auth()->user()->id != 55 || auth()->user()->main_agent_id != 70))
-                                                    <td> @php
-                                                            if($booking->transaction){
-                                                                 echo "N".number_format($booking->transaction->amount,2);
-                                                            }else if($booking->ptransaction){
-                                                                 echo "$".number_format($booking->ptransaction->amount,2);
-                                                            }
-                                                        @endphp</td>
+                                                @if(auth()->user()->referal_code && auth()->user()->id != 55)
+                                                    @if(auth()->user()->main_agent_id != 70)
+                                                        <td> @php
+                                                                if($booking->transaction){
+                                                                    echo "N".number_format($booking->transaction->amount,2);
+                                                                }else if($booking->ptransaction){
+                                                                    echo "$".number_format($booking->ptransaction->amount,2);
+                                                                }
+                                                            @endphp</td>
+                                                    @endif
                                                 @endif
                                                 @if(auth()->user()->type == "1")
                                                     <td>
