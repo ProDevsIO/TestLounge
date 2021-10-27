@@ -26,7 +26,9 @@
 @section('content')
     <div class="content-wrapper">
         <div class="container-fluid">
+        @include('errors.showerrors')
             <div class="row">
+
                 <?php $j =1;?>
                 @foreach($products as $product)
                  <div class="col-xl-4 col-sm-4">
@@ -67,8 +69,8 @@
                                     @if($product->voucherCount->quantity > 0)
                                         <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
                                                                                 href="#refmodal{{$product->id}}">generate voucher</button>
-                                        <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
-                                                                                href="#assign{{$product->id}}">Assign to sub agent</button>
+                                        <!-- <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
+                                                                                href="#assign{{$product->id}}">Assign to sub agent</button> -->
                                     @endif
                                 @endif
                             </div>
@@ -141,7 +143,7 @@
                                 </div>
                                 <div class="alert alert-info"> Hint: Complete customer booking by clicking on their voucher number below once generated</div>
                                 <div class="card-body p-0">
-                                    @include('errors.showerrors')
+                                  
                                     <div class="table-responsive">
                                         <table class="table table-hover table-custom" id="data_table">
                                             <thead>

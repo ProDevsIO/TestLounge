@@ -1564,12 +1564,13 @@ class DashboardController extends Controller
                
             
             }
+              // encode the testkit in json format
+             $test_kit = json_encode($test_kit);
 
         }
        
         
-        // encode the testkit in json format
-        $test_kit = json_encode($test_kit);
+      
      
         $voucherCount = VoucherCount::where(['product_id'=> $id, 'agent' => auth()->user()->id])->first();
     
