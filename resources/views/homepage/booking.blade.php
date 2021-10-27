@@ -219,7 +219,7 @@
                                 @if(isset($voucher))
 
                                     @if($voucher->voucherCount->product_id == 15)
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" style="display:none">
                                         <?php $decode = json_decode($voucher->test_kit); ?>
    
                                             @for($x =0; $x < $voucher->quantity; $x++)
