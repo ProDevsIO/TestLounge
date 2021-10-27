@@ -77,12 +77,12 @@
                     </a> -->
                 </div>
             </div>
-            <div class="container" >
+            <div class="container" style="top:-23px;">
                 <div class="row">
                     <div class="col-md-12 text-center" id="banner-writeup-container" >
                         <div class="row">
                             <div class="col-md-6 "style=" padding-top:10px">
-                                <h2 class="text-white space-bottom-medium" id="banner-writeup">We simplify the process of booking and making payments for COVID-19 Travel Tests for both travellers and travel agents. You’ll get up to date information on travel requirements and access to test providers in the country of destination. This ensures you have a hassle free travel experience.</h2>
+                                <h2 class="text-white space-bottom-medium"  id="banner-writeup">We simplify the process of booking and making payments for COVID-19 Travel Tests for both travellers and travel agents. You’ll get up to date information on travel requirements and access to test providers in the country of destination. This ensures you have a hassle free travel experience.</h2>
                                 <!-- <a href="/#popular" class="btn btn-primary  btn-white">Learn more</a> -->
                                <p style="color: #fff;text-align: left" class="learn_more">Choose the Country you are travelling to: </p>
 
