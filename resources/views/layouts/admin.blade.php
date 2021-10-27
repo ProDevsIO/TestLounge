@@ -7,10 +7,10 @@
     <meta name="author" content="ProDevs">
 
     <!--favicon icon-->
-    <link rel="icon" type="image/png" href="assets/img/fav.png">
+    <link rel="icon" type="image/png" href="assets/img/fav.PNG">
 
     <title>Traveltestsltd | Admin</title>
-    <link rel="icon" type="image/png" href="/img/fav.png">
+    <link rel="icon" type="image/png" href="/img/fav.PNG">
 
     <!--web fonts-->
     <link href="//fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet">
