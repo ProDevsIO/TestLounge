@@ -1819,7 +1819,20 @@ class DashboardController extends Controller
                 }
             }
            
+        }elseif (auth()->user()->type == 2 && auth()->user()->main_agent_id == 70) {
+            
+            if($request->code != null){
+                if($request->code != 9009)
+                {
+                    session()->flash('alert-danger', "Please this is a wrong access code");
+                    return back();
+                }else{
+                    $code = $request->code;
+                }
+            }
+           
         }
+
 
         if (auth()->user()->type == 1) {
 
