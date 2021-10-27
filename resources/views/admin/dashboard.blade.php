@@ -291,7 +291,7 @@
                                             @endif
                                             <th scope="col">Status</th>
                                             <th scope="col">Mode of Payment</th>
-                                            @if(auth()->user()->referal_code && auth()->user()->id != 55)
+                                            @if(auth()->user()->referal_code && (auth()->user()->id != 55 || auth()->user()->main_agent_id != 70) )
                                                 <th scope="col">Earnings</th>
                                             @endif
                                             @if(auth()->user()->type == "1")
@@ -364,7 +364,7 @@
                                                         Vas
                                                     @endif
                                                 </td>
-                                                @if(auth()->user()->referal_code && auth()->user()->id != 55)
+                                                @if(auth()->user()->referal_code && (auth()->user()->id != 55 || auth()->user()->main_agent_id != 70))
                                                     <td> @php
                                                             if($booking->transaction){
                                                                  echo "N".number_format($booking->transaction->amount,2);
