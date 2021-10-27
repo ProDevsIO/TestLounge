@@ -344,7 +344,7 @@
             $card.empty(); // remove old options
                 for(i = 0 ; i< quantity; i++){
                     $card.append($("<label>Test kit number</label><br>"))
-                    $card.append($("<div class='input-group mb-3'><input type='text' class='form-control' placeholder='please put in test kit number' name='test_kit"+ i + "' required><div class='input-group-append' data-toggle='modal' data-target='#barcodeModal'><span class='input-group-text'>Scan barcode</span></div></div>")); 
+                    $card.append($("<div class='input-group mb-3'><input type='text' class='form-control' placeholder='Type test kit number' name='test_kit"+ i + "' required><div class='input-group-append' data-toggle='modal' data-target='#barcodeModal'><span class='input-group-text'>Scan barcode</span></div></div>")); 
                 
                 }
             
@@ -369,7 +369,7 @@
             $card.empty(); // remove old options
                 for(i = 0 ; i< quantity; i++){
                     $card.append($("<label>Test kit number</label><br>"))
-                    $card.append($("<input type='text' class='form-control' placeholder='please put in test kit number' name='test_kit"+ i + "' required>")); 
+                    $card.append($("<input type='text' class='form-control' placeholder='Type test kit number' name='test_kit"+ i + "' required>")); 
                 
                 }
             
