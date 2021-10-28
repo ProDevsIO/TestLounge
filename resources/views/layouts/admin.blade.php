@@ -258,7 +258,7 @@
                                 <li> <a href="{{ url('/view/vouchers/transaction') }}">Voucher transaction</a> </li>
                             @endif
 
-                            @if(auth()->user()->type != 1)
+                            @if(auth()->user()->type != 1 && auth()->user()->main_agent_id == null)
                                 <li> <a href="{{ url('/subagent/assigned/vouchers') }}">Assigned Vouchers</a> </li>
                             @endif
 

@@ -69,8 +69,10 @@
                                     @if($product->voucherCount->quantity > 0)
                                         <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
                                                                                 href="#refmodal{{$product->id}}">generate voucher</button>
-                                        <!-- <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
-                                                                                href="#assign{{$product->id}}">Assign to sub agent</button> -->
+                                        @if(auth()->user->main_agent_id == null)                                    
+                                        <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
+                                                                                href="#assign{{$product->id}}">Assign to sub agent</button>
+                                        @endif
                                     @endif
                                 @endif
                             </div>
