@@ -17,8 +17,8 @@
                                         <table class="table table-hover table-custom" id="data_table">
                                             <thead>
                                             <tr>
-                                                @if(auth()->user()->type == 1)
-                                                <th> Agent</th>
+                                                @if(auth()->user()->type != 1)
+                                                <th> Sub Agent</th>
                                                 @endif
                                                
                                                 <th scope="col" style="padding-left:70px; padding-right:70px">Test package</th>
@@ -28,7 +28,7 @@
                                                 <th scope="col">Amount</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Date</th>
-                                                <th scope="col"> Action</th>
+                                                <!-- <th scope="col"> Action</th> -->
                                                
                                                 <!-- <th scope="col">Action</th> -->
                                             </tr>
@@ -39,7 +39,7 @@
                                             
                                                         <tr>
                                                         
-                                                            @if(auth()->user()->type == 1)
+                                                            @if(auth()->user()->type != 1)
                                                                 @if(!empty($voucher->user))
                                                                 <td>{{ $voucher->user->first_name }} {{ $voucher->user->last_name }}</td>
                                                                 @else
@@ -85,14 +85,14 @@
                                                             <td> <span class ="badge badge-success"> Paid</span></td>
                                                             @endif
                                                             <td>{{ $voucher->created_at }}</td>
-                                                            @if($voucher->status == 0)
+                                                            <!-- @if($voucher->status == 0)
                                                             <td class="text-center"><a href="javascript:;"
                                                                                onclick="confirmation('{{ url('/mark/voucher/' .$voucher->id) }}')"
                                                                                class="bg-success text-white p-2">Mark as paid</a></td>
 
                                                             @else
                                                             <td> </td>
-                                                            @endif
+                                                            @endif -->
                                                             <!-- <td>
                                                                 <div class="btn-group" role="group">
                                                                     <button id="btnGroupDrop1" type="button"
