@@ -1643,6 +1643,7 @@ class DashboardController extends Controller
 
     public function voucher_transactions()
     {
+
         $vouchers = VoucherPayment::wherenotNull('transaction_ref')->orderby('id', 'desc')->get();
         $voucherboughts = VoucherPayment::whereNull('transaction_ref')->orderby('id', 'desc')->get();
         $products = Product::all();
@@ -1650,6 +1651,12 @@ class DashboardController extends Controller
         $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->count();
         $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->count();
         return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid'));
+    }
+
+    public function voucher_assigned_subagent()
+    {
+        $vouchers = VoucherPayment::where('assignee', auth()->user()->id)->orderby('id', 'desc')->get();
+        return view('admin.subagent_assigned_vouchers')->with(compact('vouchers'));
     }
 
     public function admin_assign_voucher(Request $request, $id)
