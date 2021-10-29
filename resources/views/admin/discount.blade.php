@@ -26,7 +26,7 @@
          <div class="row">
              <div class="col-xl-12">
                  <div class="card">
-                    <div class="card-body p-2">
+                    <div class="card-body p-0">
                                         <div class="table-responsive">
                                             <table class="table table-hover table-custom" id="data_table">
                                                 <thead>
@@ -34,7 +34,7 @@
                                                     @if(auth()->user()->type == 1)
                                                     <th> Agent</th>
                                                     @endif
-                                                <th>id</th>
+                                                
                                                     <th scope="col" style="padding-left:70px; padding-right:70px">Test package</th>
                                                     <th scope> Acquired</th>
                                                     <!-- <th scope="col">Amount</th> -->
@@ -48,10 +48,9 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                   
                                         
                                                     @foreach($vouchers as $voucher)
-                                                       
+                                                       @if(!empty($voucher->v_pay))
                                                             <tr>
                                                             
                                                                 @if(auth()->user()->type == 1)
@@ -63,18 +62,18 @@
                                                                 @endif
                                                             
                                                             
-                                                                <td>{{$voucher->id}}</td>
+
                                                                 <td>{{optional(optional($voucher->v_pay)->product)->name}}<br>
                                                                 @if($voucher->currency == "NG")
                                                                     @if($voucher->v_pay->transaction_ref != null)
-                                                                        (N{{$voucher->cost_config *$voucher->v_pay->quantity}})
+                                                                        (N{{$voucher->cost_config }})
                                                                     @else
                                                                       (N{{$voucher->cost_config * $voucher->v_pay->quantity}})
                                                                     @endif
                                                                     
                                                                 @else
                                                                      @if($voucher->v_pay->transaction_ref != null)
-                                                                        (${{$voucher->cost_config *$voucher->v_pay->quantity}})
+                                                                        (${{$voucher->cost_config}})
                                                                     @else
                                                                       (${{$voucher->cost_config * $voucher->v_pay->quantity}})
                                                                     @endif
@@ -113,7 +112,7 @@
                                                                 
                                                                 
                                                             </tr>
-                                                            
+                                                        @endif    
                                                     
                                                     @endforeach
                                             
