@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Helpers\BookingConfirmationService;
 use App\Helpers\BookingService;
 use App\Helpers\BarcodeHelper;
+use App\Helpers\VoucherDiscountProcess;
+use App\Helpers\UserShare;
 use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
 use App\Models\Voucher;
@@ -821,7 +823,7 @@ class DashboardController extends Controller
         //get all colors
         $colors = Color::all();
         //get all countries
-        $country_id_exclude = CountryColor::pluck('country_id')->toArray();;
+        $country_id_exclude = CountryColor::pluck('country_id')->toArray();
         $countries = Country::whereNotIn('id', $country_id_exclude)->get();
         $countryzone = CountryColor::all();
 
@@ -1417,7 +1419,16 @@ class DashboardController extends Controller
     {
         $vproducts = VendorProduct::where('vendor_id', 3)->get();
 
-        return view('admin.agent_view_product')->with(compact('vproducts'));
+        $user = User::where('id', auth()->user()->id)->first();
+        
+        if ($user->percentage_split != null) {
+            $percentage = $user->percentage_split/100;
+        } else {
+            $defaultpercent = Setting::where('id', '2')->first();
+            $percentage = $defaultpercent->value/100;
+        }
+
+        return view('admin.agent_view_product')->with(compact('vproducts','percentage'));
     }
 
     public function post_agent_buy($product_id, $vendor_id, $quantity)
@@ -1425,14 +1436,27 @@ class DashboardController extends Controller
        
         $product = VendorProduct::where('product_id',$product_id)->where('vendor_id',$vendor_id)->first();
 
+        $user = User::where('id', auth()->user()->id)->first();
+        
+        if ($user->percentage_split != null) {
+            $percentage = $user->percentage_split/100;
+        } else {
+            $defaultpercent = Setting::where('id', '2')->first();
+            $percentage = $defaultpercent->value/100;
+        }
+
         $country = auth()->user()->country;
 
         if ($country == "NG") {
             $amount = $product->price * $quantity;
+            $amount = $amount - ($amount * $percentage);
 
         } else {
             $amount = $product->price_pounds * $quantity;
+            $amount = $amount - ($amount * $percentage);
         }
+
+       
 
         $transaction_ref = uniqid('voucher-') . rand(10000, 999999);
 
@@ -1501,6 +1525,7 @@ class DashboardController extends Controller
 
             $voucherpay = VoucherPayment::where('transaction_ref', $txRef)->first();
 
+           
             if ($voucherpay->status != 1) {
 
                 $count_check = VoucherCount::where(['agent' => $voucherpay->agent, 'product_id' => $voucherpay->product_id])->first();
@@ -1523,16 +1548,93 @@ class DashboardController extends Controller
                      ]);
      
                 }
+
                 //update voucher payment status
-                $voucherpay->update([
-                    'status' => 1,
-                ]);
+                // $voucherpay->update([
+                //     'status' => 1,
+                // ]);
+
+            
+                    try {
+                        DB::beginTransaction();
+
+                        $userService = new UserShare;
+                        $user = User::where('id', $voucherpay->agent)->first();
+                        $agent_share = $userService->myShare($user);
+                        $share_data = $userService->calculateMainAgentShare($user->main_agent_share_raw, $agent_share);
+
+                        $agent_percentage = $share_data["sub_agent_share"];
+
+                        $cost_booking = $voucherpay->charged_amount;
+
+
+                        if ($voucherpay->currency != null) {
+
+                            //for international transaction in pounds
+                            $product = VendorProduct::where('product_id', $voucherpay->product_id)->where('vendor_id',$voucherpay->vendor_id)->first();
+                           
+                            $user = User::where('id', auth()->user()->id)->first();
+        
+                            if ($user->percentage_split != null) {
+                                $percentage = $user->percentage_split/100;
+                            } else {
+                                $defaultpercent = Setting::where('id', '2')->first();
+                                $percentage = $defaultpercent->value/100;
+                            }
+                    
+                            $country = auth()->user()->country;
+                    
+                            if ($country == "NG") {
+                                $amount = $product->price * $voucherpay->quantity;
+                                $amount = $amount * $percentage;
+                    
+                            } else {
+                                $amount = $product->price_pounds * $voucherpay->quantity;
+                                $amount = $amount * $percentage;
+                            }
+
+                            $agent_amount_credit = $amount;
+
+
+                            VoucherDiscountProcess::processTransaction(
+                                $user->id,
+                                $voucherpay->id,
+                                $agent_amount_credit,
+                                $cost_booking,
+                                $agent_percentage
+                            );
+
+                            if (!empty($superAgent = $user->superAgent)) {
+                                $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                $super_agent_amount_credit = $cost_booking + ($cost_booking * ($super_agent_percentage / 100));
+
+                                VoucherDiscountProcess::processTransaction(
+                                    $superAgent,
+                                    $booking->id,
+                                    $super_agent_amount_credit,
+                                    $cost_booking,
+                                    $super_agent_percentage
+                                );
+                            }
+                        }
+
+                        DB::commit();
+                    } catch (\Exception $e) {
+                        DB::rollBack();
+                        dd($e);
+                        logger("An error occured while saving discount");
+                       
+                    }
+                 
+                
 
             }
+        
 
             session()->flash('alert-success', "Transaction completed. Your account has been topped up");
             return redirect()->to('/view/vouchers');
         }
+
 
         session()->flash('alert-danger', "Sorry but this transaction wasnt successful");
         return redirect()->to('/view/vouchers');
@@ -1681,10 +1783,17 @@ class DashboardController extends Controller
         //get the user collection
         $user = User::where('id', $id)->first();
 
+        if ($user->percentage_split != null) {
+            $percentage = $user->percentage_split/100;
+        } else {
+            $defaultpercent = Setting::where('id', '2')->first();
+            $percentage = $defaultpercent->value/100;
+        }
+
         //get the users country to get the currency and charge rate
         if($user->country == 'NG'){
             $currency = "NG";
-            $charged = $v_rate->price;
+            $charged = $v_rate->price - ($v_rate->price * $percentage);
         }else{
 
             if($user->country == null)
@@ -1693,7 +1802,7 @@ class DashboardController extends Controller
                 return back();
             }
             $currency = "USD";
-            $charged = $v_rate->price_pounds;
+            $charged = $v_rate->price_pounds - ($v_rate->price_pounds * $percentage);
         }
 
        
@@ -1708,6 +1817,24 @@ class DashboardController extends Controller
             'currency' => $currency,
             'status' => 0
         ]);
+
+        if ($user->percentage_split != null) {
+            $percentage = $user->percentage_split/100;
+        } else {
+            $defaultpercent = Setting::where('id', '2')->first();
+            $percentage = $defaultpercent->value/100;
+        }
+      
+       
+
+        if ($user->country == "NG") {
+            $amount = $v_rate->price * $request->number;
+            $amount = ($amount * $percentage);
+
+        } else {
+            $amount = $v_rate->price_pounds * $request->number;
+            $amount = ($amount * $percentage);
+        }
 
         //check if this user already has wallet for this product
         $count_check = VoucherCount::where(['agent' => $id, 'product_id' => $request->product_id])->first();
@@ -1732,6 +1859,54 @@ class DashboardController extends Controller
 
         }
 
+        try {
+            DB::beginTransaction();
+
+            $userService = new UserShare;
+            $user = User::where('id', $voucherpay->agent)->first();
+            $agent_share = $userService->myShare($user);
+            $share_data = $userService->calculateMainAgentShare($user->main_agent_share_raw, $agent_share);
+
+            $agent_percentage = $share_data["sub_agent_share"];
+
+            $cost_booking = $voucherpay->charged_amount;
+
+
+            if ($voucherpay->currency != null) {
+
+                //for international transaction in pounds
+               
+                $agent_amount_credit = $amount;
+
+
+                VoucherDiscountProcess::processTransaction(
+                    $user->id,
+                    $voucherpay->id,
+                    $agent_amount_credit,
+                    $cost_booking,
+                    $agent_percentage
+                );
+
+                if (!empty($superAgent = $user->superAgent)) {
+                    $super_agent_percentage = $share_data["main_agent_share_percent"];
+                    $super_agent_amount_credit = $cost_booking + ($cost_booking * ($super_agent_percentage / 100));
+
+                    VoucherDiscountProcess::processTransaction(
+                        $superAgent,
+                        $booking->id,
+                        $super_agent_amount_credit,
+                        $cost_booking,
+                        $super_agent_percentage
+                    );
+                }
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            logger("An error occured while saving discount", $e);
+           
+        }
         // dd($request->product_id,$request->number, $id, $v_rate, $currency, $charged, $voucherpay, $count_check);
         session()->flash('alert-success', "Transaction successful, $request->number voucher has been added to $user->first_name's account");
                

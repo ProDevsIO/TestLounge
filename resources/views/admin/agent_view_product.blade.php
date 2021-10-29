@@ -25,6 +25,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="container m-2"><h3>Purchase Product Vouchers here</h3></div>
+                <div class="alert alert-success container">
+                    
+                    A {{$percentage * 100}} % discount will be granted when paying for any product
+                        
+                </div>
             @include('errors.showerrors')
                 <?php $i =1 ?>
                 @foreach($vproducts as $product)
