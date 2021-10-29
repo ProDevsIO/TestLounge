@@ -1643,6 +1643,7 @@ class DashboardController extends Controller
 
     public function voucher_transactions()
     {
+
         $vouchers = VoucherPayment::wherenotNull('transaction_ref')->orderby('id', 'desc')->get();
         $voucherboughts = VoucherPayment::whereNull('transaction_ref')->orderby('id', 'desc')->get();
         $products = Product::all();
@@ -1650,6 +1651,21 @@ class DashboardController extends Controller
         $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->count();
         $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->count();
         return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid'));
+    }
+
+    public function voucher_assigned_subagent(Request $request)
+    {
+        if ($request->start) {
+
+            $start = Carbon::parse($request->start)->startOfDay();
+            $end = Carbon::parse($request->end)->endOfDay();
+            $vouchers = VoucherPayment::where('assignee', auth()->user()->id)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+       
+        }else{
+             $vouchers = VoucherPayment::where('assignee', auth()->user()->id)->orderby('id', 'desc')->get();
+        }
+
+        return view('admin.subagent_assigned_vouchers')->with(compact('vouchers'));
     }
 
     public function admin_assign_voucher(Request $request, $id)
@@ -2529,16 +2545,25 @@ class DashboardController extends Controller
 
     public function assign_subagent(Request $request, $id){
 
-        User::where('id', $request->agent)->update([
-            'main_agent_id'=> $id,
-            'main_agent_share_raw' => $request->my_share
-        ]);
+        
         
         if ($request->my_share > 99 || $request->my_share < 0) {
             session()->flash('alert-danger', "Super agent share cannot be greater than 99 % or less than 1%");
             return back()->withInput();
         }
+
+        $check = User::where('main_agent_id', $request->agent)->first();
+
+        if(!$check)
+        {
+            session()->flash('alert-danger', "This agent already has subagents, He/She cant be added under you as a subagent.");
+            return back()->withInput();
+        }
         
+        User::where('id', $request->agent)->update([
+            'main_agent_id'=> $id,
+            'main_agent_share_raw' => $request->my_share
+        ]);
 
         session()->flash('alert-success', "Successfully assigned a sub agent");
         return back();

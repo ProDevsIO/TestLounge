@@ -141,6 +141,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/voucher/payment/confirmation', [\App\Http\Controllers\DashboardController::class,"voucher_payment_confirmation"]);
     Route::get('/view/vouchers', [\App\Http\Controllers\DashboardController::class, "view_vouchers"]);
     Route::get('/view/vouchers/transaction', [\App\Http\Controllers\DashboardController::class, "voucher_transactions"]);
+    Route::get('/subagent/assigned/vouchers', [\App\Http\Controllers\DashboardController::class, "voucher_assigned_subagent"]);
     Route::post('/voucher/email/{id}', [\App\Http\Controllers\DashboardController::class, "email_vouchers"]);
 
     Route::post('/add/vendor', [\App\Http\Controllers\DashboardController::class,"add_vendor"]);

@@ -69,10 +69,18 @@
                                     @if($product->voucherCount->quantity > 0)
                                         <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
                                                                                 href="#refmodal{{$product->id}}">generate voucher</button>
-                                        <!-- <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
-                                                                                href="#assign{{$product->id}}">Assign to sub agent</button> -->
+                                        @if(auth()->user()->main_agent_id == null)                                    
+                                             <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
+                                                                                href="#assign{{$product->id}}">Assign to sub agent</button>
+                                        @else
+                                        <br><br>
+                                        @endif
+                                    
                                     @endif
+                                @else
+                                <br><br><br>
                                 @endif
+                                
                             </div>
                         </div>
                     </div>
@@ -264,7 +272,7 @@
 
         </div>
     </div>
-
+@if(auth()->user()->type == 2)
     @foreach($products as $product)
                                                     <div class="modal fade" id="assign{{ $product->id }}"
                                                          tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -293,8 +301,8 @@
                                                                         <label for=""> Please select a quantity</label>
                                                                         <select name="quantity" class="form-control" required >
                                                                             <option value=""> Select a quantity</option>
-                                                                            @if($product->voucherCount)
-                                                                                @for($i=1; $i <= $product->voucherCount->quantity; $i++)
+                                                                            @if(optional($product)->voucherCount)
+                                                                                @for($i=1; $i <= optional(optional($product)->voucherCount)->quantity; $i++)
                                                                                     <option value="{{$i}}">{{$i}}</option>
                                                                                 @endfor
                                                                             @endif
@@ -315,6 +323,7 @@
                                                         </div>
                                                     </div>
     @endforeach
+@endif
 @endsection
 @section('script')
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
