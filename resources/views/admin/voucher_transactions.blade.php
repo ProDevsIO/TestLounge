@@ -87,8 +87,12 @@
                                                 <th scope="col" style="padding-left:70px; padding-right:70px">Test package</th>
                                                 <th scope> Acquired</th>
                                                 <!-- <th scope="col">Amount</th> -->
+                                                
                                                 <th scope="col">Quantity</th>
                                                 <th scope="col">Amount</th>
+                                                <th>Discount</th>
+                                                <th scope="col">Amount Paid</th>
+                                                
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Date</th>
                                                 <th scope="col"> Action</th>
@@ -112,12 +116,8 @@
                                                         
                                                         
 
-                                                            <td>{{optional(optional($voucher)->product)->name}}<br>
-                                                            @if($voucher->currency == "NG")
-                                                                (N{{$voucher->charged_amount}})
-                                                            @else
-                                                              (${{$voucher->charged_amount}})
-                                                            @endif
+                                                            <td> {{optional(optional($voucher)->product)->name}}<br>
+                                                           
                                                             </td>
                                                             @if($voucher->transaction_ref != null)
                                                             <td><span class ="badge badge-info"> Bought</span></td>
@@ -126,20 +126,34 @@
                                                             @endif
                                 
                                                             
-                                                            <td>@if($voucher->quantity == 0)
-                                                                Quota has been used up
-                                                                @else
+                                                            <td>
+                                                              
                                                                 {{ $voucher->quantity }}
+                                                                
+                                                            </td>
+                                                            <td>
+                                                                @if($voucher->currency == "NG")
+                                                                N{{($voucher->charged_amount + (optional($voucher->discount)->amount / ($voucher->quantity ?? 1))) * ($voucher->quantity ?? 1)}}
+                                                                @else
+                                                                ${{$voucher->charged_amount + (optional($voucher->discount)->amount / ($voucher->quantity ?? 1))}}
                                                                 @endif
                                                             </td>
                                                             <td>
                                                             @if($voucher->currency == "NG")
-                                                                N{{$voucher->charged_amount * $voucher->quantity}}
+                                                             N {{optional($voucher->discount)->amount ?? 0 }}
                                                             @else
-                                                              ${{$voucher->charged_amount * $voucher->quantity}}
+                                                            $  {{optional($voucher->discount)->amount }}
                                                             @endif
-                                                               
                                                             </td>
+                                                            <td>
+                                                                 @if($voucher->currency == "NG")
+                                                                N{{$voucher->charged_amount * ($voucher->quantity ?? 1)}}
+                                                                @else
+                                                                ${{$voucher->charged_amount * ($voucher->quantity ?? 1)}}
+                                                                @endif
+                                                            </td>
+                                                            
+
                                                             
                                                             @if($voucher->status == 0)
                                                             <td class="text-center"><span class ="badge badge-warning">Unpaid </span></td>
@@ -205,11 +219,15 @@
                                                 <th scope="col" style="padding-left:70px; padding-right:70px">Test package</th>
                                                 <th scope> Acquired</th>
                                                 <!-- <th scope="col">Amount</th> -->
+                                                
                                                 <th scope="col">Quantity</th>
                                                 <th scope="col">Amount</th>
+                                                <th>Discount</th>
+                                                <th scope="col">Amount Paid</th>
+                                                
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Date</th>
-                                                <th scope="col">Action</th>
+                                                <th scope="col"> Action</th>
                                                
                                                 <!-- <th scope="col">Action</th> -->
                                             </tr>
@@ -231,11 +249,7 @@
                                                         
 
                                                             <td>{{optional(optional($voucher)->product)->name}}<br>
-                                                            @if($voucher->currency == "NG")
-                                                                (N{{$voucher->charged_amount / $voucher->quantity}})
-                                                            @else
-                                                              (${{$voucher->charged_amount / $voucher->quantity}})
-                                                            @endif
+                                                            
                                                             </td>
                                                             @if($voucher->transaction_ref != null)
                                                             <td><span class ="badge badge-info"> Bought</span></td>
@@ -252,14 +266,29 @@
                                                             </td>
                                                             <td>
                                                             @if($voucher->currency == "NG")
-                                                                N  {{$voucher->charged_amount}}
+                                                                N  {{$voucher->charged_amount + optional($voucher->discount)->amount}}
                                                             @else
-                                                              $  {{$voucher->charged_amount}}
+                                                              $  {{$voucher->charged_amount + optional($voucher->discount)->amount}}
                                                             @endif
                                                             
                                                                
                                                             </td>
+                                                            <td>
+                                                            @if($voucher->currency == "NG")
+                                                             N {{optional($voucher->discount)->amount ?? 0 }}
+                                                            @else
+                                                            $  {{optional($voucher->discount)->amount }}
+                                                            @endif
+                                                            </td>
                                                             
+                                                            <td>
+                                                            @if($voucher->currency == "NG")
+                                                                N  {{$voucher->charged_amount}}
+                                                            @else
+                                                              $  {{$voucher->charged_amount}}
+                                                            @endif
+                                                            </td>
+
                                                             @if($voucher->status == 0)
                                                             <td><span class ="badge badge-warning">unpaid </span></td>
                                                             @else

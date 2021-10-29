@@ -43,4 +43,9 @@ class VoucherPayment extends Model
 	{
 		return $this->hasOne(Product::class, 'id', 'product_id');
 	}
+
+    public function discount()
+	{
+		return $this->hasOne(VoucherDiscount::class, 'v_pay_id');
+	}
 }
