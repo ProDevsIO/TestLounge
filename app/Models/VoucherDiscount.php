@@ -28,4 +28,15 @@ class VoucherDiscount extends Model
         'pecentage_config',
         'currency'
 	];
+
+    public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
+
+    public function v_pay()
+	{
+		return $this->hasOne(VoucherPayment::class, 'id', 'v_pay_id');
+	}
+
 }

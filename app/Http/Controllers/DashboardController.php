@@ -27,6 +27,7 @@ use App\Models\VendorProduct;
 use App\Models\Color;
 use App\Models\Country;
 use App\Models\CountryColor;
+use App\Models\VoucherDiscount;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -1549,10 +1550,10 @@ class DashboardController extends Controller
      
                 }
 
-                //update voucher payment status
-                // $voucherpay->update([
-                //     'status' => 1,
-                // ]);
+                // update voucher payment status
+                $voucherpay->update([
+                    'status' => 1,
+                ]);
 
             
                     try {
@@ -1652,6 +1653,17 @@ class DashboardController extends Controller
         $products = Product::all();
 
         return view('admin.view_vouchers')->with(compact('vouchers', 'products', 'sub_agents'));
+    }
+
+    public function view_discounts()
+    {
+        if (auth()->user()->type == 1) {
+            $vouchers = VoucherDiscount::orderBy('id', 'desc')->get();
+        } else {
+            $vouchers = VoucherDiscount::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        }
+
+        return view('admin.discount')->with(compact('vouchers'));
     }
 
     public function email_vouchers(request $request ,$id){

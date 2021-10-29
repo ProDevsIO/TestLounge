@@ -266,6 +266,7 @@
                                 <li><a href="{{ url('/agent/view/products') }}">Purchase Product Vouchers</a></li>
                             @endif
                                 <li><a href="{{ url('/view/vouchers') }}">Vouchers List</a></li>
+                                <li><a href="{{ url('/view/discounts') }}">Discount Transaction</a></li>
                             
                             
                                 <!-- <li><a href="{{ url('/view/agent/booking') }}">Agent Bookings</a></li>
