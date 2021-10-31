@@ -1769,13 +1769,13 @@ class HomeController extends Controller
                             $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
 
 
-                            BookingConfirmationService::processPoundTransaction(
-                                $user,
-                                $booking->id,
-                                $agent_amount_credit,
-                                $cost_booking,
-                                $agent_percentage
-                            );
+                            // BookingConfirmationService::processPoundTransaction(
+                            //     $user,
+                            //     $booking->id,
+                            //     $agent_amount_credit,
+                            //     $cost_booking,
+                            //     $agent_percentage
+                            // );
 
                             if (!empty($superAgent = $user->superAgent)) {
                                 $super_agent_percentage = $share_data["main_agent_share_percent"];
@@ -1795,13 +1795,13 @@ class HomeController extends Controller
 
                             $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
 
-                            BookingConfirmationService::processNairaTransaction(
-                                $user,
-                                $booking->id,
-                                $agent_amount_credit,
-                                $cost_booking,
-                                $agent_percentage
-                            );
+                            // BookingConfirmationService::processNairaTransaction(
+                            //     $user,
+                            //     $booking->id,
+                            //     $agent_amount_credit,
+                            //     $cost_booking,
+                            //     $agent_percentage
+                            // );
 
                             if (!empty($superAgent = $user->superAgent)) {
                                 $super_agent_percentage = $share_data["main_agent_share_percent"];
