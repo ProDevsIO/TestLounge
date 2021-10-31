@@ -1104,7 +1104,7 @@ class DashboardController extends Controller
             
             foreach($checkn as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'NGN'])->first();
                if($book_p_n != null)
                {
                 $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
@@ -1116,7 +1116,7 @@ class DashboardController extends Controller
 
             foreach($checkb as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'USD'])->first();
                if($book_p_n != null)
                {
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
@@ -1160,7 +1160,7 @@ class DashboardController extends Controller
 
             foreach($checkb as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'USD'])->first();
         
                if($book_p_n != null)
                {
