@@ -1097,6 +1097,8 @@ class DashboardController extends Controller
             $start = Carbon::parse($request->start)->startOfDay();
             $end = Carbon::parse($request->end)->endOfDay();
 
+           
+
             $total_ngn = 0;
             $total_gbp = 0;
             $vendor_cost_ngn = 0;
@@ -1106,20 +1108,21 @@ class DashboardController extends Controller
             $checkb = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->get();
             
             foreach($checkn as $ch){
-                // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
+                
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'NGN'])->first();
+               
                if($book_p_n != null)
                {
                 $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
-                $rate = $book_p_n->charged_amount/ $book_p_n->price;
+                $rate = $book_p_n->charged_amount/ ($book_p_n->price ?? 1);
                 $vendor_cost_dollars = $vendor_cost_ngn + ($book_p_n->vendor_cost_price * $rate);
                }
                
             }
-
+            
             foreach($checkb as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'USD'])->first();
                if($book_p_n != null)
                {
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
@@ -1154,7 +1157,7 @@ class DashboardController extends Controller
                if($book_p_n != null)
                {
                 $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
-                $rate = $book_p_n->price/ $book_p_n->price_pounds;
+                $rate = $book_p_n->price/ ($book_p_n->price_pounds ?? 1);
                 $vendor_cost_ngn = $vendor_cost_ngn + ($book_p_n->vendor_cost_price * $rate);
                }
                
@@ -1163,7 +1166,7 @@ class DashboardController extends Controller
 
             foreach($checkb as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'USD'])->first();
         
                if($book_p_n != null)
                {
