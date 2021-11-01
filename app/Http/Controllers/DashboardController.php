@@ -1108,6 +1108,7 @@ class DashboardController extends Controller
             $checkb = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->get();
             
             foreach($checkn as $ch){
+                // dump($ch->booking_id);
                 
                 $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'NGN'])->first();
                
@@ -1119,7 +1120,7 @@ class DashboardController extends Controller
                }
                
             }
-            
+            // dd($checkn);
             foreach($checkb as $ch){
                 // dump( $check->product);
                 $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'USD'])->first();
@@ -1443,24 +1444,45 @@ class DashboardController extends Controller
         $user = User::where('id', auth()->user()->id)->first();
         
         if ($user->percentage_split != null) {
+
+           if($user->superAgent == null)
+           {
             $percentage = $user->percentage_split/100;
+           }else{
+            // $percentage = $user->percentage_split/100;
+            $percentage = (($user->main_agent_share_raw/100) * $user->percentage_split) / 100;
+            // dd($percentage2, $percentage);
+
+           }
+
         } else {
             $defaultpercent = Setting::where('id', '2')->first();
-            $percentage = $defaultpercent->value/100;
+
+            if($user->superAgent == null)
+            {
+                $percentage = $defaultpercent->value/100;
+               
+            }else{
+
+                $percentage = (($user->main_agent_share_raw/100) *  $defaultpercent->value) / 100;
+
+            }
         }
 
+    
         $country = auth()->user()->country;
 
         if ($country == "NG") {
-            $amount = $product->price * $quantity;
-            $amount = $amount - ($amount * $percentage);
+            $price = $product->price * $quantity;
+            $amount = $price - ($price * $percentage);
 
         } else {
-            $amount = $product->price_pounds * $quantity;
-            $amount = $amount - ($amount * $percentage);
+            $price = $product->price_pounds * $quantity;
+            $amount = $price - ($price * $percentage);
         }
 
-       
+    
+      
 
         $transaction_ref = uniqid('voucher-') . rand(10000, 999999);
 
@@ -1485,6 +1507,7 @@ class DashboardController extends Controller
                 'vendor_id' => $vendor_id,
                 'product_id' => $product_id,
                 'vendor_product_id' => $vendorProduct->id,
+                'o_price' => $price,
                 'quantity' => $quantity,
                 'charged_amount' => $amount,
                 'currency' => $country,
@@ -1554,9 +1577,9 @@ class DashboardController extends Controller
                 }
 
                 // update voucher payment status
-                $voucherpay->update([
-                    'status' => 1,
-                ]);
+                // $voucherpay->update([
+                //     'status' => 1,
+                // ]);
 
             
                     try {
@@ -1612,13 +1635,24 @@ class DashboardController extends Controller
                                 $super_agent_percentage = $share_data["main_agent_share_percent"];
                                 $super_agent_amount_credit = $cost_booking + ($cost_booking * ($super_agent_percentage / 100));
 
-                                VoucherDiscountProcess::processTransaction(
-                                    $superAgent,
-                                    $booking->id,
-                                    $super_agent_amount_credit,
-                                    $cost_booking,
-                                    $super_agent_percentage
-                                );
+                                if($country == "NG"){
+                                    //crediting the users wallet
+                                    $total_amount = $user->pounds_wallet_balance +  $super_agent_amount_credit;
+                                
+                                    User::where('id', $user->superAgent->id)->update([
+                                        'wallet_balance' => $total_amount,
+                                       
+                                    ]);
+
+                                }else{
+                                    //crediting the users wallet
+                                    $total_amount = $user->wallet_balance +  $super_agent_amount_credit;
+                                
+                                    User::where('id', $user->superAgent->id)->update([
+                                        'pounds_wallet_balance' => $total_amount,
+                                    ]);
+
+                                }
                             }
                         }
 
