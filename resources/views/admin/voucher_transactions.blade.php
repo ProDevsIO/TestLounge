@@ -95,7 +95,9 @@
                                                
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Date</th>
+                                                @if(auth()->user()->type == 1)
                                                 <th scope="col"> Action</th>
+                                                @endif
                                                
                                                 <!-- <th scope="col">Action</th> -->
                                             </tr>
@@ -162,7 +164,7 @@
                                                             <td> <span class ="badge badge-success"> Paid</span></td>
                                                             @endif
                                                             <td>{{ $voucher->created_at }}</td>
-                                                            @if($voucher->status == 0)
+                                                            @if($voucher->status == 0 && auth()->user()->type == 1)
                                                             <td class="text-center"><a href="javascript:;"
                                                                                onclick="confirmation('{{ url('/mark/voucher/' .$voucher->id) }}')"
                                                                                class="bg-success text-white p-2">Mark as paid</a></td>
