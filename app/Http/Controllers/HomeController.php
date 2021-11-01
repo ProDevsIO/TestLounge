@@ -206,7 +206,7 @@ class HomeController extends Controller
                 unset($request_data['ref']);
                 unset($request_data['voucher']);
 
-                if($voucher->voucherCount->product_id == 15)
+                if($voucher->voucherCount->product_id == 1 || $voucher->voucherCount->product_id == 10 )
                 {
                     for($n = 0; $n < $voucher->quantity; $n++)
                     {
