@@ -206,7 +206,7 @@ class HomeController extends Controller
                 unset($request_data['ref']);
                 unset($request_data['voucher']);
 
-                if($voucher->voucherCount->product_id == 1 || $voucher->voucherCount->product_id == 10 )
+                if($voucher->voucherCount->product_id != 15 )
                 {
                     for($n = 0; $n < $voucher->quantity; $n++)
                     {
@@ -634,7 +634,8 @@ class HomeController extends Controller
                             but were unable to show the approved COVID-19 proof of vaccination before your travel you might be eligible for a partial refund. <br><br>
     
                             We have a no-refund policy as indicated before your purchase.<br><br>
-                             
+
+                            <a href='https://www.surveymonkey.com/r/PQQNWV7'>Kindly click here give us your feedback </a><br><br>
     
                                   <br/><br/>
                                   Thank you.
@@ -1814,6 +1815,8 @@ class HomeController extends Controller
                         but were unable to show the approved COVID-19 proof of vaccination before your travel you might be eligible for a partial refund. <br><br>
 
                         We have a no-refund policy as indicated before your purchase.<br><br>
+
+                        <a href='https://www.surveymonkey.com/r/PQQNWV7'>Kindly click here give us your feedback </a><br><br>
                          
 
                               <br/><br/>

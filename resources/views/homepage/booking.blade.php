@@ -148,7 +148,7 @@
 
                                 <div class="col-md-6">
                                     <label>Isolation Address1: <span class="show_required"> *</span> </label>
-                                    <input class="" type="text" name="isolation_address"
+                                    <input class="" type="text" name="isolation_address" placeholder=""
                                            value="{{ old('isolation_address') }}" required/>
                                 </div>
                                 <div class="col-md-6">

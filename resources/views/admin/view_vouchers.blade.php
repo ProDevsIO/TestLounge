@@ -110,7 +110,7 @@
                                                                     <input type="email" name="email" id="email_{{$j}}"class="form-control" required>
                                                                     <br>
                                                                     <label for=""> Please select a quantity</label>
-                                                                    <select name="quantity" id="quantity_{{$j}}" class="form-control" required @if($product->id == 1 || $product->id == 10) onchange="generateKitField('{{$product->id}}', '{{$j}}')" @endif>
+                                                                    <select name="quantity" id="quantity_{{$j}}" class="form-control" required @if($product->id != 15) onchange="generateKitField('{{$product->id}}', '{{$j}}')" @endif>
                                                                         <option value=""> Select a quantity</option>
                                                                     @if($product->voucherCount)
                                                                         @for($i=1; $i <= $product->voucherCount->quantity; $i++)
@@ -120,7 +120,7 @@
                                                                    
                                                                     </select>
                                                                     <br>
-                                                                    @if($product->id == 1 || $product->id == 10 )
+                                                                    @if($product->id != 15 )
                                                                         <div class="div_kit{{$j}}">
 
                                                                         </div>
@@ -402,7 +402,7 @@
             var quantity = document.getElementById(q).value;
             // console.log(email, quantity);
             console.log(q, id, quantity, count);
-            if (id == 1 || id == 10) {
+            if (id != 15) {
                 var $card = $(kit_n);
             
             $card.empty(); // remove old options
@@ -427,7 +427,7 @@
             var quantity = document.getElementById(q).value;
             // console.log(email, quantity);
             console.log(q, id, quantity, count);
-            if (id == 1 || id == 10) {
+            if (id != 15) {
                 var $card = $(kit_n);
             
             $card.empty(); // remove old options
