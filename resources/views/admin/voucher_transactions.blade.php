@@ -170,7 +170,7 @@
                                                                                class="bg-success text-white p-2">Mark as paid</a></td>
 
                                                             @else
-                                                            <td> </td>
+                                                            
                                                             @endif
                                                             <!-- <td>
                                                                 <div class="btn-group" role="group">
@@ -231,7 +231,9 @@
                                                 
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Date</th>
+                                                @if(auth()->user()->id == 1)
                                                 <th scope="col"> Action</th>
+                                                @endif
                                                
                                                 <!-- <th scope="col">Action</th> -->
                                             </tr>
@@ -248,6 +250,8 @@
                                                                 @else
                                                                 <td> <span class ="badge badge-danger"> Agent NULL</span></td>
                                                                 @endif
+
+                                                                
                                                             @endif
                                                         
                                                         
@@ -290,6 +294,7 @@
                                                                 @endif
                                                                 <br>
                                                                 ({{ ((optional($voucher->discount)->amount ?? 0) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0)) }} % )
+                                                                
                                                             </td>
                                                             
                                                             <td>
@@ -319,10 +324,10 @@
                                                             <td>
                                                             @if($voucher->status != 0)
                                                                 Discount ({{ number_format(((optional($voucher->discount)->amount ?? 0) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }} % ) <br>
-                                                                @if($voucher->super_agent_share != 0)
+                                                               
                                                                 Super agent({{  number_format((($voucher->super_agent_share) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }} % )<br>
                                                                 Sub agent ({{ number_format((($voucher->sub_agent_share) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }} % )
-                                                                @endif
+                                                                
                                                             @endif
                                                             </td>
                                                            
@@ -333,11 +338,14 @@
                                                             <td> <span class ="badge badge-success"> Paid</span></td>
                                                             @endif
                                                             <td>{{ $voucher->created_at }}</td>
+                                                            @if(auth()->user()->id == 1)
                                                             <td>
-                                                            @if($voucher->status == 0)
-                                                             <a href="{{ url('/voucher/payment/confirmation?trxref='.$voucher->transaction_ref) }}" class="btn btn-sm btn-info"> check payment</a>
-                                                            @endif
+                                                            
+                                                                @if($voucher->status == 0)
+                                                                <a href="{{ url('/voucher/payment/confirmation?trxref='.$voucher->transaction_ref) }}" class="btn btn-sm btn-info"> check payment</a>
+                                                                @endif
                                                             </td>
+                                                            @endif
                                                             <!-- <td>
                                                                 <div class="btn-group" role="group">
                                                                     <button id="btnGroupDrop1" type="button"
