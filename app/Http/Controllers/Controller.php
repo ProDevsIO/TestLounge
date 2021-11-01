@@ -257,7 +257,7 @@ class Controller extends BaseController
             $data = [
                 "transactionRef" => $transaction_ref,
                 "amount" => $price_pound,
-                "current" => "GBP",
+                "currency" => "GBP",
                 "approvedCurrency" => "826",
                 "channel" => "WEB",
                 "clientAppId" => "831553",
