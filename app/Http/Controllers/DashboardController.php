@@ -1884,14 +1884,66 @@ class DashboardController extends Controller
 
     public function voucher_transactions()
     {
+        $paid_n = 0;
+        $unpaid_n = 0;
+        $paid_d = 0;
+        $unpaid_d = 0;
         if(auth()->user()->type == 1){
+
             $vouchers = VoucherPayment::wherenotNull('transaction_ref')->orderby('id', 'desc')->get();
             $voucherboughts = VoucherPayment::whereNull('transaction_ref')->orderby('id', 'desc')->get();
             $products = Product::all();
 
-            $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->count();
-            $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->count();
+            $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->get();
+            $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->get();
+
+            $voucherpaid_n = VoucherPayment::whereNull('transaction_ref')->where(['status'=> 1, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
+            $voucherpaid_d = VoucherPayment::whereNull('transaction_ref')->where('status', 1)->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
+            $voucherunpaid_n = VoucherPayment::whereNull('transaction_ref')->where(['status'=> 0, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
+            $voucherunpaid_d = VoucherPayment::whereNull('transaction_ref')->where('status', 0)->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+
             $voucher_all = VoucherPayment::all();
+
+            foreach($voucherpaid_n as $vpay)
+            {
+              
+                if($vpay->transaction_ref !=null)
+                {
+                    $paid_n = $paid_n + $vpay->charged_amount;
+                }else{
+                    $paid_n = $paid_n + ($vpay->charged_amount * $vpay->quantity );
+                } 
+            }
+            foreach($voucherpaid_d as $vpay)
+            {
+              
+                if($vpay->transaction_ref !=null)
+                {
+                    $paid_d = $paid_d + $vpay->charged_amount;
+                }else{
+                    $paid_d = $paid_d + ($vpay->charged_amount * $vpay->quantity );
+                } 
+            }
+
+            foreach($voucherunpaid_n as $upay)
+            {
+                if($vpay->transaction_ref !=null)
+                {
+                    $unpaid_n = $unpaid_n + $upay->charged_amount;
+                }else{
+                    $unpaid_n = $unpaid_n + ($upay->charged_amount * $vpay->quantity );
+                } 
+            }
+            foreach($voucherunpaid_d as $upay)
+            {
+                if($vpay->transaction_ref !=null)
+                {
+                    $unpaid_d = $unpaid_d + $upay->charged_amount;
+                }else{
+                    $unpaid_d = $unpaid_d + ($upay->charged_amount * $vpay->quantity );
+                } 
+            }
+               
         }else{
             $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where([
                 'agent' => auth()->user()->id
@@ -1906,19 +1958,82 @@ class DashboardController extends Controller
             $voucherpaid = VoucherPayment::where([
                 'status'=> 1,
                 'agent' => auth()->user()->id
-                ])->orderBy('id', 'desc')->count();
+                ])->orderBy('id', 'desc')->get();
 
             $voucherunpaid = VoucherPayment::where([
                 'status'=> 0,
                 'agent' => auth()->user()->id
-                ])->orderBy('id', 'desc')->count();
+                ])->orderBy('id', 'desc')->get();
 
-            $voucher_all = VoucherPayment::where([
-                'agent' => auth()->user()->id
-                ])->get();
+            $voucherpaid_n = VoucherPayment::whereNull('transaction_ref')->where([
+                 'status'=> 1,
+                 'currency' => 'NG',
+                 'agent' => auth()->user()->id
+                 ])->orderBy('id', 'desc')->get();
+
+                $voucherpaid_d = VoucherPayment::whereNull('transaction_ref')->where([
+                    'status'=> 1,
+                    'agent' => auth()->user()->id
+                    ])->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
+
+                $voucherunpaid_n = VoucherPayment::whereNull('transaction_ref')->where([
+                    'status'=> 0,
+                    'currency' => 'NG',
+                    'agent' => auth()->user()->id
+                    ])->orderBy('id', 'desc')->get();
+
+                $voucherunpaid_d = VoucherPayment::whereNull('transaction_ref')->where([
+                    'status'=> 0,
+                    'agent' => auth()->user()->id
+                    ])->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+    
+                $voucher_all = VoucherPayment::where([
+                    'agent' => auth()->user()->id
+                    ])->get();
+
+                foreach($voucherpaid_n as $vpay)
+                {
+                  
+                    if($vpay->transaction_ref !=null)
+                    {
+                        $paid_n = $paid_n + $vpay->charged_amount;
+                    }else{
+                        $paid_n = $paid_n + ($vpay->charged_amount * $vpay->quantity );
+                    } 
+                }
+                foreach($voucherpaid_d as $vpay)
+                {
+                  
+                    if($vpay->transaction_ref !=null)
+                    {
+                        $paid_d = $paid_d + $vpay->charged_amount;
+                    }else{
+                        $paid_d = $paid_d + ($vpay->charged_amount * $vpay->quantity );
+                    } 
+                }
+    
+                foreach($voucherunpaid_n as $upay)
+                {
+                    if($vpay->transaction_ref !=null)
+                    {
+                        $unpaid_n = $unpaid_n + $upay->charged_amount;
+                    }else{
+                        $unpaid_n = $unpaid_n + ($upay->charged_amount * $vpay->quantity );
+                    } 
+                }
+                foreach($voucherunpaid_d as $upay)
+                {
+                    if($vpay->transaction_ref !=null)
+                    {
+                        $unpaid_d = $unpaid_d + $upay->charged_amount;
+                    }else{
+                        $unpaid_d = $unpaid_d + ($upay->charged_amount * $vpay->quantity );
+                    } 
+                }
+        
         }
 
-        return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid', 'voucher_all'));
+        return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid', 'voucher_all', 'unpaid_n', 'paid_n', 'unpaid_d', 'paid_d'));
     }
 
     public function voucher_assigned_subagent(Request $request)
