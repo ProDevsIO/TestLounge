@@ -1443,16 +1443,26 @@ class DashboardController extends Controller
 
         $user = User::where('id', auth()->user()->id)->first();
         
+        $percent_to_charge = 0;
+        $sub_percent = 0;
+        $super_percent = 0;
+        $sub_share = 0;
+        $super_share = 0;
         if ($user->percentage_split != null) {
 
            if($user->superAgent == null)
            {
-            $percentage = $user->percentage_split/100;
+                $percentage = $user->percentage_split/100;
+
+                $super_percent = $percentage;
+
            }else{
-            // $percentage = $user->percentage_split/100;
-            $percentage = ((70/100) * $user->percentage_split) / 100;
-            // dd($percentage2, $percentage);
-        
+
+                // $percentage = $user->percentage_split/100;
+                $percentage = (($user->main_agent_share_raw/100) * $user->percentage_split) / 100;
+            
+                $sub_percent = $percentage;
+                $super_percent = $user->percentage_split/100 - $sub_percent;
 
            }
 
@@ -1462,10 +1472,13 @@ class DashboardController extends Controller
             if($user->superAgent == null)
             {
                 $percentage = $defaultpercent->value/100;
+                $super_percent = $percentage;
                
             }else{
 
                 $percentage = (($user->main_agent_share_raw/100) *  $defaultpercent->value) / 100;
+                $sub_percent = $percentage;
+                $super_percent = $defaultpercent->value/100 - $sub_percent;
               
             }
         }
@@ -1477,9 +1490,31 @@ class DashboardController extends Controller
             $price = $product->price * $quantity;
             $amount = $price - ($price * $percentage);
 
+            if($sub_percent != 0)
+            {
+                $sub_share = ($price * $sub_percent);
+            }
+
+            if($super_percent != 0)
+            {
+                $super_share = ($price * $super_percent);
+            }
+            $total_price =  $price - ($sub_share + $super_share);
+
         } else {
             $price = $product->price_pounds * $quantity;
             $amount = $price - ($price * $percentage);
+
+            if($sub_percent != 0)
+            {
+                $sub_share = ($price * $sub_percent);
+            }
+
+            if($super_percent != 0)
+            {
+                $super_share = ($price * $super_percent);
+            }
+            $total_price =  $price - ($sub_share + $super_share);
         }
 
   
@@ -1494,15 +1529,10 @@ class DashboardController extends Controller
 
         $this->bookingService->getSubAccountsByRefCode(auth()->user()->referral_code);
 
-        //redirect to payment page
-        // if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
-        //     $data['subaccounts'] = $sub_accounts;
-        // }
 
            $vendorProduct = VendorProduct::where(['product_id' => $product_id, 'vendor_id' => $vendor_id])->first();
 
-    
-            $voucherProduct = VoucherPayment::Create([
+            $save_data = [
                 'agent'=> $agent_id,
                 'transaction_ref' => $transaction_ref,
                 'vendor_id' => $vendor_id,
@@ -1510,10 +1540,16 @@ class DashboardController extends Controller
                 'vendor_product_id' => $vendorProduct->id,
                 'o_price' => $price,
                 'quantity' => $quantity,
-                'charged_amount' => $amount,
+                'charged_amount' => $total_price,
+                'super_agent_share' => $sub_share,
+                'sub_agent_share' => $super_share,
                 'currency' => $country,
                 'status' => 0
-            ]);
+            ];
+
+            // dd($save_data, $super_percent, $sub_percent, $super_share, $sub_share, $total_price);
+    
+            $voucherProduct = VoucherPayment::Create($save_data);
       
     
         $redirect_url = $this->processPaystack($data);
@@ -1578,9 +1614,9 @@ class DashboardController extends Controller
                 }
 
                 // update voucher payment status
-                // $voucherpay->update([
-                //     'status' => 1,
-                // ]);
+                $voucherpay->update([
+                    'status' => 1,
+                ]);
 
             
                     try {
@@ -1801,7 +1837,9 @@ class DashboardController extends Controller
 
         $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->count();
         $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->count();
-        return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid'));
+        $voucher_all = VoucherPayment::all();
+
+        return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid', 'voucher_all'));
     }
 
     public function voucher_assigned_subagent(Request $request)
