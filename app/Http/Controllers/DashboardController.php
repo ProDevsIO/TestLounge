@@ -1450,8 +1450,9 @@ class DashboardController extends Controller
             $percentage = $user->percentage_split/100;
            }else{
             // $percentage = $user->percentage_split/100;
-            $percentage = (($user->main_agent_share_raw/100) * $user->percentage_split) / 100;
+            $percentage = ((70/100) * $user->percentage_split) / 100;
             // dd($percentage2, $percentage);
+        
 
            }
 
@@ -1465,7 +1466,7 @@ class DashboardController extends Controller
             }else{
 
                 $percentage = (($user->main_agent_share_raw/100) *  $defaultpercent->value) / 100;
-
+              
             }
         }
 
@@ -1481,7 +1482,7 @@ class DashboardController extends Controller
             $amount = $price - ($price * $percentage);
         }
 
-    
+  
       
 
         $transaction_ref = uniqid('voucher-') . rand(10000, 999999);
@@ -1632,9 +1633,9 @@ class DashboardController extends Controller
                             );
 
                             if (!empty($superAgent = $user->superAgent)) {
-                                $super_agent_percentage = $share_data["main_agent_share_percent"];
-                                $super_agent_amount_credit = $cost_booking + ($cost_booking * ($super_agent_percentage / 100));
-
+                               //get the amount to credit super agent
+                                $super_agent_amount_credit = ($agent_amount_credit * ( $user->main_agent_share_raw / 100));
+                                
                                 if($country == "NG"){
                                     //crediting the users wallet
                                     $total_amount = $user->pounds_wallet_balance +  $super_agent_amount_credit;
@@ -1656,6 +1657,7 @@ class DashboardController extends Controller
                             }
                         }
 
+                      
                         DB::commit();
                     } catch (\Exception $e) {
                         DB::rollBack();
@@ -1663,11 +1665,9 @@ class DashboardController extends Controller
                         logger("An error occured while saving discount");
                        
                     }
-                 
-                
-
+    
             }
-        
+
 
             session()->flash('alert-success', "Transaction completed. Your account has been topped up");
             return redirect()->to('/view/vouchers');
