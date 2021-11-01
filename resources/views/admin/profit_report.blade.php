@@ -47,7 +47,7 @@
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Selling Price</th>
                                         <th scope="col">Vendor's Cost Price</th>
-                                        <th scope="col">Commission</th>
+                                        
                                         <th scope="col">Amount</th>
                                         <th scope="col">Date</th>
                                     </tr>
@@ -87,25 +87,18 @@
                                             ${{ number_format(optional(optional(optional($transact)->booking)->product)->vendor_cost_price, 2) }} </td>
                                             @endif
                                             </td>
-                                            <td>
-                                            @if($currency == 'naira')
-
-                                            N{{ number_format($transact->amount, 2) }}
-                                            @elseif($currency == 'dollars')
-                                            ${{ number_format($transact->amount, 2) }}</td>
-                                            @endif
-                                            </td>
+                                            
                                             @if($currency == 'naira')
                                                   @if( optional(optional(optional($transact)->booking)->product)->charged_amount >= $value  + $transact->amount)
-                                                    <td class="text-success">N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  $value  - $transact->amount }}
+                                                    <td class="text-success">N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  $value }}
                                                   @else
-                                                   <td class="text-danger">N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  $value  - $transact->amount }}
+                                                   <td class="text-danger">N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  $value }}
                                                    @endif
                                             @elseif($currency == 'dollars')
                                                 @if( optional(optional(optional($transact)->booking)->product)->charged_amount >= (optional(optional(optional($transact)->booking)->product)->vendor_cost_price  + $transact->amount))   
-                                                    <td class="text-success">${{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  - $transact->amount }} 
+                                                    <td class="text-success">${{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  }} 
                                                 @else
-                                                   <td class="text-danger">${{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  - $transact->amount }}
+                                                   <td class="text-danger">${{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price}}
                                                 @endif
                                             @endif
                                             <td>{{$transact->created_at}}</td>

@@ -126,7 +126,7 @@
                                     </div>
                                     <div class="media-body text-light" title="Total Commission">
                                         <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($commission, 2) }}</h4>
-                                        <span>Total Commission(Naira)</span>
+                                        <span>Total Booking Commission(Naira)</span>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +143,41 @@
                                     </div>
                                     <div class="media-body text-light" title="Total Commission">
                                         <h4 class="text-uppercase mb-0 weight500">${{ number_format($pcommission, 2) }}</h4>
-                                        <span>Total Commission(Dollars)</span>
+                                        <span>Total Booking Commission(Dollars)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-3">
+                    <a href="{{ url('view/report/discount/naira/'.$start .'/'. $end) }}">
+                        <div class="card mb-4 bg-danger" title="Total Commission">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Total Commission">
+                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($discount_commission_n, 2) }}</h4>
+                                        <span>Total Discount Commission(Naira)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-3">
+                    <a href="{{  url('view/report/discount/dollar/'.$start .'/'. $end) }}">
+                        <div class="card mb-4 bg-danger" title="Total Commission">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Total Commission">
+                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($discount_commission_us, 2) }}</h4>
+                                        <span>Total Discount Commission(Dollars)</span>
                                     </div>
                                 </div>
                             </div>

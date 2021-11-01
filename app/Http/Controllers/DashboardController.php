@@ -1106,6 +1106,9 @@ class DashboardController extends Controller
            
             $checkn = Transaction::where('type', 1)->wherebetween('created_at', [$start, $end])->get();
             $checkb = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->get();
+
+            $commission = Transaction::where('type', 1)->wherebetween('created_at', [$start, $end])->sum('amount');
+            $pcommission = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->sum('amount');
             
             foreach($checkn as $ch){
                 // dump($ch->booking_id);
@@ -1151,7 +1154,8 @@ class DashboardController extends Controller
             $checkn = Transaction::where('type', 1)->get();
             $checkb = PoundTransaction::where('type', 1)->get();
           
-
+            $commission = Transaction::where('type', 1)->sum('amount');
+            $pcommission = PoundTransaction::where('type', 1)->sum('amount');
             foreach($checkn as $ch){
                 // dump( $check->product);
                 $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'NGN'])->first();
@@ -1186,13 +1190,25 @@ class DashboardController extends Controller
             $total_kes = BookingProduct::where('currency', 'KES')->sum('charged_amount');
             $total_zar = BookingProduct::where('currency', 'ZAR')->sum('charged_amount');
         }
-        $commission = Transaction::where('type', 1)->sum('amount');
-        $pcommission = PoundTransaction::where('type', 1)->sum('amount');
+
+       
         $p_due_amount = User::sum("pounds_wallet_balance");
         $due_amount = User::sum("wallet_balance");
      
+        $discount_commission_n = Voucherpayment::where([
+            'status'=> 1,
+            'currency' => 'NG'
+            ])->where('super_agent_share', '!=', '0' )->sum('super_agent_share');
+
+        $discount_commission_us = Voucherpayment::where(['status'=> 1])
+                                    ->where('currency', '!=', 'NG' )
+                                    ->sum('super_agent_share');
+
+        
+
         $profit_naira =  $total_ngn - $commission - $vendor_cost_ngn;
         // dd($profit_naira, $total_ngn ,$commission , $vendor_cost_ngn );
+
         $profit_dollars = $total_gbp - $pcommission - $vendor_cost_dollars;
         // dd(  $profit_dollars ,$total_gbp ,$pcommission ,$vendor_cost_dollars );
 
@@ -1251,7 +1267,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn'));
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn', 'discount_commission_n', 'discount_commission_us'));
 
     }
 
@@ -1737,6 +1753,44 @@ class DashboardController extends Controller
         }
 
         return view('admin.discount')->with(compact('vouchers'));
+    }
+
+    public function view_report_discount($type, $start, $end)
+    {
+        $currency = $type;
+        if ($start != 1) {
+            $start = Carbon::parse($start)->startOfDay();
+            $end = Carbon::parse($end)->endOfDay();
+   
+            if($currency == "naira"){
+                $discounts = VoucherPayment::where('status', 1)
+                ->where('super_agent_share', '!=', '0')
+                ->where('currency', 'NG')
+                ->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+            }else{
+                $discounts = VoucherPayment::where('status', 1)
+                ->where('super_agent_share', '!=', '0')
+                ->where('currency', '!=', 'NG')
+                ->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+            }
+           
+        }else{
+
+            if($currency =="naira"){
+                 $discounts = VoucherPayment::where('status', 1)
+                 ->where('super_agent_share', '!=', '0')
+                 ->where('currency', 'NG')
+                 ->orderby('id', 'desc')->get();
+            }else{
+                $discounts = VoucherPayment::where('status', 1)
+                ->where('super_agent_share', '!=', '0')
+                ->where('currency', '!=', 'NG')
+                ->orderby('id', 'desc')->get();
+            }
+        
+        }
+       
+        return view('admin.report_discount')->with(compact('discounts', 'currency'));
     }
 
     public function email_vouchers(request $request ,$id){
