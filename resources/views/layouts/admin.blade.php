@@ -254,9 +254,9 @@
                                 <span>Vouchers</span>
                             </a>
                             <ul class="sub">
-                            @if(auth()->user()->type == 1)
+                           
                                 <li> <a href="{{ url('/view/vouchers/transaction') }}">Voucher transaction</a> </li>
-                            @endif
+                            
 
                             @if(auth()->user()->type != 1 && auth()->user()->main_agent_id == null)
                                 <li> <a href="{{ url('/subagent/assigned/vouchers') }}">Assigned Vouchers</a> </li>

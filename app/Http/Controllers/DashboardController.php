@@ -1830,14 +1830,39 @@ class DashboardController extends Controller
 
     public function voucher_transactions()
     {
+        if(auth()->user()->type == 1){
+            $vouchers = VoucherPayment::wherenotNull('transaction_ref')->orderby('id', 'desc')->get();
+            $voucherboughts = VoucherPayment::whereNull('transaction_ref')->orderby('id', 'desc')->get();
+            $products = Product::all();
 
-        $vouchers = VoucherPayment::wherenotNull('transaction_ref')->orderby('id', 'desc')->get();
-        $voucherboughts = VoucherPayment::whereNull('transaction_ref')->orderby('id', 'desc')->get();
-        $products = Product::all();
+            $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->count();
+            $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->count();
+            $voucher_all = VoucherPayment::all();
+        }else{
+            $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where([
+                'agent' => auth()->user()->id
+                ])->orderby('id', 'desc')->get();
 
-        $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->count();
-        $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->count();
-        $voucher_all = VoucherPayment::all();
+            $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where([
+                'agent' => auth()->user()->id
+                ])->orderby('id', 'desc')->get();
+
+            $products = Product::all();
+    
+            $voucherpaid = VoucherPayment::where([
+                'status'=> 1,
+                'agent' => auth()->user()->id
+                ])->orderBy('id', 'desc')->count();
+
+            $voucherunpaid = VoucherPayment::where([
+                'status'=> 0,
+                'agent' => auth()->user()->id
+                ])->orderBy('id', 'desc')->count();
+
+            $voucher_all = VoucherPayment::where([
+                'agent' => auth()->user()->id
+                ])->get();
+        }
 
         return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid', 'voucher_all'));
     }
