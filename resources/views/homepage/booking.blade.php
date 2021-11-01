@@ -286,13 +286,13 @@
 
                                             </div>
 
-                                            <!-- <div class='radio'
+                                            <div class='radio'
                                                  style="background:none;border:none;padding: 20px 40px 20px 40px;height: 86px;border-radius:25px"
                                                  data-value="vastech" onclick ="run()">
                                                 <img src="{{ url('/img/vas.svg') }}"
                                                      style="padding-bottom: 0px;margin-left: -38px;width:200px"/> <span><label>
 
-                                            </div> -->
+                                            </div>
                                            
                                         @endif    
                                         </div>
@@ -302,12 +302,12 @@
                                 <div class="form-section">
                                     <div class="voucher_input" style="margin-top:20px;display:none;" >
                                         <label>Voucher Number<span class="show_required"> *</span></label>
-                                        <small class="text-muted" style="color:red"> Please provide a valid voucher number given to you by an agent
+                                        <small class="text-muted" style="color:red"> Please input a valid voucher number
                                         </small>
                                         @if(isset($voucher))
-                                        <input class="" type="text" name="voucher" value="{{ $voucher->voucher }}" readonly/>
+                                        <input class="" type="text" style="font-weight:bold;font-size:20px;" name="voucher" value="{{ $voucher->voucher }}" readonly/>
                                         @else
-                                        <input class="" type="text" name="voucher" value="{{ old('voucher') }}" />
+                                        <input class="" type="text" style="font-weight:bold;font-size:20px;" name="voucher" value="{{ old('voucher') }}" />
                                         @endif
                                     </div>
                                     <div id="card" class="form-section" style="margin-top:20px;display:none;">
