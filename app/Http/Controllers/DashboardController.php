@@ -1520,7 +1520,7 @@ class DashboardController extends Controller
         } else {
             $price = $product->price_pounds * $quantity;
             $amount = $price - ($price * $percentage);
-
+           
             if($sub_percent != 0)
             {
                 $sub_share = ($price * $sub_percent);
@@ -1545,8 +1545,9 @@ class DashboardController extends Controller
 
         $this->bookingService->getSubAccountsByRefCode(auth()->user()->referral_code);
 
-
+            
            $vendorProduct = VendorProduct::where(['product_id' => $product_id, 'vendor_id' => $vendor_id])->first();
+           $cost =  $vendorProduct->cost_price * $quantity;
 
             $save_data = [
                 'agent'=> $agent_id,
@@ -1554,6 +1555,7 @@ class DashboardController extends Controller
                 'vendor_id' => $vendor_id,
                 'product_id' => $product_id,
                 'vendor_product_id' => $vendorProduct->id,
+                'vendors_cost' => $cost,
                 'o_price' => $price,
                 'quantity' => $quantity,
                 'charged_amount' => $total_price,
@@ -2075,6 +2077,7 @@ class DashboardController extends Controller
         if($user->country == 'NG'){
             $currency = "NG";
             $charged = $v_rate->price - ($v_rate->price * $percentage);
+            $o_price = $v_price->price;
         }else{
 
             if($user->country == null)
@@ -2083,6 +2086,7 @@ class DashboardController extends Controller
                 return back();
             }
             $currency = "USD";
+            $o_price = $v_price->price_pounds;
             $charged = $v_rate->price_pounds - ($v_rate->price_pounds * $percentage);
         }
 
@@ -2093,6 +2097,8 @@ class DashboardController extends Controller
             'vendor_id' => 3,
             'product_id' => $request->product_id,
             'vendor_product_id' => $v_rate->id,
+            'o_price' => $o_price,
+            'vendors_cost'=> $v_rate->cost_price,
             'charged_amount' => $charged,
             'quantity' => $request->number,
             'currency' => $currency,
@@ -2211,9 +2217,18 @@ class DashboardController extends Controller
 
         //get the users country to get the currency and charge rate
        
+        if ($user->percentage_split != null) {
+            $percentage = $user->percentage_split/100;
+        } else {
+            $defaultpercent = Setting::where('id', '2')->first();
+            $percentage = $defaultpercent->value/100;
+        }
+
+        //get the users country to get the currency and charge rate
         if($user->country == 'NG'){
             $currency = "NG";
-            $charged = $v_rate->price;
+            $charged = $v_rate->price - ($v_rate->price * $percentage);
+            $o_price = $v_price->price;
         }else{
 
             if($user->country == null)
@@ -2222,7 +2237,8 @@ class DashboardController extends Controller
                 return back();
             }
             $currency = "USD";
-            $charged = $v_rate->price_pounds;
+            $o_price = $v_price->price_pounds;
+            $charged = $v_rate->price_pounds - ($v_rate->price_pounds * $percentage);
         }
 
        
@@ -2235,6 +2251,8 @@ class DashboardController extends Controller
                 'vendor_id' => 3,
                 'product_id' => $id,
                 'vendor_product_id' => $v_rate->id,
+                'vendors_cost' => $v_rate->cost_price,
+                'o_price' => $o_price,
                 'charged_amount' => $charged,
                 'quantity' => $request->quantity,
                 'currency' => $currency,

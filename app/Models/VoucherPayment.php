@@ -18,6 +18,7 @@ class VoucherPayment extends Model
         'product_id',
         'vendor_product_id',
         'quantity',
+        'vendors_cost',
         'o_price',
         'charged_amount',
         'super_agent_share',
