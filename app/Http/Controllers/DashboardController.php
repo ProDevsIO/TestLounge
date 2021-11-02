@@ -1144,6 +1144,77 @@ class DashboardController extends Controller
             $total_tzs = BookingProduct::where('currency', 'TZS')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
             $total_kes = BookingProduct::where('currency', 'KES')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
             $total_zar = BookingProduct::where('currency', 'ZAR')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
+       
+            $discount_commission_n = Voucherpayment::where([
+                'status'=> 1,
+                'currency' => 'NG'
+                ])->where('super_agent_share', '!=', '0' )->wherebetween('created_at', [$start, $end])->sum('super_agent_share');
+    
+            $discount_commission_us = Voucherpayment::where(['status'=> 1])
+                                        ->where('currency', '!=', 'NG' )
+                                        ->wherebetween('created_at', [$start, $end])
+                                        ->sum('super_agent_share');
+    
+            $discount_vendorCost_d =   Voucherpayment::where(['status'=> 1])
+                                        ->where('currency', '!=', 'NG' )
+                                        ->wherebetween('created_at', [$start, $end])
+                                        ->get();
+    
+            $discount_vendorCost_n =   Voucherpayment::where(['status'=> 1])
+                                        ->where('currency', 'NG' )
+                                        ->wherebetween('created_at', [$start, $end])
+                                        ->get();
+            $d_vC_n = 0;
+            $d_vC_d = 0;
+            $d_charged = 0;
+            $n_charged = 0;
+    
+                foreach( $discount_vendorCost_n as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $d_vC_n =  $d_vC_n + ($cost->vendors_cost *  $cost->o_price);
+                    }else{
+                        $d_vC_n =  $d_vC_n + (($cost->vendors_cost *  $cost->o_price) * $cost->quantity);
+                    }
+                    
+                }
+    
+                foreach( $discount_vendorCost_n as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $n_charged=  $n_charged + ($cost->charged_amount);
+                    }else{
+                        $n_charged =  $n_charged + ($cost->charged_amount * $cost->quantity);
+                    }
+                    
+                }
+    
+    
+    
+                foreach( $discount_vendorCost_d as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $d_vC_d =  $d_vC_n + $cost->vendors_cost ;
+                    }else{
+                        $d_vC_d =  $d_vC_n  + ($cost->vendors_cost *  $cost->quantity);
+                    }
+                    
+                }
+    
+                foreach( $discount_vendorCost_d as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $d_charged=  $d_charged + ($cost->charged_amount);
+                    }else{
+                        $d_charged =  $d_charged + ($cost->charged_amount * $cost->quantity);
+                    }
+                    
+                }
+            
         } else {
             $start = 1;
             $end = 1;
@@ -1189,78 +1260,80 @@ class DashboardController extends Controller
             $total_tzs = BookingProduct::where('currency', 'TZS')->sum('charged_amount');
             $total_kes = BookingProduct::where('currency', 'KES')->sum('charged_amount');
             $total_zar = BookingProduct::where('currency', 'ZAR')->sum('charged_amount');
+
+            $discount_commission_n = Voucherpayment::where([
+                'status'=> 1,
+                'currency' => 'NG'
+                ])->where('super_agent_share', '!=', '0' )->sum('super_agent_share');
+    
+            $discount_commission_us = Voucherpayment::where(['status'=> 1])
+                                        ->where('currency', '!=', 'NG' )
+                                        ->sum('super_agent_share');
+    
+            $discount_vendorCost_d =   Voucherpayment::where(['status'=> 1])
+                                        ->where('currency', '!=', 'NG' )
+                                        ->get();
+    
+            $discount_vendorCost_n =   Voucherpayment::where(['status'=> 1])
+                                        ->where('currency', 'NG' )
+                                        ->get();
+            $d_vC_n = 0;
+            $d_vC_d = 0;
+            $d_charged = 0;
+            $n_charged = 0;
+    
+                foreach( $discount_vendorCost_n as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $d_vC_n =  $d_vC_n + ($cost->vendors_cost *  $cost->o_price);
+                    }else{
+                        $d_vC_n =  $d_vC_n + (($cost->vendors_cost *  $cost->o_price) * $cost->quantity);
+                    }
+                    
+                }
+    
+                foreach( $discount_vendorCost_n as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $n_charged=  $n_charged + ($cost->charged_amount);
+                    }else{
+                        $n_charged =  $n_charged + ($cost->charged_amount * $cost->quantity);
+                    }
+                    
+                }
+    
+    
+    
+                foreach( $discount_vendorCost_d as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $d_vC_d =  $d_vC_n + $cost->vendors_cost ;
+                    }else{
+                        $d_vC_d =  $d_vC_n  + ($cost->vendors_cost *  $cost->quantity);
+                    }
+                    
+                }
+    
+                foreach( $discount_vendorCost_d as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $d_charged=  $d_charged + ($cost->charged_amount);
+                    }else{
+                        $d_charged =  $d_charged + ($cost->charged_amount * $cost->quantity);
+                    }
+                    
+                }
+            
         }
 
        
         $p_due_amount = User::sum("pounds_wallet_balance");
         $due_amount = User::sum("wallet_balance");
      
-        $discount_commission_n = Voucherpayment::where([
-            'status'=> 1,
-            'currency' => 'NG'
-            ])->where('super_agent_share', '!=', '0' )->sum('super_agent_share');
-
-        $discount_commission_us = Voucherpayment::where(['status'=> 1])
-                                    ->where('currency', '!=', 'NG' )
-                                    ->sum('super_agent_share');
-
-        $discount_vendorCost_d =   Voucherpayment::where(['status'=> 1])
-                                    ->where('currency', '!=', 'NG' )
-                                    ->get();
-
-        $discount_vendorCost_n =   Voucherpayment::where(['status'=> 1])
-                                    ->where('currency', 'NG' )
-                                    ->get();
-        $d_vC_n = 0;
-        $d_vC_d = 0;
-        $d_charged = 0;
-        $n_charged = 0;
-
-            foreach( $discount_vendorCost_n as $cost)
-            {
-                if($cost->transaction_ref != null)
-                {
-                    $d_vC_n =  $d_vC_n + ($cost->vendors_cost *  $cost->o_price);
-                }else{
-                    $d_vC_n =  $d_vC_n + (($cost->vendors_cost *  $cost->o_price) * $cost->quantity);
-                }
-                
-            }
-
-            foreach( $discount_vendorCost_n as $cost)
-            {
-                if($cost->transaction_ref != null)
-                {
-                    $n_charged=  $n_charged + ($cost->charged_amount);
-                }else{
-                    $n_charged =  $n_charged + ($cost->charged_amount * $cost->quantity);
-                }
-                
-            }
-
-
-
-            foreach( $discount_vendorCost_d as $cost)
-            {
-                if($cost->transaction_ref != null)
-                {
-                    $d_vC_d =  $d_vC_n + $cost->vendors_cost ;
-                }else{
-                    $d_vC_d =  $d_vC_n  + ($cost->vendors_cost *  $cost->quantity);
-                }
-                
-            }
-
-            foreach( $discount_vendorCost_d as $cost)
-            {
-                if($cost->transaction_ref != null)
-                {
-                    $d_charged=  $d_charged + ($cost->charged_amount);
-                }else{
-                    $d_charged =  $d_charged + ($cost->charged_amount * $cost->quantity);
-                }
-                
-            }
         
             $discount_profit_n =  $n_charged -  $d_vC_n;
             $discount_profit_d = $d_charged -  $d_vC_d;
