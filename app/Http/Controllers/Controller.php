@@ -113,9 +113,9 @@ class Controller extends BaseController
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
-        $headr[] = 'X-API-Key: '.env('VASTECHKEY');
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '6a295535dff6f0a7881491c500ee46db');
 //        dd($headr);
-        curl_setopt($ch, CURLOPT_URL, "https://vastech.sevas.live/vastech/api/v1/ubank");
+        curl_setopt($ch, CURLOPT_URL, "https://vastech.atp-sevas.com/vastech/api/v1/ubank");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($request));
@@ -124,6 +124,7 @@ class Controller extends BaseController
         $server_output = curl_exec($ch);
 
         curl_close($ch);
+        dd($server_output);
         $server_output = json_decode($server_output);
 
         return $server_output->data;
@@ -240,31 +241,31 @@ class Controller extends BaseController
     function getVasTechData($booking,$price,$transaction_ref,$price_pound = null, $card_type = null){
         if ($booking->country_travelling_from_id == 156 && $card_type == 1) {
             $data = [
-                "transactionRef" => $transaction_ref,
+                "transactionId" => $transaction_ref,
                 "amount" => $price,
                 "approvedCurrency" => "566",
                 "channel" => "WEB",
                 "currency" => "NGN",
-                "clientAppId" => "831553",
-                "clientId" => "238588",
+                "clientAppId" => "659758",
+                "clientId" => "106669",
                 "mobileNumber"=> "07039448968",
                 "paymentTypeId" => 2,
-                "redirectURL" => env("VASTECH_URL"),
+                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "voucher/payment/confirmation",
                 "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
             ];
             }else{
             $data = [
-                "transactionRef" => $transaction_ref,
+                "transactionId" => $transaction_ref,
                 "amount" => $price_pound,
                 "currency" => "GBP",
                 "approvedCurrency" => "826",
                 "channel" => "WEB",
-                "clientAppId" => "831553",
-                "clientId" => "238588",
+                "clientAppId" => "659758",
+                "clientId" => "106669",
                 "mobileNumber"=> "07039448968",
                 "paymentTypeId" => 2,
-                "redirectURL" => env("VASTECH_URL"),
+                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "voucher/payment/confirmation",
                 "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
             ];

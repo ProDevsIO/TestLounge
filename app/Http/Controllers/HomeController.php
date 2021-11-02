@@ -247,7 +247,7 @@ class HomeController extends Controller
 
         unset($request_data['_token']);
         if($request->payment_method == "vastech"){
-            $transaction_ref = rand(100000, 9999999);
+            $transaction_ref = rand(100000, 999999);
         }elseif($request->payment_method == "paystack"){
             //paystack doesnt allow underscrore in their reference
             $transaction_ref = uniqid('pay-') . rand(10000, 999999);
