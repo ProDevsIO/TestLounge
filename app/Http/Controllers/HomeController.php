@@ -1020,6 +1020,12 @@ class HomeController extends Controller
         return view('homepage.about');
     }
 
+    public function terms()
+    {
+
+        return view('homepage.terms');
+    }
+
     public function pick()
     {
 

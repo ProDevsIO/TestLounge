@@ -357,8 +357,18 @@
                                     <br/><br/>
                                     <span
                                             class="color-10" style="margin-left: 17px;margin-top: 10px">Bookings can’t be cancelled or refunded</span>
+                                    <div class="col-md-12 color-9">
+                 
+                                        <div class="color-8"><p class="text-muted"><input type="checkbox" name="terms" required
+                                                                    class="bg-1"/>
+                                         I have read and agreed to the <a href="/terms" class="text-info"> terms and condition</a></p>
+
+                                        </div>
+                                    </div>
+                              
 
                                 </div>
+
                                 <input type="hidden" name="payment_method" value="paystack" id="payment_method"/>
 
                                 <input type="submit" class="btn btn-primary pull-right" style="margin-top: 0px;" value="Make Payment">
