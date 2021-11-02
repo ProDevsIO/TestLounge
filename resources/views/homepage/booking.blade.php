@@ -148,13 +148,13 @@
 
                                 <div class="col-md-6">
                                     <label>Isolation Address1: <span class="show_required"> *</span> </label>
-                                    <input class="" type="text" name="isolation_address" placeholder=""
+                                    <input class="" type="text" name="isolation_address" placeholder="apartment, building, block, street"
                                            value="{{ old('isolation_address') }}" required/>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Isolation Address2: </label>
                                     <input class="" type="text" name="isolation_address2"
-                                           id="isolation_address2"
+                                           id="isolation_address2" placeholder="apartment, building, block, street"
                                            value="{{ old('isolation_address2') }}"/>
                                 </div>
                                 <div class="col-md-6">
