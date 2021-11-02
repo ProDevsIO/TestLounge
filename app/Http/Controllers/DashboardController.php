@@ -2309,14 +2309,14 @@ class DashboardController extends Controller
                     $cost_booking,
                     $agent_percentage
                 );
-
+                      
                 if (!empty($superAgent = $user->superAgent)) {
                     $super_agent_percentage = $share_data["main_agent_share_percent"];
                     $super_agent_amount_credit = $cost_booking + ($cost_booking * ($super_agent_percentage / 100));
 
                     VoucherDiscountProcess::processTransaction(
-                        $superAgent,
-                        $booking->id,
+                        $superAgent->id,
+                        $voucherpay->id,
                         $super_agent_amount_credit,
                         $cost_booking,
                         $super_agent_percentage
@@ -2325,9 +2325,11 @@ class DashboardController extends Controller
             }
 
             DB::commit();
+            
         } catch (\Exception $e) {
             DB::rollBack();
-            logger("An error occured while saving discount", $e);
+            logger("An error occured while saving discount");
+            dd($e);
            
         }
         // dd($request->product_id,$request->number, $id, $v_rate, $currency, $charged, $voucherpay, $count_check);
