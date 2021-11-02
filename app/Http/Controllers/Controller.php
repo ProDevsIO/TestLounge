@@ -109,6 +109,7 @@ class Controller extends BaseController
     {
         unset($request['subaccounts']);
         unset($request['currency']);
+        dd($request);
 
         $ch = curl_init();
         $headr = array();
@@ -241,7 +242,7 @@ class Controller extends BaseController
     function getVasTechData($booking,$price,$transaction_ref,$price_pound = null, $card_type = null){
         if ($booking->country_travelling_from_id == 156 && $card_type == 1) {
             $data = [
-                "transactionId" => $transaction_ref,
+                "transactionRef" => $transaction_ref,
                 "amount" => $price,
                 "approvedCurrency" => "566",
                 "channel" => "WEB",
@@ -256,7 +257,7 @@ class Controller extends BaseController
             ];
             }else{
             $data = [
-                "transactionId" => $transaction_ref,
+                "transactionRef" => $transaction_ref,
                 "amount" => $price_pound,
                 "currency" => "GBP",
                 "approvedCurrency" => "826",

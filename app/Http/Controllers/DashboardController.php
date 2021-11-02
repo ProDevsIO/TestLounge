@@ -2152,7 +2152,7 @@ class DashboardController extends Controller
     
                 foreach($voucherunpaid_n as $upay)
                 {
-                    if($vpay->transaction_ref !=null)
+                    if($upay->transaction_ref !=null)
                     {
                         $unpaid_n = $unpaid_n + $upay->charged_amount;
                     }else{
@@ -2161,7 +2161,7 @@ class DashboardController extends Controller
                 }
                 foreach($voucherunpaid_d as $upay)
                 {
-                    if($vpay->transaction_ref !=null)
+                    if($upay->transaction_ref !=null)
                     {
                         $unpaid_d = $unpaid_d + $upay->charged_amount;
                     }else{
