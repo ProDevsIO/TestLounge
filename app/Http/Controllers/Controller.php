@@ -125,7 +125,7 @@ class Controller extends BaseController
         $server_output = curl_exec($ch);
 
         curl_close($ch);
-        dd($server_output);
+       
         $server_output = json_decode($server_output);
 
         return $server_output->data;
