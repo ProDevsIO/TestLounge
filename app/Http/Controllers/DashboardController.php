@@ -1109,6 +1109,9 @@ class DashboardController extends Controller
 
             $commission = Transaction::where('type', 1)->wherebetween('created_at', [$start, $end])->sum('amount');
             $pcommission = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->sum('amount');
+
+            $discount_total_n = VoucherDiscount::where('currency','NG' )->wherebetween('created_at', [$start, $end])->sum('amount');
+            $discount_total_d = VoucherDiscount::where('currency','!=','NG' )->wherebetween('created_at', [$start, $end])->sum('amount');
             
             foreach($checkn as $ch){
                 // dump($ch->booking_id);
@@ -1227,6 +1230,10 @@ class DashboardController extends Controller
           
             $commission = Transaction::where('type', 1)->sum('amount');
             $pcommission = PoundTransaction::where('type', 1)->sum('amount');
+
+            $discount_total_n = VoucherDiscount::where('currency','NG' )->sum('amount');
+            $discount_total_d = VoucherDiscount::where('currency','!=','NG' )->sum('amount');
+
             foreach($checkn as $ch){
                 // dump( $check->product);
                 $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'NGN'])->first();
@@ -1400,7 +1407,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn', 'discount_commission_n', 'discount_commission_us', 'discount_profit_n', 'discount_profit_d'));
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn', 'discount_commission_n', 'discount_commission_us', 'discount_profit_n', 'discount_profit_d', 'discount_total_d','discount_total_n'));
 
     }
 
@@ -2310,18 +2317,6 @@ class DashboardController extends Controller
                     $agent_percentage
                 );
                       
-                if (!empty($superAgent = $user->superAgent)) {
-                    $super_agent_percentage = $share_data["main_agent_share_percent"];
-                    $super_agent_amount_credit = $cost_booking + ($cost_booking * ($super_agent_percentage / 100));
-
-                    VoucherDiscountProcess::processTransaction(
-                        $superAgent->id,
-                        $voucherpay->id,
-                        $super_agent_amount_credit,
-                        $cost_booking,
-                        $super_agent_percentage
-                    );
-                }
             }
 
             DB::commit();

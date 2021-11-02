@@ -184,6 +184,40 @@
                         </div>
                     </a>
                 </div>
+                <div class="col-xl-3 col-sm-3">
+                  
+                        <div class="card mb-4 bg-danger" title="Total Commission">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Total Commission">
+                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($discount_total_n, 2) }}</h4>
+                                        <span>Total Discount (Naira)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                   
+                </div>
+                <div class="col-xl-3 col-sm-3">
+                   
+                        <div class="card mb-4 bg-danger" title="Total Commission">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Total Commission">
+                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($discount_total_d, 2) }}</h4>
+                                        <span>Total Discount(Dollars)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
                 <!-- <div class="col-xl-3 col-sm-3">
                     <div class="card mb-4 bg-purple" title="Revenue">
                         <div class="card-body">
