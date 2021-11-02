@@ -1830,7 +1830,7 @@ class DashboardController extends Controller
                                //get the amount to credit super agent
                                 $super_agent_amount_credit = ($agent_amount_credit * ( $user->main_agent_share_raw / 100));
                                 
-                                if($country == "NG"){
+                                if($country != "NG"){
                                     //crediting the users wallet
                                     $total_amount = $user->pounds_wallet_balance +  $super_agent_amount_credit;
                                 
@@ -2209,18 +2209,66 @@ class DashboardController extends Controller
         //get the user collection
         $user = User::where('id', $id)->first();
 
+        $percent_to_charge = 0;
+        $sub_percent = 0;
+        $super_percent = 0;
+        $sub_share = 0;
+        $super_share = 0;
         if ($user->percentage_split != null) {
-            $percentage = $user->percentage_split/100;
+
+           if($user->superAgent == null)
+           {
+                $percentage = $user->percentage_split/100;
+
+                $super_percent = $percentage;
+
+           }else{
+
+                // $percentage = $user->percentage_split/100;
+                $percentage = (($user->main_agent_share_raw/100) * $user->percentage_split) / 100;
+            
+                $sub_percent = $percentage;
+                $super_percent = $user->percentage_split/100 - $sub_percent;
+
+           }
+
         } else {
             $defaultpercent = Setting::where('id', '2')->first();
-            $percentage = $defaultpercent->value/100;
+
+            if($user->superAgent == null)
+            {
+                $percentage = $defaultpercent->value/100;
+                $super_percent = $percentage;
+               
+            }else{
+
+                $percentage = (($user->main_agent_share_raw/100) *  $defaultpercent->value) / 100;
+                $sub_percent = $percentage;
+                $super_percent = $defaultpercent->value/100 - $sub_percent;
+              
+            }
         }
+
+    
+        $country = auth()->user()->country;
+
 
         //get the users country to get the currency and charge rate
         if($user->country == 'NG'){
             $currency = "NG";
             $charged = $v_rate->price - ($v_rate->price * $percentage);
             $o_price = $v_rate->price;
+
+            if($sub_percent != 0)
+            {
+                $sub_share = ($charged * $sub_percent);
+            }
+
+            if($super_percent != 0)
+            {
+                $super_share = ($charged * $super_percent);
+            }
+            $total_price =  $charged - ($sub_share + $super_share);
         }else{
 
             if($user->country == null)
@@ -2231,6 +2279,17 @@ class DashboardController extends Controller
             $currency = "USD";
             $o_price = $v_rate->price_pounds;
             $charged = $v_rate->price_pounds - ($v_rate->price_pounds * $percentage);
+
+            if($sub_percent != 0)
+            {
+                $sub_share = ($charged * $sub_percent);
+            }
+
+            if($super_percent != 0)
+            {
+                $super_share = ( $charged * $super_percent);
+            }
+            $total_price =   $charged - ($sub_share + $super_share);
         }
 
        
@@ -2243,6 +2302,8 @@ class DashboardController extends Controller
             'o_price' => $o_price,
             'vendors_cost'=> $v_rate->cost_price,
             'charged_amount' => $charged,
+            'super_agent_share' => $sub_share,
+            'sub_agent_share' => $super_share,
             'quantity' => $request->number,
             'currency' => $currency,
             'status' => 0
@@ -2316,6 +2377,30 @@ class DashboardController extends Controller
                     $cost_booking,
                     $agent_percentage
                 );
+
+                if (!empty($superAgent = $user->superAgent)) {
+                    //get the amount to credit super agent
+                     $super_agent_amount_credit = ($agent_amount_credit * ( $user->main_agent_share_raw / 100));
+                     
+                     if($country != "NG"){
+                         //crediting the users wallet
+                         $total_amount = $user->pounds_wallet_balance +  $super_agent_amount_credit;
+                     
+                         User::where('id', $user->superAgent->id)->update([
+                             'wallet_balance' => $total_amount,
+                            
+                         ]);
+
+                     }else{
+                         //crediting the users wallet
+                         $total_amount = $user->wallet_balance +  $super_agent_amount_credit;
+                     
+                         User::where('id', $user->superAgent->id)->update([
+                             'pounds_wallet_balance' => $total_amount,
+                         ]);
+
+                     }
+                 }
                       
             }
 

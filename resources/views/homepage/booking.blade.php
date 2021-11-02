@@ -347,7 +347,7 @@
                                     <div class="col-md-12 color-9">
                                         <label>Consent to Test <span class="color-10">*</span></label>
                                         <div class="color-8"><p class="text-muted"><input type="checkbox" name="consent" value="1"
-                                                                    class="bg-1"/>
+                                                                    class="bg-1" required/>
                                             I consent to this test being done, or if this test
                                             is for a child, I confirm I am a legal guardian of the child and consent to
                                             this test being done.</p>

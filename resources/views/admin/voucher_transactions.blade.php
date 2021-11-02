@@ -47,7 +47,7 @@
                                <div class="media-body text-light" title="Total Vendor Cost">
                                    <h4 class="text-uppercase mb-0 weight500">{{$voucherunpaid->count()}}</h4>
                                    
-                                   <span>unpaid Transactions</span>
+                                   <span>Unpaid Transactions</span>
                                </div>
                            </div>
                        </div>
@@ -155,7 +155,9 @@
                                                 <th scope="col">Product Price</th>
                                                 <th>Discount</th>
                                                 <th scope="col">Amount Paid</th>
-                                               
+                                                <th scope="col">Super Agent share</th>
+                                                <th scope ="col" style="padding-left:50px; padding-right:50px">Percentage</th>
+                                                
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Date</th>
                                                 @if(auth()->user()->type == 1)
@@ -207,11 +209,12 @@
                                                             </td>
                                                             <td>
                                                             @if($voucher->currency == "NG")
-                                                             N {{optional($voucher->discount)->amount ?? 0 }}
+                                                             N{{optional($voucher->discount)->amount ?? 0 }}
                                                             @else
-                                                            $  {{optional($voucher->discount)->amount }}
+                                                            ${{optional($voucher->discount)->amount }}
                                                             @endif
                                                             </td>
+                                                            
                                                             <td>
                                                                  @if($voucher->currency == "NG")
                                                                 N{{$voucher->charged_amount * ($voucher->quantity ?? 1)}}
@@ -219,8 +222,33 @@
                                                                 ${{$voucher->charged_amount * ($voucher->quantity ?? 1)}}
                                                                 @endif
                                                             </td>
-                                                            
-
+                                                            <td>
+                                                            @if($voucher->currency == "NG")
+                                                                    @if($voucher->super_agent_share == 0)
+                                                                        none
+                                                                    @else
+                                                                    N{{$voucher->super_agent_share}}
+                                                                    @endif
+                                                                
+                                                                @else
+                                                                    @if($voucher->super_agent_share == 0)
+                                                                        none
+                                                                    @else
+                                                                    ${{$voucher->super_agent_share}}
+                                                                    @endif
+                                                                
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                            @if($voucher->status == 0)
+                                                                Discount ({{ number_format(((optional($voucher->discount)->amount ?? 0) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }}% ) <br>
+                                                                @if($voucher->super_agent_share != 0)
+                                                                Super agent({{  number_format((($voucher->super_agent_share) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }}% )<br>
+                                                                Sub agent ({{ number_format((($voucher->sub_agent_share) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }}% )
+                                                                @endif
+                                                                
+                                                            @endif
+                                                            </td>
                                                             
                                                             @if($voucher->status == 0)
                                                             <td class="text-center"><span class ="badge badge-warning">Unpaid </span></td>
@@ -323,9 +351,9 @@
 
                                                             <td>{{optional(optional($voucher)->product)->name}}<br>
                                                                 @if($voucher->currency == "NG")
-                                                                     N {{$voucher->o_price / ($voucher->quantity ?? 1)}}
+                                                                     N{{$voucher->o_price / ($voucher->quantity ?? 1)}}
                                                                 @else
-                                                                     $  {{$voucher->o_price / ($voucher->quantity ?? 1)}}
+                                                                     ${{$voucher->o_price / ($voucher->quantity ?? 1)}}
                                                                 @endif
                                                                 
                                                             </td>
@@ -344,29 +372,29 @@
                                                             </td>
                                                             <td>
                                                                 @if($voucher->currency == "NG")
-                                                                    N  {{$voucher->charged_amount + optional($voucher->discount)->amount}}
+                                                                    N{{$voucher->charged_amount + optional($voucher->discount)->amount}}
                                                                 @else
-                                                                $  {{$voucher->charged_amount + optional($voucher->discount)->amount}}
+                                                                ${{$voucher->charged_amount + optional($voucher->discount)->amount}}
                                                                 @endif
                                                             
                                                                
                                                             </td>
                                                             <td>
                                                                 @if($voucher->currency == "NG")
-                                                                N {{optional($voucher->discount)->amount ?? 0 }}
+                                                                N{{optional($voucher->discount)->amount ?? 0 }}
                                                                 @else
-                                                                $  {{optional($voucher->discount)->amount }}
+                                                                ${{optional($voucher->discount)->amount }}
                                                                 @endif
                                                                 <br>
-                                                                ({{ ((optional($voucher->discount)->amount ?? 0) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0)) }} % )
+                                                                ({{ ((optional($voucher->discount)->amount ?? 0) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0)) }}% )
                                                                 
                                                             </td>
                                                             
                                                             <td>
                                                                 @if($voucher->currency == "NG")
-                                                                    N  {{$voucher->charged_amount}}
+                                                                    N{{$voucher->charged_amount}}
                                                                 @else
-                                                                $  {{$voucher->charged_amount}}
+                                                                ${{$voucher->charged_amount}}
                                                                 @endif
                                                             </td>
                                                             <td>
@@ -374,7 +402,7 @@
                                                                     @if($voucher->super_agent_share == 0)
                                                                         none
                                                                     @else
-                                                                    N  {{$voucher->super_agent_share}}
+                                                                    N{{$voucher->super_agent_share}}
                                                                     @endif
                                                                 
                                                                 @else
@@ -388,10 +416,10 @@
                                                             </td>
                                                             <td>
                                                             @if($voucher->status != 0)
-                                                                Discount ({{ number_format(((optional($voucher->discount)->amount ?? 0) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }} % ) <br>
+                                                                Discount ({{ number_format(((optional($voucher->discount)->amount ?? 0) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }}% ) <br>
                                                                
-                                                                Super agent({{  number_format((($voucher->super_agent_share) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }} % )<br>
-                                                                Sub agent ({{ number_format((($voucher->sub_agent_share) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }} % )
+                                                                Super agent({{  number_format((($voucher->super_agent_share) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }}% )<br>
+                                                                Sub agent ({{ number_format((($voucher->sub_agent_share) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }}% )
                                                                 
                                                             @endif
                                                             </td>
