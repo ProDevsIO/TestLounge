@@ -1204,8 +1204,68 @@ class DashboardController extends Controller
                                     ->where('currency', '!=', 'NG' )
                                     ->sum('super_agent_share');
 
-        
+        $discount_vendorCost_d =   Voucherpayment::where(['status'=> 1])
+                                    ->where('currency', '!=', 'NG' )
+                                    ->get();
 
+        $discount_vendorCost_n =   Voucherpayment::where(['status'=> 1])
+                                    ->where('currency', 'NG' )
+                                    ->get();
+        $d_vC_n = 0;
+        $d_vC_d = 0;
+        $d_charged = 0;
+        $n_charged = 0;
+
+            foreach( $discount_vendorCost_n as $cost)
+            {
+                if($cost->transaction_ref != null)
+                {
+                    $d_vC_n =  $d_vC_n + ($cost->vendors_cost *  $cost->o_price);
+                }else{
+                    $d_vC_n =  $d_vC_n + (($cost->vendors_cost *  $cost->o_price) * $cost->quantity);
+                }
+                
+            }
+
+            foreach( $discount_vendorCost_n as $cost)
+            {
+                if($cost->transaction_ref != null)
+                {
+                    $n_charged=  $n_charged + ($cost->charged_amount);
+                }else{
+                    $n_charged =  $n_charged + ($cost->charged_amount * $cost->quantity);
+                }
+                
+            }
+
+
+
+            foreach( $discount_vendorCost_d as $cost)
+            {
+                if($cost->transaction_ref != null)
+                {
+                    $d_vC_d =  $d_vC_n + $cost->vendors_cost ;
+                }else{
+                    $d_vC_d =  $d_vC_n  + ($cost->vendors_cost *  $cost->quantity);
+                }
+                
+            }
+
+            foreach( $discount_vendorCost_d as $cost)
+            {
+                if($cost->transaction_ref != null)
+                {
+                    $d_charged=  $d_charged + ($cost->charged_amount);
+                }else{
+                    $d_charged =  $d_charged + ($cost->charged_amount * $cost->quantity);
+                }
+                
+            }
+        
+            $discount_profit_n =  $n_charged -  $d_vC_n;
+            $discount_profit_d = $d_charged -  $d_vC_d;
+
+           
         $profit_naira =  $total_ngn - $commission - $vendor_cost_ngn;
         // dd($profit_naira, $total_ngn ,$commission , $vendor_cost_ngn );
 
@@ -1267,7 +1327,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn', 'discount_commission_n', 'discount_commission_us'));
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn', 'discount_commission_n', 'discount_commission_us', 'discount_profit_n', 'discount_profit_d'));
 
     }
 
@@ -1899,10 +1959,10 @@ class DashboardController extends Controller
             $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->get();
             $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->get();
 
-            $voucherpaid_n = VoucherPayment::whereNull('transaction_ref')->where(['status'=> 1, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
-            $voucherpaid_d = VoucherPayment::whereNull('transaction_ref')->where('status', 1)->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
-            $voucherunpaid_n = VoucherPayment::whereNull('transaction_ref')->where(['status'=> 0, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
-            $voucherunpaid_d = VoucherPayment::whereNull('transaction_ref')->where('status', 0)->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+            $voucherpaid_n = VoucherPayment::where(['status'=> 1, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
+            $voucherpaid_d = VoucherPayment::where('status', 1)->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
+            $voucherunpaid_n = VoucherPayment::where(['status'=> 0, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
+            $voucherunpaid_d = VoucherPayment::where('status', 0)->where('currency','!=','NG')->orderBy('id', 'desc')->get();
 
             $voucher_all = VoucherPayment::all();
 
@@ -1916,6 +1976,9 @@ class DashboardController extends Controller
                     $paid_n = $paid_n + ($vpay->charged_amount * $vpay->quantity );
                 } 
             }
+
+        
+            
             foreach($voucherpaid_d as $vpay)
             {
               
@@ -1929,20 +1992,20 @@ class DashboardController extends Controller
 
             foreach($voucherunpaid_n as $upay)
             {
-                if($vpay->transaction_ref !=null)
+                if($upay->transaction_ref !=null)
                 {
                     $unpaid_n = $unpaid_n + $upay->charged_amount;
                 }else{
-                    $unpaid_n = $unpaid_n + ($upay->charged_amount * $vpay->quantity );
+                    $unpaid_n = $unpaid_n + ($upay->charged_amount * $upay->quantity );
                 } 
             }
             foreach($voucherunpaid_d as $upay)
             {
-                if($vpay->transaction_ref !=null)
+                if($upay->transaction_ref !=null)
                 {
                     $unpaid_d = $unpaid_d + $upay->charged_amount;
                 }else{
-                    $unpaid_d = $unpaid_d + ($upay->charged_amount * $vpay->quantity );
+                    $unpaid_d = $unpaid_d + ($upay->charged_amount * $upay->quantity );
                 } 
             }
                
@@ -1967,24 +2030,24 @@ class DashboardController extends Controller
                 'agent' => auth()->user()->id
                 ])->orderBy('id', 'desc')->get();
 
-            $voucherpaid_n = VoucherPayment::whereNull('transaction_ref')->where([
+            $voucherpaid_n = VoucherPayment::where([
                  'status'=> 1,
                  'currency' => 'NG',
                  'agent' => auth()->user()->id
                  ])->orderBy('id', 'desc')->get();
 
-                $voucherpaid_d = VoucherPayment::whereNull('transaction_ref')->where([
+                $voucherpaid_d = VoucherPayment::where([
                     'status'=> 1,
                     'agent' => auth()->user()->id
                     ])->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
 
-                $voucherunpaid_n = VoucherPayment::whereNull('transaction_ref')->where([
+                $voucherunpaid_n = VoucherPayment::where([
                     'status'=> 0,
                     'currency' => 'NG',
                     'agent' => auth()->user()->id
                     ])->orderBy('id', 'desc')->get();
 
-                $voucherunpaid_d = VoucherPayment::whereNull('transaction_ref')->where([
+                $voucherunpaid_d = VoucherPayment::where([
                     'status'=> 0,
                     'agent' => auth()->user()->id
                     ])->where('currency','!=','NG')->orderBy('id', 'desc')->get();
@@ -2020,7 +2083,7 @@ class DashboardController extends Controller
                     {
                         $unpaid_n = $unpaid_n + $upay->charged_amount;
                     }else{
-                        $unpaid_n = $unpaid_n + ($upay->charged_amount * $vpay->quantity );
+                        $unpaid_n = $unpaid_n + ($upay->charged_amount * $upay->quantity );
                     } 
                 }
                 foreach($voucherunpaid_d as $upay)
@@ -2029,7 +2092,7 @@ class DashboardController extends Controller
                     {
                         $unpaid_d = $unpaid_d + $upay->charged_amount;
                     }else{
-                        $unpaid_d = $unpaid_d + ($upay->charged_amount * $vpay->quantity );
+                        $unpaid_d = $unpaid_d + ($upay->charged_amount * $upay->quantity );
                     } 
                 }
         
