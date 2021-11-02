@@ -2077,7 +2077,7 @@ class DashboardController extends Controller
         if($user->country == 'NG'){
             $currency = "NG";
             $charged = $v_rate->price - ($v_rate->price * $percentage);
-            $o_price = $v_price->price;
+            $o_price = $v_rate->price;
         }else{
 
             if($user->country == null)
@@ -2086,7 +2086,7 @@ class DashboardController extends Controller
                 return back();
             }
             $currency = "USD";
-            $o_price = $v_price->price_pounds;
+            $o_price = $v_rate->price_pounds;
             $charged = $v_rate->price_pounds - ($v_rate->price_pounds * $percentage);
         }
 
@@ -2228,7 +2228,7 @@ class DashboardController extends Controller
         if($user->country == 'NG'){
             $currency = "NG";
             $charged = $v_rate->price - ($v_rate->price * $percentage);
-            $o_price = $v_price->price;
+            $o_price = $v_rate->price;
         }else{
 
             if($user->country == null)
@@ -2237,7 +2237,7 @@ class DashboardController extends Controller
                 return back();
             }
             $currency = "USD";
-            $o_price = $v_price->price_pounds;
+            $o_price = $v_rate->price_pounds;
             $charged = $v_rate->price_pounds - ($v_rate->price_pounds * $percentage);
         }
 
