@@ -109,14 +109,14 @@ class Controller extends BaseController
     {
         unset($request['subaccounts']);
         unset($request['currency']);
-        dd($request);
+        // dd($request);
 
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
-        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '6a295535dff6f0a7881491c500ee46db');
-//        dd($headr);
-        curl_setopt($ch, CURLOPT_URL, "https://vastech.atp-sevas.com/vastech/api/v1/ubank");
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '50431695d717d0954b5ad94d18eae264');
+        //dd($headr);
+        curl_setopt($ch, CURLOPT_URL, env('VASTECH_URL', 'https://vastech.sevas.live/vastech/api/v1/ubank'));
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($request));
@@ -247,8 +247,8 @@ class Controller extends BaseController
                 "approvedCurrency" => "566",
                 "channel" => "WEB",
                 "currency" => "NGN",
-                "clientAppId" => "659758",
-                "clientId" => "106669",
+                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '717359'),
+                "clientId" => env('VASTECH_CLIENT_ID', '316006'),
                 "mobileNumber"=> "07039448968",
                 "paymentTypeId" => 2,
                 "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "voucher/payment/confirmation",
@@ -262,8 +262,8 @@ class Controller extends BaseController
                 "currency" => "GBP",
                 "approvedCurrency" => "826",
                 "channel" => "WEB",
-                "clientAppId" => "659758",
-                "clientId" => "106669",
+                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '717359'),
+                "clientId" => env('VASTECH_CLIENT_ID', '316006'),
                 "mobileNumber"=> "07039448968",
                 "paymentTypeId" => 2,
                 "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "voucher/payment/confirmation",
