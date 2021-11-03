@@ -1321,7 +1321,7 @@ class DashboardController extends Controller
                     }else{
                         $d_vC_d =  $d_vC_n  + ($cost->vendors_cost *  $cost->quantity);
                     }
-                    
+                    dump($d_vC_d);
                 }
     
                 foreach( $discount_vendorCost_d as $cost)
@@ -1332,7 +1332,7 @@ class DashboardController extends Controller
                     }else{
                         $d_charged =  $d_charged + ($cost->charged_amount * $cost->quantity);
                     }
-                    
+                    dump($d_charged);
                 }
             
         }
@@ -1344,7 +1344,7 @@ class DashboardController extends Controller
         
             $discount_profit_n =  $n_charged -  $d_vC_n;
             $discount_profit_d = $d_charged -  $d_vC_d;
-
+            dd( $discount_profit_d , $d_charged , $d_vC_d);
            
         $profit_naira =  $total_ngn - $commission - $vendor_cost_ngn;
         // dd($profit_naira, $total_ngn ,$commission , $vendor_cost_ngn );
@@ -1868,7 +1868,7 @@ class DashboardController extends Controller
         }
 
 
-        session()->flash('alert-danger', "Sorry but this transaction wasnt successful");
+        session()->flash('alert-danger', "Sorry! The Voucher purchase was unsuccessful.");
         return redirect()->to('/view/vouchers');
     }
 
