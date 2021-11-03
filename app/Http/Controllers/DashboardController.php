@@ -2368,7 +2368,7 @@ class DashboardController extends Controller
                 //for international transaction in pounds
                
                 $agent_amount_credit = $amount;
-
+               
 
                 VoucherDiscountProcess::processTransaction(
                     $user->id,
