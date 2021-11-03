@@ -241,7 +241,9 @@
                                                             </td>
                                                             <td>
                                                             @if($voucher->status == 0)
-                                                                Discount ({{ number_format(((optional($voucher->discount)->amount ?? 0) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }}% ) <br>
+                                                              
+                                                                
+                                                                Discount ({{( ($voucher->o_price *  ($voucher->quantity))/ (optional($voucher->discount)->amount ?? 0) )}}%)<br>
                                                                 @if($voucher->super_agent_share != 0)
                                                                 Super agent({{  number_format((($voucher->super_agent_share) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }}% )<br>
                                                                 Sub agent ({{ number_format((($voucher->sub_agent_share) * 100 ) / ($voucher->charged_amount +  (optional($voucher->discount)->amount ?? 0))) }}% )
