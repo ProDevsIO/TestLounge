@@ -359,7 +359,7 @@
                                             this test being done.</p>
                                            <div class="color-8"><p class="text-muted"><input type="checkbox" name="terms" required
                                                                     class="bg-1"/>
-                                                                    By submitting the form, I consent to the <a href="/terms" class="text-info"> terms and conditions</a> of purchasing this product.</p>
+                                                                    By submitting the form, I consent to the <a href="/terms" target="_blank" class="text-info"> terms and conditions</a> of purchasing this product.</p>
 
                                         </div>
                                         </div>

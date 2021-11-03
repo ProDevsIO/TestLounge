@@ -418,30 +418,5 @@
 
 
     </script>
-    @elseif(auth()->user()->enable_barcode == 0)
-    <script>
-       function generateKitField(id, count) {
-            var q = 'quantity_' + count;
-            var id = id;
-            var kit_n = ".div_kit" + count;
-            var quantity = document.getElementById(q).value;
-            // console.log(email, quantity);
-            console.log(q, id, quantity, count);
-            if (id != 15) {
-                var $card = $(kit_n);
-            
-            $card.empty(); // remove old options
-                for(i = 0 ; i< quantity; i++){
-                    $card.append($("<label>Test kit number</label><br>"))
-                    $card.append($("<input type='text' class='form-control' placeholder='Type test kit number' name='test_kit"+ i + "' required>")); 
-                
-                }
-            
-            }
-
-        }
-
-
-    </script>
     @endif
 @endsection
