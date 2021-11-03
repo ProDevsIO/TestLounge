@@ -350,9 +350,10 @@ class HomeController extends Controller
         }
 
 
-        $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $request->product_id)->first();
+        $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $booking->product->product_id)->first();
 
         if ($request->payment_method == "stripe") {
+           
             $response = $this->processStripe($vendor_products->price_stripe, $booking);
             $redirect_url = $response->url;
 
@@ -1555,89 +1556,147 @@ class HomeController extends Controller
         $booking_id = encrypt_decrypt('decrypt', $request->b);
         $booking = Booking::where('id', $booking_id)->first();
 
-
         if ($booking->status != 1) {
-            $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
 
-            if (!$booking_product->stripe_session) {
-                return redirect()->to('/booking/stripe/failed?b=' . $request->b);
-            }
+            $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
 
-            $checkout_session = $this->checkSession($booking_product);
+            foreach ($booking_products as $booking_product) {
+                if ($booking->user_id) {
+                    try {
+                        DB::beginTransaction();
 
-            if ($checkout_session->payment_status != "paid") {
+                        $userService = new UserShare;
+                        $user = User::where('id', $booking->user_id)->first();
+                        $agent_share = $userService->myShare($user);
+                        $share_data = $userService->calculateMainAgentShare($user->main_agent_share_raw, $agent_share);
 
-                return redirect()->to('/booking/stripe/failed?b=' . $request->b);
-            }
+                        $agent_percentage = $share_data["sub_agent_share"];
+
+                        $cost_booking = $booking_product->price;
 
 
-            if ($booking->user_id) {
-                try {
-                    DB::beginTransaction();
-                    $user = User::where('id', $booking->user_id)->first();
-                    if ($user->percentage_split != null) {
-                        $pecentage = $user->percentage_split;
-                    } else {
-                        $defaultpercent = Setting::where('id', '2')->first();
-                        $pecentage = $defaultpercent->value;
+                        if ($booking->card_type == null || $booking->card_type == 2) {
+
+                            //for international transaction in dollars(please the pounds was converted to dollars)
+                            $cost_booking = $booking_product->price_pounds;
+                            $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
+
+
+                            BookingConfirmationService::processPoundTransaction(
+                                $user,
+                                $booking->id,
+                                $agent_amount_credit,
+                                $cost_booking,
+                                $agent_percentage
+                            );
+
+                            if (!empty($superAgent = $user->superAgent)) {
+                                $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
+                                $descript = 1;
+                                BookingConfirmationService::processPoundTransaction(
+                                    $superAgent,
+                                    $booking->id,
+                                    $super_agent_amount_credit,
+                                    $cost_booking,
+                                    $super_agent_percentage,
+                                    $descript
+                                );
+                            }
+                        } elseif ($booking->card_type == 1) {
+                            //for local transaction in naira
+                            $cost_booking = $booking_product->price;
+
+                            $agent_amount_credit = ($cost_booking * ($agent_percentage / 100));
+
+                            BookingConfirmationService::processNairaTransaction(
+                                $user,
+                                $booking->id,
+                                $agent_amount_credit,
+                                $cost_booking,
+                                $agent_percentage
+                            );
+
+                            if (!empty($superAgent = $user->superAgent)) {
+                                $super_agent_percentage = $share_data["main_agent_share_percent"];
+                                $super_agent_amount_credit = ($cost_booking * ($super_agent_percentage / 100));
+                                $descript = 1;
+                                BookingConfirmationService::processNairaTransaction(
+                                    $superAgent,
+                                    $booking->id,
+                                    $super_agent_amount_credit,
+                                    $cost_booking,
+                                    $super_agent_percentage,
+                                    $descript
+                                );
+                            }
+                        }
+                        DB::commit();
+                    } catch (\Exception $e) {
+                        logger("An error occured while confirming payments", $request->all());
+                        DB::rollBack();
                     }
-
-                    if ($user->country != null) {
-
-                        $cost_booking = $booking_product->price_pounds;
-
-                        $amount_credit = ($cost_booking * ($pecentage / 100));
-
-
-                        PoundTransaction::create([
-                            'amount' => $amount_credit,
-                            'booking_id' => $booking->id,
-                            'user_id' => $user->id,
-                            'cost_config' => $cost_booking,
-                            'pecentage_config' => $pecentage,
-                            'type' => "1"
-                        ]);
-
-
-                        $transactions = Transaction::where('type', "1")->where('user_id', $user->id)->sum('amount');
-
-                        $total_amount = $user->pounds_wallet_balance + $amount_credit;
-
-                        User::where('id', $booking->user_id)->update([
-                            'pounds_wallet_balance' => $total_amount,
-                            'total_credit_pounds' => $transactions
-                        ]);
-                    }
-
-
-                    DB::commit();
-                } catch (\Exception $e) {
-                    DB::rollBack();
                 }
             }
 
-            $vendor_p = VendorProduct::where('product_id', $booking_product->product_id)->where('vendor_id', 3)->first();
-
-            $booking_product->update([
-                'charged_amount' => $vendor_p->price_pounds,
-                'currency' => "USD"
-            ]);
 
             try {
-                $code = $this->sendData($booking);
-            } catch (\Exception $e) {
 
-                $booking->update([
-                    'vendor_id' => 3,
-                    'mode_of_payment' => 2,
-                    'transaction_ref' => $txRef,
-                    'status' => 1
-                ]);
+                $code = $this->sendData($booking);
+               
+            } catch (\Exception $e) {
+                dd($e);
+               
+                    $booking->update([
+                        'vendor_id' => 3,
+                        'mode_of_payment' => 1,
+                        'transaction_ref' => $txRef,
+                        'status' => 1
+                    ]);
 
                 return redirect()->to('/booking/code/failed?b=' . $txRef);
             }
 
-            if ($booking_product) {
+            foreach ($booking_products as $booking_product) {
+                try {
+
+                    if($booking_product->product_id == 2 || $booking_product->product_id == 10)
+                    {
+                        $message = "
+                        Dear " . $booking->first_name . ",<br><br>
+            
+                        Thank you for booking with us.<br><br>
+                         If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory Test or The Unvaccinated Day 2 & Day 8 Mandatory Tests.<br/><br/>
+
+                        Your purchase would be for one of the following reasons:<br><br>
+
+                        1. You are Unvaccinated or Not Fully Vaccinated. Read more <a href='https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19#check-if-you-qualify-as-fully-vaccinated'>here</a><br><br>
+                        2. The Vaccination you got is not approved by the UK. Read more <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
+                        3. You are Fully Vaccinated but unable to show an approved COVID-19 proof of vaccination before your travel. 
+                        Read more about the approved proof of vaccination  <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
+
+                        If you are fully vaccinated under an approved vaccination programme accepted in the UK (check if your vaccination is approved <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a>)
+                        but were unable to show the approved COVID-19 proof of vaccination before your travel you might be eligible for a partial refund. <br><br>
+
+                        We have a no-refund policy as indicated before your purchase.<br><br>
+
+                        <a href='https://www.surveymonkey.com/r/PQQNWV7'>Kindly click here give us your feedback </a><br><br>
+
+                              <br/><br/>
+                              Thank you.
+                              <br/><br/>
+                            Traveltestsltd Team
+                        ";
+                        Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
+                    }
+                   
+                } catch (\Exception $e) {
+                 dd($e);
+                }
+
+            }
+
+            foreach ($booking_products as $booking_product) {
                 try {
                     //check if a referral code exist
                     if ($booking->referral_code != null) {
@@ -1647,26 +1706,49 @@ class HomeController extends Controller
                         //check the status set by the copy receipt
                         //if 1 :copy the agent else if 0: send normally
                         if ($getUser->copy_receipt == 1) {
-                            Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                            $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
                         } elseif ($getUser->copy_receipt == 0) {
-                            Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                            $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
                         }
                     } else {
                         //referral code doesnt exist
-                        Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                        $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
                     }
+                    
                 } catch (\Exception $e) {
+                 dd($e); 
                 }
+
+                
+            }
+          
+            if (!empty($booking->phone_no)) {
+
+                $decode = implode(", ", json_decode($code));
+
+                $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
+                $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
+
             }
 
-            $booking->update([
-                'vendor_id' => 3,
-                'mode_of_payment' => 2,
-                'transaction_ref' => $txRef,
-                'status' => 1,
-                'booking_code' => $code
-            ]);
+            //update wiith transaction code
+
+            
+                $booking->update([
+                    'vendor_id' => 3,
+                    'mode_of_payment' => 1,
+                    'transaction_ref' => $txRef,
+                    'status' => 1,
+                    'booking_code' => $code
+                ]);
+            
+
+            //to remove items from cart
+            $cart = Cart::where('ip', session()->get('ip'))->delete();
         }
+        //to remove items from cart
+        $cart = Cart::where('ip', session()->get('ip'))->delete();
+      
 
 
         return redirect()->to('/booking/success?b=' . $txRef);

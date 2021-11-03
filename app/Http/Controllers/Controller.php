@@ -17,7 +17,7 @@ class Controller extends BaseController
 
 
     function processStripe($price,$booking){
-        \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JHzEGI12ZmR225jgcGfjm25u1RsPopaeB4x2Z6E32SsCaTGQQMB0GAFbBdEaHZLLBHBYAvEsOZjhf1CkooC9bTR00rh2Iytpz'));
+        \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JrhodAxurgPUhdw4h7s1RzWGxbobEC38K1LjNWVI6gH7rdQMNYYkNXfSQbYF78weVxoIwWwvqXdSRBz6qJZCT9M00771V820w'));
 
         header('Content-Type: application/json');
         $YOUR_DOMAIN = env('APP_URL', "https://uktraveltest.prodevs.io/");
@@ -125,7 +125,7 @@ class Controller extends BaseController
         $server_output = curl_exec($ch);
 
         curl_close($ch);
-    
+    dd($server_output);
         $server_output = json_decode($server_output);
 
         return $server_output->data;
