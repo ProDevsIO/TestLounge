@@ -1200,9 +1200,9 @@ class DashboardController extends Controller
                 {
                     if($cost->transaction_ref != null)
                     {
-                        $d_vC_d =  $d_vC_n + $cost->vendors_cost ;
+                        $d_vC_d =  $d_vC_d + $cost->vendors_cost ;
                     }else{
-                        $d_vC_d =  $d_vC_n  + ($cost->vendors_cost *  $cost->quantity);
+                        $d_vC_d =  $d_vC_d  + ($cost->vendors_cost *  $cost->quantity);
                     }
                     
                 }
@@ -1317,11 +1317,11 @@ class DashboardController extends Controller
                 {
                     if($cost->transaction_ref != null)
                     {
-                        $d_vC_d =  $d_vC_n + $cost->vendors_cost ;
+                        $d_vC_d =  $d_vC_d + $cost->vendors_cost ;
                     }else{
-                        $d_vC_d =  $d_vC_n  + ($cost->vendors_cost *  $cost->quantity);
+                        $d_vC_d =  $d_vC_d  + ($cost->vendors_cost *  $cost->quantity);
                     }
-                    dump($d_vC_d);
+                    
                 }
     
                 foreach( $discount_vendorCost_d as $cost)
@@ -1332,7 +1332,7 @@ class DashboardController extends Controller
                     }else{
                         $d_charged =  $d_charged + ($cost->charged_amount * $cost->quantity);
                     }
-                    dump($d_charged);
+                    
                 }
             
         }
@@ -1344,7 +1344,7 @@ class DashboardController extends Controller
         
             $discount_profit_n =  $n_charged -  $d_vC_n;
             $discount_profit_d = $d_charged -  $d_vC_d;
-            dd( $discount_profit_d , $d_charged , $d_vC_d);
+            
            
         $profit_naira =  $total_ngn - $commission - $vendor_cost_ngn;
         // dd($profit_naira, $total_ngn ,$commission , $vendor_cost_ngn );
