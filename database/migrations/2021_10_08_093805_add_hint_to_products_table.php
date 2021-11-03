@@ -15,7 +15,9 @@ class AddHintToProductsTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             //
-            $table->text('hint')->nullable()->after('description');
+            if(!Schema::hasColumn('products', 'hint')){
+              $table->text('hint')->nullable()->after('description');
+            }
         });
     }
 
