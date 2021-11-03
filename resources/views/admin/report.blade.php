@@ -395,7 +395,7 @@
                                 <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
                                     <i class="vl_book"></i>
                                 </div>
-                                <div class="media-body text-light"  title="Revenue - Vendors cost - Commission">
+                                <div class="media-body text-light">
                                     <h4 class="text-uppercase mb-0 weight500">${{ number_format($discount_profit_d, 2) }}</h4>
                                     <span>Profit from Purchased Vouchers</span>
                                 </div>
