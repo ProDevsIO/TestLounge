@@ -140,7 +140,7 @@
                     </div>
                     @if($booking->test_kit == null || $booking->test_kit == "[null]")
                         @if($booking->product != null)
-                            @if($booking->product->product_id == 15)
+                            @if($booking->product->product_id != 15 )
                             <button class="btn btn-info" data-toggle="modal" data-target="#myModal">Update test kits</button>
                             @endif
                         @endif
@@ -272,7 +272,7 @@
 
     @if($booking->test_kit == null || $booking->test_kit == "[null]")
          @if($booking->product != null)
-            @if($booking->product->product_id == 15)
+            @if($booking->product->product_id != 15 )
                 <!-- Modal -->
                 <div id="myModal" class="modal fade" role="dialog">
                     <div class="modal-dialog">

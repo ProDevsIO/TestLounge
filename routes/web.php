@@ -46,6 +46,7 @@ Route::get('/payment/{vas}/confirmation', [\App\Http\Controllers\HomeController:
 Route::get('/pick', [\App\Http\Controllers\HomeController::class,"pick"])->name('pick');
 Route::get('/pricing', [\App\Http\Controllers\HomeController::class,"pricing"])->name('pricing');
 Route::get('/about', [\App\Http\Controllers\HomeController::class,"about"])->name('about');
+Route::get('/terms', [\App\Http\Controllers\HomeController::class, "terms"])->name('terms');
 Route::get('/product/{type}', [\App\Http\Controllers\HomeController::class,"viewProducts"]);
 Route::get('/add/cart/{product_id}/{vendor_id}', [\App\Http\Controllers\HomeController::class,"addToCart"]);
 Route::get('/view/cart', [\App\Http\Controllers\HomeController::class,"viewCart"]);
@@ -107,6 +108,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/view/subagent/report', [\App\Http\Controllers\DashboardController::class,"subagent_report"]);
     Route::get('currency/detail/report/{currency}/{startDate}/{endDate}', [\App\Http\Controllers\DashboardController::class,"view_currency_report"]);
     Route::get('profit/report/{currency}/{startDate}/{endDate}', [\App\Http\Controllers\DashboardController::class,"view_profit_report"]);
+    Route::get('view/report/discount/{type}/{startDate}/{endDate}', [\App\Http\Controllers\DashboardController::class,"view_report_discount"]);
     Route::get('/imitate/account/{id}', [\App\Http\Controllers\DashboardController::class,"imitate_account"]);
     Route::get('/view/transactions', [\App\Http\Controllers\DashboardController::class,"view_transactions"]);
     Route::post('/view/transactions', [\App\Http\Controllers\DashboardController::class,"view_transactions"]);
@@ -140,7 +142,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/process/price/{product_id}/{quantity}', [\App\Http\Controllers\DashboardController::class,"agent_process_price"]);
     Route::get('/voucher/payment/confirmation', [\App\Http\Controllers\DashboardController::class,"voucher_payment_confirmation"]);
     Route::get('/view/vouchers', [\App\Http\Controllers\DashboardController::class, "view_vouchers"]);
+    Route::get('/view/discounts', [\App\Http\Controllers\DashboardController::class, "view_discounts"]);
     Route::get('/view/vouchers/transaction', [\App\Http\Controllers\DashboardController::class, "voucher_transactions"]);
+    Route::get('/subagent/assigned/vouchers', [\App\Http\Controllers\DashboardController::class, "voucher_assigned_subagent"]);
     Route::post('/voucher/email/{id}', [\App\Http\Controllers\DashboardController::class, "email_vouchers"]);
 
     Route::post('/add/vendor', [\App\Http\Controllers\DashboardController::class,"add_vendor"]);

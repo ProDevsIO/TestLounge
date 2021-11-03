@@ -23,6 +23,7 @@
                     <div class="col-sm-6 col-sm-offset-3 text-center">
                         <h2 style="color:#0fad00">Payment is successful</h2><br/>
                         <img src="/img/success.png" style="height: 100px">
+                        
                         @if(isset($booking))
                             <h3>Hi, {{ $booking->first_name }} {{ $booking->last_name }}</h3>
                             <p style="font-size:20px;color:#5C5C5C;">

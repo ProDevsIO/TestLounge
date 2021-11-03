@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Helpers\BookingConfirmationService;
 use App\Helpers\BookingService;
 use App\Helpers\BarcodeHelper;
+use App\Helpers\VoucherDiscountProcess;
+use App\Helpers\UserShare;
 use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
 use App\Models\Voucher;
@@ -25,6 +27,7 @@ use App\Models\VendorProduct;
 use App\Models\Color;
 use App\Models\Country;
 use App\Models\CountryColor;
+use App\Models\VoucherDiscount;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -821,7 +824,7 @@ class DashboardController extends Controller
         //get all colors
         $colors = Color::all();
         //get all countries
-        $country_id_exclude = CountryColor::pluck('country_id')->toArray();;
+        $country_id_exclude = CountryColor::pluck('country_id')->toArray();
         $countries = Country::whereNotIn('id', $country_id_exclude)->get();
         $countryzone = CountryColor::all();
 
@@ -1094,6 +1097,8 @@ class DashboardController extends Controller
             $start = Carbon::parse($request->start)->startOfDay();
             $end = Carbon::parse($request->end)->endOfDay();
 
+           
+
             $total_ngn = 0;
             $total_gbp = 0;
             $vendor_cost_ngn = 0;
@@ -1101,22 +1106,30 @@ class DashboardController extends Controller
            
             $checkn = Transaction::where('type', 1)->wherebetween('created_at', [$start, $end])->get();
             $checkb = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->get();
+
+            $commission = Transaction::where('type', 1)->wherebetween('created_at', [$start, $end])->sum('amount');
+            $pcommission = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->sum('amount');
+
+            $discount_total_n = VoucherDiscount::where('currency','NG' )->wherebetween('created_at', [$start, $end])->sum('amount');
+            $discount_total_d = VoucherDiscount::where('currency','!=','NG' )->wherebetween('created_at', [$start, $end])->sum('amount');
             
             foreach($checkn as $ch){
-                // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
+                // dump($ch->booking_id);
+                
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'NGN'])->first();
+               
                if($book_p_n != null)
                {
                 $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
-                $rate = $book_p_n->charged_amount/ $book_p_n->price;
+                $rate = $book_p_n->charged_amount/ ($book_p_n->price ?? 1);
                 $vendor_cost_dollars = $vendor_cost_ngn + ($book_p_n->vendor_cost_price * $rate);
                }
                
             }
-
+            // dd($checkn);
             foreach($checkb as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'USD'])->first();
                if($book_p_n != null)
                {
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
@@ -1134,6 +1147,77 @@ class DashboardController extends Controller
             $total_tzs = BookingProduct::where('currency', 'TZS')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
             $total_kes = BookingProduct::where('currency', 'KES')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
             $total_zar = BookingProduct::where('currency', 'ZAR')->wherebetween('created_at', [$start, $end])->sum('charged_amount');
+       
+            $discount_commission_n = Voucherpayment::where([
+                'status'=> 1,
+                'currency' => 'NG'
+                ])->where('super_agent_share', '!=', '0' )->wherebetween('created_at', [$start, $end])->sum('super_agent_share');
+    
+            $discount_commission_us = Voucherpayment::where(['status'=> 1])
+                                        ->where('currency', '!=', 'NG' )
+                                        ->wherebetween('created_at', [$start, $end])
+                                        ->sum('super_agent_share');
+    
+            $discount_vendorCost_d =   Voucherpayment::where(['status'=> 1])
+                                        ->where('currency', '!=', 'NG' )
+                                        ->wherebetween('created_at', [$start, $end])
+                                        ->get();
+    
+            $discount_vendorCost_n =   Voucherpayment::where(['status'=> 1])
+                                        ->where('currency', 'NG' )
+                                        ->wherebetween('created_at', [$start, $end])
+                                        ->get();
+            $d_vC_n = 0;
+            $d_vC_d = 0;
+            $d_charged = 0;
+            $n_charged = 0;
+    
+                foreach( $discount_vendorCost_n as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $d_vC_n =  $d_vC_n + ($cost->vendors_cost *  $cost->o_price);
+                    }else{
+                        $d_vC_n =  $d_vC_n + (($cost->vendors_cost *  $cost->o_price) * $cost->quantity);
+                    }
+                    
+                }
+    
+                foreach( $discount_vendorCost_n as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $n_charged=  $n_charged + ($cost->charged_amount);
+                    }else{
+                        $n_charged =  $n_charged + ($cost->charged_amount * $cost->quantity);
+                    }
+                    
+                }
+    
+    
+    
+                foreach( $discount_vendorCost_d as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $d_vC_d =  $d_vC_n + $cost->vendors_cost ;
+                    }else{
+                        $d_vC_d =  $d_vC_n  + ($cost->vendors_cost *  $cost->quantity);
+                    }
+                    
+                }
+    
+                foreach( $discount_vendorCost_d as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $d_charged=  $d_charged + ($cost->charged_amount);
+                    }else{
+                        $d_charged =  $d_charged + ($cost->charged_amount * $cost->quantity);
+                    }
+                    
+                }
+            
         } else {
             $start = 1;
             $end = 1;
@@ -1144,6 +1228,11 @@ class DashboardController extends Controller
             $checkn = Transaction::where('type', 1)->get();
             $checkb = PoundTransaction::where('type', 1)->get();
           
+            $commission = Transaction::where('type', 1)->sum('amount');
+            $pcommission = PoundTransaction::where('type', 1)->sum('amount');
+
+            $discount_total_n = VoucherDiscount::where('currency','NG' )->sum('amount');
+            $discount_total_d = VoucherDiscount::where('currency','!=','NG' )->sum('amount');
 
             foreach($checkn as $ch){
                 // dump( $check->product);
@@ -1151,7 +1240,7 @@ class DashboardController extends Controller
                if($book_p_n != null)
                {
                 $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
-                $rate = $book_p_n->price/ $book_p_n->price_pounds;
+                $rate = $book_p_n->price/ ($book_p_n->price_pounds ?? 1);
                 $vendor_cost_ngn = $vendor_cost_ngn + ($book_p_n->vendor_cost_price * $rate);
                }
                
@@ -1160,7 +1249,7 @@ class DashboardController extends Controller
 
             foreach($checkb as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'USD'])->first();
         
                if($book_p_n != null)
                {
@@ -1178,14 +1267,88 @@ class DashboardController extends Controller
             $total_tzs = BookingProduct::where('currency', 'TZS')->sum('charged_amount');
             $total_kes = BookingProduct::where('currency', 'KES')->sum('charged_amount');
             $total_zar = BookingProduct::where('currency', 'ZAR')->sum('charged_amount');
+
+            $discount_commission_n = Voucherpayment::where([
+                'status'=> 1,
+                'currency' => 'NG'
+                ])->where('super_agent_share', '!=', '0' )->sum('super_agent_share');
+    
+            $discount_commission_us = Voucherpayment::where(['status'=> 1])
+                                        ->where('currency', '!=', 'NG' )
+                                        ->sum('super_agent_share');
+    
+            $discount_vendorCost_d =   Voucherpayment::where(['status'=> 1])
+                                        ->where('currency', '!=', 'NG' )
+                                        ->get();
+    
+            $discount_vendorCost_n =   Voucherpayment::where(['status'=> 1])
+                                        ->where('currency', 'NG' )
+                                        ->get();
+            $d_vC_n = 0;
+            $d_vC_d = 0;
+            $d_charged = 0;
+            $n_charged = 0;
+    
+                foreach( $discount_vendorCost_n as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $d_vC_n =  $d_vC_n + ($cost->vendors_cost *  $cost->o_price);
+                    }else{
+                        $d_vC_n =  $d_vC_n + (($cost->vendors_cost *  $cost->o_price) * $cost->quantity);
+                    }
+                    
+                }
+    
+                foreach( $discount_vendorCost_n as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $n_charged=  $n_charged + ($cost->charged_amount);
+                    }else{
+                        $n_charged =  $n_charged + ($cost->charged_amount * $cost->quantity);
+                    }
+                    
+                }
+    
+    
+    
+                foreach( $discount_vendorCost_d as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $d_vC_d =  $d_vC_n + $cost->vendors_cost ;
+                    }else{
+                        $d_vC_d =  $d_vC_n  + ($cost->vendors_cost *  $cost->quantity);
+                    }
+                    
+                }
+    
+                foreach( $discount_vendorCost_d as $cost)
+                {
+                    if($cost->transaction_ref != null)
+                    {
+                        $d_charged=  $d_charged + ($cost->charged_amount);
+                    }else{
+                        $d_charged =  $d_charged + ($cost->charged_amount * $cost->quantity);
+                    }
+                    
+                }
+            
         }
-        $commission = Transaction::where('type', 1)->sum('amount');
-        $pcommission = PoundTransaction::where('type', 1)->sum('amount');
+
+       
         $p_due_amount = User::sum("pounds_wallet_balance");
         $due_amount = User::sum("wallet_balance");
      
+        
+            $discount_profit_n =  $n_charged -  $d_vC_n;
+            $discount_profit_d = $d_charged -  $d_vC_d;
+
+           
         $profit_naira =  $total_ngn - $commission - $vendor_cost_ngn;
         // dd($profit_naira, $total_ngn ,$commission , $vendor_cost_ngn );
+
         $profit_dollars = $total_gbp - $pcommission - $vendor_cost_dollars;
         // dd(  $profit_dollars ,$total_gbp ,$pcommission ,$vendor_cost_dollars );
 
@@ -1244,7 +1407,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn'));
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn', 'discount_commission_n', 'discount_commission_us', 'discount_profit_n', 'discount_profit_d', 'discount_total_d','discount_total_n'));
 
     }
 
@@ -1417,7 +1580,16 @@ class DashboardController extends Controller
     {
         $vproducts = VendorProduct::where('vendor_id', 3)->get();
 
-        return view('admin.agent_view_product')->with(compact('vproducts'));
+        $user = User::where('id', auth()->user()->id)->first();
+        
+        if ($user->percentage_split != null) {
+            $percentage = $user->percentage_split/100;
+        } else {
+            $defaultpercent = Setting::where('id', '2')->first();
+            $percentage = $defaultpercent->value/100;
+        }
+
+        return view('admin.agent_view_product')->with(compact('vproducts','percentage'));
     }
 
     public function post_agent_buy($product_id, $vendor_id, $quantity)
@@ -1425,14 +1597,84 @@ class DashboardController extends Controller
        
         $product = VendorProduct::where('product_id',$product_id)->where('vendor_id',$vendor_id)->first();
 
+        $user = User::where('id', auth()->user()->id)->first();
+        
+        $percent_to_charge = 0;
+        $sub_percent = 0;
+        $super_percent = 0;
+        $sub_share = 0;
+        $super_share = 0;
+        if ($user->percentage_split != null) {
+
+           if($user->superAgent == null)
+           {
+                $percentage = $user->percentage_split/100;
+
+                $super_percent = $percentage;
+
+           }else{
+
+                // $percentage = $user->percentage_split/100;
+                $percentage = (($user->main_agent_share_raw/100) * $user->percentage_split) / 100;
+            
+                $sub_percent = $percentage;
+                $super_percent = $user->percentage_split/100 - $sub_percent;
+
+           }
+
+        } else {
+            $defaultpercent = Setting::where('id', '2')->first();
+
+            if($user->superAgent == null)
+            {
+                $percentage = $defaultpercent->value/100;
+                $super_percent = $percentage;
+               
+            }else{
+
+                $percentage = (($user->main_agent_share_raw/100) *  $defaultpercent->value) / 100;
+                $sub_percent = $percentage;
+                $super_percent = $defaultpercent->value/100 - $sub_percent;
+              
+            }
+        }
+
+    
         $country = auth()->user()->country;
 
         if ($country == "NG") {
-            $amount = $product->price * $quantity;
+            $price = $product->price * $quantity;
+            $amount = $price - ($price * $percentage);
+
+            if($sub_percent != 0)
+            {
+                $sub_share = ($price * $sub_percent);
+            }
+
+            if($super_percent != 0)
+            {
+                $super_share = ($price * $super_percent);
+            }
+            $total_price =  $price - ($sub_share + $super_share);
 
         } else {
-            $amount = $product->price_pounds * $quantity;
+            $price = $product->price_pounds * $quantity;
+            $amount = $price - ($price * $percentage);
+           
+            if($sub_percent != 0)
+            {
+                $sub_share = ($price * $sub_percent);
+            }
+
+            if($super_percent != 0)
+            {
+                $super_share = ($price * $super_percent);
+            }
+            $total_price =  $price - ($sub_share + $super_share);
         }
+
+  
+      
 
         $transaction_ref = uniqid('voucher-') . rand(10000, 999999);
 
@@ -1443,25 +1685,29 @@ class DashboardController extends Controller
 
         $this->bookingService->getSubAccountsByRefCode(auth()->user()->referral_code);
 
-        //redirect to payment page
-        // if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
-        //     $data['subaccounts'] = $sub_accounts;
-        // }
-
+            
            $vendorProduct = VendorProduct::where(['product_id' => $product_id, 'vendor_id' => $vendor_id])->first();
+           $cost =  $vendorProduct->cost_price * $quantity;
 
-    
-            $voucherProduct = VoucherPayment::Create([
+            $save_data = [
                 'agent'=> $agent_id,
                 'transaction_ref' => $transaction_ref,
                 'vendor_id' => $vendor_id,
                 'product_id' => $product_id,
                 'vendor_product_id' => $vendorProduct->id,
+                'vendors_cost' => $cost,
+                'o_price' => $price,
                 'quantity' => $quantity,
-                'charged_amount' => $amount,
+                'charged_amount' => $total_price,
+                'super_agent_share' => $sub_share,
+                'sub_agent_share' => $super_share,
                 'currency' => $country,
                 'status' => 0
-            ]);
+            ];
+
+            // dd($save_data, $super_percent, $sub_percent, $super_share, $sub_share, $total_price);
+    
+            $voucherProduct = VoucherPayment::Create($save_data);
       
     
         $redirect_url = $this->processPaystack($data);
@@ -1501,6 +1747,7 @@ class DashboardController extends Controller
 
             $voucherpay = VoucherPayment::where('transaction_ref', $txRef)->first();
 
+           
             if ($voucherpay->status != 1) {
 
                 $count_check = VoucherCount::where(['agent' => $voucherpay->agent, 'product_id' => $voucherpay->product_id])->first();
@@ -1523,16 +1770,103 @@ class DashboardController extends Controller
                      ]);
      
                 }
-                //update voucher payment status
+
+                // update voucher payment status
                 $voucherpay->update([
                     'status' => 1,
                 ]);
 
+            
+                    try {
+                        DB::beginTransaction();
+
+                        $userService = new UserShare;
+                        $user = User::where('id', $voucherpay->agent)->first();
+                        $agent_share = $userService->myShare($user);
+                        $share_data = $userService->calculateMainAgentShare($user->main_agent_share_raw, $agent_share);
+
+                        $agent_percentage = $share_data["sub_agent_share"];
+
+                        $cost_booking = $voucherpay->charged_amount;
+
+
+                        if ($voucherpay->currency != null) {
+
+                            //for international transaction in pounds
+                            $product = VendorProduct::where('product_id', $voucherpay->product_id)->where('vendor_id',$voucherpay->vendor_id)->first();
+                           
+                            $user = User::where('id', auth()->user()->id)->first();
+        
+                            if ($user->percentage_split != null) {
+                                $percentage = $user->percentage_split/100;
+                            } else {
+                                $defaultpercent = Setting::where('id', '2')->first();
+                                $percentage = $defaultpercent->value/100;
+                            }
+                    
+                            $country = auth()->user()->country;
+                    
+                            if ($country == "NG") {
+                                $amount = $product->price * $voucherpay->quantity;
+                                $amount = $amount * $percentage;
+                    
+                            } else {
+                                $amount = $product->price_pounds * $voucherpay->quantity;
+                                $amount = $amount * $percentage;
+                            }
+
+                            $agent_amount_credit = $amount;
+
+
+                            VoucherDiscountProcess::processTransaction(
+                                $user->id,
+                                $voucherpay->id,
+                                $agent_amount_credit,
+                                $cost_booking,
+                                $agent_percentage
+                            );
+
+                            if (!empty($superAgent = $user->superAgent)) {
+                               //get the amount to credit super agent
+                                $super_agent_amount_credit = ($agent_amount_credit * ( $user->main_agent_share_raw / 100));
+                                
+                                if($country != "NG"){
+                                    //crediting the users wallet
+                                    $total_amount = $user->pounds_wallet_balance +  $super_agent_amount_credit;
+                                
+                                    User::where('id', $user->superAgent->id)->update([
+                                        'wallet_balance' => $total_amount,
+                                       
+                                    ]);
+
+                                }else{
+                                    //crediting the users wallet
+                                    $total_amount = $user->wallet_balance +  $super_agent_amount_credit;
+                                
+                                    User::where('id', $user->superAgent->id)->update([
+                                        'pounds_wallet_balance' => $total_amount,
+                                    ]);
+
+                                }
+                            }
+                        }
+
+                      
+                        DB::commit();
+                    } catch (\Exception $e) {
+                        DB::rollBack();
+                        dd($e);
+                        logger("An error occured while saving discount");
+                       
+                    }
+    
             }
+
 
             session()->flash('alert-success', "Transaction completed. Your account has been topped up");
             return redirect()->to('/view/vouchers');
         }
+
 
         session()->flash('alert-danger', "Sorry but this transaction wasnt successful");
         return redirect()->to('/view/vouchers');
@@ -1550,6 +1884,55 @@ class DashboardController extends Controller
         $products = Product::all();
 
         return view('admin.view_vouchers')->with(compact('vouchers', 'products', 'sub_agents'));
+    }
+
+    public function view_discounts()
+    {
+        if (auth()->user()->type == 1) {
+            $vouchers = VoucherDiscount::orderBy('id', 'desc')->get();
+        } else {
+            $vouchers = VoucherDiscount::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        }
+
+        return view('admin.discount')->with(compact('vouchers'));
+    }
+
+    public function view_report_discount($type, $start, $end)
+    {
+        $currency = $type;
+        if ($start != 1) {
+            $start = Carbon::parse($start)->startOfDay();
+            $end = Carbon::parse($end)->endOfDay();
+   
+            if($currency == "naira"){
+                $discounts = VoucherPayment::where('status', 1)
+                ->where('super_agent_share', '!=', '0')
+                ->where('currency', 'NG')
+                ->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+            }else{
+                $discounts = VoucherPayment::where('status', 1)
+                ->where('super_agent_share', '!=', '0')
+                ->where('currency', '!=', 'NG')
+                ->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+            }
+           
+        }else{
+
+            if($currency =="naira"){
+                 $discounts = VoucherPayment::where('status', 1)
+                 ->where('super_agent_share', '!=', '0')
+                 ->where('currency', 'NG')
+                 ->orderby('id', 'desc')->get();
+            }else{
+                $discounts = VoucherPayment::where('status', 1)
+                ->where('super_agent_share', '!=', '0')
+                ->where('currency', '!=', 'NG')
+                ->orderby('id', 'desc')->get();
+            }
+        
+        }
+       
+        return view('admin.report_discount')->with(compact('discounts', 'currency'));
     }
 
     public function email_vouchers(request $request ,$id){
@@ -1643,13 +2026,174 @@ class DashboardController extends Controller
 
     public function voucher_transactions()
     {
-        $vouchers = VoucherPayment::wherenotNull('transaction_ref')->orderby('id', 'desc')->get();
-        $voucherboughts = VoucherPayment::whereNull('transaction_ref')->orderby('id', 'desc')->get();
-        $products = Product::all();
+        $paid_n = 0;
+        $unpaid_n = 0;
+        $paid_d = 0;
+        $unpaid_d = 0;
+        if(auth()->user()->type == 1){
 
-        $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->count();
-        $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->count();
-        return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid'));
+            $vouchers = VoucherPayment::wherenotNull('transaction_ref')->orderby('id', 'desc')->get();
+            $voucherboughts = VoucherPayment::whereNull('transaction_ref')->orderby('id', 'desc')->get();
+            $products = Product::all();
+
+            $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->get();
+            $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->get();
+
+            $voucherpaid_n = VoucherPayment::where(['status'=> 1, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
+            $voucherpaid_d = VoucherPayment::where('status', 1)->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
+            $voucherunpaid_n = VoucherPayment::where(['status'=> 0, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
+            $voucherunpaid_d = VoucherPayment::where('status', 0)->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+
+            $voucher_all = VoucherPayment::all();
+
+            foreach($voucherpaid_n as $vpay)
+            {
+              
+                if($vpay->transaction_ref !=null)
+                {
+                    $paid_n = $paid_n + $vpay->charged_amount;
+                }else{
+                    $paid_n = $paid_n + ($vpay->charged_amount * $vpay->quantity );
+                } 
+            }
+
+        
+            
+            foreach($voucherpaid_d as $vpay)
+            {
+              
+                if($vpay->transaction_ref !=null)
+                {
+                    $paid_d = $paid_d + $vpay->charged_amount;
+                }else{
+                    $paid_d = $paid_d + ($vpay->charged_amount * $vpay->quantity );
+                } 
+            }
+
+            foreach($voucherunpaid_n as $upay)
+            {
+                if($upay->transaction_ref !=null)
+                {
+                    $unpaid_n = $unpaid_n + $upay->charged_amount;
+                }else{
+                    $unpaid_n = $unpaid_n + ($upay->charged_amount * $upay->quantity );
+                } 
+            }
+            foreach($voucherunpaid_d as $upay)
+            {
+                if($upay->transaction_ref !=null)
+                {
+                    $unpaid_d = $unpaid_d + $upay->charged_amount;
+                }else{
+                    $unpaid_d = $unpaid_d + ($upay->charged_amount * $upay->quantity );
+                } 
+            }
+               
+        }else{
+            $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where([
+                'agent' => auth()->user()->id
+                ])->orderby('id', 'desc')->get();
+
+            $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where([
+                'agent' => auth()->user()->id
+                ])->orderby('id', 'desc')->get();
+
+            $products = Product::all();
+    
+            $voucherpaid = VoucherPayment::where([
+                'status'=> 1,
+                'agent' => auth()->user()->id
+                ])->orderBy('id', 'desc')->get();
+
+            $voucherunpaid = VoucherPayment::where([
+                'status'=> 0,
+                'agent' => auth()->user()->id
+                ])->orderBy('id', 'desc')->get();
+
+            $voucherpaid_n = VoucherPayment::where([
+                 'status'=> 1,
+                 'currency' => 'NG',
+                 'agent' => auth()->user()->id
+                 ])->orderBy('id', 'desc')->get();
+
+                $voucherpaid_d = VoucherPayment::where([
+                    'status'=> 1,
+                    'agent' => auth()->user()->id
+                    ])->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
+
+                $voucherunpaid_n = VoucherPayment::where([
+                    'status'=> 0,
+                    'currency' => 'NG',
+                    'agent' => auth()->user()->id
+                    ])->orderBy('id', 'desc')->get();
+
+                $voucherunpaid_d = VoucherPayment::where([
+                    'status'=> 0,
+                    'agent' => auth()->user()->id
+                    ])->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+    
+                $voucher_all = VoucherPayment::where([
+                    'agent' => auth()->user()->id
+                    ])->get();
+
+                foreach($voucherpaid_n as $vpay)
+                {
+                  
+                    if($vpay->transaction_ref !=null)
+                    {
+                        $paid_n = $paid_n + $vpay->charged_amount;
+                    }else{
+                        $paid_n = $paid_n + ($vpay->charged_amount * $vpay->quantity );
+                    } 
+                }
+                foreach($voucherpaid_d as $vpay)
+                {
+                  
+                    if($vpay->transaction_ref !=null)
+                    {
+                        $paid_d = $paid_d + $vpay->charged_amount;
+                    }else{
+                        $paid_d = $paid_d + ($vpay->charged_amount * $vpay->quantity );
+                    } 
+                }
+    
+                foreach($voucherunpaid_n as $upay)
+                {
+                    if($upay->transaction_ref !=null)
+                    {
+                        $unpaid_n = $unpaid_n + $upay->charged_amount;
+                    }else{
+                        $unpaid_n = $unpaid_n + ($upay->charged_amount * $upay->quantity );
+                    } 
+                }
+                foreach($voucherunpaid_d as $upay)
+                {
+                    if($upay->transaction_ref !=null)
+                    {
+                        $unpaid_d = $unpaid_d + $upay->charged_amount;
+                    }else{
+                        $unpaid_d = $unpaid_d + ($upay->charged_amount * $upay->quantity );
+                    } 
+                }
+        
+        }
+
+        return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid', 'voucher_all', 'unpaid_n', 'paid_n', 'unpaid_d', 'paid_d'));
+    }
+
+    public function voucher_assigned_subagent(Request $request)
+    {
+        if ($request->start) {
+
+            $start = Carbon::parse($request->start)->startOfDay();
+            $end = Carbon::parse($request->end)->endOfDay();
+            $vouchers = VoucherPayment::where('assignee', auth()->user()->id)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+       
+        }else{
+             $vouchers = VoucherPayment::where('assignee', auth()->user()->id)->orderby('id', 'desc')->get();
+        }
+
+        return view('admin.subagent_assigned_vouchers')->with(compact('vouchers'));
     }
 
     public function admin_assign_voucher(Request $request, $id)
@@ -1665,10 +2209,66 @@ class DashboardController extends Controller
         //get the user collection
         $user = User::where('id', $id)->first();
 
+        $percent_to_charge = 0;
+        $sub_percent = 0;
+        $super_percent = 0;
+        $sub_share = 0;
+        $super_share = 0;
+        if ($user->percentage_split != null) {
+
+           if($user->superAgent == null)
+           {
+                $percentage = $user->percentage_split/100;
+
+                $super_percent = $percentage;
+
+           }else{
+
+                // $percentage = $user->percentage_split/100;
+                $percentage = (($user->main_agent_share_raw/100) * $user->percentage_split) / 100;
+            
+                $sub_percent = $percentage;
+                $super_percent = $user->percentage_split/100 - $sub_percent;
+
+           }
+
+        } else {
+            $defaultpercent = Setting::where('id', '2')->first();
+
+            if($user->superAgent == null)
+            {
+                $percentage = $defaultpercent->value/100;
+                $super_percent = $percentage;
+               
+            }else{
+
+                $percentage = (($user->main_agent_share_raw/100) *  $defaultpercent->value) / 100;
+                $sub_percent = $percentage;
+                $super_percent = $defaultpercent->value/100 - $sub_percent;
+              
+            }
+        }
+
+    
+        $country = auth()->user()->country;
+
+
         //get the users country to get the currency and charge rate
         if($user->country == 'NG'){
             $currency = "NG";
-            $charged = $v_rate->price;
+            $charged = $v_rate->price - ($v_rate->price * $percentage);
+            $o_price = $v_rate->price;
+
+            if($sub_percent != 0)
+            {
+                $sub_share = ($charged * $sub_percent);
+            }
+
+            if($super_percent != 0)
+            {
+                $super_share = ($charged * $super_percent);
+            }
+            $total_price =  $charged - ($sub_share + $super_share);
         }else{
 
             if($user->country == null)
@@ -1677,7 +2277,19 @@ class DashboardController extends Controller
                 return back();
             }
             $currency = "USD";
-            $charged = $v_rate->price_pounds;
+            $o_price = $v_rate->price_pounds;
+            $charged = $v_rate->price_pounds - ($v_rate->price_pounds * $percentage);
+
+            if($sub_percent != 0)
+            {
+                $sub_share = ($charged * $sub_percent);
+            }
+
+            if($super_percent != 0)
+            {
+                $super_share = ( $charged * $super_percent);
+            }
+            $total_price =   $charged - ($sub_share + $super_share);
         }
 
        
@@ -1687,11 +2299,33 @@ class DashboardController extends Controller
             'vendor_id' => 3,
             'product_id' => $request->product_id,
             'vendor_product_id' => $v_rate->id,
+            'o_price' => $o_price,
+            'vendors_cost'=> $v_rate->cost_price,
             'charged_amount' => $charged,
+            'super_agent_share' => $sub_share,
+            'sub_agent_share' => $super_share,
             'quantity' => $request->number,
             'currency' => $currency,
             'status' => 0
         ]);
+
+        if ($user->percentage_split != null) {
+            $percentage = $user->percentage_split/100;
+        } else {
+            $defaultpercent = Setting::where('id', '2')->first();
+            $percentage = $defaultpercent->value/100;
+        }
+      
+       
+
+        if ($user->country == "NG") {
+            $amount = $v_rate->price * $request->number;
+            $amount = ($amount * $percentage);
+
+        } else {
+            $amount = $v_rate->price_pounds * $request->number;
+            $amount = ($amount * $percentage);
+        }
 
         //check if this user already has wallet for this product
         $count_check = VoucherCount::where(['agent' => $id, 'product_id' => $request->product_id])->first();
@@ -1716,6 +2350,68 @@ class DashboardController extends Controller
 
         }
 
+        try {
+            DB::beginTransaction();
+
+            $userService = new UserShare;
+            $user = User::where('id', $voucherpay->agent)->first();
+            $agent_share = $userService->myShare($user);
+            $share_data = $userService->calculateMainAgentShare($user->main_agent_share_raw, $agent_share);
+
+            $agent_percentage = $share_data["sub_agent_share"];
+
+            $cost_booking = $voucherpay->charged_amount;
+
+
+            if ($voucherpay->currency != null) {
+
+                //for international transaction in pounds
+               
+                $agent_amount_credit = $amount;
+
+
+                VoucherDiscountProcess::processTransaction(
+                    $user->id,
+                    $voucherpay->id,
+                    $agent_amount_credit,
+                    $cost_booking,
+                    $agent_percentage
+                );
+
+                if (!empty($superAgent = $user->superAgent)) {
+                    //get the amount to credit super agent
+                     $super_agent_amount_credit = ($agent_amount_credit * ( $user->main_agent_share_raw / 100));
+                     
+                     if($country != "NG"){
+                         //crediting the users wallet
+                         $total_amount = $user->pounds_wallet_balance +  $super_agent_amount_credit;
+                     
+                         User::where('id', $user->superAgent->id)->update([
+                             'wallet_balance' => $total_amount,
+                            
+                         ]);
+
+                     }else{
+                         //crediting the users wallet
+                         $total_amount = $user->wallet_balance +  $super_agent_amount_credit;
+                     
+                         User::where('id', $user->superAgent->id)->update([
+                             'pounds_wallet_balance' => $total_amount,
+                         ]);
+
+                     }
+                 }
+                      
+            }
+
+            DB::commit();
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            logger("An error occured while saving discount");
+            dd($e);
+           
+        }
         // dd($request->product_id,$request->number, $id, $v_rate, $currency, $charged, $voucherpay, $count_check);
         session()->flash('alert-success', "Transaction successful, $request->number voucher has been added to $user->first_name's account");
                
@@ -1739,9 +2435,18 @@ class DashboardController extends Controller
 
         //get the users country to get the currency and charge rate
        
+        if ($user->percentage_split != null) {
+            $percentage = $user->percentage_split/100;
+        } else {
+            $defaultpercent = Setting::where('id', '2')->first();
+            $percentage = $defaultpercent->value/100;
+        }
+
+        //get the users country to get the currency and charge rate
         if($user->country == 'NG'){
             $currency = "NG";
-            $charged = $v_rate->price;
+            $charged = $v_rate->price - ($v_rate->price * $percentage);
+            $o_price = $v_rate->price;
         }else{
 
             if($user->country == null)
@@ -1750,7 +2455,8 @@ class DashboardController extends Controller
                 return back();
             }
             $currency = "USD";
-            $charged = $v_rate->price_pounds;
+            $o_price = $v_rate->price_pounds;
+            $charged = $v_rate->price_pounds - ($v_rate->price_pounds * $percentage);
         }
 
        
@@ -1763,6 +2469,8 @@ class DashboardController extends Controller
                 'vendor_id' => 3,
                 'product_id' => $id,
                 'vendor_product_id' => $v_rate->id,
+                'vendors_cost' => $v_rate->cost_price,
+                'o_price' => $o_price,
                 'charged_amount' => $charged,
                 'quantity' => $request->quantity,
                 'currency' => $currency,
@@ -2529,16 +3237,25 @@ class DashboardController extends Controller
 
     public function assign_subagent(Request $request, $id){
 
-        User::where('id', $request->agent)->update([
-            'main_agent_id'=> $id,
-            'main_agent_share_raw' => $request->my_share
-        ]);
+        
         
         if ($request->my_share > 99 || $request->my_share < 0) {
             session()->flash('alert-danger', "Super agent share cannot be greater than 99 % or less than 1%");
             return back()->withInput();
         }
+
+        $check = User::where('main_agent_id', $request->agent)->first();
+
+        if(!$check)
+        {
+            session()->flash('alert-danger', "This agent already has subagents, He/She cant be added under you as a subagent.");
+            return back()->withInput();
+        }
         
+        User::where('id', $request->agent)->update([
+            'main_agent_id'=> $id,
+            'main_agent_share_raw' => $request->my_share
+        ]);
 
         session()->flash('alert-success', "Successfully assigned a sub agent");
         return back();

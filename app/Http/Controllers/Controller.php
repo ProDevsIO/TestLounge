@@ -17,10 +17,10 @@ class Controller extends BaseController
 
 
     function processStripe($price,$booking){
-        \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JHzEGI12ZmR225jgcGfjm25u1RsPopaeB4x2Z6E32SsCaTGQQMB0GAFbBdEaHZLLBHBYAvEsOZjhf1CkooC9bTR00rh2Iytpz'));
+        \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JrhodAxurgPUhdw4h7s1RzWGxbobEC38K1LjNWVI6gH7rdQMNYYkNXfSQbYF78weVxoIwWwvqXdSRBz6qJZCT9M00771V820w'));
 
         header('Content-Type: application/json');
-        $YOUR_DOMAIN = env('APP_URL', "https://uktraveltest.prodevs.io/");
+        $YOUR_DOMAIN = env('APP_URL', "http://127.0.0.1:8000/");
 
         $checkout_session = \Stripe\Checkout\Session::create([
             'payment_method_types' => [
@@ -39,7 +39,7 @@ class Controller extends BaseController
     }
 
     function checkSession($booking_product){
-        \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JHzEGI12ZmR225jgcGfjm25u1RsPopaeB4x2Z6E32SsCaTGQQMB0GAFbBdEaHZLLBHBYAvEsOZjhf1CkooC9bTR00rh2Iytpz'));
+        \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JrhodAxurgPUhdw4h7s1RzWGxbobEC38K1LjNWVI6gH7rdQMNYYkNXfSQbYF78weVxoIwWwvqXdSRBz6qJZCT9M00771V820w'));
 
         header('Content-Type: application/json');
 
@@ -109,13 +109,14 @@ class Controller extends BaseController
     {
         unset($request['subaccounts']);
         unset($request['currency']);
+        // dd($request);
 
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
-        $headr[] = 'X-API-Key: '.env('VASTECHKEY');
-//        dd($headr);
-        curl_setopt($ch, CURLOPT_URL, "https://vastech.sevas.live/vastech/api/v1/ubank");
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '50431695d717d0954b5ad94d18eae264');
+        //dd($headr);
+        curl_setopt($ch, CURLOPT_URL, env('VASTECH_URL', 'https://vastech.sevas.live/vastech/api/v1/ubank'));
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($request));
@@ -124,6 +125,7 @@ class Controller extends BaseController
         $server_output = curl_exec($ch);
 
         curl_close($ch);
+
         $server_output = json_decode($server_output);
 
         return $server_output->data;
@@ -245,11 +247,11 @@ class Controller extends BaseController
                 "approvedCurrency" => "566",
                 "channel" => "WEB",
                 "currency" => "NGN",
-                "clientAppId" => "831553",
-                "clientId" => "238588",
+                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '717359'),
+                "clientId" => env('VASTECH_CLIENT_ID', '316006'),
                 "mobileNumber"=> "07039448968",
                 "paymentTypeId" => 2,
-                "redirectURL" => env("VASTECH_URL"),
+                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "voucher/payment/confirmation",
                 "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
             ];
@@ -257,14 +259,14 @@ class Controller extends BaseController
             $data = [
                 "transactionRef" => $transaction_ref,
                 "amount" => $price_pound,
-                "current" => "GBP",
+                "currency" => "GBP",
                 "approvedCurrency" => "826",
                 "channel" => "WEB",
-                "clientAppId" => "831553",
-                "clientId" => "238588",
+                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '717359'),
+                "clientId" => env('VASTECH_CLIENT_ID', '316006'),
                 "mobileNumber"=> "07039448968",
                 "paymentTypeId" => 2,
-                "redirectURL" => env("VASTECH_URL"),
+                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "voucher/payment/confirmation",
                 "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
             ];

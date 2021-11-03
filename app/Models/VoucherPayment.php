@@ -18,7 +18,11 @@ class VoucherPayment extends Model
         'product_id',
         'vendor_product_id',
         'quantity',
+        'vendors_cost',
+        'o_price',
         'charged_amount',
+        'super_agent_share',
+        'sub_agent_share',
         'currency',
         'status',
         'assignee'
@@ -42,5 +46,10 @@ class VoucherPayment extends Model
     public function product()
 	{
 		return $this->hasOne(Product::class, 'id', 'product_id');
+	}
+
+    public function discount()
+	{
+		return $this->hasOne(VoucherDiscount::class, 'v_pay_id');
 	}
 }
