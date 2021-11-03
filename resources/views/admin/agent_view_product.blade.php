@@ -25,6 +25,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="container m-2"><h3>Purchase Product Vouchers here</h3></div>
+               
             @include('errors.showerrors')
                 <?php $i =1 ?>
                 @foreach($vproducts as $product)

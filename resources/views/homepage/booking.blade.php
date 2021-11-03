@@ -148,13 +148,13 @@
 
                                 <div class="col-md-6">
                                     <label>Isolation Address1: <span class="show_required"> *</span> </label>
-                                    <input class="" type="text" name="isolation_address"
+                                    <input class="" type="text" name="isolation_address" placeholder="apartment, building, block, street"
                                            value="{{ old('isolation_address') }}" required/>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Isolation Address2: </label>
                                     <input class="" type="text" name="isolation_address2"
-                                           id="isolation_address2"
+                                           id="isolation_address2" placeholder="apartment, building, block, street"
                                            value="{{ old('isolation_address2') }}"/>
                                 </div>
                                 <div class="col-md-6">
@@ -285,6 +285,12 @@
                                                  <img  style="padding-bottom: 0px;width:100%;" src="https://tukuz.com/wp-content/uploads/2020/10/paystack-logo-vector.png" />
 
                                             </div>
+                                            <!-- <div class='radio'
+                                                 style="background:none;border:none;padding: 8px 80px;height: 86px;border-radius:25px; width:300px;"
+                                                 data-value="stripe" >
+                                                 <img  style="padding-bottom: 0px;width:100%;" src="{{ url('/img/stripe.png') }}" />
+
+                                            </div> -->
 
                                             <!-- <div class='radio'
                                                  style="background:none;border:none;padding: 20px 40px 20px 40px;height: 86px;border-radius:25px"
@@ -302,12 +308,12 @@
                                 <div class="form-section">
                                     <div class="voucher_input" style="margin-top:20px;display:none;" >
                                         <label>Voucher Number<span class="show_required"> *</span></label>
-                                        <small class="text-muted" style="color:red"> Please provide a valid voucher number given to you by an agent
+                                        <small class="text-muted" style="color:red"> Please input a valid voucher number
                                         </small>
                                         @if(isset($voucher))
-                                        <input class="" type="text" name="voucher" value="{{ $voucher->voucher }}" readonly/>
+                                        <input class="" type="text" style="font-weight:bold;font-size:20px;" name="voucher" value="{{ $voucher->voucher }}" readonly/>
                                         @else
-                                        <input class="" type="text" name="voucher" value="{{ old('voucher') }}" />
+                                        <input class="" type="text" style="font-weight:bold;font-size:20px;" name="voucher" value="{{ old('voucher') }}" />
                                         @endif
                                     </div>
                                     <div id="card" class="form-section" style="margin-top:20px;display:none;">
@@ -347,21 +353,29 @@
                                     <div class="col-md-12 color-9">
                                         <label>Consent to Test <span class="color-10">*</span></label>
                                         <div class="color-8"><p class="text-muted"><input type="checkbox" name="consent" value="1"
-                                                                    class="bg-1"/>
+                                                                    class="bg-1" required/>
                                             I consent to this test being done, or if this test
                                             is for a child, I confirm I am a legal guardian of the child and consent to
                                             this test being done.</p>
+                                           <div class="color-8"><p class="text-muted"><input type="checkbox" name="terms" required
+                                                                    class="bg-1"/>
+                                                                    By submitting the form, I consent to the <a href="/terms" class="text-info"> terms and conditions</a> of purchasing this product.</p>
 
                                         </div>
+                                        </div>
                                     </div>
+                                   
                                     <br/><br/>
                                     <span
                                             class="color-10" style="margin-left: 17px;margin-top: 10px">Bookings can’t be cancelled or refunded</span>
+                                    
+                              
 
                                 </div>
+
                                 <input type="hidden" name="payment_method" value="paystack" id="payment_method"/>
 
-                                <input type="submit" class="btn btn-primary pull-right" style="margin-top: 0px;" value="Make Payment">
+                                <input type="submit" class="btn btn-primary pull-right" style="margin-top: 0px;" value="Submit">
 
 
                             </form>
@@ -435,6 +449,7 @@
 
         var input = document.querySelector("#phone");
         window.intlTelInput(input, {
+            preferredCountries:['GB','NG','GH','US'],
             initialCountry: "gb",
             separateDialCode: true,
             utilsScript: "/js/phone_lib/js/utils.js",
