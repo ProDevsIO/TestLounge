@@ -16,7 +16,7 @@ class AddTestKitToVoucherGenerate extends Migration
         Schema::table('voucher_generated', function (Blueprint $table) {
             //
           
-                if(!Schema::hasColumn('voucher_generate', 'test_kit')){
+                if(!Schema::hasColumn('voucher_generated', 'test_kit')){
                     $table->string('test_kit', 500)->nullabe()->after('status');
                    
                 }
