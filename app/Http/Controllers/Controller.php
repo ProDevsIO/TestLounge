@@ -249,9 +249,9 @@ class Controller extends BaseController
                 "currency" => "NGN",
                 "clientAppId" => env('VASTECH_CLIENT_APP_ID', '717359'),
                 "clientId" => env('VASTECH_CLIENT_ID', '316006'),
-                "mobileNumber"=> "07039448968",
+                "mobileNumber"=> $booking->phone_no,
                 "paymentTypeId" => 2,
-                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "voucher/payment/confirmation",
+                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "/payment/vas/confirmation",
                 "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
             ];
@@ -264,9 +264,9 @@ class Controller extends BaseController
                 "channel" => "WEB",
                 "clientAppId" => env('VASTECH_CLIENT_APP_ID', '717359'),
                 "clientId" => env('VASTECH_CLIENT_ID', '316006'),
-                "mobileNumber"=> "07039448968",
+                "mobileNumber"=> $booking->phone_no,
                 "paymentTypeId" => 2,
-                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "voucher/payment/confirmation",
+                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "/payment/vas/confirmation",
                 "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
             ];
