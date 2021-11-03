@@ -356,7 +356,7 @@ class HomeController extends Controller
            
             $response = $this->processStripe($vendor_products->price_stripe, $booking);
             $redirect_url = $response->url;
-
+         
             BookingProduct::where('booking_id', $booking->id)->update([
                 'stripe_intent' => $response->payment_intent,
                 'stripe_session' => $response->id
@@ -733,6 +733,7 @@ class HomeController extends Controller
 
     public function booking_success(Request $request)
     {
+        // dd($request->b);
         $booking = Booking::where('transaction_ref', $request->b)->first();
 
         return view('homepage.success')->with(compact('booking'));
@@ -1551,11 +1552,13 @@ class HomeController extends Controller
         if (!$request->b) {
             return redirect()->to('/');
         }
-        $txRef = "stripe_" . rand(10000000, 99929302399);
+
 
         $booking_id = encrypt_decrypt('decrypt', $request->b);
         $booking = Booking::where('id', $booking_id)->first();
+        $txRef = $booking->transaction_ref;
 
+     
         if ($booking->status != 1) {
 
             $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
@@ -1649,7 +1652,7 @@ class HomeController extends Controller
                
                     $booking->update([
                         'vendor_id' => 3,
-                        'mode_of_payment' => 1,
+                        'mode_of_payment' => 2,
                         'transaction_ref' => $txRef,
                         'status' => 1
                     ]);
@@ -1736,7 +1739,7 @@ class HomeController extends Controller
             
                 $booking->update([
                     'vendor_id' => 3,
-                    'mode_of_payment' => 1,
+                    'mode_of_payment' => 2,
                     'transaction_ref' => $txRef,
                     'status' => 1,
                     'booking_code' => $code
@@ -1749,7 +1752,7 @@ class HomeController extends Controller
         //to remove items from cart
         $cart = Cart::where('ip', session()->get('ip'))->delete();
       
-
+       
 
         return redirect()->to('/booking/success?b=' . $txRef);
     }
