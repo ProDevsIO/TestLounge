@@ -392,7 +392,7 @@
                                 </tr>
                                 <tr>
                                     <td style="text-align: left;line-height: 25px;">
-                                        Booking Reference: {{ $booking->transaction_ref }}
+                                        Booking Reference: {{ $booking->id }}
                                     </td>
                                 </tr>
                                 <tr>

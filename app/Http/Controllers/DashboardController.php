@@ -2047,7 +2047,8 @@ class DashboardController extends Controller
             $voucherunpaid_d = VoucherPayment::where('status', 0)->where('currency','!=','NG')->orderBy('id', 'desc')->get();
 
             $voucher_all = VoucherPayment::all();
-
+            $discount_total_n = 0;
+            $discount_total_d = 0;
             foreach($voucherpaid_n as $vpay)
             {
               
@@ -2057,9 +2058,11 @@ class DashboardController extends Controller
                 }else{
                     $paid_n = $paid_n + ($vpay->charged_amount * $vpay->quantity );
                 } 
+                $discount_total_n = $discount_total_n + ($vpay->discount->amount ?? 0);
+               
             }
 
-        
+      
             
             foreach($voucherpaid_d as $vpay)
             {
@@ -2070,6 +2073,7 @@ class DashboardController extends Controller
                 }else{
                     $paid_d = $paid_d + ($vpay->charged_amount * $vpay->quantity );
                 } 
+                $discount_total_d = $discount_total_d + ($vpay->discount->amount ?? 0);
             }
 
             foreach($voucherunpaid_n as $upay)
@@ -2138,6 +2142,9 @@ class DashboardController extends Controller
                     'agent' => auth()->user()->id
                     ])->get();
 
+                    $discount_total_n = 0;
+                    $discount_total_d = 0;
+
                 foreach($voucherpaid_n as $vpay)
                 {
                   
@@ -2147,7 +2154,10 @@ class DashboardController extends Controller
                     }else{
                         $paid_n = $paid_n + ($vpay->charged_amount * $vpay->quantity );
                     } 
+                    $discount_total_n = $discount_total_n + ($vpay->discount->amount ?? 0);
+                   
                 }
+            
                 foreach($voucherpaid_d as $vpay)
                 {
                   
@@ -2157,6 +2167,7 @@ class DashboardController extends Controller
                     }else{
                         $paid_d = $paid_d + ($vpay->charged_amount * $vpay->quantity );
                     } 
+                    $discount_total_d = $discount_total_d + ($vpay->discount->amount ?? 0);
                 }
     
                 foreach($voucherunpaid_n as $upay)
@@ -2180,7 +2191,7 @@ class DashboardController extends Controller
         
         }
 
-        return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid', 'voucher_all', 'unpaid_n', 'paid_n', 'unpaid_d', 'paid_d'));
+        return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid', 'voucher_all', 'unpaid_n', 'paid_n', 'unpaid_d', 'paid_d', 'discount_total_n', 'discount_total_d'));
     }
 
     public function voucher_assigned_subagent(Request $request)
