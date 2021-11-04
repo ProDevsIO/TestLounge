@@ -115,6 +115,36 @@
                         </div>
                     </div>
             </div>
+            <div class="col-xl-3 col-sm-3">
+                    <div class="card mb-4 bg-danger" title="Total Vendor Cost">
+                        <div class="card-body">
+                            <div class="media d-flex align-items-center ">
+                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                    <i class="vl_book"></i>
+                                </div>
+                                <div class="media-body text-light" title="Total Vendor Cost">
+                                    <h4 class="text-uppercase mb-0 weight500"> N{{number_format($discount_total_n)}}</h4>
+                                    <span>Unpaid Transactions</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-xl-3 col-sm-3">
+                    <div class="card mb-4 bg-danger" title="Total Vendor Cost">
+                        <div class="card-body">
+                            <div class="media d-flex align-items-center ">
+                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                    <i class="vl_book"></i>
+                                </div>
+                                <div class="media-body text-light" title="Total Vendor Cost">
+                                    <h4 class="text-uppercase mb-0 weight500"> ${{number_format($discount_total_d)}}</h4>
+                                    <span>Unpaid Transactions</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
          </div>
         <div class="row">
                 <div class="col-xl-12 container p-0">

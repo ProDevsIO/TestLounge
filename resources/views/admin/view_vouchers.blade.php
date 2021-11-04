@@ -31,7 +31,7 @@
 
                 <?php $j =1;?>
                 @foreach($products as $product)
-                    @if($product->id !=15)
+                    
                         <div class="col-xl-4 col-sm-4">
                                 <div class="card mb-4 bg-purple" title="Generate voucher">
                                     <div class="card-body">
@@ -142,7 +142,7 @@
                                                 </div>
                                             @endif
                                         <?php $j++; ?>         
-                    @endif
+                  
                  @endforeach
                      <div class="col-xl-12 p-0">
                             <div class="card card-shadow mb-4 ">
