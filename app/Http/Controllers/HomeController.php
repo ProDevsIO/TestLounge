@@ -431,7 +431,8 @@ class HomeController extends Controller
         // }
     }
 
-    function confirm_vas($url){
+    function confirm_vas($url, $txRef){
+    
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
@@ -446,7 +447,7 @@ class HomeController extends Controller
         curl_setopt(
             $ch,
             CURLOPT_POSTFIELDS,
-            json_encode(['transactionRef'=> $txRef ,"clientId"=>238588])
+            json_encode(['transactionRef'=> $txRef ,"clientId"=>106669])
         );
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -455,6 +456,8 @@ class HomeController extends Controller
         curl_close($ch);
 
         return $response;
+
+        
     }
 
     public function payment_confirmation(Request $request,$type = null)
@@ -1169,7 +1172,7 @@ class HomeController extends Controller
         } elseif ($type == "Amber_v") {
             $products = $products->where('product_id', 1)->get();
         } elseif ($type == "Amber_uv") {
-            $products = $products->whereIn('product_id', [2, 4, 3, 10, 15])->get();
+            $products = $products->whereIn('product_id', [2, 4, 3, 10])->get();
         } elseif ($type == "Red") {
             $products = $products->where('product_id', 5)->get();
         } elseif ($type == "UK") {

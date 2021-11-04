@@ -47,30 +47,61 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($transact as $transact)
-                                         @if($transact->booking)
-                                        <tr>
-                                            <td>
-                                            {{ optional(optional($transact)->booking)->first_name }}   {{ optional(optional($transact)->booking)->last_name }}
-                                            </td>
-                                            <td>
-                                            {{optional(optional(optional(optional($transact)->booking)->product)->product)->name}}
-                                            </td>
-                                            <td>
-                                            {{optional(optional(optional($transact)->booking)->product)->quantity}}
-                                            </td>
-                                            <td> {{optional(optional(optional($transact)->booking)->vendor)->name}}</td>
-                                            @if($currency == 'naira')
+                                    @if($currency == 'naira')
+                                        @foreach($transact as $transact)
+                                            @if($transact->product)
+                                                @if($transact->product_ngn)
+                                                <tr>
+                                                    <td>
+                                                    {{ $transact->first_name }}   {{ $transact->last_name }}
+                                                    </td>
+                                                    <td>
+                                                    {{optional(optional(optional($transact)->product)->product)->name}}
+                                                    </td>
+                                                    <td>
+                                                    {{optional(optional($transact)->product_ngn)->quantity}}
+                                                    </td>
+                                                    <td> {{optional(optional($transact)->vendor)->name}}</td>
+                                                    @if($currency == 'naira')
 
-                                                <td>N{{ number_format(optional(optional(optional($transact)->booking)->product)->charged_amount, 3) }}</td>
-                                            @elseif($currency == 'pounds')
-                                                <td>${{number_format(optional(optional(optional($transact)->booking)->product)->charged_amount, 3) }} </td>
+                                                        <td>N{{ number_format(optional(optional($transact)->product_ngn)->charged_amount, 2) }}</td>
+                                                    @elseif($currency == 'pounds')
+                                                        <td>${{number_format(optional(optional($transact)->product_ngn)->charged_amount, 2) }} </td>
+                                                    @endif
+                                                    <td>{{$transact->created_at}}</td>
+                                                </tr>
+                                                @endif
                                             @endif
-                                            <td>{{$transact->created_at}}</td>
-                                        </tr>
+                                        @endforeach
+                                    @endif
 
-                                        @endif
-                                    @endforeach
+                                    @if($currency == 'pounds')
+                                        @foreach($transact as $transact)
+                                            @if($transact->product)
+                                                @if($transact->product_usd)
+                                                <tr>
+                                                    <td>
+                                                    {{ $transact->first_name }}   {{ $transact->last_name }}
+                                                    </td>
+                                                    <td>
+                                                    {{optional(optional(optional($transact)->product)->product)->name}}
+                                                    </td>
+                                                    <td>
+                                                    {{optional(optional($transact)->product_usd)->quantity}}
+                                                    </td>
+                                                    <td> {{optional(optional($transact)->vendor)->name}}</td>
+                                                    @if($currency == 'naira')
+
+                                                        <td>N{{ number_format(optional(optional($transact)->product_ngn)->charged_amount, 2) }}</td>
+                                                    @elseif($currency == 'pounds')
+                                                        <td>${{number_format(optional(optional($transact)->product_usd)->charged_amount, 2) }} </td>
+                                                    @endif
+                                                    <td>{{$transact->created_at}}</td>
+                                                </tr>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    @endif
 
                                     </tbody>
                                 </table>

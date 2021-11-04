@@ -1104,8 +1104,8 @@ class DashboardController extends Controller
             $vendor_cost_ngn = 0;
             $vendor_cost_dollars = 0;
            
-            $checkn = Transaction::where('type', 1)->wherebetween('created_at', [$start, $end])->get();
-            $checkb = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->get();
+            $checkn = Booking::where('status', 1)->wherebetween('created_at', [$start, $end])->get();
+            $checkb = Booking::where('status', 1)->wherebetween('created_at', [$start, $end])->get();
 
             $commission = Transaction::where('type', 1)->wherebetween('created_at', [$start, $end])->sum('amount');
             $pcommission = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->sum('amount');
@@ -1116,7 +1116,7 @@ class DashboardController extends Controller
             foreach($checkn as $ch){
                 // dump($ch->booking_id);
                 
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'NGN'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
                
                if($book_p_n != null)
                {
@@ -1129,7 +1129,7 @@ class DashboardController extends Controller
             // dd($checkn);
             foreach($checkb as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'USD'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
                if($book_p_n != null)
                {
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
@@ -1225,9 +1225,9 @@ class DashboardController extends Controller
             $total_gbp = 0;
             $vendor_cost_ngn = 0;
             $vendor_cost_dollars = 0;
-            $checkn = Transaction::where('type', 1)->get();
-            $checkb = PoundTransaction::where('type', 1)->get();
-          
+            $checkn =Booking::where('status', 1)->get();
+            $checkb = Booking::where('status', 1)->get();
+       
             $commission = Transaction::where('type', 1)->sum('amount');
             $pcommission = PoundTransaction::where('type', 1)->sum('amount');
 
@@ -1236,21 +1236,22 @@ class DashboardController extends Controller
 
             foreach($checkn as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'NGN'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
                if($book_p_n != null)
                {
+
                 $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
                 $rate = $book_p_n->price/ ($book_p_n->price_pounds ?? 1);
                 $vendor_cost_ngn = $vendor_cost_ngn + ($book_p_n->vendor_cost_price * $rate);
                }
                
             }
-           
+            
 
             foreach($checkb as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'USD'])->first();
-        
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id])->where('currency','!=','NGN')->first();
+                
                if($book_p_n != null)
                {
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
@@ -1258,6 +1259,7 @@ class DashboardController extends Controller
                }
                
             }
+            
           
             // $total_ngn = BookingProduct::where('currency', 'NGN')->sum('charged_amount');
             // $vendor_cost_ngn = BookingProduct::where('currency', 'NGN')->sum('vendor_cost_price');
@@ -2914,20 +2916,21 @@ class DashboardController extends Controller
             $end = Carbon::parse($endDate)->endOfDay();
             //if a date range exist
             if ($currency == "naira") {
-                $transact = Transaction::orderBy('id', 'desc')->where('type', '1')->wherebetween('created_at', [$start, $end])->get();
+                $transact =  Booking::orderBy('id', 'desc')->where('status', '1')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "pounds") {
-                $transact = PoundTransaction::orderBy('id', 'desc')->where('type', '1')->wherebetween('created_at', [$start, $end])->get();
+                $transact = Booking::orderBy('id', 'desc')->where('status', '1')->wherebetween('created_at', [$start, $end])->get();
             }
         } else {
 
             //if no date range exist
             if ($currency == "naira") {
-                $transact = Transaction::orderBy('id', 'desc')->where('type', '1')->get();
+                $transact = Booking::orderBy('id', 'desc')->where('status', '1')->get();
             } elseif ($currency == "pounds") {
-                $transact = PoundTransaction::orderBy('id', 'desc')->where('type', '1')->get();
+                $transact = Booking::orderBy('id', 'desc')->where('status', '1')->get();
             }
         }
-
+      
+           
 
         return view('admin.currency_report')->with(compact('transact', 'currency', 'startDate', 'endDate'));
 
