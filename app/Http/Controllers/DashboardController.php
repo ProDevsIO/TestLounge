@@ -1189,16 +1189,19 @@ class DashboardController extends Controller
     
             $discount_commission_us = Voucherpayment::where(['status'=> 1])
                                         ->where('currency', '!=', 'NG' )
+                                        ->where('status', 1)
                                         ->wherebetween('created_at', [$start, $end])
                                         ->sum('super_agent_share');
     
             $discount_vendorCost_d =   Voucherpayment::where(['status'=> 1])
                                         ->where('currency', '!=', 'NG' )
+                                        ->where('status', 1)
                                         ->wherebetween('created_at', [$start, $end])
                                         ->get();
     
             $discount_vendorCost_n =   Voucherpayment::where(['status'=> 1])
                                         ->where('currency', 'NG' )
+                                        ->where('status', 1)
                                         ->wherebetween('created_at', [$start, $end])
                                         ->get();
             $d_vC_n = 0;
@@ -1344,14 +1347,17 @@ class DashboardController extends Controller
     
             $discount_commission_us = Voucherpayment::where(['status'=> 1])
                                         ->where('currency', '!=', 'NG' )
+                                        ->where('status', 1)
                                         ->sum('super_agent_share');
     
             $discount_vendorCost_d =   Voucherpayment::where(['status'=> 1])
                                         ->where('currency', '!=', 'NG' )
+                                        ->where('status', 1)
                                         ->get();
     
             $discount_vendorCost_n =   Voucherpayment::where(['status'=> 1])
                                         ->where('currency', 'NG' )
+                                        ->where('status', 1)
                                         ->get();
             $d_vC_n = 0;
             $d_vC_d = 0;
@@ -3055,21 +3061,21 @@ class DashboardController extends Controller
             $end = Carbon::parse($endDate)->endOfDay();
             //if a date range exist
             if ($currency == "naira") {
-                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','NG')->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
-                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','NG')->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','NG')->where('status', 1)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','NG')->where('status', 1)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
             } elseif ($currency == "dollars") {
-                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','!=','NG')->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
-                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','!=','NG')->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','!=','NG')->where('status', 1)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','!=','NG')->where('status', 1)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
             }
         } else {
 
             //if no date range exist
             if ($currency == "naira") {
-                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','NG')->orderby('id', 'desc')->get();
-                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','NG')->orderby('id', 'desc')->get();
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','NG')->where('status', 1)->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','NG')->where('status', 1)->orderby('id', 'desc')->get();
             } elseif ($currency == "dollars") {
-                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','!=','NG')->orderby('id', 'desc')->get();
-                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','!=','NG')->orderby('id', 'desc')->get();
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','!=','NG')->where('status', 1)->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','!=','NG')->where('status', 1)->orderby('id', 'desc')->get();
             }
         }
     
