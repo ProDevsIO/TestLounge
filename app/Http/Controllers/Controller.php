@@ -109,14 +109,14 @@ class Controller extends BaseController
     {
         unset($request['subaccounts']);
         unset($request['currency']);
-        // dd($request);
+        // dd($request,env('VASTECHKEY', '8317dc390aca4e482bf8d2ae06f4d3cfdf3ed402c5afd7f8d0bc257dea4842d9'));
 
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
-        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '50431695d717d0954b5ad94d18eae264');
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '8317dc390aca4e482bf8d2ae06f4d3cfdf3ed402c5afd7f8d0bc257dea4842d9');
         //dd($headr);
-        curl_setopt($ch, CURLOPT_URL, env('VASTECH_URL', 'https://vastech.sevas.live/vastech/api/v1/ubank'));
+        curl_setopt($ch, CURLOPT_URL, env('VASTECH_URL', 'https://dashboard.smartpay.ng/api/v1/ubank'));
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($request));
@@ -125,9 +125,9 @@ class Controller extends BaseController
         $server_output = curl_exec($ch);
 
         curl_close($ch);
-
+        // dd( $server_output );
         $server_output = json_decode($server_output);
-
+       
         return $server_output->data;
     }
 
@@ -247,11 +247,11 @@ class Controller extends BaseController
                 "approvedCurrency" => "566",
                 "channel" => "WEB",
                 "currency" => "NGN",
-                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '717359'),
-                "clientId" => env('VASTECH_CLIENT_ID', '316006'),
-                "mobileNumber"=> $booking->phone_no,
+                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '659758'),
+                "clientId" => env('VASTECH_CLIENT_ID', '106669'),
+                "mobileNumber"=> '08085124966',
                 "paymentTypeId" => 2,
-                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "/payment/vas/confirmation",
+                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "payment/vas/confirmation",
                 "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
             ];
@@ -262,11 +262,11 @@ class Controller extends BaseController
                 "currency" => "GBP",
                 "approvedCurrency" => "826",
                 "channel" => "WEB",
-                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '717359'),
-                "clientId" => env('VASTECH_CLIENT_ID', '316006'),
-                "mobileNumber"=> $booking->phone_no,
+                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '106669'),
+                "clientId" => env('VASTECH_CLIENT_ID', '659758'),
+                "mobileNumber"=> '08085124966',
                 "paymentTypeId" => 2,
-                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "/payment/vas/confirmation",
+                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "payment/vas/confirmation",
                 "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
             ];
