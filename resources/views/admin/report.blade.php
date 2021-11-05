@@ -57,7 +57,7 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Revenue in naira from bookings">
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($total_revenue_n, 2) }}</h4>
+                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($total_ngn, 2) }}</h4>
                                         <span>Total Revenue(Naira)</span>
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Revenue in dollars from bookings">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($profit_dollars, 2) }}</h4>
+                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($total_gbp, 2) }}</h4>
                                         <span>Total Revenue(Dollars)</span>
                                     </div>
                                 </div>
