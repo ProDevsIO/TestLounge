@@ -6,7 +6,42 @@
 @section('content')
 <div class="content-wrapper">
     <div class="container-fluid">
-         <div class="row">
+             <div class="row">
+                <div class="col-xl-12 col-sm-12 p-0">
+                    <div class="card mb-4 bg-primary" title="Completed bookings">
+                        <div class="card-body">
+
+                            <form class="form">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Start Date</label>
+                                        <input type="date" name="start" class="form-control"
+                                               value="{{ (isset($_GET['start']) ? $_GET['start'] : "")  }}" required/>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>End Date</label>
+                                        <input type="date" name="end" class="form-control"
+                                               value="{{ (isset($_GET['end']) ? $_GET['end'] : "")  }}" required/>
+                                    </div>
+                                    <div clas="col-md-2">
+                                        <br>
+                                    <input type="submit" class="btn btn-danger pull-right mt-2" value="Search">
+                                    </div>
+                                   
+                                    <div style="width: 100%">
+                                       
+                                    @csrf
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+      
+            </div>
+        <div class="row">
             <div class="col-xl-3 col-sm-3">
                 <div class="card mb-4 bg-dark" title="Total Vendor Cost">
                        <div class="card-body">
@@ -22,6 +57,38 @@
                        </div>
                    </div>
            </div>
+           <div class="col-xl-3 col-sm-3">
+                <div class="card mb-4 bg-purple" title="Total Vendor Cost">
+                       <div class="card-body">
+                           <div class="media d-flex align-items-center ">
+                               <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                   <i class="vl_book"></i>
+                               </div>
+                               <div class="media-body text-light" title="Total Vendor Cost">
+                                   <h4 class="text-uppercase mb-0 weight500">{{$vouchers->count()}}</h4>
+                                   <span>Total Bought Transactions</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+           </div>
+           <div class="col-xl-3 col-sm-3">
+                <div class="card mb-4 bg-info" title="Total Vendor Cost">
+                       <div class="card-body">
+                           <div class="media d-flex align-items-center ">
+                               <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                   <i class="vl_book"></i>
+                               </div>
+                               <div class="media-body text-light" title="Total Vendor Cost">
+                                   <h4 class="text-uppercase mb-0 weight500">{{$voucherboughts->count()}}</h4>
+                                   <span>Total Assigned Transactions</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+           </div>
+        </div>
+        <div class="row">
            <div class="col-xl-3 col-sm-3">
                 <div class="card mb-4 bg-info" title="Total Vendor Cost">
                        <div class="card-body">
@@ -53,6 +120,37 @@
                        </div>
                    </div>
            </div>
+           
+            <div class="col-xl-3 col-sm-3">
+                    <div class="card mb-4 bg-danger" title="Total Vendor Cost">
+                        <div class="card-body">
+                            <div class="media d-flex align-items-center ">
+                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                    <i class="vl_book"></i>
+                                </div>
+                                <div class="media-body text-light" title="Total Vendor Cost">
+                                    <h4 class="text-uppercase mb-0 weight500"> N{{number_format($discount_total_n)}}</h4>
+                                    <span>Total Discount Amount</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-xl-3 col-sm-3">
+                    <div class="card mb-4 bg-danger" title="Total Vendor Cost">
+                        <div class="card-body">
+                            <div class="media d-flex align-items-center ">
+                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                    <i class="vl_book"></i>
+                                </div>
+                                <div class="media-body text-light" title="Total Vendor Cost">
+                                    <h4 class="text-uppercase mb-0 weight500"> ${{number_format($discount_total_d)}}</h4>
+                                    <span>Total Discount Amount</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
          </div>
          <div class="row">
             <div class="col-xl-3 col-sm-3">
@@ -65,6 +163,21 @@
                                 <div class="media-body text-light" title="Total Vendor Cost">
                                     <h4 class="text-uppercase mb-0 weight500"> N{{number_format($paid_n)}}</h4>
                                     <span>Paid Transactions</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-xl-3 col-sm-3">
+                    <div class="card mb-4 bg-danger" title="Total Vendor Cost">
+                        <div class="card-body">
+                            <div class="media d-flex align-items-center ">
+                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                    <i class="vl_book"></i>
+                                </div>
+                                <div class="media-body text-light" title="Total Vendor Cost">
+                                    <h4 class="text-uppercase mb-0 weight500"> ${{number_format($unpaid_d)}}</h4>
+                                    <span>Unpaid Transactions</span>
                                 </div>
                             </div>
                         </div>
@@ -100,51 +213,7 @@
                         </div>
                     </div>
             </div>
-            <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-danger" title="Total Vendor Cost">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Total Vendor Cost">
-                                    <h4 class="text-uppercase mb-0 weight500"> ${{number_format($unpaid_d)}}</h4>
-                                    <span>Unpaid Transactions</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-danger" title="Total Vendor Cost">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Total Vendor Cost">
-                                    <h4 class="text-uppercase mb-0 weight500"> N{{number_format($discount_total_n)}}</h4>
-                                    <span>Total Discount Amount</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="col-xl-3 col-sm-3">
-                    <div class="card mb-4 bg-danger" title="Total Vendor Cost">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Total Vendor Cost">
-                                    <h4 class="text-uppercase mb-0 weight500"> ${{number_format($discount_total_d)}}</h4>
-                                    <span>Total Discount Amount</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
+           
          </div>
         <div class="row">
                 <div class="col-xl-12 container p-0">
