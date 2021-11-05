@@ -2102,29 +2102,58 @@ class DashboardController extends Controller
 
     }
 
-    public function voucher_transactions()
+    public function voucher_transactions(Request $request)
     {
         $paid_n = 0;
         $unpaid_n = 0;
         $paid_d = 0;
         $unpaid_d = 0;
+
+       
         if(auth()->user()->type == 1){
 
-            $vouchers = VoucherPayment::wherenotNull('transaction_ref')->orderby('id', 'desc')->get();
-            $voucherboughts = VoucherPayment::whereNull('transaction_ref')->orderby('id', 'desc')->get();
-            $products = Product::all();
+            if($request->start)
+            {
+                $start = $request->start;
+                $end = $request->end;
 
-            $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->get();
-            $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->get();
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+                $products = Product::all();
+    
+                $voucherpaid = VoucherPayment::where('status', 1)->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+                $voucherunpaid = VoucherPayment::where('status', 0)->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+    
+                $voucherpaid_n = VoucherPayment::where(['status'=> 1, 'currency' => 'NG'])->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+                $voucherpaid_d = VoucherPayment::where('status', 1)->where('currency', '!=', 'NG')->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+                $voucherunpaid_n = VoucherPayment::where(['status'=> 0, 'currency' => 'NG'])->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+                $voucherunpaid_d = VoucherPayment::where('status', 0)->where('currency','!=','NG')->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+    
+                $voucher_all = VoucherPayment::wherebetween('created_at', [$start, $end])->get();
 
-            $voucherpaid_n = VoucherPayment::where(['status'=> 1, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
-            $voucherpaid_d = VoucherPayment::where('status', 1)->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
-            $voucherunpaid_n = VoucherPayment::where(['status'=> 0, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
-            $voucherunpaid_d = VoucherPayment::where('status', 0)->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+            }else{
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->orderby('id', 'desc')->get();
+                $products = Product::all();
+    
+                $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->get();
+                $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->get();
+    
+                $voucherpaid_n = VoucherPayment::where(['status'=> 1, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
+                $voucherpaid_d = VoucherPayment::where('status', 1)->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
+                $voucherunpaid_n = VoucherPayment::where(['status'=> 0, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
+                $voucherunpaid_d = VoucherPayment::where('status', 0)->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+    
+                $voucher_all = VoucherPayment::all();
+                
+            }
 
-            $voucher_all = VoucherPayment::all();
+            
+
+          
             $discount_total_n = 0;
             $discount_total_d = 0;
+
             foreach($voucherpaid_n as $vpay)
             {
               
@@ -2172,51 +2201,107 @@ class DashboardController extends Controller
             }
                
         }else{
-            $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where([
-                'agent' => auth()->user()->id
-                ])->orderby('id', 'desc')->get();
 
-            $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where([
-                'agent' => auth()->user()->id
-                ])->orderby('id', 'desc')->get();
-
-            $products = Product::all();
+            if($request->start)
+            {
+                $start = $request->start;
+                $end = $request->end;
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where([
+                    'agent' => auth()->user()->id
+                    ])->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
     
-            $voucherpaid = VoucherPayment::where([
-                'status'=> 1,
-                'agent' => auth()->user()->id
-                ])->orderBy('id', 'desc')->get();
-
-            $voucherunpaid = VoucherPayment::where([
-                'status'=> 0,
-                'agent' => auth()->user()->id
-                ])->orderBy('id', 'desc')->get();
-
-            $voucherpaid_n = VoucherPayment::where([
-                 'status'=> 1,
-                 'currency' => 'NG',
-                 'agent' => auth()->user()->id
-                 ])->orderBy('id', 'desc')->get();
-
-                $voucherpaid_d = VoucherPayment::where([
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where([
+                    'agent' => auth()->user()->id
+                    ])->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+    
+                $products = Product::all();
+        
+                $voucherpaid = VoucherPayment::where([
                     'status'=> 1,
                     'agent' => auth()->user()->id
-                    ])->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
-
-                $voucherunpaid_n = VoucherPayment::where([
+                    ])->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+    
+                $voucherunpaid = VoucherPayment::where([
                     'status'=> 0,
-                    'currency' => 'NG',
+                    'agent' => auth()->user()->id
+                    ])->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+    
+                $voucherpaid_n = VoucherPayment::where([
+                     'status'=> 1,
+                     'currency' => 'NG',
+                     'agent' => auth()->user()->id
+                     ])->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+    
+                    $voucherpaid_d = VoucherPayment::where([
+                        'status'=> 1,
+                        'agent' => auth()->user()->id
+                        ])->wherebetween('created_at', [$start, $end])->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
+    
+                    $voucherunpaid_n = VoucherPayment::where([
+                        'status'=> 0,
+                        'currency' => 'NG',
+                        'agent' => auth()->user()->id
+                        ])->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+    
+                    $voucherunpaid_d = VoucherPayment::where([
+                        'status'=> 0,
+                        'agent' => auth()->user()->id
+                        ])->wherebetween('created_at', [$start, $end])->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+        
+                    $voucher_all = VoucherPayment::where([
+                        'agent' => auth()->user()->id
+                        ])->wherebetween('created_at', [$start, $end])->get();
+
+            }else{
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where([
+                    'agent' => auth()->user()->id
+                    ])->orderby('id', 'desc')->get();
+    
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where([
+                    'agent' => auth()->user()->id
+                    ])->orderby('id', 'desc')->get();
+    
+                $products = Product::all();
+        
+                $voucherpaid = VoucherPayment::where([
+                    'status'=> 1,
                     'agent' => auth()->user()->id
                     ])->orderBy('id', 'desc')->get();
-
-                $voucherunpaid_d = VoucherPayment::where([
+    
+                $voucherunpaid = VoucherPayment::where([
                     'status'=> 0,
                     'agent' => auth()->user()->id
-                    ])->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+                    ])->orderBy('id', 'desc')->get();
     
-                $voucher_all = VoucherPayment::where([
-                    'agent' => auth()->user()->id
-                    ])->get();
+                $voucherpaid_n = VoucherPayment::where([
+                     'status'=> 1,
+                     'currency' => 'NG',
+                     'agent' => auth()->user()->id
+                     ])->orderBy('id', 'desc')->get();
+    
+                    $voucherpaid_d = VoucherPayment::where([
+                        'status'=> 1,
+                        'agent' => auth()->user()->id
+                        ])->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
+    
+                    $voucherunpaid_n = VoucherPayment::where([
+                        'status'=> 0,
+                        'currency' => 'NG',
+                        'agent' => auth()->user()->id
+                        ])->orderBy('id', 'desc')->get();
+    
+                    $voucherunpaid_d = VoucherPayment::where([
+                        'status'=> 0,
+                        'agent' => auth()->user()->id
+                        ])->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+        
+                    $voucher_all = VoucherPayment::where([
+                        'agent' => auth()->user()->id
+                        ])->get();
+                
+            }
+
+            
 
                     $discount_total_n = 0;
                     $discount_total_d = 0;
