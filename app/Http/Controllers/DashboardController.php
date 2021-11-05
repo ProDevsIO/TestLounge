@@ -1091,6 +1091,11 @@ class DashboardController extends Controller
             abort(403);
         }
 
+        $total_w_v_n = 0;
+        $total_w_v_p = 0;
+        $vendor_cost_w_v_n = 0;
+        $vendor_cost_w_v_p = 0;
+
         if ($request->start && $request->end) {
             $start = $request->start;
             $end = $request->end;
@@ -1103,9 +1108,38 @@ class DashboardController extends Controller
             $total_gbp = 0;
             $vendor_cost_ngn = 0;
             $vendor_cost_dollars = 0;
+
            
             $checkn = Booking::where('status', 1)->wherebetween('created_at', [$start, $end])->get();
             $checkb = Booking::where('status', 1)->wherebetween('created_at', [$start, $end])->get();
+
+            $c_w_v =Booking::where('status', 1)->where('mode_of_payment','!=', '3')->wherebetween('created_at', [$start, $end])->get();
+            $c_w_v_b = Booking::where('status', 1)->where('mode_of_payment','!=', '3')->wherebetween('created_at', [$start, $end])->get();
+
+            foreach($c_w_v as $ch){
+                // dump($ch->booking_id);
+                
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
+               
+               if($book_p_n != null)
+               {
+                $total_w_v_n  = $total_w_v_n  + ($book_p_n->charged_amount ?? 0);
+                $rate = $book_p_n->charged_amount/ ($book_p_n->price ?? 1);
+                $vendor_cost_w_v_n = $vendor_cost_w_v_n + ($book_p_n->vendor_cost_price * $rate);
+               }
+               
+            }
+            // dd($checkn);
+            foreach($c_w_v_b as $ch){
+                // dump( $check->product);
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
+               if($book_p_n != null)
+               {
+                $total_w_v_p  = $total_w_v_p  + ($book_p_n->charged_amount ?? 0);
+                $vendor_cost_w_v_p = $vendor_cost_w_v_p + $book_p_n->vendor_cost_price;
+               }
+               
+            }
 
             $commission = Transaction::where('type', 1)->wherebetween('created_at', [$start, $end])->sum('amount');
             $pcommission = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->sum('amount');
@@ -1120,7 +1154,7 @@ class DashboardController extends Controller
                
                if($book_p_n != null)
                {
-                $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
+                $total_ngn  = $total_ngn  + ($book_p_n->charged_amount ?? 0);
                 $rate = $book_p_n->charged_amount/ ($book_p_n->price ?? 1);
                 $vendor_cost_dollars = $vendor_cost_ngn + ($book_p_n->vendor_cost_price * $rate);
                }
@@ -1132,7 +1166,7 @@ class DashboardController extends Controller
                 $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
                if($book_p_n != null)
                {
-                $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
+                $total_gbp  = $total_gbp  + ($book_p_n->charged_amount ?? 0);
                 $vendor_cost_dollars = $vendor_cost_dollars + $book_p_n->vendor_cost_price;
                }
                
@@ -1155,16 +1189,19 @@ class DashboardController extends Controller
     
             $discount_commission_us = Voucherpayment::where(['status'=> 1])
                                         ->where('currency', '!=', 'NG' )
+                                        ->where('status', 1)
                                         ->wherebetween('created_at', [$start, $end])
                                         ->sum('super_agent_share');
     
             $discount_vendorCost_d =   Voucherpayment::where(['status'=> 1])
                                         ->where('currency', '!=', 'NG' )
+                                        ->where('status', 1)
                                         ->wherebetween('created_at', [$start, $end])
                                         ->get();
     
             $discount_vendorCost_n =   Voucherpayment::where(['status'=> 1])
                                         ->where('currency', 'NG' )
+                                        ->where('status', 1)
                                         ->wherebetween('created_at', [$start, $end])
                                         ->get();
             $d_vC_n = 0;
@@ -1234,6 +1271,38 @@ class DashboardController extends Controller
             $discount_total_n = VoucherDiscount::where('currency','NG' )->sum('amount');
             $discount_total_d = VoucherDiscount::where('currency','!=','NG' )->sum('amount');
 
+            $c_w_v =Booking::where('status', 1)->where('mode_of_payment','!=', '3')->get();
+            $c_w_v_b = Booking::where('status', 1)->where('mode_of_payment','!=', '3')->get();
+          
+        
+            foreach($c_w_v as $ch){
+                // dump($ch->booking_id);
+                
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
+               
+               if($book_p_n != null)
+               {
+                $total_w_v_n  = $total_w_v_n  + ($book_p_n->charged_amount ?? 0);
+                $rate = $book_p_n->charged_amount/ ($book_p_n->price ?? 1);
+                $vendor_cost_w_v_n = $vendor_cost_w_v_n + ($book_p_n->vendor_cost_price * $rate);
+               }
+               
+            }
+            // dd($checkn);
+            foreach($c_w_v_b as $ch){
+              
+                // dump( $check->product);
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id])->first();
+               if($book_p_n != null)
+               {
+               
+                $total_w_v_p  = $total_w_v_p  + ($book_p_n->charged_amount ?? 0);
+                $vendor_cost_w_v_p = $vendor_cost_w_v_p + $book_p_n->vendor_cost_price;
+               }
+               
+            }
+           
+
             foreach($checkn as $ch){
                 // dump( $check->product);
                 $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
@@ -1254,12 +1323,13 @@ class DashboardController extends Controller
                 
                if($book_p_n != null)
                {
+               
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
                 $vendor_cost_dollars = $vendor_cost_dollars + $book_p_n->vendor_cost_price;
                }
                
             }
-            
+          
           
             // $total_ngn = BookingProduct::where('currency', 'NGN')->sum('charged_amount');
             // $vendor_cost_ngn = BookingProduct::where('currency', 'NGN')->sum('vendor_cost_price');
@@ -1277,14 +1347,17 @@ class DashboardController extends Controller
     
             $discount_commission_us = Voucherpayment::where(['status'=> 1])
                                         ->where('currency', '!=', 'NG' )
+                                        ->where('status', 1)
                                         ->sum('super_agent_share');
     
             $discount_vendorCost_d =   Voucherpayment::where(['status'=> 1])
                                         ->where('currency', '!=', 'NG' )
+                                        ->where('status', 1)
                                         ->get();
     
             $discount_vendorCost_n =   Voucherpayment::where(['status'=> 1])
                                         ->where('currency', 'NG' )
+                                        ->where('status', 1)
                                         ->get();
             $d_vC_n = 0;
             $d_vC_d = 0;
@@ -1346,11 +1419,17 @@ class DashboardController extends Controller
         
             $discount_profit_n =  $n_charged -  $d_vC_n;
             $discount_profit_d = $d_charged -  $d_vC_d;
-            
+
+            $total_revenue_n = $n_charged + $total_w_v_n;
+            $total_revenue_p =  $d_charged + $total_w_v_p;
+
            
         $profit_naira =  $total_ngn - $commission - $vendor_cost_ngn;
         // dd($profit_naira, $total_ngn ,$commission , $vendor_cost_ngn );
-
+        // dump( $total_revenue_n , $n_charged , $total_w_v_n,   $total_ngn );
+        // dump('br', $total_revenue_p , $d_charged , $total_w_v_p,   $total_gbp );
+        // dd();
+            
         $profit_dollars = $total_gbp - $pcommission - $vendor_cost_dollars;
         // dd(  $profit_dollars ,$total_gbp ,$pcommission ,$vendor_cost_dollars );
 
@@ -1369,9 +1448,9 @@ class DashboardController extends Controller
             );
 
             $columns = array('Name', 'Referral Code', 'Total C.booking', 'Wallet Balance', 'Account Details');
-            $columnMoney = array('Total Revenue(Naira)', 'Total Revenue(Dollar)', 'Total Revenue(cedis)', 'Total Revenue(TZS)', 'Total Revenue(KES)', 'Total Revenue(ZAR)', 'Amount due(Referrals');
+            $columnMoney = array('Total Revenue(Naira)', 'Total Revenue(Dollar)', 'Amount due(Referrals');
 
-            $callback = function () use ($users, $columns, $columnMoney, $total_ngn, $total_gbp, $total_ghs, $total_tzs, $total_kes, $total_zar, $due_amount) {
+            $callback = function () use ($users, $columns, $columnMoney, $total_revenue_n, $total_revenue_p, $total_ghs, $total_tzs, $total_kes, $total_zar, $due_amount) {
                 $file = fopen('php://output', 'w');
                 fputcsv($file, $columns);
 
@@ -1392,13 +1471,10 @@ class DashboardController extends Controller
                 fputcsv($file, array(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '));
 
                 fputcsv($file, $columnMoney);
-                $row['Naira'] = 'N' . number_format($total_ngn, 5);
-                $row['Pound'] = '# ' . number_format($total_gbp, 5);
-                $row['cedis'] = 'GH' . number_format($total_ghs, 5);
-                $row['tzs'] = 'TZS ' . number_format($total_tzs, 5);
-                $row['kes'] = 'KES ' . number_format($total_kes, 5);
-                $row['zar'] = 'ZAR ' . number_format($total_zar, 5);
+                $row['Naira'] = 'N' . number_format($total_revenue_n,1);
+                $row['Pound'] = '# ' . number_format($total_revenue_p, 1);
                 $row['due'] = 'N ' . number_format($due_amount, 5);
+               
 
 
                 fputcsv($file, array($row['Naira'], $row['Pound'], $row['cedis'], $row['tzs'], $row['kes'], $row['zar'], $row['due']));
@@ -1409,7 +1485,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn', 'discount_commission_n', 'discount_commission_us', 'discount_profit_n', 'discount_profit_d', 'discount_total_d','discount_total_n'));
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn', 'discount_commission_n', 'discount_commission_us', 'discount_profit_n', 'discount_profit_d', 'discount_total_d','discount_total_n','total_revenue_n','total_revenue_p'));
 
     }
 
@@ -2956,22 +3032,56 @@ class DashboardController extends Controller
             $end = Carbon::parse($endDate)->endOfDay();
             //if a date range exist
             if ($currency == "naira") {
-                $transact = Transaction::orderBy('id', 'desc')->where('type', '1')->wherebetween('created_at', [$start, $end])->get();
-            } elseif ($currency == "dollars") {
-                $transact = PoundTransaction::orderBy('id', 'desc')->where('type', '1')->wherebetween('created_at', [$start, $end])->get();
+                $transact =  Booking::orderBy('id', 'desc')->where('status', '1')->wherebetween('created_at', [$start, $end])->get();
+            } elseif ($currency == "pounds") {
+                $transact = Booking::orderBy('id', 'desc')->where('status', '1')->wherebetween('created_at', [$start, $end])->get();
             }
         } else {
 
             //if no date range exist
             if ($currency == "naira") {
-                $transact = Transaction::orderBy('id', 'desc')->where('type', '1')->get();
+                $transact = Booking::orderBy('id', 'desc')->where('status', '1')->get();
             } elseif ($currency == "dollars") {
-                $transact = PoundTransaction::orderBy('id', 'desc')->where('type', '1')->get();
+                $transact = Booking::orderBy('id', 'desc')->where('status', '1')->get();
             }
         }
+      
 
 
         return view('admin.profit_report')->with(compact('transact', 'currency', 'startDate', 'endDate'));
+
+    }
+
+    public function view_profit_voucher($currency, $startDate, $endDate)
+    {
+
+
+        if ($startDate != 1) {
+            $start = Carbon::parse($startDate)->startOfDay();
+            $end = Carbon::parse($endDate)->endOfDay();
+            //if a date range exist
+            if ($currency == "naira") {
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','NG')->where('status', 1)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','NG')->where('status', 1)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+            } elseif ($currency == "dollars") {
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','!=','NG')->where('status', 1)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','!=','NG')->where('status', 1)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+            }
+        } else {
+
+            //if no date range exist
+            if ($currency == "naira") {
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','NG')->where('status', 1)->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','NG')->where('status', 1)->orderby('id', 'desc')->get();
+            } elseif ($currency == "dollars") {
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','!=','NG')->where('status', 1)->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','!=','NG')->where('status', 1)->orderby('id', 'desc')->get();
+            }
+        }
+    
+
+
+        return view('admin.profit_voucher_report')->with(compact('vouchers','voucherboughts', 'currency', 'startDate', 'endDate'));
 
     }
 

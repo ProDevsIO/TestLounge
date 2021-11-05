@@ -47,64 +47,132 @@
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Selling Price</th>
                                         <th scope="col">Vendor's Cost Price</th>
-                                        
+                                        <th scope="col">Commission</th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">Date</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($transact as $transact)
-                                        @if($transact->booking)
-                                        <tr>
-                                            <td>
-                                                {{ optional(optional($transact)->booking)->first_name }}   {{ optional(optional($transact)->booking)->last_name }}
-                                            </td>
-                                            <td>{{ optional(optional($transact)->user)->first_name }} {{ optional(optional($transact)->user)->last_name }}</td>
-                                            <td> {{optional(optional(optional($transact)->booking)->vendor)->name}}</td>
-                                            <td>
-                                                {{optional(optional(optional(optional($transact)->booking)->product)->product)->name}}
-                                            </td>
-                                            <td>
-                                                {{optional(optional(optional($transact)->booking)->product)->quantity}}
-                                            </td>
-                                            <td>
-                                                @if($currency == 'naira')
-                                              
-                                                 N{{ number_format(optional(optional(optional($transact)->booking)->product)->charged_amount, 2) }}
-                                                @elseif($currency == 'dollars')
-                                                ${{ number_format(optional(optional(optional($transact)->booking)->product)->charged_amount, 2) }}</td>
-                                                @endif
-                                            </td>
-                                            <td>
-                                            @if($currency == 'naira')
-                                            <?php
+                                    @if($currency == 'naira')
+                                        @foreach($transact as $transact)
+                                            @if($transact->product)
+                                                @if($transact->product_ngn)
+                                                    <tr>
+                                                        <td>
+                                                        {{ $transact->first_name }}   {{ $transact->last_name }}
+                                                        </td>
+                                                        <td>{{ optional(optional($transact)->user)->first_name }} {{ optional(optional($transact)->user)->last_name }}</td>
+                                                        <td> {{optional(optional($transact)->vendor)->name}}</td>
+                                                        <td>
+                                                            {{optional(optional(optional($transact)->product)->product)->name}}
+                                                        </td>
+                                                        <td>
+                                                            {{optional(optional($transact)->product)->quantity}}
+                                                        </td>
+                                                        <td>
+                                                            @if($currency == 'naira')
+                                                        
+                                                            N{{ number_format(optional(optional($transact)->product)->charged_amount, 2) }}
+                                                            @elseif($currency == 'dollars')
+                                                            ${{ number_format(optional(optional($transact)->product)->charged_amount, 2) }}</td>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                        @if($currency == 'naira')
+                                                        <?php
 
-                                            $Exchange_rate =   optional(optional(optional($transact)->booking)->product)->price /  (optional(optional(optional($transact)->booking)->product)->price_pounds ?? 1);
-                                            $value = optional(optional(optional($transact)->booking)->product)->vendor_cost_price * $Exchange_rate;
-                                            ?>
-                                            N{{ number_format($value, 2) }}
-                                            @elseif($currency == 'dollars')
-                                            ${{ number_format(optional(optional(optional($transact)->booking)->product)->vendor_cost_price, 2) }} </td>
-                                            @endif
-                                            </td>
-                                            
-                                            @if($currency == 'naira')
-                                                  @if( optional(optional(optional($transact)->booking)->product)->charged_amount >= $value  + $transact->amount)
-                                                    <td class="text-success">N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  $value }}
-                                                  @else
-                                                   <td class="text-danger">N{{ optional(optional(optional($transact)->booking)->product)->charged_amount -  $value }}
-                                                   @endif
-                                            @elseif($currency == 'dollars')
-                                                @if( optional(optional(optional($transact)->booking)->product)->charged_amount >= (optional(optional(optional($transact)->booking)->product)->vendor_cost_price  + $transact->amount))   
-                                                    <td class="text-success">${{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price  }} 
-                                                @else
-                                                   <td class="text-danger">${{ optional(optional(optional($transact)->booking)->product)->charged_amount -  optional(optional(optional($transact)->booking)->product)->vendor_cost_price}}
+                                                        $Exchange_rate =   optional(optional($transact)->product)->price /  (optional(optional($transact)->product)->price_pounds ?? 1);
+                                                        $value = optional(optional($transact)->product)->vendor_cost_price * $Exchange_rate;
+                                                        ?>
+                                                        N{{ number_format($value, 2) }}
+                                                        @elseif($currency == 'dollars')
+                                                        ${{ number_format(optional(optional($transact)->product)->vendor_cost_price, 2) }} </td>
+                                                        @endif
+                                                        </td>
+                                                        <td>
+                                                            N{{$transact->transaction->amount ?? 0}}
+                                                        </td>
+                                                        @if($currency == 'naira')
+                                                                
+                                                            @if( optional(optional($transact)->product)->charged_amount >= $value  + ($transact->ptransaction->amount ?? 0))
+                                                                <td class="text-success">N{{ optional(optional($transact)->product)->charged_amount -  $value - ($transact->transaction->amount ?? 0) }}
+                                                            @else
+                                                            <td class="text-danger">N{{ optional(optional($transact)->product)->charged_amount -  $value - ($transact->transaction->amount ?? 0)}}
+                                                            @endif
+                                                        @elseif($currency == 'dollars')
+                                                            @if( optional(optional($transact)->product)->charged_amount >= (optional(optional(optional($transact)->booking)->product)->vendor_cost_price  + $transact->amount))   
+                                                                <td class="text-success">${{ optional(optional($transact)->product)->charged_amount -  optional(optional($transact)->product)->vendor_cost_price  }} 
+                                                            @else
+                                                            <td class="text-danger">${{ optional(optional($transact)->product)->charged_amount -  optional(optional($transact)->product)->vendor_cost_price}}
+                                                            @endif
+                                                        @endif
+                                                        <td>{{$transact->created_at}}</td>
+                                                    </tr>
                                                 @endif
-                                            @endif
-                                            <td>{{$transact->created_at}}</td>
-                                        </tr>
-                                        @endif                                       
-                                    @endforeach
+                                            @endif                                       
+                                        @endforeach
+                                    @endif
+
+                                    @if($currency == 'dollars')
+                                        @foreach($transact as $transact)
+                                            @if($transact->product)
+                                                @if($transact->product_usd)
+                                                    <tr>
+                                                        <td>
+                                                        {{ $transact->first_name }}   {{ $transact->last_name }}
+                                                        </td>
+                                                        <td>{{ optional(optional($transact)->user)->first_name }} {{ optional(optional($transact)->user)->last_name }}</td>
+                                                        <td> {{optional(optional($transact)->vendor)->name}}</td>
+                                                        <td>
+                                                            {{optional(optional(optional($transact)->product)->product)->name}}
+                                                        </td>
+                                                        <td>
+                                                            {{optional(optional($transact)->product_usd)->quantity}}
+                                                        </td>
+                                                        <td>
+                                                            @if($currency == 'naira')
+                                                        
+                                                            N{{ number_format(optional(optional($transact)->product_usd)->charged_amount, 2) }}
+                                                            @elseif($currency == 'dollars')
+                                                            ${{ number_format(optional(optional($transact)->product_usd)->charged_amount, 2) }}</td>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                        @if($currency == 'naira')
+                                                        <?php
+
+                                                        $Exchange_rate =   optional(optional($transact)->product_usd)->price /  (optional(optional($transact)->product_usd)->price_pounds ?? 1);
+                                                        $value = optional(optional($transact)->product_usd)->vendor_cost_price * $Exchange_rate;
+                                                        ?>
+                                                        N{{ number_format($value, 2) }}
+                                                        @elseif($currency == 'dollars')
+                                                        ${{ number_format(optional(optional($transact)->product_usd)->vendor_cost_price, 2) }} </td>
+                                                        @endif
+                                                        </td>
+                                                         <td>
+                                                            ${{$transact->ptransaction->amount ?? 0}}
+                                                        </td>
+                                                        @if($currency == 'naira')
+                                                                
+                                                            @if( optional(optional($transact)->product_usd)->charged_amount >= $value  + ($transact->ptransaction->amount ?? 0))
+                                                                <td class="text-success">N{{ optional(optional($transact)->product_usd)->charged_amount -  $value - ($transact->ptransaction->amount ?? 0)}}
+                                                            @else
+                                                            <td class="text-danger">N{{ optional(optional($transact)->product_ngn)->charged_amount -  $value - ($transact->ptransaction->amount ?? 0) }}
+                                                            @endif
+                                                        @elseif($currency == 'dollars')
+                                                            @if( optional(optional($transact)->product)->charged_amount >= (optional(optional($transact)->product)->vendor_cost_price  + ($transact->ptransaction->amount ?? 0)))   
+                                                                <td class="text-success">${{ optional(optional($transact)->product)->charged_amount -  optional(optional($transact)->product)->vendor_cost_price - ($transact->ptransaction->amount ?? 0) }} 
+                                                            @else
+                                                            <td class="text-danger">${{ optional(optional($transact)->product)->charged_amount -  optional(optional($transact)->product)->vendor_cost_price - ($transact->ptransaction->amount ?? 0)}}
+                                                            @endif
+                                                        @endif
+                                                        <td>{{$transact->created_at}}</td>
+                                                    </tr>
+                                                @endif
+                                            @endif                                       
+                                        @endforeach
+                                    @endif
+
 
                                     </tbody>
                                 </table>
