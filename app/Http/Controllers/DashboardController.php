@@ -1208,14 +1208,18 @@ class DashboardController extends Controller
             $d_vC_d = 0;
             $d_charged = 0;
             $n_charged = 0;
+            $o_price_n = 0;
+            $o_price_d = 0;
     
                 foreach( $discount_vendorCost_n as $cost)
                 {
                     if($cost->transaction_ref != null)
                     {
                         $d_vC_n =  $d_vC_n + ($cost->vendors_cost *  $cost->o_price);
+                        $o_price_n = $o_price_n + $cost->o_price ;
                     }else{
                         $d_vC_n =  $d_vC_n + (($cost->vendors_cost *  $cost->o_price) * $cost->quantity);
+                        $o_price_n = $o_price_n + ($cost->o_price * $cost->quantity);
                     }
                     
                 }
@@ -1238,8 +1242,10 @@ class DashboardController extends Controller
                     if($cost->transaction_ref != null)
                     {
                         $d_vC_d =  $d_vC_d + $cost->vendors_cost ;
+                        $o_price_d = $o_price_d + $cost->o_price ;
                     }else{
                         $d_vC_d =  $d_vC_d  + ($cost->vendors_cost *  $cost->quantity);
+                        $o_price_d = $o_price_d + ($cost->o_price * $cost->quantity);
                     }
                     
                 }
@@ -1341,36 +1347,36 @@ class DashboardController extends Controller
             $total_zar = BookingProduct::where('currency', 'ZAR')->sum('charged_amount');
 
             $discount_commission_n = Voucherpayment::where([
-                'status'=> 1,
                 'currency' => 'NG'
                 ])->where('super_agent_share', '!=', '0' )->sum('super_agent_share');
     
             $discount_commission_us = Voucherpayment::where(['status'=> 1])
                                         ->where('currency', '!=', 'NG' )
-                                        ->where('status', 1)
                                         ->sum('super_agent_share');
     
             $discount_vendorCost_d =   Voucherpayment::where(['status'=> 1])
                                         ->where('currency', '!=', 'NG' )
-                                        ->where('status', 1)
                                         ->get();
     
             $discount_vendorCost_n =   Voucherpayment::where(['status'=> 1])
                                         ->where('currency', 'NG' )
-                                        ->where('status', 1)
                                         ->get();
             $d_vC_n = 0;
             $d_vC_d = 0;
             $d_charged = 0;
             $n_charged = 0;
+            $o_price_n = 0;
+            $o_price_d = 0;
     
                 foreach( $discount_vendorCost_n as $cost)
                 {
                     if($cost->transaction_ref != null)
                     {
                         $d_vC_n =  $d_vC_n + ($cost->vendors_cost *  $cost->o_price);
+                        $o_price_n = $o_price_n + $cost->o_price;
                     }else{
                         $d_vC_n =  $d_vC_n + (($cost->vendors_cost *  $cost->o_price) * $cost->quantity);
+                        $o_price_n = $o_price_n + ($cost->o_price * $cost->quantity);
                     }
                     
                 }
@@ -1393,8 +1399,10 @@ class DashboardController extends Controller
                     if($cost->transaction_ref != null)
                     {
                         $d_vC_d =  $d_vC_d + $cost->vendors_cost ;
+                        $o_price_d = $o_price_d + $cost->o_price;
                     }else{
                         $d_vC_d =  $d_vC_d  + ($cost->vendors_cost *  $cost->quantity);
+                        $o_price_d = $o_price_d + ($cost->o_price * $cost->quantity);
                     }
                     
                 }
@@ -1485,7 +1493,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn', 'discount_commission_n', 'discount_commission_us', 'discount_profit_n', 'discount_profit_d', 'discount_total_d','discount_total_n','total_revenue_n','total_revenue_p'));
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn', 'discount_commission_n', 'discount_commission_us', 'discount_profit_n', 'discount_profit_d', 'discount_total_d','discount_total_n','total_revenue_n','total_revenue_p','o_price_n','o_price_d'));
 
     }
 
