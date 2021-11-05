@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="media-body text-light" title="Total Revenue in naira from bookings">
                                         <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($total_ngn, 2) }}</h4>
-                                        <span>Total Revenue(Naira)</span>
+                                        <span>Bookings Total Revenue(Naira)</span>
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +75,41 @@
                                     </div>
                                     <div class="media-body text-light" title="Total Revenue in dollars from bookings">
                                         <h4 class="text-uppercase mb-0 weight500">${{ number_format($total_gbp, 2) }}</h4>
-                                        <span>Total Revenue(Dollars)</span>
+                                        <span>Bookings Total Revenue(Dollars)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </a> -->
+                </div>
+                <div class="col-xl-3 col-sm-3">
+                    <!-- <a href="{{  url('currency/detail/report/naira/'.$start .'/'. $end) }}"> -->
+                        <div class="card mb-4 bg-purple" title="Revenue">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Total Revenue in naira from bookings">
+                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($o_price_n, 2) }}</h4>
+                                        <span>Voucher Total Revenue(Naira)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </a> -->
+                </div>
+                <div class="col-xl-3 col-sm-3">
+                    <!-- <a href="{{  url('currency/detail/report/pounds/'.$start.'/'.$end) }}"> -->
+                        <div class="card mb-4 bg-purple" title="Revenue">
+                            <div class="card-body">
+                                <div class="media d-flex align-items-center ">
+                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                        <i class="vl_book"></i>
+                                    </div>
+                                    <div class="media-body text-light" title="Total Revenue in dollars from bookings">
+                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($o_price_d, 2) }}</h4>
+                                        <span>Voucher Total Revenue(Dollars)</span>
                                     </div>
                                 </div>
                             </div>
