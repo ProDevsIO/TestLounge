@@ -42,7 +42,8 @@ Route::get('/next_steps', [\App\Http\Controllers\HomeController::class,"next_ste
 
 
 Route::get('/payment/confirmation', [\App\Http\Controllers\HomeController::class,"payment_confirmation"]);
-Route::get('/payment/{vas}/confirmation', [\App\Http\Controllers\HomeController::class,"payment_confirmation"]);
+Route::any('/payment/{vas}/confirmation', [\App\Http\Controllers\HomeController::class,"payment_confirmation"]);
+Route::get('/stripe/process/{id}', [\App\Http\Controllers\HomeController::class,"return_stripe_popup"]);
 Route::get('/pick', [\App\Http\Controllers\HomeController::class,"pick"])->name('pick');
 Route::get('/pricing', [\App\Http\Controllers\HomeController::class,"pricing"])->name('pricing');
 Route::get('/about', [\App\Http\Controllers\HomeController::class,"about"])->name('about');

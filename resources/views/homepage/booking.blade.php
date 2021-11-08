@@ -296,7 +296,7 @@
                                             </div>
                                             <div class='radio'
                                                  style="background:none;border:none;padding: 8px 80px;height: 86px;border-radius:25px; width:300px;"
-                                                 data-value="stripe" >
+                                                 data-value="stripe" onclick ="run()">
                                                  <img  style="padding-bottom: 0px;width:100%;" src="{{ url('/img/stripe.png') }}" />
 
                                             </div>

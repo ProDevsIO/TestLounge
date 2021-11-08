@@ -5,40 +5,57 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\CountryColor;
 use App\Models\BookingProduct;
+use App\Models\Booking;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Stripe;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
 
-    function processStripe($price,$booking){
-        
-        \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JP5BAG2gr81fV6sIYtifddnR0KZ3e8Y2eqPQEoWBe6nCBWfqs9nR9fhScQwd0JakZ1u6BA3fm7igEUVKOLaSKmL006KZ7Ekac'));
+    function processStripe($stripeToken,$booking_id){
 
-        header('Content-Type: application/json');
-        $YOUR_DOMAIN = env('APP_URL', "http://127.0.0.1:8000/");
+        $booking = Booking::where('id', $booking_id)->first();
+        $product = BookingProduct::where('booking_id',$booking_id)->first();
 
-        $booking_products = BookingProduct::where('booking_id', $booking->id)->first();
+        $username =  $booking->first_name." ".$booking->last_name;
+        $item = $product->product->name;
+        $quantity = $product->quantity;
 
-        $checkout_session = \Stripe\Checkout\Session::create([
-            'payment_method_types' => [
-                'card',
-            ],
-            'line_items' => [[
-                'price' => $price,
-                'quantity' => $booking_products->quantity
-            ]],
-            'mode' => 'payment',
-            'success_url' => $YOUR_DOMAIN . 'booking/stripe/success?b='.encrypt_decrypt('encrypt',$booking->id),
-            'cancel_url' => $YOUR_DOMAIN . 'booking/stripe/failed?b='.encrypt_decrypt('encrypt',$booking->id),
-        ]);
+      
+       
+        if($product->currency == 'NGN'){
 
-        return $checkout_session;
+            \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JP5BAG2gr81fV6sIYtifddnR0KZ3e8Y2eqPQEoWBe6nCBWfqs9nR9fhScQwd0JakZ1u6BA3fm7igEUVKOLaSKmL006KZ7Ekac'));
+
+            $stripe_charge = Stripe\Charge::create ([
+                    "amount" => $product->charged_amount * 100,
+                    "currency" => "NGN",
+                    "source" => $stripeToken,
+                    "description" => "Payment for $quantity x $item by $username ." 
+            ]);
+             
+        }else{
+
+            \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JP5BAG2gr81fV6sIYtifddnR0KZ3e8Y2eqPQEoWBe6nCBWfqs9nR9fhScQwd0JakZ1u6BA3fm7igEUVKOLaSKmL006KZ7Ekac'));
+
+            $stripe_charge = Stripe\Charge::create ([
+                    "amount" => $product->price_pounds * 100,
+                    "currency" => "USD",
+                    "source" => $stripeToken,
+                    "description" => "Payment for $quantity x $item by $username ." 
+            ]);
+          
+        }
+         
+        $data = ["data" => $stripe_charge];
+
+        return  json_encode($data);
     }
 
     function checkSession($booking_product){
