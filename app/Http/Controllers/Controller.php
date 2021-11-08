@@ -17,10 +17,13 @@ class Controller extends BaseController
 
 
     function processStripe($price,$booking){
-        \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JrhodAxurgPUhdw4h7s1RzWGxbobEC38K1LjNWVI6gH7rdQMNYYkNXfSQbYF78weVxoIwWwvqXdSRBz6qJZCT9M00771V820w'));
+        
+        \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JP5BAG2gr81fV6sIYtifddnR0KZ3e8Y2eqPQEoWBe6nCBWfqs9nR9fhScQwd0JakZ1u6BA3fm7igEUVKOLaSKmL006KZ7Ekac'));
 
         header('Content-Type: application/json');
         $YOUR_DOMAIN = env('APP_URL', "http://127.0.0.1:8000/");
+
+        $booking_products = BookingProduct::where('booking_id', $booking->id)->first();
 
         $checkout_session = \Stripe\Checkout\Session::create([
             'payment_method_types' => [
@@ -28,7 +31,7 @@ class Controller extends BaseController
             ],
             'line_items' => [[
                 'price' => $price,
-                'quantity' => 1
+                'quantity' => $booking_products->quantity
             ]],
             'mode' => 'payment',
             'success_url' => $YOUR_DOMAIN . 'booking/stripe/success?b='.encrypt_decrypt('encrypt',$booking->id),
