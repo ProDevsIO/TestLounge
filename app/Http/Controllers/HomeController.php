@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use PDF;
+use Stripe;
 
 class HomeController extends Controller
 {
@@ -354,18 +355,9 @@ class HomeController extends Controller
 
         if ($request->payment_method == "stripe") {
            
-            $response = $this->processStripe($vendor_products->price_stripe, $booking);
-            $redirect_url = $response->url;
-         
-            BookingProduct::where('booking_id', $booking->id)->update([
-                'stripe_intent' => $response->payment_intent,
-                'stripe_session' => $response->id
-            ]);
-
-            Booking::where('id', $booking->id)->update([
-                'stripe_intent' => $response->payment_intent,
-                'stripe_session' => $response->id
-            ]);
+            // $response = $this->processStripe($vendor_products->price_stripe, $booking);
+            $redirect_url = '/stripe/process/'.$booking->id.'/booking';
+           
         } else {
             if($request->payment_method == "vastech"){
                 $redirect_url = $this->processVas($data);
@@ -401,6 +393,28 @@ class HomeController extends Controller
         return $response;
     }
 
+    function return_stripe_popup($id,$type = null)
+    {
+      if($type == "booking"){
+        $product = BookingProduct::where('booking_id',$id)->first();
+        if($product->currency == 'NGN'){
+            $amount = '₦'.$product->charged_amount;
+        }else{
+            $amount = '$'.$product->price_pounds;
+        }
+    }else{
+        $product = VoucherPayment::where('id',$id)->first();
+        if($product->currency == 'NG'){
+            $amount = '₦'.$product->charged_amount;
+        }else{
+            $amount = '$'.$product->price_pounds;
+        }
+    }
+     
+        // dd($product->currency);
+        return view('homepage.stripe_popup')->with(compact('amount','id','type'));
+    }
+
     function confirm_paystack($txRef){
        
         $curl = curl_init();
@@ -432,11 +446,12 @@ class HomeController extends Controller
     }
 
     function confirm_vas($url, $txRef){
-    
+       
+   
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
-        $headr[] = 'X-API-Key: '.env('VASTECHKEY');
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '47489e67e05cd615c22298f826391ae0a0d8f124941f7a02a86e7c79ce558743');
 
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -447,18 +462,20 @@ class HomeController extends Controller
         curl_setopt(
             $ch,
             CURLOPT_POSTFIELDS,
-            json_encode(['transactionRef'=> $txRef ,"clientId"=>106669])
+            json_encode(['transactionRef'=> $txRef ,"clientId"=> 333117])
         );
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
 
         curl_close($ch);
-
+   
         return $response;
 
         
     }
+
+    
 
     public function payment_confirmation(Request $request,$type = null)
     {
@@ -469,30 +486,41 @@ class HomeController extends Controller
             $url = "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/verify";
         }
 
+       
         $request_data = $request->all();
-
-        $txRef = $request->tx_ref;
+      
+        
 
         if($type == "vas"){
             $txRef = $request->transactionRef;
-            $url = "https://vastech.sevas.live/vastech/api/v1/tstatus?transactionRef=".$txRef;
+            $url = "https://dashboard.smartpay.ng/api/v1/tstatus?transactionRef=".$txRef;
             $response = $this->confirm_vas($url,$txRef);
+            $data_response = json_decode($response);
 
         }elseif($type == "paystack")
         {
             $txRef = $request->trxref;
          
             $response = $this->confirm_paystack($txRef);
+            $data_response = json_decode($response);
+        }elseif($type == "stripe"){
+
+            $booking = Booking::where('id', $request->id)->first();
+            $txRef = $booking->transaction_ref;
+            $response = $this->processStripe($request->stripeToken, $request->id);
+            
+          
         }
         else{
+            $txRef = $request->tx_ref;
             $response = $this->confirm_flutterwave($url,$txRef);
+            
         }
 
-    
-
         $data_response = json_decode($response);
+       
 
-        if (isset($data_response->data->status) && ($data_response->data->status == "successful" || $data_response->data->status == "APPROVED" || $data_response->data->status == "success")) {
+        if (isset($data_response->data->status) && ($data_response->data->status == "successful" || $data_response->data->status == "APPROVED" || $data_response->data->status == "success" ||  $data_response->data->status == "succeeded" )) {
 
             $booking = Booking::where('transaction_ref', $txRef)->first();
 
@@ -604,6 +632,14 @@ class HomeController extends Controller
                             'transaction_ref' => $txRef,
                             'status' => 1
                         ]);
+                    }elseif($type == "stripe"){
+
+                        $booking->update([
+                            'vendor_id' => 3,
+                            'mode_of_payment' => 2,
+                            'transaction_ref' => $txRef,
+                            'status' => 1
+                        ]);
                     }else{
                         $booking->update([
                             'vendor_id' => 3,
@@ -711,6 +747,15 @@ class HomeController extends Controller
                         'status' => 1,
                         'booking_code' => $code
                     ]);
+                }elseif($type == "stripe"){
+
+                    $booking->update([
+                        'vendor_id' => 3,
+                        'mode_of_payment' => 2,
+                        'transaction_ref' => $txRef,
+                        'status' => 1,
+                        'booking_code' => $code
+                    ]);
                 }else{
                     $booking->update([
                         'vendor_id' => 3,
@@ -729,7 +774,7 @@ class HomeController extends Controller
 
             return redirect()->to('/booking/success?b=' . $txRef);
         }
-        // dd('not checking', $data_response);
+        dd('not checking', $stripe_response);
         return redirect()->to('/booking/failed?b=' . $txRef);
     }
 
@@ -1550,15 +1595,19 @@ class HomeController extends Controller
         return view('homepage.code_failed')->with(compact('booking'));
     }
 
-    public function success_stripe(Request $request)
+    public function success_stripe(Request $request, $booking_id)
     {
-        if (!$request->b) {
-            return redirect()->to('/');
-        }
+        // if (!$request->b) {
+        //     return redirect()->to('/');
+        // }
 
-
-        $booking_id = encrypt_decrypt('decrypt', $request->b);
+     
         $booking = Booking::where('id', $booking_id)->first();
+
+        dd($stripe_charge, $product->charged_amount);
+
+       
+        
         $txRef = $booking->transaction_ref;
 
      

@@ -42,7 +42,8 @@ Route::get('/next_steps', [\App\Http\Controllers\HomeController::class,"next_ste
 
 
 Route::get('/payment/confirmation', [\App\Http\Controllers\HomeController::class,"payment_confirmation"]);
-Route::get('/payment/{vas}/confirmation', [\App\Http\Controllers\HomeController::class,"payment_confirmation"]);
+Route::any('/payment/{vas}/confirmation', [\App\Http\Controllers\HomeController::class,"payment_confirmation"]);
+Route::get('/stripe/process/{id}/{type}', [\App\Http\Controllers\HomeController::class,"return_stripe_popup"]);
 Route::get('/pick', [\App\Http\Controllers\HomeController::class,"pick"])->name('pick');
 Route::get('/pricing', [\App\Http\Controllers\HomeController::class,"pricing"])->name('pricing');
 Route::get('/about', [\App\Http\Controllers\HomeController::class,"about"])->name('about');
@@ -141,7 +142,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/agent/view/products', [\App\Http\Controllers\DashboardController::class,"agent_view_product"]);
     Route::get('/post/agent/buy/{product_id}/{vendor_id}/{quantity}', [\App\Http\Controllers\DashboardController::class,"post_agent_buy"]);
     Route::get('/process/price/{product_id}/{quantity}', [\App\Http\Controllers\DashboardController::class,"agent_process_price"]);
-    Route::get('/voucher/payment/confirmation', [\App\Http\Controllers\DashboardController::class,"voucher_payment_confirmation"]);
+    Route::any('/voucher/payment/confirmation', [\App\Http\Controllers\DashboardController::class,"voucher_payment_confirmation"]);
     Route::get('/view/vouchers', [\App\Http\Controllers\DashboardController::class, "view_vouchers"]);
     Route::get('/view/discounts', [\App\Http\Controllers\DashboardController::class, "view_discounts"]);
     Route::get('/view/vouchers/transaction', [\App\Http\Controllers\DashboardController::class, "voucher_transactions"]);

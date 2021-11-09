@@ -5,37 +5,100 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\CountryColor;
 use App\Models\BookingProduct;
+use App\Models\VoucherPayment;
+use App\Models\Booking;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Stripe;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
 
-    function processStripe($price,$booking){
-        \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JrhodAxurgPUhdw4h7s1RzWGxbobEC38K1LjNWVI6gH7rdQMNYYkNXfSQbYF78weVxoIwWwvqXdSRBz6qJZCT9M00771V820w'));
+    function processStripe($stripeToken,$booking_id){
 
-        header('Content-Type: application/json');
-        $YOUR_DOMAIN = env('APP_URL', "http://127.0.0.1:8000/");
+        $booking = Booking::where('id', $booking_id)->first();
+        $product = BookingProduct::where('booking_id',$booking_id)->first();
 
-        $checkout_session = \Stripe\Checkout\Session::create([
-            'payment_method_types' => [
-                'card',
-            ],
-            'line_items' => [[
-                'price' => $price,
-                'quantity' => 1
-            ]],
-            'mode' => 'payment',
-            'success_url' => $YOUR_DOMAIN . 'booking/stripe/success?b='.encrypt_decrypt('encrypt',$booking->id),
-            'cancel_url' => $YOUR_DOMAIN . 'booking/stripe/failed?b='.encrypt_decrypt('encrypt',$booking->id),
-        ]);
+        $username =  $booking->first_name." ".$booking->last_name;
+        $item = $product->product->name;
+        $quantity = $product->quantity;
 
-        return $checkout_session;
+      
+       
+        if($product->currency == 'NGN'){
+
+            \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JP5BAG2gr81fV6sIYtifddnR0KZ3e8Y2eqPQEoWBe6nCBWfqs9nR9fhScQwd0JakZ1u6BA3fm7igEUVKOLaSKmL006KZ7Ekac'));
+
+            $stripe_charge = Stripe\Charge::create ([
+                    "amount" => $product->charged_amount * 100,
+                    "currency" => "NGN",
+                    "source" => $stripeToken,
+                    "description" => "Payment for $quantity x $item by $username ." 
+            ]);
+             
+        }else{
+
+            \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JP5BAG2gr81fV6sIYtifddnR0KZ3e8Y2eqPQEoWBe6nCBWfqs9nR9fhScQwd0JakZ1u6BA3fm7igEUVKOLaSKmL006KZ7Ekac'));
+
+            $stripe_charge = Stripe\Charge::create ([
+                    "amount" => $product->price_pounds * 100,
+                    "currency" => "USD",
+                    "source" => $stripeToken,
+                    "description" => "Payment for $quantity x $item by $username ." 
+            ]);
+          
+        }
+         
+        $data = ["data" => $stripe_charge];
+
+        return  json_encode($data);
+    }
+
+    function processVoucherStripe($stripeToken,$id){
+
+        $v_pay = VoucherPayment::where('id', $id)->first();
+       
+
+        $username =  $v_pay->user->first_name." ".$v_pay->user->last_name;
+        $item = $v_pay->product->name;
+        $quantity = $v_pay->quantity;
+
+        
+
+      
+       
+        if($v_pay->currency == 'NG'){
+
+            \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JP5BAG2gr81fV6sIYtifddnR0KZ3e8Y2eqPQEoWBe6nCBWfqs9nR9fhScQwd0JakZ1u6BA3fm7igEUVKOLaSKmL006KZ7Ekac'));
+
+            $stripe_charge = Stripe\Charge::create ([
+                    "amount" => $v_pay->charged_amount * 100,
+                    "currency" => "NGN",
+                    "source" => $stripeToken,
+                    "description" => "Payment for $quantity x $item by $username ." 
+            ]);
+             
+        }else{
+
+            \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JP5BAG2gr81fV6sIYtifddnR0KZ3e8Y2eqPQEoWBe6nCBWfqs9nR9fhScQwd0JakZ1u6BA3fm7igEUVKOLaSKmL006KZ7Ekac'));
+
+            $stripe_charge = Stripe\Charge::create ([
+                    "amount" => $v_pay->charged_amount * 100,
+                    "currency" => "USD",
+                    "source" => $stripeToken,
+                    "description" => "Payment for $quantity x $item by $username ." 
+            ]);
+          
+        }
+         
+        $data = ["data" => $stripe_charge];
+
+        return  json_encode($data);
     }
 
     function checkSession($booking_product){
@@ -109,12 +172,14 @@ class Controller extends BaseController
     {
         unset($request['subaccounts']);
         unset($request['currency']);
+
+       
         // dd($request,env('VASTECHKEY', '8317dc390aca4e482bf8d2ae06f4d3cfdf3ed402c5afd7f8d0bc257dea4842d9'));
 
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
-        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '8317dc390aca4e482bf8d2ae06f4d3cfdf3ed402c5afd7f8d0bc257dea4842d9');
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '47489e67e05cd615c22298f826391ae0a0d8f124941f7a02a86e7c79ce558743');
         //dd($headr);
         curl_setopt($ch, CURLOPT_URL, env('VASTECH_URL', 'https://dashboard.smartpay.ng/api/v1/ubank'));
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
@@ -241,31 +306,33 @@ class Controller extends BaseController
 
     function getVasTechData($booking,$price,$transaction_ref,$price_pound = null, $card_type = null){
         if ($booking->country_travelling_from_id == 156 && $card_type == 1) {
+            //50 naira minium pay
             $data = [
                 "transactionRef" => $transaction_ref,
                 "amount" => $price,
                 "approvedCurrency" => "566",
                 "channel" => "WEB",
                 "currency" => "NGN",
-                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '659758'),
-                "clientId" => env('VASTECH_CLIENT_ID', '106669'),
-                "mobileNumber"=> '08085124966',
+                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '568412'),
+                "clientId" => env('VASTECH_CLIENT_ID', '333117'),
+                "mobileNumber"=> $booking->phone_no,
                 "paymentTypeId" => 2,
                 "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "payment/vas/confirmation",
                 "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
             ];
-            }else{
+        }else{
+            //5 dollar  minium pay
             $data = [
                 "transactionRef" => $transaction_ref,
                 "amount" => $price_pound,
-                "currency" => "GBP",
-                "approvedCurrency" => "826",
+                "currency" => "USD",
+                "approvedCurrency" => "840",
                 "channel" => "WEB",
-                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '106669'),
-                "clientId" => env('VASTECH_CLIENT_ID', '659758'),
-                "mobileNumber"=> '08085124966',
-                "paymentTypeId" => 2,
+                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '568412'),
+                "clientId" => env('VASTECH_CLIENT_ID', '333117'),
+                "mobileNumber"=>  $booking->phone_no,
+                "paymentTypeId" => 4,
                 "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "payment/vas/confirmation",
                 "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
