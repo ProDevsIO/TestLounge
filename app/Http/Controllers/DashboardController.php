@@ -1806,6 +1806,10 @@ class DashboardController extends Controller
         $request_data = $request->all();
         
         $booking = VoucherPayment::where('id', $request->id)->first();
+
+        $info_quantity =  $booking->quantity;
+        $item = $v_pay->product->name;
+
         $txRef = $booking->transaction_ref;
 
         $response = $this->processVoucherStripe($request->stripeToken, $request->id);        
@@ -1934,12 +1938,12 @@ class DashboardController extends Controller
             }
 
 
-            session()->flash('alert-success', "Transaction completed. Your account has been topped up");
+            session()->flash('alert-success', "Transaction completed. $item has been topped up with $info_quantity vouchers");
             return redirect()->to('/view/vouchers');
         }
 
 
-        session()->flash('alert-danger', "Sorry! The Voucher purchase was unsuccessful.");
+        session()->flash('alert-danger', "Sorry! The Voucher purchase for $info_quantity x $item was unsuccessful.");
         return redirect()->to('/view/vouchers');
     }
 
