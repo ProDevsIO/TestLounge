@@ -446,11 +446,12 @@ class HomeController extends Controller
     }
 
     function confirm_vas($url, $txRef){
-    
+       
+   
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
-        $headr[] = 'X-API-Key: '.env('VASTECHKEY');
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '47489e67e05cd615c22298f826391ae0a0d8f124941f7a02a86e7c79ce558743');
 
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -461,14 +462,14 @@ class HomeController extends Controller
         curl_setopt(
             $ch,
             CURLOPT_POSTFIELDS,
-            json_encode(['transactionRef'=> $txRef ,"clientId"=>106669])
+            json_encode(['transactionRef'=> $txRef ,"clientId"=> 333117])
         );
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
 
         curl_close($ch);
-
+   
         return $response;
 
         
@@ -492,7 +493,7 @@ class HomeController extends Controller
 
         if($type == "vas"){
             $txRef = $request->transactionRef;
-            $url = "https://vastech.sevas.live/vastech/api/v1/tstatus?transactionRef=".$txRef;
+            $url = "https://dashboard.smartpay.ng/api/v1/tstatus?transactionRef=".$txRef;
             $response = $this->confirm_vas($url,$txRef);
             $data_response = json_decode($response);
 

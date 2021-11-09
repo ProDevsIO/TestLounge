@@ -172,12 +172,14 @@ class Controller extends BaseController
     {
         unset($request['subaccounts']);
         unset($request['currency']);
+
+       
         // dd($request,env('VASTECHKEY', '8317dc390aca4e482bf8d2ae06f4d3cfdf3ed402c5afd7f8d0bc257dea4842d9'));
 
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
-        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '8317dc390aca4e482bf8d2ae06f4d3cfdf3ed402c5afd7f8d0bc257dea4842d9');
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '47489e67e05cd615c22298f826391ae0a0d8f124941f7a02a86e7c79ce558743');
         //dd($headr);
         curl_setopt($ch, CURLOPT_URL, env('VASTECH_URL', 'https://dashboard.smartpay.ng/api/v1/ubank'));
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
@@ -304,31 +306,33 @@ class Controller extends BaseController
 
     function getVasTechData($booking,$price,$transaction_ref,$price_pound = null, $card_type = null){
         if ($booking->country_travelling_from_id == 156 && $card_type == 1) {
+            //50 naira minium pay
             $data = [
                 "transactionRef" => $transaction_ref,
                 "amount" => $price,
                 "approvedCurrency" => "566",
                 "channel" => "WEB",
                 "currency" => "NGN",
-                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '659758'),
-                "clientId" => env('VASTECH_CLIENT_ID', '106669'),
-                "mobileNumber"=> '08085124966',
+                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '568412'),
+                "clientId" => env('VASTECH_CLIENT_ID', '333117'),
+                "mobileNumber"=> $booking->phone_no,
                 "paymentTypeId" => 2,
                 "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "payment/vas/confirmation",
                 "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
             ];
-            }else{
+        }else{
+            //5 dollar  minium pay
             $data = [
                 "transactionRef" => $transaction_ref,
                 "amount" => $price_pound,
-                "currency" => "GBP",
-                "approvedCurrency" => "826",
+                "currency" => "USD",
+                "approvedCurrency" => "840",
                 "channel" => "WEB",
-                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '106669'),
-                "clientId" => env('VASTECH_CLIENT_ID', '659758'),
-                "mobileNumber"=> '08085124966',
-                "paymentTypeId" => 2,
+                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '568412'),
+                "clientId" => env('VASTECH_CLIENT_ID', '333117'),
+                "mobileNumber"=>  $booking->phone_no,
+                "paymentTypeId" => 4,
                 "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "payment/vas/confirmation",
                 "paymentDescription" =>  "TravelTestGlobal Covid Testing Booking"
 
