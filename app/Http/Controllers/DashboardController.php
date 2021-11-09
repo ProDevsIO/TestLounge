@@ -1796,7 +1796,7 @@ class DashboardController extends Controller
             $voucherProduct = VoucherPayment::Create($save_data);
       
     
-        $redirect_url = $this->processPaystack($data);
+         $redirect_url = '/stripe/process/'.$voucherProduct->id.'/voucher';
 
         return redirect()->to($redirect_url);
     }
@@ -1804,32 +1804,17 @@ class DashboardController extends Controller
     public function voucher_payment_confirmation(Request $request)
     {
         $request_data = $request->all();
-        $txRef = $request->trxref;
-
-        //run some curl commands to verify
-        $curl = curl_init();
-        $url = "https://api.paystack.co/transaction/verify/$txRef";
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
-            "Authorization: Bearer ". env('PAYSTACK_SECRET_KEY', 'sk_test_a888f85236f4da1b0bd204ad8f8c96b6e010a7e9'),
-            "Cache-Control: application/json",
-            ),
-        ));
         
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        curl_close($curl);
+        $booking = VoucherPayment::where('id', $request->id)->first();
+        $txRef = $booking->transaction_ref;
+
+        $response = $this->processVoucherStripe($request->stripeToken, $request->id);        
+
         $data_response = json_decode($response);
+       
 
         //check if succesful
-        if (isset($data_response->data->status) && $data_response->data->status == "success") {
+        if (isset($data_response->data->status) && $data_response->data->status == "succeeded") {
 
             $voucherpay = VoucherPayment::where('transaction_ref', $txRef)->first();
 

@@ -28,7 +28,6 @@
   
 <div class="container">
   
-   
   
     <div class="row">
    
@@ -53,10 +52,17 @@
                         </div>
                     @endif
   
-                    <form role="form" action='{{url("/payment/stripe/confirmation")}}' method="post" class="require-validation"
+                    @if($type == "booking")
+                        <form role="form" action='{{url("/payment/stripe/confirmation")}}' method="post" class="require-validation"
                                                      data-cc-on-file="false"
                                                     data-stripe-publishable-key="{{ env('Stripe_pkey','pk_test_51JP5BAG2gr81fV6sq1YEHmRKLuq0J1WFGHdaQUf3rPfmEqV3HJx6z4fwb9JIq191mfBHpm61JybOS9ndFdkR9qd800LJTOH07Q') }}"
                                                     id="payment-form">
+                    @elseif($type == "voucher")
+                        <form role="form" action='{{url("/voucher/payment/confirmation")}}' method="post" class="require-validation"
+                                                     data-cc-on-file="false"
+                                                    data-stripe-publishable-key="{{ env('Stripe_pkey','pk_test_51JP5BAG2gr81fV6sq1YEHmRKLuq0J1WFGHdaQUf3rPfmEqV3HJx6z4fwb9JIq191mfBHpm61JybOS9ndFdkR9qd800LJTOH07Q') }}"
+                                                    id="payment-form">
+                    @endif
                         @csrf
   
                         <div class='form-row row'>

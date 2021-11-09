@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\CountryColor;
 use App\Models\BookingProduct;
+use App\Models\VoucherPayment;
 use App\Models\Booking;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -46,6 +47,48 @@ class Controller extends BaseController
 
             $stripe_charge = Stripe\Charge::create ([
                     "amount" => $product->price_pounds * 100,
+                    "currency" => "USD",
+                    "source" => $stripeToken,
+                    "description" => "Payment for $quantity x $item by $username ." 
+            ]);
+          
+        }
+         
+        $data = ["data" => $stripe_charge];
+
+        return  json_encode($data);
+    }
+
+    function processVoucherStripe($stripeToken,$id){
+
+        $v_pay = VoucherPayment::where('id', $id)->first();
+       
+
+        $username =  $v_pay->user->first_name." ".$v_pay->user->last_name;
+        $item = $v_pay->product->name;
+        $quantity = $v_pay->quantity;
+
+        
+
+      
+       
+        if($v_pay->currency == 'NG'){
+
+            \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JP5BAG2gr81fV6sIYtifddnR0KZ3e8Y2eqPQEoWBe6nCBWfqs9nR9fhScQwd0JakZ1u6BA3fm7igEUVKOLaSKmL006KZ7Ekac'));
+
+            $stripe_charge = Stripe\Charge::create ([
+                    "amount" => $v_pay->charged_amount * 100,
+                    "currency" => "NGN",
+                    "source" => $stripeToken,
+                    "description" => "Payment for $quantity x $item by $username ." 
+            ]);
+             
+        }else{
+
+            \Stripe\Stripe::setApiKey(env('Stripe_Key','sk_test_51JP5BAG2gr81fV6sIYtifddnR0KZ3e8Y2eqPQEoWBe6nCBWfqs9nR9fhScQwd0JakZ1u6BA3fm7igEUVKOLaSKmL006KZ7Ekac'));
+
+            $stripe_charge = Stripe\Charge::create ([
+                    "amount" => $v_pay->charged_amount * 100,
                     "currency" => "USD",
                     "source" => $stripeToken,
                     "description" => "Payment for $quantity x $item by $username ." 

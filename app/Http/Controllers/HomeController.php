@@ -356,7 +356,7 @@ class HomeController extends Controller
         if ($request->payment_method == "stripe") {
            
             // $response = $this->processStripe($vendor_products->price_stripe, $booking);
-            $redirect_url = '/stripe/process/'.$booking->id;
+            $redirect_url = '/stripe/process/'.$booking->id.'/booking';
            
         } else {
             if($request->payment_method == "vastech"){
@@ -393,19 +393,26 @@ class HomeController extends Controller
         return $response;
     }
 
-    function return_stripe_popup($id)
+    function return_stripe_popup($id,$type = null)
     {
-      
+      if($type == "booking"){
         $product = BookingProduct::where('booking_id',$id)->first();
         if($product->currency == 'NGN'){
             $amount = '₦'.$product->charged_amount;
         }else{
             $amount = '$'.$product->price_pounds;
         }
-     
+    }else{
+        $product = VoucherPayment::where('id',$id)->first();
+        if($product->currency == 'NG'){
+            $amount = '₦'.$product->charged_amount;
+        }else{
+            $amount = '$'.$product->price_pounds;
+        }
+    }
      
         // dd($product->currency);
-        return view('homepage.stripe_popup')->with(compact('amount','id'));
+        return view('homepage.stripe_popup')->with(compact('amount','id','type'));
     }
 
     function confirm_paystack($txRef){
