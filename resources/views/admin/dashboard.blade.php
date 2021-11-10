@@ -400,7 +400,8 @@
                                                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                                 <a href="{{ url('/view/booking/'.$booking->id) }}"
                                                                    class="dropdown-item">View</a>
-                                                                <a href="{{ url('/booking/delete/'.$booking->id) }}"
+                                                                <a href="javascript:;"
+                                                                    onclick="confirmation('{{ url('/booking/delete/'.$booking->id) }}')"
                                                                    class="dropdown-item">Delete</a>
                                                                 @if($booking->user_id == null)
                                                                     <a class="dropdown-item" data-toggle="modal"
@@ -514,6 +515,14 @@
             if (d) {
 
                 window.location = "/agent/deactivate/name/" + id;
+            }
+        }
+
+        function confirmation(url) {
+            var d = confirm("Are you sure you want to perform this action?");
+
+            if (d) {
+                window.location = url;
             }
         }
     </script>

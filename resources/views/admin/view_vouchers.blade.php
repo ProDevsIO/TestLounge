@@ -31,117 +31,119 @@
 
                 <?php $j =1;?>
                 @foreach($products as $product)
-                 <div class="col-xl-4 col-sm-4">
-                        <div class="card mb-4 bg-purple" title="Generate voucher">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light" title="Generate voucher">
-                                        <h6 class="text-uppercase mb-0 weight500">{{$product->name}}</h6>
-                                        <span>Quota: 
-                                            @if($product->voucherCount)
-                                                @if(auth()->user()->type == 1)
-
-                                                    <?php $pcount = 0;
-                                                        foreach($product->voucherCount as $count){
-                                                            
-                                                            $pcount = $pcount + $count->quantity;
-                                                        }
-                                                    ?>
-                                                    {{$pcount}}
-                                                @else
-                                                    {{$product->voucherCount->quantity}}
-                                                @endif
-                                                    
-                                            @else  
-                                              0
-                                            @endif</span>
-                                            
-                                           
-                                    </div>
-                                    
-                                </div>
-                                <br>
-
-                                @if($product->voucherCount && auth()->user()->type == 2)
-                                    @if($product->voucherCount->quantity > 0)
-                                        <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
-                                                                                href="#refmodal{{$product->id}}">generate voucher</button>
-                                        @if(auth()->user()->main_agent_id == null)                                    
-                                             <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
-                                                                                href="#assign{{$product->id}}">Assign to sub agent</button>
-                                        @else
-                                        <br><br>
-                                        @endif
-                                    
-                                    @endif
-                                @else
-                                <br><br><br>
-                                @endif
-                                
-                            </div>
-                        </div>
-                    </div>
-
-                        <!-- Modal -->
-                                        @if(auth()->user()->type ==2)
-                                             <div id="refmodal{{$product->id}}" class="modal fade" role="dialog">
-                                                <div class="modal-dialog">
-
-                                                    <!-- Modal content-->
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Assign voucher code to Client</h4>
-                                                            <button type="button" class="close pull-left"
-                                                                    data-dismiss="modal">&times;
-                                                            </button>
-
-                                                        </div>
-                                                        <div class="modal-body">
-                                                                    <div class="alert alert-warning">
-                                                                        <p><span class="badge badge-danger">Notice!</span> Once this code is generated, it will be assigned to this email address and email will be sent out with the booking link for the voucher, This simply means that the code generated can only be used by the assigned email for booking. </p>
-                                                                    </div>
-                                                            
-                                                            <form action="{{ url('/voucher/email/' . $product->id) }}" method="post">
-                                                                @csrf    
-                                                                <label for=""> Client Email</label>
-                                                                    <input type="email" name="email" id="email_{{$j}}"class="form-control" required>
-                                                                    <br>
-                                                                    <label for=""> Please select a quantity</label>
-                                                                    <select name="quantity" id="quantity_{{$j}}" class="form-control" required @if($product->id != 15) onchange="generateKitField('{{$product->id}}', '{{$j}}')" @endif>
-                                                                        <option value=""> Select a quantity</option>
-                                                                    @if($product->voucherCount)
-                                                                        @for($i=1; $i <= $product->voucherCount->quantity; $i++)
-                                                                            <option value="{{$i}}">{{$i}}</option>
-                                                                        @endfor
-                                                                    @endif
-                                                                   
-                                                                    </select>
-                                                                    <br>
-                                                                    @if($product->id != 15 )
-                                                                        <div class="div_kit{{$j}}">
-
-                                                                        </div>
-
-                                                                    @endif
-                                                        
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-sm bg-purple text-white">submit</button>
-                                                            </form>
-                                                            <button type="button" class="btn btn-sm bg-purple text-white"
-                                                                    data-dismiss="modal">Close
-                                                            </button>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
+                    
+                        <div class="col-xl-4 col-sm-4">
+                                <div class="card mb-4 bg-purple" title="Generate voucher">
+                                    <div class="card-body">
+                                        <div class="media d-flex align-items-center ">
+                                            <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
+                                                <i class="vl_book"></i>
                                             </div>
+                                            <div class="media-body text-light" title="Generate voucher">
+                                                <h6 class="text-uppercase mb-0 weight500">{{$product->name}}</h6>
+                                                <span>Quota: 
+                                                    @if($product->voucherCount)
+                                                        @if(auth()->user()->type == 1)
+
+                                                            <?php $pcount = 0;
+                                                                foreach($product->voucherCount as $count){
+                                                                    
+                                                                    $pcount = $pcount + $count->quantity;
+                                                                }
+                                                            ?>
+                                                            {{$pcount}}
+                                                        @else
+                                                            {{$product->voucherCount->quantity}}
+                                                        @endif
+                                                            
+                                                    @else  
+                                                    0
+                                                    @endif</span>
+                                                    
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        <br>
+
+                                        @if($product->voucherCount && auth()->user()->type == 2)
+                                            @if($product->voucherCount->quantity > 0)
+                                                <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
+                                                                                        href="#refmodal{{$product->id}}">generate voucher</button>
+                                                @if(auth()->user()->main_agent_id == null)                                    
+                                                    <button class="btn btn-outline-dark text-white btn-block" id="generate_button" style="color:white; border-color:white;" data-toggle="modal"
+                                                                                        href="#assign{{$product->id}}">Assign to sub agent</button>
+                                                @else
+                                                <br><br>
+                                                @endif
+                                            
+                                            @endif
+                                        @else
+                                        <br><br><br>
                                         @endif
-                                      <?php $j++; ?>         
-                @endforeach
+                                        
+                                    </div>
+                                </div>
+                        </div>
+
+                            <!-- Modal -->
+                                            @if(auth()->user()->type ==2)
+                                                <div id="refmodal{{$product->id}}" class="modal fade" role="dialog">
+                                                    <div class="modal-dialog">
+
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Assign voucher code to Client</h4>
+                                                                <button type="button" class="close pull-left"
+                                                                        data-dismiss="modal">&times;
+                                                                </button>
+
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                        <div class="alert alert-warning">
+                                                                            <p><span class="badge badge-danger">Notice!</span> Once this code is generated, it will be assigned to this email address and email will be sent out with the booking link for the voucher, This simply means that the code generated can only be used by the assigned email for booking. </p>
+                                                                        </div>
+                                                                
+                                                                <form action="{{ url('/voucher/email/' . $product->id) }}" method="post">
+                                                                    @csrf    
+                                                                    <label for=""> Client Email</label>
+                                                                        <input type="email" name="email" id="email_{{$j}}"class="form-control" required>
+                                                                        <br>
+                                                                        <label for=""> Please select a quantity</label>
+                                                                        <select name="quantity" id="quantity_{{$j}}" class="form-control" required @if($product->id != 15) onchange="generateKitField('{{$product->id}}', '{{$j}}')" @endif>
+                                                                            <option value=""> Select a quantity</option>
+                                                                        @if($product->voucherCount)
+                                                                            @for($i=1; $i <= $product->voucherCount->quantity; $i++)
+                                                                                <option value="{{$i}}">{{$i}}</option>
+                                                                            @endfor
+                                                                        @endif
+                                                                    
+                                                                        </select>
+                                                                        <br>
+                                                                        @if($product->id != 15 )
+                                                                            <div class="div_kit{{$j}}">
+
+                                                                            </div>
+
+                                                                        @endif
+                                                            
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-sm bg-purple text-white">submit</button>
+                                                                </form>
+                                                                <button type="button" class="btn btn-sm bg-purple text-white"
+                                                                        data-dismiss="modal">Close
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        <?php $j++; ?>         
+                  
+                 @endforeach
                      <div class="col-xl-12 p-0">
                             <div class="card card-shadow mb-4 ">
                                 <div class="card-header border-0">
@@ -409,31 +411,6 @@
                 for(i = 0 ; i< quantity; i++){
                     $card.append($("<label>Test kit number</label><br>"))
                     $card.append($("<div class='input-group mb-3'><input type='text' class='form-control' placeholder='Type test kit number' name='test_kit"+ i + "' required><div class='input-group-append' data-toggle='modal' data-target='#barcodeModal'><span class='input-group-text'>Scan barcode</span></div></div>")); 
-                
-                }
-            
-            }
-
-        }
-
-
-    </script>
-    @elseif(auth()->user()->enable_barcode == 0)
-    <script>
-       function generateKitField(id, count) {
-            var q = 'quantity_' + count;
-            var id = id;
-            var kit_n = ".div_kit" + count;
-            var quantity = document.getElementById(q).value;
-            // console.log(email, quantity);
-            console.log(q, id, quantity, count);
-            if (id != 15) {
-                var $card = $(kit_n);
-            
-            $card.empty(); // remove old options
-                for(i = 0 ; i< quantity; i++){
-                    $card.append($("<label>Test kit number</label><br>"))
-                    $card.append($("<input type='text' class='form-control' placeholder='Type test kit number' name='test_kit"+ i + "' required>")); 
                 
                 }
             

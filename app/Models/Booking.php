@@ -180,6 +180,16 @@ class Booking extends Model
         return $this->hasOne(BookingProduct::class, 'booking_id');
     }
 
+	public function product_ngn()
+    {
+        return $this->hasOne(BookingProduct::class, 'booking_id')->where('currency','NGN');
+    }
+
+	public function product_usd()
+    {
+        return $this->hasOne(BookingProduct::class, 'booking_id')->where('currency','!=','NGN');
+    }
+
 	public function symproduct()
 	{
 		return $this->hasMany(BookingProduct::class, 'booking_id');

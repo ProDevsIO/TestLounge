@@ -15,8 +15,10 @@ class AddConsentVaccineToBookingsTable extends Migration
     {
         Schema::table('bookings', function (Blueprint $table) {
             //
-            $table->text('vaccinated')->nullable()->after('vaccination_type');
-            $table->text('proof_vaccine')->nullable()->after('vaccination_type');
+            if(!Schema::hasColumn('bookings', 'vaccinated')){
+                $table->text('vaccinated')->nullable()->after('vaccination_type');
+                $table->text('proof_vaccine')->nullable()->after('vaccination_type');
+            }
         });
     }
 

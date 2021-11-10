@@ -89,6 +89,8 @@
                                 </div>
                                 <div class="col-md-12 " style="margin-top: 20px">
                                     <label>Phone number<span class="show_required"> *</span></label>
+                                    <br>
+                                    <span>Please indicate your internation dailing country code and then enter the rest of the number</span>
                                     <input id="phone" style="" type="text" value="{{ old('phone_no') }}" name="phone_no"
                                            class=" pr-5" placeholder="Phone No" required>
                                            <input id="hidden_phone" type="hidden" name="phone_full">
@@ -147,28 +149,32 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label>Isolation Address1: <span class="show_required"> *</span> </label>
+                                    <label>Isolation Address1: <span class="show_required"> *</span> </label><br>
+                                    <span>This is the address where you will be during isolation</span>
                                     <input class="" type="text" name="isolation_address" placeholder="apartment, building, block, street"
                                            value="{{ old('isolation_address') }}" required/>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Isolation Address2: </label>
+                                    <label>Isolation Address2: </label><br>
+                                    <span>This is the address where you will be during isolation</span>
                                     <input class="" type="text" name="isolation_address2"
                                            id="isolation_address2" placeholder="apartment, building, block, street"
                                            value="{{ old('isolation_address2') }}"/>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Isolation City/Town: <span class="show_required"> *</span></label>
+                                    <br><br><br>
                                     <input class="" type="text" name="isolation_town"
                                            value="{{ old('isolation_town') }}" required/>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Isolation Postcode: <span class="show_required"> *</span></label>
+                                    <label>Isolation Postcode: <span class="show_required"> *</span></label><br>
+                                    <span>Your sampling package will be posted here, kindly ensure you put in the correct post code</span>
                                     <input class="" type="text" name="isolation_postal_code"
                                            value="{{ old('isolation_postal_code') }}" required/>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Isolation Country: <span class="show_required"> *</span></label>
+                                    <label>Isolation Country: <span class="show_required"> *</span></label><br><br><br>
                                     <select style="width: 100%;" class="select-2"
                                             name="isolation_country_id" required readonly>
                                         <option value="">Make a selection</option>
@@ -180,7 +186,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label>Country travelled from: <span
-                                                class="show_required"> *</span></label>
+                                                class="show_required"> *</span></label><br>
+                                                <span>Please indicate the country/territory where you are travelling from</span>
                                     <select class="select-2 select2 country_id__"
                                             name="country_travelling_from_id" autocomplete="off"
                                             id="travel_from"  onselect="selectCountry()">
@@ -217,8 +224,9 @@
 
 
                                 @if(isset($voucher))
-
-                                    @if($voucher->voucherCount->product_id == 15)
+                                    
+                                    @if($voucher->voucherCount->product_id != 15)
+                                    
                                         <div class="col-md-12" style="display:none">
                                         <?php $decode = json_decode($voucher->test_kit); ?>
    
@@ -231,10 +239,11 @@
                                                     <label>Test kit number</label>
                                                 @endif
                                                 <!-- <div class="input-group mb-3"> -->
+                                               
                                                     @if($decode != null)
                                                     <input class="" type="text" name="test_kit{{$x}}" value="{{ $decode[$x] }}" readonly required ><br>
                                                     @else
-                                                    <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required ><br>
+                                                    <!-- <input class="" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" ><br> -->
                                                     @endif
                                                     <!-- <div class="input-group-append" data-toggle="modal" data-target="#myModal">
                                                         <span class="input-group-text">Scan barcode</span>
@@ -287,18 +296,18 @@
                                             </div>
                                             <div class='radio'
                                                  style="background:none;border:none;padding: 8px 80px;height: 86px;border-radius:25px; width:300px;"
-                                                 data-value="stripe" >
+                                                 data-value="stripe" onclick ="run()">
                                                  <img  style="padding-bottom: 0px;width:100%;" src="{{ url('/img/stripe.png') }}" />
 
                                             </div>
 
-                                            <!-- <div class='radio'
+                                            <div class='radio'
                                                  style="background:none;border:none;padding: 20px 40px 20px 40px;height: 86px;border-radius:25px"
                                                  data-value="vastech" onclick ="run()">
                                                 <img src="{{ url('/img/vas.svg') }}"
                                                      style="padding-bottom: 0px;margin-left: -38px;width:200px"/> <span><label>
 
-                                            </div> -->
+                                            </div>
                                            
                                         @endif    
                                         </div>
@@ -359,7 +368,7 @@
                                             this test being done.</p>
                                            <div class="color-8"><p class="text-muted"><input type="checkbox" name="terms" required
                                                                     class="bg-1"/>
-                                                                    By submitting the form, I consent to the <a href="/terms" class="text-info"> terms and conditions</a> of purchasing this product.</p>
+                                                                    By submitting the form, I consent to the <a href="/terms" target="_blank" class="text-info"> terms and conditions</a> of purchasing this product.</p>
 
                                         </div>
                                         </div>

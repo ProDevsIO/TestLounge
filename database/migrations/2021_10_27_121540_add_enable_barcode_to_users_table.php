@@ -15,7 +15,7 @@ class AddEnableBarcodeToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            if(!Schema::hasColumn('users', 'enabled_barcode')){
+            if(!Schema::hasColumn('users', 'enable_barcode')){
                 $table->integer('enable_barcode')->nullable()->default(0)->after('updated_at');
             }
         });

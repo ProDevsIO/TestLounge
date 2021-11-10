@@ -1091,6 +1091,11 @@ class DashboardController extends Controller
             abort(403);
         }
 
+        $total_w_v_n = 0;
+        $total_w_v_p = 0;
+        $vendor_cost_w_v_n = 0;
+        $vendor_cost_w_v_p = 0;
+
         if ($request->start && $request->end) {
             $start = $request->start;
             $end = $request->end;
@@ -1103,9 +1108,38 @@ class DashboardController extends Controller
             $total_gbp = 0;
             $vendor_cost_ngn = 0;
             $vendor_cost_dollars = 0;
+
            
-            $checkn = Transaction::where('type', 1)->wherebetween('created_at', [$start, $end])->get();
-            $checkb = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->get();
+            $checkn = Booking::where('status', 1)->wherebetween('created_at', [$start, $end])->get();
+            $checkb = Booking::where('status', 1)->wherebetween('created_at', [$start, $end])->get();
+
+            $c_w_v =Booking::where('status', 1)->where('mode_of_payment','!=', '3')->wherebetween('created_at', [$start, $end])->get();
+            $c_w_v_b = Booking::where('status', 1)->where('mode_of_payment','!=', '3')->wherebetween('created_at', [$start, $end])->get();
+
+            foreach($c_w_v as $ch){
+                // dump($ch->booking_id);
+                
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
+               
+               if($book_p_n != null)
+               {
+                $total_w_v_n  = $total_w_v_n  + ($book_p_n->charged_amount ?? 0);
+                $rate = $book_p_n->charged_amount/ ($book_p_n->price ?? 1);
+                $vendor_cost_w_v_n = $vendor_cost_w_v_n + ($book_p_n->vendor_cost_price * $rate);
+               }
+               
+            }
+            // dd($checkn);
+            foreach($c_w_v_b as $ch){
+                // dump( $check->product);
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
+               if($book_p_n != null)
+               {
+                $total_w_v_p  = $total_w_v_p  + ($book_p_n->charged_amount ?? 0);
+                $vendor_cost_w_v_p = $vendor_cost_w_v_p + $book_p_n->vendor_cost_price;
+               }
+               
+            }
 
             $commission = Transaction::where('type', 1)->wherebetween('created_at', [$start, $end])->sum('amount');
             $pcommission = PoundTransaction::where('type', 1)->wherebetween('created_at', [$start, $end])->sum('amount');
@@ -1116,11 +1150,11 @@ class DashboardController extends Controller
             foreach($checkn as $ch){
                 // dump($ch->booking_id);
                 
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'NGN'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
                
                if($book_p_n != null)
                {
-                $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
+                $total_ngn  = $total_ngn  + ($book_p_n->charged_amount ?? 0);
                 $rate = $book_p_n->charged_amount/ ($book_p_n->price ?? 1);
                 $vendor_cost_dollars = $vendor_cost_ngn + ($book_p_n->vendor_cost_price * $rate);
                }
@@ -1129,10 +1163,10 @@ class DashboardController extends Controller
             // dd($checkn);
             foreach($checkb as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'USD'])->first();
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'USD'])->first();
                if($book_p_n != null)
                {
-                $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
+                $total_gbp  = $total_gbp  + ($book_p_n->charged_amount ?? 0);
                 $vendor_cost_dollars = $vendor_cost_dollars + $book_p_n->vendor_cost_price;
                }
                
@@ -1155,30 +1189,37 @@ class DashboardController extends Controller
     
             $discount_commission_us = Voucherpayment::where(['status'=> 1])
                                         ->where('currency', '!=', 'NG' )
+                                        ->where('status', 1)
                                         ->wherebetween('created_at', [$start, $end])
                                         ->sum('super_agent_share');
     
             $discount_vendorCost_d =   Voucherpayment::where(['status'=> 1])
                                         ->where('currency', '!=', 'NG' )
+                                        ->where('status', 1)
                                         ->wherebetween('created_at', [$start, $end])
                                         ->get();
     
             $discount_vendorCost_n =   Voucherpayment::where(['status'=> 1])
                                         ->where('currency', 'NG' )
+                                        ->where('status', 1)
                                         ->wherebetween('created_at', [$start, $end])
                                         ->get();
             $d_vC_n = 0;
             $d_vC_d = 0;
             $d_charged = 0;
             $n_charged = 0;
+            $o_price_n = 0;
+            $o_price_d = 0;
     
                 foreach( $discount_vendorCost_n as $cost)
                 {
                     if($cost->transaction_ref != null)
                     {
                         $d_vC_n =  $d_vC_n + ($cost->vendors_cost *  $cost->o_price);
+                        $o_price_n = $o_price_n + $cost->o_price ;
                     }else{
                         $d_vC_n =  $d_vC_n + (($cost->vendors_cost *  $cost->o_price) * $cost->quantity);
+                        $o_price_n = $o_price_n + ($cost->o_price * $cost->quantity);
                     }
                     
                 }
@@ -1200,9 +1241,11 @@ class DashboardController extends Controller
                 {
                     if($cost->transaction_ref != null)
                     {
-                        $d_vC_d =  $d_vC_n + $cost->vendors_cost ;
+                        $d_vC_d =  $d_vC_d + $cost->vendors_cost ;
+                        $o_price_d = $o_price_d + $cost->o_price ;
                     }else{
-                        $d_vC_d =  $d_vC_n  + ($cost->vendors_cost *  $cost->quantity);
+                        $d_vC_d =  $d_vC_d  + ($cost->vendors_cost *  $cost->quantity);
+                        $o_price_d = $o_price_d + ($cost->o_price * $cost->quantity);
                     }
                     
                 }
@@ -1225,39 +1268,74 @@ class DashboardController extends Controller
             $total_gbp = 0;
             $vendor_cost_ngn = 0;
             $vendor_cost_dollars = 0;
-            $checkn = Transaction::where('type', 1)->get();
-            $checkb = PoundTransaction::where('type', 1)->get();
-          
+            $checkn =Booking::where('status', 1)->get();
+            $checkb = Booking::where('status', 1)->get();
+       
             $commission = Transaction::where('type', 1)->sum('amount');
             $pcommission = PoundTransaction::where('type', 1)->sum('amount');
 
             $discount_total_n = VoucherDiscount::where('currency','NG' )->sum('amount');
             $discount_total_d = VoucherDiscount::where('currency','!=','NG' )->sum('amount');
 
-            foreach($checkn as $ch){
-                // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'NGN'])->first();
+            $c_w_v =Booking::where('status', 1)->where('mode_of_payment','!=', '3')->get();
+            $c_w_v_b = Booking::where('status', 1)->where('mode_of_payment','!=', '3')->get();
+          
+        
+            foreach($c_w_v as $ch){
+                // dump($ch->booking_id);
+                
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
+               
                if($book_p_n != null)
                {
+                $total_w_v_n  = $total_w_v_n  + ($book_p_n->charged_amount ?? 0);
+                $rate = $book_p_n->charged_amount/ ($book_p_n->price ?? 1);
+                $vendor_cost_w_v_n = $vendor_cost_w_v_n + ($book_p_n->vendor_cost_price * $rate);
+               }
+               
+            }
+            // dd($checkn);
+            foreach($c_w_v_b as $ch){
+              
+                // dump( $check->product);
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id])->first();
+               if($book_p_n != null)
+               {
+               
+                $total_w_v_p  = $total_w_v_p  + ($book_p_n->charged_amount ?? 0);
+                $vendor_cost_w_v_p = $vendor_cost_w_v_p + $book_p_n->vendor_cost_price;
+               }
+               
+            }
+           
+
+            foreach($checkn as $ch){
+                // dump( $check->product);
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id ,'currency' => 'NGN'])->first();
+               if($book_p_n != null)
+               {
+
                 $total_ngn  = $total_ngn  + $book_p_n->charged_amount;
                 $rate = $book_p_n->price/ ($book_p_n->price_pounds ?? 1);
                 $vendor_cost_ngn = $vendor_cost_ngn + ($book_p_n->vendor_cost_price * $rate);
                }
                
             }
-           
+            
 
             foreach($checkb as $ch){
                 // dump( $check->product);
-                $book_p_n = BookingProduct::where(['booking_id' => $ch->booking_id ,'currency' => 'USD'])->first();
-        
+                $book_p_n = BookingProduct::where(['booking_id' => $ch->id])->where('currency','!=','NGN')->first();
+                
                if($book_p_n != null)
                {
+               
                 $total_gbp  = $total_gbp  + $book_p_n->charged_amount;
                 $vendor_cost_dollars = $vendor_cost_dollars + $book_p_n->vendor_cost_price;
                }
                
             }
+          
           
             // $total_ngn = BookingProduct::where('currency', 'NGN')->sum('charged_amount');
             // $vendor_cost_ngn = BookingProduct::where('currency', 'NGN')->sum('vendor_cost_price');
@@ -1269,7 +1347,6 @@ class DashboardController extends Controller
             $total_zar = BookingProduct::where('currency', 'ZAR')->sum('charged_amount');
 
             $discount_commission_n = Voucherpayment::where([
-                'status'=> 1,
                 'currency' => 'NG'
                 ])->where('super_agent_share', '!=', '0' )->sum('super_agent_share');
     
@@ -1288,14 +1365,18 @@ class DashboardController extends Controller
             $d_vC_d = 0;
             $d_charged = 0;
             $n_charged = 0;
+            $o_price_n = 0;
+            $o_price_d = 0;
     
                 foreach( $discount_vendorCost_n as $cost)
                 {
                     if($cost->transaction_ref != null)
                     {
                         $d_vC_n =  $d_vC_n + ($cost->vendors_cost *  $cost->o_price);
+                        $o_price_n = $o_price_n + $cost->o_price;
                     }else{
                         $d_vC_n =  $d_vC_n + (($cost->vendors_cost *  $cost->o_price) * $cost->quantity);
+                        $o_price_n = $o_price_n + ($cost->o_price * $cost->quantity);
                     }
                     
                 }
@@ -1317,9 +1398,11 @@ class DashboardController extends Controller
                 {
                     if($cost->transaction_ref != null)
                     {
-                        $d_vC_d =  $d_vC_n + $cost->vendors_cost ;
+                        $d_vC_d =  $d_vC_d + $cost->vendors_cost ;
+                        $o_price_d = $o_price_d + $cost->o_price;
                     }else{
-                        $d_vC_d =  $d_vC_n  + ($cost->vendors_cost *  $cost->quantity);
+                        $d_vC_d =  $d_vC_d  + ($cost->vendors_cost *  $cost->quantity);
+                        $o_price_d = $o_price_d + ($cost->o_price * $cost->quantity);
                     }
                     
                 }
@@ -1345,10 +1428,16 @@ class DashboardController extends Controller
             $discount_profit_n =  $n_charged -  $d_vC_n;
             $discount_profit_d = $d_charged -  $d_vC_d;
 
+            $total_revenue_n = $n_charged + $total_w_v_n;
+            $total_revenue_p =  $d_charged + $total_w_v_p;
+
            
         $profit_naira =  $total_ngn - $commission - $vendor_cost_ngn;
         // dd($profit_naira, $total_ngn ,$commission , $vendor_cost_ngn );
-
+        // dump( $total_revenue_n , $n_charged , $total_w_v_n,   $total_ngn );
+        // dump('br', $total_revenue_p , $d_charged , $total_w_v_p,   $total_gbp );
+        // dd();
+            
         $profit_dollars = $total_gbp - $pcommission - $vendor_cost_dollars;
         // dd(  $profit_dollars ,$total_gbp ,$pcommission ,$vendor_cost_dollars );
 
@@ -1367,9 +1456,9 @@ class DashboardController extends Controller
             );
 
             $columns = array('Name', 'Referral Code', 'Total C.booking', 'Wallet Balance', 'Account Details');
-            $columnMoney = array('Total Revenue(Naira)', 'Total Revenue(Dollar)', 'Total Revenue(cedis)', 'Total Revenue(TZS)', 'Total Revenue(KES)', 'Total Revenue(ZAR)', 'Amount due(Referrals');
+            $columnMoney = array('Total Revenue(Naira)', 'Total Revenue(Dollar)', 'Amount due(Referrals');
 
-            $callback = function () use ($users, $columns, $columnMoney, $total_ngn, $total_gbp, $total_ghs, $total_tzs, $total_kes, $total_zar, $due_amount) {
+            $callback = function () use ($users, $columns, $columnMoney, $total_revenue_n, $total_revenue_p, $total_ghs, $total_tzs, $total_kes, $total_zar, $due_amount) {
                 $file = fopen('php://output', 'w');
                 fputcsv($file, $columns);
 
@@ -1390,13 +1479,10 @@ class DashboardController extends Controller
                 fputcsv($file, array(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '));
 
                 fputcsv($file, $columnMoney);
-                $row['Naira'] = 'N' . number_format($total_ngn, 5);
-                $row['Pound'] = '# ' . number_format($total_gbp, 5);
-                $row['cedis'] = 'GH' . number_format($total_ghs, 5);
-                $row['tzs'] = 'TZS ' . number_format($total_tzs, 5);
-                $row['kes'] = 'KES ' . number_format($total_kes, 5);
-                $row['zar'] = 'ZAR ' . number_format($total_zar, 5);
+                $row['Naira'] = 'N' . number_format($total_revenue_n,1);
+                $row['Pound'] = '# ' . number_format($total_revenue_p, 1);
                 $row['due'] = 'N ' . number_format($due_amount, 5);
+               
 
 
                 fputcsv($file, array($row['Naira'], $row['Pound'], $row['cedis'], $row['tzs'], $row['kes'], $row['zar'], $row['due']));
@@ -1407,7 +1493,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn', 'discount_commission_n', 'discount_commission_us', 'discount_profit_n', 'discount_profit_d', 'discount_total_d','discount_total_n'));
+        return view('admin.report')->with(compact('total_ngn', 'total_gbp', 'total_ghs', 'total_kes', 'due_amount', 'total_zar', 'total_tzs', 'users', 'start', 'end', 'commission', 'p_due_amount', 'profit_naira', 'profit_dollars', 'pcommission', 'vendor_cost_dollars', 'vendor_cost_ngn', 'discount_commission_n', 'discount_commission_us', 'discount_profit_n', 'discount_profit_d', 'discount_total_d','discount_total_n','total_revenue_n','total_revenue_p','o_price_n','o_price_d'));
 
     }
 
@@ -1710,7 +1796,7 @@ class DashboardController extends Controller
             $voucherProduct = VoucherPayment::Create($save_data);
       
     
-        $redirect_url = $this->processPaystack($data);
+         $redirect_url = '/stripe/process/'.$voucherProduct->id.'/voucher';
 
         return redirect()->to($redirect_url);
     }
@@ -1718,32 +1804,21 @@ class DashboardController extends Controller
     public function voucher_payment_confirmation(Request $request)
     {
         $request_data = $request->all();
-        $txRef = $request->trxref;
-
-        //run some curl commands to verify
-        $curl = curl_init();
-        $url = "https://api.paystack.co/transaction/verify/$txRef";
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
-            "Authorization: Bearer ". env('PAYSTACK_SECRET_KEY', 'sk_test_a888f85236f4da1b0bd204ad8f8c96b6e010a7e9'),
-            "Cache-Control: application/json",
-            ),
-        ));
         
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        curl_close($curl);
+        $booking = VoucherPayment::where('id', $request->id)->first();
+
+        $info_quantity =  $booking->quantity;
+        $item = $v_pay->product->name;
+
+        $txRef = $booking->transaction_ref;
+
+        $response = $this->processVoucherStripe($request->stripeToken, $request->id);        
+
         $data_response = json_decode($response);
+       
 
         //check if succesful
-        if (isset($data_response->data->status) && $data_response->data->status == "success") {
+        if (isset($data_response->data->status) && $data_response->data->status == "succeeded") {
 
             $voucherpay = VoucherPayment::where('transaction_ref', $txRef)->first();
 
@@ -1863,12 +1938,12 @@ class DashboardController extends Controller
             }
 
 
-            session()->flash('alert-success', "Transaction completed. Your account has been topped up");
+            session()->flash('alert-success', "Transaction completed. $item has been topped up with $info_quantity vouchers");
             return redirect()->to('/view/vouchers');
         }
 
 
-        session()->flash('alert-danger', "Sorry but this transaction wasnt successful");
+        session()->flash('alert-danger', "Sorry! The Voucher purchase for $info_quantity x $item was unsuccessful.");
         return redirect()->to('/view/vouchers');
     }
 
@@ -2024,27 +2099,57 @@ class DashboardController extends Controller
 
     }
 
-    public function voucher_transactions()
+    public function voucher_transactions(Request $request)
     {
         $paid_n = 0;
         $unpaid_n = 0;
         $paid_d = 0;
         $unpaid_d = 0;
+
+       
         if(auth()->user()->type == 1){
 
-            $vouchers = VoucherPayment::wherenotNull('transaction_ref')->orderby('id', 'desc')->get();
-            $voucherboughts = VoucherPayment::whereNull('transaction_ref')->orderby('id', 'desc')->get();
-            $products = Product::all();
+            if($request->start)
+            {
+                $start = $request->start;
+                $end = $request->end;
 
-            $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->get();
-            $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->get();
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+                $products = Product::all();
+    
+                $voucherpaid = VoucherPayment::where('status', 1)->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+                $voucherunpaid = VoucherPayment::where('status', 0)->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+    
+                $voucherpaid_n = VoucherPayment::where(['status'=> 1, 'currency' => 'NG'])->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+                $voucherpaid_d = VoucherPayment::where('status', 1)->where('currency', '!=', 'NG')->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+                $voucherunpaid_n = VoucherPayment::where(['status'=> 0, 'currency' => 'NG'])->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+                $voucherunpaid_d = VoucherPayment::where('status', 0)->where('currency','!=','NG')->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+    
+                $voucher_all = VoucherPayment::wherebetween('created_at', [$start, $end])->get();
 
-            $voucherpaid_n = VoucherPayment::where(['status'=> 1, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
-            $voucherpaid_d = VoucherPayment::where('status', 1)->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
-            $voucherunpaid_n = VoucherPayment::where(['status'=> 0, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
-            $voucherunpaid_d = VoucherPayment::where('status', 0)->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+            }else{
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->orderby('id', 'desc')->get();
+                $products = Product::all();
+    
+                $voucherpaid = VoucherPayment::where('status', 1)->orderBy('id', 'desc')->get();
+                $voucherunpaid = VoucherPayment::where('status', 0)->orderBy('id', 'desc')->get();
+    
+                $voucherpaid_n = VoucherPayment::where(['status'=> 1, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
+                $voucherpaid_d = VoucherPayment::where('status', 1)->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
+                $voucherunpaid_n = VoucherPayment::where(['status'=> 0, 'currency' => 'NG'])->orderBy('id', 'desc')->get();
+                $voucherunpaid_d = VoucherPayment::where('status', 0)->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+    
+                $voucher_all = VoucherPayment::all();
+                
+            }
 
-            $voucher_all = VoucherPayment::all();
+            
+
+          
+            $discount_total_n = 0;
+            $discount_total_d = 0;
 
             foreach($voucherpaid_n as $vpay)
             {
@@ -2055,9 +2160,11 @@ class DashboardController extends Controller
                 }else{
                     $paid_n = $paid_n + ($vpay->charged_amount * $vpay->quantity );
                 } 
+                $discount_total_n = $discount_total_n + ($vpay->discount->amount ?? 0);
+               
             }
 
-        
+      
             
             foreach($voucherpaid_d as $vpay)
             {
@@ -2068,6 +2175,7 @@ class DashboardController extends Controller
                 }else{
                     $paid_d = $paid_d + ($vpay->charged_amount * $vpay->quantity );
                 } 
+                $discount_total_d = $discount_total_d + ($vpay->discount->amount ?? 0);
             }
 
             foreach($voucherunpaid_n as $upay)
@@ -2090,51 +2198,110 @@ class DashboardController extends Controller
             }
                
         }else{
-            $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where([
-                'agent' => auth()->user()->id
-                ])->orderby('id', 'desc')->get();
 
-            $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where([
-                'agent' => auth()->user()->id
-                ])->orderby('id', 'desc')->get();
-
-            $products = Product::all();
+            if($request->start)
+            {
+                $start = $request->start;
+                $end = $request->end;
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where([
+                    'agent' => auth()->user()->id
+                    ])->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
     
-            $voucherpaid = VoucherPayment::where([
-                'status'=> 1,
-                'agent' => auth()->user()->id
-                ])->orderBy('id', 'desc')->get();
-
-            $voucherunpaid = VoucherPayment::where([
-                'status'=> 0,
-                'agent' => auth()->user()->id
-                ])->orderBy('id', 'desc')->get();
-
-            $voucherpaid_n = VoucherPayment::where([
-                 'status'=> 1,
-                 'currency' => 'NG',
-                 'agent' => auth()->user()->id
-                 ])->orderBy('id', 'desc')->get();
-
-                $voucherpaid_d = VoucherPayment::where([
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where([
+                    'agent' => auth()->user()->id
+                    ])->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+    
+                $products = Product::all();
+        
+                $voucherpaid = VoucherPayment::where([
                     'status'=> 1,
                     'agent' => auth()->user()->id
-                    ])->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
-
-                $voucherunpaid_n = VoucherPayment::where([
+                    ])->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+    
+                $voucherunpaid = VoucherPayment::where([
                     'status'=> 0,
-                    'currency' => 'NG',
+                    'agent' => auth()->user()->id
+                    ])->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+    
+                $voucherpaid_n = VoucherPayment::where([
+                     'status'=> 1,
+                     'currency' => 'NG',
+                     'agent' => auth()->user()->id
+                     ])->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+    
+                    $voucherpaid_d = VoucherPayment::where([
+                        'status'=> 1,
+                        'agent' => auth()->user()->id
+                        ])->wherebetween('created_at', [$start, $end])->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
+    
+                    $voucherunpaid_n = VoucherPayment::where([
+                        'status'=> 0,
+                        'currency' => 'NG',
+                        'agent' => auth()->user()->id
+                        ])->wherebetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+    
+                    $voucherunpaid_d = VoucherPayment::where([
+                        'status'=> 0,
+                        'agent' => auth()->user()->id
+                        ])->wherebetween('created_at', [$start, $end])->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+        
+                    $voucher_all = VoucherPayment::where([
+                        'agent' => auth()->user()->id
+                        ])->wherebetween('created_at', [$start, $end])->get();
+
+            }else{
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where([
+                    'agent' => auth()->user()->id
+                    ])->orderby('id', 'desc')->get();
+    
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where([
+                    'agent' => auth()->user()->id
+                    ])->orderby('id', 'desc')->get();
+    
+                $products = Product::all();
+        
+                $voucherpaid = VoucherPayment::where([
+                    'status'=> 1,
                     'agent' => auth()->user()->id
                     ])->orderBy('id', 'desc')->get();
-
-                $voucherunpaid_d = VoucherPayment::where([
+    
+                $voucherunpaid = VoucherPayment::where([
                     'status'=> 0,
                     'agent' => auth()->user()->id
-                    ])->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+                    ])->orderBy('id', 'desc')->get();
     
-                $voucher_all = VoucherPayment::where([
-                    'agent' => auth()->user()->id
-                    ])->get();
+                $voucherpaid_n = VoucherPayment::where([
+                     'status'=> 1,
+                     'currency' => 'NG',
+                     'agent' => auth()->user()->id
+                     ])->orderBy('id', 'desc')->get();
+    
+                    $voucherpaid_d = VoucherPayment::where([
+                        'status'=> 1,
+                        'agent' => auth()->user()->id
+                        ])->where('currency', '!=', 'NG')->orderBy('id', 'desc')->get();
+    
+                    $voucherunpaid_n = VoucherPayment::where([
+                        'status'=> 0,
+                        'currency' => 'NG',
+                        'agent' => auth()->user()->id
+                        ])->orderBy('id', 'desc')->get();
+    
+                    $voucherunpaid_d = VoucherPayment::where([
+                        'status'=> 0,
+                        'agent' => auth()->user()->id
+                        ])->where('currency','!=','NG')->orderBy('id', 'desc')->get();
+        
+                    $voucher_all = VoucherPayment::where([
+                        'agent' => auth()->user()->id
+                        ])->get();
+                
+            }
+
+            
+
+                    $discount_total_n = 0;
+                    $discount_total_d = 0;
 
                 foreach($voucherpaid_n as $vpay)
                 {
@@ -2145,7 +2312,10 @@ class DashboardController extends Controller
                     }else{
                         $paid_n = $paid_n + ($vpay->charged_amount * $vpay->quantity );
                     } 
+                    $discount_total_n = $discount_total_n + ($vpay->discount->amount ?? 0);
+                   
                 }
+            
                 foreach($voucherpaid_d as $vpay)
                 {
                   
@@ -2155,6 +2325,7 @@ class DashboardController extends Controller
                     }else{
                         $paid_d = $paid_d + ($vpay->charged_amount * $vpay->quantity );
                     } 
+                    $discount_total_d = $discount_total_d + ($vpay->discount->amount ?? 0);
                 }
     
                 foreach($voucherunpaid_n as $upay)
@@ -2178,7 +2349,7 @@ class DashboardController extends Controller
         
         }
 
-        return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid', 'voucher_all', 'unpaid_n', 'paid_n', 'unpaid_d', 'paid_d'));
+        return view('admin.voucher_transactions')->with(compact('vouchers','voucherboughts', 'products', 'voucherpaid', 'voucherunpaid', 'voucher_all', 'unpaid_n', 'paid_n', 'unpaid_d', 'paid_d', 'discount_total_n', 'discount_total_d'));
     }
 
     public function voucher_assigned_subagent(Request $request)
@@ -2368,7 +2539,7 @@ class DashboardController extends Controller
                 //for international transaction in pounds
                
                 $agent_amount_credit = $amount;
-
+               
 
                 VoucherDiscountProcess::processTransaction(
                     $user->id,
@@ -2914,20 +3085,21 @@ class DashboardController extends Controller
             $end = Carbon::parse($endDate)->endOfDay();
             //if a date range exist
             if ($currency == "naira") {
-                $transact = Transaction::orderBy('id', 'desc')->where('type', '1')->wherebetween('created_at', [$start, $end])->get();
+                $transact =  Booking::orderBy('id', 'desc')->where('status', '1')->wherebetween('created_at', [$start, $end])->get();
             } elseif ($currency == "pounds") {
-                $transact = PoundTransaction::orderBy('id', 'desc')->where('type', '1')->wherebetween('created_at', [$start, $end])->get();
+                $transact = Booking::orderBy('id', 'desc')->where('status', '1')->wherebetween('created_at', [$start, $end])->get();
             }
         } else {
 
             //if no date range exist
             if ($currency == "naira") {
-                $transact = Transaction::orderBy('id', 'desc')->where('type', '1')->get();
+                $transact = Booking::orderBy('id', 'desc')->where('status', '1')->get();
             } elseif ($currency == "pounds") {
-                $transact = PoundTransaction::orderBy('id', 'desc')->where('type', '1')->get();
+                $transact = Booking::orderBy('id', 'desc')->where('status', '1')->get();
             }
         }
-
+      
+           
 
         return view('admin.currency_report')->with(compact('transact', 'currency', 'startDate', 'endDate'));
 
@@ -2942,22 +3114,56 @@ class DashboardController extends Controller
             $end = Carbon::parse($endDate)->endOfDay();
             //if a date range exist
             if ($currency == "naira") {
-                $transact = Transaction::orderBy('id', 'desc')->where('type', '1')->wherebetween('created_at', [$start, $end])->get();
-            } elseif ($currency == "dollars") {
-                $transact = PoundTransaction::orderBy('id', 'desc')->where('type', '1')->wherebetween('created_at', [$start, $end])->get();
+                $transact =  Booking::orderBy('id', 'desc')->where('status', '1')->wherebetween('created_at', [$start, $end])->get();
+            } elseif ($currency == "pounds") {
+                $transact = Booking::orderBy('id', 'desc')->where('status', '1')->wherebetween('created_at', [$start, $end])->get();
             }
         } else {
 
             //if no date range exist
             if ($currency == "naira") {
-                $transact = Transaction::orderBy('id', 'desc')->where('type', '1')->get();
+                $transact = Booking::orderBy('id', 'desc')->where('status', '1')->get();
             } elseif ($currency == "dollars") {
-                $transact = PoundTransaction::orderBy('id', 'desc')->where('type', '1')->get();
+                $transact = Booking::orderBy('id', 'desc')->where('status', '1')->get();
             }
         }
+      
 
 
         return view('admin.profit_report')->with(compact('transact', 'currency', 'startDate', 'endDate'));
+
+    }
+
+    public function view_profit_voucher($currency, $startDate, $endDate)
+    {
+
+
+        if ($startDate != 1) {
+            $start = Carbon::parse($startDate)->startOfDay();
+            $end = Carbon::parse($endDate)->endOfDay();
+            //if a date range exist
+            if ($currency == "naira") {
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','NG')->where('status', 1)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','NG')->where('status', 1)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+            } elseif ($currency == "dollars") {
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','!=','NG')->where('status', 1)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','!=','NG')->where('status', 1)->wherebetween('created_at', [$start, $end])->orderby('id', 'desc')->get();
+            }
+        } else {
+
+            //if no date range exist
+            if ($currency == "naira") {
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','NG')->where('status', 1)->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','NG')->where('status', 1)->orderby('id', 'desc')->get();
+            } elseif ($currency == "dollars") {
+                $vouchers = VoucherPayment::wherenotNull('transaction_ref')->where('currency','!=','NG')->where('status', 1)->orderby('id', 'desc')->get();
+                $voucherboughts = VoucherPayment::whereNull('transaction_ref')->where('currency','!=','NG')->where('status', 1)->orderby('id', 'desc')->get();
+            }
+        }
+    
+
+
+        return view('admin.profit_voucher_report')->with(compact('vouchers','voucherboughts', 'currency', 'startDate', 'endDate'));
 
     }
 
