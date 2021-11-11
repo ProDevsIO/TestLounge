@@ -294,6 +294,12 @@
                         </a>
                     </li>
                     <li>
+                      <a href="{{ url('/supported/countries') }}">
+                            <i class="icon-globe"></i>
+                            <span>Supported Countries</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url('/vendors') }}">
                             <i class=" icon-grid"></i>
                             <span>Vendors</span>

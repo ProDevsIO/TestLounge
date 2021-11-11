@@ -181,6 +181,10 @@ Route::middleware('auth')->group(function () {
     Route::get('currency/export/{currency}/{startDate}/{endDate}', [\App\Http\Controllers\DashboardController::class,"currency_export"]);
 
     Route::get('/view/guidelines/{num}', [\App\Http\Controllers\DashboardController::class,"view_guidelines"]);
+    Route::get('/supported/countries', [\App\Http\Controllers\DashboardController::class,"view_supported_countries"]);
+    Route::get('/add/supported/countries', [\App\Http\Controllers\DashboardController::class,"view_add_supported_countries"]);
+    Route::get('/vendor/supported/{id}', [\App\Http\Controllers\DashboardController::class,"view_supported_vendor"]);
+    Route::post('/page/configure/data', [\App\Http\Controllers\DashboardController::class, "page_configuration"]);
 
     Route::get('/logout', [\App\Http\Controllers\DashboardController::class,"logout"]);
 

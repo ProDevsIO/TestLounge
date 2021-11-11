@@ -10,6 +10,7 @@ use App\Helpers\UserShare;
 use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
 use App\Models\Voucher;
+use App\Models\SupportedCountries;
 use App\Models\VoucherCount;
 use App\Models\VoucherGenerate;
 use App\Models\VoucherPayment;
@@ -3472,5 +3473,64 @@ class DashboardController extends Controller
 
         return view('admin.guidelines')->with(compact('stepper'));
     }
+
+    public function view_supported_countries()
+    {
+        $countries = Country::all();
+        return view('admin.supported')->with(compact('countries'));
+    }
+
+    public function view_add_supported_countries()
+    {
+        $countries = Country::all();
+        return view('admin.add_supported_countries')->with(compact('countries'));
+    }
+
+    public function view_supported_vendor($id)
+    {
+        $products = Product::where('country_id', $id)->first();
+        $data = [];
+
+      try{
+            $vendor_products = VendorProduct::where('product_id', $products->id)->get();
+        
+      
+            foreach ($vendor_products as $vproduct) {
+
+                $data[] = [
+                    'name' => $vproduct->vendor->name,
+                    // 'price' => "$" . number_format($vproduct->price_pounds, 0),
+                    'vendor_id' => $vproduct->vendor_id
+                ];
+            }
+
+        } catch(\Exception $e) {
+
+            $data = "error". $e;
+        }
+       
+        return $data;
+    }
+
+    public function page_configuration(Request $request)
+    {
+        try{
+            $request_data = $request->all();
+
+            unset($request_data['_token']);
+
+            $support = SupportedCountries::create($request_data);
+
+            session()->flash('alert-success', "Successfully regsitered country configurations");
+
+            return redirect()->to('/supported/countries');
+        } catch(\Exception $e) {
+
+            session()->flash('alert-danger', "Something went wrong");
+
+            return back()->withInputs();
+        }
+    }
+
 
 }
