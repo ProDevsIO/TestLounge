@@ -172,8 +172,9 @@ class Controller extends BaseController
     {
         unset($request['subaccounts']);
         unset($request['currency']);
+     
 
-       
+        //    dd($request);
         // dd($request,env('VASTECHKEY', '8317dc390aca4e482bf8d2ae06f4d3cfdf3ed402c5afd7f8d0bc257dea4842d9'));
 
         $ch = curl_init();
@@ -190,10 +191,78 @@ class Controller extends BaseController
         $server_output = curl_exec($ch);
 
         curl_close($ch);
-        // dd( $server_output );
+        // dd( $server_output, $request );
         $server_output = json_decode($server_output);
-       
+  
         return $server_output->data;
+    }
+
+    function confirm_vas($url, $txRef){
+       
+   
+        $ch = curl_init();
+        $headr = array();
+        $headr[] = 'Content-type: application/json';
+        $headr[] = 'X-API-Key: '.env('VASTECHKEY', '47489e67e05cd615c22298f826391ae0a0d8f124941f7a02a86e7c79ce558743');
+
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
+
+        curl_setopt($ch, CURLOPT_POST, 1);
+
+        curl_setopt(
+            $ch,
+            CURLOPT_POSTFIELDS,
+            json_encode(['transactionRef'=> $txRef ,"clientId"=> 333117])
+        );
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+   
+        return $response;
+
+        
+    }
+
+    function getVasTechVoucherData($amount, $transaction_ref, $country, $agent_id){
+        if (auth()->user()->country == "NG" ) {
+            //50 naira minium pay
+            $data = [
+                "transactionRef" => $transaction_ref,
+                "amount" => number_format($amount),
+                "approvedCurrency" => "566",
+                "channel" => "WEB",
+                "currency" => "NGN",
+                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '568412'),
+                "clientId" => env('VASTECH_CLIENT_ID', '333117'),
+                "mobileNumber"=> "+442080872262",
+                "paymentTypeId" => 2,
+                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "voucher/payment/confirmation",
+                "paymentDescription" =>  "TravelTestGlobal Voucher Payment"
+
+            ];
+        }else{
+            //5 dollar  minium pay
+            $data = [
+                "transactionRef" => $transaction_ref,
+                "amount" => number_format($amount),
+                "currency" => "USD",
+                "approvedCurrency" => "840",
+                "channel" => "WEB",
+                "clientAppId" => env('VASTECH_CLIENT_APP_ID', '568412'),
+                "clientId" => env('VASTECH_CLIENT_ID', '333117'),
+                "mobileNumber"=>  "+442080872262",
+                "paymentTypeId" => 4,
+                "redirectURL" =>  env('APP_URL', "http://127.0.0.1:8000/") . "voucher/payment/confirmation",
+                "paymentDescription" =>  "TravelTestGlobal Voucher Payment"
+
+            ];
+        }
+
+        return $data;
     }
 
     function bank($country)
@@ -341,6 +410,8 @@ class Controller extends BaseController
 
         return $data;
     }
+
+   
 
     function processFlutterwaveVoucherData($price,$transaction_ref, $country, $agent_id){
 

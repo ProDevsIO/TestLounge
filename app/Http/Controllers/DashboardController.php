@@ -1762,13 +1762,13 @@ class DashboardController extends Controller
   
       
 
-        $transaction_ref = uniqid('voucher-') . rand(10000, 999999);
+        $transaction_ref =  rand(100000, 999999);
 
         $agent_id = auth()->user()->id;
         
 
-        $data = $this->processPaystackVoucherData($amount, $transaction_ref, $country, $agent_id);
-
+        // $data = $this->processPaystackVoucherData($amount, $transaction_ref, $country, $agent_id);
+        
         $this->bookingService->getSubAccountsByRefCode(auth()->user()->referral_code);
 
             
@@ -1792,33 +1792,49 @@ class DashboardController extends Controller
             ];
 
             // dd($save_data, $super_percent, $sub_percent, $super_share, $sub_share, $total_price);
-    
+            //create the voucher payment 
             $voucherProduct = VoucherPayment::Create($save_data);
-      
-    
-         $redirect_url = '/stripe/process/'.$voucherProduct->id.'/voucher';
+            //------------------------------------------------------------------------------------
+            // stripe voucher payment integration
+            //  $redirect_url = '/stripe/process/'.$voucherProduct->id.'/voucher';
+            //----------------------------------------------------------------------------
 
+            $data = $this->getVasTechVoucherData($amount, $transaction_ref, $country, $agent_id);
+            $redirect_url = $this->processVas($data);
         return redirect()->to($redirect_url);
     }
 
     public function voucher_payment_confirmation(Request $request)
-    {
-        $request_data = $request->all();
+    { 
+        // stripe verify payment on voucher
+        //-------------------------------------------------------------------------------------
+        // $request_data = $request->all();
         
-        $booking = VoucherPayment::where('id', $request->id)->first();
+        // $booking = VoucherPayment::where('id', $request->id)->first();
 
-        $info_quantity =  $booking->quantity;
+        // $info_quantity =  $booking->quantity;
+        // $item = $booking->product->name;
+
+        // $txRef = $booking->transaction_ref;
+
+        // $response = $this->processVoucherStripe($request->stripeToken, $request->id);    
+       // -------------------------------------------------------------------------------------
+
+        //vaspay verify transaction
+        $txRef = $request->transactionRef;
+        $v_pay = VoucherPayment::where('transaction_ref',  $txRef )->first();
+
+        $info_quantity =  $v_pay->quantity;
         $item = $v_pay->product->name;
-
-        $txRef = $booking->transaction_ref;
-
-        $response = $this->processVoucherStripe($request->stripeToken, $request->id);        
+        $url = "https://dashboard.smartpay.ng/api/v1/tstatus?transactionRef=".$txRef;
+       
+        $response = $this->confirm_vas($url,$txRef);
 
         $data_response = json_decode($response);
-       
-
+       dd($data_response->data->status);
+      
         //check if succesful
-        if (isset($data_response->data->status) && $data_response->data->status == "succeeded") {
+        if (isset($data_response->data->status) && $data_response->data->status == "APPROVED") {
 
             $voucherpay = VoucherPayment::where('transaction_ref', $txRef)->first();
 
