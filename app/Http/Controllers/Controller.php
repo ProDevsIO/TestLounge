@@ -248,7 +248,7 @@ class Controller extends BaseController
             //5 dollar  minium pay
             $data = [
                 "transactionRef" => $transaction_ref,
-                "amount" => roound($amount, 0),
+                "amount" => round($amount, 0),
                 "currency" => "USD",
                 "approvedCurrency" => "840",
                 "channel" => "WEB",
