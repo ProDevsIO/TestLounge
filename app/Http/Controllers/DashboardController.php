@@ -620,20 +620,24 @@ class DashboardController extends Controller
     public function products()
     {
         $products = Product::all();
+        $countries = Country::all();
 
-        return view('admin.products')->with(compact('products'));
+        return view('admin.products')->with(compact('products', 'countries'));
     }
 
     public function add_product(Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
-            "description" => "required"
+            "description" => "required",
+            'country_id' => "required"
         ]);
+      
 
         Product::create([
             'name' => $request->name,
-            'description' => $request->description
+            'description' => $request->description,
+            'country_id' => $request->country_id
         ]);
 
         session()->flash('alert-success', "Product has been added successfully");
@@ -645,12 +649,15 @@ class DashboardController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            "description" => "required"
+            "description" => "required",
+            'country_id' => "required"
         ]);
+     
 
         Product::where('id', $request->id)->update([
             'name' => $request->name,
-            'description' => $request->description
+            'description' => $request->description,
+            'country_id' => $request->country_id
         ]);
 
         session()->flash('alert-success', "Product has been updated successfully");
@@ -3476,13 +3483,23 @@ class DashboardController extends Controller
 
     public function view_supported_countries()
     {
-        $countries = Country::all();
+        $country = SupportedCountries::all();
+        $countries = $country->unique('country_id');
         return view('admin.supported')->with(compact('countries'));
     }
 
     public function view_add_supported_countries()
     {
-        $countries = Country::all();
+        $support = SupportedCountries::all();
+        $unique_supported_countries = $support->unique('country_id');
+        $checker = [];
+        foreach( $unique_supported_countries as  $unique_supported_country)
+        {
+            $checker[] = $unique_supported_country->country_id;
+        }
+
+        $countries = Country::whereNotIn('id', $checker)->get();
+ 
         return view('admin.add_supported_countries')->with(compact('countries'));
     }
 

@@ -59,6 +59,13 @@
                             <input type="text" class="form-control"
                                    value="{{ old('description') }}" name="description" required>
 
+                            <label for="">Country</label>
+                                <select name="country_id" class="form-control" id="country" required>
+                                    <option value="">Please select a country for this test</option>
+                                    @foreach($countries as $country)
+                                        <option value="{{$country->id}}">{{$country->nicename}}</option>
+                                    @endforeach
+                                </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -86,6 +93,7 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Booking</th>
+                                        <th scope='col'>Country</th>
                                         @if(auth()->user()->type == "1")
                                             <th scope="col">Action</th>
                                         @endif
@@ -101,6 +109,7 @@
                                                 {!! $product->description !!}
                                             </td>
                                             <td>{{ $product->bookings->count() }}</td>
+                                            <td>{{optional($product->country)->nicename ?? "No country"}}</td>
                                             @if(auth()->user()->type == "1")
                                                 <td>
 
@@ -154,7 +163,13 @@
                                                             <label>Description</label>
                                                             <input type="text" class="form-control"
                                                                    value="{{ $product->description }}" name="description" required>
-
+                                                            <label for="">Country</label>
+                                                            <select name="country_id" class="form-control" id="country" required>
+                                                                <option value="">Please select a country for this test</option>
+                                                                @foreach($countries as $country)  
+                                                                    <option value="{{$country->id}}"  @if($product->country_id == $country->id ) selected @endif>{{$country->nicename}}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
