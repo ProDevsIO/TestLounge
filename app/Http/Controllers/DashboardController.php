@@ -1831,7 +1831,6 @@ class DashboardController extends Controller
         $response = $this->confirm_vas($url,$txRef);
 
         $data_response = json_decode($response);
-       dd($data_response->data->status);
       
         //check if succesful
         if (isset($data_response->data->status) && $data_response->data->status == "APPROVED") {
