@@ -161,7 +161,7 @@ class Controller extends BaseController
         curl_close($ch);
         try {
             $server_output = json_decode($server_output);
-            //dd($server_output);
+            // dd($server_output);
             return $server_output->data->link;
         }catch (\Exception $e){
             dd(json_decode($server_output));
@@ -191,7 +191,7 @@ class Controller extends BaseController
         $server_output = curl_exec($ch);
 
         curl_close($ch);
-        dd( $server_output, $request );
+        // dd( $server_output, $request );
         $server_output = json_decode($server_output);
   
         return $server_output->data;
@@ -232,7 +232,7 @@ class Controller extends BaseController
             //50 naira minium pay
             $data = [
                 "transactionRef" => $transaction_ref,
-                "amount" => $amount,
+                "amount" => round($amount,0),
                 "approvedCurrency" => "566",
                 "channel" => "WEB",
                 "currency" => "NGN",
@@ -248,7 +248,7 @@ class Controller extends BaseController
             //5 dollar  minium pay
             $data = [
                 "transactionRef" => $transaction_ref,
-                "amount" => number_format($amount),
+                "amount" => roound($amount, 0),
                 "currency" => "USD",
                 "approvedCurrency" => "840",
                 "channel" => "WEB",
