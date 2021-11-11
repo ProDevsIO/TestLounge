@@ -304,7 +304,7 @@
                                             <div class='radio'
                                                  style="background:none;border:none;padding: 20px 40px 20px 40px;height: 86px;border-radius:25px"
                                                  data-value="vastech" onclick ="run()">
-                                                <img src="{{ url('/img/vas.svg') }}"
+                                                <img src="{{ url('/img/smartpay.png') }}"
                                                      style="padding-bottom: 0px;margin-left: -38px;width:200px"/> <span><label>
 
                                             </div>
