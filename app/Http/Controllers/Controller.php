@@ -232,7 +232,7 @@ class Controller extends BaseController
             //50 naira minium pay
             $data = [
                 "transactionRef" => $transaction_ref,
-                "amount" => number_format($amount),
+                "amount" => $amount,
                 "approvedCurrency" => "566",
                 "channel" => "WEB",
                 "currency" => "NGN",
