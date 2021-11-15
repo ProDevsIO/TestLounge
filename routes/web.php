@@ -13,10 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('homepage.home');
-});
 
+
+Route::get('/', [\App\Http\Controllers\HomeController::class,"home"]);
 Route::get('/webhook/receiver', [\App\Http\Controllers\HomeController::class,"webhook_receiver"]);
 
 
@@ -55,7 +54,8 @@ Route::get('/update/cart/{id}/{quantity}', [\App\Http\Controllers\HomeController
 Route::get('/delete/cart/{id}', [\App\Http\Controllers\HomeController::class,"deleteCart"]);
 Route::get('/covid/testing', [\App\Http\Controllers\HomeController::class,"products"])->name('products_covid');
 Route::get('/check/price/{vendor_id}', [\App\Http\Controllers\HomeController::class,"check_price"])->name('check_price');
-Route::get('/view/uk', [\App\Http\Controllers\HomeController::class,"view_uk"]);
+Route::get('/view/uk/{id}', [\App\Http\Controllers\HomeController::class,"view_uk"]);
+Route::get('/travel/details/{id}/{action}', [\App\Http\Controllers\HomeController::class,"view_travel_details"]);
 
 Route::get('/check/{nationality}/price', [\App\Http\Controllers\HomeController::class,"check_product_price"])->name('check_product_price');
 
@@ -65,6 +65,9 @@ Route::get('/product/vendors/{product_id}/{nationality}',  [\App\Http\Controller
 Route::post('/login', [\App\Http\Controllers\HomeController::class,"post_login"])->name('login');
 Route::post('/register', [\App\Http\Controllers\HomeController::class,"register"]);
 
+Route::get('/green', [\App\Http\Controllers\HomeController::class, "view_green"]);
+Route::get('/amber', [\App\Http\Controllers\HomeController::class, "view_amber"]);
+Route::get('/red', [\App\Http\Controllers\HomeController::class, "view_red"]);
 
 
 Route::post('/post/booking', [\App\Http\Controllers\HomeController::class,"post_booking"]);
@@ -88,6 +91,7 @@ Route::post('/pay', [\App\Http\Controllers\PaymentController::class, 'redirectTo
 Route::get('/payment/callback', [\App\Http\Controllers\PaymentController::class, 'handleGatewayCallback']);
 
 Route::get('/booking',[\App\Http\Controllers\HomeController::class,"booking"])->name('booking');
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,"dashboard"]);
@@ -184,7 +188,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/supported/countries', [\App\Http\Controllers\DashboardController::class,"view_supported_countries"]);
     Route::get('/add/supported/countries', [\App\Http\Controllers\DashboardController::class,"view_add_supported_countries"]);
     Route::get('/vendor/supported/{id}', [\App\Http\Controllers\DashboardController::class,"view_supported_vendor"]);
+    Route::get('/edit/configuration/{id}', [\App\Http\Controllers\DashboardController::class,"view_edit_configuration"]);
     Route::post('/page/configure/data', [\App\Http\Controllers\DashboardController::class, "page_configuration"]);
+    Route::post('/edit/configure/data', [\App\Http\Controllers\DashboardController::class, "edit_page_configuration"]);
 
     Route::get('/logout', [\App\Http\Controllers\DashboardController::class,"logout"]);
 

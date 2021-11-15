@@ -10,6 +10,7 @@ use App\Mail\VendorReceipt;
 use App\Models\Booking;
 use App\Models\BookingProduct;
 use App\Models\Country;
+use App\Models\SupportedCountries;
 use App\Models\CountryColor;
 use App\Models\Product;
 use App\Models\Setting;
@@ -45,6 +46,12 @@ class HomeController extends Controller
         $this->bookConfirmationService = new BookingConfirmationService;
     }
 
+    public function home()
+    {  
+        $scountries = SupportedCountries::all();
+        return view('homepage.home')->with(compact('scountries'));
+    }
+    
     public function booking(Request $request)
     {
 
@@ -1830,11 +1837,29 @@ class HomeController extends Controller
         return redirect()->to('/booking/failed?b=' . $txRef);
     }
 
-    public function view_uk()
+    public function view_uk($id)
     {
-        $countries = Country::all();
-        return view('homepage.uk_page')->with(compact('countries'));
+        if($id == 225)
+        {
+            $countries = Country::all();
+        
+            return view('homepage.uk_page')->with(compact('countries'));
+        }else{
+            $countries = Country::where('id', $id)->first();
+            return view('homepage.country_decision_page')->with(compact('countries'));
+        }
+       
     }
+
+    public function view_travel_details($id, $action)
+    {
+
+        
+            $countries = SupportedCountries::where('country_id', $id)->first();
+            return view('homepage.travel_details')->with(compact('countries', 'action'));
+       
+    }
+    
 
     public function voucherProcessing(array $request_data ){
 
@@ -2001,5 +2026,29 @@ class HomeController extends Controller
         $redirect ='/booking/success?b=' . $txRef;
         return $redirect;
       
+    }
+
+    public function view_green()
+    {
+        $countries = CountryColor::where('color_id', 1)->get();
+        $type = "GREEN";
+
+        return view('homepage.typecountries')->with(compact('type', 'countries'));
+    }
+
+    public function view_amber()
+    {
+        $countries = CountryColor::where('color_id', 2)->get();
+        $type = "AMBER";
+
+        return view('homepage.typecountries')->with(compact('type', 'countries'));
+    }
+
+    public function view_red()
+    {
+        $countries = CountryColor::where('color_id', 3)->get();
+        $type = "RED";
+
+        return view('homepage.typecountries')->with(compact('type', 'countries'));
     }
 }

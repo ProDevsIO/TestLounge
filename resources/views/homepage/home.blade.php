@@ -84,6 +84,9 @@
                                         <select name="" class="form-control" id="country" onchange="ukDirect()">
                                             <option value="">Select a country</option>
                                             <option value="225">United Kingdom</option>
+                                            @foreach($scountries as $scountry)
+                                                <option value="{{$scountry->country_id}}"> {{$scountry->country->nicename}} {{$scountry->country_id}} </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-sm 2"></div>
@@ -149,9 +152,13 @@
                             <label for="">Choose the country you’re travelling to</label>
                         </div>
                         <div class="col-sm-4" style="margin-bottom: 35px;">
-                            <select name="" class="form-control" id="country" onchange="ukDirect()">
+                            
+                            <select name="" class="form-control" id="country1" onchange="ukDirect1()">
                                 <option value="">Select a country</option>
                                 <option value="225">United Kingdom</option>
+                                @foreach($scountries as $scountry)
+                                    <option value="{{$scountry->country_id}}"> {{$scountry->country->nicename}} {{$scountry->country_id}} </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-sm 2"></div>
@@ -235,10 +242,20 @@
 
         $("#travel").attr("disabled","disabled")
     }
+
     function ukDirect()
     {
-        window.location = '/view/uk/';
+        var country_id = document.getElementById("country").value;
+        window.location = '/view/uk/'+ country_id;
     }
+
+    function ukDirect1()
+    {
+        var country_id = document.getElementById("country1").value;
+     
+        window.location = '/view/uk/'+ country_id;
+    }
+
     function countryQuery()
     {
 

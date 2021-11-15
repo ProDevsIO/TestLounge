@@ -3444,7 +3444,7 @@ class DashboardController extends Controller
             'user_id' => $user->id,
             'type' => 2
         ])->sum('amount');
-// dd($user, $earned, $earnedPounds);
+        // dd($user, $earned, $earnedPounds);
 
         return view('admin.details')->with(compact('user', 'agents', 'earnedPounds', 'earned'));
     }
@@ -3523,7 +3523,7 @@ class DashboardController extends Controller
 
         } catch(\Exception $e) {
 
-            $data = "error". $e;
+            $data = "error";
         }
        
         return $data;
@@ -3538,13 +3538,41 @@ class DashboardController extends Controller
 
             $support = SupportedCountries::create($request_data);
 
-            session()->flash('alert-success', "Successfully regsitered country configurations");
+            session()->flash('alert-success', "Successfully registered country configurations");
 
             return redirect()->to('/supported/countries');
         } catch(\Exception $e) {
-
+            dd($e);
             session()->flash('alert-danger', "Something went wrong");
+            
+            return back()->withInputs();
+        }
+    }
 
+    public function view_edit_configuration($country_id)
+    {
+        $countries = SupportedCountries::where('id', $country_id)->first();
+     
+        return view('admin.edit_supported_countries')->with(compact('countries'));
+    }
+
+    public function edit_page_configuration(request $request)
+    {
+      try{
+        $request_data = $request->all();
+
+        unset($request_data['_token']);
+        unset($request_data['files']);
+        
+        $support = SupportedCountries::where('country_id', $request->country_id)->update($request_data);
+
+        session()->flash('alert-success', "Successfully updated country configurations");
+
+        return redirect()->to('/supported/countries');
+        } catch(\Exception $e) {
+            dd($e);
+            session()->flash('alert-danger', "Something went wrong");
+            
             return back()->withInputs();
         }
     }

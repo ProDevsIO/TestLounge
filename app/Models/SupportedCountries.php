@@ -14,8 +14,10 @@ class SupportedCountries extends Model
 	protected $fillable = [
 		'country_id',
 		'vendor_id',
-        'on_arrival',
-        'departure',
+        'arrival_vaccinated',
+        'arrival_unvaccinated',
+        'departure_vaccinated',
+        'departure_unvaccinated',
 		'faq',
 	];
 

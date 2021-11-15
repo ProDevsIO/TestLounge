@@ -19,9 +19,11 @@ class CreateSupportedCountriesTable extends Migration
                 $table->integer('id', true);
                 $table->integer('country_id')->nullable();
                 $table->integer('vendor_id')->nullable();
-                $table->text('on_arrival');
-                $table->text('departure');
-                $table->text('faq');
+                $table->longtext('arrival_vaccinated');
+                $table->longtext('arrival_unvaccinated');
+                $table->longtext('departure_vaccinated');
+                $table->longtext('departure_unvaccinated');
+                $table->longtext('faq');
                 $table->timestamps();
                 $table->foreign('country_id')->references('id')->on('countries')->nullOnDelete();
                 $table->foreign('vendor_id')->references('id')->on('vendors')->nullOnDelete();

@@ -377,7 +377,7 @@
 <!--basic scripts initialization-->
 <script src="/assets/js/scripts.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
 @yield('script')
 <script>

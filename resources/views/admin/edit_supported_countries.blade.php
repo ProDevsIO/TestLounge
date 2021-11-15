@@ -12,10 +12,10 @@
          
             <div class="rows">
                             <div class="card-title p-2">
-                               <h3> Supported countries setup</h3>
+                               <h3> Edit Supported Countries Setup</h3>
                             </div>
                 <div clas="col-md-12">
-                    <form action="{{url('page/configure/data')}}" method="POST">
+                    <form action="{{url('/edit/configure/data')}}" method="POST">
                         @csrf
                         <div class="card">
                             <div class="card-body">
@@ -24,9 +24,9 @@
 
                                 <select name="country_id" class="form-control" id="country" onchange ="getVendorCountry()" required>
                                     <option value="">Please select a country</option>
-                                    @foreach($countries as $country)
-                                        <option value="{{$country->id}}">{{$country->nicename}}</option>
-                                    @endforeach
+                                
+                                        <option value="{{$countries->country_id}}" selected>{{$countries->country->nicename}}</option>
+                               
                                 </select>
                                 <br>
                             </div>
@@ -38,7 +38,8 @@
                             </div>
                             <div class="card-body">
                                 <label for="">Vendor</label>
-                                <select name="vendor_id" id="" class="form-control vendor" required></select>
+                                <input name="" class="form-control" readonly value="{{$countries->vendor->name}}" required>
+                               
                             </div>
                         </div>
                         <br>
@@ -49,23 +50,23 @@
                             <div class="card-body">
 
                                 <label for=""><b>On arrival (If fully vaccinated)</b></label>
-                                <textarea name="arrival_vaccinated" id="" class="form-control arrival_vaccinated" cols="30" rows="10" required></textarea>
+                                <textarea name="arrival_vaccinated" id="" class="form-control arrival_vaccinated" cols="30" rows="10" required>{{ old('arrival_vaccinated') ?? $countries->arrival_vaccinated}}</textarea>
                                 <br>
 
                                 <label for=""><b>On arrival(If Unvaccinated / Partially vaccinated)</b></label>
-                                <textarea name="arrival_unvaccinated" id="" class="form-control arrival_unvaccinated" cols="30" rows="10" required></textarea>
+                                <textarea name="arrival_unvaccinated" id="" class="form-control arrival_unvaccinated" cols="30" rows="10" required>{{ old('arrival_unvaccinated') ?? $countries->arrival_unvaccinated}}</textarea>
                                 <br>
 
                                 <label for=""><b>Predeparture(If fully vaccinated)</b></label>
-                                <textarea name="departure_vaccinated" id="" class="form-control departure_vaccinated" cols="30" rows="10" required></textarea>
+                                <textarea name="departure_vaccinated" id="" class="form-control departure_vaccinated" cols="30" rows="10" required>{{ old('departure_vaccinated') ?? $countries->departure_vaccinated}}</textarea>
                                 <br>
 
                                 <label for=""><b>Predeparture(If Unvaccinated / Partially vaccinated)</b></label>
-                                <textarea name="departure_unvaccinated" id="" class="form-control  departure_unvaccinated" cols="30" rows="10" required></textarea>
+                                <textarea name="departure_unvaccinated" id="" class="form-control departure_unvaccinated" cols="30" rows="10" required>{{ old('departure_unvaccinated') ?? $countries->departure_unvaccinated}}</textarea>
                                 <br>
 
                                 <label for=""><b>Faq</b></label>
-                                <textarea name="faq" id="" class="form-control faq" cols="30" rows="10" required></textarea>
+                                <textarea name="faq" id="" class="form-control faq" cols="30" rows="10" required>{{old('faq') ?? $countries->faq}}</textarea>
                             </div>
                         </div>
                         <br>

@@ -27,16 +27,30 @@
                                             <th scope="col">Country</th>
                                             <th scope="col">Vendor</th>
                                             @if(auth()->user()->type == "1")
-                                                <!-- <th scope="col">Action</th> -->
+                                                <th scope="col">Action</th>
                                             @endif
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($countries as $country)
                                             <tr>
-                                            <td>{{$country->country->nicename}}</td>
-                                            <td>{{$country->vendor->name}}</td>
-                                            <!-- <td><button>action</button></td> -->
+                                                <td>{{$country->country->nicename}}</td>
+                                                <td>{{$country->vendor->name}}</td>
+                                                <td>
+                                                <div class="btn-group" role="group">
+                                                                <button id="btnGroupDrop1" type="button"
+                                                                        class="btn btn-primary dropdown-toggle btn-sm"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                    Action
+                                                                </button>
+                                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                           
+                                                                        <a class="dropdown-item" href="{{ url('/edit/configuration/'.$country->id)}}">Edit</a>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                             </tr>
 
                                         
