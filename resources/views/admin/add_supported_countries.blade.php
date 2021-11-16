@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('style')
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    {{--<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">--}}
 @endsection
 @section('content')
 
@@ -34,16 +34,6 @@
                         <br>
                         <div class="card">
                             <div class="card-title p-3">
-                               <h5>Vendor</h5>
-                            </div>
-                            <div class="card-body">
-                                <label for="">Vendor</label>
-                                <select name="vendor_id" id="" class="form-control vendor" required></select>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="card">
-                            <div class="card-title p-3">
                                <h5> Page Information </h5>
                             </div>
                             <div class="card-body">
@@ -69,7 +59,7 @@
                             </div>
                         </div>
                         <br>
-                       <input type="submit" class="btn btn-md btn-info" value="submit">
+                       <input type="submit" class="btn btn-md btn-info pull-right" value="Add Country">
                     </form>
                 </div>
             </div>
@@ -83,61 +73,21 @@
 @section('script')
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendor/data-tables/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     <script>
         $(document).ready(function() {
 
-            $('.arrival_vaccinated').summernote({
-                
-                height:300,
-                placeholder: 'please fill this box...'
-
-            });
-
-        });
-
-        $(document).ready(function() {
-
-            $('.arrival_unvaccinated').summernote({
-                
-                height:300,
-                placeholder: 'please fill this box...'
-
-            });
+            CKEDITOR.replace( 'arrival_vaccinated' );
+            CKEDITOR.replace( 'arrival_unvaccinated' );
+            CKEDITOR.replace( 'departure_unvaccinated' );
+            CKEDITOR.replace( 'departure_vaccinated' );
+            CKEDITOR.replace( 'faq' );
+            CKEDITOR.replace( 'arrival_vaccinated' );
 
         });
 
-        $(document).ready(function() {
 
-            $('.departure_unvaccinated').summernote({
-                
-                height:300,
-                placeholder: 'please fill this box...'
 
-            });
-
-        });
-
-        $(document).ready(function() {
-
-            $('.departure_vaccinated').summernote({
-                
-                height:300,
-                placeholder: 'please fill this box...'
-
-            });
-
-        });
-
-        $(document).ready(function() {
-
-            $('.faq').summernote({
-                
-                height:200,
-                placeholder: 'please fill this box...'
-
-            });
-
-        });
 
         $(document).ready(function () {
             $('#data_table').DataTable({

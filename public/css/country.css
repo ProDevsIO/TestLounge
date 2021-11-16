@@ -10,9 +10,9 @@ select option:hover {
     box-shadow: 0 0 10px 100px #000 inset;
 }
 .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover  {
-    color: #5477DF;
+    color: #c0272d;
     background-color: #F4F5F7 !important;
-    border-bottom: 5px solid #5477DF;
+    border-bottom: 5px solid #c0272d;
     width:70%;
     padding:50px;
     left: 15%;
@@ -48,30 +48,29 @@ h4{
     line-height: 150%;
 }
 
-li{
+
+
+.container li{
+    font-family: Nunito;
+    text-align: justify;
+    font-weight: 400;
+    color:black !important;
+
+}
+
+.container h3{
+    font-family: Nunito;
+    margin-bottom: 20px;
+}
+
+.container p{
     font-family: Nunito;
     font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 170%;
     color:black !important;
 }
-p{
-    font-family: Nunito;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 170%;
-    color:black !important;
-}
-span{
-    font-family: Nunito;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 170%; 
-    
-}
+
 
 h4>span{
     font-family: Nunito;
@@ -79,4 +78,12 @@ h4>span{
     font-weight: 600;
     font-size: 35px;
     line-height: 150%;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
 }

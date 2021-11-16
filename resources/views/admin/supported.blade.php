@@ -25,7 +25,6 @@
                                         <thead>
                                         <tr>
                                             <th scope="col">Country</th>
-                                            <th scope="col">Vendor</th>
                                             @if(auth()->user()->type == "1")
                                                 <th scope="col">Action</th>
                                             @endif
@@ -35,7 +34,6 @@
                                         @foreach($countries as $country)
                                             <tr>
                                                 <td>{{$country->country->nicename}}</td>
-                                                <td>{{$country->vendor->name}}</td>
                                                 <td>
                                                 <div class="btn-group" role="group">
                                                                 <button id="btnGroupDrop1" type="button"
