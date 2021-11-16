@@ -192,6 +192,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit/configuration/{id}', [\App\Http\Controllers\DashboardController::class,"view_edit_configuration"]);
     Route::post('/page/configure/data', [\App\Http\Controllers\DashboardController::class, "page_configuration"]);
     Route::post('/edit/configure/data', [\App\Http\Controllers\DashboardController::class, "edit_page_configuration"]);
+    Route::get('/view/configure/products/{id}', [\App\Http\Controllers\DashboardController::class,"view_configure_products"]);
 
     Route::get('/logout', [\App\Http\Controllers\DashboardController::class,"logout"]);
 

@@ -3610,5 +3610,12 @@ class DashboardController extends Controller
         }
     }
 
-
+    public function view_configure_products($id)
+    {
+        
+        $products = Product::where('country_id', $id )->get();
+        $countries = Country::where('id', $id )->first();
+       
+        return view('admin.configured_products')->with(compact('products', 'countries'));
+    }
 }
