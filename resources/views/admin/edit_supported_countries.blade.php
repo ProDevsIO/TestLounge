@@ -14,12 +14,13 @@
                             <div class="card-title p-2">
                                <h3> Edit Supported Countries Setup</h3>
                             </div>
+                            @include('errors.showerrors')
                 <div clas="col-md-12">
-                    <form action="{{url('/edit/configure/data')}}" method="POST">
+                    <form action="{{url('/edit/configure/data')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card">
                             <div class="card-body">
-                                <label for="">Country</label>
+                                <label for=""><b>Country</b></label>
                                
 
                                 <select name="country_id" class="form-control" id="country" onchange ="getVendorCountry()" required>
@@ -31,7 +32,17 @@
                                 <br>
                             </div>
                         </div>
-
+                        <br>
+                        <div class="card">
+                            <div class="card-title p-3">
+                               <h5><b>Image</b></h5>
+                            </div>
+                            <div class="card-body">
+                                <img id="blah" src="{{url('/page_img/'.$countries->image)}}" class="img-thumbnail img-fluid mx-auto d-block " width="50%" alt="View Image here" />
+                                <br><br>
+                                <input type="file" name="image" class="form-control" id="imgInp">
+                            </div>
+                        </div>
                         <br>
                         <div class="card">
                             <div class="card-title p-3">
@@ -40,23 +51,23 @@
                             <div class="card-body">
 
                                 <label for=""><b>On arrival (If fully vaccinated)</b></label>
-                                <textarea name="arrival_vaccinated" id="" class="form-control arrival_vaccinated" cols="30" rows="10" required>{{ old('arrival_vaccinated') ?? $countries->arrival_vaccinated}}</textarea>
+                                <textarea name="arrival_vaccinated" id="" class="form-control arrival_vaccinated" cols="30" rows="10" >{{ old('arrival_vaccinated') ?? $countries->arrival_vaccinated}}</textarea>
                                 <br>
 
                                 <label for=""><b>On arrival(If Unvaccinated / Partially vaccinated)</b></label>
-                                <textarea name="arrival_unvaccinated" id="" class="form-control arrival_unvaccinated" cols="30" rows="10" required>{{ old('arrival_unvaccinated') ?? $countries->arrival_unvaccinated}}</textarea>
+                                <textarea name="arrival_unvaccinated" id="" class="form-control arrival_unvaccinated" cols="30" rows="10">{{ old('arrival_unvaccinated') ?? $countries->arrival_unvaccinated}}</textarea>
                                 <br>
 
                                 <label for=""><b>Predeparture(If fully vaccinated)</b></label>
-                                <textarea name="departure_vaccinated" id="" class="form-control departure_vaccinated" cols="30" rows="10" required>{{ old('departure_vaccinated') ?? $countries->departure_vaccinated}}</textarea>
+                                <textarea name="departure_vaccinated" id="" class="form-control departure_vaccinated" cols="30" rows="10">{{ old('departure_vaccinated') ?? $countries->departure_vaccinated}}</textarea>
                                 <br>
 
                                 <label for=""><b>Predeparture(If Unvaccinated / Partially vaccinated)</b></label>
-                                <textarea name="departure_unvaccinated" id="" class="form-control departure_unvaccinated" cols="30" rows="10" required>{{ old('departure_unvaccinated') ?? $countries->departure_unvaccinated}}</textarea>
+                                <textarea name="departure_unvaccinated" id="" class="form-control departure_unvaccinated" cols="30" rows="10">{{ old('departure_unvaccinated') ?? $countries->departure_unvaccinated}}</textarea>
                                 <br>
 
                                 <label for=""><b>Faq</b></label>
-                                <textarea name="faq" id="" class="form-control faq" cols="30" rows="10" required>{{old('faq') ?? $countries->faq}}</textarea>
+                                <textarea name="faq" id="" class="form-control faq" cols="30" rows="10">{{old('faq') ?? $countries->faq}}</textarea>
                             </div>
                         </div>
                         <br>
@@ -136,6 +147,22 @@
 
             });
         }
+
+        function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#blah').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#imgInp").change(function(){
+                readURL(this);
+            });
 
     </script>
 @endsection

@@ -13,7 +13,7 @@ class SupportedCountries extends Model
 
 	protected $fillable = [
 		'country_id',
-		'vendor_id',
+        'image',
         'arrival_vaccinated',
         'arrival_unvaccinated',
         'departure_vaccinated',
@@ -21,10 +21,10 @@ class SupportedCountries extends Model
 		'faq',
 	];
 
-    public function vendor()
-    {
-        return $this->belongsTo(Vendor::class, 'vendor_id');
-    }
+    // public function vendor()
+    // {
+    //     return $this->belongsTo(Vendor::class, 'vendor_id');
+    // }
 
     public function country()
     {

@@ -18,15 +18,15 @@ class CreateSupportedCountriesTable extends Migration
             Schema::create('supported_countries', function (Blueprint $table) {
                 $table->integer('id', true);
                 $table->integer('country_id')->nullable();
-//                $table->integer('vendor_id')->nullable();
-                $table->longtext('arrival_vaccinated');
-                $table->longtext('arrival_unvaccinated');
-                $table->longtext('departure_vaccinated');
-                $table->longtext('departure_unvaccinated');
-                $table->longtext('faq');
+                $table->longtext('image')->nullable();
+                $table->longtext('arrival_vaccinated')->nullable();
+                $table->longtext('arrival_unvaccinated')->nullable();
+                $table->longtext('departure_vaccinated')->nullable();
+                $table->longtext('departure_unvaccinated')->nullable();
+                $table->longtext('faq')->nullable();
                 $table->timestamps();
                 $table->foreign('country_id')->references('id')->on('countries')->nullOnDelete();
-//                $table->foreign('vendor_id')->references('id')->on('vendors')->nullOnDelete();
+                // $table->foreign('vendor_id')->references('id')->on('vendors')->nullOnDelete();
             });
        
     }

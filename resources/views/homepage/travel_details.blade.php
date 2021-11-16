@@ -33,9 +33,13 @@
     </style>
 @endsection
 @section('content')
-    <header class="title" style="max-height: 300px !important;">
+    <header class="title" style="max-height: 400px !important;">
         <div class="background-image-holder parallax-background">
-            <img class="background-image" alt="Background Image" src="/img/pass2.jpg">
+            @if($countries->image == null)
+                <img class="background-image" alt="Background Image" src="/img/pass2.jpg">
+            @else
+                <img class="background-image" alt="Background Image" src="{{ url('/page_img/'. $countries->image)}}">
+            @endif
         </div>
         <div class="container align-bottom">
             <div class="row">

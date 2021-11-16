@@ -25,6 +25,7 @@
                                         <thead>
                                         <tr>
                                             <th scope="col">Country</th>
+                                            
                                             @if(auth()->user()->type == "1")
                                                 <th scope="col">Action</th>
                                             @endif
@@ -45,7 +46,7 @@
                                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                            
                                                                         <a class="dropdown-item" href="{{ url('/edit/configuration/'.$country->id)}}">Edit</a>
-                                                                    
+                                                                        <a class="dropdown-item" href="{{ url('/view/configure/products/'.$country->country_id)}}">View Products</a>
                                                                 </div>
                                                             </div>
                                                         </td>
