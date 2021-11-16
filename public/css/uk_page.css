@@ -581,7 +581,7 @@ line-height: 150% !important;
 /* mobile version */
 @media screen and (max-width: 800px) {
     .page-header{
-        height:600px !important;
+        height:450px !important;
     }
     .cart .cart-container .card{
         grid-template-columns:2fr 1fr 2fr 2fr;
