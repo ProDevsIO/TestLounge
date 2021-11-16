@@ -91,6 +91,7 @@ Route::post('/pay', [\App\Http\Controllers\PaymentController::class, 'redirectTo
 Route::get('/payment/callback', [\App\Http\Controllers\PaymentController::class, 'handleGatewayCallback']);
 
 Route::get('/booking',[\App\Http\Controllers\HomeController::class,"booking"])->name('booking');
+Route::get('/testing' ,[\App\Http\Controllers\HomeController::class, "test"]);
 
 Route::middleware('auth')->group(function () {
 

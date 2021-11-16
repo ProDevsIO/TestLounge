@@ -117,7 +117,7 @@ class HomeController extends Controller
 
             //To restrict access as per admin
             if (auth()->user()->status == 0) {
-                session()->flash('alert-danger', "Your profile is currently under review and will be activated shortly by our Admin. To Facilitate this process, Kindly contact INFO@TRAVELTESTSLTD.COM");
+                session()->flash('alert-danger', "Your profile is currently under review and will be activated shortly by our Admin. To Facilitate this process, Kindly contact INFO@TRAVELlongtextSLTD.COM");
                 auth()->logout();
                 return back();
             }
@@ -154,7 +154,7 @@ class HomeController extends Controller
 
 
         $request->vendor_id = 3;
-        $test_kit = [];
+        $longtext_kit = [];
 
        if($request->email != $request->verify_email)
        {
@@ -218,13 +218,13 @@ class HomeController extends Controller
                 {
                     for($n = 0; $n < $voucher->quantity; $n++)
                     {
-                        $test_kit[] = $request->{'test_kit'.$n};
-                        unset($request_data['test_kit'.$n]);
+                        $longtext_kit[] = $request->{'longtext_kit'.$n};
+                        unset($request_data['longtext_kit'.$n]);
                     }
-                    // encode the testkit in json format
-                    $test_kit = json_encode($test_kit); 
+                    // encode the longtextkit in json format
+                    $longtext_kit = json_encode($longtext_kit); 
                     
-                    $request_data['test_kit'] = $test_kit;
+                    $request_data['longtext_kit'] = $longtext_kit;
                 }
                 
 
@@ -310,9 +310,9 @@ class HomeController extends Controller
         //         Hi " . $request->first_name . ",
 
         //         Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
-        //         For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktraveltest.prodevs.io/#popular' >Here</a> <br>
+        //         For More Information and Guidelines on the UK Travel longtexting Process, click <a href='https://uktravellongtext.prodevs.io/#popular' >Here</a> <br>
         //      <br/>
-        //         <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "make/payment/" . $transaction_ref . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+        //         <a href='" . env('APP_URL', "https://uktravellongtext.prodevs.io/") . "make/payment/" . $transaction_ref . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
         //                Make Payment
         //               </a>
         //               <br/>
@@ -389,7 +389,7 @@ class HomeController extends Controller
         curl_setopt(
             $ch,
             CURLOPT_POSTFIELDS,
-            "txref=" . $txRef . "&SECKEY=" . env('RAVE_SECRET_KEY', 'FLWSECK_TEST-516babb36b12f7f60ae0a118dcc9482a-X')
+            "txref=" . $txRef . "&SECKEY=" . env('RAVE_SECRET_KEY', 'FLWSECK_longtext-516babb36b12f7f60ae0a118dcc9482a-X')
         );
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -435,7 +435,7 @@ class HomeController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
-            "Authorization: Bearer ". env('PAYSTACK_SECRET_KEY', 'sk_test_a888f85236f4da1b0bd204ad8f8c96b6e010a7e9'),
+            "Authorization: Bearer ". env('PAYSTACK_SECRET_KEY', 'sk_longtext_a888f85236f4da1b0bd204ad8f8c96b6e010a7e9'),
             "Cache-Control: application/json",
             ),
         ));
@@ -668,7 +668,7 @@ class HomeController extends Controller
                             Dear " . $booking->first_name . ",<br><br>
                 
                             Thank you for booking with us.<br><br>
-                             If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory Test or The Unvaccinated Day 2 & Day 8 Mandatory Tests.<br/><br/>
+                             If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory longtext or The Unvaccinated Day 2 & Day 8 Mandatory longtexts.<br/><br/>
     
                             Your purchase would be for one of the following reasons:<br><br>
     
@@ -687,9 +687,9 @@ class HomeController extends Controller
                                   <br/><br/>
                                   Thank you.
                                   <br/><br/>
-                                Traveltestsltd Team
+                                Travellongtextsltd Team
                             ";
-                            Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
+                            Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a longtexts for the Unvaccinated/ Partially Vaccinated "));
                         }
                        
                     } catch (\Exception $e) {
@@ -708,13 +708,13 @@ class HomeController extends Controller
                             //check the status set by the copy receipt
                             //if 1 :copy the agent else if 0: send normally
                             if ($getUser->copy_receipt == 1) {
-                                $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                                $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from TravellongtextsGlobal", optional($booking_product->vendor)->email, $code));
                             } elseif ($getUser->copy_receipt == 0) {
-                                $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                                $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravellongtextsGlobal", optional($booking_product->vendor)->email, $code));
                             }
                         } else {
                             //referral code doesnt exist
-                            $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                            $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravellongtextsGlobal", optional($booking_product->vendor)->email, $code));
                         }
                         
                     } catch (\Exception $e) {
@@ -728,7 +728,7 @@ class HomeController extends Controller
 
                     $decode = implode(", ", json_decode($code));
 
-                    $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
+                    $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TravellongtextGlobal.Your Booking Reference:- " . $decode . ". longtext Provider:- " . $booking_product->vendor->name . ".Thank you";
                     $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
 
                 }
@@ -915,13 +915,13 @@ class HomeController extends Controller
             $message = "
             Hi " . $request->first_name . ",<br><br>
 
-            Thank you for your interest to register as an Agent with Traveltestsltd.<br/><br/>
+            Thank you for your interest to register as an Agent with Travellongtextsltd.<br/><br/>
             Your profile is currently under review and will be activated shortly by our Admin. <br><br>
-            To facilitate this process, Kindly contact <a href='https://info@traveltestsltd.com'>INFO@TRAVELTESTSLTD.COM</a>
+            To facilitate this process, Kindly contact <a href='https://info@travellongtextsltd.com'>INFO@TRAVELlongtextSLTD.COM</a>
                   <br/><br/>
                   Thank you.
                   <br/><br/>
-                Traveltestsltd Team
+                Travellongtextsltd Team
             ";
             Mail::to($request->email)->send(new BookingCreation($message, "Agent Registration"));
         } catch (\Exception $e) {
@@ -933,20 +933,20 @@ class HomeController extends Controller
             $message2 = "
             Hi Admin,<br/>
 
-            We would like to inform you that a new SuperAgent has registered with Traveltestsltd.<br/><br/>
+            We would like to inform you that a new SuperAgent has registered with Travellongtextsltd.<br/><br/>
             Name: " . $request->first_name . " " . $request->last_name . " <br/>
             Phone: " . $request->phone_no . "<br/>
             Email: " . $request->email . "<br/>
             Company Name: " . $request->company . "<br/>
             <br/>Kindly click the button below to login and review<br/><br/>
-            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+            <a href='" . env('APP_URL', "https://uktravellongtext.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Go to Login
                   </a>
 
                   <br/><br/>
                   Thank you.
                   <br/><br/>
-                Traveltestsltd Team
+                Travellongtextsltd Team
             ";
             Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Superagent Registration"));
         } catch (\Exception $e) {
@@ -958,7 +958,7 @@ class HomeController extends Controller
         return back();
     }
 
-    public function testEmail()
+    public function longtextEmail()
     {
         dd(encrypt_decrypt('encrypt', "165"));
         $booking = Booking::where('id', 51)->first();
@@ -1046,20 +1046,20 @@ class HomeController extends Controller
             $message2 = "
             Hi Admin,<br/>
 
-            We would like to inform you that a Subagent has completed registraion with Traveltestsltd.<br/><br/>
+            We would like to inform you that a Subagent has completed registraion with Travellongtextsltd.<br/><br/>
             Name: " . $user->first_name . " " . $user->last_name . " <br/>
             Phone: " . $user->phone_no . "<br/>
             Email: " . $user->email . "<br/>
             Company Name: " . $user->company . "<br/>
             <br/>Kindly click the button below to login and review<br/><br/>
-            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+            <a href='" . env('APP_URL', "https://uktravellongtext.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Go to Login
                   </a>
 
                   <br/><br/>
                   Thank you.
                   <br/><br/>
-                Traveltestsltd Team
+                Travellongtextsltd Team
             ";
             Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Subagent Registration"));
 
@@ -1102,38 +1102,38 @@ class HomeController extends Controller
             if($user->main_agent_share_raw == null)
             {
                 $message = "Congratulations!,<br><br>
-                Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
+                Your application to join the Agent network of the Travellongtextsltd Platform has been approved.<br><br>
                 You can now log in to your portal to complete your profile and set up your account. <br><br>
                 You will find your dedicated customer booking link on your portal <br><br>
                 Kindly click the button below<br/><br/>
-                        <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "super/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                        <a href='" . env('APP_URL', "https://uktravellongtext.prodevs.io/") . "super/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                         Continue Registration
                        </a>
             
                               <br/><br/>
-                Thank you for joining the  Traveltestsltd network!<br><br>
+                Thank you for joining the  Travellongtextsltd network!<br><br>
     
-                Traveltestsltd Team
+                Travellongtextsltd Team
                 ";
             }else{
 
                 $message = "Congratulations!,<br><br>
-                Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
+                Your application to join the Agent network of the Travellongtextsltd Platform has been approved.<br><br>
                 You can now log in to your portal to complete your profile and set up your account. <br><br>
                 Kindly find your login details below:<br><br>
                 Email: $user->email<br><br>
                
                 You will find your dedicated customer booking link on your portal <br><br>
                 Kindly click the button below<br/><br/>
-                        <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "sub/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                        <a href='" . env('APP_URL', "https://uktravellongtext.prodevs.io/") . "sub/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                         Continue Registration
                        </a>
             
                               <br/><br/>
                 
-                Thank you for joining the  Traveltestsltd network!<br><br>
+                Thank you for joining the  Travellongtextsltd network!<br><br>
     
-                Traveltestsltd Team
+                Travellongtextsltd Team
                 ";
                 
             }
@@ -1195,9 +1195,9 @@ class HomeController extends Controller
 
             You will no longer be able to access your Agent portal , you will also not recieve any of the Agent benefits during the time of deactivation.<br><br>
 
-            Do kindly reach out to the Traveltestsltd  Desk for more information on how to get back on the network.<br><br>
+            Do kindly reach out to the Travellongtextsltd  Desk for more information on how to get back on the network.<br><br>
 
-            Traveltestsltd Team
+            Travellongtextsltd Team
             ";
             Mail::to($user->email)->send(new BookingCreation($message, 'Agent Deactivation'));
         } catch (\Exception $e) {
@@ -1498,7 +1498,7 @@ class HomeController extends Controller
 
             Kindly click this link to reset your password : <a href='" . env('APP_URL') . 'reset/password/' . encrypt_decrypt('encrypt', $people->id) . "/" . encrypt_decrypt("encrypt", $people->email) . "'>Reset Password</a>,<br><br>
 
-             Traveltestsltd
+             Travellongtextsltd
             ";
             Mail::to($people->email)->send(new BookingCreation($message, "Password Reset"));
         } catch (\Exception $e) {
@@ -1545,15 +1545,15 @@ class HomeController extends Controller
         return redirect()->to('/login');
     }
 
-    public function testing()
+    public function longtexting()
     {
         $booking = Booking::first();
         $message = "
                 Hi,
 
                 Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
-                For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktraveltest.prodevs.io/#popular' >Here</a> <br>
-                <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "make/payment/'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                For More Information and Guidelines on the UK Travel longtexting Process, click <a href='https://uktravellongtext.prodevs.io/#popular' >Here</a> <br>
+                <a href='" . env('APP_URL', "https://uktravellongtext.prodevs.io/") . "make/payment/'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                        Make Payment
                       </a>
 
@@ -1728,7 +1728,7 @@ class HomeController extends Controller
                         Dear " . $booking->first_name . ",<br><br>
             
                         Thank you for booking with us.<br><br>
-                         If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory Test or The Unvaccinated Day 2 & Day 8 Mandatory Tests.<br/><br/>
+                         If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory longtext or The Unvaccinated Day 2 & Day 8 Mandatory longtexts.<br/><br/>
 
                         Your purchase would be for one of the following reasons:<br><br>
 
@@ -1747,9 +1747,9 @@ class HomeController extends Controller
                               <br/><br/>
                               Thank you.
                               <br/><br/>
-                            Traveltestsltd Team
+                            Travellongtextsltd Team
                         ";
-                        Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
+                        Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a longtexts for the Unvaccinated/ Partially Vaccinated "));
                     }
                    
                 } catch (\Exception $e) {
@@ -1768,13 +1768,13 @@ class HomeController extends Controller
                         //check the status set by the copy receipt
                         //if 1 :copy the agent else if 0: send normally
                         if ($getUser->copy_receipt == 1) {
-                            $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                            $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from TravellongtextsGlobal", optional($booking_product->vendor)->email, $code));
                         } elseif ($getUser->copy_receipt == 0) {
-                            $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                            $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravellongtextsGlobal", optional($booking_product->vendor)->email, $code));
                         }
                     } else {
                         //referral code doesnt exist
-                        $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                        $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravellongtextsGlobal", optional($booking_product->vendor)->email, $code));
                     }
                     
                 } catch (\Exception $e) {
@@ -1788,7 +1788,7 @@ class HomeController extends Controller
 
                 $decode = implode(", ", json_decode($code));
 
-                $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
+                $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TravellongtextGlobal.Your Booking Reference:- " . $decode . ". longtext Provider:- " . $booking_product->vendor->name . ".Thank you";
                 $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
 
             }
@@ -1839,17 +1839,18 @@ class HomeController extends Controller
 
     public function view_uk($id)
     {
-        if($id == 225)
-        {
-            $countries = Country::all();
+        // if($id == 221)
+        // {
+        //     $countries = Country::all();
         
-            return view('homepage.uk_page')->with(compact('countries'));
-        }else{
+        //     return view('homepage.uk_page')->with(compact('countries'));
+        // }else{
             $countries = Country::where('id', $id)->first();
             return view('homepage.country_decision_page')->with(compact('countries'));
-        }
+        // }
        
     }
+
 
     public function view_travel_details($id, $action)
     {
@@ -1949,13 +1950,13 @@ class HomeController extends Controller
                         //check the status set by the copy receipt
                         //if 1 :copy the agent else if 0: send normally
                         if ($getUser->copy_receipt == 1) {
-                            $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                            $yes = Mail::to(["$booking->email", "$getUser->email"])->send(new VendorReceipt($booking_product->id, "Receipt from TravellongtextsGlobal", optional($booking_product->vendor)->email, $code));
                         } elseif ($getUser->copy_receipt == 0) {
-                            $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                            $no = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravellongtextsGlobal", optional($booking_product->vendor)->email, $code));
                         }
                     } else {
                         //referral code doesnt exist
-                        $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
+                        $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravellongtextsGlobal", optional($booking_product->vendor)->email, $code));
                     }
                 } catch (\Exception $e) {
                 }
@@ -1970,7 +1971,7 @@ class HomeController extends Controller
                         Dear " . $booking->first_name . ",<br><br>
             
                         Thank you for booking with us.<br><br>
-                         If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory Test or The Unvaccinated Day 2 & Day 8 Mandatory Tests.<br/><br/>
+                         If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory longtext or The Unvaccinated Day 2 & Day 8 Mandatory longtexts.<br/><br/>
 
                         Your purchase would be for one of the following reasons:<br><br>
 
@@ -1990,9 +1991,9 @@ class HomeController extends Controller
                               <br/><br/>
                               Thank you.
                               <br/><br/>
-                            Traveltestsltd Team
+                            Travellongtextsltd Team
                         ";
-                        Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
+                        Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a longtexts for the Unvaccinated/ Partially Vaccinated "));
                     }
                    
                 } catch (\Exception $e) {
@@ -2005,7 +2006,7 @@ class HomeController extends Controller
 
                 $decode = implode(", ", json_decode($code));
 
-                $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
+                $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TravellongtextGlobal.Your Booking Reference:- " . $decode . ". longtext Provider:- " . $booking_product->vendor->name . ".Thank you";
                 $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
 
             }
@@ -2050,5 +2051,108 @@ class HomeController extends Controller
         $type = "RED";
 
         return view('homepage.typecountries')->with(compact('type', 'countries'));
+    }
+
+    public function test()
+    {
+      // ---- DAM HEALTH INTEGRATION TEST ON DIFFERENT END POINT COMPILED TOGETHER ---- //
+      
+
+        ///  ---------------  Get Bearer Token  -----------  ///
+        $request = [
+                        "client_id" => "4e0fc3ff-7256-478b-9434-c6df9df9db0c",
+                        "client_secret" =>"b7ed19139aa984f4e8a1084cef5b32677d1ed2d66645df061485d58d77af27bab000c6a6f5eca5b8052d496ff1f9dcf7a8d6e94132519db56000b7e91c7c9853"
+                    ];
+
+        $data_string = json_encode($request);
+
+        $url = "https://partner-api-dev.dam-health.com/v1/api/authenticate";
+
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_string)));
+        
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($result);
+        $bearer = $response->token->value;
+        ///  --------------------   End of get bearer token   -----------------   ///
+
+         ///  -----------------  Get Location list  -----------  ///
+        $request2 = [
+
+            "query" => "query GetLocations {damhealth_locations {availability isactive locationid name address rooms { name roomid } } }"
+            
+            ];
+
+        $data_string2 = json_encode($request2);
+     
+        // dump($data_string2);
+        // exit();
+        $ch2 = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
+
+        curl_setopt($ch2, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch2, CURLOPT_POSTFIELDS, $data_string2);
+        curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch2, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+       
+        $result_p = curl_exec($ch2);
+        ///    --------------------    end of get product list   -----------------   ///
+
+        // curl_close($ch2);
+        // dd($result_p);
+        // dump(json_decode($result_p));
+
+        ///  -------------------   Get Product list   --------------   ///
+        $getArrayProduct = [
+
+            "query" => "query GetProducts { damhealth_products { locationids itemcode name price productid priceandavailabilitybylocation type} }"
+          
+        ];
+
+        $encodedArray = json_encode($getArrayProduct);
+
+        $ch3 = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
+
+        curl_setopt($ch3, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch3, CURLOPT_POSTFIELDS,  $encodedArray);
+        curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch3, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+       
+        $result_3 = curl_exec($ch3);
+        ///   --------------------    end of get product list   -----------------  ///
+
+        
+        ///  ------------  Create  a new Booking ----------   ///
+    
+
+        $object = [ "object" => ["locationid"=> 10037,"roomid"=> 10244,"durationstart"=> "2021-10-24T12:00:00","durationend"=> "2021-10-24T12:10:00","bookingdate"=> "2021-10-24","comments"=> "","bookingproducts"=> [ "data"=> [ ["productid"=> 10002 ] ] ],"bookingnotes"=> [ "data"=> [ "note"=> ""] ],"patient"=> ["data"=> ["address"=> [ ["address"=> "57 , Churchdown Lane","city"=> "Gloucester","state"=> "England","postcode"=> "GL3 3QJ","country"=> "United Kingdom"]],"firstname"=> "John","lastname"=> "Snow","dob"=> "1954-10-26","gender"=> "male", "email"=> "dew@thrones.com","mobilenumber"=> "+2547776332546","passportnumber"=> "123456789","ethnicity"=> "asian","religion"=> null,"occupation"=> null,"company"=> null,"comments"=> null,"customattributes"=> null,"receiveemail"=> true, "receivesms"=> true,"promotionalmarketing"=> true] ] ] ];
+
+        $object = json_encode($object);
+   
+        $getArrayBooking = [
+
+            "query" => "mutation CreateBooking( $object: damhealth_bookings_insert_input!) { insert_damhealth_bookings_one(object: $object) {bookingid} }"
+            
+        ];
+       
+        $encoded_booking_data = json_encode($getArrayBooking);
+
+        $b = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
+
+        curl_setopt($b, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($b, CURLOPT_POSTFIELDS,  $encoded_booking_data);
+        curl_setopt($b, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($b, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+       
+        $result_book = curl_exec($b);
+
+     
+         ///  ------------  End a new Booking Creation ----------   ///
+        // dump(json_decode($result_p), json_decode($result _3));
+        dd(json_decode($result_p), json_decode($result_3), json_decode($result_book));
     }
 }
