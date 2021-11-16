@@ -3531,10 +3531,23 @@ class DashboardController extends Controller
 
     public function page_configuration(Request $request)
     {
+
+        $request->validate([
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        //rename image
+        $imageName = time().'.'.$request->image->extension();  
+        //move to path 
+        $request->image->move(public_path('page_img'), $imageName);
+
+     
         try{
             $request_data = $request->all();
 
             unset($request_data['_token']);
+            unset($request_data['image']);
+
+            $request_data['image'] = $imageName;
 
             $support = SupportedCountries::create($request_data);
 
@@ -3558,11 +3571,31 @@ class DashboardController extends Controller
 
     public function edit_page_configuration(request $request)
     {
+        
+        $request->validate([
+            'image' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
       try{
         $request_data = $request->all();
 
         unset($request_data['_token']);
         unset($request_data['files']);
+
+        if($request_data == "null")
+        {
+            unset($request_data['image']);
+        }else{
+             //rename image
+            $imageName = time().'.'.$request->image->extension();  
+            //move to path 
+            $request->image->move(public_path('page_img'), $imageName);
+
+            unset($request_data['image']);
+
+            $request_data['image'] = $imageName;
+
+        }
         
         $support = SupportedCountries::where('country_id', $request->country_id)->update($request_data);
 

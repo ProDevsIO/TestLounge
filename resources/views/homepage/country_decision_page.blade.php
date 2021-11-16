@@ -16,7 +16,7 @@
     </style>
 @endsection
 @section('content')
-    <header class="title" style="min-height: 300px !important;">
+    <header class="title" style="max-height: 300px !important;">
         <div class="background-image-holder parallax-background">
             <img class="background-image" alt="Background Image" src="/img/pass2.jpg">
         </div>

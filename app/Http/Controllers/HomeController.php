@@ -2131,20 +2131,21 @@ class HomeController extends Controller
 
         $object = [ "object" => ["locationid"=> 10037,"roomid"=> 10244,"durationstart"=> "2021-10-24T12:00:00","durationend"=> "2021-10-24T12:10:00","bookingdate"=> "2021-10-24","comments"=> "","bookingproducts"=> [ "data"=> [ ["productid"=> 10002 ] ] ],"bookingnotes"=> [ "data"=> [ "note"=> ""] ],"patient"=> ["data"=> ["address"=> [ ["address"=> "57 , Churchdown Lane","city"=> "Gloucester","state"=> "England","postcode"=> "GL3 3QJ","country"=> "United Kingdom"]],"firstname"=> "John","lastname"=> "Snow","dob"=> "1954-10-26","gender"=> "male", "email"=> "dew@thrones.com","mobilenumber"=> "+2547776332546","passportnumber"=> "123456789","ethnicity"=> "asian","religion"=> null,"occupation"=> null,"company"=> null,"comments"=> null,"customattributes"=> null,"receiveemail"=> true, "receivesms"=> true,"promotionalmarketing"=> true] ] ] ];
 
-        $object = json_encode($object);
-   
+        // $object = json_encode($object);
+ 
         $getArrayBooking = [
 
-            "query" => "mutation CreateBooking( $object: damhealth_bookings_insert_input!) { insert_damhealth_bookings_one(object: $object) {bookingid} }"
+            "query" => 'mutation CreateBooking( $object: damhealth_bookings_insert_input!) { insert_damhealth_bookings_one(object: $object) {bookingid} }',
+            "variables" => $object
             
         ];
        
         $encoded_booking_data = json_encode($getArrayBooking);
-
+       
         $b = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
 
         curl_setopt($b, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($b, CURLOPT_POSTFIELDS,  $encoded_booking_data);
+        curl_setopt($b, CURLOPT_POSTFIELDS,   $encoded_booking_data);
         curl_setopt($b, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($b, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
        
@@ -2153,6 +2154,6 @@ class HomeController extends Controller
      
          ///  ------------  End a new Booking Creation ----------   ///
         // dump(json_decode($result_p), json_decode($result _3));
-        dd(json_decode($result_p), json_decode($result_3), json_decode($result_book));
+        dd($bearer,json_decode($result_p), json_decode($result_3), json_decode($result_book));
     }
 }

@@ -246,14 +246,14 @@
     function ukDirect()
     {
         var country_id = document.getElementById("country").value;
-        window.location = '/view/uk/'+ country_id;
+        window.location = '/view/country/'+ country_id;
     }
 
     function ukDirect1()
     {
         var country_id = document.getElementById("country1").value;
      
-        window.location = '/view/uk/'+ country_id;
+        window.location = '/view/country/'+ country_id;
     }
 
     function countryQuery()

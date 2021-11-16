@@ -54,7 +54,7 @@ Route::get('/update/cart/{id}/{quantity}', [\App\Http\Controllers\HomeController
 Route::get('/delete/cart/{id}', [\App\Http\Controllers\HomeController::class,"deleteCart"]);
 Route::get('/covid/testing', [\App\Http\Controllers\HomeController::class,"products"])->name('products_covid');
 Route::get('/check/price/{vendor_id}', [\App\Http\Controllers\HomeController::class,"check_price"])->name('check_price');
-Route::get('/view/uk/{id}', [\App\Http\Controllers\HomeController::class,"view_uk"]);
+Route::get('/view/country/{id}', [\App\Http\Controllers\HomeController::class,"view_uk"]);
 Route::get('/travel/details/{id}/{action}', [\App\Http\Controllers\HomeController::class,"view_travel_details"]);
 
 Route::get('/check/{nationality}/price', [\App\Http\Controllers\HomeController::class,"check_product_price"])->name('check_product_price');

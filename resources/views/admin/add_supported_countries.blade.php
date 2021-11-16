@@ -14,8 +14,9 @@
                             <div class="card-title p-2">
                                <h3> Supported countries setup</h3>
                             </div>
+                            @include('errors.showerrors')
                 <div clas="col-md-12">
-                    <form action="{{url('page/configure/data')}}" method="POST">
+                    <form action="{{url('page/configure/data')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card">
                             <div class="card-body">
@@ -31,37 +32,32 @@
                                 <br>
                             </div>
                         </div>
-                        <br>
-                        <div class="card">
-                            <div class="card-title p-3">
-                               <h5>Vendor</h5>
-                            </div>
-                            <div class="card-body">
-                                <label for="">Vendor</label>
-                                <select name="vendor_id" id="" class="form-control vendor" required></select>
-                            </div>
-                        </div>
+                    
+                    
                         <br>
                         <div class="card">
                             <div class="card-title p-3">
                                <h5> Page Information </h5>
                             </div>
                             <div class="card-body">
+                                 <label for=""><b>Page Image</b></label>
+                                 <input type="file" name="image" class="form-control" src="" alt="">
 
+                                <br>
                                 <label for=""><b>On arrival (If fully vaccinated)</b></label>
-                                <textarea name="arrival_vaccinated" id="" class="form-control arrival_vaccinated" cols="30" rows="10" required></textarea>
+                                <textarea name="arrival_vaccinated" id="" class="form-control arrival_vaccinated" cols="30" rows="10"></textarea>
                                 <br>
 
                                 <label for=""><b>On arrival(If Unvaccinated / Partially vaccinated)</b></label>
-                                <textarea name="arrival_unvaccinated" id="" class="form-control arrival_unvaccinated" cols="30" rows="10" required></textarea>
+                                <textarea name="arrival_unvaccinated" id="" class="form-control arrival_unvaccinated" cols="30" rows="10"></textarea>
                                 <br>
 
                                 <label for=""><b>Predeparture(If fully vaccinated)</b></label>
-                                <textarea name="departure_vaccinated" id="" class="form-control departure_vaccinated" cols="30" rows="10" required></textarea>
+                                <textarea name="departure_vaccinated" id="" class="form-control departure_vaccinated" cols="30" rows="10"></textarea>
                                 <br>
 
                                 <label for=""><b>Predeparture(If Unvaccinated / Partially vaccinated)</b></label>
-                                <textarea name="departure_unvaccinated" id="" class="form-control  departure_unvaccinated" cols="30" rows="10" required></textarea>
+                                <textarea name="departure_unvaccinated" id="" class="form-control  departure_unvaccinated" cols="30" rows="10"></textarea>
                                 <br>
 
                                 <label for=""><b>Faq</b></label>
@@ -159,33 +155,33 @@
             }
         }
 
-        function getVendorCountry()
-        {
+        // function getVendorCountry()
+        // {
          
-            var country_id = document.getElementById('country').value;
+        //     var country_id = document.getElementById('country').value;
            
 
-            var url = '/vendor/supported/' + country_id;
+        //     var url = '/vendor/supported/' + country_id;
 
-            $.get(url, function (data) {
-                var $el = $(".vendor");
-                $el.empty(); // remove old options
-                console.log(data);
-                if(data != "error")
-                {
-                    $el.append($("<option value=''>Select a Vendor</option>"));
+        //     $.get(url, function (data) {
+        //         var $el = $(".vendor");
+        //         $el.empty(); // remove old options
+        //         console.log(data);
+        //         if(data != "error")
+        //         {
+        //             $el.append($("<option value=''>Select a Vendor</option>"));
                     
-                    $.each(data, function (key, value) {
-                        $el.append($("<option></option>")
-                            // .attr("value", value.vendor_id).text(value.name + "(" + value.price + ")"));
-                            .attr("value", value.vendor_id).text(value.name ));
-                    });
-                }else{
-                    $el.append($("<option value=''>No vendor is supported for this country</option>"));
-                }
+        //             $.each(data, function (key, value) {
+        //                 $el.append($("<option></option>")
+        //                     // .attr("value", value.vendor_id).text(value.name + "(" + value.price + ")"));
+        //                     .attr("value", value.vendor_id).text(value.name ));
+        //             });
+        //         }else{
+        //             $el.append($("<option value=''>No vendor is supported for this country</option>"));
+        //         }
 
-            });
-        }
+        //     });
+        // }
 
     </script>
 @endsection
