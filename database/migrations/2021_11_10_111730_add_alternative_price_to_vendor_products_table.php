@@ -16,7 +16,7 @@ class AddAlternativePriceToVendorProductsTable extends Migration
         Schema::table('vendor_products', function (Blueprint $table) {
             //
             if(!Schema::hasColumn('vendor_products', 'alternative_price')){
-                $table->text('alternative_price')->after('price_stripe');
+                $table->text('alternative_price')->nullable()->after('price_stripe');
             }
         });
     }

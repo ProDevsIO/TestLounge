@@ -636,6 +636,7 @@ class DashboardController extends Controller
 
         Product::create([
             'name' => $request->name,
+            'slug' => $request->name,
             'description' => $request->description,
             'country_id' => $request->country_id
         ]);

@@ -93,7 +93,7 @@
                                             <option value="">Select a country</option>
                                             <option value="225">United Kingdom</option>
                                             @foreach($scountries as $scountry)
-                                                <option value="{{$scountry->country_id}}"> {{$scountry->country->nicename}} {{$scountry->country_id}} </option>
+                                                <option value="{{$scountry->country_id}}"> {{$scountry->country->nicename}} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -165,7 +165,7 @@
                                 <option value="">Select a country</option>
                                 <option value="225">United Kingdom</option>
                                 @foreach($scountries as $scountry)
-                                    <option value="{{$scountry->country_id}}"> {{$scountry->country->nicename}} {{$scountry->country_id}} </option>
+                                    <option value="{{$scountry->country_id}}"> {{$scountry->country->nicename}} </option>
                                 @endforeach
                             </select>
                         </div>

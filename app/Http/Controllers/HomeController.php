@@ -1839,15 +1839,15 @@ class HomeController extends Controller
 
     public function view_uk($id)
     {
-        // if($id == 221)
-        // {
-        //     $countries = Country::all();
+        if($id == 225)
+        {
+            $countries = Country::all();
         
-        //     return view('homepage.uk_page')->with(compact('countries'));
-        // }else{
+            return view('homepage.uk_page')->with(compact('countries'));
+        }else{
             $countries = Country::where('id', $id)->first();
             return view('homepage.country_decision_page')->with(compact('countries'));
-        // }
+        }
        
     }
 
@@ -2053,6 +2053,17 @@ class HomeController extends Controller
         return view('homepage.typecountries')->with(compact('type', 'countries'));
     }
 
+    public function view_single_product($slug)
+    {
+        
+        $product = Product::where('slug', $slug)->first();
+        $vproducts = VendorProduct::where('product_id', optional($product)->id)->orderby('id', 'desc')->take(1)->get();
+        $sproducts = VendorProduct::where('product_id',  optional($product)->id)->first();
+        
+        return view('homepage.single_product')->with(compact('vproducts','sproducts'));
+
+    }
+
     public function test()
     {
       // ---- DAM HEALTH INTEGRATION TEST ON DIFFERENT END POINT COMPILED TOGETHER ---- //
@@ -2156,4 +2167,5 @@ class HomeController extends Controller
         // dump(json_decode($result_p), json_decode($result _3));
         dd($bearer,json_decode($result_p), json_decode($result_3), json_decode($result_book));
     }
+
 }

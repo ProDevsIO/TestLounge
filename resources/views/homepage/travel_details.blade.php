@@ -46,7 +46,7 @@
                 <div class="col-xs-12 ">
 
                     <h1 id="cent" class="text-white">Home > <a style="color: white"
-                                                               href="http://traveltestglobal.test/view/uk/{{ $countries->country_id }}">{{ ucfirst(strtolower(optional(optional($countries)->country)->name))}}</a> @if($action == "departure")
+                                                               href="{{ url( env('APP_URL', 'http://127.0.0.1:8000/'). 'view/country/' .$countries->country_id) }}">{{ ucfirst(strtolower(optional(optional($countries)->country)->name))}}</a> @if($action == "departure")
                             > Pre-departure
                         @else
                             > Arrival
