@@ -35,10 +35,10 @@
                                     <div class="container" id="show-result">
 
                                     </div>
-                                    <br>
+                                
                                     <?php $i = 1 ?>
-                                    <div class="row"  style="margin-top:100px;">
-                                                                             <div class="col-md-8" >
+                                    <div class="row">
+                                                                             <div class="col-md-8" style="margin-top:100px;" >
                                                                                 <h2 class="" style="text-color:black"><span class="">{{ optional(optional($sproducts)->product)->name }}</span>
                                                                                 </h2>
                                                                                 <br>
@@ -50,8 +50,8 @@
 
                                                                      
                                                                        
-                                                                            <br>
-                                                                            <div class="col-md-4">
+                                                                        
+                                                                            <div class="col-md-4" style="margin-top:100px;">
                                                                                     <div class="col-md-12 card">
                                                                                         <h5>{{$vproduct->vendor->name}}</h5>
                                                                                                     <div class="container text-center"
@@ -123,7 +123,14 @@
                                                                                                             </a>
                                                                                                            
                                                                                                         @endif
-                                                                                                        <a href="/view/cart" id="add_button" class="btn btn-info">Go to cart</a>
+                                                                                                        <!-- <a href="/view/cart" id="add_button" class="btn btn-info">Go to cart</a> -->
+                                                                                                        <div class="col-sm-12 text-center" style="margin-top:50px"><a
+                                                                                                                    id="go_button"
+                                                                                                                    href="{{ url('/view/cart') }}"
+                                                                                                                    type="button" class="btn bg-1" >Go
+                                                                                                                to cart <img
+                                                                                                                        src="https://img.icons8.com/fluency/20/000000/right.png"/></a>
+                                                                                                        </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                             </div>
@@ -133,16 +140,7 @@
                                                  @endforeach
                                                  <div>	&nbsp;</div> 
                                                  </div>
-                                                        <div class="row" style="margin-right:0px; margin-top:30px;margin-left:0px">
-
-                                                                            <div class="col-sm-12 text-center"><a
-                                                                                        id="go_button"
-                                                                                        href="{{ url('/view/cart') }}"
-                                                                                        type="button" class="btn bg-1">Go
-                                                                                    to cart <img
-                                                                                            src="https://img.icons8.com/fluency/20/000000/right.png"/></a>
-                                                                            </div>
-                                                         </div>
+                                                       
                                                                     @else
                                                                         <div style="padding: 50px 50px 30px 50px">
                                                                             <h4 class="text-center">No product available
