@@ -94,6 +94,7 @@
                                         <th scope="col">Description</th>
                                         <th scope="col">Booking</th>
                                         <th scope='col'>Country</th>
+                                        <th scope="col">Links</th>
                                         @if(auth()->user()->type == "1")
                                             <th scope="col">Action</th>
                                         @endif
@@ -110,6 +111,12 @@
                                             </td>
                                             <td>{{ $product->bookings->count() }}</td>
                                             <td>{{optional($product->country)->nicename ?? "No country"}}</td>
+                                            <td>@if(optional($product)->slug) 
+                                                   <a href="{{url(env('APP_URL', 'http://127.0.0.1:8000/').'view/product/'.$product->slug)}}">{{env('APP_URL', 'http://127.0.0.1:8000/')}}/view/product/{{optional($product)->slug}}</a>  
+                                                @else
+                                                    No Links
+                                                @endif
+                                            </td>
                                             @if(auth()->user()->type == "1")
                                                 <td>
 
