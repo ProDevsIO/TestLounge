@@ -736,31 +736,31 @@ class DashboardController extends Controller
         $settings = Setting::where('id', 2)->first();
         //update flutterwave
 
-        $flutterwave_data = [
-            'account_bank' => $request->account_bank,
-            'account_number' => $request->account_no,
-            'business_name' => auth()->user()->first_name . " " . auth()->user()->last_name,
-            'business_email' => auth()->user()->email,
-            'business_mobile' => auth()->user()->phone_no,
-            'country' => $request->country,
-            "split_type" => "percentage",
-            "split_value" => (auth()->user()->percentage_split) ? (100 - auth()->user()->percentage_split) / 100 : (100 - $settings->value) / 100
-        ];
+        // $flutterwave_data = [
+        //     'account_bank' => $request->account_bank,
+        //     'account_number' => $request->account_no,
+        //     'business_name' => auth()->user()->first_name . " " . auth()->user()->last_name,
+        //     'business_email' => auth()->user()->email,
+        //     'business_mobile' => auth()->user()->phone_no,
+        //     'country' => $request->country,
+        //     "split_type" => "percentage",
+        //     "split_value" => (auth()->user()->percentage_split) ? (100 - auth()->user()->percentage_split) / 100 : (100 - $settings->value) / 100
+        // ];
 
-        if (!auth()->user()->flutterwave_key) {
-            $data = $this->addFlutterwave($flutterwave_data);
-        } else {
-            $data = $this->editFlutterwave($flutterwave_data, auth()->user()->flutterwave_id);
+        // if (!auth()->user()->flutterwave_key) {
+        //     $data = $this->addFlutterwave($flutterwave_data);
+        // } else {
+        //     $data = $this->editFlutterwave($flutterwave_data, auth()->user()->flutterwave_id);
 
-        }
-        if (!$data->data) {
-            session()->flash("alert-danger", $data->message);
-            return back();
+        // }
+        // if (!$data->data) {
+        //     session()->flash("alert-danger", $data->message);
+        //     return back();
 
-        }
+        // }
 
-        $data_save['flutterwave_key'] = $data->data->subaccount_id;
-        $data_save['flutterwave_id'] = $data->data->id;
+        // $data_save['flutterwave_key'] = $data->data->subaccount_id;
+        // $data_save['flutterwave_id'] = $data->data->id;
 
 
         User::where('id', auth()->user()->id)->update($data_save);
