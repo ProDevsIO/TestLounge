@@ -217,6 +217,28 @@
                                            name="arrival_date"
                                            value="{{ old('arrival_date') }}" required>
                                 </div>
+                               
+                                @if(!$locations == null)
+                               
+                                <div class="col-md-12">
+                                    <label>Test Location: <span class="show_required"> *</span></label>
+                                    <select class="select-2 select2"
+                                            name="test_location[]" autocomplete="off"
+                                             required>
+                                        <option value="">Make a selection</option>
+                                        @foreach($locations as $location)
+                                        @php
+                                            $value = [
+                                                        'location' => $location->locationid,
+                                                        'address' => json_encode($location->address),
+                                                        'room' => json_encode($location->rooms['0'])
+                                                      ];
+                                        @endphp
+                                            <option value="{{json_encode($value)}}" selected>{{ $location->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @endif
 
                                 @if(isset($_GET['ref']))
                                     <input type="hidden" name="ref" value="{{ $_GET['ref'] }}">

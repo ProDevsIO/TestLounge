@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="media-body text-light" title="Pending bookings">
                                     <h4 class="text-uppercase mb-0 weight500">{{ $products->count() }}</h4>
-                                    <span>All Products</span>
+                                    <span>All Products for {{ $countries->nicename }} </span>
                                 </div>
                             </div>
                         </div>
@@ -62,9 +62,7 @@
                             <label for="">Country</label>
                                 <select name="country_id" class="form-control" id="country" required>
                                     <option value="">Please select a country for this test</option>
-                                    @foreach($countries as $country)
-                                        <option value="{{$country->id}}">{{$country->nicename}}</option>
-                                    @endforeach
+                                    <option value="{{$countries->id}}">{{$countries->nicename}}</option> 
                                 </select>
                         </div>
                         <div class="modal-footer">
@@ -94,7 +92,6 @@
                                         <th scope="col">Description</th>
                                         <th scope="col">Booking</th>
                                         <th scope='col'>Country</th>
-                                        <th scope="col">Links</th>
                                         @if(auth()->user()->type == "1")
                                             <th scope="col">Action</th>
                                         @endif
@@ -111,12 +108,6 @@
                                             </td>
                                             <td>{{ $product->bookings->count() }}</td>
                                             <td>{{optional($product->country)->nicename ?? "No country"}}</td>
-                                            <td>@if(optional($product)->slug) 
-                                                   <a href="{{url(env('APP_URL', 'http://127.0.0.1:8000/').'view/product/'.$product->slug)}}">{{env('APP_URL', 'http://127.0.0.1:8000/')}}/view/product/{{optional($product)->slug}}</a>  
-                                                @else
-                                                    No Links
-                                                @endif
-                                            </td>
                                             @if(auth()->user()->type == "1")
                                                 <td>
 
@@ -173,9 +164,9 @@
                                                             <label for="">Country</label>
                                                             <select name="country_id" class="form-control" id="country" required>
                                                                 <option value="">Please select a country for this test</option>
-                                                                @foreach($countries as $country)  
-                                                                    <option value="{{$country->id}}"  @if($product->country_id == $country->id ) selected @endif>{{$country->nicename}}</option>
-                                                                @endforeach
+                                                                
+                                                                    <option value="{{$countries->id}}"  @if($product->country_id == $countries->id ) selected @endif>{{$countries->nicename}}</option>
+                                                              
                                                             </select>
                                                         </div>
                                                         <div class="modal-footer">

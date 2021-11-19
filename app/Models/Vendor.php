@@ -29,7 +29,7 @@ class Vendor extends Model
 	protected $table = 'vendors';
 
 	protected $fillable = [
-		'name','email'
+		'name','email','address'
 	];
 
 	public function booking_products()

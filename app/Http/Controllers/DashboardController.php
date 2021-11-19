@@ -10,6 +10,7 @@ use App\Helpers\UserShare;
 use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
 use App\Models\Voucher;
+use App\Models\SupportedCountries;
 use App\Models\VoucherCount;
 use App\Models\VoucherGenerate;
 use App\Models\VoucherPayment;
@@ -441,12 +442,17 @@ class DashboardController extends Controller
     public function add_vendor(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'email' => 'required',
+            'address' => 'required'
         ]);
 
         Vendor::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'email' => $request->email,
+            'address' => $request->address
         ]);
+
         session()->flash('alert-success', "Vendor successfully created.");
         return back();
     }
@@ -619,20 +625,25 @@ class DashboardController extends Controller
     public function products()
     {
         $products = Product::all();
+        $countries = Country::all();
 
-        return view('admin.products')->with(compact('products'));
+        return view('admin.products')->with(compact('products', 'countries'));
     }
 
     public function add_product(Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
-            "description" => "required"
+            "description" => "required",
+            'country_id' => "required"
         ]);
+      
 
         Product::create([
             'name' => $request->name,
-            'description' => $request->description
+            'slug' => $request->name,
+            'description' => $request->description,
+            'country_id' => $request->country_id
         ]);
 
         session()->flash('alert-success', "Product has been added successfully");
@@ -644,12 +655,15 @@ class DashboardController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            "description" => "required"
+            "description" => "required",
+            'country_id' => "required"
         ]);
+     
 
         Product::where('id', $request->id)->update([
             'name' => $request->name,
-            'description' => $request->description
+            'description' => $request->description,
+            'country_id' => $request->country_id
         ]);
 
         session()->flash('alert-success', "Product has been updated successfully");
@@ -674,15 +688,28 @@ class DashboardController extends Controller
         return back();
     }
 
-    public function product_vendor($id, $price, $priceStripe, $costPrice)
+    public function product_vendor($id, $price, $priceStripe, $costPrice, $alternative_price = null, $walkid = null)
     {
         $pounds_value = Setting::first();
-        VendorProduct::where('id', $id)->update([
+
+        $data = [
             'price' => $price * $pounds_value->pounds,
             'price_pounds' => $price,
             'price_stripe' => $priceStripe,
-            'cost_price' => $costPrice
-        ]);
+            'cost_price' => $costPrice,
+        ];
+
+        if(!is_null($alternative_price))
+        {
+            $data['alternative_price'] = $alternative_price;
+        }
+
+        if(!is_null($walkid))
+        {
+            $data['walk_product_id'] = $walkid;
+        }
+        
+        VendorProduct::where('id', $id)->update($data);
 
         return "success";
     }
@@ -3451,7 +3478,7 @@ class DashboardController extends Controller
             'user_id' => $user->id,
             'type' => 2
         ])->sum('amount');
-// dd($user, $earned, $earnedPounds);
+        // dd($user, $earned, $earnedPounds);
 
         return view('admin.details')->with(compact('user', 'agents', 'earnedPounds', 'earned'));
     }
@@ -3488,4 +3515,141 @@ class DashboardController extends Controller
         return view('admin.guidelines')->with(compact('stepper'));
     }
 
+    public function view_supported_countries()
+    {
+        $country = SupportedCountries::all();
+        $countries = $country->unique('country_id');
+        return view('admin.supported')->with(compact('countries'));
+    }
+
+    public function view_add_supported_countries()
+    {
+        $support = SupportedCountries::all();
+        $unique_supported_countries = $support->unique('country_id');
+        $checker = [];
+        foreach( $unique_supported_countries as  $unique_supported_country)
+        {
+            $checker[] = $unique_supported_country->country_id;
+        }
+
+        $countries = Country::whereNotIn('id', $checker)->get();
+ 
+        return view('admin.add_supported_countries')->with(compact('countries'));
+    }
+
+    public function view_supported_vendor($id)
+    {
+        $products = Product::where('country_id', $id)->first();
+        $data = [];
+
+      try{
+            $vendor_products = VendorProduct::where('product_id', $products->id)->get();
+        
+      
+            foreach ($vendor_products as $vproduct) {
+
+                $data[] = [
+                    'name' => $vproduct->vendor->name,
+                    // 'price' => "$" . number_format($vproduct->price_pounds, 0),
+                    'vendor_id' => $vproduct->vendor_id
+                ];
+            }
+
+        } catch(\Exception $e) {
+
+            $data = "error";
+        }
+       
+        return $data;
+    }
+
+    public function page_configuration(Request $request)
+    {
+
+        $request->validate([
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        //rename image
+        $imageName = time().'.'.$request->image->extension();  
+        //move to path 
+        $request->image->move(public_path('page_img'), $imageName);
+
+     
+        try{
+            $request_data = $request->all();
+
+            unset($request_data['_token']);
+            unset($request_data['image']);
+
+            $request_data['image'] = $imageName;
+
+            $support = SupportedCountries::create($request_data);
+
+            session()->flash('alert-success', "Successfully registered country configurations");
+
+            return redirect()->to('/supported/countries');
+        } catch(\Exception $e) {
+            dd($e);
+            session()->flash('alert-danger', "Something went wrong");
+            
+            return back()->withInputs();
+        }
+    }
+
+    public function view_edit_configuration($country_id)
+    {
+        $countries = SupportedCountries::where('id', $country_id)->first();
+     
+        return view('admin.edit_supported_countries')->with(compact('countries'));
+    }
+
+    public function edit_page_configuration(request $request)
+    {
+        
+        $request->validate([
+            'image' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+      try{
+        $request_data = $request->all();
+
+        unset($request_data['_token']);
+        unset($request_data['files']);
+
+        if($request_data == "null")
+        {
+            unset($request_data['image']);
+        }else{
+             //rename image
+            $imageName = time().'.'.$request->image->extension();  
+            //move to path 
+            $request->image->move(public_path('page_img'), $imageName);
+
+            unset($request_data['image']);
+
+            $request_data['image'] = $imageName;
+
+        }
+        
+        $support = SupportedCountries::where('country_id', $request->country_id)->update($request_data);
+
+        session()->flash('alert-success', "Successfully updated country configurations");
+
+        return redirect()->to('/supported/countries');
+        } catch(\Exception $e) {
+            dd($e);
+            session()->flash('alert-danger', "Something went wrong");
+            
+            return back()->withInputs();
+        }
+    }
+
+    public function view_configure_products($id)
+    {
+        
+        $products = Product::where('country_id', $id )->get();
+        $countries = Country::where('id', $id )->first();
+       
+        return view('admin.configured_products')->with(compact('products', 'countries'));
+    }
 }

@@ -9,6 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * Class Product
@@ -30,8 +31,35 @@ class Product extends Model
 
 	protected $fillable = [
 		'name',
-		'description'
+		'slug',
+		'description',
+		'country_id'
 	];
+
+	protected static function boot()
+    {
+        parent::boot();
+        static::created(function ($blog) {
+            $blog->slug = $blog->initSlug($blog->name);
+            $blog->save();
+        });
+    }
+
+    private function initSlug($name)
+    {
+        if (static::whereSlug($slug = Str::slug($name))->exists()) {
+            $max = static::whereName($name)->latest('id')->skip(1)->value('slug');
+            if (isset($max[-1]) && is_numeric($max[-1])) {
+				
+                return preg_replace_callback('/(\d+)$/', function($mathces) {
+                    return $mathces[1] + 1;
+                }, $max);
+            }
+            return "{$slug}-1";
+        }
+	
+        return $slug;
+    }
 
 	public function bookings()
 	{
@@ -57,4 +85,8 @@ class Product extends Model
 		}
 	}
 	
+	public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
 }

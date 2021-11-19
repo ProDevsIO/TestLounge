@@ -186,6 +186,7 @@ $ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_co
 <script src="/js/lightbox.min.js"></script>
 <script src="/js/jquery.countdown.min.js"></script>
 <script src="/js/scripts.js"></script>
+
 <script>
     @if(isset($_GET['ref']) && $_GET['ref'])
       localStorage.setItem('ref', '{{ $_GET['ref'] }}');
