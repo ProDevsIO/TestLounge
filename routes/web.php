@@ -48,6 +48,7 @@ Route::get('/pricing', [\App\Http\Controllers\HomeController::class,"pricing"])-
 Route::get('/about', [\App\Http\Controllers\HomeController::class,"about"])->name('about');
 Route::get('/terms', [\App\Http\Controllers\HomeController::class, "terms"])->name('terms');
 Route::get('/product/{type}', [\App\Http\Controllers\HomeController::class,"viewProducts"]);
+Route::get('/walk-in', [\App\Http\Controllers\HomeController::class,"walkIn"]);
 Route::get('/add/cart/{product_id}/{vendor_id}', [\App\Http\Controllers\HomeController::class,"addToCart"]);
 Route::get('/view/cart', [\App\Http\Controllers\HomeController::class,"viewCart"]);
 Route::get('/update/cart/{id}/{quantity}', [\App\Http\Controllers\HomeController::class,"updateCart"]);
@@ -77,7 +78,8 @@ Route::get('/booking/success', [\App\Http\Controllers\HomeController::class,"boo
 Route::get('/booking/code/failed', [\App\Http\Controllers\HomeController::class,"code_failed"])->name('code_failed');
 Route::get('/booking/stripe/success', [\App\Http\Controllers\HomeController::class,"success_stripe"])->name('success_stripe');
 Route::get('/booking/stripe/failed', [\App\Http\Controllers\HomeController::class,"success_failed"])->name('failed_stripe');
-Route::get('/booking/voucher/{code}', [\App\Http\Controllers\HomeController::class,"voucher_booking"])->name('voucher_booking');
+Route::get('/booking/voucher/{code}/{walk?}', [\App\Http\Controllers\HomeController::class,"voucher_booking"])->name('voucher_booking');
+Route::get('/voucher/voucherOption/{code}', [\App\Http\Controllers\HomeController::class,"voucher_option"])->name('voucher_option');
 
 Route::get('/testEmail', [\App\Http\Controllers\HomeController::class,"testEmail"])->name('testEmail');
 Route::get('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"make_payment"])->name('make_payment');
@@ -91,6 +93,7 @@ Route::post('/pay', [\App\Http\Controllers\PaymentController::class, 'redirectTo
 Route::get('/payment/callback', [\App\Http\Controllers\PaymentController::class, 'handleGatewayCallback']);
 
 Route::get('/booking',[\App\Http\Controllers\HomeController::class,"booking"])->name('booking');
+
 Route::get('/view/product/{slug}', [\App\Http\Controllers\HomeController::class, "view_single_product"]);
 
 Route::get('/testing' ,[\App\Http\Controllers\HomeController::class, "test"]);
@@ -134,7 +137,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/edit/product', [\App\Http\Controllers\DashboardController::class,"edit_product"]);
     Route::post('/add/product', [\App\Http\Controllers\DashboardController::class,"add_product"]);
     Route::get('/delete/product/{id}', [\App\Http\Controllers\DashboardController::class,"delete_product"]);
-    Route::get('/product/vendor/{id}/{price}/{pricestripe}/{costPrice}', [\App\Http\Controllers\DashboardController::class,"product_vendor"]);
+    Route::get('/product/vendor/{id}/{price}/{pricestripe}/{costPrice}/{altprice}/{walkid?}', [\App\Http\Controllers\DashboardController::class,"product_vendor"]);
 
     Route::get('/agent/activate/{id}', [\App\Http\Controllers\HomeController::class,"agent_activate"]);
     Route::get('/agent/deactivate/{id}', [\App\Http\Controllers\HomeController::class,"agent_deactivate"]);

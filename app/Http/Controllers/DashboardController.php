@@ -442,12 +442,17 @@ class DashboardController extends Controller
     public function add_vendor(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'email' => 'required',
+            'address' => 'required'
         ]);
 
         Vendor::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'email' => $request->email,
+            'address' => $request->address
         ]);
+
         session()->flash('alert-success', "Vendor successfully created.");
         return back();
     }
@@ -683,15 +688,28 @@ class DashboardController extends Controller
         return back();
     }
 
-    public function product_vendor($id, $price, $priceStripe, $costPrice)
+    public function product_vendor($id, $price, $priceStripe, $costPrice, $alternative_price = null, $walkid = null)
     {
         $pounds_value = Setting::first();
-        VendorProduct::where('id', $id)->update([
+
+        $data = [
             'price' => $price * $pounds_value->pounds,
             'price_pounds' => $price,
             'price_stripe' => $priceStripe,
-            'cost_price' => $costPrice
-        ]);
+            'cost_price' => $costPrice,
+        ];
+
+        if(!is_null($alternative_price))
+        {
+            $data['alternative_price'] = $alternative_price;
+        }
+
+        if(!is_null($walkid))
+        {
+            $data['walk_product_id'] = $walkid;
+        }
+        
+        VendorProduct::where('id', $id)->update($data);
 
         return "success";
     }

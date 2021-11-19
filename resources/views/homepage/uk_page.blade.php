@@ -48,12 +48,12 @@
                     
                     <div class="card-container double-container fs-20 text-center">
                     
-                    <a href="/product/all" class="link ">
+                        <a  data-toggle="modal" data-target="#myModal" class="link ">
                             <div class="card" style="color:black">
                                 <div class="inner"><v>PURCHASE OR VIEW ALL TESTS </v></div>
                             </div>
                         </a>
-                        <a href="/product/Amber_v" class="link">
+                        <a  data-toggle="modal" data-target="#greenModal" class="link ">
                             <div class="card bg-2 fw-700">
                                     <div class="inner">
                                         <v>
@@ -62,7 +62,7 @@
                                     </div>
                             </div>
                         </a>
-                        <a href="/product/Amber_uv" class="link text-white">
+                        <a data-toggle="modal" data-target="#yellowModal" class="link ">
                             <div class="card bg-4 fw-700">
                                     <div class="inner">
                                         <v>
@@ -76,7 +76,7 @@
                                     <div class="inner"><v>Purchase Test if you are travelling from a green country</v></div>
                             </div>
                         </a> -->
-                        <a href="/product/Red" class="link text-white">
+                        <a data-toggle="modal" data-target="#redModal" class="link ">
                             <div class="card bg-5 fw-700">
                                     <div class="inner"><v>Information for Red List countries</v></div>
                             </div>
@@ -340,6 +340,159 @@
             </div>
         </div>
 </div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center"><b>Choice of Test</b></h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <center>
+                        <a href="/walk-in" style="color:black">
+                            <img src="https://img.icons8.com/color/120/000000/walking--v1.png" style="padding:20px"/><br>
+                            <button class="btn btn-primary bg-1" href="/walk-in">Walk in</button>
+                            <br><br>
+                            <p class="text-justify">Do you want to book a walk in?.</p>
+                        </a>
+                    </center>
+                </div>
+                <div class="col-md-6 col-sm-6" style="display: block;"> 
+                    <center>
+                        <a  href="/product/all" style="color:black">
+                        <img style="padding:20px" src="https://img.icons8.com/external-inipagistudio-lineal-color-inipagistudio/120/000000/external-flight-tourist-agency-inipagistudio-lineal-color-inipagistudio.png"/><br>
+                        <button class="btn btn-primary bg-1" href="/product/all">Postal</button>
+                        <br><br>
+                        <p class="text-justify"> Do you want to book a postal?</p>
+                        </a>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="greenModal" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center"><b>Choice of Test</b></h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <center>
+                        <a href="/walk-in" style="color:black">
+                            <img src="https://img.icons8.com/color/120/000000/walking--v1.png" style="padding:20px"/><br>
+                            <button class="btn btn-primary bg-1" href="/walk-in">Walk in</button>
+                            <br><br>
+                            <p class="text-justify"> Do you want to book a walk in?</p>
+                        </a>
+                    </center>
+                </div>
+                <div class="col-md-6 col-sm-6" style="display: block;"> 
+                    <center>
+                        <a  href="/product/Amber_v" style="color:black">
+                        <img style="padding:20px" src="https://img.icons8.com/external-inipagistudio-lineal-color-inipagistudio/120/000000/external-flight-tourist-agency-inipagistudio-lineal-color-inipagistudio.png"/><br>
+                        <button class="btn btn-primary bg-1" href="/product/all">Postal</button>
+                        <br><br>
+                        <p class="text-justify"> Do you want to book a postal?</p>
+                        </a>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="yellowModal" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center"><b>Choice of Test</b></h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <center>
+                        <a href="/walk-in" style="color:black">
+                            <img src="https://img.icons8.com/color/120/000000/walking--v1.png" style="padding:20px"/><br>
+                            <button class="btn btn-primary bg-1" href="/walk-in">Walk in</button>
+                            <br><br>
+                            <p class="text-justify"> Do you want to book a walk in?</p>
+                        </a>
+                    </center>
+                </div>
+                <div class="col-md-6 col-sm-6" style="display: block;"> 
+                    <center>
+                        <a  href="/product/Amber_uv" style="color:black">
+                        <img style="padding:20px" src="https://img.icons8.com/external-inipagistudio-lineal-color-inipagistudio/120/000000/external-flight-tourist-agency-inipagistudio-lineal-color-inipagistudio.png"/><br>
+                        <button class="btn btn-primary bg-1" href="/product/all">Postal</button>
+                        <br><br>
+                        <p class="text-justify"> Do you want to book a postal?</p>
+                        </a>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="redModal" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center"><b>Choice of Test</b></h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <center>
+                        <a href="/walk-in" style="color:black">
+                            <img src="https://img.icons8.com/color/120/000000/walking--v1.png" style="padding:20px"/><br>
+                            <button class="btn btn-primary bg-1" href="/walk-in">Walk in</button>
+                            <br><br>
+                            <p class="text-justify"> Do you want to book a walk in?</p>
+                        </a>
+                    </center>
+                </div>
+                <div class="col-md-6 col-sm-6" style="display: block;"> 
+                    <center>
+                        <a  href="/product/Red" style="color:black">
+                        <img style="padding:20px" src="https://img.icons8.com/external-inipagistudio-lineal-color-inipagistudio/120/000000/external-flight-tourist-agency-inipagistudio-lineal-color-inipagistudio.png"/><br>
+                        <button class="btn btn-primary bg-1" href="/product/all">Postal</button>
+                        <br><br>
+                        <p class="text-justify"> Do you want to book a postal?</p>
+                        </a>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
 @endsection
 
 @section('script')

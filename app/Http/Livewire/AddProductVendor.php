@@ -17,6 +17,8 @@ class AddProductVendor extends Component
     public $price_stripe;
     public $costPrice;
     public $pound_price;
+    public $alternativePrice;
+    public $walkProductid;
 
     protected $listeners = ['deleteProduct' => 'deleteProduct',"productVendor" => '$refresh'];
 
@@ -39,10 +41,10 @@ class AddProductVendor extends Component
             return;
         }
 
-
         $vendore_product_ = VendorProduct::where('product_id', $this->product_id)->where('vendor_id', $this->vendor_id)->first();
 
         $pounds_value = Setting::first();
+        
         if (!$vendore_product_) {
             VendorProduct::create([
                 'price_pounds' => $this->price,
@@ -50,7 +52,9 @@ class AddProductVendor extends Component
                 'price_stripe' => $this->price_stripe,
                 'product_id' => $this->product_id,
                 'cost_price' =>$this->costPrice,
-                'vendor_id' => $this->vendor_id
+                'vendor_id' => $this->vendor_id,
+                'alternative_price' => $this->alternativePrice,
+                'walk_product_id' => $this->walkProductid
             ]);
         }
 

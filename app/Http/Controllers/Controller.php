@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\CountryColor;
 use App\Models\BookingProduct;
+use App\Models\VendorProduct;
 use App\Models\VoucherPayment;
 use App\Models\Booking;
 use Carbon\Carbon;
@@ -18,6 +19,162 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+
+    function getDamhealthToken()
+    {
+         ///  ---------------  Get Bearer Token  -----------  ///
+         $request = [
+            "client_id" => "4e0fc3ff-7256-478b-9434-c6df9df9db0c",
+            "client_secret" =>"b7ed19139aa984f4e8a1084cef5b32677d1ed2d66645df061485d58d77af27bab000c6a6f5eca5b8052d496ff1f9dcf7a8d6e94132519db56000b7e91c7c9853"
+        ];
+
+            $data_string = json_encode($request);
+
+            $url = "https://partner-api-dev.dam-health.com/v1/api/authenticate";
+
+            $ch = curl_init($url);
+
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_string)));
+
+            $result = curl_exec($ch);
+            curl_close($ch);
+            $response = json_decode($result);
+            $bearer = $response->token->value;
+            ///  --------------------   End of get bearer token   -----------------   ///
+            return $bearer;
+    }
+
+    function getDamHealthLocations($bearer)
+    {
+        ///  -----------------  Get Location list  -----------  ///
+        $request2 = [
+
+            "query" => "query GetLocations {damhealth_locations {availability isactive locationid name address rooms { name roomid } } }"
+            
+            ];
+
+        $data_string2 = json_encode($request2);
+
+        // dump($data_string2);
+        // exit();
+        $ch2 = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
+
+        curl_setopt($ch2, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch2, CURLOPT_POSTFIELDS, $data_string2);
+        curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch2, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+
+        $result_p = curl_exec($ch2);
+        curl_close($ch2);
+        ///    --------------------    end of get product list   -----------------   ///
+        
+        return $result_p;
+    }
+
+    function getDamHealthProducts($bearer)
+    {
+       ///  -------------------   Get Product list   --------------   ///
+       $getArrayProduct = [
+
+        "query" => "query GetProducts { damhealth_products { locationids itemcode name price productid priceandavailabilitybylocation type} }"
+      
+        ];
+
+        $encodedArray = json_encode($getArrayProduct);
+
+        $ch3 = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
+
+        curl_setopt($ch3, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch3, CURLOPT_POSTFIELDS,  $encodedArray);
+        curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch3, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+    
+        $result_3 = curl_exec($ch3);
+        curl_close($ch3);
+        ///   --------------------    end of get product list   -----------------  ///
+            
+        return $result_3;
+    }
+
+    function GetDamHealthCode($booking)
+    {
+        $bproduct= BookingProduct::where('booking_id',$booking->id)->first();
+        $product = VendorProduct::where('id', $bproduct->vendor_product_id)->first();
+
+        $locationid = $booking->dam_location;
+        $getroom = json_decode($booking->dam_room);
+        $getAddress = json_decode($booking->dam_address);
+        $city = $getAddress->city;
+        $address =  $getAddress->address;
+        $country =  $getAddress->country;
+        $postalcode =  $getAddress->postcode;
+        $room = $getroom->roomid;
+        $dam_product_id = $product->walk_product_id;
+        $bookdate = $booking->created_at->format('Y-m-d');
+        $durateStart = $booking->arrival_date->format('Y-m-d') ."T8:00:00";
+        $durateEnd = $booking->arrival_date->format('Y-m-d') ."T17:00:00";
+        $dob = $booking->dob->format('Y-m-d');
+        
+        //ethnicity
+        if ($booking->ethnicity == 1) {
+            $ethnic = "white";
+        } elseif ($booking->ethnicity == 2) {
+            $ethnic = "asian";
+        } elseif ($booking->ethnicity == 3) {
+            $ethnic = "mixed";
+        } elseif ($booking->ethnicity == 4) {
+            $ethnic = "black";
+        } elseif ($booking->ethnicity == 5) {
+            $ethnic = "Other_mixed";
+        }
+
+        if ($booking->sex == 1) {
+            $sex = "male";
+        } else{
+            $sex = "female";
+        }
+
+       
+
+        
+         ///  ------------  Create  a New Booking ----------   ///
+         $bearer = $this->getDamhealthToken();
+
+         $object = [ "object" => ["locationid"=> $locationid,"roomid"=>  $room,"durationstart"=> $durateStart,"durationend"=> $durateEnd,"bookingdate"=> $bookdate,"comments"=> "","bookingproducts"=> [ "data"=> [ ["productid"=> $dam_product_id ] ] ],"bookingnotes"=> [ "data"=> [ "note"=> ""] ],"patient"=> ["data"=> ["address"=> [ ["address"=> $address,"city"=>  $city,"state"=> $booking->isolation_town,"postcode"=> "$postalcode","country"=> $country]],"firstname"=> $booking->first_name,"lastname"=> $booking->first_name,"dob"=> $dob,"gender"=> $sex, "email"=> $booking->email,"mobilenumber"=> $booking->phone_no,"passportnumber"=> "123456789","ethnicity"=> $ethnic,"religion"=> null,"occupation"=> null,"company"=> null,"comments"=> null,"customattributes"=> null,"receiveemail"=> true, "receivesms"=> true,"promotionalmarketing"=> true] ] ] ];
+       
+         // $object = json_encode($object);
+  
+         $getArrayBooking = [
+ 
+             "query" => 'mutation CreateBooking( $object: damhealth_bookings_insert_input!) { insert_damhealth_bookings_one(object: $object) {bookingid} }',
+             "variables" => $object
+             
+         ];
+        
+         $encoded_booking_data = json_encode($getArrayBooking);
+        
+         $b = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
+ 
+         curl_setopt($b, CURLOPT_CUSTOMREQUEST, "POST");
+         curl_setopt($b, CURLOPT_POSTFIELDS,   $encoded_booking_data);
+         curl_setopt($b, CURLOPT_RETURNTRANSFER, true);
+         curl_setopt($b, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+         
+         $result_book = curl_exec($b);
+         curl_close($b);
+         $dam_booking = json_decode($result_book);
+
+         $code = array();
+
+         $code[] = $dam_booking->data->insert_damhealth_bookings_one->bookingid;
+     
+        $formatted_data = json_encode($code);
+
+        return $formatted_data;
+    }
 
     function processStripe($stripeToken,$booking_id){
 
