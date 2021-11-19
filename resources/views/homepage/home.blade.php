@@ -91,9 +91,9 @@
                                     <div class="col-sm-11" style="margin-bottom: 100px;">
                                         <select name="" class="form-control" id="country" onchange="ukDirect()">
                                             <option value="">Select a country</option>
-                                            <option value="225">United Kingdom</option>
+                                            <option value="united-kingdom-1">United Kingdom</option>
                                             @foreach($scountries as $scountry)
-                                                <option value="{{$scountry->country_id}}"> {{$scountry->country->nicename}} </option>
+                                                <option value="{{$scountry->country->slug_name}}"> {{$scountry->country->nicename}} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -163,9 +163,9 @@
                             
                             <select name="" class="form-control" id="country1" onchange="ukDirect1()">
                                 <option value="">Select a country</option>
-                                <option value="225">United Kingdom</option>
+                                <option value="united-kingdom-1">United Kingdom</option>
                                 @foreach($scountries as $scountry)
-                                    <option value="{{$scountry->country_id}}"> {{$scountry->country->nicename}} </option>
+                                    <option value="{{$scountry->country->slug_name}}"> {{$scountry->country->nicename}} </option>
                                 @endforeach
                             </select>
                         </div>

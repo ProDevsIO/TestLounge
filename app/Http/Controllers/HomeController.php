@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use PDF;
 use Stripe;
 
@@ -1911,14 +1912,24 @@ class HomeController extends Controller
 
     public function view_uk($id)
     {
-        if($id == 225)
+        
+        if($id == "united-kingdom-1")
         {
             $countries = Country::all();
        
             return view('homepage.uk_page')->with(compact('countries'));
         }else{
-            $countries = Country::where('id', $id)->first();
-            return view('homepage.country_decision_page')->with(compact('countries'));
+            $countries = Country::where('slug_name', $id)->first();
+            $scountry = SupportedCountries::where('country_id', $countries->id)->first();
+          
+
+            if(!is_null($scountry))
+            {
+                return view('homepage.country_decision_page')->with(compact('countries'));
+            }else{
+                Abort(404);
+            }
+        
         }
        
     }
@@ -2252,5 +2263,28 @@ class HomeController extends Controller
         return view('homepage.walk_in')->with(compact('vproducts'));
     }
 
+    public function slugify()
+    {
+        $countries = Country::all();
+
+        foreach($countries as $country)
+        {
+            $name = $country->nicename;
+            $slug = Str::slug($name);
+
+            if ($country->wherenotnull('slug_name')->orwhere('slug_name',$slug)->exists()) {
+                $max = $country->whereName($name)->latest('id')->skip(1)->value('slug_name');
+                if (isset($max[-1]) && is_numeric($max[-1])) {
+                    
+                    return preg_replace_callback('/(\d+)$/', function($mathces) {
+                        return $mathces[1] + 1;
+                    }, $max);
+                }
+                $slug = "{$slug}-1";
+            }
+            dump($slug);
+            Country::where('id',$country->id)->update(['slug_name' => $slug]);     
+        }
+    }
 
 }

@@ -98,6 +98,8 @@ Route::get('/view/product/{slug}', [\App\Http\Controllers\HomeController::class,
 
 Route::get('/testing' ,[\App\Http\Controllers\HomeController::class, "test"]);
 
+Route::get('/slugging' ,[\App\Http\Controllers\HomeController::class, "slugify"]);
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,"dashboard"]);
