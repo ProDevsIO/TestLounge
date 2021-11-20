@@ -10,7 +10,7 @@
             
               
          
-            <div class="rows">
+            <div class="rows" style="padding-bottom:30px">
                             <div class="card-title p-2">
                                <h3> Supported countries setup</h3>
                             </div>
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <br>
-                       <input type="submit" class="btn btn-md btn-info pull-right" value="Add Country">
+                       <input type="submit" class="btn btn-md btn-info pull-right"  value="Add Country">
                     </form>
                 </div>
             </div>
