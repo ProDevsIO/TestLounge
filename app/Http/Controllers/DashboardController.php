@@ -624,9 +624,8 @@ class DashboardController extends Controller
 
     public function products()
     {
-        $supported_countries = SupportedCountries::pluck('country_id')->toArray();
         $products = Product::all();
-        $countries = Country::whereIn('id',$supported_countries)->get();
+        $countries = Country::all();
 
         return view('admin.products')->with(compact('products', 'countries'));
     }
@@ -759,36 +758,6 @@ class DashboardController extends Controller
             'account_name' => $request->account_name,
             'bank' => (isset($banks_[$request->account_bank]) ? $banks_[$request->account_bank] : "")
         ];
-
-
-        $settings = Setting::where('id', 2)->first();
-        //update flutterwave
-
-        // $flutterwave_data = [
-        //     'account_bank' => $request->account_bank,
-        //     'account_number' => $request->account_no,
-        //     'business_name' => auth()->user()->first_name . " " . auth()->user()->last_name,
-        //     'business_email' => auth()->user()->email,
-        //     'business_mobile' => auth()->user()->phone_no,
-        //     'country' => $request->country,
-        //     "split_type" => "percentage",
-        //     "split_value" => (auth()->user()->percentage_split) ? (100 - auth()->user()->percentage_split) / 100 : (100 - $settings->value) / 100
-        // ];
-
-        // if (!auth()->user()->flutterwave_key) {
-        //     $data = $this->addFlutterwave($flutterwave_data);
-        // } else {
-        //     $data = $this->editFlutterwave($flutterwave_data, auth()->user()->flutterwave_id);
-
-        // }
-        // if (!$data->data) {
-        //     session()->flash("alert-danger", $data->message);
-        //     return back();
-
-        // }
-
-        // $data_save['flutterwave_key'] = $data->data->subaccount_id;
-        // $data_save['flutterwave_id'] = $data->data->id;
 
 
         User::where('id', auth()->user()->id)->update($data_save);
@@ -3525,17 +3494,14 @@ class DashboardController extends Controller
 
     public function view_add_supported_countries()
     {
-        $support = SupportedCountries::all();
-        $unique_supported_countries = $support->unique('country_id');
-        $checker = [];
-        foreach( $unique_supported_countries as  $unique_supported_country)
-        {
-            $checker[] = $unique_supported_country->country_id;
-        }
+        $support_countries = SupportedCountries::pluck('country_id')->toArray();
 
-        $countries = Country::whereNotIn('id', $checker)->get();
- 
-        return view('admin.add_supported_countries')->with(compact('countries'));
+        $countries = Country::whereNotIn('id', $support_countries)->get();
+
+        $products = Product::all();
+
+
+        return view('admin.add_supported_countries')->with(compact('countries','products'));
     }
 
     public function view_supported_vendor($id)
@@ -3604,8 +3570,10 @@ class DashboardController extends Controller
     public function view_edit_configuration($country_id)
     {
         $countries = SupportedCountries::where('id', $country_id)->first();
-     
-        return view('admin.edit_supported_countries')->with(compact('countries'));
+
+        $products = Product::all();
+
+        return view('admin.edit_supported_countries')->with(compact('countries','products'));
     }
 
     public function edit_page_configuration(request $request)
