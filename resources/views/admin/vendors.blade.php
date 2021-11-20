@@ -2,20 +2,6 @@
 @section('style')
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/vendor_/jquery-toast-plugin/jquery.toast.min.css">
-<style>
-      .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9 !important;
-    width: 100vw;
-    height: 0% !important;
-    background-color: #000;
-}
-.modal{
-
-}
-</style>
     @livewireStyles
 @endsection
 @section('content')
@@ -26,6 +12,7 @@
             <!--employee data table-->
             <div class="row">
                 <div class="col-xl-12 p-0">
+                    @include('errors.showerrors')
                     <div class="card card-shadow mb-4 ">
                         <div class="card-header border-0">
                             <div class="custom-title-wrap border-0 position-relative pb-2">
@@ -33,7 +20,6 @@
                             </div>
                         </div>
                         <div class="card-body p-3">
-                            @include('errors.showerrors')
                            <form action="{{ url('/settings') }}" method="post">
                                @csrf
                                <label>Exchange rate($)</label>
@@ -55,7 +41,6 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            @include('errors.showerrors')
                             <div class="table-responsive">
                                 @if($vendors->count() > 0)
                                     <table class="table table-hover table-custom" id="data_table">

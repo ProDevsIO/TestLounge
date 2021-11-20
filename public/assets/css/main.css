@@ -4470,3 +4470,17 @@ a.text-purple-light:hover {
 .input-group .btn {
     padding: .6rem 1.5rem;
 }
+
+ @supports (-webkit-touch-callout: none) {
+    @media only screen and (max-width: 600px) {
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9 !important;
+            width: 100vw;
+            height: 0% !important;
+            background-color: #000;
+        }
+    }
+}
