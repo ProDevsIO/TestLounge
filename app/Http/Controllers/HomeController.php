@@ -2263,6 +2263,15 @@ class HomeController extends Controller
         return view('homepage.walk_in')->with(compact('vproducts'));
     }
 
+    public function viewCountryProducts($country)
+    {
+       
+        $countries = Country::where('slug_name', $country)->first();
+        $product = Product::where('country_id', $countries->id)->pluck('id')->toArray();
+        $products = VendorProduct::whereIn('product_id',$product)->get();
+        return view('homepage.viewCountryProducts')->with(compact('products'));
+    }
+
     public function slugify()
     {
         $countries = Country::all();
@@ -2286,5 +2295,6 @@ class HomeController extends Controller
             Country::where('id',$country->id)->update(['slug_name' => $slug]);     
         }
     }
+    
 
 }

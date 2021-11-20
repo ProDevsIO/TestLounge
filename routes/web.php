@@ -48,6 +48,7 @@ Route::get('/pricing', [\App\Http\Controllers\HomeController::class,"pricing"])-
 Route::get('/about', [\App\Http\Controllers\HomeController::class,"about"])->name('about');
 Route::get('/terms', [\App\Http\Controllers\HomeController::class, "terms"])->name('terms');
 Route::get('/product/{type}', [\App\Http\Controllers\HomeController::class,"viewProducts"]);
+Route::get('/product/country/{country}', [\App\Http\Controllers\HomeController::class,"viewCountryProducts"]);
 Route::get('/walk-in', [\App\Http\Controllers\HomeController::class,"walkIn"]);
 Route::get('/add/cart/{product_id}/{vendor_id}', [\App\Http\Controllers\HomeController::class,"addToCart"]);
 Route::get('/view/cart', [\App\Http\Controllers\HomeController::class,"viewCart"]);
