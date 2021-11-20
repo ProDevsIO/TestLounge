@@ -86,7 +86,7 @@
                             </div>
                             <div id="menu2" class="tab-pane fade container">
                                 @php
-                                    $departure_unvaccinated = optional($countries)->depature_unvaccinated;
+                                    $departure_unvaccinated = optional($countries)->departure_unvaccinated;
 
                                     $departure_unvaccinated = str_replace("<a href", "<a class='btn btn-danger' href",$departure_unvaccinated);
                                 @endphp
