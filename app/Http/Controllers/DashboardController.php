@@ -3567,21 +3567,25 @@ class DashboardController extends Controller
     {
 
         $request->validate([
-            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        //rename image
-        $imageName = time().'.'.$request->image->extension();  
-        //move to path 
-        $request->image->move(public_path('page_img'), $imageName);
-
-     
+        
         try{
+
             $request_data = $request->all();
 
             unset($request_data['_token']);
-            unset($request_data['image']);
+
+            if(isset($request_data['image']))
+            {
+            //rename image
+            $imageName = time().'.'.$request->image->extension();  
+            //move to path 
+            $request->image->move(public_path('page_img'), $imageName);
 
             $request_data['image'] = $imageName;
+
+            }
 
             $support = SupportedCountries::create($request_data);
 
@@ -3616,10 +3620,9 @@ class DashboardController extends Controller
         unset($request_data['_token']);
         unset($request_data['files']);
 
-        if($request_data == "null")
+        if(isset($request_data['image']))
         {
-            unset($request_data['image']);
-        }else{
+
              //rename image
             $imageName = time().'.'.$request->image->extension();  
             //move to path 
