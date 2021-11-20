@@ -624,8 +624,9 @@ class DashboardController extends Controller
 
     public function products()
     {
+        $supported_countries = SupportedCountries::pluck('country_id')->toArray();
         $products = Product::all();
-        $countries = Country::all();
+        $countries = Country::whereIn('id',$supported_countries)->get();
 
         return view('admin.products')->with(compact('products', 'countries'));
     }

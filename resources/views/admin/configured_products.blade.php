@@ -1,18 +1,6 @@
 @extends('layouts.admin')
 @section('style')
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <style>
-          .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9 !important;
-    width: 100vw;
-    height: 0% !important;
-    background-color: #000;
-}
-
-    </style>
 @endsection
 @section('content')
 
