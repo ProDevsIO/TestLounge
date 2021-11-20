@@ -80,7 +80,7 @@ h4>span{
     line-height: 150%;
 }
 
-ul {
+.tab-content ul {
     display: block;
     list-style-type: disc;
     margin-inline-start: 0px;
