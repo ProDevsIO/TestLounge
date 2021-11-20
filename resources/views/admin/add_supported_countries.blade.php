@@ -79,7 +79,7 @@
 @section('script')
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendor/data-tables/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.17.1/standard-all/ckeditor.js"></script>
     <script>
         $(document).ready(function() {
             var settings = {
