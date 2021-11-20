@@ -82,30 +82,74 @@
     <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     <script>
         $(document).ready(function() {
+            var settings = {
+                toolbar: [{
+                    name: 'document',
+                    items: ['Print']
+                },
+                    {
+                        name: 'clipboard',
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'styles',
+                        items: ['Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'align',
+                        items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
+                    },
+                    '/',
+                    {
+                        name: 'basicstyles',
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat', 'CopyFormatting']
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'paragraph',
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Image', 'Table']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'editing',
+                        items: ['Scayt']
+                    }
+                ],
 
-            CKEDITOR.replace( 'arrival_vaccinated' );
-            CKEDITOR.replace( 'arrival_unvaccinated' );
-            CKEDITOR.replace( 'departure_unvaccinated' );
-            CKEDITOR.replace( 'departure_vaccinated' );
-            CKEDITOR.replace( 'faq' );
-            CKEDITOR.replace( 'arrival_vaccinated' );
+                extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
+
+                // Adding drag and drop image upload.
+                extraPlugins: 'print,format,font,colorbutton,justify,uploadimage',
+                height: 560,
+                removeDialogTabs: 'image:advanced;link:advanced',
+                removeButtons: 'PasteFromWord'
+            }
+
+            CKEDITOR.replace( 'arrival_vaccinated',settings );
+            CKEDITOR.replace( 'arrival_unvaccinated',settings );
+            CKEDITOR.replace( 'departure_unvaccinated',settings );
+            CKEDITOR.replace( 'departure_vaccinated' ,settings);
+            CKEDITOR.replace( 'faq',settings );
+            CKEDITOR.replace( 'arrival_vaccinated' ,settings);b
 
         });
 
 
 
-
-        $(document).ready(function () {
-            $('#data_table').DataTable({
-                "order": []
-            });
-        });
-        $(document).ready(function () {
-            $('#data_table1').DataTable({
-                "order": []
-            });
-        });
-       
 
         function confirmation(url) {
             var d = confirm("Are you sure you want to perform this action?");
@@ -114,34 +158,6 @@
                 window.location = url;
             }
         }
-
-        // function getVendorCountry()
-        // {
-         
-        //     var country_id = document.getElementById('country').value;
-           
-
-        //     var url = '/vendor/supported/' + country_id;
-
-        //     $.get(url, function (data) {
-        //         var $el = $(".vendor");
-        //         $el.empty(); // remove old options
-        //         console.log(data);
-        //         if(data != "error")
-        //         {
-        //             $el.append($("<option value=''>Select a Vendor</option>"));
-                    
-        //             $.each(data, function (key, value) {
-        //                 $el.append($("<option></option>")
-        //                     // .attr("value", value.vendor_id).text(value.name + "(" + value.price + ")"));
-        //                     .attr("value", value.vendor_id).text(value.name ));
-        //             });
-        //         }else{
-        //             $el.append($("<option value=''>No vendor is supported for this country</option>"));
-        //         }
-
-        //     });
-        // }
 
     </script>
 @endsection

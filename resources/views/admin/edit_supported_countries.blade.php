@@ -85,16 +85,73 @@
 @section('script')
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendor/data-tables/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.17.1/standard-all/ckeditor.js"></script>
+
     <script>
         $(document).ready(function() {
+            var settings = {
+                toolbar: [{
+                    name: 'document',
+                    items: ['Print']
+                },
+                    {
+                        name: 'clipboard',
+                        items: ['Undo', 'Redo']
+                    },
+                    {
+                        name: 'styles',
+                        items: ['Format', 'Font', 'FontSize']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor']
+                    },
+                    {
+                        name: 'align',
+                        items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
+                    },
+                    '/',
+                    {
+                        name: 'basicstyles',
+                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat', 'CopyFormatting']
+                    },
+                    {
+                        name: 'links',
+                        items: ['Link', 'Unlink']
+                    },
+                    {
+                        name: 'paragraph',
+                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote']
+                    },
+                    {
+                        name: 'insert',
+                        items: ['Image', 'Table']
+                    },
+                    {
+                        name: 'tools',
+                        items: ['Maximize']
+                    },
+                    {
+                        name: 'editing',
+                        items: ['Scayt']
+                    }
+                ],
 
-            CKEDITOR.replace( 'arrival_vaccinated' );
-            CKEDITOR.replace( 'arrival_unvaccinated' );
-            CKEDITOR.replace( 'departure_unvaccinated' );
-            CKEDITOR.replace( 'departure_vaccinated' );
-            CKEDITOR.replace( 'faq' );
-            CKEDITOR.replace( 'arrival_vaccinated' );
+                extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
+
+                // Adding drag and drop image upload.
+                extraPlugins: 'print,format,font,colorbutton,justify,uploadimage',
+                height: 560,
+                removeDialogTabs: 'image:advanced;link:advanced',
+                removeButtons: 'PasteFromWord'
+            }
+
+            CKEDITOR.replace( 'arrival_vaccinated',settings );
+            CKEDITOR.replace( 'arrival_unvaccinated',settings );
+            CKEDITOR.replace( 'departure_unvaccinated',settings );
+            CKEDITOR.replace( 'departure_vaccinated' ,settings);
+            CKEDITOR.replace( 'faq',settings );
+            CKEDITOR.replace( 'arrival_vaccinated' ,settings);
 
         });
 
