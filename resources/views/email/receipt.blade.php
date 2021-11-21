@@ -312,10 +312,10 @@
                                             Thank you for choosing to book with us. <br/>
                                             Booking Reference: 
                                             <?php foreach($code as $decode){
-                                                echo $decode .",<br>";
+                                                echo $decode .",    <br>";
                                                  }
                                                  ?>
-                                                <br/>
+                                            
                                                 <?php
                                                     if($booking->dam_address != null){
                                                             $address  = json_decode($booking->dam_address);
@@ -323,7 +323,7 @@
                                          
                                                 ?>
                                                 @if($booking->dam_address != null)
-                                                 Walkin Test Lab address : {{$address->address}},{{$address->city}}, {{$address->country}}
+                                                 Walkin Test Lab Address : {{$address->address}},{{$address->city}}, {{$address->country}}
                                                 @endif
                                             
                                             <br/>
