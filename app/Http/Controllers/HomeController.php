@@ -1016,7 +1016,7 @@ class HomeController extends Controller
                   <br/><br/>
                 TravelTestsltd Team
             ";
-            Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Superagent Registration"));
+            Mail::to(['itunu.akinware@medburymedicals.com'])->send(new BookingCreation($message2, "New Superagent Registration"));
         } catch (\Exception $e) {
         }
 
@@ -1129,7 +1129,7 @@ class HomeController extends Controller
                   <br/><br/>
                 TravelTestsltd Team
             ";
-            Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Subagent Registration"));
+            Mail::to(['itunu.akinware@medburymedicals.com'])->send(new BookingCreation($message2, "New Subagent Registration"));
 
         } catch (\Exception $e) {
         }
