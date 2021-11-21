@@ -1,37 +1,45 @@
 @extends('layouts.home')
 
-@section('content')
 @section('style')
-  
- <link href="/css/cart.css" rel="stylesheet"/>
- <style>
-    @media all and (max-width: 1050px) {
-  
-     #myCarousel{
-         position: absolute;
-         top: 200px;
-     }
+
+    <link href="/css/cart.css" rel="stylesheet"/>
+    <style>
+        @media all and (max-width: 1050px) {
+
+            #myCarousel{
+                position: absolute;
+                top: 200px;
+            }
 
 
-     .carousel-img{
-        width: 100%;
-        height:100vh !important;
-        object-fit: cover;
-    
-     }
-        .travel_agent_form{
-            margin-top: 0px;
+            .carousel-img{
+                width: 100%;
+                height:100vh !important;
+                object-fit: cover;
+
+            }
+            .travel_agent_form{
+                margin-top: 0px;
+            }
         }
-    }
-    .page-header{
-        height: 100% !important;
-    }
+        .page-header{
+            height: 100% !important;
+        }
 
-     .travel_agent_form{
-         margin-top: 15px;
-     }
- </style>
+        .travel_agent_form{
+            margin-top: 15px;
+        }
+
+        .inner{
+            display:block;
+        }
+        .p_desc{
+            margin-top: 30px;
+        }
+    </style>
 @endsection
+@section('content')
+
 
     <div class="main-container" >
         <header class="page-header" style="padding-bottom:0;">
@@ -96,6 +104,7 @@
                                                 <option value="{{$scountry->country->slug_name}}"> {{$scountry->country->nicename}} </option>
                                             @endforeach
                                         </select>
+                                        <div id="loader"></div>
                                     </div>
 
                                 </div>
@@ -151,29 +160,44 @@
 					</div><!--end of row-->
 				</div><!--end of container-->
 			</section>
-                <div class="container-fluid" style="padding:0">
-                    <div class="text-center bg-1 check_calculator" style="padding:59px;">
-                        <div class="row" id="calculator" style="margin-top: 20px;">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-4 text-center">
-
-                            <label for="">Choose the country you’re travelling to</label>
-                        </div>
-                        <div class="col-sm-4" style="margin-bottom: 35px;">
-                            
-                            <select name="" class="form-control" id="country1" onchange="ukDirect1()">
-                                <option value="">Select a country</option>
-                                <option value="united-kingdom-1">United Kingdom</option>
-                                @foreach($scountries as $scountry)
-                                    <option value="{{$scountry->country->slug_name}}"> {{$scountry->country->nicename}} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-sm 2"></div>
-                        </div>
-                       
+        <section class="primary-features duplicatable-content">
+            <div class="container">
+                <h1 class="text-center" style="color: white !important;margin-top: -35px">3 Key Steps to follow</h1>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 clearfix">
+                        <div class="feature feature-icon-small">
+                            <i class="icon icon-search"></i>
+                            <h6 class="text-white">Select a country</h6>
+                            <p class="text-white">
+                                Various countries have different covid 19 protocol for arrival into the country and departure.
+                            </p>
+                        </div><!--end of feature-->
                     </div>
-                </div>
+
+                    <div class="col-md-4 col-sm-6 clearfix">
+                        <div class="feature feature-icon-small">
+                            <i class="icon icon-scope"></i>
+                            <h6 class="text-white">Review the Country Requirement</h6>
+                            <p class="text-white">
+                                Review the country requirments and the various test to book to ensure you have a smooth entry or departure process
+                            </p>
+                        </div><!--end of feature-->
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 clearfix">
+                        <div class="feature feature-icon-small">
+                            <i class="icon icon-target"></i>
+                            <h6 class="text-white">Book the test</h6>
+                            <p class="text-white">
+                                Book the test easily and get connected with the lab and all necessary documentation needed for you to have a smooth ride
+                            </p>
+                        </div><!--end of feature-->
+                    </div>
+
+                </div><!--end of row-->
+
+            </div><!--end of container-->
+        </section>
                 <div class="card-container"  style="padding:70px"id="country-section" style="">
                             <?php 
                                 $countries = App\Models\Country::all();
@@ -195,28 +219,63 @@
                                         <div class="row">
                                             <div class="col-md-6">  <p style="font-weight:200px;font-size:30px;line-height: 41px;color:white" class="travel_agent_form fs-20 text-center">Are you a travel agent? Join our network.</a></p>
                                             </div>
-                                            <div class="col-md-6 text-center">
-                                            <p><a href="{{ url('/register/agent') }}" type="button" class="btn btn-md bg-primary" style="margin-bottom: 30px;border-radius:25px; padding:14px 28px 13px 28px;font-family: Nunito;font-style: normal;font-weight: bolder;font-size: 16px;line-height: 19px;color: #1E50A0 !important;background-color:white !important;">Join our network</a></p>
+                                            <div class="col-md-6 text-center" style="height:100px;">
+                                            <p><a href="{{ url('/register/agent') }}" target="_blank" type="button" class="btn btn-md bg-primary" style="margin-top: 30px;border-radius:25px; padding:14px 28px 13px 28px;font-family: Nunito;font-style: normal;font-weight: bolder;font-size: 16px;line-height: 19px;color: #1E50A0 !important;background-color:white !important;">Join our network</a></p>
                                             </div>
                                         </div>
                                 </div>
                             <br>
-                            {{--<p class="fw-700 fs-28"> <a href="{{ url('/product/all') }}" type="button" class="btn btn-md bg-primary" style="margin-bottom: 30px;border-radius:25px; padding:14px 28px 13px 28px;font-family: Nunito;font-style: normal;font-weight: bolder;font-size: 16px;line-height: 19px;color: #1E50A0 !important;background-color:white !important;">BOOK NOW</a></p>--}}
                             </div>
-                            {{--<div class="col-sm-2"></div>--}}
-                            {{--<div class="col-sm-4 text-center">--}}
-                            {{----}}
-                                {{--<label for="">Choose the country you’re travelling to</label>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-sm-4" style="margin-bottom: 35px;">--}}
-                                {{--<select name="" class="form-control" id="country" onchange="ukDirect()">--}}
-                                    {{--<option value="">Select a country</option>--}}
-                                    {{--<option value="225">United Kingdom</option>--}}
-                                {{--</select>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-sm 2"></div>--}}
+
                         </div>
                 </div>
+
+        <section class="no-pad clearfix">
+
+            <div class="col-md-6 col-sm-12 no-pad">
+
+                <div class="feature-box">
+
+                    <div class="background-image-holder overlay" style="background: url(&quot;img/header2.jpg&quot;) 50% 0%;">
+                        <img class="background-image" alt="Background Image" src="/img/bigben2.jpg" style="display: none;">
+                    </div>
+
+                    <div class="inner mt-2">
+                        <h3 class="text-white">Travelling to UK.</h3>
+                        <p class="text-white p_desc">
+                            To know more about the country requirements and the test to book, click the link below
+                        </p>
+                        <a href="{{ url('/view/country/united-kingdom-1') }}" target="_blank" class="btn btn-primary btn-white">Tell Me More</a>
+                    </div>
+                </div>
+
+            </div>
+
+            @foreach($display_countries as $country)
+            <div class="col-md-6 col-sm-12 no-pad">
+
+                <div class="feature-box">
+
+                    <div class="background-image-holder overlay" style="background: url(&quot;img/header2.jpg&quot;) 50% 0%;">
+
+                        <img class="background-image" alt="Background Image" src="{{ url('/page_img/'.$country->image) }}" style="display: none;">
+                    </div>
+
+                    <div class="inner mt-2">
+                        <h3 class="text-white">Travelling to {{ ucfirst(strtolower(optional($country->country)->name)) }}.</h3>
+                        <p class="text-white p_desc">
+                            To know more about the country requirements and the test to book, click the link below
+                        </p>
+                        <a href="{{ url('/view/country/'.$country->slug) }}" target="_blank" class="btn btn-primary btn-white">Tell Me More</a>
+                    </div>
+                </div>
+
+            </div>
+            @endforeach
+
+
+        </section>
+
                 <div class="card-container bg-sky"  style="padding:100px" id="banner3">
                          <div class="container check_calculator_p">
                                <p style="    font-weight: 600;
@@ -247,6 +306,9 @@
 @endsection
 @section('script')
 <script>
+
+
+
     function show() {
         console.log(1);
         $("#country-section").show();
@@ -256,6 +318,10 @@
 
     function ukDirect()
     {
+        Rocket.loader({
+            target: '#loader',
+            body: 'Loading'
+        });
         var country_id = document.getElementById("country").value;
         window.location = '/view/country/'+ country_id;
     }

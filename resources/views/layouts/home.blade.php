@@ -37,6 +37,8 @@
 
     @yield('style')
     <link href="/css/index.css" rel="stylesheet"/>
+
+    <link href="/css/loader.min.css" rel="stylesheet"/>
 </head>
 <body>
 <?php
@@ -144,30 +146,27 @@ $ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_co
 @yield('content')
 
 
+
+
+
 <div class="footer-container">
 
-    <footer class="bg-1 short-2" id="contact">
+    <footer class="bg-1 short-2">
         <div class="container">
             <div class="row">
-
                 <div class="col-sm-12">
-                    <h5 class="text-white">Contact us</h5>
-                    <span class="text-white" style="font-size: 16px !important;line-height: 33px;">If you have further questions call us on<br>
-                    Phone number: +44 20 8087 2262<br>
-                    WhatsApp: +44 74 3687 5938<br>
-                    Email us at: info@traveltestsltd.com
-                    <br>
-                  {{--Powered by <a href="https://www.medburymedicals.com/" target="_blank">MMS</a>--}}
-                </span>
-
+                    <span class="text-white">© {{ date('Y') }} Traveltestsltd.</span>
+                    <span class="text-white"><a href="#">info@traveltestsltd.com</a></span>
+                    <span class="text-white">Phone: +44 20 8087 2262, </span>
+                    <span class="text-white">WhatsApp: +44 74 3687 5938</span>
                 </div>
             </div><!--end for row-->
         </div><!--end of container-->
 
-        <div class="footer2">
-            <div class="align-vertical">
-                <span class="text-white" style="font-size: 16px;">© {{ date('Y') }} Traveltestsltd.
-                </span>
+        <div class="contact-action">
+            <div class="align-vertical" style="padding-top: 0px;">
+                <i class="icon text-white icon_mail"></i>
+                <a href="mailto:info@traveltestsltd.com" class="text-white"><span class="text-white">Get in touch with us <i class="icon arrow_right"></i></span></a>
             </div>
         </div>
     </footer>
@@ -186,6 +185,8 @@ $ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_co
 <script src="/js/lightbox.min.js"></script>
 <script src="/js/jquery.countdown.min.js"></script>
 <script src="/js/scripts.js"></script>
+<script src="/js/tools.min.js"></script>
+<script src="/js/loader.min.js"></script>
 
 <script>
     @if(isset($_GET['ref']) && $_GET['ref'])

@@ -121,7 +121,7 @@
                                 @php
                                     $arrival_unvaccinated = optional($countries)->arrival_unvaccinated;
                                     $arrival_unvaccinated = str_replace('<a href="all"', "<a class='btn btn-danger' href='".url(env('APP_URL')."product/country/".$countries->slug)."'",$arrival_unvaccinated);
-                                    
+
                                     $arrival_unvaccinated = str_replace("<a href", "<a class='btn btn-danger' href",$arrival_unvaccinated);
                                 @endphp
                                 {!! $arrival_unvaccinated !!}

@@ -47,6 +47,7 @@
             </div>
             <div class="col-md-2"></div>
         </div>
+        <div id="loader"></div>
     </section>
 
 @endsection
@@ -54,6 +55,11 @@
 <script>
     function redirect(id)
     {
+        Rocket.loader({
+            target: '#loader',
+            body: 'Loading'
+        });
+
         var country_id = id;
         var action = document.getElementById("action").value;
         console.log(country_id, action);
