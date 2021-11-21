@@ -29,7 +29,15 @@
                             <p style="font-size:20px;color:#5C5C5C;">
                                 <?php
                                 $codes = json_decode($booking->booking_code);
+
+                                    if($booking->dam_address != null){
+                                        $address  = json_decode($booking->dam_address);
+                                    } 
                                 ?>
+                             
+                               @if(isset($address))
+                                    The test lab for walkin is located at {{$address->address}},{{$address->city}}, {{$address->country}}.
+                               @endif
                                 
 @if(count($codes) > 1)
                                 Thank you for booking with us, Here are your

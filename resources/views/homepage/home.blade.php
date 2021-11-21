@@ -272,7 +272,8 @@
                         <p class="text-white p_desc">
                             To know more about the country requirements and the test to book, click the link below
                         </p>
-                        <a href="{{ url('/view/country/'.optional($country->country)->slug) }}" target="_blank" class="btn btn-primary btn-white">Tell Me More</a>
+                        
+                        <a href="{{ url('/view/country/'.optional($country->country)->slug_name) }}" target="_blank" class="btn btn-primary btn-white">Tell Me More</a>
                     </div>
                 </div>
 

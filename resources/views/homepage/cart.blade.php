@@ -19,7 +19,9 @@
         <!--end of container-->
     </header>
     <section class="content bg-white">
-    <div class="col-sm-12 text-let"><a id="go_button" href="{{ url('/product/all') }}" type="button" class="btn bg-1"><img src="https://img.icons8.com/fluency/20/000000/left.png"/> Go back to Test products </a></div>
+    <div class="col-sm-12 text-left"><a style="font-size:16px" href="{{ url('/product/all') }}" type="button" ><img src="https://img.icons8.com/fluency/20/000000/left.png"/> Go back to Test products </a></div>
+    <br>
+    <br>
         @if ($carts->count() > 0)
             <div class="cart">
                 <div class="header">
@@ -98,6 +100,7 @@
 
             </div>
         @endif
+        <br>
     </section>
 @endsection
 @section('script')

@@ -315,7 +315,16 @@
                                                 echo $decode .",<br>";
                                                  }
                                                  ?>
-                                          
+                                                <br/>
+                                                <?php
+                                                    if($booking->dam_address != null){
+                                                            $address  = json_decode($booking->dam_address);
+                                                        } 
+                                         
+                                                ?>
+                                                @if($booking->dam_address != null)
+                                                 Walkin Test Lab address : {{$address->address}},{{$address->city}}, {{$address->country}}
+                                                @endif
                                             
                                             <br/>
                                             Test Provider: {{ $booking_product->vendor->name }}

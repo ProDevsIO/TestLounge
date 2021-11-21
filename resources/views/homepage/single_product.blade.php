@@ -42,7 +42,7 @@
                                                                                 <h2 class="" style="text-color:black"><span class="">{{ optional(optional($sproducts)->product)->name }}</span>
                                                                                 </h2>
                                                                                 <br>
-                                                                                <p style="line-height:50px">{!! optional(optional($sproducts)->product)->description !!}</p>
+                                                                                <p style="line-height:50px; font-size: 16px;">{!! optional(optional($sproducts)->product)->description !!}</p>
                                                                             </div>
                                                                         
                                               
@@ -51,9 +51,9 @@
                                                                      
                                                                        
                                                                         
-                                                                            <div class="col-md-4" style="margin-top:100px;">
-                                                                                    <div class="col-md-12 card">
-                                                                                        <h5>{{$vproduct->vendor->name}}</h5>
+                                                                            <div class="col-md-4" >
+                                                                                    <div class="col-md-12 card" style="margin-top:100px;padding:50px; border-radius:10px; background-color:#24477f;">
+                                                                                       
                                                                                                     <div class="container text-center"
                                                                                                          style="padding-left:0; padding-right:0;">
                                                                                                         {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
@@ -73,8 +73,8 @@
                                                                                                                 <span class="input-group-addon cart_update_btn bg-white"
                                                                                                                       data-action="add">+</span>
                                                                                                             </div>
-                                                                                                            <h5 class="text-center"
-                                                                                                                style=""><span
+                                                                                                            <br>
+                                                                                                            <h5 class="text-center" style="color:white !important;"><span 
                                                                                                                         class=""> £{{ number_format(optional($vproduct)->price / 830)}} / ${{ optional($vproduct)->price_pounds }} </span>
                                                                                                             </h5>
                                                                                                             <a id="remove_button"
@@ -107,7 +107,7 @@
                                                                                                             </div>
 
                                                                                                             <h5 class="text-center"
-                                                                                                                style=""><span
+                                                                                                            style="color:white !important;"><span
                                                                                                                         class="">£{{ number_format(optional($vproduct)->price / 830)}} / ${{ optional($vproduct)->price_pounds }}</span>
                                                                                                             </h5>
                                                                                                             <a id="add_button"
@@ -124,15 +124,16 @@
                                                                                                            
                                                                                                         @endif
                                                                                                         <!-- <a href="/view/cart" id="add_button" class="btn btn-info">Go to cart</a> -->
-                                                                                                        <div class="col-sm-12 text-center" style="margin-top:50px"><a
+                                                                                                        
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-sm-12 text-center" style="margin-top:50px"><a
                                                                                                                     id="go_button"
                                                                                                                     href="{{ url('/view/cart') }}"
                                                                                                                     type="button" class="btn bg-1" >Go
                                                                                                                 to cart <img
                                                                                                                         src="https://img.icons8.com/fluency/20/000000/right.png"/></a>
                                                                                                         </div>
-                                                                                                    </div>
-                                                                                                </div>
                                                                             </div>
                                                                         
                                                                        
