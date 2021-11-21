@@ -10,22 +10,26 @@
         .btn-danger {
             background-color: #d9534f !important;
         }
+
         @media only screen and (max-width: 600px) {
-            .nav-justified>li {
+            .nav-justified > li {
                 float: left;
                 width: 50%;
             }
 
-            .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover  {
-                padding:10px;
+            .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+                padding: 10px;
             }
-            .nav-pills>li>a, .nav-pills>li>a:focus, .nav-pills>li>a:hover{
-                padding:10px;
+
+            .nav-pills > li > a, .nav-pills > li > a:focus, .nav-pills > li > a:hover {
+                padding: 10px;
             }
-            .nav-pills>li+li{
+
+            .nav-pills > li + li {
                 margin-left: 0px;
             }
-            .if_full{
+
+            .if_full {
                 margin-top: 40px;
                 margin-bottom: 39px;
             }
@@ -80,6 +84,8 @@
                                 @php
                                     $departure_vaccinated = optional($countries)->departure_vaccinated;
 
+                                    $departure_vaccinated = str_replace('<a href="all"', "<a class='btn btn-danger' href='".url(env('APP_URL')."product/country/".$countries->slug)."'",$departure_vaccinated);
+
                                     $departure_vaccinated = str_replace("<a href", "<a class='btn btn-danger' href",$departure_vaccinated);
                                 @endphp
                                 {!! $departure_vaccinated !!}
@@ -87,6 +93,9 @@
                             <div id="menu2" class="tab-pane fade container">
                                 @php
                                     $departure_unvaccinated = optional($countries)->departure_unvaccinated;
+
+                                     $departure_unvaccinated = str_replace('<a href="all"', "<a class='btn btn-danger' href='".url(env('APP_URL')."product/country/".$countries->slug)."'",$departure_unvaccinated);
+
 
                                     $departure_unvaccinated = str_replace("<a href", "<a class='btn btn-danger' href",$departure_unvaccinated);
                                 @endphp
@@ -101,6 +110,9 @@
                                 @php
                                     $arrival_vaccinated = optional($countries)->arrival_vaccinated;
 
+                                    $arrival_vaccinated = str_replace('<a href="all"', "<a class='btn btn-danger' href='".url(env('APP_URL')."product/country/".$countries->slug)."'",$arrival_vaccinated);
+
+
                                     $arrival_vaccinated = str_replace("<a href", "<a class='btn btn-danger' href",$arrival_vaccinated);
                                 @endphp
                                 {!! $arrival_vaccinated !!}
@@ -108,6 +120,7 @@
                             <div id="menu2" class="tab-pane fade container">
                                 @php
                                     $arrival_unvaccinated = optional($countries)->arrival_unvaccinated;
+                                    $arrival_unvaccinated = str_replace('<a href="all"', "<a class='btn btn-danger' href='".url(env('APP_URL')."product/country/".$countries->slug)."'",$arrival_unvaccinated);
 
                                     $arrival_unvaccinated = str_replace("<a href", "<a class='btn btn-danger' href",$arrival_unvaccinated);
                                 @endphp

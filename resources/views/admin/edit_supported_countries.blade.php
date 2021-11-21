@@ -90,53 +90,41 @@
     <script>
         $(document).ready(function() {
             var settings = {
-                toolbar: [{
-                    name: 'document',
-                    items: ['Print']
-                },
-                    {
-                        name: 'clipboard',
-                        items: ['Undo', 'Redo']
-                    },
-                    {
-                        name: 'styles',
-                        items: ['Format', 'Font', 'FontSize']
-                    },
-                    {
-                        name: 'colors',
-                        items: ['TextColor', 'BGColor']
-                    },
-                    {
-                        name: 'align',
-                        items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
-                    },
-                    '/',
-                    {
-                        name: 'basicstyles',
-                        items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat', 'CopyFormatting']
-                    },
-                    {
-                        name: 'links',
-                        items: ['Link', 'Unlink']
-                    },
-                    {
-                        name: 'paragraph',
-                        items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote']
-                    },
-                    {
-                        name: 'insert',
-                        items: ['Image', 'Table']
-                    },
-                    {
-                        name: 'tools',
-                        items: ['Maximize']
-                    },
-                    {
-                        name: 'editing',
-                        items: ['Scayt']
-                    }
-                ],
+                on: {
+                    pluginsLoaded: function () {
+                        var editor = this,
+                            config = editor.config;
 
+                        editor.ui.addRichCombo('my-combo', {
+                            label: 'Add Product(s)',
+                            title: 'Add Product(s)',
+                            toolbar: 'basicstyles,0',
+
+                            panel: {
+                                css: [CKEDITOR.skin.getPath('editor')].concat(config.contentsCss),
+                                multiSelect: false,
+                                attributes: {'aria-label': 'Add Product(s)'}
+                            },
+
+                            init: function () {
+                                this.startGroup('Options');
+                                this.add('<a href="all">Book Test(s)</a>', 'Add all Country Test!');
+                                @foreach($products as $product)
+                                    this.add('<a href="{{ env("APP_URL")."view/product/".$product->slug }}">Book {{ $product->name }}</a>', '{{ $product->name }}');
+                                @endforeach
+                            },
+
+                            onClick: function (value) {
+                                editor.focus();
+                                editor.fire('saveSnapshot');
+
+                                editor.insertHtml(value);
+
+                                editor.fire('saveSnapshot');
+                            }
+                        });
+                    }
+                },
                 extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
 
                 // Adding drag and drop image upload.
@@ -144,7 +132,7 @@
                 height: 560,
                 removeDialogTabs: 'image:advanced;link:advanced',
                 removeButtons: 'PasteFromWord'
-            }
+            };
 
             CKEDITOR.replace( 'arrival_vaccinated',settings );
             CKEDITOR.replace( 'arrival_unvaccinated',settings );

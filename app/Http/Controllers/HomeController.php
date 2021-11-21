@@ -48,9 +48,12 @@ class HomeController extends Controller
     }
 
     public function home()
-    {  
+    {
         $scountries = SupportedCountries::all();
-        return view('homepage.home')->with(compact('scountries'));
+
+        $display_countries = SupportedCountries::whereNotNull('image')->inRandomOrder()->limit(1)->get();
+
+        return view('homepage.home')->with(compact('scountries','display_countries'));
     }
     
     public function booking(Request $request)
