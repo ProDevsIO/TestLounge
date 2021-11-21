@@ -60,11 +60,13 @@
         <div class="container-fluid">
 
             @if(auth()->user()->account_no == null)
-                <div class="alert alert-danger">
-                    Kindly setup your bank account to gain access to your referral link and also recieve payment via voucher payment.<a href="/user/bank"
-                                                                                           class="btn btn-danger">Add
-                        Bank</a>
-                </div>
+                @if(auth()->user()->type != 1)
+                    <div class="alert alert-danger">
+                        Kindly setup your bank account to gain access to your referral link and also recieve payment via voucher payment.<a href="/user/bank"
+                                                                                            class="btn btn-danger">Add
+                            Bank</a>
+                    </div>
+                @endif
             @else
                 @if(auth()->user()->type != 1)
                     <div class="alert alert-success">
