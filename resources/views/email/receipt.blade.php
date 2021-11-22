@@ -312,20 +312,19 @@
                                             Thank you for choosing to book with us. <br/>
                                             Booking Reference: 
                                             <?php foreach($code as $decode){
-                                                echo $decode .",    <br>";
+                                                echo $decode .",<br>";
                                                  }
                                                  ?>
-                                            
+                                          
                                                 <?php
                                                     if($booking->dam_address != null){
-                                                            $address  = json_decode($booking->dam_address);
-                                                        } 
-                                         
+                                                        $address  = json_decode($booking->dam_address);
+                                                    } 
                                                 ?>
-                                                @if($booking->dam_address != null)
-                                                 Walkin Test Lab Address : {{$address->address}},{{$address->city}}, {{$address->country}}
-                                                @endif
                                             
+                                            @if(isset($address))
+                                                Walkin Test Lab: {{$address->address}},{{$address->city}}, {{$address->country}}.
+                                            @endif
                                             <br/>
                                             Test Provider: {{ $booking_product->vendor->name }}
                                             <br/>

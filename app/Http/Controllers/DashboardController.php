@@ -992,10 +992,11 @@ class DashboardController extends Controller
         $booking = Booking::where('id', $id)->first();
         $code = $booking->booking_code;
         $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
-    
+        try {
             Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
-       
-        
+        } catch (\Exception $e) {
+            dd($e);
+        }
         session()->flash('alert-success', "Receipt has been sent successfully");
 
         return back();
