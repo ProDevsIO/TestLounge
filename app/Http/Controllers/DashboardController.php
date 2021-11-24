@@ -759,8 +759,87 @@ class DashboardController extends Controller
             'bank' => (isset($banks_[$request->account_bank]) ? $banks_[$request->account_bank] : "")
         ];
 
-
         User::where('id', auth()->user()->id)->update($data_save);
+
+         //send an email
+         try {
+            if($user->main_agent_share_raw == null)
+            {
+                $message = "Dear Partner, <br><br>
+
+                            Welcome to the Agents Network of Travel Test Global! <br> 
+                            
+                            Your profile has been fully set-up and activated on our platform as a Super-Agent <br>
+                            You have been fully activated as a Super-Agent <br><br>
+                            Please see below your unique client booking link: <br>
+                            $user->referal_code<br><br>
+                            Use this link when booking any test for your clients on our platform and share same link with your customers when they purchase any of our test products by themselves. Click to see a video on how to book a test. <br>
+                            <a href='" . env('APP_URL', "https://youtu.be/Io7SpaV6fJ0")."'> https://youtu.be/Io7SpaV6fJ0</a><br>
+                            
+                            How to book a test using vouchers
+                            <a href='" . env('APP_URL', "https://youtu.be/JgQn2UWFmY0 ")."'>https://youtu.be/JgQn2UWFmY0 </a><br>
+                             
+                            How to register as  an agent 
+                            <a href='" . env('APP_URL', " https://youtu.be/WNfsahAdXVE")."'>https://youtu.be/WNfsahAdXVE</a><br><br>
+                            For more information on how your agency account works, please click below link to see Agency On-boarding brochure.  <br>
+                            XXXXXXXXXXXXXXXXXXXXXX <br><br>
+                        
+                            Should you need further support, please contact us with the details below: <br><br>
+                            <a href='" . env('APP_URL', "Info@traveltestltd.com")."'>Info@traveltestltd.com</a> <br>
+                            <a href='" . env('APP_URL', "www.traveltestsltd.com")."'> www.traveltestsltd.com</a> <br>
+                        
+                            Phone Nos: <br>
+                            Nigeria: +2347060466084  <br>
+                            UAE: +971544119013, +971563784904  <br>
+                            UK: +447436875938  <br>
+                         
+                            <br/><br/>
+                            Thank you for joining the  TravelTestsltd network!<br><br>
+    
+                            TravelTestsltd Team
+                ";
+            }else{
+
+                $message = "Dear Partner, <br><br>
+
+                    Welcome to the Agents Network of Travel Test Global! <br> 
+                    
+                    Your profile has been fully set-up and activated on our platform as a Sub-Agent <br>
+                    You have been fully activated as a Sub-Agent <br><br>
+                    Please see below your unique client booking link: <br>
+                    $user->referal_code<br><br>
+                    Use this link when booking any test for your clients on our platform and share same link with your customers when they purchase any of our test products by themselves. Click to see a video on how to book a test. <br>
+                    <a href='" . env('APP_URL', "https://youtu.be/Io7SpaV6fJ0")."'> https://youtu.be/Io7SpaV6fJ0</a><br>
+                    
+                    How to book a test using vouchers
+                    <a href='" . env('APP_URL', "https://youtu.be/JgQn2UWFmY0 ")."'>https://youtu.be/JgQn2UWFmY0 </a><br>
+                    
+                    How to register as  an agent 
+                    <a href='" . env('APP_URL', " https://youtu.be/WNfsahAdXVE")."'>https://youtu.be/WNfsahAdXVE</a><br><br>
+                    For more information on how your agency account works, please click below link to see Agency On-boarding brochure.  <br>
+                    XXXXXXXXXXXXXXXXXXXXXX <br><br>
+                
+                    Should you need further support, please contact us with the details below: <br><br>
+                    <a href='" . env('APP_URL', "Info@traveltestltd.com")."'>Info@traveltestltd.com</a> <br>
+                    <a href='" . env('APP_URL', "www.traveltestsltd.com")."'> www.traveltestsltd.com</a> <br>
+                
+                    Phone Nos: <br>
+                    Nigeria: +2347060466084  <br>
+                    UAE: +971544119013, +971563784904  <br>
+                    UK: +447436875938  <br>
+                
+                    <br/><br/>
+                    Thank you for joining the  TravelTestsltd network!<br><br>
+
+                    TravelTestsltd Team             
+                ";
+                
+            }
+           
+            Mail::to($user->email)->send(new BookingCreation($message, 'Agent Activation'));
+        } catch (\Exception $e) {
+            dd($e);
+        }
         session()->flash("alert-success", "Bank has been added successfully");
         return back();
 
