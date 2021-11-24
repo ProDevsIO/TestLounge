@@ -774,19 +774,19 @@ class DashboardController extends Controller
                             Please see below your unique client booking link: <br>
                             $user->referal_code<br><br>
                             Use this link when booking any test for your clients on our platform and share same link with your customers when they purchase any of our test products by themselves. Click to see a video on how to book a test. <br>
-                            <a href='" . env('APP_URL', "https://youtu.be/Io7SpaV6fJ0")."'> https://youtu.be/Io7SpaV6fJ0</a><br>
+                            <a href='https://youtu.be/Io7SpaV6fJ0'> https://youtu.be/Io7SpaV6fJ0</a><br>
                             
                             How to book a test using vouchers
-                            <a href='" . env('APP_URL', "https://youtu.be/JgQn2UWFmY0 ")."'>https://youtu.be/JgQn2UWFmY0 </a><br>
+                            <a href='https://youtu.be/JgQn2UWFmY0'>https://youtu.be/JgQn2UWFmY0 </a><br>
                              
                             How to register as  an agent 
-                            <a href='" . env('APP_URL', " https://youtu.be/WNfsahAdXVE")."'>https://youtu.be/WNfsahAdXVE</a><br><br>
+                            <a href='https://youtu.be/WNfsahAdXVE'>https://youtu.be/WNfsahAdXVE</a><br><br>
                             For more information on how your agency account works, please click below link to see Agency On-boarding brochure.  <br>
                             XXXXXXXXXXXXXXXXXXXXXX <br><br>
                         
                             Should you need further support, please contact us with the details below: <br><br>
-                            <a href='" . env('APP_URL', "Info@traveltestltd.com")."'>Info@traveltestltd.com</a> <br>
-                            <a href='" . env('APP_URL', "www.traveltestsltd.com")."'> www.traveltestsltd.com</a> <br>
+                            <a href='Info@traveltestltd.com'>Info@traveltestltd.com</a> <br>
+                            <a href='https://www.traveltestsltd.com'> www.traveltestsltd.com</a> <br>
                         
                             Phone Nos: <br>
                             Nigeria: +2347060466084  <br>
@@ -809,20 +809,20 @@ class DashboardController extends Controller
                     Please see below your unique client booking link: <br>
                     $user->referal_code<br><br>
                     Use this link when booking any test for your clients on our platform and share same link with your customers when they purchase any of our test products by themselves. Click to see a video on how to book a test. <br>
-                    <a href='" . env('APP_URL', "https://youtu.be/Io7SpaV6fJ0")."'> https://youtu.be/Io7SpaV6fJ0</a><br>
-                    
-                    How to book a test using vouchers
-                    <a href='" . env('APP_URL', "https://youtu.be/JgQn2UWFmY0 ")."'>https://youtu.be/JgQn2UWFmY0 </a><br>
-                    
-                    How to register as  an agent 
-                    <a href='" . env('APP_URL', " https://youtu.be/WNfsahAdXVE")."'>https://youtu.be/WNfsahAdXVE</a><br><br>
-                    For more information on how your agency account works, please click below link to see Agency On-boarding brochure.  <br>
-                    XXXXXXXXXXXXXXXXXXXXXX <br><br>
-                
-                    Should you need further support, please contact us with the details below: <br><br>
-                    <a href='" . env('APP_URL', "Info@traveltestltd.com")."'>Info@traveltestltd.com</a> <br>
-                    <a href='" . env('APP_URL', "www.traveltestsltd.com")."'> www.traveltestsltd.com</a> <br>
-                
+                            <a href='https://youtu.be/Io7SpaV6fJ0'> https://youtu.be/Io7SpaV6fJ0</a><br>
+                            
+                            How to book a test using vouchers
+                            <a href='https://youtu.be/JgQn2UWFmY0'>https://youtu.be/JgQn2UWFmY0 </a><br>
+                             
+                            How to register as  an agent 
+                            <a href='https://youtu.be/WNfsahAdXVE'>https://youtu.be/WNfsahAdXVE</a><br><br>
+                            For more information on how your agency account works, please click below link to see Agency On-boarding brochure.  <br>
+                            XXXXXXXXXXXXXXXXXXXXXX <br><br>
+                        
+                            Should you need further support, please contact us with the details below: <br><br>
+                            <a href='Info@traveltestltd.com'>Info@traveltestltd.com</a> <br>
+                            <a href='https://www.traveltestsltd.com'> www.traveltestsltd.com</a> <br>
+                        
                     Phone Nos: <br>
                     Nigeria: +2347060466084  <br>
                     UAE: +971544119013, +971563784904  <br>

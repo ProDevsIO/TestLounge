@@ -2030,7 +2030,7 @@ class HomeController extends Controller
                 return $redirect;
             }
 
-
+            //send receipt 
             foreach ($booking_products as $booking_product) {
                 try {
                     //check if a referral code exist
@@ -2053,6 +2053,7 @@ class HomeController extends Controller
                 }
             }
 
+            //day 2 and 8 disclaimer
             foreach ($booking_products as $booking_product) {
                 try {
 
@@ -2086,6 +2087,49 @@ class HomeController extends Controller
                         ";
                         Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
                     }
+                   
+                } catch (\Exception $e) {
+                 dd($e);
+                }
+
+            }
+
+            //customer feed back mail
+            foreach ($booking_products as $booking_product) {
+                try {
+
+                        $message = "Hi " . $booking->first_name . ",<br><br>
+                            Thank you for booking your test with Travel Test Global.<br><br>
+                            If you ordered a home testing service, have you received your test kits?  <br>
+                            <a href='https://docs.google.com/forms/u/1/d/1X2f1Jhd5k6UgnM_dK88pUTXHVW43hT4By_QaLMu4pnM/edit'> Yes</a> or  <a href='https://docs.google.com/forms/u/1/d/1X2f1Jhd5k6UgnM_dK88pUTXHVW43hT4By_QaLMu4pnM/edit'>No </a>  <br><br>
+                            
+                            If you ordered the in-clinic service, have you received details about the clinic appointment for your test? <br>
+                            <a href='https://docs.google.com/forms/u/1/d/1X2f1Jhd5k6UgnM_dK88pUTXHVW43hT4By_QaLMu4pnM/edit'>Yes</a> or  <a href='https://docs.google.com/forms/u/1/d/1X2f1Jhd5k6UgnM_dK88pUTXHVW43hT4By_QaLMu4pnM/edit'>No </a> <br><br>
+                        
+                            We value your feedback. Please click here to tell us how we are doing.<a href='https://docs.google.com/forms/d/e/1FAIpQLScPxT051YcrGm3AzAM4bb2q5fh4ZL-xNm6QXOfyTzdL5LLf8w/viewform'> Click here </a><br>
+                            
+                            If you require further support, please contact us using the details shown below. <br><br>
+                            
+                            Contact Us <br>
+                            <a href='Info@traveltestltd.com'>Info@traveltestltd.com</a> <br>
+                            <a href='https://www.traveltestsltd.com'> www.traveltestsltd.com</a> <br><br>
+                    
+                            United Kingdom <br>
+                            WhatsApp: +447742999786  <br><br>
+                            
+                            United Arab Emirates <br> 
+                            Mobile & WhatsApp: +971544119013, +971563784904 <br><br>
+                            
+                            Nigeria <br>
+                            Mobile & WhatsApp: +2347060466084 
+             
+                            <br/><br/>
+                            Thank you.
+                            <br/><br/>
+                            TravelTestsltd Team
+                        ";
+                        Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
+                
                    
                 } catch (\Exception $e) {
                  dd($e);
