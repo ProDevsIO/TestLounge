@@ -727,6 +727,8 @@ class Controller extends BaseController
 
         // dd($booking_products);
         $code = [];
+        $acr = [];
+        $external =[];
         $z = 0;
         $y = 0;
         $i = 0;
@@ -738,13 +740,13 @@ class Controller extends BaseController
           
             while($y < $z){
                 $data_send['external_reference'] = "booking_".$booking->id."_".$y;
+                $external[] = "booking_".$booking->id."_".$y;
                 $i++;
                 $ch = curl_init();
 
                 curl_setopt($ch, CURLOPT_URL, "https://portal.ukhealthtesting.com/api/partner_orders");
                 curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS,
-                    http_build_query($data_send));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data_send));
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         
                 $response = curl_exec($ch);
@@ -753,12 +755,27 @@ class Controller extends BaseController
                 
                 $data_response = json_decode($response);
                 $code[] = $data_response->reference;
+                
                 $y++;
                 
-               
+                if($data_response->acr != null)
+                {
+                    $acr[] = $data_response->acr;
+                }
+              
             }
          
-       
+        $ukht_data["ukht_id"] = json_encode($external);
+       //getting antigen certificate number
+        if($data_response->acr != null)
+        {
+            $ukht_data["certificate_no"] =  json_encode($acr);
+          
+        }
+    
+        $final_book = Booking::where('id', $booking->id);
+        $final_book->update($ukht_data);
+      
         $formatted_data = json_encode($code);
 
         return $formatted_data;

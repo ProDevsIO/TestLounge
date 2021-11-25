@@ -2299,8 +2299,33 @@ class HomeController extends Controller
 
      
          ///  ------------  End a new Booking Creation ----------   ///
+
+        ///  --------------  Availability api  --------------------  ///
+       
+        $variable =  ["locationid" => 10002, "roomid" => 10009, "productid" => 10000, "bookingdate"=> "2021-09-01"] ;
+
+        $object = [
+
+            
+            "variables" => $variable
+            
+        ];
+       
+        $encoded_booking_data = json_encode($object);
+    //    dd($encoded_booking_data);
+        $x = curl_init('https://partner-api-dev.dam-health.com/v1/api/availability');
+
+        curl_setopt($x, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($x, CURLOPT_POSTFIELDS,   $encoded_booking_data);
+        curl_setopt($x, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($x, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+       
+        $result_x = curl_exec($x);
+
+        ///  --------------  End Availability api  --------------------  ///
+
         // dump(json_decode($result_p), json_decode($result _3));
-        dd($bearer,json_decode($result_p), json_decode($result_3), json_decode($result_book));
+        dd($bearer,json_decode($result_p), json_decode($result_3), json_decode($result_book), json_decode( $encoded_booking_data));
     }
 
     public function walkIn()
