@@ -176,8 +176,10 @@ class HomeController extends Controller
             'consent' => 'required'
         ]);
 
-        $dam_data = json_decode($request->test_location['0']);
-
+        if($request->test_location)
+        {
+            $dam_data = json_decode($request->test_location['0']);
+        }
 
         $request->vendor_id = 3;
         $test_kit = [];
