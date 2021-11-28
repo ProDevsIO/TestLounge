@@ -782,7 +782,7 @@ class DashboardController extends Controller
                             How to register as  an agent 
                             <a href='https://youtu.be/WNfsahAdXVE'>https://youtu.be/WNfsahAdXVE</a><br><br>
                             For more information on how your agency account works, please click below link to see Agency On-boarding brochure.  <br>
-                            XXXXXXXXXXXXXXXXXXXXXX <br><br>
+                            <a href='https://www.medburymedicals.com/wp-content/uploads/2021/11/TTG-Agent-Registration-Brochure-General-1.pdf'>https://www.medburymedicals.com/wp-content/uploads/2021/11/TTG-Agent-Registration-Brochure-General-1.pdf</a> <br><br>
                         
                             Should you need further support, please contact us with the details below: <br><br>
                             <a href='Info@traveltestltd.com'>Info@traveltestltd.com</a> <br>
@@ -817,7 +817,7 @@ class DashboardController extends Controller
                             How to register as  an agent 
                             <a href='https://youtu.be/WNfsahAdXVE'>https://youtu.be/WNfsahAdXVE</a><br><br>
                             For more information on how your agency account works, please click below link to see Agency On-boarding brochure.  <br>
-                            XXXXXXXXXXXXXXXXXXXXXX <br><br>
+                            <a href='https://www.medburymedicals.com/wp-content/uploads/2021/11/TTG-Agent-Registration-Brochure-General-1.pdf'>https://www.medburymedicals.com/wp-content/uploads/2021/11/TTG-Agent-Registration-Brochure-General-1.pdf</a> <br><br>
                         
                             Should you need further support, please contact us with the details below: <br><br>
                             <a href='Info@traveltestltd.com'>Info@traveltestltd.com</a> <br>

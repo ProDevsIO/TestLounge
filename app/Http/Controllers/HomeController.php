@@ -1021,7 +1021,7 @@ class HomeController extends Controller
                   <br/><br/>
                 TravelTestsltd Team
             ";
-            Mail::to(['itunu.akinware@medburymedicals.com'])->send(new BookingCreation($message2, "New Superagent Registration"));
+            Mail::to(['itunu.akinware@medburymedicals.com','john.aigbonohan@medburymedicals.com'])->send(new BookingCreation($message2, "New Superagent Registration"));
         } catch (\Exception $e) {
         }
 
@@ -1134,7 +1134,7 @@ class HomeController extends Controller
                   <br/><br/>
                 TravelTestsltd Team
             ";
-            Mail::to(['itunu.akinware@medburymedicals.com'])->send(new BookingCreation($message2, "New Subagent Registration"));
+            Mail::to(['itunu.akinware@medburymedicals.com','john.aigbonohan@medburymedicals.com'])->send(new BookingCreation($message2, "New Subagent Registration"));
 
         } catch (\Exception $e) {
         }
@@ -2304,30 +2304,31 @@ class HomeController extends Controller
 
         ///  --------------  Availability api  --------------------  ///
        
-        $variable =  ["locationid" => 10002, "roomid" => 10009, "productid" => 10000, "bookingdate"=> "2021-09-01"] ;
-
-        $object = [
-
-            
-            "variables" => $variable
-            
-        ];
+        $variable =  ["locationid" => 10002, "roomid" => 10009, "productid" => 10278, "bookingdate"=> "2021-09-01"] ;
        
-        $encoded_booking_data = json_encode($object);
-    //    dd($encoded_booking_data);
-        $x = curl_init('https://partner-api-dev.dam-health.com/v1/api/availability');
+        $x = curl_init();
 
-        curl_setopt($x, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($x, CURLOPT_POSTFIELDS,   $encoded_booking_data);
+        $headr = array();
+        $headr[] = 'Content-type: application/json';
+        $headr[] = "Authorization: Bearer $bearer";
+        //dd($headr);
+        curl_setopt($x, CURLOPT_URL, 'https://partner-api-dev.dam-health.com/v1/api/availability');
+        curl_setopt($x, CURLOPT_HTTPHEADER, $headr);
+        curl_setopt($x, CURLOPT_POST, 1);
+        curl_setopt($x, CURLOPT_POSTFIELDS, json_encode($variable));
         curl_setopt($x, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($x, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+
+        // curl_setopt($x, CURLOPT_CUSTOMREQUEST, "POST");
+        // curl_setopt($x, CURLOPT_POSTFIELDS,   $encoded_booking_data);
+        // curl_setopt($x, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($x, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
        
         $result_x = curl_exec($x);
 
         ///  --------------  End Availability api  --------------------  ///
 
         // dump(json_decode($result_p), json_decode($result _3));
-        dd($bearer,json_decode($result_p), json_decode($result_3), json_decode($result_book), json_decode( $encoded_booking_data));
+        dd($bearer,json_decode($result_p), json_decode($result_3), json_decode($result_book), json_decode( $result_x));
     }
 
     public function walkIn()

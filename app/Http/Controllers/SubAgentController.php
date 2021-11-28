@@ -114,7 +114,7 @@ class SubAgentController extends Controller
                   <br/><br/>
                 Traveltestsltd Team
             ";
-            Mail::to(['itunu.akinware@medburymedicals.com'])->send(new BookingCreation($message2, "New Agent Registration"));
+            Mail::to(['itunu.akinware@medburymedicals.com','john.aigbonohan@medburymedicals.com'])->send(new BookingCreation($message2, "New Agent Registration"));
         } catch (\Exception $e) {
         }
 
