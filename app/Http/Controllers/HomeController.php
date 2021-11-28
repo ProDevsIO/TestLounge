@@ -820,6 +820,34 @@ class HomeController extends Controller
             return redirect()->to('/booking/success?b=' . $txRef);
         }
         
+        try {
+
+                $message = "
+              
+                Items in your shopping cart are still waiting. Do you need help to complete your order?
+                Click here to see a video on “How to Book a Test”
+
+                If you need further support, Contact us:<br><br>
+                <a href='Info@traveltestltd.com'>Info@traveltestltd.com</a> <br>
+            
+                Phone Nos: <br>
+                Nigeria: +2347060466084  <br>
+                UAE: +971544119013, +971563784904  <br>
+                UK: +447436875938  <br>
+                
+                <a href='https://www.surveymonkey.com/r/PQQNWV7'>Kindly Click here give us your feedback </a><br><br>
+
+                      <br/><br/>
+                      Thank you.
+                      <br/><br/>
+                    TravelTestsltd Team
+                ";
+                Mail::to($booking->email)->send(new BookingCreation($message, "Incomplete Order"));
+           
+        } catch (\Exception $e) {
+         dd($e);
+        }
+
         return redirect()->to('/booking/failed?b=' . $txRef);
     }
 
