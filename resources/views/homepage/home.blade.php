@@ -106,6 +106,8 @@
                                         <select name="" class="form-control" id="country" onchange="ukDirect()">
                                             <option value="">Select a country</option>
                                             <option value="united-kingdom-1">United Kingdom</option>
+                                            <option value="united-arab-emirates-1">United Arab Emirates</option>
+                                            <option value="nigeria-1">Nigeria</option>
                                             @foreach($scountries as $scountry)
                                                 <option value="{{$scountry->country->slug_name}}"> {{$scountry->country->nicename}} </option>
                                             @endforeach

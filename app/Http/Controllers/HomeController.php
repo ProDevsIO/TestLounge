@@ -49,7 +49,7 @@ class HomeController extends Controller
 
     public function home()
     {
-        $scountries = SupportedCountries::all();
+        $scountries = SupportedCountries::whereNotIn('country_id',[224, 156])->get();
 
         $display_countries = SupportedCountries::whereNotNull('image')->inRandomOrder()->limit(1)->get();
 

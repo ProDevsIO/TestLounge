@@ -112,6 +112,7 @@
                                 @foreach($products as $product)
                                     this.add('<a href="{{ env("APP_URL")."view/product/".$product->slug }}">Book {{ $product->name }}</a>', '{{ $product->name }}');
                                 @endforeach
+                                this.add('<a href="loop">All Test(s)</a>', 'Loop all Country Test!')
                             },
 
                             onClick: function (value) {

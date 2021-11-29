@@ -30,4 +30,9 @@ class SupportedCountries extends Model
     {
         return $this->belongsTo(Country::class, 'country_id');
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'country_id','country_id');
+    }
 }
