@@ -10,6 +10,10 @@
                 color: #428bca !important;
                 text-decoration: underline;
         }
+        .underline{
+            color: #428bca !important;
+                text-decoration: underline;
+        }
 
         @media only screen and (max-width: 600px) {
             .nav-justified > li {
@@ -86,15 +90,16 @@
                                      $products = $countries->products;
                                      $string_product ="";
                                      $string_product .= '<div class="row">';
+                                     $string_product .= '<h5 class="text-center">View All Tests</h5>';
                                      foreach($products as $product)
                                      {
                                         $slug = $product->slug;
-                                        $string_product .= '<div class="col-md-3 text-center" >
+                                        $string_product .= '<div class="col-md-3 text-center" style="margin-top:20px">
                                                                     <div class="card" style=" background-color: #1E50A0!important;color:white;min-height: 180px;">
                                                                         <div class="card-body " style="padding: 30px">
                                                                         <p style="color:white !important">
                                                                         '.$product->name.'</p>
-                                                                        <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">View Page</a>
+                                                                        <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">Book Test</a>
                                                                         </div>
                                                                     </div>
                                                             </div>';
@@ -117,10 +122,11 @@
                                      $products = $countries->products;
                                      $string_product ="";
                                      $string_product .= '<div class="row">';
+                                     $string_product .= '<h5 class="text-center">View All Tests</h5>';
                                      foreach($products as $product)
                                      {
                                         $slug = $product->slug;
-                                        $string_product .= '<div class="col-md-3 text-center" >
+                                        $string_product .= '<div class="col-md-3 text-center" style="margin-top:20px" >
                                                                     <div class="card" style=" background-color: #1E50A0!important;color:white;min-height: 180px;">
                                                                         <div class="card-body " style="padding: 30px">
                                                                         <p style="color:white !important">
@@ -151,10 +157,11 @@
                                      $products = $countries->products;
                                      $string_product ="";
                                      $string_product .= '<div class="row">';
+                                     $string_product .= '<h5 class="text-center">View All Tests</h5>';
                                      foreach($products as $product)
                                      {
                                         $slug = $product->slug;
-                                        $string_product .= '<div class="col-md-3 text-center" >
+                                        $string_product .= '<div class="col-md-3 text-center" style="margin-top:20px">
                                                                     <div class="card" style=" background-color: #1E50A0!important;color:white;min-height: 180px;">
                                                                         <div class="card-body " style="padding: 30px">
                                                                         <p style="color:white !important">
@@ -171,7 +178,7 @@
                                     $arrival_vaccinated = str_replace('<a href="all"', "<a id='all' href='".url(env('APP_URL')."product/country/".optional($countries->country)->slug_name)."'",$arrival_vaccinated);
 
                                  
-                                    $arrival_vaccinated = str_replace("<a href", "<a href",$arrival_vaccinated);
+                                    $arrival_vaccinated = str_replace("<a href", "<a class='underline' href",$arrival_vaccinated);
                                 @endphp
                                 {!! $arrival_vaccinated !!}
                             </div>
@@ -181,10 +188,11 @@
                                      $products = $countries->products;
                                      $string_product ="";
                                      $string_product .= '<div class="row">';
+                                     $string_product .= '<h5 class="text-center">View All Tests</h5>';
                                      foreach($products as $product)
                                      {
                                         $slug = $product->slug;
-                                        $string_product .= '<div class="col-md-3 text-center" >
+                                        $string_product .= '<div class="col-md-3 text-center" style="margin-top:20px">
                                                                     <div class="card" style=" background-color: #1E50A0!important;color:white;min-height: 180px;">
                                                                         <div class="card-body " style="padding: 30px">
                                                                         <p style="color:white !important">
