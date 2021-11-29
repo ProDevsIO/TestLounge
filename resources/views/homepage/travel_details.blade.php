@@ -46,7 +46,7 @@
             @if($countries->image == null)
                 <img class="background-image" alt="Background Image" src="/img/pass2.jpg">
             @else
-                <img class="background-image" alt="Background Image" src="{{ url('/page_img/'. $countries->image)}}">
+                <img class="background-image" alt="Background Image" src="{{ url($countries->image)}}">
             @endif
         </div>
         <div class="container align-bottom">

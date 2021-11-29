@@ -38,7 +38,7 @@
                                <h5><b>Image</b></h5>
                             </div>
                             <div class="card-body">
-                                <img id="blah" src="{{url('/page_img/'.$countries->image)}}" class="img-thumbnail img-fluid mx-auto d-block " width="50%" alt="View Image here" />
+                                <img id="blah" src="{{url($countries->image)}}" class="img-thumbnail img-fluid mx-auto d-block " width="50%" alt="View Image here" />
                                 <br><br>
                                 <input type="file" name="image" class="form-control" id="imgInp">
                             </div>

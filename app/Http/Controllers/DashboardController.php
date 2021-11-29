@@ -34,6 +34,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -3623,12 +3624,15 @@ class DashboardController extends Controller
 
             if(isset($request_data['image']))
             {
-            //rename image
-            $imageName = time().'.'.$request->image->extension();  
-            //move to path 
-            $request->image->move(public_path('page_img'), $imageName);
+            
+                //rename image
+                $imageName = time().'.'.$request->image->extension();  
+                //move to path 
+                $request->image->storeAs('/public', $imageName);
 
-            $request_data['image'] = $imageName;
+                $url = Storage::url($imageName);
+
+                $request_data['image'] = $url;
 
             }
 
@@ -3672,12 +3676,15 @@ class DashboardController extends Controller
 
              //rename image
             $imageName = time().'.'.$request->image->extension();  
+            
             //move to path 
-            $request->image->move(public_path('page_img'), $imageName);
+            $request->image->storeAs('/public', $imageName);
 
-            unset($request_data['image']);
+            $url = Storage::url($imageName);
 
-            $request_data['image'] = $imageName;
+            $request_data['image'] = $url;
+
+          
 
         }
         
