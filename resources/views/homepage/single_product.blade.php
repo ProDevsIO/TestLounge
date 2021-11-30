@@ -3,9 +3,13 @@
     <link href="{{ url('/css/product.css') }}" rel="stylesheet">
     <style>
         @media screen and (max-width: 508px) {
-            #content{
-                margin-top:30px !important;
+            #content {
+                margin-top: 30px !important;
             }
+        }
+
+        .btn-info {
+            border-color: transparent !important;
         }
     </style>
 @endsection
@@ -19,8 +23,9 @@
             <div class="container align-bottom">
                 <div class="row">
                     <div class="col-xs-12 h9_header">
-                        <h5 id="h9" class="text-white">COUNTRY TESTS ({{optional(optional($sproducts)->product)->name}}) </h5>
-                        
+                        <h5 id="h9" class="text-white">COUNTRY TESTS ({{optional(optional($sproducts)->product)->name}}
+                            ) </h5>
+
                     </div>
                 </div>
                 <!--end of row-->
@@ -42,128 +47,135 @@
                                     <div class="container" id="show-result">
 
                                     </div>
-                                
+
                                     <?php $i = 1 ?>
                                     <div class="row">
-                                                                             <div class="col-md-8" id="content" style="margin-top:100px;" >
-                                                                                <h2 class="" style="text-color:black"><span class="">{{ optional(optional($sproducts)->product)->name }}</span>
-                                                                                </h2>
-                                                                                <br>
-                                                                                <p style="line-height:50px; font-size: 16px;">{!! optional(optional($sproducts)->product)->description !!}</p>
-                                                                            </div>
-                                                                        
-                                              
-                                                 @foreach ($vproducts as $vproduct)
-
-                                                                     
-                                                                       
-                                                                        
-                                                                            <div class="col-md-4" >
-                                                                                    <div class="col-md-12 card" style="margin-top:100px;padding:50px; border-radius:10px; background-color:#24477f;">
-                                                                                       
-                                                                                                    <div class="container text-center"
-                                                                                                         style="padding-left:0; padding-right:0;">
-                                                                                                        {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
-
-                                                                                                        @if ($vproduct->cartItem)
-                                                                                                            <div class="input-group count_now{{ $vproduct->product->id }}">
-                                                                                                                <span class="input-group-addon cart_update_btn bg-white"
-                                                                                                                      data-action="remove">-</span>
-
-                                                                                                                <input type="text"
-                                                                                                                       style=""
-                                                                                                                       class="form-control text-center cart_input"
-                                                                                                                       id="quantity_{{ $i }}"
-                                                                                                                       value="{{ $vproduct->cartItem->quantity }}"
-                                                                                                                       data-cart_id="{{  $vproduct->cartItem->id }}"/>
-
-                                                                                                                <span class="input-group-addon cart_update_btn bg-white"
-                                                                                                                      data-action="add">+</span>
-                                                                                                            </div>
-                                                                                                            <br>
-                                                                                                            <h5 class="text-center" style="color:white !important;"><span 
-                                                                                                                        class=""> £{{ number_format(optional($vproduct)->price / 830)}} / ${{ optional($vproduct)->price_pounds }} </span>
-                                                                                                            </h5>
-                                                                                                            <a id="remove_button"
-                                                                                                               type="button"
-                                                                                                               data-button="remove_button"
-                                                                                                               data-product_id="{{ $vproduct->product->id }}"
-                                                                                                               data-vendor_id="{{ $vproduct->vendor->id }}"
-                                                                                                               class="btn btn-outline-info cart_btn"
-                                                                                                               style="border:1px solid #1E50A0;">
-                                                                                                                Remove
-                                                                                                                
-                                                                                                            </a>
-                                                                                                            
-                                                                                                        @else
-
-                                                                                                            <div class="input-group count_now{{ $vproduct->product->id }}"
-                                                                                                                 style="display: none;">
-                                                                                                                <span class="input-group-addon cart_update_btn bg-white"
-                                                                                                                      data-action="remove">-</span>
-
-                                                                                                                <input type="text"
-                                                                                                                       style=""
-                                                                                                                       class="form-control text-center cart_input cart{{ $vproduct->product->id  }}"
-                                                                                                                       id="quantity_{{ $i }}"
-                                                                                                                       value="1"
-                                                                                                                       data-cart_id=""/>
-
-                                                                                                                <span class="input-group-addon cart_update_btn bg-white"
-                                                                                                                      data-action="add">+</span>
-                                                                                                            </div>
-
-                                                                                                            <h5 class="text-center"
-                                                                                                            style="color:white !important;"><span
-                                                                                                                        class="">£{{ number_format(optional($vproduct)->price / 830)}} / ${{ optional($vproduct)->price_pounds }}</span>
-                                                                                                            </h5>
-                                                                                                            <a id="add_button"
-                                                                                                               type="button"
-                                                                                                               data-button="add_button"
-                                                                                                               style="align:center;"
-                                                                                                               data-product_id="{{ $vproduct->product->id }}"
-                                                                                                               data-vendor_id="{{ $vproduct->vendor->id }}"
-                                                                                                               class="btn btn-info cart_btn "
-                                                                                                            >
-                                                                                                                Add to
-                                                                                                                cart
-                                                                                                            </a>
-                                                                                                           
-                                                                                                        @endif
-                                                                                                        <!-- <a href="/view/cart" id="add_button" class="btn btn-info">Go to cart</a> -->
-                                                                                                        
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col-sm-12 text-center" style="margin-top:50px"><a
-                                                                                                                    id="go_button"
-                                                                                                                    href="{{ url('/view/cart') }}"
-                                                                                                                    type="button" class="btn bg-1" >Go
-                                                                                                                to cart <img
-                                                                                                                        src="https://img.icons8.com/fluency/20/000000/right.png"/></a>
-                                                                                                        </div>
-                                                                            </div>
-                                                                        
-                                                                       
-                                                    <?php $i++; ?>
-                                                 @endforeach
-                                                 <div>	&nbsp;</div> 
-                                                 </div>
-                                                       
-                                                                    @else
-                                                                        <div style="padding: 50px 50px 30px 50px">
-                                                                            <h4 class="text-center">No product available
-                                                                                for now</h4>
-                                                                        </div>
-                                                                    @endif
-                                                                </div>
-                                                        </div>
-                                                </div>
+                                        <div class="col-md-8" id="content" style="margin-top:100px;">
+                                            <h2 class="" style="text-color:black"><span
+                                                    class="">{{ optional(optional($sproducts)->product)->name }}</span>
+                                            </h2>
+                                            <br>
+                                            <p style="line-height:50px; font-size: 16px;">{!! optional(optional($sproducts)->product)->description !!}</p>
                                         </div>
-                                </section>
 
-                                <br>
-                            
+
+                                        @foreach ($vproducts as $vproduct)
+
+
+
+
+                                            <div class="col-md-4">
+                                                <div class="col-md-12 card"
+                                                     style="padding:50px; border-radius:10px; background-color:#24477f;">
+
+                                                    <div class="container text-center"
+                                                         style="padding-left:0; padding-right:0;">
+                                                        {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
+
+                                                        @if ($vproduct->cartItem)
+                                                            <div
+                                                                class="input-group count_now{{ $vproduct->product->id }}">
+                                                                                                                <span
+                                                                                                                    class="input-group-addon cart_update_btn bg-white"
+                                                                                                                    data-action="remove">-</span>
+
+                                                                <input type="text"
+                                                                       style=""
+                                                                       class="form-control text-center cart_input"
+                                                                       id="quantity_{{ $i }}"
+                                                                       value="{{ $vproduct->cartItem->quantity }}"
+                                                                       data-cart_id="{{  $vproduct->cartItem->id }}"/>
+
+                                                                <span class="input-group-addon cart_update_btn bg-white"
+                                                                      data-action="add">+</span>
+                                                            </div>
+                                                            <br>
+                                                            <h5 class="text-center"
+                                                                style="color:white !important;"><span
+                                                                    class=""> £{{ number_format(optional($vproduct)->price / 830)}} / ${{ optional($vproduct)->price_pounds }} </span>
+                                                            </h5>
+                                                            <a id="remove_button"
+                                                               type="button"
+                                                               data-button="remove_button"
+                                                               data-product_id="{{ $vproduct->product->id }}"
+                                                               data-vendor_id="{{ $vproduct->vendor->id }}"
+                                                               class="btn btn-outline-info cart_btn"
+                                                               style="border:1px solid #1E50A0;">
+                                                                Remove
+
+                                                            </a>
+
+                                                        @else
+
+                                                            <div
+                                                                class="input-group count_now{{ $vproduct->product->id }}"
+                                                                style="display: none;">
+                                                                                                                <span
+                                                                                                                    class="input-group-addon cart_update_btn bg-white"
+                                                                                                                    data-action="remove">-</span>
+
+                                                                <input type="text"
+                                                                       style=""
+                                                                       class="form-control text-center cart_input cart{{ $vproduct->product->id  }}"
+                                                                       id="quantity_{{ $i }}"
+                                                                       value="1"
+                                                                       data-cart_id=""/>
+
+                                                                <span class="input-group-addon cart_update_btn bg-white"
+                                                                      data-action="add">+</span>
+                                                            </div>
+
+                                                            <h5 class="text-center"
+                                                                style="color:white !important;"><span
+                                                                    class="">£{{ number_format(optional($vproduct)->price / 830)}} / ${{ optional($vproduct)->price_pounds }}</span>
+                                                            </h5>
+                                                            <a id="add_button"
+                                                               type="button"
+                                                               data-button="add_button"
+                                                               style="align:center;"
+                                                               data-product_id="{{ $vproduct->product->id }}"
+                                                               data-vendor_id="{{ $vproduct->vendor->id }}"
+                                                               class="btn btn-info cart_btn "
+                                                            >
+                                                                Add to
+                                                                cart
+                                                            </a>
+
+                                                    @endif
+                                                    <!-- <a href="/view/cart" id="add_button" class="btn btn-info">Go to cart</a> -->
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 text-center" style="margin-top:50px"><a
+                                                        id="go_button"
+                                                        href="{{ url('/view/cart') }}"
+                                                        type="button" class="btn bg-1">Go
+                                                        to cart <img
+                                                            src="https://img.icons8.com/fluency/20/000000/right.png"/></a>
+                                                </div>
+                                            </div>
+
+
+                                            <?php $i++; ?>
+                                        @endforeach
+                                        <div> &nbsp;</div>
+                                    </div>
+
+                                    @else
+                                        <div style="padding: 50px 50px 30px 50px">
+                                            <h4 class="text-center">No product available
+                                                for now</h4>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
+                        </div>
+                </div>
+        </section>
+
+        <br>
+
+    </div>
 @endsection
 @section('script')
     <script>
