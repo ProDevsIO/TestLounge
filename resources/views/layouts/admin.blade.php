@@ -293,12 +293,12 @@
                             <span>Color zones</span>
                         </a>
                     </li>
-                    <!-- <li>
+                    <li>
                       <a href="{{ url('/pages') }}">
                             <i class="ti-receipt"></i>
                             <span>Pages</span>
                         </a>
-                    </li> -->
+                    </li>
                     <li>
                       <a href="{{ url('/supported/countries') }}">
                             <i class="icon-globe"></i>
