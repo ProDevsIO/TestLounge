@@ -266,7 +266,11 @@
 
                     <div class="background-image-holder overlay" style="background: url(&quot;img/header2.jpg&quot;) 50% 0%;">
 
+                        @if($country->image != null)
                         <img class="background-image" alt="Background Image" src="{{ url($country->image) }}" style="display: none;">
+                        @else
+                        <img class="background-image" alt="Background Image" src="img/pass1.jpg" style="display: none;">
+                        @endif
                     </div>
 
                     <div class="inner mt-2">
