@@ -2035,7 +2035,7 @@ class HomeController extends Controller
            
             try {
 
-                if(!$booking->room = null)
+                if(!$booking->room == null)
                 {
                     $code = $this->GetDamHealthCode($booking);
                 }else{
