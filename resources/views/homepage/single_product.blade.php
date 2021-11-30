@@ -66,7 +66,7 @@
 
                                             <div class="col-md-4">
                                                 <div class="col-md-12 card"
-                                                     style="padding:50px; border-radius:10px; background-color:#24477f;">
+                                                     style="margin-top:20px;padding:50px; border-radius:10px; background-color:#24477f;">
 
                                                     <div class="container text-center"
                                                          style="padding-left:0; padding-right:0;">
