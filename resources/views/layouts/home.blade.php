@@ -157,8 +157,9 @@ $ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_co
                 <div class="col-sm-12">
                     <span class="text-white">© {{ date('Y') }} Traveltestsltd.</span>
                     <span class="text-white">info@traveltestsltd.com</span>
-                    <span class="text-white">Phone: +447436875938, </span>
-                    <span class="text-white">WhatsApp: +447436875938</span>
+                    <span class="text-white" style="">Nigeria: +234 9124768070<br>UAE: +971544119013, +971563784904 <br>UK: +44 (0) 7742 999786(WhatsApp)</span>
+                   
+                  
                 </div>
             </div><!--end for row-->
         </div><!--end of container-->
