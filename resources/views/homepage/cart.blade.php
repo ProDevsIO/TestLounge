@@ -19,13 +19,13 @@
         <!--end of container-->
     </header>
     <section class="content bg-white">
-    <div class="col-sm-12 text-left"><a style="font-size:16px" href="{{ url('/product/all') }}" type="button" ><img src="https://img.icons8.com/fluency/20/000000/left.png"/> Go back to Test products </a></div>
-    <br>
-    <br>
+    <div class="col-sm-12 text-left">
+        <a style="font-size:16px;color: #1e50a0" href="{{ back() }}" type="button" ><- Go back</a></div>
+
         @if ($carts->count() > 0)
             <div class="cart">
                 <div class="header">
-                    <div class="fw-700 fs-28 text-center" id="cart-header">Cart: {{ $carts->count() }} Item</div>
+                    <div class="fw-700 fs-28 text-center" id="cart-header">My Cart</div>
                 </div>
                 <div class="cart-container" >
                     @include('errors.showerrors')
@@ -34,7 +34,7 @@
                         <div id="cart-table-header">Tests</div>
                         <div id="cart-table-header">Quantity</div>
                         <div id="cart-table-header">Amount</div>
-                        <div id="cart-table-header">Option</div>
+                        <div id="cart-table-header">Action</div>
                     </div>
                     <?php $i = 0; ?>
                     <div id="underlay">
@@ -45,23 +45,23 @@
                                 <span>{{ optional($cart->vendorProduct->product)->name }}</span>
 
                             </div>
-                            <div class="card-item" >
+                            <div class="card-item">
                                 {{-- <select name="" class="form-control" id="quantity_{{$i}}" >
                                     @for ($y = 1; $y < 10; $y++)
                                         <option value="{{$y}}"  @if ($cart->quantity == $y)selected @endif>{{$y}}</option>
                                     @endfor
                                 </select> --}}
-                                
+
                                 <div class="input-group">
                                      <span class="input-group-addon cart_update_btn bg-white" data-action="remove">-</span>
-                                    
+
                                     <input type="text" style="" class="form-control text-center cart_input"
                                         id="quantity_{{ $i }}" value="{{ $cart->quantity }}"
                                         data-cart_id="{{ $cart->id }}" />
-                                    
+
                                         <span class="input-group-addon cart_update_btn bg-white" data-action="add">+</span>
                                 </div>
-                                
+
                             </div>
                             <div class="card-item text-center cart-p" id="cart-text">$
                                 <span id="cart_item_total_{{ $cart->id }}" >
@@ -83,7 +83,7 @@
                     </div>
                     <div class="button-container">
                         <!-- <a class="btn-3 bg-none color-1 fw-600">Back to Shopping</a> -->
-                        <a id="add_button" href="{{ url('/booking') }}" type="button" class="btn btn-sm btn-info"
+                        <a id="add_button" href="{{ url('/booking') }}" type="button" style="font-size: 18px" class="btn btn-sm btn-info"
                            >Proceed to checkout</a>
                     </div>
                 </div>
