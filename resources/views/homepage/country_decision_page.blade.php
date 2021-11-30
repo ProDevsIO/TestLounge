@@ -49,13 +49,13 @@
     <section class="container bg-white">
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-4"><h3>Choose the appropriate travelling option</h3></div>
+            <div class="col-md-4"><h3>Choose your travel option</h3></div>
             <div class="col-md-5">
                             <select name="" class="form-control" id="action" onchange="redirect('{{$countries->id}}')">
-                                <option value="">Select a country</option>
+                                <option value="">Select an Option</option>
                                 <option value="departure">Departure</option>
                                 <option value="arrival">On arrival</option>
-                               
+
                             </select>
             </div>
             <div class="col-md-2"></div>
