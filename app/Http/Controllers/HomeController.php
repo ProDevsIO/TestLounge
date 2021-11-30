@@ -68,6 +68,8 @@ class HomeController extends Controller
 
         $cart = Cart::where('ip', session()->get('ip'))->first();
         $vproduct = VendorProduct::where('id', $cart->vendor_product_id)->first();
+
+      
        
         if(!is_null($vproduct->walk_product_id))
         {
@@ -886,26 +888,32 @@ class HomeController extends Controller
         {
             $vproduct = VendorProduct::where('product_id', $voucher->voucherCount->product_id)
                                      ->where('vendor_id', 4)->first();
+            if($vproduct != null){
 
-            if(!is_null($vproduct->walk_product_id))
-            {
-
-                $bearer = $this->getDamhealthToken();
-               
-                $getlocation = $this->getDamHealthLocations($bearer);
-                $location = json_decode($getlocation);
             
-                            if(!isset($location->errors))
-                            {
-                                $locations = $location->data->damhealth_locations;
-                            }else{
-                                $locations = null;
-                            }
-        
-                $walkin = $vproduct->walk_product_id;
-            }else{
+                if(!is_null($vproduct->walk_product_id))
+                {
+
+                    $bearer = $this->getDamhealthToken();
+                
+                    $getlocation = $this->getDamHealthLocations($bearer);
+                    $location = json_decode($getlocation);
+                
+                                if(!isset($location->errors))
+                                {
+                                    $locations = $location->data->damhealth_locations;
+                                }else{
+                                    $locations = null;
+                                }
+            
+                    $walkin = $vproduct->walk_product_id;
+                }else{
+                    $walkin = null;
+                    $locations = null;
+                }
+            } else{
                 $walkin = null;
-                $locations = null;
+                $locations = null;   
             }
         }else{
             $walkin = null;
