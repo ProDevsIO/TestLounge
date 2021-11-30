@@ -202,6 +202,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/edit/configure/data', [\App\Http\Controllers\DashboardController::class, "edit_page_configuration"]);
     Route::get('/view/configure/products/{id}', [\App\Http\Controllers\DashboardController::class,"view_configure_products"]);
 
+    Route::get('/pages', [\App\Http\Controllers\pageController::class,"view_created_pages"]);
+
     Route::get('/logout', [\App\Http\Controllers\DashboardController::class,"logout"]);
 
 });
