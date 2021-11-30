@@ -6,6 +6,14 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="/css/booking.css">
 <style>
+    #disclamer{
+        font-size:16px;
+    }
+
+    #under{
+        font-size:12px !important;
+        color:red !important;
+    }
     video {
         max-width: 100%;
         height: auto;
@@ -64,7 +72,7 @@
                                 </div>
                                 <div class="col-md-12" style="margin-top: 20px">
                                     <label>Contact Email: <span class="show_required"> *</span></label>
-                                    <small class="text-muted" style="color:red"> Please provide only ONE email address
+                                    
                                     </small>
                                     @if(isset($voucher))
                                     <input type="text" name="email" readonly value="{{ $voucher->email }}" id="email" required/>
@@ -73,7 +81,7 @@
 
                                     <input type="text" name="email" value="{{ old('email') }}" id="email" required/>
                                     @endif
-
+                                    <small class="text-muted" style="color:red"> Please provide only ONE email address
                                 </div>
                                 <div class="col-md-12" style="margin-top: 20px">
                                     <label>Confirm Email: <span class="show_required"> *</span></label>
@@ -90,10 +98,11 @@
                                 <div class="col-md-12 " style="margin-top: 20px">
                                     <label>Phone number<span class="show_required"> *</span></label>
                                     <br>
-                                    <span>Please indicate your internation dailing country code and then enter the rest of the number</span>
+                                  
                                     <input id="phone" style="" type="text" value="{{ old('phone_no') }}" name="phone_no"
                                            class=" pr-5" placeholder="Phone No" required>
                                            <input id="hidden_phone" type="hidden" name="phone_full">
+                                    <span id="under">Please indicate your internation dailing country code and then enter the rest of the number</span>
                                 </div>
                                 <div class="col-md-6"
                                      style="margin-bottom: 20px">
@@ -149,32 +158,35 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label>Isolation Address1: <span class="show_required"> *</span> </label><br>
-                                    <span>This is the address where you will be during isolation</span>
+                                    <label>Isolation Address1: <span class="show_required"> *</span> </label>
+                                   
                                     <input class="" type="text" name="isolation_address" placeholder="apartment, building, block, street"
                                            value="{{ old('isolation_address') }}" required/>
+                                           <span id="under">This is the address where you will be during isolation</span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Isolation Address2: </label><br>
-                                    <span>This is the address where you will be during isolation</span>
+                                    <label>Isolation Address2: </label>
+                                  
                                     <input class="" type="text" name="isolation_address2"
                                            id="isolation_address2" placeholder="apartment, building, block, street"
                                            value="{{ old('isolation_address2') }}"/>
+                                     <span id="under">This is the address where you will be during isolation</span>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Isolation City/Town: <span class="show_required"> *</span></label>
-                                    <br><br><br>
+                                    <br>
                                     <input class="" type="text" name="isolation_town"
                                            value="{{ old('isolation_town') }}" required/>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Isolation Postcode: <span class="show_required"> *</span></label><br>
-                                    <span>Your sampling package will be posted here, kindly ensure you put in the correct post code</span>
+                                    <label>Isolation Postcode: <span class="show_required"> *</span></label>
+                                   
                                     <input class="" type="text" name="isolation_postal_code"
                                            value="{{ old('isolation_postal_code') }}" required/>
+                                           <span id="under">Your sampling package will be posted here, kindly ensure you put in the correct post code</span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Isolation Country: <span class="show_required"> *</span></label><br><br><br>
+                                    <label>Isolation Country: <span class="show_required"> *</span></label>
                                     <select style="width: 100%;" class="select-2"
                                             name="isolation_country_id" required readonly>
                                         <option value="">Make a selection</option>
@@ -187,7 +199,6 @@
                                 <div class="col-md-6">
                                     <label>Country travelled from: <span
                                                 class="show_required"> *</span></label><br>
-                                                <span>Please indicate the country/territory where you are travelling from</span>
                                     <select class="select-2 select2 country_id__"
                                             name="country_travelling_from_id" autocomplete="off"
                                             id="travel_from"  onselect="selectCountry()">
@@ -199,6 +210,7 @@
                                                     @endif>{{ $country->name }}</option>
                                         @endforeach
                                     </select>
+                                    <span id="under">Please indicate the country/territory where you are travelling from</span>
                                 </div>
 
                                 <div class="col-md-6">
@@ -358,37 +370,37 @@
 
                                    
                                     <div class="col-md-12 color-9">
-                                        <p>
-                                            I understand that I am purchasing this service in line with the <b><a target="_blank" class="text-info" href="https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19" style="text-decoration:underline">UK Government's travel requirements </a></b> because</p>
+                                        <p id="disclamer">
+                                            I understand that I am purchasing this service in line with the Government's travel requirements because</p>
                                           
-                                        <div class="color-8"> <p class="text-muted"><input type="radio" name="vaccinated" value="fully"
+                                        <div class="color-8"> <p class="text-muted" id="disclamer"><input type="radio" name="vaccinated" value="fully"
                                                                     class="bg-1"/>
                                            I am fully vaccinated </p>
                                         </div>
                                         <br>
-                                        <div class="color-8"> <p class="text-muted"><input type="radio" name="vaccinated" value="yes"
+                                        <div class="color-8"> <p class="text-muted" id="disclamer"><input type="radio" name="vaccinated" value="yes"
                                                                     class="bg-1"/>
                                            I am fully vaccinated but unable to show evidence of this</p>
                                         </div>
                                         <br>
-                                        <div class="color-8"> <p class="text-muted"><input type="radio" name="vaccinated" value="no"
+                                        <div class="color-8"> <p class="text-muted" id="disclamer"><input type="radio" name="vaccinated" value="no"
                                                                     class="bg-1"/>
                                            I am not fully vaccinated</p>
 
                                         </div>
                                         <br>
-                                       <p>I understand that this service I am about to purchase is non refundable and I am about to purchase it of my own free will.</p>
+                                       <p id="disclamer">I understand that this service I am about to purchase is non refundable and I am about to purchase it of my own free will.</p>
                                         
                                     </div>
 
                                     <div class="col-md-12 color-9">
                                         <label>Consent to Test <span class="color-10">*</span></label>
-                                        <div class="color-8"><p class="text-muted"><input type="checkbox" name="consent" value="1"
+                                        <div class="color-8"><p class="text-muted" id="disclamer"><input type="checkbox" name="consent" value="1"
                                                                     class="bg-1" required/>
                                             I consent to this test being done, or if this test
                                             is for a child, I confirm I am a legal guardian of the child and consent to
                                             this test being done.</p>
-                                           <div class="color-8"><p class="text-muted"><input type="checkbox" name="terms" required
+                                           <div class="color-8"><p class="text-muted" id="disclamer"><input type="checkbox" name="terms" required
                                                                     class="bg-1"/>
                                                                     By submitting the form, I consent to the <a href="/terms" target="_blank" class="text-info"> terms and conditions</a> of purchasing this product.</p>
 

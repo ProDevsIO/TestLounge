@@ -718,8 +718,7 @@ class HomeController extends Controller
                             3. You are Fully Vaccinated but unable to show an approved COVID-19 proof of vaccination before your travel. 
                             Read more about the approved proof of vaccination  <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
     
-                            If you are fully vaccinated under an approved vaccination programme accepted in the UK (check if your vaccination is approved <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a>)
-                            but were unable to show the approved COVID-19 proof of vaccination before your travel you might be eligible for a partial refund. <br><br>
+                            If you are fully vaccinated under an approved vaccination programme accepted in the UK (check if your vaccination is approved <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a>). <br><br>
     
                             We have a no-refund policy as indicated before your purchase.<br><br>
 

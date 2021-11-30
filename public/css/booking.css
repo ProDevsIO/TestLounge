@@ -8,7 +8,6 @@ body {
 
 .radio-group {
     position: relative;
-    margin-bottom: 25px
 }
 
 .radio {
@@ -31,7 +30,7 @@ body {
 }
 
 .input-container, .col-md-6, .col-md-5, .col-md-3, .col-md-12 {
-    margin-top: 40px !important;
+    margin-top: 20px !important;
 }
 
 #regForm {
@@ -61,10 +60,10 @@ label {
     font-family: Nunito;
     font-style: normal;
     font-weight: bold;
-    font-size: 20px;
-    line-height: 27px;
+    font-size: 16px;
+    line-height: 5px;
     color: #636363;
-    margin-bottom: 20px;
+    margin-bottom: 15px
 }
 
 h5 {
@@ -774,11 +773,6 @@ input.invalid {
     width: 90%;
 }
 
-
-.radio-group {
-    position: relative;
-    margin-bottom: 25px
-}
 
 .radio {
     display: inline-block;

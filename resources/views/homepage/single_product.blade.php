@@ -1,6 +1,13 @@
 @extends('layouts.home')
 @section('style')
     <link href="{{ url('/css/product.css') }}" rel="stylesheet">
+    <style>
+        @media screen and (max-width: 508px) {
+            #content{
+                margin-top:30px !important;
+            }
+        }
+    </style>
 @endsection
 @section('content')
     <div class="main-container">
@@ -38,7 +45,7 @@
                                 
                                     <?php $i = 1 ?>
                                     <div class="row">
-                                                                             <div class="col-md-8" style="margin-top:100px;" >
+                                                                             <div class="col-md-8" id="content" style="margin-top:100px;" >
                                                                                 <h2 class="" style="text-color:black"><span class="">{{ optional(optional($sproducts)->product)->name }}</span>
                                                                                 </h2>
                                                                                 <br>
