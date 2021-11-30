@@ -55,7 +55,7 @@
                                                     class="">{{ optional(optional($sproducts)->product)->name }}</span>
                                             </h2>
                                             <br>
-                                            <p style="line-height:50px; font-size: 16px;">{!! optional(optional($sproducts)->product)->description !!}</p>
+                                            <p style="line-height:36px; font-size: 16px;">{!! optional(optional($sproducts)->product)->description !!}</p>
                                         </div>
 
 
