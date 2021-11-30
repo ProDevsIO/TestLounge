@@ -6,13 +6,15 @@
         #cent {
             font-size: 30px;
         }
-        #all{
-                color: #428bca !important;
-                text-decoration: underline;
-        }
-        .underline{
+
+        #all {
             color: #428bca !important;
-                text-decoration: underline;
+            text-decoration: underline;
+        }
+
+        .underline {
+            color: #428bca !important;
+            text-decoration: underline;
         }
 
         @media only screen and (max-width: 600px) {
@@ -53,8 +55,9 @@
             <div class="row">
                 <div class="col-xs-12 ">
 
-                    <h1 id="cent" class="text-white"><a style="color: white" href="{{ url('/') }}">Home</a> > <a style="color: white"
-                                                               href="{{ url( env('APP_URL', 'http://127.0.0.1:8000/'). 'view/country/' .$countries->country->slug_name) }}">{{ ucwords(strtolower(optional(optional($countries)->country)->name))}}</a> @if($action == "departure")
+                    <h1 id="cent" class="text-white"><a style="color: white" href="{{ url('/') }}">Home</a> > <a
+                            style="color: white"
+                            href="{{ url( env('APP_URL', 'http://127.0.0.1:8000/'). 'view/country/' .$countries->country->slug_name) }}">{{ ucwords(strtolower(optional(optional($countries)->country)->name))}}</a> @if($action == "departure")
                             > Pre-departure
                         @else
                             > Arrival
@@ -87,63 +90,66 @@
 
                                 @php
 
-                                     $products = $countries->products;
-                                     $string_product ="";
-                                     $string_product .= '<div class="row">';
+                                    $products = $countries->products;
+                                    $string_product ="";
+                                    $string_product .= '<div class="row">';
 
-                                     foreach($products as $product)
-                                     {
-                                        $slug = $product->slug;
-                                        $string_product .= '<div class="col-md-3 text-center" style="margin-top:20px">
-                                                                    <div class="card" style=" background-color: #1E50A0!important;color:white;min-height: 180px;">
-                                                                        <div class="card-body " style="padding: 30px">
-                                                                        <p style="color:white !important">
-                                                                        '.$product->name.'</p>
-                                                                        <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">Book Test</a>
-                                                                        </div>
-                                                                    </div>
-                                                            </div>';
-                                     }
-                                     $string_product .="</div>";
+                                    foreach($products as $product)
+                                    {
+                                       $slug = $product->slug;
+                                       $string_product .= '<div class="col-md-3 text-center" style="margin-top:20px">
+                                                                   <div class="card" style=" background-color: #1E50A0!important;color:white;min-height: 180px;">
+                                                                       <div class="card-body " style="padding: 30px">
+                                                                       <p style="color:white !important">
+                                                                       '.$product->name.'</p>
+                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">Book Test</a>
+                                                                       </div>
+                                                                   </div>
+                                                           </div>';
+                                    }
+                                    $string_product .="</div>";
 
-                                     $departure_vaccinated = optional($countries)->departure_vaccinated;
+                                    $departure_vaccinated = optional($countries)->departure_vaccinated;
 
-                                    $departure_vaccinated = str_replace('<a href="loop">All Test(s)</a>', "$string_product",$departure_vaccinated);
+                                   $departure_vaccinated = str_replace('<a href="loop">All Test(s)</a>', "$string_product",$departure_vaccinated);
 
-                                    $departure_vaccinated = str_replace('<a href="all"', "<a id='all' href='".url(env('APP_URL')."product/country/".$countries->country->slug_name)."'",$departure_vaccinated);
+                                   $departure_vaccinated = str_replace('<a href="all"', "<a id='all' href='".url(env('APP_URL')."product/country/".$countries->country->slug_name)."'",$departure_vaccinated);
 
-                                    $departure_vaccinated = str_replace("<a href", "<a style='color: #c0272d' href",$departure_vaccinated);
+                                   $departure_vaccinated = str_replace("<a href", "<a style='color: #c0272d' href",$departure_vaccinated);
+                                            $departure_vaccinated = str_replace('<a id="all"', "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none' href",$departure_vaccinated);
+
                                 @endphp
                                 {!! $departure_vaccinated !!}
                             </div>
                             <div id="menu2" class="tab-pane fade container">
                                 @php
 
-                                     $products = $countries->products;
-                                     $string_product ="";
-                                     $string_product .= '<div class="row">';
+                                    $products = $countries->products;
+                                    $string_product ="";
+                                    $string_product .= '<div class="row">';
 
-                                     foreach($products as $product)
-                                     {
-                                        $slug = $product->slug;
-                                        $string_product .= '<div class="col-md-3 text-center" style="margin-top:20px" >
-                                                                    <div class="card" style=" background-color: #1E50A0!important;color:white;min-height: 180px;">
-                                                                        <div class="card-body " style="padding: 30px">
-                                                                        <p style="color:white !important">
-                                                                        '.$product->name.'</p>
-                                                                        <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">View Page</a>
-                                                                        </div>
-                                                                    </div>
-                                                            </div>';
-                                     }
-                                     $string_product .="</div>";
-                                     $departure_unvaccinated  = optional($countries)->departure_unvaccinated;
+                                    foreach($products as $product)
+                                    {
+                                       $slug = $product->slug;
+                                       $string_product .= '<div class="col-md-3 text-center" style="margin-top:20px" >
+                                                                   <div class="card" style=" background-color: #1E50A0!important;color:white;min-height: 180px;">
+                                                                       <div class="card-body " style="padding: 30px">
+                                                                       <p style="color:white !important">
+                                                                       '.$product->name.'</p>
+                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">View Page</a>
+                                                                       </div>
+                                                                   </div>
+                                                           </div>';
+                                    }
+                                    $string_product .="</div>";
+                                    $departure_unvaccinated  = optional($countries)->departure_unvaccinated;
 
-                                    $departure_unvaccinated  = str_replace('<a href="loop">All Test(s)</a>', "$string_product", $departure_unvaccinated );
+                                   $departure_unvaccinated  = str_replace('<a href="loop">All Test(s)</a>', "$string_product", $departure_unvaccinated );
 
-                                    $departure_unvaccinated = str_replace('<a href="all"', "<a id='all' href='".url(env('APP_URL')."product/country/".$countries->country->slug_name)."'",$departure_unvaccinated);
+                                   $departure_unvaccinated = str_replace('<a href="all"', "<a id='all' href='".url(env('APP_URL')."product/country/".$countries->country->slug_name)."'",$departure_unvaccinated);
 
-                                    $departure_unvaccinated = str_replace("<a href", "<a style='color: #c0272d' href",$departure_unvaccinated);
+                                   $departure_unvaccinated = str_replace("<a href", "<a style='color: #c0272d' href",$departure_unvaccinated);
+                                   $departure_unvaccinated = str_replace('<a id="all"', "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none' href",$departure_unvaccinated);
                                 @endphp
                                 {!! $departure_unvaccinated !!}
                             </div>
@@ -154,62 +160,66 @@
                             <div id="menu1" class="tab-pane fade in active container" style="padding: 0px 30px">
 
                                 @php
-                                     $products = $countries->products;
-                                     $string_product ="";
-                                     $string_product .= '<div class="row">';
+                                    $products = $countries->products;
+                                    $string_product ="";
+                                    $string_product .= '<div class="row">';
 
-                                     foreach($products as $product)
-                                     {
-                                        $slug = $product->slug;
-                                        $string_product .= '<div class="col-md-3 text-center" style="margin-top:20px">
-                                                                    <div class="card" style=" background-color: #1E50A0!important;color:white;min-height: 180px;">
-                                                                        <div class="card-body " style="padding: 30px">
-                                                                        <p style="color:white !important">
-                                                                        '.$product->name.'</p>
-                                                                        <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">View Page</a>
-                                                                        </div>
-                                                                    </div>
-                                                            </div>';
-                                     }
-                                     $string_product .="</div>";
-                                    $arrival_vaccinated = optional($countries)->arrival_vaccinated;
-                                    $arrival_vaccinated = str_replace('<a href="loop">All Test(s)</a>', "$string_product",$arrival_vaccinated);
+                                    foreach($products as $product)
+                                    {
+                                       $slug = $product->slug;
+                                       $string_product .= '<div class="col-md-3 text-center" style="margin-top:20px">
+                                                                   <div class="card" style=" background-color: #1E50A0!important;color:white;min-height: 180px;">
+                                                                       <div class="card-body " style="padding: 30px">
+                                                                       <p style="color:white !important">
+                                                                       '.$product->name.'</p>
+                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">View Page</a>
+                                                                       </div>
+                                                                   </div>
+                                                           </div>';
+                                    }
+                                    $string_product .="</div>";
+                                   $arrival_vaccinated = optional($countries)->arrival_vaccinated;
+                                   $arrival_vaccinated = str_replace('<a href="loop">All Test(s)</a>', "$string_product",$arrival_vaccinated);
 
-                                    $arrival_vaccinated = str_replace('<a href="all"', "<a id='all' href='".url(env('APP_URL')."product/country/".optional($countries->country)->slug_name)."'",$arrival_vaccinated);
+                                   $arrival_vaccinated = str_replace('<a href="all"', "<a id='all' href='".url(env('APP_URL')."product/country/".optional($countries->country)->slug_name)."'",$arrival_vaccinated);
 
 
-                                    $arrival_vaccinated = str_replace("<a href", "<a style='color: #c0272d' class='underline' href",$arrival_vaccinated);
+                                   $arrival_vaccinated = str_replace("<a href", "<a style='color: #c0272d' class='underline' href",$arrival_vaccinated);
+                                  $arrival_vaccinated = str_replace('<a id="all"', "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none' href",$arrival_vaccinated);
+
                                 @endphp
                                 {!! $arrival_vaccinated !!}
                             </div>
                             <div id="menu2" class="tab-pane fade container">
                                 @php
 
-                                     $products = $countries->products;
-                                     $string_product ="";
-                                     $string_product .= '<div class="row">';
+                                    $products = $countries->products;
+                                    $string_product ="";
+                                    $string_product .= '<div class="row">';
 
-                                     foreach($products as $product)
-                                     {
-                                        $slug = $product->slug;
-                                        $string_product .= '<div class="col-md-3 text-center" style="margin-top:20px">
-                                                                    <div class="card" style=" background-color: #1E50A0!important;color:white;min-height: 180px;">
-                                                                        <div class="card-body " style="padding: 30px">
-                                                                        <p style="color:white !important">
-                                                                        '.$product->name.'</p>
-                                                                        <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">View Page</a>
-                                                                        </div>
-                                                                    </div>
-                                                            </div>';
-                                     }
-                                    $string_product .="</div>";
-                                    $arrival_unvaccinated = optional($countries)->arrival_unvaccinated;
+                                    foreach($products as $product)
+                                    {
+                                       $slug = $product->slug;
+                                       $string_product .= '<div class="col-md-3 text-center" style="margin-top:20px">
+                                                                   <div class="card" style=" background-color: #1E50A0!important;color:white;min-height: 180px;">
+                                                                       <div class="card-body " style="padding: 30px">
+                                                                       <p style="color:white !important">
+                                                                       '.$product->name.'</p>
+                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">View Page</a>
+                                                                       </div>
+                                                                   </div>
+                                                           </div>';
+                                    }
+                                   $string_product .="</div>";
+                                   $arrival_unvaccinated = optional($countries)->arrival_unvaccinated;
 
-                                    $arrival_unvaccinated = str_replace('<a href="loop">All Test(s)</a>', "$string_product",$arrival_unvaccinated);
+                                   $arrival_unvaccinated = str_replace('<a href="loop">All Test(s)</a>', "$string_product",$arrival_unvaccinated);
 
-                                    $arrival_unvaccinated = str_replace('<a href="all"', "<a id='all' class='btn btn-danger' href='".url(env('APP_URL')."product/country/".optional($countries->country)->slug_name)."'",$arrival_unvaccinated);
+                                   $arrival_unvaccinated = str_replace('<a href="all"', "<a id='all' class='btn btn-danger' href='".url(env('APP_URL')."product/country/".optional($countries->country)->slug_name)."'",$arrival_unvaccinated);
 
-                                    $arrival_unvaccinated = str_replace("<a href", "<a style='color: #c0272d' href",$arrival_unvaccinated);
+                                   $arrival_unvaccinated = str_replace("<a href", "<a style='color: #c0272d' href",$arrival_unvaccinated);
+                                   $arrival_unvaccinated = str_replace('<a id="all"', "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none' href",$arrival_unvaccinated);
+
                                 @endphp
                                 {!! $arrival_unvaccinated !!}
                             </div>
