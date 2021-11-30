@@ -20,7 +20,7 @@
     </header>
     <section class="content bg-white">
     <div class="col-sm-12 text-left">
-        <a style="font-size:16px;color: #1e50a0" href="{{ back() }}" type="button" ><- Go back</a></div>
+        <a style="font-size:16px;color: #1e50a0" href="{{ \Illuminate\Support\Facades\URL::previous() }}" type="button" ><- Go back</a></div>
 
         @if ($carts->count() > 0)
             <div class="cart">
