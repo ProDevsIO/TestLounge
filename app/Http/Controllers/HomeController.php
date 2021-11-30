@@ -10,6 +10,7 @@ use App\Mail\VendorReceipt;
 use App\Models\Booking;
 use App\Models\BookingProduct;
 use App\Models\Country;
+use App\Models\SupportedCountries;
 use App\Models\CountryColor;
 use App\Models\Product;
 use App\Models\Setting;
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use PDF;
 use Stripe;
 
@@ -45,9 +47,18 @@ class HomeController extends Controller
         $this->bookConfirmationService = new BookingConfirmationService;
     }
 
+    public function home()
+    {
+        $scountries = SupportedCountries::whereNotIn('country_id',[224, 156])->get();
+
+        $display_countries = SupportedCountries::whereNotNull('image')->inRandomOrder()->limit(1)->get();
+
+        return view('homepage.home')->with(compact('scountries','display_countries'));
+    }
+    
     public function booking(Request $request)
     {
-
+        
         $countries = Country::all();
         $products = Product::all();
         $vendors = Vendor::all();
@@ -56,12 +67,34 @@ class HomeController extends Controller
         $carts_count = Cart::where('ip', session()->get('ip'))->count();
 
         $cart = Cart::where('ip', session()->get('ip'))->first();
+        $vproduct = VendorProduct::where('id', $cart->vendor_product_id)->first();
+       
+        if(!is_null($vproduct->walk_product_id))
+        {
+
+            $bearer = $this->getDamhealthToken();
+            $getlocation = $this->getDamHealthLocations($bearer);
+            $location = json_decode($getlocation);
+            
+                    if(!isset($location->errors))
+                    {
+                        $locations = $location->data->damhealth_locations;
+                    }else{
+                        $locations = null;
+                    }
+              
+            $walkin = $vproduct->walk_product_id;
+        }else{
+            $walkin = null;
+            $locations = null;
+        }
+        
         if ($request->ref) {
             $user = User::where('referal_code', $request->ref)->first();
         }
 
 
-        return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user','carts_count', 'cart'));
+        return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user','carts_count', 'cart','locations','walkin'));
     }
 
     public function booking2(Request $request)
@@ -110,7 +143,7 @@ class HomeController extends Controller
 
             //To restrict access as per admin
             if (auth()->user()->status == 0) {
-                session()->flash('alert-danger', "Your profile is currently under review and will be activated shortly by our Admin. To Facilitate this process, Kindly contact INFO@TRAVELTESTSLTD.COM");
+                session()->flash('alert-danger', "Your profile is currently under review and will be activated shortly by our Admin. To Facilitate this process, Kindly contact INFO@TRAVELTestSLTD.COM");
                 auth()->logout();
                 return back();
             }
@@ -143,8 +176,10 @@ class HomeController extends Controller
             'consent' => 'required'
         ]);
 
-        
-
+        if($request->test_location)
+        {
+            $dam_data = json_decode($request->test_location['0']);
+        }
 
         $request->vendor_id = 3;
         $test_kit = [];
@@ -166,6 +201,16 @@ class HomeController extends Controller
         unset($request_data['hidden_phone']);
         unset($request_data['phone_full']);
         unset($request_data['verify_email']);
+        unset($request_data['test_location']);
+        if($request->test_location)
+        {
+            $request_data['dam_location'] = $dam_data->location;
+            $request_data['dam_address'] = $dam_data->address;
+            $request_data['dam_room'] = $dam_data->room;
+        }
+        
+
+        
        
 
         if($request->voucher != null){
@@ -211,10 +256,10 @@ class HomeController extends Controller
                 {
                     for($n = 0; $n < $voucher->quantity; $n++)
                     {
-                        $test_kit[] = $request->{'test_kit'.$n};
+                        $Test_kit[] = $request->{'test_kit'.$n};
                         unset($request_data['test_kit'.$n]);
                     }
-                    // encode the testkit in json format
+                    // encode the Testkit in json format
                     $test_kit = json_encode($test_kit); 
                     
                     $request_data['test_kit'] = $test_kit;
@@ -270,17 +315,21 @@ class HomeController extends Controller
 
         $request_data['transaction_ref'] = $transaction_ref;
         $request_data['external_reference'] = $external_ref;
+        
+        foreach ($carts as $cart) {
+            $request_data['vendor_id']  = $cart->vendorProduct->vendor_id;
+        }
 
         unset($request_data['payment_method']);
 
         $price = $price_pounds = 0;
-     
+        
         $booking = Booking::create($request_data);
         foreach ($carts as $cart) {
             $product_id = $cart->vendorProduct->product_id;
 
 
-            $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $product_id)->first();
+            $vendor_products = VendorProduct::where('vendor_id', $cart->vendorProduct->vendor_id)->where('product_id', $product_id)->first();
 
             BookingProduct::create([
                 'booking_id' => $booking->id,
@@ -303,9 +352,9 @@ class HomeController extends Controller
         //         Hi " . $request->first_name . ",
 
         //         Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
-        //         For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktraveltest.prodevs.io/#popular' >Here</a> <br>
+        //         For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktravelTest.prodevs.io/#popular' >Here</a> <br>
         //      <br/>
-        //         <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "make/payment/" . $transaction_ref . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+        //         <a href='" . env('APP_URL', "https://uktravelTest.prodevs.io/") . "make/payment/" . $transaction_ref . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
         //                Make Payment
         //               </a>
         //               <br/>
@@ -351,11 +400,8 @@ class HomeController extends Controller
         }
 
 
-        $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $booking->product->product_id)->first();
-
         if ($request->payment_method == "stripe") {
            
-            // $response = $this->processStripe($vendor_products->price_stripe, $booking);
             $redirect_url = '/stripe/process/'.$booking->id.'/booking';
            
         } else {
@@ -382,7 +428,7 @@ class HomeController extends Controller
         curl_setopt(
             $ch,
             CURLOPT_POSTFIELDS,
-            "txref=" . $txRef . "&SECKEY=" . env('RAVE_SECRET_KEY', 'FLWSECK_TEST-516babb36b12f7f60ae0a118dcc9482a-X')
+            "txref=" . $txRef . "&SECKEY=" . env('RAVE_SECRET_KEY', 'FLWSECK_test-516babb36b12f7f60ae0a118dcc9482a-X')
         );
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -503,6 +549,7 @@ class HomeController extends Controller
          
             $response = $this->confirm_paystack($txRef);
             $data_response = json_decode($response);
+           
         }elseif($type == "stripe"){
 
             $booking = Booking::where('id', $request->id)->first();
@@ -610,15 +657,18 @@ class HomeController extends Controller
 
 
                 try {
-
-                    $code = $this->sendData($booking);
-                   
+                    //$booking->room signifies dam health data
+                    if(!$booking->dam_room == null)
+                    {
+                        $code = $this->GetDamHealthCode($booking);
+                    }else{
+                        $code = $this->sendData($booking);
+                    }
                 } catch (\Exception $e) {
-                    dd($e);
+                 
                     if($type == "paystack"){
 
                         $booking->update([
-                            'vendor_id' => 3,
                             'mode_of_payment' => 4,
                             'transaction_ref' => $txRef,
                             'status' => 1
@@ -627,7 +677,6 @@ class HomeController extends Controller
                     } elseif($type == "vas"){
 
                         $booking->update([
-                            'vendor_id' => 3,
                             'mode_of_payment' => 5,
                             'transaction_ref' => $txRef,
                             'status' => 1
@@ -635,14 +684,12 @@ class HomeController extends Controller
                     }elseif($type == "stripe"){
 
                         $booking->update([
-                            'vendor_id' => 3,
                             'mode_of_payment' => 2,
                             'transaction_ref' => $txRef,
                             'status' => 1
                         ]);
                     }else{
                         $booking->update([
-                            'vendor_id' => 3,
                             'mode_of_payment' => 1,
                             'transaction_ref' => $txRef,
                             'status' => 1
@@ -652,6 +699,7 @@ class HomeController extends Controller
                     return redirect()->to('/booking/code/failed?b=' . $txRef);
                 }
 
+             
                 foreach ($booking_products as $booking_product) {
                     try {
 
@@ -670,8 +718,7 @@ class HomeController extends Controller
                             3. You are Fully Vaccinated but unable to show an approved COVID-19 proof of vaccination before your travel. 
                             Read more about the approved proof of vaccination  <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
     
-                            If you are fully vaccinated under an approved vaccination programme accepted in the UK (check if your vaccination is approved <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a>)
-                            but were unable to show the approved COVID-19 proof of vaccination before your travel you might be eligible for a partial refund. <br><br>
+                            If you are fully vaccinated under an approved vaccination programme accepted in the UK (check if your vaccination is approved <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a>). <br><br>
     
                             We have a no-refund policy as indicated before your purchase.<br><br>
 
@@ -680,7 +727,7 @@ class HomeController extends Controller
                                   <br/><br/>
                                   Thank you.
                                   <br/><br/>
-                                Traveltestsltd Team
+                                TravelTestsltd Team
                             ";
                             Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
                         }
@@ -721,7 +768,7 @@ class HomeController extends Controller
 
                     $decode = implode(", ", json_decode($code));
 
-                    $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
+                    $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TravelTestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
                     $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
 
                 }
@@ -729,19 +776,18 @@ class HomeController extends Controller
                 //update wiith transaction code
 
                 if($type == "paystack"){
-
-                    $booking->update([
-                        'vendor_id' => 3,
+                    $data_save =[                
                         'mode_of_payment' => 4,
                         'transaction_ref' => $txRef,
                         'status' => 1,
                         'booking_code' => $code
-                    ]);
-
+                    ];
+                
+                    $booking->update($data_save);
+                  
                 } elseif($type == "vas"){
 
                     $booking->update([
-                        'vendor_id' => 3,
                         'mode_of_payment' => 5,
                         'transaction_ref' => $txRef,
                         'status' => 1,
@@ -749,8 +795,7 @@ class HomeController extends Controller
                     ]);
                 }elseif($type == "stripe"){
 
-                    $booking->update([
-                        'vendor_id' => 3,
+                    $booking->update([ 
                         'mode_of_payment' => 2,
                         'transaction_ref' => $txRef,
                         'status' => 1,
@@ -758,7 +803,6 @@ class HomeController extends Controller
                     ]);
                 }else{
                     $booking->update([
-                        'vendor_id' => 3,
                         'mode_of_payment' => 1,
                         'transaction_ref' => $txRef,
                         'status' => 1,
@@ -774,7 +818,35 @@ class HomeController extends Controller
 
             return redirect()->to('/booking/success?b=' . $txRef);
         }
-        dd('not checking', $stripe_response);
+        
+        try {
+
+                $message = "
+              
+                Items in your shopping cart are still waiting. Do you need help to complete your order?
+                Click here to see a video on “How to Book a Test”
+
+                If you need further support, Contact us:<br><br>
+                <a href='Info@traveltestltd.com'>Info@traveltestltd.com</a> <br>
+            
+                Phone Nos: <br>
+                Nigeria: +2347060466084  <br>
+                UAE: +971544119013, +971563784904  <br>
+                UK: +447436875938  <br>
+                
+                <a href='https://www.surveymonkey.com/r/PQQNWV7'>Kindly Click here give us your feedback </a><br><br>
+
+                      <br/><br/>
+                      Thank you.
+                      <br/><br/>
+                    TravelTestsltd Team
+                ";
+                Mail::to($booking->email)->send(new BookingCreation($message, "Incomplete Order"));
+           
+        } catch (\Exception $e) {
+         dd($e);
+        }
+
         return redirect()->to('/booking/failed?b=' . $txRef);
     }
 
@@ -794,7 +866,11 @@ class HomeController extends Controller
         return view('homepage.failed')->with(compact('booking'));
     }
 
-    public function voucher_booking($voucher)
+    public function voucher_option($voucher)
+    {
+        return view('homepage.v_option')->with(compact('voucher'));
+    }
+    public function voucher_booking($voucher, $walk = null)
     {
         
     
@@ -805,7 +881,38 @@ class HomeController extends Controller
 
         $carts_count = Cart::where('ip', session()->get('ip'))->count();
         $voucher = VoucherGenerate::where('voucher', $voucher)->first();
-        return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user','carts_count', 'voucher'));
+
+        if($walk == 'yes')
+        {
+            $vproduct = VendorProduct::where('product_id', $voucher->voucherCount->product_id)
+                                     ->where('vendor_id', 4)->first();
+
+            if(!is_null($vproduct->walk_product_id))
+            {
+
+                $bearer = $this->getDamhealthToken();
+               
+                $getlocation = $this->getDamHealthLocations($bearer);
+                $location = json_decode($getlocation);
+            
+                            if(!isset($location->errors))
+                            {
+                                $locations = $location->data->damhealth_locations;
+                            }else{
+                                $locations = null;
+                            }
+        
+                $walkin = $vproduct->walk_product_id;
+            }else{
+                $walkin = null;
+                $locations = null;
+            }
+        }else{
+            $walkin = null;
+            $locations = null;   
+        }
+
+        return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user','carts_count', 'voucher', 'locations','walkin'));
 
     }
 
@@ -908,13 +1015,13 @@ class HomeController extends Controller
             $message = "
             Hi " . $request->first_name . ",<br><br>
 
-            Thank you for your interest to register as an Agent with Traveltestsltd.<br/><br/>
+            Thank you for your interest to register as an Agent with TravelTestsltd.<br/><br/>
             Your profile is currently under review and will be activated shortly by our Admin. <br><br>
-            To facilitate this process, Kindly contact <a href='https://info@traveltestsltd.com'>INFO@TRAVELTESTSLTD.COM</a>
+            To facilitate this process, Kindly contact <a href='https://info@travelTestsltd.com'>INFO@TRAVELTestSLTD.COM</a>
                   <br/><br/>
                   Thank you.
                   <br/><br/>
-                Traveltestsltd Team
+                TravelTestsltd Team
             ";
             Mail::to($request->email)->send(new BookingCreation($message, "Agent Registration"));
         } catch (\Exception $e) {
@@ -926,22 +1033,22 @@ class HomeController extends Controller
             $message2 = "
             Hi Admin,<br/>
 
-            We would like to inform you that a new SuperAgent has registered with Traveltestsltd.<br/><br/>
+            We would like to inform you that a new SuperAgent has registered with TravelTestsltd.<br/><br/>
             Name: " . $request->first_name . " " . $request->last_name . " <br/>
             Phone: " . $request->phone_no . "<br/>
             Email: " . $request->email . "<br/>
             Company Name: " . $request->company . "<br/>
             <br/>Kindly click the button below to login and review<br/><br/>
-            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+            <a href='" . env('APP_URL', "https://uktravelTest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Go to Login
                   </a>
 
                   <br/><br/>
                   Thank you.
                   <br/><br/>
-                Traveltestsltd Team
+                TravelTestsltd Team
             ";
-            Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Superagent Registration"));
+            Mail::to(['itunu.akinware@medburymedicals.com','john.aigbonohan@medburymedicals.com'])->send(new BookingCreation($message2, "New Superagent Registration"));
         } catch (\Exception $e) {
         }
 
@@ -951,7 +1058,7 @@ class HomeController extends Controller
         return back();
     }
 
-    public function testEmail()
+    public function TestEmail()
     {
         dd(encrypt_decrypt('encrypt', "165"));
         $booking = Booking::where('id', 51)->first();
@@ -1039,22 +1146,22 @@ class HomeController extends Controller
             $message2 = "
             Hi Admin,<br/>
 
-            We would like to inform you that a Subagent has completed registraion with Traveltestsltd.<br/><br/>
+            We would like to inform you that a Subagent has completed registraion with TravelTestsltd.<br/><br/>
             Name: " . $user->first_name . " " . $user->last_name . " <br/>
             Phone: " . $user->phone_no . "<br/>
             Email: " . $user->email . "<br/>
             Company Name: " . $user->company . "<br/>
             <br/>Kindly click the button below to login and review<br/><br/>
-            <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+            <a href='" . env('APP_URL', "https://uktravelTest.prodevs.io/login") . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                    Go to Login
                   </a>
 
                   <br/><br/>
                   Thank you.
                   <br/><br/>
-                Traveltestsltd Team
+                TravelTestsltd Team
             ";
-            Mail::to(['itunu.akinware@medburymedicals.com', 'ola.2@hotmail.com'])->send(new BookingCreation($message2, "New Subagent Registration"));
+            Mail::to(['itunu.akinware@medburymedicals.com','john.aigbonohan@medburymedicals.com'])->send(new BookingCreation($message2, "New Subagent Registration"));
 
         } catch (\Exception $e) {
         }
@@ -1095,7 +1202,7 @@ class HomeController extends Controller
             if($user->main_agent_share_raw == null)
             {
                 $message = "Congratulations!,<br><br>
-                Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
+                Your application to join the Agent network of the TravelTestsltd Platform has been approved.<br><br>
                 You can now log in to your portal to complete your profile and set up your account. <br><br>
                 You will find your dedicated customer booking link on your portal <br><br>
                 Kindly click the button below<br/><br/>
@@ -1104,14 +1211,14 @@ class HomeController extends Controller
                        </a>
             
                               <br/><br/>
-                Thank you for joining the  Traveltestsltd network!<br><br>
+                Thank you for joining the  TravelTestsltd network!<br><br>
     
-                Traveltestsltd Team
+                TravelTestsltd Team
                 ";
             }else{
 
                 $message = "Congratulations!,<br><br>
-                Your application to join the Agent network of the Traveltestsltd Platform has been approved.<br><br>
+                Your application to join the Agent network of the TravelTestsltd Platform has been approved.<br><br>
                 You can now log in to your portal to complete your profile and set up your account. <br><br>
                 Kindly find your login details below:<br><br>
                 Email: $user->email<br><br>
@@ -1124,9 +1231,9 @@ class HomeController extends Controller
             
                               <br/><br/>
                 
-                Thank you for joining the  Traveltestsltd network!<br><br>
+                Thank you for joining the  TravelTestsltd network!<br><br>
     
-                Traveltestsltd Team
+                TravelTestsltd Team
                 ";
                 
             }
@@ -1188,9 +1295,9 @@ class HomeController extends Controller
 
             You will no longer be able to access your Agent portal , you will also not recieve any of the Agent benefits during the time of deactivation.<br><br>
 
-            Do kindly reach out to the Traveltestsltd  Desk for more information on how to get back on the network.<br><br>
+            Do kindly reach out to the TravelTestsltd  Desk for more information on how to get back on the network.<br><br>
 
-            Traveltestsltd Team
+            TravelTestsltd Team
             ";
             Mail::to($user->email)->send(new BookingCreation($message, 'Agent Deactivation'));
         } catch (\Exception $e) {
@@ -1491,7 +1598,7 @@ class HomeController extends Controller
 
             Kindly click this link to reset your password : <a href='" . env('APP_URL') . 'reset/password/' . encrypt_decrypt('encrypt', $people->id) . "/" . encrypt_decrypt("encrypt", $people->email) . "'>Reset Password</a>,<br><br>
 
-             Traveltestsltd
+             TravelTestsltd
             ";
             Mail::to($people->email)->send(new BookingCreation($message, "Password Reset"));
         } catch (\Exception $e) {
@@ -1538,7 +1645,7 @@ class HomeController extends Controller
         return redirect()->to('/login');
     }
 
-    public function testing()
+    public function Testing()
     {
         $booking = Booking::first();
         $message = "
@@ -1546,7 +1653,7 @@ class HomeController extends Controller
 
                 Thank you for choosing to book with us. To complete your booking, you will need to make payment.<br/><br/>Kindly click the button below to make payment<br/><br/>
                 For More Information and Guidelines on the UK Travel Testing Process, click <a href='https://uktraveltest.prodevs.io/#popular' >Here</a> <br>
-                <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "make/payment/'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
+                <a href='" . env('APP_URL', "https://uktraveltests.prodevs.io/") . "make/payment/'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                        Make Payment
                       </a>
 
@@ -1697,7 +1804,12 @@ class HomeController extends Controller
 
             try {
 
-                $code = $this->sendData($booking);
+                if(!$booking->room = null)
+                {
+                    $code = $this->GetDamHealthCode($booking);
+                }else{
+                    $code = $this->sendData($booking);
+                }
                
             } catch (\Exception $e) {
                 dd($e);
@@ -1740,7 +1852,7 @@ class HomeController extends Controller
                               <br/><br/>
                               Thank you.
                               <br/><br/>
-                            Traveltestsltd Team
+                            TravelTestsltd Team
                         ";
                         Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
                     }
@@ -1781,7 +1893,7 @@ class HomeController extends Controller
 
                 $decode = implode(", ", json_decode($code));
 
-                $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
+                $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TravelTestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
                 $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
 
             }
@@ -1830,11 +1942,40 @@ class HomeController extends Controller
         return redirect()->to('/booking/failed?b=' . $txRef);
     }
 
-    public function view_uk()
+    public function view_uk($id)
     {
-        $countries = Country::all();
-        return view('homepage.uk_page')->with(compact('countries'));
+        
+        if($id == "united-kingdom-1")
+        {
+            $countries = Country::all();
+       
+            return view('homepage.uk_page')->with(compact('countries'));
+        }else{
+            $countries = Country::where('slug_name', $id)->first();
+            $scountry = SupportedCountries::where('country_id', $countries->id)->first();
+          
+
+            if(!is_null($scountry))
+            {
+                return view('homepage.country_decision_page')->with(compact('countries'));
+            }else{
+                Abort(404);
+            }
+        
+        }
+       
     }
+
+
+    public function view_travel_details($id, $action)
+    {
+
+        
+            $countries = SupportedCountries::where('country_id', $id)->first();
+            return view('homepage.travel_details')->with(compact('countries', 'action'));
+       
+    }
+    
 
     public function voucherProcessing(array $request_data ){
 
@@ -1894,7 +2035,12 @@ class HomeController extends Controller
            
             try {
 
-                $code = $this->sendData($booking);     
+                if(!$booking->room = null)
+                {
+                    $code = $this->GetDamHealthCode($booking);
+                }else{
+                    $code = $this->sendData($booking);
+                }
                 $voucher->update([
                         'quantity' => 0,
                         'status' =>1
@@ -1913,7 +2059,7 @@ class HomeController extends Controller
                 return $redirect;
             }
 
-
+            //send receipt 
             foreach ($booking_products as $booking_product) {
                 try {
                     //check if a referral code exist
@@ -1936,6 +2082,7 @@ class HomeController extends Controller
                 }
             }
 
+            //day 2 and 8 disclaimer
             foreach ($booking_products as $booking_product) {
                 try {
 
@@ -1965,10 +2112,53 @@ class HomeController extends Controller
                               <br/><br/>
                               Thank you.
                               <br/><br/>
-                            Traveltestsltd Team
+                            TravelTestsltd Team
                         ";
                         Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
                     }
+                   
+                } catch (\Exception $e) {
+                 dd($e);
+                }
+
+            }
+
+            //customer feed back mail
+            foreach ($booking_products as $booking_product) {
+                try {
+
+                        $message = "Hi " . $booking->first_name . ",<br><br>
+                            Thank you for booking your test with Travel Test Global.<br><br>
+                            If you ordered a home testing service, have you received your test kits?  <br>
+                            <a href='https://docs.google.com/forms/u/1/d/1X2f1Jhd5k6UgnM_dK88pUTXHVW43hT4By_QaLMu4pnM/edit'> Yes</a> or  <a href='https://docs.google.com/forms/u/1/d/1X2f1Jhd5k6UgnM_dK88pUTXHVW43hT4By_QaLMu4pnM/edit'>No </a>  <br><br>
+                            
+                            If you ordered the in-clinic service, have you received details about the clinic appointment for your test? <br>
+                            <a href='https://docs.google.com/forms/u/1/d/1X2f1Jhd5k6UgnM_dK88pUTXHVW43hT4By_QaLMu4pnM/edit'>Yes</a> or  <a href='https://docs.google.com/forms/u/1/d/1X2f1Jhd5k6UgnM_dK88pUTXHVW43hT4By_QaLMu4pnM/edit'>No </a> <br><br>
+                        
+                            We value your feedback. Please click here to tell us how we are doing.<a href='https://docs.google.com/forms/d/e/1FAIpQLScPxT051YcrGm3AzAM4bb2q5fh4ZL-xNm6QXOfyTzdL5LLf8w/viewform'> Click here </a><br>
+                            
+                            If you require further support, please contact us using the details shown below. <br><br>
+                            
+                            Contact Us <br>
+                            <a href='Info@traveltestltd.com'>Info@traveltestltd.com</a> <br>
+                            <a href='https://www.traveltestsltd.com'> www.traveltestsltd.com</a> <br><br>
+                    
+                            United Kingdom <br>
+                            WhatsApp: +447742999786  <br><br>
+                            
+                            United Arab Emirates <br> 
+                            Mobile & WhatsApp: +971544119013, +971563784904 <br><br>
+                            
+                            Nigeria <br>
+                            Mobile & WhatsApp: +2347060466084 
+             
+                            <br/><br/>
+                            Thank you.
+                            <br/><br/>
+                            TravelTestsltd Team
+                        ";
+                        Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
+                
                    
                 } catch (\Exception $e) {
                  dd($e);
@@ -1980,7 +2170,7 @@ class HomeController extends Controller
 
                 $decode = implode(", ", json_decode($code));
 
-                $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TraveltestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
+                $smsMessage = " Hi $booking->first_name  $booking->last_name .Thank you for choosing to book with us at TravelTestGlobal.Your Booking Reference:- " . $decode . ". Test Provider:- " . $booking_product->vendor->name . ".Thank you";
                 $sms = $this->sendSMS($smsMessage, [$booking->phone_no], 4);
 
             }
@@ -2002,4 +2192,211 @@ class HomeController extends Controller
         return $redirect;
       
     }
+
+    public function view_green()
+    {
+        $countries = CountryColor::where('color_id', 1)->get();
+        $type = "GREEN";
+
+        return view('homepage.typecountries')->with(compact('type', 'countries'));
+    }
+
+    public function view_amber()
+    {
+        $countries = CountryColor::where('color_id', 2)->get();
+        $type = "AMBER";
+
+        return view('homepage.typecountries')->with(compact('type', 'countries'));
+    }
+
+    public function view_red()
+    {
+        $countries = CountryColor::where('color_id', 3)->get();
+        $type = "RED";
+
+        return view('homepage.typecountries')->with(compact('type', 'countries'));
+    }
+
+    public function view_single_product($slug)
+    {
+        
+        $product = Product::where('slug', $slug)->first();
+        $vproducts = VendorProduct::where('product_id', optional($product)->id)->orderby('id', 'desc')->take(1)->get();
+        $sproducts = VendorProduct::where('product_id',  optional($product)->id)->first();
+        
+        return view('homepage.single_product')->with(compact('vproducts','sproducts'));
+
+    }
+
+    public function test()
+    {
+      // ---- DAM HEALTH INTEGRATION TEST ON DIFFERENT END POINT COMPILED TOGETHER ---- //
+      
+
+        ///  ---------------  Get Bearer Token  -----------  ///
+        $request = [
+                        "client_id" => "4e0fc3ff-7256-478b-9434-c6df9df9db0c",
+                        "client_secret" =>"b7ed19139aa984f4e8a1084cef5b32677d1ed2d66645df061485d58d77af27bab000c6a6f5eca5b8052d496ff1f9dcf7a8d6e94132519db56000b7e91c7c9853"
+                    ];
+
+        $data_string = json_encode($request);
+
+        $url = "https://partner-api-dev.dam-health.com/v1/api/authenticate";
+
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_string)));
+        
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($result);
+        $bearer = $response->token->value;
+        ///  --------------------   End of get bearer token   -----------------   ///
+
+        ///  -----------------  Get Location list  -----------  ///
+        $request2 = [
+
+            "query" => "query GetLocations {damhealth_locations {availability isactive locationid name address rooms { name roomid } } }"
+            
+            ];
+
+        $data_string2 = json_encode($request2);
+     
+        // dump($data_string2);
+        // exit();
+        $ch2 = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
+
+        curl_setopt($ch2, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch2, CURLOPT_POSTFIELDS, $data_string2);
+        curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch2, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+       
+        $result_p = curl_exec($ch2);
+        ///    --------------------    end of get product list   -----------------   ///
+
+        // curl_close($ch2);
+        // dd($result_p);
+        // dump(json_decode($result_p));
+
+        ///  -------------------   Get Product list   --------------   ///
+        $getArrayProduct = [
+
+            "query" => "query GetProducts { damhealth_products { locationids itemcode name price productid priceandavailabilitybylocation type} }"
+          
+        ];
+
+        $encodedArray = json_encode($getArrayProduct);
+
+        $ch3 = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
+
+        curl_setopt($ch3, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch3, CURLOPT_POSTFIELDS,  $encodedArray);
+        curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch3, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+       
+        $result_3 = curl_exec($ch3);
+        ///   --------------------    end of get product list   -----------------  ///
+
+        
+        ///  ------------  Create  a new Booking ----------   ///
+    
+
+        $object = [ "object" => ["locationid"=> 10037,"roomid"=> 10244,"durationstart"=> "2021-10-24T12:00:00","durationend"=> "2021-10-24T12:10:00","bookingdate"=> "2021-10-24","comments"=> "","bookingproducts"=> [ "data"=> [ ["productid"=> 10002 ] ] ],"bookingnotes"=> [ "data"=> [ "note"=> ""] ],"patient"=> ["data"=> ["address"=> [ ["address"=> "57 , Churchdown Lane","city"=> "Gloucester","state"=> "England","postcode"=> "GL3 3QJ","country"=> "United Kingdom"]],"firstname"=> "John","lastname"=> "Snow","dob"=> "1954-10-26","gender"=> "male", "email"=> "dew@thrones.com","mobilenumber"=> "+2547776332546","passportnumber"=> "123456789","ethnicity"=> "asian","religion"=> null,"occupation"=> null,"company"=> null,"comments"=> null,"customattributes"=> null,"receiveemail"=> true, "receivesms"=> true,"promotionalmarketing"=> true] ] ] ];
+
+        // $object = json_encode($object);
+ 
+        $getArrayBooking = [
+
+            "query" => 'mutation CreateBooking( $object: damhealth_bookings_insert_input!) { insert_damhealth_bookings_one(object: $object) {bookingid} }',
+            "variables" => $object
+            
+        ];
+       
+        $encoded_booking_data = json_encode($getArrayBooking);
+       
+        $b = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
+
+        curl_setopt($b, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($b, CURLOPT_POSTFIELDS,   $encoded_booking_data);
+        curl_setopt($b, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($b, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+       
+        $result_book = curl_exec($b);
+
+     
+         ///  ------------  End a new Booking Creation ----------   ///
+
+        ///  --------------  Availability api  --------------------  ///
+       
+        $variable =  ["locationid" => 10002, "roomid" => 10009, "productid" => 10278, "bookingdate"=> "2021-09-01"] ;
+       
+        $x = curl_init();
+
+        $headr = array();
+        $headr[] = 'Content-type: application/json';
+        $headr[] = "Authorization: Bearer $bearer";
+        //dd($headr);
+        curl_setopt($x, CURLOPT_URL, 'https://partner-api-dev.dam-health.com/v1/api/availability');
+        curl_setopt($x, CURLOPT_HTTPHEADER, $headr);
+        curl_setopt($x, CURLOPT_POST, 1);
+        curl_setopt($x, CURLOPT_POSTFIELDS, json_encode($variable));
+        curl_setopt($x, CURLOPT_RETURNTRANSFER, true);
+
+        // curl_setopt($x, CURLOPT_CUSTOMREQUEST, "POST");
+        // curl_setopt($x, CURLOPT_POSTFIELDS,   $encoded_booking_data);
+        // curl_setopt($x, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($x, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+       
+        $result_x = curl_exec($x);
+
+        ///  --------------  End Availability api  --------------------  ///
+
+        // dump(json_decode($result_p), json_decode($result _3));
+        dd($bearer,json_decode($result_p), json_decode($result_3), json_decode($result_book), json_decode( $result_x));
+    }
+
+    public function walkIn()
+    {
+        $vproducts = VendorProduct::where('vendor_id', 4)->get();
+
+        return view('homepage.walk_in')->with(compact('vproducts'));
+    }
+
+    public function viewCountryProducts($country)
+    {
+       
+        $countries = Country::where('slug_name', $country)->first();
+        $product = Product::where('country_id', $countries->id)->pluck('id')->toArray();
+        $products = VendorProduct::whereIn('product_id',$product)->get();
+        return view('homepage.viewCountryProducts')->with(compact('products'));
+    }
+
+    public function slugify()
+    {
+        $countries = Country::all();
+
+        foreach($countries as $country)
+        {
+            $name = $country->nicename;
+            $slug = Str::slug($name);
+
+            if ($country->wherenotnull('slug_name')->orwhere('slug_name',$slug)->exists()) {
+                $max = $country->whereName($name)->latest('id')->skip(1)->value('slug_name');
+                if (isset($max[-1]) && is_numeric($max[-1])) {
+                    
+                    return preg_replace_callback('/(\d+)$/', function($mathces) {
+                        return $mathces[1] + 1;
+                    }, $max);
+                }
+                $slug = "{$slug}-1";
+            }
+            dump($slug);
+            Country::where('id',$country->id)->update(['slug_name' => $slug]);     
+        }
+    }
+    
+
 }

@@ -2,20 +2,6 @@
 @section('style')
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/vendor_/jquery-toast-plugin/jquery.toast.min.css">
-<style>
-      .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9 !important;
-    width: 100vw;
-    height: 0% !important;
-    background-color: #000;
-}
-.modal{
-
-}
-</style>
     @livewireStyles
 @endsection
 @section('content')
@@ -26,6 +12,7 @@
             <!--employee data table-->
             <div class="row">
                 <div class="col-xl-12 p-0">
+                    @include('errors.showerrors')
                     <div class="card card-shadow mb-4 ">
                         <div class="card-header border-0">
                             <div class="custom-title-wrap border-0 position-relative pb-2">
@@ -33,7 +20,6 @@
                             </div>
                         </div>
                         <div class="card-body p-3">
-                            @include('errors.showerrors')
                            <form action="{{ url('/settings') }}" method="post">
                                @csrf
                                <label>Exchange rate($)</label>
@@ -51,11 +37,10 @@
                     <div class="card card-shadow mb-4 ">
                         <div class="card-header border-0">
                             <div class="custom-title-wrap border-0 position-relative pb-2">
-                                <div class="custom-title">Vendors</div>
+                                <div class="custom-title">Vendors  <button class="btn btn-info pull-right" data-toggle="modal" data-target="#addVendor"> Add Vendor</button></div>
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            @include('errors.showerrors')
                             <div class="table-responsive">
                                 @if($vendors->count() > 0)
                                     <table class="table table-hover table-custom" id="data_table">
@@ -113,7 +98,14 @@
                             <div class="modal-body">
 
                                 <label>Name</label>
-                                <input type="text" name="name" class="form-control">
+                                <input type="text" name="name" placeholder="Please fill in the vendor name" class="form-control">
+                                <br>
+                                <label>Email</label>
+                                <input type="email" name="email"  placeholder="Please fill in the vendor email"  class="form-control" id=""  required>
+                                <br>
+                                <label>Address</label>
+                                <textarea class="form-control" name="address" id="" cols="30" rows="10"required>Please fill in your address</textarea>
+                
 
                             </div>
                             <div class="modal-footer">
@@ -151,6 +143,34 @@
     <!--/footer-->
     </div>
 
+    <div class="modal fade" id="vendorModal" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          
+          <h4 class="modal-title "><b>Create a vendor</b></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form action="/vendor/create" method="POST">
+            <div class="modal-body">
+                <div class="container">
+                    
+                        <input type="text" name="name" placeholder="Please fill in the vendor name" class="form-control" id="" required>
+                        <br>
+                        <input type="email" name="email"  placeholder="Please fill in the vendor email"  class="form-control" id=""  required>
+                        <br>
+                        <textarea class="form-control" name="address" id="" cols="30" rows="10"required>Please fill in your address</textarea>
+                
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-info">Submit</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
 
 @endsection
 @section('script')

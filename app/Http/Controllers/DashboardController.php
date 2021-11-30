@@ -10,6 +10,7 @@ use App\Helpers\UserShare;
 use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
 use App\Models\Voucher;
+use App\Models\SupportedCountries;
 use App\Models\VoucherCount;
 use App\Models\VoucherGenerate;
 use App\Models\VoucherPayment;
@@ -33,6 +34,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -441,12 +443,17 @@ class DashboardController extends Controller
     public function add_vendor(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'email' => 'required',
+            'address' => 'required'
         ]);
 
         Vendor::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'email' => $request->email,
+            'address' => $request->address
         ]);
+
         session()->flash('alert-success', "Vendor successfully created.");
         return back();
     }
@@ -619,20 +626,25 @@ class DashboardController extends Controller
     public function products()
     {
         $products = Product::all();
+        $countries = Country::all();
 
-        return view('admin.products')->with(compact('products'));
+        return view('admin.products')->with(compact('products', 'countries'));
     }
 
     public function add_product(Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
-            "description" => "required"
+            "description" => "required",
+            'country_id' => "required"
         ]);
+      
 
         Product::create([
             'name' => $request->name,
-            'description' => $request->description
+            'slug' => $request->name,
+            'description' => $request->description,
+            'country_id' => $request->country_id
         ]);
 
         session()->flash('alert-success', "Product has been added successfully");
@@ -644,12 +656,15 @@ class DashboardController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            "description" => "required"
+            "description" => "required",
+            'country_id' => "required"
         ]);
+     
 
         Product::where('id', $request->id)->update([
             'name' => $request->name,
-            'description' => $request->description
+            'description' => $request->description,
+            'country_id' => $request->country_id
         ]);
 
         session()->flash('alert-success', "Product has been updated successfully");
@@ -674,15 +689,28 @@ class DashboardController extends Controller
         return back();
     }
 
-    public function product_vendor($id, $price, $priceStripe, $costPrice)
+    public function product_vendor($id, $price, $priceStripe, $costPrice, $alternative_price = null, $walkid = null)
     {
         $pounds_value = Setting::first();
-        VendorProduct::where('id', $id)->update([
+
+        $data = [
             'price' => $price * $pounds_value->pounds,
             'price_pounds' => $price,
             'price_stripe' => $priceStripe,
-            'cost_price' => $costPrice
-        ]);
+            'cost_price' => $costPrice,
+        ];
+
+        if(!is_null($alternative_price))
+        {
+            $data['alternative_price'] = $alternative_price;
+        }
+
+        if(!is_null($walkid))
+        {
+            $data['walk_product_id'] = $walkid;
+        }
+        
+        VendorProduct::where('id', $id)->update($data);
 
         return "success";
     }
@@ -732,38 +760,87 @@ class DashboardController extends Controller
             'bank' => (isset($banks_[$request->account_bank]) ? $banks_[$request->account_bank] : "")
         ];
 
-
-        $settings = Setting::where('id', 2)->first();
-        //update flutterwave
-
-        // $flutterwave_data = [
-        //     'account_bank' => $request->account_bank,
-        //     'account_number' => $request->account_no,
-        //     'business_name' => auth()->user()->first_name . " " . auth()->user()->last_name,
-        //     'business_email' => auth()->user()->email,
-        //     'business_mobile' => auth()->user()->phone_no,
-        //     'country' => $request->country,
-        //     "split_type" => "percentage",
-        //     "split_value" => (auth()->user()->percentage_split) ? (100 - auth()->user()->percentage_split) / 100 : (100 - $settings->value) / 100
-        // ];
-
-        // if (!auth()->user()->flutterwave_key) {
-        //     $data = $this->addFlutterwave($flutterwave_data);
-        // } else {
-        //     $data = $this->editFlutterwave($flutterwave_data, auth()->user()->flutterwave_id);
-
-        // }
-        // if (!$data->data) {
-        //     session()->flash("alert-danger", $data->message);
-        //     return back();
-
-        // }
-
-        // $data_save['flutterwave_key'] = $data->data->subaccount_id;
-        // $data_save['flutterwave_id'] = $data->data->id;
-
-
         User::where('id', auth()->user()->id)->update($data_save);
+
+         //send an email
+         try {
+            if($user->main_agent_share_raw == null)
+            {
+                $message = "Dear Partner, <br><br>
+
+                            Welcome to the Agents Network of Travel Test Global! <br> 
+                            
+                            Your profile has been fully set-up and activated on our platform as a Super-Agent <br>
+                            You have been fully activated as a Super-Agent <br><br>
+                            Please see below your unique client booking link: <br>
+                            $user->referal_code<br><br>
+                            Use this link when booking any test for your clients on our platform and share same link with your customers when they purchase any of our test products by themselves. Click to see a video on how to book a test. <br>
+                            <a href='https://youtu.be/Io7SpaV6fJ0'> https://youtu.be/Io7SpaV6fJ0</a><br>
+                            
+                            How to book a test using vouchers
+                            <a href='https://youtu.be/JgQn2UWFmY0'>https://youtu.be/JgQn2UWFmY0 </a><br>
+                             
+                            How to register as  an agent 
+                            <a href='https://youtu.be/WNfsahAdXVE'>https://youtu.be/WNfsahAdXVE</a><br><br>
+                            For more information on how your agency account works, please click below link to see Agency On-boarding brochure.  <br>
+                            <a href='https://www.medburymedicals.com/wp-content/uploads/2021/11/TTG-Agent-Registration-Brochure-General-1.pdf'>https://www.medburymedicals.com/wp-content/uploads/2021/11/TTG-Agent-Registration-Brochure-General-1.pdf</a> <br><br>
+                        
+                            Should you need further support, please contact us with the details below: <br><br>
+                            <a href='Info@traveltestltd.com'>Info@traveltestltd.com</a> <br>
+                            <a href='https://www.traveltestsltd.com'> www.traveltestsltd.com</a> <br>
+                        
+                            Phone Nos: <br>
+                            Nigeria: +2347060466084  <br>
+                            UAE: +971544119013, +971563784904  <br>
+                            UK: +447436875938  <br>
+                         
+                            <br/><br/>
+                            Thank you for joining the  TravelTestsltd network!<br><br>
+    
+                            TravelTestsltd Team
+                ";
+            }else{
+
+                $message = "Dear Partner, <br><br>
+
+                    Welcome to the Agents Network of Travel Test Global! <br> 
+                    
+                    Your profile has been fully set-up and activated on our platform as a Sub-Agent <br>
+                    You have been fully activated as a Sub-Agent <br><br>
+                    Please see below your unique client booking link: <br>
+                    $user->referal_code<br><br>
+                    Use this link when booking any test for your clients on our platform and share same link with your customers when they purchase any of our test products by themselves. Click to see a video on how to book a test. <br>
+                            <a href='https://youtu.be/Io7SpaV6fJ0'> https://youtu.be/Io7SpaV6fJ0</a><br>
+                            
+                            How to book a test using vouchers
+                            <a href='https://youtu.be/JgQn2UWFmY0'>https://youtu.be/JgQn2UWFmY0 </a><br>
+                             
+                            How to register as  an agent 
+                            <a href='https://youtu.be/WNfsahAdXVE'>https://youtu.be/WNfsahAdXVE</a><br><br>
+                            For more information on how your agency account works, please click below link to see Agency On-boarding brochure.  <br>
+                            <a href='https://www.medburymedicals.com/wp-content/uploads/2021/11/TTG-Agent-Registration-Brochure-General-1.pdf'>https://www.medburymedicals.com/wp-content/uploads/2021/11/TTG-Agent-Registration-Brochure-General-1.pdf</a> <br><br>
+                        
+                            Should you need further support, please contact us with the details below: <br><br>
+                            <a href='Info@traveltestltd.com'>Info@traveltestltd.com</a> <br>
+                            <a href='https://www.traveltestsltd.com'> www.traveltestsltd.com</a> <br>
+                        
+                    Phone Nos: <br>
+                    Nigeria: +2347060466084  <br>
+                    UAE: +971544119013, +971563784904  <br>
+                    UK: +447436875938  <br>
+                
+                    <br/><br/>
+                    Thank you for joining the  TravelTestsltd network!<br><br>
+
+                    TravelTestsltd Team             
+                ";
+                
+            }
+           
+            Mail::to($user->email)->send(new BookingCreation($message, 'Agent Activation'));
+        } catch (\Exception $e) {
+            dd($e);
+        }
         session()->flash("alert-success", "Bank has been added successfully");
         return back();
 
@@ -996,11 +1073,10 @@ class DashboardController extends Controller
         $code = $booking->booking_code;
         $booking_product = BookingProduct::where('booking_id', $booking->id)->first();
         try {
-            Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from UK Travel Tests", optional($booking_product->vendor)->email, $code));
+            Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
         } catch (\Exception $e) {
-
+            dd($e);
         }
-
         session()->flash('alert-success', "Receipt has been sent successfully");
 
         return back();
@@ -3451,7 +3527,7 @@ class DashboardController extends Controller
             'user_id' => $user->id,
             'type' => 2
         ])->sum('amount');
-// dd($user, $earned, $earnedPounds);
+        // dd($user, $earned, $earnedPounds);
 
         return view('admin.details')->with(compact('user', 'agents', 'earnedPounds', 'earned'));
     }
@@ -3488,4 +3564,149 @@ class DashboardController extends Controller
         return view('admin.guidelines')->with(compact('stepper'));
     }
 
+    public function view_supported_countries()
+    {
+        $country = SupportedCountries::all();
+        $countries = $country->unique('country_id');
+        return view('admin.supported')->with(compact('countries'));
+    }
+
+    public function view_add_supported_countries()
+    {
+        $support_countries = SupportedCountries::pluck('country_id')->toArray();
+
+        $countries = Country::whereNotIn('id', $support_countries)->get();
+
+        $products = Product::all();
+
+
+        return view('admin.add_supported_countries')->with(compact('countries','products'));
+    }
+
+    public function view_supported_vendor($id)
+    {
+        $products = Product::where('country_id', $id)->first();
+        $data = [];
+
+      try{
+            $vendor_products = VendorProduct::where('product_id', $products->id)->get();
+        
+      
+            foreach ($vendor_products as $vproduct) {
+
+                $data[] = [
+                    'name' => $vproduct->vendor->name,
+                    // 'price' => "$" . number_format($vproduct->price_pounds, 0),
+                    'vendor_id' => $vproduct->vendor_id
+                ];
+            }
+
+        } catch(\Exception $e) {
+
+            $data = "error";
+        }
+       
+        return $data;
+    }
+
+    public function page_configuration(Request $request)
+    {
+
+        $request->validate([
+            'image' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        
+        try{
+
+            $request_data = $request->all();
+
+            unset($request_data['_token']);
+
+            if(isset($request_data['image']))
+            {
+            
+                //rename image
+                $imageName = time().'.'.$request->image->extension();  
+                //move to path 
+                $request->image->storeAs('/public', $imageName);
+
+                $url = Storage::url($imageName);
+
+                $request_data['image'] = $url;
+
+            }
+
+            $support = SupportedCountries::create($request_data);
+
+            session()->flash('alert-success', "Successfully registered country configurations");
+
+            return redirect()->to('/supported/countries');
+        } catch(\Exception $e) {
+            dd($e);
+            session()->flash('alert-danger', "Something went wrong");
+            
+            return back()->withInputs();
+        }
+    }
+
+    public function view_edit_configuration($country_id)
+    {
+        $countries = SupportedCountries::where('id', $country_id)->first();
+
+        $products = Product::all();
+
+        return view('admin.edit_supported_countries')->with(compact('countries','products'));
+    }
+
+    public function edit_page_configuration(request $request)
+    {
+        
+        $request->validate([
+            'image' => 'file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+      try{
+        $request_data = $request->all();
+
+        unset($request_data['_token']);
+        unset($request_data['files']);
+
+        if(isset($request_data['image']))
+        {
+
+             //rename image
+            $imageName = time().'.'.$request->image->extension();  
+            
+            //move to path 
+            $request->image->storeAs('/public', $imageName);
+
+            $url = Storage::url($imageName);
+
+            $request_data['image'] = $url;
+
+          
+
+        }
+        
+        $support = SupportedCountries::where('country_id', $request->country_id)->update($request_data);
+
+        session()->flash('alert-success', "Successfully updated country configurations");
+
+        return redirect()->to('/supported/countries');
+        } catch(\Exception $e) {
+            dd($e);
+            session()->flash('alert-danger', "Something went wrong");
+            
+            return back()->withInputs();
+        }
+    }
+
+    public function view_configure_products($id)
+    {
+        
+        $products = Product::where('country_id', $id )->get();
+        $countries = Country::where('id', $id )->first();
+       
+        return view('admin.configured_products')->with(compact('products', 'countries'));
+    }
 }

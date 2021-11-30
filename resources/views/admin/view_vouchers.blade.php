@@ -191,7 +191,7 @@
                                                          @else
                                                             <td> <span class ="badge badge-warning text-white"> UNASSIGNED</span></td>
                                                         @endif
-                                                        <td><a href="/booking/voucher/{{ $voucher->voucher }}">{{ $voucher->voucher }}</a></td>
+                                                        <td><a href="/voucher/voucherOption/{{ $voucher->voucher }}">{{ $voucher->voucher }}</a></td>
 
                                                         <td>{{optional(optional(optional($voucher)->voucherCount)->product)->name}}</td>
                                                         

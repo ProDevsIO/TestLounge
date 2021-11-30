@@ -541,13 +541,13 @@ function handleTweets(tweets){
 
 function alignVertical(){
 
-		$('.align-vertical').each(function(){
-			var that = $(this);
-			var height = that.height();
-			var parentHeight = that.parent().height();
-			var padAmount = (parentHeight / 2) - (height/2);
-			that.css('padding-top', padAmount);
-		});
+		// $('.align-vertical').each(function(){
+		// 	var that = $(this);
+		// 	var height = that.height();
+		// 	var parentHeight = that.parent().height();
+		// 	var padAmount = (parentHeight / 2) - (height/2);
+		// 	that.css('padding-top', padAmount);
+		// });
 	
 }
 

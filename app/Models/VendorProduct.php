@@ -41,7 +41,9 @@ class VendorProduct extends Model
         'price_stripe',
         'cost_price',
         'product_id',
-        'vendor_id'
+        'vendor_id',
+        'alternative_price',
+        'walk_product_id'
     ];
 
     public function vendor()

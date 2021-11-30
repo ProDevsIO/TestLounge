@@ -353,12 +353,11 @@ button {
 
 
 /* start laptop version */
-@media screen and (min-width: 1000px) {
-    #con{
-        margin-left:140px;
-        margin-right:20px;
-    }
-}
+/*@media screen and (min-width: 1000px) {*/
+    /*!*#con{*!*/
+        /*!*margin-right:20px;*!*/
+    /*!*}*!*/
+/*}*/
 
 
 

@@ -134,7 +134,10 @@ class Booking extends Model
 		'post_status',
         'card_type',
 		'external_reference',
-		'test_kit'
+		'test_kit',
+		'dam_location',
+		'dam_address',
+		'dam_room',
 	];
 
 	public function country()

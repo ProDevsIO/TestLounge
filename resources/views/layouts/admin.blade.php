@@ -294,6 +294,12 @@
                         </a>
                     </li>
                     <li>
+                      <a href="{{ url('/supported/countries') }}">
+                            <i class="icon-globe"></i>
+                            <span>Supported Countries</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url('/vendors') }}">
                             <i class=" icon-grid"></i>
                             <span>Vendors</span>
@@ -371,7 +377,6 @@
 <!--basic scripts initialization-->
 <script src="/assets/js/scripts.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
 
 @yield('script')
 <script>

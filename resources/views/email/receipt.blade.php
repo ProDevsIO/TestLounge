@@ -316,8 +316,40 @@
                                                  }
                                                  ?>
                                           
+                                                <?php
+                                                    if($booking->dam_address != null){
+                                                        $address  = json_decode($booking->dam_address);
+                                                    } 
+                                                ?>
                                             
+                                            @if(isset($address))
+                                                Walkin Test Lab: {{$address->address}},{{$address->city}}, {{$address->country}}.
+                                            @endif
                                             <br/>
+                                                @if($booking->certificate_no != null)
+                                                    <?php 
+                                                        if($booking->certificate_no != null)
+                                                        {
+                                                            $acr_numbers = json_decode($booking->certificate_no);
+                                                            $orders = json_decode($booking->ukht_id);
+                                                        }
+                                                        
+                                                    ?>
+                                                    Order ids: 
+                                                    <?php 
+                                                        foreach($orders as $order){
+                                                            echo $order .",";
+                                                            }
+                                                    ?>
+                                                    <br>
+                                                    Certificate_no:
+                                                        <?php 
+                                                        foreach($acr_numbers as $acr){
+                                                            echo $acr .",";
+                                                            }
+                                                    ?>
+                                                @endif
+                                            <br>
                                             Test Provider: {{ $booking_product->vendor->name }}
                                             <br/>
                                             Please take a note of the above as you will require these to complete your passenger locator form

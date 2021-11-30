@@ -19,14 +19,15 @@
                             </h5>
                         @elseif($type=="Amber_v")
                             <h5 id="h9" class="text-white">Tests for fully vaccinated <span
-                                        class="badge" style="color:white;padding:10px;background-color:#258C48;">G</span>
+                                        class="badge"
+                                        style="color:white;padding:10px;background-color:#258C48;">G</span>
                             </h5>
                         @elseif($type == "Amber_uv")
                             <h5 id="h9" class="text-white">Tests for unvaccinated /Not fully vaccinated
                                 <span class="badge" style="background-color:#efb918;padding:10px">A</span></h5>
                         @elseif($type=="Red")
                             <h5 id="h9" class="text-white"> Information for Red List countries<span class="badge"
-                                                                                                        style="background-color:#E73636;padding:10px">R</span>
+                                                                                                    style="background-color:#E73636;padding:10px">R</span>
                             </h5>
                         @elseif($type == "UK")
                             <h5 id="h9" class="text-white">Travelling from the UK<span class="badge"
@@ -56,8 +57,8 @@
                                     </div>
                                     <br>
                                     <?php $i = 1 ?>
-                                    
-                                    
+
+
                                     @foreach ($products as $vproduct)
 
                                         <div class="col-md-4" id="con" style="">
@@ -98,9 +99,11 @@
                                                                                                                 class="color-7 ">{{ optional(optional($vproduct)->vendor)->name }}</span>
                                                                                                     </p>
 
-                                                                                                             <p<span class="color-7 ">{{optional(optional($vproduct)->product)->hint}}</span></p>       
+                                                                                                    <p>
+                                                                                                    <span class="color-7 ">{{optional(optional($vproduct)->product)->hint}}</span></p>
                                                                                                 </div>
-                                                                                                <div class="col-md-12" style="padding:0;">
+                                                                                                <div class="col-md-12"
+                                                                                                     style="padding:0;">
                                                                                                     <div class="container text-center"
                                                                                                          style="padding-top:50px; padding-left:0; padding-right:0;">
                                                                                                         {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
@@ -132,9 +135,9 @@
                                                                                                                class="btn btn-outline-info cart_btn"
                                                                                                                style="border:1px solid #1E50A0;">
                                                                                                                 Remove
-                                                                                                                
+
                                                                                                             </a>
-                                                                                                            
+
                                                                                                         @else
 
                                                                                                             <div class="input-group count_now{{ $vproduct->product->id }}"
@@ -168,22 +171,25 @@
                                                                                                                 Add to
                                                                                                                 cart
                                                                                                             </a>
-                                                                                                           
+
                                                                                                         @endif
-                                                                                                        <a href="/view/cart" id="add_button" class="btn btn-info">Go to cart</a>
+                                                                                                        <a href="/view/cart"
+                                                                                                           id="add_button"
+                                                                                                           class="btn btn-info">Go
+                                                                                                            to cart</a>
                                                                                                     </div>
                                                                                                 </div>
 
                                                                                             </div>
                                                                                         </div>
                                                                                 </div>
-                                                                                 @if($i %2  == 0)
+                                                                                @if($i % 3  == 0)
                                                                                     <div class="clearfix"></div>
                                                                                 @endif
 
                                                                                 <?php $i++; ?>
                                                                                 @endforeach
-                                                                               
+
                                                                         </div>
                                                                         <div class="row"
                                                                              style="margin-right:0px; margin-left:0px">
@@ -216,24 +222,39 @@
         <section class="content bg-white" style="padding:0;">
             <div class="container">
 
-
                 <div class="row rul" style="padding: 0px 200px">
                     <h4 style="font-family: Nunito;
 font-style: normal;
 font-weight: 600;
 font-size: 30px;
 line-height: 55px;
-margin-left: 18px;
-color: #1E50A0;">Product Rules & Information ____</h4>
-                    @foreach ($products as $vproduct)
-                    <div class="col-lg-12" style="padding-top:20px">
-                        <h6>{{ optional(optional($vproduct)->product)->name }}</h6>
-                        <p>
-                           {!! optional(optional($vproduct)->product)->description !!}
-                        </p>
+color: #1E50A0;margin-bottom: 30px;margin-top: 20px;text-align: center">Product Rules & Information ____</h4>
+
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <?php $i = 1;?>
+                        @foreach ($products as $vproduct)
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapseOne{{ $vproduct->id }}" aria-expanded="true" aria-controls="collapseOne">
+                                            {{ optional(optional($vproduct)->product)->name }}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne{{ $vproduct->id }}" class="panel-collapse collapse @if($i == 1)
+                                        in
+                                        @endif" role="tabpanel"
+                                     aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        {!! optional(optional($vproduct)->product)->description !!} </div>
+                                </div>
+                            </div>
+                                <?php $i++?>
+                        @endforeach
                     </div>
-                    @endforeach
-                   
+
+
                 </div>
             </div>
 
@@ -342,152 +363,199 @@ color: #1E50A0;">Product Rules & Information ____</h4>
                             <h1><strong>FAQs</strong></h1>
 
                             <ul class="accordion">
-                            <li class="active">
-                                <div class="title"><span>WHY SHOULD I TAKE THE TEST?</span></div>
-                                <div class="text">
-                                    <p style="font-size:18px;">
-                                        It is important to know what test you should do before you travel and when you arrive in the UK
-                                       </p>
-                                    <p style="font-size:18px;"> 
-                                        What you do depends o whether you qualify as fully vaccinated or unvaccinated under the Uk travel rules.
-                                        To avoid any delays to your travel plans, check what tests you might need <b><a class="text-info" href="https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19" style="text-decoration:underline">here</a></b>
-                                    </p>
-                                </div>
-                            </li>
+                                <li class="active">
+                                    <div class="title"><span>WHY SHOULD I TAKE THE TEST?</span></div>
+                                    <div class="text">
+                                        <p style="font-size:18px;">
+                                            It is important to know what test you should do before you travel and when
+                                            you arrive in the UK
+                                        </p>
+                                        <p style="font-size:18px;">
+                                            What you do depends o whether you qualify as fully vaccinated or
+                                            unvaccinated under the Uk travel rules.
+                                            To avoid any delays to your travel plans, check what tests you might need
+                                            <b><a class="text-info"
+                                                  href="https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19"
+                                                  style="text-decoration:underline">here</a></b>
+                                        </p>
+                                    </div>
+                                </li>
 
-                            <li>
-                                <div class="title"><span>WHO QUALIFIES AS FULLY VACCINATED?</span></div>
-                                <div class="text">
-                                    <p style="font-size:18px;">
-                                        From 4am Monday 4 October, you will qualify as fully vaccinated if you are vaccinated either:<br>
-                                    </p>
+                                <li>
+                                    <div class="title"><span>WHO QUALIFIES AS FULLY VACCINATED?</span></div>
+                                    <div class="text">
+                                        <p style="font-size:18px;">
+                                            From 4am Monday 4 October, you will qualify as fully vaccinated if you are
+                                            vaccinated either:<br>
+                                        </p>
                                         <ul style="font-size:18px;">
-                                            <li>- under an <a href="https://www.gov.uk/guidance/how-to-quarantine-when-you-arrive-in-england" style="text-decoration:underline"> approved vaccination programme in the UK, Europe, USA or UK vaccine programme overseas</a></li>
-                                            <li>-  with a full course of the Oxford/AstraZeneca, Pfizer BioNTech, Moderna or Janssen vaccines from a relevant public health body in Australia, Antigua and Barbuda, Barbados, Bahrain, Brunei, Canada, Dominica, Israel, Japan, Kuwait, Malaysia, New Zealand, Qatar, Saudi Arabia, Singapore, South Korea, Taiwan or the United Arab Emirates (UAE)
-                                                    Formulations of the 4 listed vaccines, such as AstraZeneca Covishield, AstraZeneca Vaxzevria and Moderna Takeda, qualify as approved vaccines.<br>
-                                                    </li>
+                                            <li>- under an <a
+                                                        href="https://www.gov.uk/guidance/how-to-quarantine-when-you-arrive-in-england"
+                                                        style="text-decoration:underline"> approved vaccination
+                                                    programme in the UK, Europe, USA or UK vaccine programme
+                                                    overseas</a></li>
+                                            <li>- with a full course of the Oxford/AstraZeneca, Pfizer BioNTech, Moderna
+                                                or Janssen vaccines from a relevant public health body in Australia,
+                                                Antigua and Barbuda, Barbados, Bahrain, Brunei, Canada, Dominica,
+                                                Israel, Japan, Kuwait, Malaysia, New Zealand, Qatar, Saudi Arabia,
+                                                Singapore, South Korea, Taiwan or the United Arab Emirates (UAE)
+                                                Formulations of the 4 listed vaccines, such as AstraZeneca Covishield,
+                                                AstraZeneca Vaxzevria and Moderna Takeda, qualify as approved
+                                                vaccines.<br>
+                                            </li>
                                         </ul>
-                                    <p style="font-size:18px;"><br>
+                                        <p style="font-size:18px;"><br>
 
-                                        You must have had a complete course of an approved vaccine at least 14 days before you arrive in England.
-                                    </p>
-                                </div>
-                            </li>
+                                            You must have had a complete course of an approved vaccine at least 14 days
+                                            before you arrive in England.
+                                        </p>
+                                    </div>
+                                </li>
 
-                            <li>
-                                <div class="title"><span>WHAT ARE THE CONSTRAINTS?</span></div>
-                                <div class="text">
-                                    <p style="font-size:18px;">
-                                        Before entering the UK, all visitors must provide a negative test within the
-                                        last 72 hours and fill out a Passenger Locator Form.</p>
-                                    <p style="font-size:18px;"> In England, Scotland, Wales, and Northern Ireland, a traffic light-based
-                                        transport system (red, amber, and green) is presently in operation.</p>
-                                    <p style="font-size:18px;"> Non-UK residents from countries on the red list are now denied access to the
-                                        United Kingdom.</p>
-                                    <p style="font-size:18px;"> Residents returning from destinations on the red list, such as South Africa and
-                                        India, must stay in a hotel for ten days.</p>
-                                    <p style="font-size:18px;"> These passengers must purchase a "quarantine package" before arriving in the UK
-                                        - which covers their stay in hotel quarantine, food, and drink while there
-                                        (Personal expenses).
+                                <li>
+                                    <div class="title"><span>WHAT ARE THE CONSTRAINTS?</span></div>
+                                    <div class="text">
+                                        <p style="font-size:18px;">
+                                            Before entering the UK, all visitors must provide a negative test within the
+                                            last 72 hours and fill out a Passenger Locator Form.</p>
+                                        <p style="font-size:18px;"> In England, Scotland, Wales, and Northern Ireland, a
+                                            traffic light-based
+                                            transport system (red, amber, and green) is presently in operation.</p>
+                                        <p style="font-size:18px;"> Non-UK residents from countries on the red list are
+                                            now denied access to the
+                                            United Kingdom.</p>
+                                        <p style="font-size:18px;"> Residents returning from destinations on the red
+                                            list, such as South Africa and
+                                            India, must stay in a hotel for ten days.</p>
+                                        <p style="font-size:18px;"> These passengers must purchase a "quarantine
+                                            package" before arriving in the UK
+                                            - which covers their stay in hotel quarantine, food, and drink while there
+                                            (Personal expenses).
 
-                                    </p>
+                                        </p>
 
-                                </div>
-                            </li>
+                                    </div>
+                                </li>
 
-                            <li>
-                                <div class="title"><span>WHAT MUST I DO IF I AM FULLY VACCINATED?</span>
-                                </div>
-                                <div class="text" >
-                                    <p style="font-size:18px;"> Book and pay for a day 2 COVID-19 test – to be taken after arrival in England.</p>
-                                    <p style="font-size:18px;"> Complete your passenger locator form – any time in the 48 hours before you arrive in England.</p>
-                                    <p style="font-size:18px;"> Take a COVID-19 test on or before day 2 after you arrive in England Under the new rules, you will not need to:</p>
-                                    <ul style="font-size:18px;">
-                                        <li>- Take a pre-departure test.</li>
-                                        <li>- Take a day 8 COVID-19 test.</li>
-                                        <li>- Quarantine at home or in the place you are staying for 10 days after you arrive in England.</li>
-                                    </ul>
-
-                                    </p>
-                                </div>
-                            </li>
-                            <!-- 
-                            <li>
-                                <div class="title"><span>WHEN YOU ARRIVE IN THE UK, YOU MUST:</span></div>
-                                <div class="text">
-
-                                    <p style="font-size:18px;"> For ten days, quarantine at home or wherever you are staying.</p>
-                                    <ul style="font-size:18px">
-                                        <li>- On or before Day 2 and on or after Day 8, take a COVID-19 test</li>
-                                        <li> - Read up on quarantine and COVID-19 testing.</li>
-                                        <li> - The day two and day eight tests are not required for children under the
-                                            age of four.
-                                        </li>
-                                        <li> - If you pay for a private COVID-19 exam under the Test to Release scheme,
-                                            you could be able to get out of quarantine sooner.
-                                        </li>
-                                    </ul><br/>
-                                    <p style="font-size:18px;"> The amber list isn't all-inclusive. You should not presume that a country or
-                                        territory is on the green or red list if it is not on this list.
-
-                                    </p>
-
-                                </div>
-                            </li> -->
-                            <li>
-                                <div class="title">
-                                    <span>WHAT TO DO IF AM NOT FULLY VACCINATED?</span></div>
-                                <div class="text">
-
-                                    <p style="font-size:18px;"> From 4am Monday 4 October, you must follow these rules if you:.</p>
-                                    
+                                <li>
+                                    <div class="title"><span>WHAT MUST I DO IF I AM FULLY VACCINATED?</span>
+                                    </div>
+                                    <div class="text">
+                                        <p style="font-size:18px;"> Book and pay for a day 2 COVID-19 test – to be taken
+                                            after arrival in England.</p>
+                                        <p style="font-size:18px;"> Complete your passenger locator form – any time in
+                                            the 48 hours before you arrive in England.</p>
+                                        <p style="font-size:18px;"> Take a COVID-19 test on or before day 2 after you
+                                            arrive in England Under the new rules, you will not need to:</p>
                                         <ul style="font-size:18px;">
-                                            <li>- Do not qualify under the fully vaccinated rules, </li>
+                                            <li>- Take a pre-departure test.</li>
+                                            <li>- Take a day 8 COVID-19 test.</li>
+                                            <li>- Quarantine at home or in the place you are staying for 10 days after
+                                                you arrive in England.
+                                            </li>
+                                        </ul>
+
+                                        </p>
+                                    </div>
+                                </li>
+                                <!--
+                                <li>
+                                    <div class="title"><span>WHEN YOU ARRIVE IN THE UK, YOU MUST:</span></div>
+                                    <div class="text">
+
+                                        <p style="font-size:18px;"> For ten days, quarantine at home or wherever you are staying.</p>
+                                        <ul style="font-size:18px">
+                                            <li>- On or before Day 2 and on or after Day 8, take a COVID-19 test</li>
+                                            <li> - Read up on quarantine and COVID-19 testing.</li>
+                                            <li> - The day two and day eight tests are not required for children under the
+                                                age of four.
+                                            </li>
+                                            <li> - If you pay for a private COVID-19 exam under the Test to Release scheme,
+                                                you could be able to get out of quarantine sooner.
+                                            </li>
+                                        </ul><br/>
+                                        <p style="font-size:18px;"> The amber list isn't all-inclusive. You should not presume that a country or
+                                            territory is on the green or red list if it is not on this list.
+
+                                        </p>
+
+                                    </div>
+                                </li> -->
+                                <li>
+                                    <div class="title">
+                                        <span>WHAT TO DO IF AM NOT FULLY VACCINATED?</span></div>
+                                    <div class="text">
+
+                                        <p style="font-size:18px;"> From 4am Monday 4 October, you must follow these
+                                            rules if you:.</p>
+
+                                        <ul style="font-size:18px;">
+                                            <li>- Do not qualify under the fully vaccinated rules,</li>
                                             <li>- Are partially vaccinated or .</li>
-                                            <li>- Are not vaccinated. </li>
-                                           
+                                            <li>- Are not vaccinated.</li>
+
                                         </ul>
-                                    <p style="font-size:18px;">Before you travel to England you must:</p>
+                                        <p style="font-size:18px;">Before you travel to England you must:</p>
                                         <ul style="font-size:18px;">
-                                            <li>- Take a pre-departure COVID-19 test – to be taken in the 3 days before you travel to England.</li>
-                                            <li>- Book and pay for day 2 and day 8 COVID-19 tests – to be taken after arrival in England.</li>
-                                            <li>- Complete your passenger locator form – any time in the 48 hours before you arrive in England. </li>
+                                            <li>- Take a pre-departure COVID-19 test – to be taken in the 3 days before
+                                                you travel to England.
+                                            </li>
+                                            <li>- Book and pay for day 2 and day 8 COVID-19 tests – to be taken after
+                                                arrival in England.
+                                            </li>
+                                            <li>- Complete your passenger locator form – any time in the 48 hours before
+                                                you arrive in England.
+                                            </li>
                                         </ul>
-                                    <p style="font-size:18px;">After you arrive in England you must:</p>   
+                                        <p style="font-size:18px;">After you arrive in England you must:</p>
                                         <ul style="font-size:18px;">
                                             <li>- Quarantine at home or in the place you are staying for 10 days.</li>
                                             <li>- Take a COVID-19 test on or before day 2 and on or after day 8.</li>
-                                            <li>- You may be able to end quarantine early if you pay for a private COVID-19 test through the Test to Release scheme. </li>
+                                            <li>- You may be able to end quarantine early if you pay for a private
+                                                COVID-19 test through the Test to Release scheme.
+                                            </li>
                                         </ul>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="title" >
-                                    <span>HOW DO I PROVE THAT I AM FULLY VACCINATED?</span></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="title">
+                                        <span>HOW DO I PROVE THAT I AM FULLY VACCINATED?</span></div>
                                     <div class="text">
 
-                                        <p style="font-size:18px;"> You must be able to prove that you have been fully 
-                                                    vaccinated (plus 14 days) with a document (digital or paper-based) 
-                                                    from a national or state-level public health body that includes, as a minimum:
+                                        <p style="font-size:18px;"> You must be able to prove that you have been fully
+                                            vaccinated (plus 14 days) with a document (digital or paper-based)
+                                            from a national or state-level public health body that includes, as a
+                                            minimum:
                                         </p>
                                         <ul style="font-size:18px;">
-                                            <li>-	Forename and surname(s).</li>
-                                            <li>-	Date of birth.</li>
-                                            <li>-	Vaccine brand and manufacturer.</li>
-                                            <li>-   Date of vaccination for every dose.</li>
-                                            <li>-   Country or territory of vaccination and/or certificate issuer.</li>
-                                         
+                                            <li>- Forename and surname(s).</li>
+                                            <li>- Date of birth.</li>
+                                            <li>- Vaccine brand and manufacturer.</li>
+                                            <li>- Date of vaccination for every dose.</li>
+                                            <li>- Country or territory of vaccination and/or certificate issuer.</li>
+
                                         </ul>
-                                        <p style="font-size:18px;">If your document from a public health body does not include all of these, you must follow the non-vaccinated rules. If not, you may be denied boarding.</p>
+                                        <p style="font-size:18px;">If your document from a public health body does not
+                                            include all of these, you must follow the non-vaccinated rules. If not, you
+                                            may be denied boarding.</p>
                                         <br/>
-                                        <p style="font-size:18px;"> If you are fully vaccinated in the USA, you will need to show a CDC card showing you’ve had a full course of an FDA-approved vaccine in the USA. You’ll also need to prove that you are a resident of the USA.</p>
-                                        <p style="font-size:18px;"> If you are fully vaccinated in Europe, you will need to show an EU Digital COVID Certificate (EU DCC), showing you’ve had a full course of an EMA or Swissmedic-approved vaccine.</p>                                        
+                                        <p style="font-size:18px;"> If you are fully vaccinated in the USA, you will
+                                            need to show a CDC card showing you’ve had a full course of an FDA-approved
+                                            vaccine in the USA. You’ll also need to prove that you are a resident of the
+                                            USA.</p>
+                                        <p style="font-size:18px;"> If you are fully vaccinated in Europe, you will need
+                                            to show an EU Digital COVID Certificate (EU DCC), showing you’ve had a full
+                                            course of an EMA or Swissmedic-approved vaccine.</p>
                                         <br/>
-                                        <p style="font-size:18px;">If you are fully vaccinated, but do not qualify under these fully vaccinated rules, you must follow the <a href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england#not-vaccinated" style="text-decoration:underline;color:#136480"> non-vaccinated rules.</a></p>
+                                        <p style="font-size:18px;">If you are fully vaccinated, but do not qualify under
+                                            these fully vaccinated rules, you must follow the <a
+                                                    href="https://www.gov.uk/guidance/red-amber-and-green-list-rules-for-entering-england#not-vaccinated"
+                                                    style="text-decoration:underline;color:#136480"> non-vaccinated
+                                                rules.</a></p>
 
                                     </div>
-                                </div>
-                            </li>
+                        </div>
+                        </li>
                         </ul><!--end of accordion-->
 
                     </div>

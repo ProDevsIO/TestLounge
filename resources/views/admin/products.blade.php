@@ -1,18 +1,6 @@
 @extends('layouts.admin')
 @section('style')
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <style>
-          .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9 !important;
-    width: 100vw;
-    height: 0% !important;
-    background-color: #000;
-}
-
-    </style>
 @endsection
 @section('content')
 
@@ -59,6 +47,13 @@
                             <input type="text" class="form-control"
                                    value="{{ old('description') }}" name="description" required>
 
+                            <label for="">Country</label>
+                                <select name="country_id" class="form-control" id="country" required>
+                                    <option value="">Please select a country for this test</option>
+                                    @foreach($countries as $country)
+                                        <option value="{{$country->id}}">{{$country->nicename}}</option>
+                                    @endforeach
+                                </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -86,6 +81,8 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Booking</th>
+                                        <th scope='col'>Country</th>
+                                        <th scope="col">Links</th>
                                         @if(auth()->user()->type == "1")
                                             <th scope="col">Action</th>
                                         @endif
@@ -101,6 +98,13 @@
                                                 {!! $product->description !!}
                                             </td>
                                             <td>{{ $product->bookings->count() }}</td>
+                                            <td>{{optional($product->country)->nicename ?? "No country"}}</td>
+                                            <td>@if(optional($product)->slug) 
+                                                   <a href="{{url(env('APP_URL', 'http://127.0.0.1:8000/').'view/product/'.$product->slug)}}">{{env('APP_URL', 'http://127.0.0.1:8000/')}}/view/product/{{optional($product)->slug}}</a>  
+                                                @else
+                                                    No Links
+                                                @endif
+                                            </td>
                                             @if(auth()->user()->type == "1")
                                                 <td>
 
@@ -151,10 +155,16 @@
                                                             <label>Name</label>
                                                             <input type="text" class="form-control"
                                                                    value="{{ $product->name }}" name="name">
-                                                            <label>Description</label>
+                                                            <label class="mt-2">Description</label>
                                                             <input type="text" class="form-control"
                                                                    value="{{ $product->description }}" name="description" required>
-
+                                                            <label class="mt-2">Country</label>
+                                                            <select name="country_id" class="form-control" id="country" required>
+                                                                <option value="">Kindly select a country </option>
+                                                                @foreach($countries as $country)  
+                                                                    <option value="{{$country->id}}"  @if($product->country_id == $country->id ) selected @endif>{{$country->nicename}}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
