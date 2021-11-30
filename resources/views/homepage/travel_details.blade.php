@@ -136,7 +136,7 @@
                                                                        <div class="card-body " style="padding: 30px">
                                                                        <p style="color:white !important">
                                                                        '.$product->name.'</p>
-                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">View Page</a>
+                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">Book Test<</a>
                                                                        </div>
                                                                    </div>
                                                            </div>';
@@ -172,7 +172,7 @@
                                                                        <div class="card-body " style="padding: 30px">
                                                                        <p style="color:white !important">
                                                                        '.$product->name.'</p>
-                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">View Page</a>
+                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">Book Test<</a>
                                                                        </div>
                                                                    </div>
                                                            </div>';
@@ -205,7 +205,7 @@
                                                                        <div class="card-body " style="padding: 30px">
                                                                        <p style="color:white !important">
                                                                        '.$product->name.'</p>
-                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">View Page</a>
+                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">Book Test<</a>
                                                                        </div>
                                                                    </div>
                                                            </div>';
