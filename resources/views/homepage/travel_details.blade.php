@@ -116,6 +116,7 @@
                                    $departure_vaccinated = str_replace('<a href="all"', "<a id='all' href='".url(env('APP_URL')."product/country/".$countries->country->slug_name)."'",$departure_vaccinated);
 
                                    $departure_vaccinated = str_replace("<a href", "<a style='color: #1e50a0' href",$departure_vaccinated);
+                                   
                                    $departure_vaccinated = str_replace("<a id='all'", "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none' ",$departure_vaccinated);
 
                                 @endphp
@@ -136,7 +137,7 @@
                                                                        <div class="card-body " style="padding: 30px">
                                                                        <p style="color:white !important">
                                                                        '.$product->name.'</p>
-                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">Book Test<</a>
+                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">Book Test</a>
                                                                        </div>
                                                                    </div>
                                                            </div>';
@@ -172,7 +173,7 @@
                                                                        <div class="card-body " style="padding: 30px">
                                                                        <p style="color:white !important">
                                                                        '.$product->name.'</p>
-                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">Book Test<</a>
+                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">Book Test</a>
                                                                        </div>
                                                                    </div>
                                                            </div>';
@@ -205,7 +206,7 @@
                                                                        <div class="card-body " style="padding: 30px">
                                                                        <p style="color:white !important">
                                                                        '.$product->name.'</p>
-                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">Book Test<</a>
+                                                                       <a href="/view/product/'.$slug.'" id="add_button" class="btn btn-">Book Test</a>
                                                                        </div>
                                                                    </div>
                                                            </div>';
