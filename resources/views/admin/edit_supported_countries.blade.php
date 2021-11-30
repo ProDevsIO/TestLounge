@@ -108,7 +108,7 @@
 
                             init: function () {
                                 this.startGroup('Options');
-                                this.add('<a href="all">Book Test(s)</a>', 'Add all Country Test!');
+                                this.add('<a href="all">Book COVID Tests</a>', 'Add all Country Test!');
                                 @foreach($products as $product)
                                     this.add('<a href="{{ env("APP_URL")."view/product/".$product->slug }}">Book {{ $product->name }}</a>', '{{ $product->name }}');
                                 @endforeach

@@ -90,7 +90,7 @@
                                      $products = $countries->products;
                                      $string_product ="";
                                      $string_product .= '<div class="row">';
-                                     $string_product .= '<h5 class="text-center">View All Tests</h5>';
+                                   
                                      foreach($products as $product)
                                      {
                                         $slug = $product->slug;
@@ -122,7 +122,7 @@
                                      $products = $countries->products;
                                      $string_product ="";
                                      $string_product .= '<div class="row">';
-                                     $string_product .= '<h5 class="text-center">View All Tests</h5>';
+                                    
                                      foreach($products as $product)
                                      {
                                         $slug = $product->slug;
@@ -157,7 +157,7 @@
                                      $products = $countries->products;
                                      $string_product ="";
                                      $string_product .= '<div class="row">';
-                                     $string_product .= '<h5 class="text-center">View All Tests</h5>';
+                                    
                                      foreach($products as $product)
                                      {
                                         $slug = $product->slug;
@@ -188,7 +188,7 @@
                                      $products = $countries->products;
                                      $string_product ="";
                                      $string_product .= '<div class="row">';
-                                     $string_product .= '<h5 class="text-center">View All Tests</h5>';
+                                    
                                      foreach($products as $product)
                                      {
                                         $slug = $product->slug;
