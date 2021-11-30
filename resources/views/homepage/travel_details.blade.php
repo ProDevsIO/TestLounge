@@ -116,7 +116,7 @@
                                    $departure_vaccinated = str_replace('<a href="all"', "<a id='all' href='".url(env('APP_URL')."product/country/".$countries->country->slug_name)."'",$departure_vaccinated);
 
                                    $departure_vaccinated = str_replace("<a href", "<a style='color: #c0272d' href",$departure_vaccinated);
-                                            $departure_vaccinated = str_replace('<a id="all"', "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none' href",$departure_vaccinated);
+                                            $departure_vaccinated = str_replace('<a id="all"', "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none' ",$departure_vaccinated);
 
                                 @endphp
                                 {!! $departure_vaccinated !!}
@@ -149,7 +149,7 @@
                                    $departure_unvaccinated = str_replace('<a href="all"', "<a id='all' href='".url(env('APP_URL')."product/country/".$countries->country->slug_name)."'",$departure_unvaccinated);
 
                                    $departure_unvaccinated = str_replace("<a href", "<a style='color: #c0272d' href",$departure_unvaccinated);
-                                   $departure_unvaccinated = str_replace('<a id="all"', "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none' href",$departure_unvaccinated);
+                                   $departure_unvaccinated = str_replace('<a id="all"', "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none'",$departure_unvaccinated);
                                 @endphp
                                 {!! $departure_unvaccinated !!}
                             </div>
@@ -185,7 +185,7 @@
 
 
                                    $arrival_vaccinated = str_replace("<a href", "<a style='color: #c0272d' class='underline' href",$arrival_vaccinated);
-                                  $arrival_vaccinated = str_replace('<a id="all"', "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none' href",$arrival_vaccinated);
+                                  $arrival_vaccinated = str_replace('<a id="all"', "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none'",$arrival_vaccinated);
 
                                 @endphp
                                 {!! $arrival_vaccinated !!}
@@ -218,7 +218,7 @@
                                    $arrival_unvaccinated = str_replace('<a href="all"', "<a id='all' class='btn btn-danger' href='".url(env('APP_URL')."product/country/".optional($countries->country)->slug_name)."'",$arrival_unvaccinated);
 
                                    $arrival_unvaccinated = str_replace("<a href", "<a style='color: #c0272d' href",$arrival_unvaccinated);
-                                   $arrival_unvaccinated = str_replace('<a id="all"', "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none' href",$arrival_unvaccinated);
+                                   $arrival_unvaccinated = str_replace('<a id="all"', "<a class='btn btn-danger' style='color: #fff; background: #c0272d; text-decoration: none'",$arrival_unvaccinated);
 
                                 @endphp
                                 {!! $arrival_unvaccinated !!}
