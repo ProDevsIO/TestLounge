@@ -207,6 +207,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/view/configure/products/{id}', [\App\Http\Controllers\DashboardController::class,"view_configure_products"]);
 
     Route::get('/pages', [\App\Http\Controllers\pageController::class,"view_created_pages"]);
+    Route::post('/page/save', [\App\Http\Controllers\pageController::class,"add_page"]);
+    Route::post('/page/edit/{id}', [\App\Http\Controllers\pageController::class,"edit_page"]);
 
     Route::get('/logout', [\App\Http\Controllers\DashboardController::class,"logout"]);
 

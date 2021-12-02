@@ -121,9 +121,42 @@
                                 editor.fire('saveSnapshot');
                             }
                         });
+                        editor.ui.addRichCombo('page-combo', {
+                            label: 'Add Page(s)',
+                            title: 'Add Pages(s)',
+                            toolbar: 'basicstyles,0',
+
+                            panel: {
+                                css: [CKEDITOR.skin.getPath('editor')].concat(config.contentsCss),
+                                multiSelect: false,
+                                attributes: {'aria-label': 'Add Pages(s)'}
+                            },
+
+                            init: function () {
+                                this.startGroup('Options');
+                                
+                                @foreach($pages as $page)
+                                    @if($page->type == 1)
+                                         this.add('<a  data-target="#addPage{{$page->id}}" href="javascript:;" data-toggle="modal">Add {{ $page->title }}</a>', '{{ $page->title }}');
+                                    @else
+                                         this.add('<a href="{{ env("APP_URL")."view/product/".$page->id }}">Add {{ $page->title }}</a>', '{{ $page->title }}');
+                                    @endif
+                               @endforeach
+
+                            },
+
+                            onClick: function (value) {
+                                editor.focus();
+                                editor.fire('saveSnapshot');
+
+                                editor.insertHtml(value);
+
+                                editor.fire('saveSnapshot');
+                            }
+                        });
                     }
                 },
-                extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
+                extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top};a[data-*];',
 
                 // Adding drag and drop image upload.
                 extraPlugins: 'print,format,font,colorbutton,justify,uploadimage',

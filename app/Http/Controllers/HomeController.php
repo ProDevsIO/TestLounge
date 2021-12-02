@@ -8,6 +8,7 @@ use App\Helpers\UserShare;
 use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
 use App\Models\Booking;
+use App\Models\Pages;
 use App\Models\BookingProduct;
 use App\Models\Country;
 use App\Models\SupportedCountries;
@@ -1979,9 +1980,9 @@ class HomeController extends Controller
     public function view_travel_details($id, $action)
     {
 
-        
             $countries = SupportedCountries::where('country_id', $id)->first();
-            return view('homepage.travel_details')->with(compact('countries', 'action'));
+            $pages = Pages::all();
+            return view('homepage.travel_details')->with(compact('countries', 'action','pages'));
        
     }
     
