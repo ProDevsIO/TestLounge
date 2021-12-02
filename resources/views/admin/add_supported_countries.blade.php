@@ -137,7 +137,7 @@
                                 
                                 @foreach($pages as $page)
                                     @if($page->type == 1)
-                                         this.add('<a href="javascript:;"data-toggle="modal" data-target="#addPage{{$page->id}}">Add {{ $page->title }}</a>', '{{ $page->title }}');
+                                         this.add('<a  data-target="#addPage{{$page->id}}" href="javascript:;" data-toggle="modal">Add {{ $page->title }}</a>', '{{ $page->title }}');
                                     @else
                                          this.add('<a href="{{ env("APP_URL")."view/product/".$page->id }}">Add {{ $page->title }}</a>', '{{ $page->title }}');
                                     @endif
@@ -156,7 +156,7 @@
                         });
                     }
                 },
-                extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
+                extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top};a[data-*];',
 
                 // Adding drag and drop image upload.
                 extraPlugins: 'print,format,font,colorbutton,justify,uploadimage',
