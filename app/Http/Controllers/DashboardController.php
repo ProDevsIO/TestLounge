@@ -2464,7 +2464,6 @@ class DashboardController extends Controller
         //get data from vendor products table
         $v_rate = VendorProduct::where([
                     'product_id' => $request->product_id,
-                    'vendor_id' => 3
         ])->first(); 
 
        
