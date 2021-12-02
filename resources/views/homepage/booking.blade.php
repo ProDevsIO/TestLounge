@@ -636,9 +636,9 @@
                 const obj = JSON.parse(info);
                 const room = JSON.parse(obj.room);
                 @if($carts_count > 0)
-                 const product = '{!! optional(optional($cart)->vendorProduct)->walk_product_id !!}';
+                 const product = "{!! optional(optional($cart)->vendorProduct)->walk_product_id !!}";
                 @else
-                    const product = '{!! $walkin !!}';
+                    const product = "{!! $walkin !!}";
                 @endif
                 const location = obj.location;
                 const room_id = room.roomid;
