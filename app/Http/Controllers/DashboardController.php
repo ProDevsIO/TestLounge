@@ -2466,6 +2466,11 @@ class DashboardController extends Controller
                     'product_id' => $request->product_id,
         ])->first(); 
 
+        if($v_rate == null)
+        {
+            session()->flash('alert-danger', 'No vendor has been provided a price for this product.');
+            return back();
+        }
        
         //get the user collection
         $user = User::where('id', $id)->first();
