@@ -272,7 +272,7 @@
                                     <div class="col-md-12">
                                         <div id="dam_time" class="form-section" style="margin-top:20px;display:none">
                                             <label>Select time slots <span class="show_required"> *</span></label>
-                                          
+
                                             <select class="select-2 get_dam_time" autocomplete="off" name="dam_time" required>
 
                                             </select>
@@ -622,27 +622,27 @@
 
 
         }
-        
+
         function gettime()
         {
             var info = document.getElementById('test_location').value;
             var date = document.getElementById('arrive').value;
-           
+
             var $el = $(".get_dam_time");
             var $v = $('#dam_time')
-        
+
             if (info !== '' && date !== '') {
 
                 const obj = JSON.parse(info);
                 const room = JSON.parse(obj.room);
                 @if($carts_count > 0)
-                 const product = {!! optional(optional($cart)->vendorProduct)->walk_product_id !!};
+                 const product = '{!! optional(optional($cart)->vendorProduct)->walk_product_id !!}';
                 @else
-                    const product = {!! $walkin !!};
+                    const product = '{!! $walkin !!}';
                 @endif
                 const location = obj.location;
                 const room_id = room.roomid;
-                
+
 
                 console.log(obj.location);
                 console.log(obj);
@@ -652,9 +652,9 @@
                 var url = '/check/time/damlocation/'+location+'/'+room_id+'/'+product+'?from='+ date;
                 $v.show();
                     $.get(url, function (data) {
-                        
+
                         $el.empty(); // remove old options
-                        
+
                         $el.append($("<option value=''>Select an available time </option>"));
 
                         $.each(data, function (key, value) {
