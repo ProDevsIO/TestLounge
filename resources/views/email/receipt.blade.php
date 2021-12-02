@@ -320,12 +320,20 @@
                                                     if($booking->dam_address != null){
                                                         $address  = json_decode($booking->dam_address);
                                                     } 
+                                                  
                                                 ?>
                                             
                                             @if(isset($address))
-                                                Walkin Test Lab: {{$address->address}},{{$address->city}}, {{$address->country}}.
+                                                Walkin Test Lab: {{$address->address}},{{$address->city}},{{$address->postcode}} {{$address->country}}.
                                             @endif
-                                            <br/>
+
+                                            @if($booking->dam_time != null)
+                                                <br>
+                                                Date of test: {{ $booking->arrival_date }}
+                                                <br>
+                                                Test time: {{$booking->dam_time}}
+                                            @endif
+
                                                 @if($booking->certificate_no != null)
                                                     <?php 
                                                         if($booking->certificate_no != null)
@@ -424,7 +432,7 @@
                                 </tr>
                                 <tr>
                                     <td style="text-align: left;line-height: 25px;">
-                                        Booking Reference: {{ $booking->id }}
+                                        Reference: {{ $booking->id }}
                                     </td>
                                 </tr>
                                 <tr>

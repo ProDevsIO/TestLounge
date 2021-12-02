@@ -81,6 +81,7 @@ class HomeController extends Controller
                     if(!isset($location->errors))
                     {
                         $locations = $location->data->damhealth_locations;
+                        
                     }else{
                         $locations = null;
                     }
@@ -193,7 +194,7 @@ class HomeController extends Controller
        }
 
         $request_data = $request->all();
-        
+       
         if(!$request->hidden_phone){
             $request->hidden_phone = $request_data['phone_no'];
         }
@@ -667,7 +668,7 @@ class HomeController extends Controller
                         $code = $this->sendData($booking);
                     }
                 } catch (\Exception $e) {
-                 
+                 dd($e);
                     if($type == "paystack"){
 
                         $booking->update([
@@ -1332,7 +1333,7 @@ class HomeController extends Controller
         } elseif ($type == "Amber_v") {
             $products = $products->where('product_id', 1)->get();
         } elseif ($type == "Amber_uv") {
-            $products = $products->whereIn('product_id', [2, 4, 3, 10, 15])->get();
+            $products = $products->whereIn('product_id', [2, 4, 3, 10, 15, 24])->get();
         } elseif ($type == "Red") {
             $products = $products->where('product_id', 5)->get();
         } elseif ($type == "UK") {
@@ -2234,6 +2235,31 @@ class HomeController extends Controller
         
         return view('homepage.single_product')->with(compact('vproducts','sproducts'));
 
+    }
+
+    public function getdamtimeslot(Request $request,$location,$room,$product)
+    {
+        // dd($request->from);
+        // dd(Carbon::now());
+        $date = Carbon::createFromFormat('m/d/Y', $request->from)->format('Y-m-d');
+
+        $bearer = $this->getDamhealthToken();
+
+        $time_slots = $this->getDamHealthtime($bearer,$location, $room, $product, $date);
+        $slots = json_decode($time_slots);
+        $get_slots = $slots->availableSlots;
+        
+        $time = [];
+        foreach ($get_slots as $slot) {
+            $seperate_start = explode('T', $slot->starttime);
+            $seperate_end = explode('T', $slot->endtime);
+          
+            $time[] = [
+                'name' => "$seperate_start[1] - $seperate_end[1]",
+            ];
+        }
+       
+        return $time;
     }
 
     public function test()

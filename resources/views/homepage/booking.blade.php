@@ -245,7 +245,7 @@
                                     <input class="date_picker1" type="text"
                                            placeholder="Arrival Date in UK"
                                            name="arrival_date"
-                                           value="{{ old('arrival_date') }}" required>
+                                           value="{{ old('arrival_date') }}" id="arrive"  onclick="gettime()" required>
                                 </div>
 
                                 @if(!$locations == null)
@@ -253,7 +253,7 @@
                                     <div class="col-md-12">
                                         <label>Test Location: <span class="show_required"> *</span></label>
                                         <select class="select-2 select2"
-                                                name="test_location[]" autocomplete="off"
+                                                name="test_location[]" id="test_location" onchange="gettime()" autocomplete="off"
                                                 required>
                                             <option value="">Make a selection</option>
                                             @foreach($locations as $location)
@@ -268,6 +268,15 @@
                                                         selected>{{ $location->name }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div id="dam_time" class="form-section" style="margin-top:20px;display:none">
+                                            <label>Select time slots <span class="show_required"> *</span></label>
+                                          
+                                            <select class="select-2 get_dam_time" autocomplete="off" name="dam_time" required>
+
+                                            </select>
+                                        </div>
                                     </div>
                                 @endif
 
@@ -613,6 +622,56 @@
 
 
         }
+        
+        function gettime()
+        {
+            var info = document.getElementById('test_location').value;
+            var date = document.getElementById('arrive').value;
+           
+            var $el = $(".get_dam_time");
+            var $v = $('#dam_time')
+        
+            if (info !== '' && date !== '') {
+
+                const obj = JSON.parse(info);
+                const room = JSON.parse(obj.room);
+                @if($carts_count > 0)
+                 const product = {!! optional(optional($cart)->vendorProduct)->walk_product_id !!};
+                @else
+                    const product = {!! $walkin !!};
+                @endif
+                const location = obj.location;
+                const room_id = room.roomid;
+                
+
+                console.log(obj.location);
+                console.log(obj);
+                console.log(room.roomid);
+                console.log(product);
+
+                var url = '/check/time/damlocation/'+location+'/'+room_id+'/'+product+'?from='+ date;
+                $v.show();
+                    $.get(url, function (data) {
+                        
+                        $el.empty(); // remove old options
+                        
+                        $el.append($("<option value=''>Select an available time </option>"));
+
+                        $.each(data, function (key, value) {
+
+                            $el.append($("<option></option>")
+                                .attr("value", value.name).text(value.name));
+                        });
+
+                    });
+                console.log('yes');
+            } else {
+                $el.empty();
+                $v.hide();
+                console.log('no');
+            }
+        }
+
 
         function veriy() {
             var email = document.getElementById('email').value;

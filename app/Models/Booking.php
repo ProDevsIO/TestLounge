@@ -138,6 +138,7 @@ class Booking extends Model
 		'dam_location',
 		'dam_address',
 		'dam_room',
+		'dam_time'
 	];
 
 	public function country()

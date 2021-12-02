@@ -1740,7 +1740,7 @@ class DashboardController extends Controller
 
     public function agent_view_product()
     {
-        $vproducts = VendorProduct::where('vendor_id', 3)->get();
+        $vproducts = VendorProduct::all();
 
         $user = User::where('id', auth()->user()->id)->first();
         
@@ -2464,9 +2464,13 @@ class DashboardController extends Controller
         //get data from vendor products table
         $v_rate = VendorProduct::where([
                     'product_id' => $request->product_id,
-                    'vendor_id' => 3
         ])->first(); 
 
+        if($v_rate == null)
+        {
+            session()->flash('alert-danger', 'No vendor has been provided a price for this product.');
+            return back();
+        }
        
         //get the user collection
         $user = User::where('id', $id)->first();
@@ -2688,7 +2692,6 @@ class DashboardController extends Controller
         //get data from vendor products table
         $v_rate = VendorProduct::where([
                     'product_id' => $id,
-                    'vendor_id' => 3
         ])->first(); 
 
        
