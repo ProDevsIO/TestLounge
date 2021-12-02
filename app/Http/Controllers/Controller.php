@@ -74,6 +74,27 @@ class Controller extends BaseController
         return $result_p;
     }
 
+    function getDamHealthtime($bearer,$locationid, $room, $dam_product_id, $bookdate )
+    {
+        //------ Create the availability slot ----//         
+        $variable =  ["locationid" => $locationid, "roomid" => $room, "productid" => $dam_product_id, "bookingdate"=> $bookdate] ;
+            
+        $x = curl_init();
+
+        $headr = array();
+        $headr[] = 'Content-type: application/json';
+        $headr[] = "Authorization: Bearer $bearer";
+        //dd($headr);
+        curl_setopt($x, CURLOPT_URL, 'https://partner-api-dev.dam-health.com/v1/api/availability');
+        curl_setopt($x, CURLOPT_HTTPHEADER, $headr);
+        curl_setopt($x, CURLOPT_POST, 1);
+        curl_setopt($x, CURLOPT_POSTFIELDS, json_encode($variable));
+        curl_setopt($x, CURLOPT_RETURNTRANSFER, true);
+        $result_x = curl_exec($x);
+        curl_close($x);
+        return $result_x;
+    }
+
     function getDamHealthProducts($bearer)
     {
        ///  -------------------   Get Product list   --------------   ///
@@ -103,6 +124,8 @@ class Controller extends BaseController
     {
         $bproduct= BookingProduct::where('booking_id',$booking->id)->first();
         $product = VendorProduct::where('id', $bproduct->vendor_product_id)->first();
+        
+        $seperate_time = explode('-', $booking->dam_time);
 
         $locationid = $booking->dam_location;
         $getroom = json_decode($booking->dam_room);
@@ -114,10 +137,10 @@ class Controller extends BaseController
         $room = $getroom->roomid;
         $dam_product_id = $product->walk_product_id;
         $bookdate = $booking->created_at->format('Y-m-d');
-        $durateStart = $booking->arrival_date->format('Y-m-d') ."T8:50:00";
-        $durateEnd = $booking->arrival_date->format('Y-m-d') ."T8:55:00";
+        $durateStart = $booking->arrival_date->format('Y-m-d') ."T". $seperate_time[0];
+        $durateEnd = $booking->arrival_date->format('Y-m-d') ."T". $seperate_time[0];
         $dob = $booking->dob->format('Y-m-d');
-        
+       
         //ethnicity
         if ($booking->ethnicity == 1) {
             $ethnic = "white";
@@ -172,23 +195,6 @@ class Controller extends BaseController
         $code[] = $dam_booking->data->insert_damhealth_bookings_one->bookingid;
      
         $formatted_data = json_encode($code);
-
-
-        //------ Create the availability slot ----//         
-        $variable =  ["locationid" => $locationid, "roomid" => $room, "productid" => $dam_product_id, "bookingdate"=> $bookdate] ;
-       
-        $x = curl_init();
-
-        $headr = array();
-        $headr[] = 'Content-type: application/json';
-        $headr[] = "Authorization: Bearer $bearer";
-        //dd($headr);
-        curl_setopt($x, CURLOPT_URL, 'https://partner-api-dev.dam-health.com/v1/api/availability');
-        curl_setopt($x, CURLOPT_HTTPHEADER, $headr);
-        curl_setopt($x, CURLOPT_POST, 1);
-        curl_setopt($x, CURLOPT_POSTFIELDS, json_encode($variable));
-        curl_setopt($x, CURLOPT_RETURNTRANSFER, true);
-        $result_x = curl_exec($x);
 
         ///  --------------  End Availability api  --------------------  ///
 

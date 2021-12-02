@@ -97,9 +97,13 @@ Route::get('/booking',[\App\Http\Controllers\HomeController::class,"booking"])->
 
 Route::get('/view/product/{slug}', [\App\Http\Controllers\HomeController::class, "view_single_product"]);
 
+Route::get('/check/time/damlocation/{location}/{room}/{product}', [\App\Http\Controllers\HomeController::class, "getdamtimeslot"]);
+
 Route::get('/testing' ,[\App\Http\Controllers\HomeController::class, "test"]);
 
 Route::get('/slugging' ,[\App\Http\Controllers\HomeController::class, "slugify"]);
+
+
 
 Route::middleware('auth')->group(function () {
 
