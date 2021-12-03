@@ -50,28 +50,28 @@
                             </div>
                             <div class="card-body">
 
-                                <label for=""><b>On arrival (If fully vaccinated)</b></label>
+                                <h5><b>On arrival (If fully vaccinated)</b></h5>
                                 <textarea name="arrival_vaccinated" id="" class="form-control arrival_vaccinated" cols="30" rows="10" >{{ old('arrival_vaccinated') ?? $countries->arrival_vaccinated}}</textarea>
                                 <br>
 
-                                <label for=""><b>On arrival(If Unvaccinated / Partially vaccinated)</b></label>
+                                <h5 for=""><b>On arrival(If Unvaccinated / Partially vaccinated)</b></h5>
                                 <textarea name="arrival_unvaccinated" id="" class="form-control arrival_unvaccinated" cols="30" rows="10">{{ old('arrival_unvaccinated') ?? $countries->arrival_unvaccinated}}</textarea>
                                 <br>
 
-                                <label for=""><b>Predeparture(If fully vaccinated)</b></label>
+                                <h5 for=""><b>Predeparture(If fully vaccinated)</b></h5>
                                 <textarea name="departure_vaccinated" id="" class="form-control departure_vaccinated" cols="30" rows="10">{{ old('departure_vaccinated') ?? $countries->departure_vaccinated}}</textarea>
                                 <br>
 
-                                <label for=""><b>Predeparture(If Unvaccinated / Partially vaccinated)</b></label>
+                                <h5 for=""><b>Predeparture(If Unvaccinated / Partially vaccinated)</b></h5>
                                 <textarea name="departure_unvaccinated" id="" class="form-control departure_unvaccinated" cols="30" rows="10">{{ old('departure_unvaccinated') ?? $countries->departure_unvaccinated}}</textarea>
                                 <br>
 
-                                <label for=""><b>Faq</b></label>
+                                <h5 for=""><b>Faq</b></h5>
                                 <textarea name="faq" id="" class="form-control faq" cols="30" rows="10">{{old('faq') ?? $countries->faq}}</textarea>
                             </div>
                         </div>
                         <br>
-                       <input type="submit" class="btn btn-md btn-info" value="Edit Country">
+                       <input type="submit" class="btn btn-md btn-info" value="Update">
                     </form>
                 </div>
             </div>
@@ -124,9 +124,41 @@
                                 editor.fire('saveSnapshot');
                             }
                         });
+
+                        editor.ui.addRichCombo('page-combo', {
+                            label: 'Add Modal(s)',
+                            title: 'Add Modal(s)',
+                            toolbar: 'basicstyles,0',
+
+                            panel: {
+                                css: [CKEDITOR.skin.getPath('editor')].concat(config.contentsCss),
+                                multiSelect: false,
+                                attributes: {'aria-label': 'Add Modal(s)'}
+                            },
+
+                            init: function () {
+                                this.startGroup('Options');
+                                
+                                @foreach($pages as $page)
+                                    @if($page->type == 1)
+                                         this.add('<a id="all" data-target="#addPage{{$page->id}}" href="javascript:;" data-toggle="modal" >{{ $page->title }}</a>', '{{ $page->title }}');
+                                    @endif
+                               @endforeach
+
+                            },
+
+                            onClick: function (value) {
+                                editor.focus();
+                                editor.fire('saveSnapshot');
+
+                                editor.insertHtml(value);
+
+                                editor.fire('saveSnapshot');
+                            }
+                        });
                     }
                 },
-                extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
+                extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top};a[data-*];a[id]',
 
                 // Adding drag and drop image upload.
                 extraPlugins: 'print,format,font,colorbutton,justify,uploadimage',

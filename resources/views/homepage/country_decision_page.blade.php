@@ -53,7 +53,7 @@
             <div class="col-md-5">
                             <select name="" class="form-control" id="action" onchange="redirect('{{$countries->id}}')">
                                 <option value="">Select an Option</option>
-                                <option value="departure">Departure</option>
+                                <option value="departure">Pre-departure</option>
                                 <option value="arrival">On arrival</option>
 
                             </select>

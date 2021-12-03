@@ -10,6 +10,7 @@ use App\Helpers\UserShare;
 use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
 use App\Models\Voucher;
+use App\Models\Pages;
 use App\Models\SupportedCountries;
 use App\Models\VoucherCount;
 use App\Models\VoucherGenerate;
@@ -3581,9 +3582,9 @@ class DashboardController extends Controller
         $countries = Country::whereNotIn('id', $support_countries)->get();
 
         $products = Product::all();
+        $pages = Pages::all();
 
-
-        return view('admin.add_supported_countries')->with(compact('countries','products'));
+        return view('admin.add_supported_countries')->with(compact('countries','products','pages'));
     }
 
     public function view_supported_vendor($id)
@@ -3658,7 +3659,9 @@ class DashboardController extends Controller
 
         $products = Product::all();
 
-        return view('admin.edit_supported_countries')->with(compact('countries','products'));
+        $pages = Pages::all();
+
+        return view('admin.edit_supported_countries')->with(compact('countries','products','pages'));
     }
 
     public function edit_page_configuration(request $request)
