@@ -185,7 +185,7 @@
                     <div class="col-md-4 col-sm-6 clearfix">
                         <div class="feature feature-icon-small">
                             <i class="icon icon-scope"></i>
-                            <h6 class="text-white">Review the Country Requirement</h6>
+                            <h6 class="text-white">Review the Country Requirements</h6>
                             <p class="text-white">
                                 Review the country requirments and the various test to book to ensure you have a smooth entry or departure process
                             </p>
@@ -197,7 +197,7 @@
                             <i class="icon icon-target"></i>
                             <h6 class="text-white">Book the test</h6>
                             <p class="text-white">
-                                Book the test easily and get connected with the lab and all necessary documentation needed for you to have a smooth ride
+                                Book the test easily and get connected with the test provider and all necessary documentation needed for you to have a smooth ride
                             </p>
                         </div><!--end of feature-->
                     </div>
