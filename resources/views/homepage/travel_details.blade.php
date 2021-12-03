@@ -9,7 +9,7 @@
 
         #all {
             color: #428bca !important;
-            text-decoration: underline;
+            text-decoration: none;
         }
 
         .underline {

@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <br>
-                       <input type="submit" class="btn btn-md btn-info" value="Edit Country">
+                       <input type="submit" class="btn btn-md btn-info" value="Update">
                     </form>
                 </div>
             </div>

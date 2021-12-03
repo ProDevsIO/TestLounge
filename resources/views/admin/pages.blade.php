@@ -104,7 +104,7 @@
                                                                         <label for="">Type</label>
                                                                         <select name="type" id="" class="form-control" required>
                                                                             <option value="">Please select a page type</option>
-                                                                            <option value="Normal ">Normal page</option>
+                                                                            <!-- <option value="Normal ">Normal page</option> -->
                                                                             <option value="Modal">Modal</option>
                                                                         </select>
                                                                     </div>
@@ -153,7 +153,7 @@
                                                                             <select name="type" id="" class="form-control" required>
                                                                                 <option value="">Please select a page type</option>
                                                                                
-                                                                                <option value="Normal " @if((old('type') ?? $page->type) == 2) selected @endif>Normal page</option>
+                                                                                <!-- <option value="Normal " @if((old('type') ?? $page->type) == 2) selected @endif>Normal page</option> -->
                                                                                 <option value="Modal"  @if((old('type') ?? $page->type) == 1) selected @endif>Modal</option>
                                                                             </select>
                                                                         </div>
