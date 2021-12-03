@@ -122,14 +122,14 @@
                             }
                         });
                         editor.ui.addRichCombo('page-combo', {
-                            label: 'Add Page(s)',
-                            title: 'Add Pages(s)',
+                            label: 'Add Modal(s)',
+                            title: 'Add Modal(s)',
                             toolbar: 'basicstyles,0',
 
                             panel: {
                                 css: [CKEDITOR.skin.getPath('editor')].concat(config.contentsCss),
                                 multiSelect: false,
-                                attributes: {'aria-label': 'Add Pages(s)'}
+                                attributes: {'aria-label': 'Add Modal(s)'}
                             },
 
                             init: function () {
@@ -137,9 +137,7 @@
                                 
                                 @foreach($pages as $page)
                                     @if($page->type == 1)
-                                         this.add('<a  data-target="#addPage{{$page->id}}" href="javascript:;" data-toggle="modal">Add {{ $page->title }}</a>', '{{ $page->title }}');
-                                    @else
-                                         this.add('<a href="{{ env("APP_URL")."view/product/".$page->id }}">Add {{ $page->title }}</a>', '{{ $page->title }}');
+                                         this.add('<a  data-target="#addPage{{$page->id}}" href="javascript:;" data-toggle="modal">{{ $page->title }}</a>', '{{ $page->title }}');
                                     @endif
                                @endforeach
 
