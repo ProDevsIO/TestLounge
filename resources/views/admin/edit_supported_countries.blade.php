@@ -50,23 +50,23 @@
                             </div>
                             <div class="card-body">
 
-                                <label for=""><b>On arrival (If fully vaccinated)</b></label>
+                                <h5><b>On arrival (If fully vaccinated)</b></h5>
                                 <textarea name="arrival_vaccinated" id="" class="form-control arrival_vaccinated" cols="30" rows="10" >{{ old('arrival_vaccinated') ?? $countries->arrival_vaccinated}}</textarea>
                                 <br>
 
-                                <label for=""><b>On arrival(If Unvaccinated / Partially vaccinated)</b></label>
+                                <h5 for=""><b>On arrival(If Unvaccinated / Partially vaccinated)</b></h5>
                                 <textarea name="arrival_unvaccinated" id="" class="form-control arrival_unvaccinated" cols="30" rows="10">{{ old('arrival_unvaccinated') ?? $countries->arrival_unvaccinated}}</textarea>
                                 <br>
 
-                                <label for=""><b>Predeparture(If fully vaccinated)</b></label>
+                                <h5 for=""><b>Predeparture(If fully vaccinated)</b></h5>
                                 <textarea name="departure_vaccinated" id="" class="form-control departure_vaccinated" cols="30" rows="10">{{ old('departure_vaccinated') ?? $countries->departure_vaccinated}}</textarea>
                                 <br>
 
-                                <label for=""><b>Predeparture(If Unvaccinated / Partially vaccinated)</b></label>
+                                <h5 for=""><b>Predeparture(If Unvaccinated / Partially vaccinated)</b></h5>
                                 <textarea name="departure_unvaccinated" id="" class="form-control departure_unvaccinated" cols="30" rows="10">{{ old('departure_unvaccinated') ?? $countries->departure_unvaccinated}}</textarea>
                                 <br>
 
-                                <label for=""><b>Faq</b></label>
+                                <h5 for=""><b>Faq</b></h5>
                                 <textarea name="faq" id="" class="form-control faq" cols="30" rows="10">{{old('faq') ?? $countries->faq}}</textarea>
                             </div>
                         </div>

@@ -251,7 +251,7 @@
                                                                         {{$page->title}}</h5>
                                                                       
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body" style="color:black !important">
                                                                         {!! $page->content !!}
                                                                     </div>
                                                                     <div class="modal-footer">

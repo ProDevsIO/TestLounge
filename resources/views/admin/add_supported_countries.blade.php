@@ -44,27 +44,27 @@
                                 <input type="file" name="image" class="form-control" src="" alt="">
 
                                 <br>
-                                <label for=""><b>On arrival (If fully vaccinated)</b></label>
+                                <h5 for=""><b>On arrival (If fully vaccinated)</b></h5>
                                 <textarea name="arrival_vaccinated" id="" class="form-control arrival_vaccinated"
                                           cols="30" rows="10"></textarea>
                                 <br>
 
-                                <label for=""><b>On arrival(If Unvaccinated / Partially vaccinated)</b></label>
+                                <h5 for=""><b>On arrival(If Unvaccinated / Partially vaccinated)</b></h5>
                                 <textarea name="arrival_unvaccinated" id="" class="form-control arrival_unvaccinated"
                                           cols="30" rows="10"></textarea>
                                 <br>
 
-                                <label for=""><b>Predeparture(If fully vaccinated)</b></label>
+                                <h5 for=""><b>Predeparture(If fully vaccinated)</b></h5>
                                 <textarea name="departure_vaccinated" id="" class="form-control departure_vaccinated"
                                           cols="30" rows="10"></textarea>
                                 <br>
 
-                                <label for=""><b>Predeparture(If Unvaccinated / Partially vaccinated)</b></label>
+                                <h5 for=""><b>Predeparture(If Unvaccinated / Partially vaccinated)</b></h5>
                                 <textarea name="departure_unvaccinated" id=""
                                           class="form-control  departure_unvaccinated" cols="30" rows="10"></textarea>
                                 <br>
 
-                                <label for=""><b>Faq</b></label>
+                                <h5 for=""><b>Faq</b></h5>
                                 <textarea name="faq" id="" class="form-control faq" cols="30" rows="10"
                                           required></textarea>
                             </div>
