@@ -136,9 +136,9 @@ class Controller extends BaseController
         $postalcode =  $getAddress->postcode;
         $room = $getroom->roomid;
         $dam_product_id = $product->walk_product_id;
-        $bookdate = $booking->created_at->format('Y-m-d');
-        $durateStart = $booking->arrival_date->format('Y-m-d') ."T". $seperate_time[0];
-        $durateEnd = $booking->arrival_date->format('Y-m-d') ."T". $seperate_time[0];
+        $bookdate = $booking->test_date->format('Y-m-d');
+        $durateStart = $booking->test_date->format('Y-m-d') ."T". $seperate_time[0];
+        $durateEnd = $booking->test_date->format('Y-m-d') ."T". $seperate_time[0];
         $dob = $booking->dob->format('Y-m-d');
        
         //ethnicity

@@ -85,7 +85,8 @@ class Booking extends Model
 		'dob',
 		'arrival_date',
 		'departure_date',
-		'last_day_travel'
+		'last_day_travel',
+		'test_date'
 	];
 
 	protected $fillable = [
@@ -138,7 +139,8 @@ class Booking extends Model
 		'dam_location',
 		'dam_address',
 		'dam_room',
-		'dam_time'
+		'dam_time',
+		'test_date'
 	];
 
 	public function country()

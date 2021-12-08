@@ -329,7 +329,7 @@
 
                                             @if($booking->dam_time != null)
                                                 <br>
-                                                Date of test: {{ $booking->arrival_date }}
+                                                Date of test: {{ $booking->test_date }}
                                                 <br>
                                                 Test time: {{$booking->dam_time}}
                                             @endif
