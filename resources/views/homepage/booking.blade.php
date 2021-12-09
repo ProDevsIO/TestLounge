@@ -207,10 +207,12 @@
                                     <select style="width: 100%;" class="select-2"
                                             name="isolation_country_id" required readonly>
                                         <option value="">Make a selection</option>
-
-                                        <option value="225" selected
-                                        >UNITED KINGDOM
-                                        </option>
+                                        @foreach($countries as $country)
+                                            <option value="{{ $country->id }}"
+                                                    @if(old('isolation_country_id') == $country->id)
+                                                    selected
+                                                @endif>{{ $country->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6">
