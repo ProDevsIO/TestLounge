@@ -3715,4 +3715,43 @@ class DashboardController extends Controller
        
         return view('admin.configured_products')->with(compact('products', 'countries'));
     }
+
+    public function updateDambookinglocation(Request $request, $id)
+    {
+        $this->validate($request, [
+            'dam_details' => "required",
+        ]);
+
+        
+        $decrypt = json_decode($request->dam_details);
+       
+        $room = json_decode($decrypt->room);
+      
+        $booking= Booking::where('id', $id)->first();
+        $codes = json_decode($booking->booking_code);
+
+        $bearer = $this->getDamhealthToken();
+
+        foreach($codes as $code)
+        {
+            $update = $this->updateDamhealthlocation($bearer, $decrypt->location, $room->roomid, $code);
+        }
+
+        if($update)
+        {
+            Booking::where('id', $id)->update([
+                'dam_room'=> $decrypt->room,
+                'dam_location' => $decrypt->location,
+                'dam_address' => $decrypt->address
+            ]);
+
+            session()->flash('alert-success', "You have successfully updated the damhealth location for this booking");
+            return back();
+        }else{
+
+            session()->flash('alert-danger', "This request coulf not be completed");
+            return back();
+        }
+
+    }
 }

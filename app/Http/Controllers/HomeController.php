@@ -445,21 +445,22 @@ class HomeController extends Controller
 
     function return_stripe_popup($id,$type = null)
     {
-      if($type == "booking"){
+      if($type == "booking")
+      {
         $product = BookingProduct::where('booking_id',$id)->first();
         if($product->currency == 'NGN'){
             $amount = '₦'.$product->charged_amount;
         }else{
             $amount = '$'.$product->price_pounds;
         }
-    }else{
-        $product = VoucherPayment::where('id',$id)->first();
-        if($product->currency == 'NG'){
-            $amount = '₦'.$product->charged_amount;
         }else{
-            $amount = '$'.$product->price_pounds;
+            $product = VoucherPayment::where('id',$id)->first();
+            if($product->currency == 'NG'){
+                $amount = '₦'.$product->charged_amount;
+            }else{
+                $amount = '$'.$product->price_pounds;
+            }
         }
-    }
      
         // dd($product->currency);
         return view('homepage.stripe_popup')->with(compact('amount','id','type'));
@@ -2263,6 +2264,38 @@ class HomeController extends Controller
         return $time;
     }
 
+    public function getdamlocate($product)
+    {
+        $bearer = $this->getDamhealthToken();
+        $getlocation = $this->getDamHealthLocations($bearer);
+        $location = json_decode($getlocation);
+        
+                if(!isset($location->errors))
+                {
+                    $locations = $location->data->damhealth_locations;
+                    
+                }else{
+                    $locations = null;
+                }
+
+            $locate = [];
+
+            foreach($locations as $location)
+            {
+                $data = [
+                    'location' => $location->locationid,
+                    'address' => json_encode($location->address),
+                    'room' => json_encode($location->rooms['0'])
+                ];
+                $locate[] = [
+                    'array' => json_encode($data),
+                    'name' => $location->name,
+                ];
+            }
+
+        return $locate;
+    }
+
     public function test()
     {
       // ---- DAM HEALTH INTEGRATION TEST ON DIFFERENT END POINT COMPILED TOGETHER ---- //
@@ -2433,5 +2466,6 @@ class HomeController extends Controller
         }
     }
     
+   
 
 }
