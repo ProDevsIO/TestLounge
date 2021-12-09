@@ -136,9 +136,9 @@ class Controller extends BaseController
         $postalcode =  $getAddress->postcode;
         $room = $getroom->roomid;
         $dam_product_id = $product->walk_product_id;
-        $bookdate = $booking->created_at->format('Y-m-d');
-        $durateStart = $booking->arrival_date->format('Y-m-d') ."T". $seperate_time[0];
-        $durateEnd = $booking->arrival_date->format('Y-m-d') ."T". $seperate_time[0];
+        $bookdate = $booking->test_date->format('Y-m-d');
+        $durateStart = $booking->test_date->format('Y-m-d') ."T". $seperate_time[0];
+        $durateEnd = $booking->test_date->format('Y-m-d') ."T". $seperate_time[0];
         $dob = $booking->dob->format('Y-m-d');
        
         //ethnicity
@@ -199,6 +199,39 @@ class Controller extends BaseController
         ///  --------------  End Availability api  --------------------  ///
 
         return $formatted_data;
+    }
+
+    function updateDamhealthlocation($bearer, $location, $room_id, $code)
+    {
+        
+        ///  ------------  update  a New Booking ----------   ///
+
+
+        $object = [ "locationid" => $location, "roomid"=> $room_id, "bookingid" => $code ];
+      
+        // $object = json_encode($object);
+ 
+        $getArrayBooking = [
+
+            "query" => 'mutation UpdateLocation($bookingid: Int!, $locationid: Int!, $roomid: Int!) { update_damhealth_bookings_by_pk(pk_columns: {bookingid: $bookingid}, _set: {roomid: $roomid, locationid: $locationid}) { locationid roomid bookingid } } ',
+
+            "variables" => $object
+    
+        ];
+       
+        $encoded_booking_data = json_encode($getArrayBooking);
+       
+        $b = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
+
+        curl_setopt($b, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($b, CURLOPT_POSTFIELDS,   $encoded_booking_data);
+        curl_setopt($b, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($b, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
+        
+        $result_book = curl_exec($b);
+        curl_close($b);
+        $dam_booking = json_decode($result_book);
+        dd($bearer, $location, $room_id, $code, $dam_booking);
     }
 
     function processStripe($stripeToken,$booking_id){

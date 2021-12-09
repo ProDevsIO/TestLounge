@@ -99,6 +99,8 @@ Route::get('/view/product/{slug}', [\App\Http\Controllers\HomeController::class,
 
 Route::get('/check/time/damlocation/{location}/{room}/{product}', [\App\Http\Controllers\HomeController::class, "getdamtimeslot"]);
 
+Route::get('/get/damlocation/{product}', [\App\Http\Controllers\HomeController::class, "getdamlocate"]);
+
 Route::get('/testing' ,[\App\Http\Controllers\HomeController::class, "test"]);
 
 Route::get('/slugging' ,[\App\Http\Controllers\HomeController::class, "slugify"]);
@@ -209,6 +211,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/pages', [\App\Http\Controllers\PageController::class,"view_created_pages"]);
     Route::post('/page/save', [\App\Http\Controllers\PageController::class,"add_page"]);
     Route::post('/page/edit/{id}', [\App\Http\Controllers\PageController::class,"edit_page"]);
+
+    Route::post('/update/damlocation/{id}', [\App\Http\Controllers\DashboardController::class,"updateDamBookingLocation"]);
 
     Route::get('/logout', [\App\Http\Controllers\DashboardController::class,"logout"]);
 

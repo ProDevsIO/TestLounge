@@ -291,7 +291,8 @@
                                             <th scope="col">Date/Time</th>
                                             <th scope="col" style="padding-left:70px; padding-right:70px">Product
                                                 </th>
-                                                <th scope="col">Product Price</th>
+                                                <th scope="col">Product
+                                                     Price</th>
                                             @if(auth()->user()->type == 1)
                                                 
                                                 <th scope="col">Commission</th>
@@ -412,8 +413,10 @@
                                                                         referral</a>
                                                                 @endif
                                                                 @if($booking->status == 1)
-                                                                    <a href="{{ url('/booking/generate/code/'.$booking->id) }}"
-                                                                        class="dropdown-item">Generate booking code</a>
+                                                                    <a href="{{ url('/booking/generate/code/'.$booking->id) }}" class="dropdown-item">Generate booking code</a>
+                                                                @endif
+                                                                @if($booking->dam_location != null)
+                                                                    <!-- <a href="#damModal{{$booking->id}}" data-toggle="modal" onclick="getdamlocate('{{ $booking->id }}')" class="dropdown-item">Update Damhealth test location</a> -->
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -461,8 +464,47 @@
 
                                                 </div>
                                             </div>
+                                            <div class="modal fade" id="damModal{{ $booking->id }}" role="dialog">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <form action="{{ url('/update/damlocation/'.$booking->id) }}" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="id" value="{{ $booking->id }}">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Update lab location</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="col-md-12">
+                                                                    <div id="dam_time" class="form-section" style="margin-top:20px;">
+                                                                        <h6>Damhealth Lab location <span class="show_required text-red"> *</span></h6>
+                                            
+                                                                        <select class="select-2 form-control get_dam_location" autocomplete="off" name="dam_details" required>
+
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close
+                                                                </button>
+                                                                <button type="submit" class="btn btn-primary">Update
+                                                                    changes
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
 
+                                        @foreach($bookings as $booking)
+                                           
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 @else
@@ -493,6 +535,7 @@
 @section('script')
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendor/data-tables/dataTables.bootstrap4.min.js"></script>
+    
     <script>
         $(document).ready(function () {
             $('#data_table').DataTable({
@@ -528,6 +571,39 @@
                 window.location = url;
             }
         }
+
+        function getdamlocate(id)
+        {  
+           
+            var $el = $(".get_dam_location");
+            console.log(id);
+            if (id !== '') {
+
+                var url = '/get/damlocation/' + id;
+
+                    $.get(url, function (data) {
+                        
+                        $el.empty(); // remove old options
+                        
+                        $el.append($("<option value=''>Select an available location </option>"));
+
+                        $.each(data, function (key, value) {
+
+                            console.log(value.array);
+
+                            $el.append($("<option></option>")
+                                .attr("value", value.array).text(value.name));
+                        });
+
+                    });
+                console.log('yes');
+            } else {
+                $el.empty();
+              
+                console.log('no');
+            }
+        }
+
     </script>
     @if(auth()->user()->type == 2 && auth()->user()->country == null)
         <script>

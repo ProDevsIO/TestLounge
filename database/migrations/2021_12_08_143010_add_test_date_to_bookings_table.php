@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDamTimeToBookingsTable extends Migration
+class AddTestDateToBookingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,9 +15,8 @@ class AddDamTimeToBookingsTable extends Migration
     {
         Schema::table('bookings', function (Blueprint $table) {
             //
-            if(!Schema::hasColumn('bookings', 'dam_time')){
-                $table->string('dam_time',200)->nullable()->after('dam_location');    
-
+            if(!Schema::hasColumn('bookings', 'test_date')){
+                $table->dateTime('test_date')->nullable()->after('dam_location');    
             }
         });
     }
@@ -31,7 +30,9 @@ class AddDamTimeToBookingsTable extends Migration
     {
         Schema::table('bookings', function (Blueprint $table) {
             //
-            $table-dropColumn('dam_time');
+            if(Schema::hasColumn('bookings', 'test_date')){
+                $table->dropColumn('test_date');    
+            }
         });
     }
 }

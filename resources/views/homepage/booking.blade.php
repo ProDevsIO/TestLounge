@@ -207,10 +207,12 @@
                                     <select style="width: 100%;" class="select-2"
                                             name="isolation_country_id" required readonly>
                                         <option value="">Make a selection</option>
-
-                                        <option value="225" selected
-                                        >UNITED KINGDOM
-                                        </option>
+                                        @foreach($countries as $country)
+                                            <option value="{{ $country->id }}"
+                                                    @if(old('isolation_country_id') == $country->id)
+                                                    selected
+                                                @endif>{{ $country->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6">
@@ -245,12 +247,20 @@
                                     <input class="date_picker1" type="text"
                                            placeholder="Arrival Date in UK"
                                            name="arrival_date"
-                                           value="{{ old('arrival_date') }}" id="arrive"  onclick="gettime()" required>
+                                           value="{{ old('arrival_date') }}" id="arrive" required>
                                 </div>
 
-                                @if(!$locations == null)
+                               
 
-                                    <div class="col-md-12">
+                                @if(!$locations == null)
+                                <div class="col-md-6">
+                                    <label>Date of test in the UK: <span class="show_required"> *</span></label>
+                                    <input class="date_picker1" type="text"
+                                           placeholder="Date of test in UK"
+                                           name="test_date"
+                                           value="{{ old('arrival_date') }}" id="test_date"  onclick="gettime()" required>
+                                </div>
+                                    <div class="col-md-6">
                                         <label>Test Location: <span class="show_required"> *</span></label>
                                         <select class="select-2 select2"
                                                 name="test_location[]" id="test_location" onchange="gettime()" autocomplete="off"
@@ -626,8 +636,8 @@
         function gettime()
         {
             var info = document.getElementById('test_location').value;
-            var date = document.getElementById('arrive').value;
-
+            var date = document.getElementById('test_date').value;
+           
             var $el = $(".get_dam_time");
             var $v = $('#dam_time')
 
