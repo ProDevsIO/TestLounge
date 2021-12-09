@@ -207,7 +207,7 @@ class Controller extends BaseController
         ///  ------------  update  a New Booking ----------   ///
 
 
-        $object = [ "object" =>[ "locationid" => $location, "roomid"=> $room_id, "bookingid" => 10009] ];
+        $object = [ "locationid" => $location, "roomid"=> $room_id, "bookingid" => $code ];
       
         // $object = json_encode($object);
  

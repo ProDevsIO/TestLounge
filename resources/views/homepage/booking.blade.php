@@ -248,6 +248,9 @@
                                            value="{{ old('arrival_date') }}" id="arrive" required>
                                 </div>
 
+                               
+
+                                @if(!$locations == null)
                                 <div class="col-md-6">
                                     <label>Date of test in the UK: <span class="show_required"> *</span></label>
                                     <input class="date_picker1" type="text"
@@ -255,9 +258,6 @@
                                            name="test_date"
                                            value="{{ old('arrival_date') }}" id="test_date"  onclick="gettime()" required>
                                 </div>
-
-                                @if(!$locations == null)
-
                                     <div class="col-md-6">
                                         <label>Test Location: <span class="show_required"> *</span></label>
                                         <select class="select-2 select2"
