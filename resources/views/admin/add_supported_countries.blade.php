@@ -2,6 +2,11 @@
 @section('style')
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
     {{--<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">--}}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.css"
+          integrity="sha512-DJ1SGx61zfspL2OycyUiXuLtxNqA3GxsXNinUX3AnvnwxbZ+YQxBARtX8G/zHvWRG9aFZz+C7HxcWMB0+heo3w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
 @endsection
 @section('content')
 
@@ -67,6 +72,14 @@
                                 <h5 for=""><b>Faq</b></h5>
                                 <textarea name="faq" id="" class="form-control faq" cols="30" rows="10"
                                           required></textarea>
+                                <br>
+                                <h5> Supported test types</h5>
+                                <select class="form-control select2" multiple name="supported_test[]" id="">
+                                    <option value=""> Select a test type</option>
+                                    @foreach($types as $type)
+                                    <option value="{{$type->id}}">{{$type->test_type}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <br>
@@ -84,6 +97,8 @@
 @section('script')
 
     <script src="https://cdn.ckeditor.com/4.17.1/standard-all/ckeditor.js"></script>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
         $(document).ready(function () {
             var settings = {
@@ -184,6 +199,11 @@
 
         });
 
+        $(document).ready(function () {
+            $('.select2').select2({
+                closeOnSelect: true
+            });
+        });
 
         function confirmation(url) {
             var d = confirm("Are you sure you want to perform this action?");

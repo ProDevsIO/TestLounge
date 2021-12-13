@@ -24,6 +24,7 @@ use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\PoundTransaction;
 use App\Models\User;
+use App\Models\TestType;
 use App\Models\Vendor;
 use App\Models\VendorProduct;
 use App\Models\Color;
@@ -3583,8 +3584,9 @@ class DashboardController extends Controller
 
         $products = Product::all();
         $pages = Pages::all();
+        $types = TestType::all();
 
-        return view('admin.add_supported_countries')->with(compact('countries','products','pages'));
+        return view('admin.add_supported_countries')->with(compact('countries','products','pages', 'types'));
     }
 
     public function view_supported_vendor($id)
@@ -3623,7 +3625,17 @@ class DashboardController extends Controller
         try{
 
             $request_data = $request->all();
+        //   dd($request_data);
 
+        //    dd(count($request_data['supported_test']));
+
+           foreach($request_data['supported_test'] as $test)
+           {
+               dump($test);
+               
+           }
+
+           dd('yes');
             unset($request_data['_token']);
 
             if(isset($request_data['image']))
@@ -3754,4 +3766,42 @@ class DashboardController extends Controller
         }
 
     }
+
+    public function view_product_category()
+    {
+        $test_types = TestType::all();
+       
+        return view('admin.test_types')->with(compact('test_types'));  
+    }
+
+    public function add_test_type(Request $request)
+    {
+        $this->validate($request, [
+            'test_type' => 'required',
+            
+        ]);
+
+        TestType::create($request->all());
+
+        session()->flash('alert-success', "You have successfully updated the test type name");
+        return back();
+    }
+
+    public function edit_test_type(Request $request, $id)
+    {
+        $this->validate($request, [
+            'test_type' => 'required',
+            
+        ]);
+
+        $request_data = $request->all();
+
+        unset($request_data['_token']);
+
+        TestType::where('id', $id)->update($request_data);
+
+        session()->flash('alert-success', "You have successfully updated the test type name");
+        return back();
+    }
+
 }

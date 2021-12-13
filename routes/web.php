@@ -143,7 +143,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/admins', [\App\Http\Controllers\DashboardController::class,"admins"]);
     Route::get('/users/delete/{id}', [\App\Http\Controllers\DashboardController::class,"delete_user"]);
     Route::get('/products', [\App\Http\Controllers\DashboardController::class,"products"]);
+    Route::get('/products/category',[\App\Http\Controllers\DashboardController::class, "view_product_category"]);
     Route::post('/edit/product', [\App\Http\Controllers\DashboardController::class,"edit_product"]);
+    Route::post('/add/test/type', [\App\Http\Controllers\DashboardController::class, "add_test_type"]);
+    Route::post('/edit/test/type/{id}', [\App\Http\Controllers\DashboardController::class, "edit_test_type"]);
     Route::post('/add/product', [\App\Http\Controllers\DashboardController::class,"add_product"]);
     Route::get('/delete/product/{id}', [\App\Http\Controllers\DashboardController::class,"delete_product"]);
     Route::get('/product/vendor/{id}/{price}/{pricestripe}/{costPrice}/{altprice}/{walkid?}', [\App\Http\Controllers\DashboardController::class,"product_vendor"]);

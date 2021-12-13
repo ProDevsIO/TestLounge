@@ -19,6 +19,7 @@ class SupportedCountries extends Model
         'departure_vaccinated',
         'departure_unvaccinated',
 		'faq',
+        'supported_test_id'
 	];
 
     // public function vendor()

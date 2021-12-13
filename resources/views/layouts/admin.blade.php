@@ -318,6 +318,12 @@
                                 <span>Products</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ url('/products/category') }}">
+                                <i class="icon-basket-loaded"></i>
+                                <span>Test Types</span>
+                            </a>
+                        </li>
 
                     <li>
                         <a href="{{ url('/users') }}">
