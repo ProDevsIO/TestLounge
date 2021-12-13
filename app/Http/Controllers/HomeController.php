@@ -885,6 +885,14 @@ class HomeController extends Controller
         $user = "";
 
         $carts_count = Cart::where('ip', session()->get('ip'))->count();
+
+        if($carts_count > 0)
+        {
+             $cart = Cart::where('ip', session()->get('ip'))->delete();
+        }
+
+        $carts_count = Cart::where('ip', session()->get('ip'))->count();
+       
         $voucher = VoucherGenerate::where('voucher', $voucher)->first();
 
         if($walk == 'yes')
@@ -1996,6 +2004,7 @@ class HomeController extends Controller
         $voucher =  VoucherGenerate::where(['voucher' => $request_data['external_reference'], 'status' => 0])->first();
         $referer = User::where('id', $voucher->agent)->first();
         $request_data['referral_code'] = $referer->referal_code;
+        
         $request_data['user_id'] = $voucher->agent;
       
 
@@ -2004,9 +2013,13 @@ class HomeController extends Controller
        
        if($voucher != null){
             $product_id = $voucher->voucherCount->product_id;
-
-            $vendor_products = VendorProduct::where('vendor_id', 3)->where('product_id', $product_id)->first();
-
+            if($booking->room == null)
+            {
+                 $vendor_products = VendorProduct::where('product_id', $product_id)->whereNull('walk_product_id')->first();
+            }else{
+                $vendor_products = VendorProduct::where('product_id', $product_id)->whereNotNull('walk_product_id')->first();
+                }
+          
             BookingProduct::create([
                 'booking_id' => $booking->id,
                 'product_id' => $product_id,
@@ -2060,7 +2073,7 @@ class HomeController extends Controller
             } catch (\Exception $e) {
 
                 $booking->update([
-                    'vendor_id' => 3,
+                    'vendor_id' => $vendor_products->vendor_id,
                     'mode_of_payment' => 3,
                     'transaction_ref' => $txRef,
                     'status' => 1
@@ -2188,7 +2201,7 @@ class HomeController extends Controller
 
             //update wiith transaction code
             $booking->update([
-                'vendor_id' => 3,
+                'vendor_id' => $vendor_products->vendor_id,
                 'mode_of_payment' => 3,
                 'transaction_ref' => $txRef,
                 'status' => 1,
