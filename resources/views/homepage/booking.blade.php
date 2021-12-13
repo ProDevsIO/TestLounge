@@ -237,15 +237,15 @@
                                     <label> Departure Date: <span
                                             class="show_required"> *</span></label>
                                     <input class="date_picker" type="text"
-                                           placeholder="Departure Date in UK"
+                                           placeholder="Departure Date "
                                            name="departure_date"
                                            value="{{ old('departure_date') }}" required>
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label>Arrival date in the UK: <span class="show_required"> *</span></label>
+                                    <label>Arrival date : <span class="show_required"> *</span></label>
                                     <input class="date_picker1" type="text"
-                                           placeholder="Arrival Date in UK"
+                                           placeholder="Arrival Date "
                                            name="arrival_date"
                                            value="{{ old('arrival_date') }}" id="arrive" required>
                                 </div>
@@ -254,9 +254,9 @@
 
                                 @if(!$locations == null)
                                 <div class="col-md-6">
-                                    <label>Date of test in the UK: <span class="show_required"> *</span></label>
+                                    <label>Date of test : <span class="show_required"> *</span></label>
                                     <input class="date_picker1" type="text"
-                                           placeholder="Date of test in UK"
+                                           placeholder="Date of test "
                                            name="test_date"
                                            value="{{ old('arrival_date') }}" id="test_date"  onclick="gettime()" required>
                                 </div>
