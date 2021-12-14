@@ -253,14 +253,14 @@
                                
 
                                 @if(!$locations == null)
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label>Date of test : <span class="show_required"> *</span></label>
                                     <input class="date_picker1" type="text"
                                            placeholder="Date of test "
                                            name="test_date"
                                            value="{{ old('arrival_date') }}" id="test_date"  onclick="gettime()" required>
                                 </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label>Test Location: <span class="show_required"> *</span></label>
                                         <select class="select-2 select2"
                                                 name="test_location[]" id="test_location" onchange="gettime()" autocomplete="off"
@@ -275,7 +275,7 @@
                                                               ];
                                                 @endphp
                                                 <option value="{{json_encode($value)}}"
-                                                        selected>{{ $location->name }}</option>
+                                                        selected>{{ $location->name }},{{$location->address->address}}, {{$location->address->city}}</option>
                                             @endforeach
                                         </select>
                                     </div>
