@@ -324,7 +324,7 @@
                                                 ?>
                                             
                                             @if(isset($address))
-                                                Walkin Test Lab: {{$address->address}},{{$address->city}},{{$address->postcode}} {{$address->country}}.
+                                                Walk-in Test Lab: {{$address->address}},{{$address->city}},{{$address->postcode}} {{$address->country}}.
                                             @endif
 
                                             @if($booking->dam_time != null)

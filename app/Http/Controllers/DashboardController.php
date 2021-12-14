@@ -3724,7 +3724,8 @@ class DashboardController extends Controller
 
         
         $decrypt = json_decode($request->dam_details);
-       
+        $address  = json_decode($decrypt->address);
+      
         $room = json_decode($decrypt->room);
       
         $booking= Booking::where('id', $id)->first();
@@ -3737,7 +3738,7 @@ class DashboardController extends Controller
             $update = $this->updateDamhealthlocation($bearer, $decrypt->location, $room->roomid, $code);
         }
 
-        if($update)
+        if($update != null)
         {
             Booking::where('id', $id)->update([
                 'dam_room'=> $decrypt->room,
@@ -3745,11 +3746,23 @@ class DashboardController extends Controller
                 'dam_address' => $decrypt->address
             ]);
 
+            $message = "
+            Dear " . $booking->first_name . ",<br><br>
+            This is to inform you that your location for walk-in test lab has been changed to $address->address,$address->city,$address->postcode,$address->country.
+            <br><br>
+
+                  <br/><br/>
+                  Thank you.
+                  <br/><br/>
+                TravelTestsltd Team
+            ";
+            Mail::to(["$booking->email",'john.aigbonohan@medburymedicals.com'])->send(new BookingCreation($message, "Walk-in Test Lab location Changed"));
+
             session()->flash('alert-success', "You have successfully updated the damhealth location for this booking");
             return back();
         }else{
 
-            session()->flash('alert-danger', "This request coulf not be completed");
+            session()->flash('alert-danger', "This request could not be completed, because the booking code isnt on damhealths system");
             return back();
         }
 

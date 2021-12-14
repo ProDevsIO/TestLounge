@@ -231,7 +231,8 @@ class Controller extends BaseController
         $result_book = curl_exec($b);
         curl_close($b);
         $dam_booking = json_decode($result_book);
-        dd($bearer, $location, $room_id, $code, $dam_booking);
+         
+        return $dam_booking->data->update_damhealth_bookings_by_pk;
     }
 
     function processStripe($stripeToken,$booking_id){

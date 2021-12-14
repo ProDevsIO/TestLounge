@@ -416,7 +416,7 @@
                                                                     <a href="{{ url('/booking/generate/code/'.$booking->id) }}" class="dropdown-item">Generate booking code</a>
                                                                 @endif
                                                                 @if($booking->dam_location != null)
-                                                                    <!-- <a href="#damModal{{$booking->id}}" data-toggle="modal" onclick="getdamlocate('{{ $booking->id }}')" class="dropdown-item">Update Damhealth test location</a> -->
+                                                                    <a href="#damModal{{$booking->id}}" data-toggle="modal" onclick="getdamlocate('{{ $booking->id }}')" class="dropdown-item">Update Damhealth test location</a>
                                                                 @endif
                                                             </div>
                                                         </div>
