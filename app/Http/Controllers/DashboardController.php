@@ -10,6 +10,7 @@ use App\Helpers\UserShare;
 use App\Mail\BookingCreation;
 use App\Mail\VendorReceipt;
 use App\Models\Voucher;
+use App\Models\SupportedCountriesTest;
 use App\Models\Pages;
 use App\Models\SupportedCountries;
 use App\Models\VoucherCount;
@@ -3628,14 +3629,20 @@ class DashboardController extends Controller
         //   dd($request_data);
 
         //    dd(count($request_data['supported_test']));
+            if(isset($request['supported_test']))
+            {
+                foreach($request['supported_test'] as $test)
+                {
+                    SupportedCountriesTest::create([
+                        'country_id'=> $request->country_id,
+                        'test_type_id'=> $test
+                    ]);
+                }
+            }
+           
 
-           foreach($request_data['supported_test'] as $test)
-           {
-               dump($test);
-               
-           }
 
-           dd('yes');
+           
             unset($request_data['_token']);
 
             if(isset($request_data['image']))
@@ -3661,19 +3668,24 @@ class DashboardController extends Controller
             dd($e);
             session()->flash('alert-danger', "Something went wrong");
             
-            return back()->withInputs();
+            return back()->withInputs(); 
         }
     }
 
-    public function view_edit_configuration($country_id)
+    public function view_edit_configuration($id)
     {
-        $countries = SupportedCountries::where('id', $country_id)->first();
+        $countries = SupportedCountries::where('id', $id)->first();
 
         $products = Product::all();
 
         $pages = Pages::all();
 
-        return view('admin.edit_supported_countries')->with(compact('countries','products','pages'));
+        $types = TestType::all();
+
+        $support = SupportedCountriesTest::where('country_id',$countries->country_id)->pluck('test_type_id')->toArray();
+    
+     
+        return view('admin.edit_supported_countries')->with(compact('countries','products','pages','support','types'));
     }
 
     public function edit_page_configuration(request $request)
@@ -3684,10 +3696,26 @@ class DashboardController extends Controller
         ]);
 
       try{
-        $request_data = $request->all();
 
+        $request_data = $request->all();
+   
+        if(isset($request['supported_test']))
+        {
+            SupportedCountriesTest::where([
+                'country_id'=> $request->country_id
+            ])->delete();
+
+            foreach($request['supported_test'] as $test)
+            {
+                SupportedCountriesTest::create([
+                    'country_id'=> $request->country_id,
+                    'test_type_id'=> $test
+                ]);
+            }
+        }
         unset($request_data['_token']);
         unset($request_data['files']);
+        unset($request_data['supported_test']);
 
         if(isset($request_data['image']))
         {
@@ -3701,8 +3729,6 @@ class DashboardController extends Controller
             $url = Storage::url($imageName);
 
             $request_data['image'] = $url;
-
-          
 
         }
         

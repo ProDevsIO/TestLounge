@@ -2,6 +2,11 @@
 @section('style')
     <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.css"
+          integrity="sha512-DJ1SGx61zfspL2OycyUiXuLtxNqA3GxsXNinUX3AnvnwxbZ+YQxBARtX8G/zHvWRG9aFZz+C7HxcWMB0+heo3w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
 @endsection
 @section('content')
 
@@ -23,6 +28,7 @@
                                 <label for=""><b>Country</b></label>
                                
 
+
                                 <select name="country_id" class="form-control" id="country" onchange ="getVendorCountry()" required>
                                     <option value="">Please select a country</option>
                                 
@@ -37,8 +43,9 @@
                             <div class="card-title p-3">
                                <h5><b>Image</b></h5>
                             </div>
+                            
                             <div class="card-body">
-                                <img id="blah" src="{{url($countries->image)}}" class="img-thumbnail img-fluid mx-auto d-block " width="50%" alt="View Image here" />
+                                <img id="blah" src="url($countries->image)" class="img-thumbnail img-fluid mx-auto d-block " width="50%" alt="View Image here" />
                                 <br><br>
                                 <input type="file" name="image" class="form-control" id="imgInp">
                             </div>
@@ -49,7 +56,7 @@
                                <h5> Page Information </h5>
                             </div>
                             <div class="card-body">
-
+                           
                                 <h5><b>On arrival (If fully vaccinated)</b></h5>
                                 <textarea name="arrival_vaccinated" id="" class="form-control arrival_vaccinated" cols="30" rows="10" >{{ old('arrival_vaccinated') ?? $countries->arrival_vaccinated}}</textarea>
                                 <br>
@@ -61,13 +68,20 @@
                                 <h5 for=""><b>Predeparture(If fully vaccinated)</b></h5>
                                 <textarea name="departure_vaccinated" id="" class="form-control departure_vaccinated" cols="30" rows="10">{{ old('departure_vaccinated') ?? $countries->departure_vaccinated}}</textarea>
                                 <br>
-
+                               
                                 <h5 for=""><b>Predeparture(If Unvaccinated / Partially vaccinated)</b></h5>
                                 <textarea name="departure_unvaccinated" id="" class="form-control departure_unvaccinated" cols="30" rows="10">{{ old('departure_unvaccinated') ?? $countries->departure_unvaccinated}}</textarea>
                                 <br>
 
                                 <h5 for=""><b>Faq</b></h5>
                                 <textarea name="faq" id="" class="form-control faq" cols="30" rows="10">{{old('faq') ?? $countries->faq}}</textarea>
+                                <h5> Supported test types</h5>
+                                <select class="form-control select2" multiple name="supported_test[]" id="">
+                                    <option value=""> Select a test type</option>
+                                    @foreach($types as $type)
+                                            <option value="{{$type->id}}" @if(in_array($type->id,$support)) selected @endif> {{$type->test_type}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <br>
@@ -86,6 +100,7 @@
     <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendor/data-tables/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.ckeditor.com/4.17.1/standard-all/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -172,7 +187,7 @@
             CKEDITOR.replace( 'departure_unvaccinated',settings );
             CKEDITOR.replace( 'departure_vaccinated' ,settings);
             CKEDITOR.replace( 'faq',settings );
-            CKEDITOR.replace( 'arrival_vaccinated' ,settings);
+            
 
         });
 
@@ -183,12 +198,12 @@
                 "order": []
             });
         });
+       
         $(document).ready(function () {
-            $('#data_table1').DataTable({
-                "order": []
+            $('.select2').select2({
+                closeOnSelect: true
             });
         });
-       
 
         function confirmation(url) {
             var d = confirm("Are you sure you want to perform this action?");
