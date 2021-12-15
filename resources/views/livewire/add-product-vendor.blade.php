@@ -1,17 +1,23 @@
 <div>
     <label>Products</label>
-    <select wire:model="product_id" class="form-control">
+    <select wire:model="product_id" class="form-control" id="product" onchange="get_types('{{$vendor_id}}')">
         <option value="">Make a Selection</option>
         @foreach($products as $product)
-            @if(!in_array($product->id,$vendor_products_array))
+           
                 <option value="{{ $product->id }}">{{ $product->name }}</option>
-            @endif
+        
         @endforeach
     </select>
     <label>Selling Price($)</label>
     <input type="number" wire:model="price" class="form-control" placeholder="Input number">
-    <label>Vendor's Cost Price($)</label>
+    <label>Vendor's Cost Price($) </label>
     <input type="number" wire:model="costPrice" class="form-control" placeholder="Input number">
+    <div class="test_box" style="width:100%;display:none "  wire:ignore>
+        <label for=""> test type</label>
+        <select wire:model="types" class="form-control" id="test_type{{$vendor_id}}">
+
+        </select>
+    </div>
     <label>Alternative price</label>
     <input type="text" wire:model="alternativePrice" class="form-control" placeholder="Please input alternative price">
     <label>Walkin Product id</label>
@@ -36,6 +42,8 @@
                 
                     {{ optional($vendor_product->product)->name }}:
                     ${{ number_format($vendor_product->price_pounds,2) }} - (N{{number_format($vendor_product->price,2) }})<br>Cost price:  (${{number_format($vendor_product->cost_price,2) }}) - (N{{number_format(($vendor_product->cost_price * $pound_price),2) }})<br>
+                    Test type: <span class="badge badge-info">{{optional($vendor_product->testtype)->test_type}}</span>
+                    <br>
                     <a href="javascript:;" class="btn btn-sm btn-info" onclick="change_product('{{ $vendor_product->id }}')"><i
                                     class="fa fa-edit"></i> edit</a>
                         <a href="javascript:;" class="btn btn-danger btn-sm"onclick="closeProduct('{{ $vendor_product->id }}')"><i
@@ -91,7 +99,43 @@
             })
         });
 
+    }
 
+    function get_types(id)
+    {
+
+        var product = document.getElementById('product').value;
+           console.log(product);
+          
+           var type = "#test_type"+id;
+            var $el = $(type);
+            var $v = $('.test_box');
+          
+            if (product !== '') {
+
+                var url = '/get/test/type/'+product+'/'+id;
+                $v.show();
+                    $.get(url, function (data) {
+
+                        $el.empty();// remove old options
+                        
+                        $el.append($("<option value=''>Select an available test type </option>"));
+
+                        $.each(data, function (key, value) {
+                            console.log(value.name);
+                           
+                            $el.append($("<option></option>")
+                                .attr("value", value.id).text(value.name));
+                        });
+                    });
+                    console.log('yes');
+            } else {
+                $el.empty();
+                $v.hide();
+                console.log('no');
+            }
+
+            console.log('maybe');
     }
 
 

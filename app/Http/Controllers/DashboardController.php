@@ -3830,4 +3830,25 @@ class DashboardController extends Controller
         return back();
     }
 
+    public function get_test_types($id, $vendor_id)
+    {
+
+        $product_array = VendorProduct::where(['product_id'=> $id, 'vendor_id' => $vendor_id])->pluck('test_type_id')->toArray();
+        $types = TestType::all();
+        $test =[];
+        foreach($types as $type)
+        {
+            if(!in_array($type->id, $product_array))
+            {
+                $test[] = [
+                    'id' => $type->id,
+                    'name' => $type->test_type,
+                   
+                ];
+            }
+        }
+
+        return $test;
+    }
+
 }

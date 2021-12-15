@@ -43,7 +43,8 @@ class VendorProduct extends Model
         'product_id',
         'vendor_id',
         'alternative_price',
-        'walk_product_id'
+        'walk_product_id',
+        'test_type_id'
     ];
 
     public function vendor()
@@ -69,5 +70,10 @@ class VendorProduct extends Model
     public function cartItem()
     {
         return $this->hasOne(Cart::class , "vendor_product_id" , "id")->where("ip" , myIP());
+    }
+
+    public function testType()
+    {
+        return $this->belongsTo(TestType::class);
     }
 }

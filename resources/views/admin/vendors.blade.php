@@ -208,6 +208,6 @@
     </script>
 
 
-
+    @stack('scripts')
     @livewireScripts
 @endsection
