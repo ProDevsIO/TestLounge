@@ -13,8 +13,9 @@
 @endsection
 @section('content')
 
-    <div class="main-container">
-        <section class="contact-photo">
+<div class="space-medium">
+        <!--space-medium-->
+        <div class="container">
 
 
             <div class="container">
@@ -39,13 +40,13 @@
                                     The test lab for walkin is located at {{$address->address}},{{$address->city}}, {{$address->country}}.
                                @endif
                                 
-@if(count($codes) > 1)
+                     @if(count($codes) > 1)
                                 Thank you for booking with us, Here are your
                                 codes
                                     @else
                                         Thank you for booking with us, Here is your
                                         code
-    @endif
+                         @endif
                                 @foreach($codes as $code)
                                     {{$code}},
                                 @endforeach

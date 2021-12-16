@@ -1,340 +1,343 @@
 @extends('layouts.home')
 @section('style')
-    <link href="{{ url('/css/product.css') }}" rel="stylesheet">
-    <style>
-        @media screen and (max-width: 508px) {
-            #content {
-                margin-top: 30px !important;
-            }
-        }
 
-        .btn-info {
-            border-color: transparent !important;
-        }
-    </style>
 @endsection
 @section('content')
-    <div class="main-container">
-
-        <header class="title" style="max-height: 300px !important;">
-            <div class="background-image-holder parallax-background">
-
-            </div>
-            <div class="container align-bottom">
-                <div class="row">
-                    <div class="col-xs-12 h9_header">
-                        <h5 id="h9" class="text-white">COUNTRY TESTS ({{optional(optional($sproducts)->product)->name}}
-                            ) </h5>
-
-                    </div>
+  <div class="page-header">
+        <!--page-header-->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+                    <!-- <h3 class="page-title">Day 2 / Book a Test</h3> -->
+                    <h1 class="page-description">{{$product->name}}</h1>
+                    <p><span class="badge" style="font-size: 25px;">£ {{optional($sproducts)->price_pounds}}</span></p>
                 </div>
-                <!--end of row-->
             </div>
-            <!--end of container-->
-        </header>
-        <section class="content bg-white" style="padding:0;">
-            <div class="jumbotron bg-white" style="padding: 0px">
-                <div class="purchase">
-                    <div class="header text-center">
-                        <!-- <div class="fw-700 fs-28">Travelling from the UK</div> -->
-                    </div>
+        </div>
+    </div>
+    <!--/.page-header-->
+    <div class="page-breadcrumb">
+        <!--page-breadcrumb-->
+        <!-- page-breadcrumb -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="/">Home</a></li>
+                        <li class="active">{{$product->name}}</li>
 
-                    @if (count($vproducts) > 0)
-                        <div class="container">
-                            <div class="container" id="show-result">
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.page-breadcrumb-->
+    <div class="content">
+        <!--content-->
+        <div class="container">
+        @include('errors.showerrors')
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
 
-                                <div class="row">
-                                    <div class="container" id="show-result">
+                    <h1>{{$product->name}}</h1>
+                    <p>{!! $product->description !!} </p>
+                   
 
+                    <!--/.st-accordion-->
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                    <div class="sidebar">
+
+                        <!--/.sidenav-->
+                        <div class="appointment-block">
+                            <!--appointment-block-->
+                           
+                                <div class="bg-default widget-appointments">
+                                @if($sproducts != null)
+                                    <div class=" ">
+                                        <h2 class="mb20">Book Test</h2>
                                     </div>
-
-                                    <?php $i = 1 ?>
-                                    <div class="row">
-                                        <div class="col-md-8" id="content" style="margin-top:100px;">
-                                            <h2 class="" style="text-color:black"><span
-                                                    class="">{{ optional(optional($sproducts)->product)->name }}</span>
-                                            </h2>
-                                            <br>
-                                            <p style="line-height:36px; font-size: 16px;">{!! optional(optional($sproducts)->product)->description !!}</p>
+                                    <form class="form-horizontal " method="post"
+                                        action="{{ url('/post/booking') }}"">
+                                        @csrf
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                                <label>First Name <span class="show_required"> *</span>
+                                                </label>
+                                                <input type="text" placeholder="First name" name="first_name" value="{{ old('first_name') }}"
+                                                    style="margin-bottom:0px;" class="form-control input-md" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Surname <span class="show_required"> *</span></label>
+                                                <input type="text" placeholder="Surname" name="last_name"
+                                                    class="form-control input-md" value="{{ old('last_name') }}" required>
+                                            </div>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12" style="margin-top: 20px">
+                                                <label>Contact Email: <span class="show_required"> *</span></label>
 
+                                                <input type="text" name="email" value="{{ old('email') }}" id="email"
+                                                    class="form-control input-md" required />
 
-                                        @foreach ($vproducts as $vproduct)
-
-
-
-
-                                            <div class="col-md-4">
-                                                <div class="col-md-12 card"
-                                                     style="margin-top:20px;padding:50px; border-radius:10px; background-color:#24477f;">
-
-                                                    <div class="container text-center"
-                                                         style="padding-left:0; padding-right:0;">
-                                                        {{-- <a onclick ="addCart('{{$vproduct->product->id}}', '{{$vproduct->vendor->id}}')" --}}
-
-                                                        @if ($vproduct->cartItem)
-                                                            <div
-                                                                class="input-group count_now{{ $vproduct->product->id }}">
-                                                                                                                <span
-                                                                                                                    class="input-group-addon cart_update_btn bg-white"
-                                                                                                                    data-action="remove">-</span>
-
-                                                                <input type="text"
-                                                                       style=""
-                                                                       class="form-control text-center cart_input"
-                                                                       id="quantity_{{ $i }}"
-                                                                       value="{{ $vproduct->cartItem->quantity }}"
-                                                                       data-cart_id="{{  $vproduct->cartItem->id }}"/>
-
-                                                                <span class="input-group-addon cart_update_btn bg-white"
-                                                                      data-action="add">+</span>
-                                                            </div>
-                                                            <br>
-                                                            <h5 class="text-center"
-                                                                style="color:white !important;"><span
-                                                                    class=""> £{{ number_format(optional($vproduct)->price / 830)}} / ${{ optional($vproduct)->price_pounds }} </span>
-                                                            </h5>
-                                                            <a id="remove_button"
-                                                               type="button"
-                                                               data-button="remove_button"
-                                                               data-product_id="{{ $vproduct->product->id }}"
-                                                               data-vendor_id="{{ $vproduct->vendor->id }}"
-                                                               class="btn btn-outline-info cart_btn"
-                                                               style="border:1px solid #1E50A0;">
-                                                                Remove
-
-                                                            </a>
-
-                                                        @else
-
-                                                            <div
-                                                                class="input-group count_now{{ $vproduct->product->id }}"
-                                                                style="display: none;">
-                                                                                                                <span
-                                                                                                                    class="input-group-addon cart_update_btn bg-white"
-                                                                                                                    data-action="remove">-</span>
-
-                                                                <input type="text"
-                                                                       style=""
-                                                                       class="form-control text-center cart_input cart{{ $vproduct->product->id  }}"
-                                                                       id="quantity_{{ $i }}"
-                                                                       value="1"
-                                                                       data-cart_id=""/>
-
-                                                                <span class="input-group-addon cart_update_btn bg-white"
-                                                                      data-action="add">+</span>
-                                                            </div>
-
-                                                            <h5 class="text-center"
-                                                                style="color:white !important;"><span
-                                                                    class="">£{{ number_format(optional($vproduct)->price / 830)}} / ${{ optional($vproduct)->price_pounds }}</span>
-                                                            </h5>
-                                                            <a id="add_button"
-                                                               type="button"
-                                                               data-button="add_button"
-                                                               style="align:center;"
-                                                               data-product_id="{{ $vproduct->product->id }}"
-                                                               data-vendor_id="{{ $vproduct->vendor->id }}"
-                                                               class="btn btn-info cart_btn "
-                                                            >
-                                                                Add to
-                                                                cart
-                                                            </a>
-
-                                                    @endif
-                                                    <!-- <a href="/view/cart" id="add_button" class="btn btn-info">Go to cart</a> -->
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 text-center" style="margin-top:50px"><a
-                                                        id="go_button"
-                                                        href="{{ url('/view/cart') }}"
-                                                        type="button" class="btn bg-1">Go
-                                                        to cart <img
-                                                            src="https://img.icons8.com/fluency/20/000000/right.png"/></a>
-                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 " style="margin-top: 20px">
+                                                <label>Phone number<span class="show_required"> *</span></label>
+                                                <br>
+                                                <input id="phone" type="text" value="" name="phone_no"
+                                                class="form-control input-md" placeholder="Phone No" required>
+                                            <input id="hidden_phone" type="hidden" name="phone_full">
                                             </div>
 
-
-                                            <?php $i++; ?>
-                                        @endforeach
-                                        <div> &nbsp;</div>
-                                    </div>
-
-                                    @else
-                                        <div style="padding: 50px 50px 30px 50px">
-                                            <h4 class="text-center">No product available
-                                                for now</h4>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="col-md-6" style="margin-bottom: 20px">
+                                                <label>Sex <span class="show_required"> *</span></label>
+                                                <select class="select-2 form-control input-md" name="sex" required>
+                                                    <option value="">Make a selection</option>
+                                                    <option value="1" @if(old('sex') == "1")
+                                                                            selected
+                                                                      @endif>Male
+                                                    </option>
+                                                    <option value="2" @if(old('sex') == "2")
+                                                                        selected
+                                                                      @endif>Female
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label>Date of Birth <span class="show_required"> *</span>
+                                                </label>
+                                                <input class="form-control input-md" type="date" placeholder="Date of Birth"
+                                                    name="dob" value="{{ old('dob') }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label>Ethnicity <span class="show_required"> *</span></label>
+                                                <select class="select-2 form-control input-md" name="ethnicity" required>
+                                                    <option value="">Make a selection</option>
+                                                    <option value="1" @if(old('ethnicity') == "1")
+                                                        selected
+                                                            @endif>White
+                                                        </option>
+                                                        <option value="2" @if(old('ethnicity') == "2")
+                                                        selected
+                                                            @endif>Mixed/Multiple Ethnic groups
+                                                        </option>
+                                                        <option value="3" @if(old('ethnicity') == "3")
+                                                        selected
+                                                            @endif>Asian/Asian British
+                                                        </option>
+                                                        <option value="4" @if(old('ethnicity') == "4")
+                                                        selected
+                                                            @endif>
+                                                            Black/African/Caribbean/Black British
+                                                        </option>
+                                                        <option value="5" @if(old('ethnicity') == "5")
+                                                        selected
+                                                            @endif>Other Ethnic group
+                                                        </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                    <label> Country travelling from:</label>
+                                                    <select style="width: 100%;" class="select-2 form-control input-md"
+                                                        name="country_travelling_from_id" required>
+                                                        <option value="">Make a selection</option>
+                                                        @foreach($countries as $country)
+                                                            <option value="{{ $country->id }}"
+                                                                    @if(old('country_travelling_from_id') == $country->id)
+                                                                    selected
+                                                                @endif>{{ $country->name }}</option>
+                                                        @endforeach
+                                                        
+                                                    </select>
+                                                </div>
+                                         </div>
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                                <label>Isolation Address1: <span class="show_required"> *</span> </label>
+                                                <input class="form-control input-md" type="text" name="isolation_address"
+                                                    placeholder="apartment, building, block, street" value="{{ old('isolation_address') }}" required />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Isolation Address2: </label>
+                                                <input class="form-control input-md" type="text" name="isolation_address2"
+                                                    id="isolation_address2" placeholder="apartment, building, block, street"
+                                                    value="{{ old('isolation_address2') }}" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Isolation City/Town: <span class="show_required"> *</span></label>
+                                                <input class="form-control input-md" type="text" name="isolation_town"
+                                                    value="{{ old('isolation_town') }}" required />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Isolation Postcode: <span class="show_required"> *</span></label>
+                                                <input class="form-control input-md" type="text"
+                                                    name="isolation_postal_code" value="{{ old('isolation_postal_code') }}" required />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Isolation Country:</label>
+                                                <select style="width: 100%;" class="select-2 form-control input-md"
+                                                    name="isolation_country_id" required readonly>
+                                                    <option value="">Make a selection</option>
+
+                                                    <option value="225" selected>UNITED KINGDOM
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label> Departure Date: <span class="show_required"> *</span></label>
+                                                <input class="date_picker form-control input-md" type="date"
+                                                    placeholder="Departure Date in UK" name="departure_date" value="{{ old('departure_date') }}"
+                                                    required>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label>Arrival date in the UK: <span class="show_required"> *</span></label>
+                                                <input class="date_picker1 form-control input-md" type="date"
+                                                    placeholder="Arrival Date in UK" name="arrival_date" value="arrival_date" required>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                            <label>Select Card types <span class="show_required"> *</span></label>
+                            
+                                                <select class="select-2 form-control input-md" autocomplete="off" required name="card_type">
+                                                    <option value="">Select a card type</option>
+                                                    <option value="1">Local Card</option>
+                                                    <option value="2">International Card</option>
+                                                </select>
+                                            </div>
+                                           <br>
+                                          
+                                        </div> 
+
+                                        <input type="hidden" value="{{$sproducts->id}}" name="vproduct">
+                                        <input type="hidden" value="stripe" name="payment_method">
+                                            
+                                        <!-- Button -->
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <button id="singlebutton" type="submit" name="singlebutton"
+                                                    class="btn btn-default btn-block">Make Payment (£{{$sproducts->price_pounds}})</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    @else
+                                        <h3 class="test-center" style="color:white"><b>No price available yet<b></h3>
                                     @endif
                                 </div>
-                            </div>
+                          
                         </div>
+
+                    </div>
+                    <!--/.sidebar-->
                 </div>
-        </section>
-
-        <br>
-
+            </div>
+        </div>
     </div>
+    <!--/.content-->
+    <div class="full-cta">
+        <!--full-cta-->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                    <h2 class="cta-title">Ask a Question?</h2>
+                    <p class="text-white">Call us on <strong>02036334452</strong> </p>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                    <a href="faq.html" class="btn btn-secondary pull-right">Frequently Asked Questions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.full-cta-->
+    <div class="footer">
+        <!--footer-->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                    <div class="widget-footer mb60">
+                        <!--widget-footer-->
+                        <a href="index.html"><img src="images/logo.png" alt="" class="img-responsive"></a>
+                    </div>
+                    <!--/.widget-footer-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="widget-footer">
+                        <!--widget-footer-->
+                        <ul class="contact listnone">
+                            <li><i class="fa fa-phone"></i><strong> 02036334452</strong></li>
+                            <li><i class="fa fa-envelope-open-o"></i> <strong>info@thetestinglounge.com</strong></li>
+                        </ul>
+                    </div>
+                    <!--/.widget-footer-->
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">
+                    <div class="widget-footer">
+                        <!--widget-footer-->
+                        <h3 class="widget-title">Covid Tests</h3>
+                        <ul class="listnone circle-style">
+                                @foreach($products as $product)
+                                    <li><a href="/view/product/{{$product->slug}}" title="{{$product->name}}">{{$product->name}}</a></li>  
+                                   @endforeach
+
+                        </ul>
+                    </div>
+                    <!--/.widget-footer-->
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                    <div class="widget-footer">
+                        <!--widget-footer-->
+                        <h3 class="widget-title">Quick Links</h3>
+                        <ul class="listnone circle-style">
+                            <li><a href="index.html">Home </a> </li>
+                            <li><a href="contact-us.html">About Us</a></li>
+                            <li><a href="test-list.html">Lab Test</a></li>
+                            <li><a href="contact-us.html">Blog</a></li>
+                            <li><a href="contact-us.html">Contact us</a></li>
+                        </ul>
+                    </div>
+                    <!--/.widget-footer-->
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                    <div class="widget-footer footer-social">
+                        <!--widget-footer-social-->
+                        <h3 class="widget-title">Connect With Us</h3>
+                        <ul class="listnone">
+                            <li><a href="https://www.instagram.com/thetestingloungeuk/" class="facebook-btn"
+                                    target="_blank"><i class="fa fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                    <!--/.widget-footer-social-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.footer--> 
 @endsection
 @section('script')
-    <script>
+<script>
+    const phoneInputField = document.querySelector("#phone");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+             initialCountry: "gb",
+             separateDialCode: true,
+             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+             hiddenInput: "hidden_phone",
+            nationalMode: false,
+    });
+</script>
 
-        $(".cart_btn").on("click", function (e) {
-            e.preventDefault();
-            const btn = $(this);
-            btn.attr("disabled", true);
-            const product_id = btn.attr("data-product_id");
-            const vendor_id = btn.attr("data-vendor_id");
-            const button = btn.attr("data-button");
-
-            if (product_id && vendor_id) {
-                var url = '/add/cart/' + product_id + '/' + vendor_id;
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $.ajax({
-                    type: "get",
-                    url: url,
-                    data: null,
-                    dataType: 'json',
-                    success: function (data) {
-                        console.log(data);
-                        if (data.error == "yes") {
-                            toastr.warning(data.message);
-                            btn.attr("disabled", false);
-                            $(".count_now" + product_id).hide();
-                        } else {
-                            toastr.success(data.message)
-                            btn.html(data.btn_text)
-                            btn.css({
-                                "backgroundColor": data.btn_color,
-                                "color": data.color
-                            });
-                            btn.removeAttr("disabled");
-                            $(".cart_count_item").html(data.cart_items);
-                            console.log(button);
-                            if (button == "add_button") {
-                                $(".cart" + product_id).attr('data-cart_id', data.cart_id);
-                                btn.attr("data-button", "remove_button");
-                                console.log(".count_now" + product_id);
-                                $(".count_now" + product_id).show();
-                            } else {
-                                btn.attr("data-button", "add_button");
-
-                                $(".count_now" + product_id).hide();
-                            }
-                        }
-                    },
-                    error: function (error) {
-                        toastr.error('Error', 'Unable to process request')
-                        console.log(error);
-                        btn.removeAttr("disabled");
-                    }
-                });
-            }
-        })
-
-        function addCart(product_id, vendor_id) {
-
-            var url = '/add/cart/' + product_id + '/' + vendor_id;
-            $("#show-result")
-                .find('p')
-                .remove()
-                .end();
-            $.get(url, function (data) {
-
-                var holder = document.getElementById("show-result");
-                var newNode = document.createElement('p');
-                var close = document.createElement('a');
-                newNode.innerHTML = data;
-                close.innerHTML = "X";
-                holder.appendChild(newNode);
-                newNode.appendChild(close);
-                $("#show-result p a").addClass('close')
-                $("#show-result p a").attr("data-dismiss", "alert")
-                $("#show-result p").addClass('alert alert-info')
-            });
-        }
-
-        function countryQuery() {
-
-            var country_id = document.getElementById("country").value;
-            console.log(country_id);
-            var url = '/country/query/' + country_id;
-            $("#show-result")
-                .find('p')
-                .remove()
-                .end();
-            $.get(url, function (data) {
-
-                var holder = document.getElementById("show-result");
-                var newNode = document.createElement('p');
-                var close = document.createElement('a');
-                newNode.innerHTML = data;
-                close.innerHTML = "X";
-                holder.appendChild(newNode);
-                newNode.appendChild(close);
-                $("#show-result p a").addClass('close')
-                $("#show-result p a").attr("data-dismiss", "alert")
-                $("#show-result p").addClass('alert')
-                $("#show-result p").addClass('p-2')
-                $("#show-result p").attr("style", "background-color: #1E50A0;color:white;margin-bottom: 5px;")
-
-            });
-        }
-
-        $(".cart_update_btn").on("click", function () {
-            const btn = $(this);
-            const input = btn.parent().find("input");
-            if (input !== undefined) {
-                let inputValue = $(input[0])
-                const value_ = parseInt(inputValue.val());
-                let value = value_
-                const action = btn.attr("data-action")
-                if (action == "add") {
-                    value = value + 1
-                } else {
-                    if (value >= 2) {
-                        value = value - 1
-                    }
-                }
-                if (value_ != value) {
-                    inputValue.val(value)
-                    update(btn, input.attr("data-cart_id"), value);
-
-                }
-            }
-        })
-
-        function update(btn, id, quantity) {
-            btn.attr("disabled", true);
-            const url = "/update/cart/" + id + "/" + quantity;
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                type: "get",
-                url: url,
-                data: null,
-                dataType: 'json',
-                success: function (data) {
-                    toastr.success('Successfully updated quantity in cart')
-                    $("#totalCartPrice").html(data.total_price);
-                    btn.removeAttr("disabled");
-                    $("#cart_item_total_" + id).html(data.item_total);
-                },
-                error: function (error) {
-                    toastr.error('Error', 'Unable to process request')
-                    btn.removeAttr("disabled");
-                }
-            });
-        }
-    </script>
 @endsection

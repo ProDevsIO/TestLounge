@@ -1,201 +1,115 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>
-<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>
-<html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js"> <!--<![endif]-->
+<html lang="en">
+
 <head>
     <meta charset="utf-8">
-
-    <title>Traveltestsltd | Home</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="/css/flexslider.min.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="/css/line-icons.min.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="/css/elegant-icons.min.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="/css/lightbox.min.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="/css/theme-blues.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="/css/custom.css" rel="stylesheet" type="text/css" media="all"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
-    <!--[if gte IE 9]>
-    <link rel="stylesheet" type="text/css" href="/css/ie9.css"/>
-    <![endif]-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600,700%7CRaleway:700'
-          rel='stylesheet' type='text/css'>
-    <script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <link rel="stylesheet" href="/js/phone_lib/css/intlTelInput.css">
-    <link rel="icon" type="image/png" href="/img/fav.PNG">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
-    <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+     <meta name="description" content="TheTestingLounge | The number one place to get all your test done in the UK">
+     <meta name="keywords" content="laboratory, TheTestingLounge laboratory, TheTestingLounge website">
+    <title>TheTestingLounge | Testing Made Easy</title>
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Style css -->
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Owl carousel style Css -->
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/owl.theme.default.css" rel="stylesheet">
+    <!-- Google Font css -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900" rel="stylesheet">
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
     @yield('style')
-    <link href="/css/index.css" rel="stylesheet"/>
-
-    <link href="/css/loader.min.css" rel="stylesheet"/>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+     <!-- Coountry code -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 </head>
+
 <body>
-<?php
-$ignore = ["booking", "booking_success", "booking_failed", 'about', 'products_covid', "next_steps", "make_payment", "code_failed", "voucher_booking"];
-?>
-<div class="nav-container">
-    <nav class="top-bar
-       @if(!in_array(\Illuminate\Support\Facades\Route::current()->getName(),$ignore))
-            overlay-bar
-
-@endif
-            ">
-
-
-        <div class="container">
-
-            <div class="row utility-menu">
-                <div class="col-sm-12 ">
-                    <div class="utility-inner clearfix">
-                        <span class=""><i class="icon-envelope"></i> INFO@TRAVELTESTSLTD.COM</span>
-
-                        <div class="pull-right">
-                            @if(!in_array(\Illuminate\Support\Facades\Route::current()->getName(),$ignore))
-                                <a id="nav-btn" href="/login" class="btn btn-primary btn-white btn-xs">Login</a>
-                                <a id="nav-btn" href="/register/agent" class="btn btn-primary btn-white btn-xs">Register
-                                    as an Agent</a>
-                            @else
-                                <a id="nav-btn" href="/login" class="btn btn-primary btn-xs">Login</a>
-                                <a id="nav-btn" href="/register/agent" class="btn btn-primary btn-xs">Register as an
-                                    Agent</a>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div><!--end of row-->
-
-
-            <div class="row nav-menu">
-                <div class="col-sm-3 col-md-2 columns">
-                    <a href="{{ url('/') }}" >
-                        <img class="logo logo-light" alt="Logo" style=" max-width: 150px;max-height:100px;top:-50px;" src="/img/logo-white.png">
-                        <img class="logo logo-dark" alt="Logo" style=" max-width: 150px;max-height:100px;top:-37px;left: -20px;" src="/img/logo-dark.png">
-                        
-                    </a>
-                </div>
-
-                <div class="col-sm-9 col-md-10 columns">
-                    <ul class="menu">
-                        <li><a href="{{ url('/') }}">Home</a>
-                        </li>
-                        <li><a href="{{ url('/about') }}">About</a></li>
-                        <li><a href="/#contact">Contact</a>
-                        </li>
-                        <?php
-                        $cartcount = App\Models\Cart::where('ip', session()->get('ip'))->count();
-
-                        ?>
-                        <li id="hide2"><a href="{{url('/view/cart')}}"><i class="icon icon_cart"></i><span
-                                        class="badge badge-cart cart_count_item">{{$cartcount}}</span></a></li>
-                        <li id="hide"><a href="/login">login</a></li>
-                        <li id="hide"><a href="/register/agent">Register as an agent</a></li>
-                    </ul>
-
-                    <ul class="social-icons text-right">
-
-                        <li>
-                            <a target="_blank" href="https://twitter.com/tests_uk">
-                                <i class="icon social_twitter"></i>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a target="_blank" href="https://www.facebook.com/UK-Travel-Tests-105975218439195">
-                                <i class="icon social_facebook"></i>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a target="_blank" href="https://www.instagram.com/uktraveltests1/?hl=en">
-                                <i class="icon social_instagram"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div><!--end of row-->
-            <div id="hide" style="
-                    position: absolute;
-                    top: 33px;
-                    right: 50px;">
-                <a href="{{url('/view/cart')}}" style="color:#777777;font-size:14px;"><i
-                            class="icon icon_cart"></i><span
-                            class="badge badge-cart cart_count_item">{{$cartcount}}</span></a></li>
-
-            </div>
-            <div class="mobile-toggle">
-
-                <i class="icon icon_menu"></i>
-            </div>
-
-        </div><!--end of container-->
-    </nav>
-
-
-</div>
-@yield('content')
-
-
-
-
-
-<div class="footer-container">
-
-    <footer class="bg-1 short-2">
+    @php
+     $products = App\Models\Product::all()
+    
+    @endphp
+    <div class="header">
+        <!--header-->
         <div class="container">
             <div class="row">
-                <div class="col-sm-12">
-                    <span class="text-white">© {{ date('Y') }} Travel Tests Limited</span>
-                    <span class="text-white">info@traveltestsltd.com</span>
-                    <span class="text-white" style="">Nigeria: +234 9124768070<br>UAE: +971544119013, +971563784904 <br>UK: +44 (0) 7742 999786(WhatsApp)</span>
-                   
-                  
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="logo">
+                        <a href="index.html"><img src="/images/logo.png" alt="" class="img-responsive"></a>
+                    </div>
                 </div>
-            </div><!--end for row-->
-        </div><!--end of container-->
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <div id="navigation">
+                        <!--navigation-->
+                        <ul>
+                            <li><a href="/" title="Home page">Home</a></li>
+                            <li><a href="#" title="Test">Covid-19 Testing</a>
+                                <ul>
+                                    @foreach($products as $product)
+                                    <li><a href="/view/product/{{$product->slug}}" title="{{$product->name}}">{{$product->name}}</a></li>  
+                                   @endforeach
+                                </ul>
+                            
+                                
+                            
+                            </li>
 
-        <div class="contact-action">
-            <div class="align-vertical" style="padding-top: 0px;">
-                <i class="icon text-white icon_mail"></i>
-                <a href="mailto:info@traveltestsltd.com" class="text-white"><span class="text-white">Get in touch with us <i class="icon arrow_right"></i></span></a>
+                            <li><a href="/about">ABOUT US</a>
+                            
+                            <li><a href="/faq">FAQ</a>
+                        
+                            </li>
+                            
+                            <li><a href="/contact" title="">Contact us</a></li>
+                            <li><a href="/login" title="">Login</a></li>
+                             <li><a href="/register/agent" title="">Register</a></li>
+                        </ul>
+                    </div>
+                    <!--/.navigation-->
+                </div>
             </div>
         </div>
-    </footer>
-</div>
-
-<script src="/js/jquery.min.js"></script>
-<script src="/js/jquery.plugin.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/jquery.flexslider-min.js"></script>
-<script src="/js/smooth-scroll.min.js"></script>
-<script src="/js/skrollr.min.js"></script>
-<script src="/js/spectragram.min.js"></script>
-<script src="/js/scrollReveal.min.js"></script>
-<script src="/js/isotope.min.js"></script>
-<script src="/js/phone_lib/js/intlTelInput.js"></script>
-<script src="/js/lightbox.min.js"></script>
-<script src="/js/jquery.countdown.min.js"></script>
-<script src="/js/scripts.js"></script>
-<script src="/js/tools.min.js"></script>
-<script src="/js/loader.min.js"></script>
-
-<script>
-    @if(isset($_GET['ref']) && $_GET['ref'])
-      localStorage.setItem('ref', '{{ $_GET['ref'] }}');
-    @endif
-    console.log('Built with ❤ by ProDevs(https://prodevs.io)');
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-@yield('script')
+    </div>
+   
+    @yield('content')
+    <!--/.footer-->
+    <div class="tiny-footer">
+        <!--tiny-footer-->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>TheTestingLounge. All Rights Reserved. 2021</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.tiny-footer-->
+    <!-- back to top icon -->
+    <a href="#0" class="cd-top" title="Go to top">Top</a>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/menumaker.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/slider.js"></script>
+    <!-- sticky header -->
+    <script type="text/javascript" src="/js/jquery.sticky.js"></script>
+    <script type="text/javascript" src="/js/sticky-header.js"></script>
+    <!-- location -->
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script type="text/javascript" src="/js/location.js"></script>
+    <!-- Back to top script -->
+    <script src="/js/back-to-top.js" type="text/javascript"></script>
+    @yield('script')
 </body>
+
 </html>

@@ -54,7 +54,9 @@ class HomeController extends Controller
 
         $display_countries = SupportedCountries::whereNotNull('image')->inRandomOrder()->limit(1)->get();
 
-        return view('homepage.home')->with(compact('scountries','display_countries'));
+      
+
+        return view('homepage.home')->with(compact('scountries'));
     }
     
     public function booking(Request $request)
@@ -169,7 +171,7 @@ class HomeController extends Controller
             'ethnicity' => 'required',
             'phone_no' => 'required',
             'email' => 'required',
-            'verify_email' => 'required',
+           
             'isolation_address' => 'required',
             'isolation_town' => 'required',
             'isolation_postal_code' => 'required',
@@ -177,7 +179,7 @@ class HomeController extends Controller
             'arrival_date' => 'required',
             'country_travelling_from_id' => 'required',
             'departure_date' => 'required',
-            'consent' => 'required'
+           
         ]);
 
         if($request->test_location)
@@ -188,11 +190,11 @@ class HomeController extends Controller
         $request->vendor_id = 3;
         $test_kit = [];
 
-       if($request->email != $request->verify_email)
-       {
-        session()->flash('alert-danger', "Please you have provided two different emails, the emails must match in order to make booking");
-        return back()->withInput();
-       }
+    //    if($request->email != $request->verify_email)
+    //    {
+    //     session()->flash('alert-danger', "Please you have provided two different emails, the emails must match in order to make booking");
+    //     return back()->withInput();
+    //    }
 
         $request_data = $request->all();
        
@@ -286,12 +288,12 @@ class HomeController extends Controller
             }
         }
 
-        $carts = Cart::where('ip', session()->get('ip'))->get();
+        // $carts = Cart::where('ip', session()->get('ip'))->get();
 
-        if ($carts->count() == 0) {
-            session()->flash('alert-danger', "Kindly select a product and add to your cart");
-            return back()->withInput();
-        }
+        // if ($carts->count() == 0) {
+        //     session()->flash('alert-danger', "Kindly select a product and add to your cart");
+        //     return back()->withInput();
+        // }
        
        
 
@@ -319,36 +321,33 @@ class HomeController extends Controller
 
         $request_data['transaction_ref'] = $transaction_ref;
         $request_data['external_reference'] = $external_ref;
-        
-        foreach ($carts as $cart) {
-            $request_data['vendor_id']  = $cart->vendorProduct->vendor_id;
-        }
+
+        $vendor_products = VendorProduct::where('id',  $request_data['vproduct'])->first(); 
+
+        $request_data['vendor_id']  = $vendor_products->vendor_id;
 
         unset($request_data['payment_method']);
+        unset($request_data['vproduct']);
 
         $price = $price_pounds = 0;
         
         $booking = Booking::create($request_data);
-        foreach ($carts as $cart) {
-            $product_id = $cart->vendorProduct->product_id;
-
-
-            $vendor_products = VendorProduct::where('vendor_id', $cart->vendorProduct->vendor_id)->where('product_id', $product_id)->first();
+       
+            $product_id =  $vendor_products->product_id;
 
             BookingProduct::create([
                 'booking_id' => $booking->id,
-                'product_id' => $product_id,
+                'product_id' => $vendor_products->product_id,
                 'vendor_id' => $vendor_products->vendor_id,
                 'vendor_product_id' => $vendor_products->id,
-                'price' => ($vendor_products->price * $cart->quantity),
-                'price_pounds' => ($vendor_products->price_pounds * $cart->quantity),
-                'vendor_cost_price' => ($vendor_products->cost_price * $cart->quantity),
-                'quantity' => $cart->quantity
+                'price' => $vendor_products->price ,
+                'price_pounds' => $vendor_products->price_pounds ,
+                'vendor_cost_price' => $vendor_products->cost_price,
+                'quantity' => 1
             ]);
 
-            $price = $price + ($vendor_products->price * $cart->quantity);
-            $price_pounds = $price_pounds + ($vendor_products->price_pounds * $cart->quantity);
-        }
+            $price = $price + $vendor_products->price;
+            $price_pounds = $price_pounds + $vendor_products->price_pounds;
 
         //send an email
         // try {
@@ -2232,10 +2231,12 @@ class HomeController extends Controller
     {
         
         $product = Product::where('slug', $slug)->first();
+        $products = product::all();
         $vproducts = VendorProduct::where('product_id', optional($product)->id)->orderby('id', 'desc')->take(1)->get();
+        $countries = Country::all();
         $sproducts = VendorProduct::where('product_id',  optional($product)->id)->first();
         
-        return view('homepage.single_product')->with(compact('vproducts','sproducts'));
+        return view('homepage.single_product')->with(compact('vproducts','sproducts','products','product', 'countries'));
 
     }
 
