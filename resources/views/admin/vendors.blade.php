@@ -37,7 +37,8 @@
                     <div class="card card-shadow mb-4 ">
                         <div class="card-header border-0">
                             <div class="custom-title-wrap border-0 position-relative pb-2">
-                                <div class="custom-title">Vendors  <button class="btn btn-info pull-right" data-toggle="modal" data-target="#addVendor"> Add Vendor</button></div>
+                                <div class="custom-title">Vendors </div>
+                                <!-- <button class="btn btn-info pull-right" data-toggle="modal" data-target="#addVendor"> Add Vendor</button> -->
                             </div>
                         </div>
                         <div class="card-body p-0">

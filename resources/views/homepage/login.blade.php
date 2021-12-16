@@ -73,7 +73,7 @@
                
                 <h2 class="text-center mb-1">
                     <a href="/">
-                        <img src="/img/logo-dark.png" srcset="/img/logo-dark.png" style="height: 80px;" alt="Uk Travel test">
+                        <img src="/images/logo2.png" srcset="/images/logo2.png" style="height: 80px;" alt="Uk Travel test">
                     </a>
                 </h2>
                 <h4 class="text-uppercase- text-purple mb-1 text-center">Login into your account</h4>
@@ -92,11 +92,11 @@
                             </div>
                        
                     </div>
-                    <p class="text-center">Don't have an account? <a href="/register/agent"> Register Now</a></p>
+                    <!-- <p class="text-center">Don't have an account? <a href="/register/agent"> Register Now</a></p> -->
                     <div class="form-group clearfix">
                         <button type="submit" class="btn btn-purple btn-pill float-right">LOGIN</button>
                     </div>
-                    <a href="/forgot/password">Forgot password?</a>
+                    <!-- <a href="/forgot/password">Forgot password?</a> -->
                 </form>
             </div>
             <!--/login form-->

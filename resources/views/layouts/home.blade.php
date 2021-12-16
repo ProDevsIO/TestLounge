@@ -9,6 +9,7 @@
      <meta name="description" content="TheTestingLounge | The number one place to get all your test done in the UK">
      <meta name="keywords" content="laboratory, TheTestingLounge laboratory, TheTestingLounge website">
     <title>TheTestingLounge | Testing Made Easy</title>
+    <link rel="icon" type="image/png" href="/images/logo1.png">
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <!-- Style css -->
@@ -70,7 +71,7 @@
                             
                             <li><a href="/contact" title="">Contact us</a></li>
                             <li><a href="/login" title="">Login</a></li>
-                             <li><a href="/register/agent" title="">Register</a></li>
+                             <!-- <li><a href="/register/agent" title="">Register</a></li> -->
                         </ul>
                     </div>
                     <!--/.navigation-->

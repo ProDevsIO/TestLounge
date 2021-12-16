@@ -449,10 +449,7 @@
                                 </tr>
                                 <tr>
                                     <td class="content-block" style="text-align: left;line-height: 25px;">
-                                        Now that you have made your booking, you can read more about the next steps <a
-                                                href="{{ url(env("APP_URL")."next_steps") }}">here</a>
-
-                                        TravelTestGlobal
+                                        TheTestingLounge
                                     </td>
                                 </tr>
                                 </tbody>
@@ -466,7 +463,7 @@
                         <tbody>
                         <tr>
                             <td class="aligncenter content-block">Questions? Email <a
-                                        href="mailto:">info@traveltestsltd.com</a></td>
+                                        href="mailto:">info@thetestinglounge.com</a></td>
                         </tr>
                         <tr>for more information and guidelines,click <a
                                     href="https://www.gov.uk/guidance/coronavirus-covid-19-getting-tested">Here</a></tr>

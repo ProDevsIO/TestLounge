@@ -167,12 +167,12 @@
                                                                 </button>
                                                                 <div class="dropdown-menu"
                                                                      aria-labelledby="btnGroupDrop1">
-                                                                    <a class="dropdown-item"
+                                                                    <!-- <a class="dropdown-item"
                                                                        href="{{ url('/view/agent/details/'.$user->id) }}">View
                                                                         </a>
                                                                     <a class="dropdown-item"
                                                                        href="{{ url('complete/booking?user_id='.$user->id) }}">View
-                                                                        Bookings</a>
+                                                                        Bookings</a> -->
 
                                                                     <a class="dropdown-item"
                                                                        href="javascript:;"
@@ -192,7 +192,7 @@
                                                                         @endif
                                                                     @endif
 
-                                                                    @if($user->type == 2)
+                                                                    <!-- @if($user->type == 2)
                                                                         <a href="{{ url('/agent/percent/' .$user->id) }}"
                                                                            class="dropdown-item">Change Percentage</a>
                                                                         <a href="javascript:;" data-toggle="modal"
@@ -253,8 +253,8 @@
                                                                                 data-target="#assignVoucher{{ $user->id }}"
                                                                                 class="dropdown-item">Assign vouchers</a>
                                                                            
-                                                                        @endif
-                                                                    @endif
+                                                                        @endif -->
+                                                                    <!-- @endif -->
                                                                 </div>
                                                             </div>
 
@@ -438,9 +438,9 @@
                                                                 </button>
                                                                 <div class="dropdown-menu"
                                                                      aria-labelledby="btnGroupDrop1">
-                                                                    <a class="dropdown-item"
+                                                                    <!-- <a class="dropdown-item"
                                                                        href="{{ url('complete/booking?user_id='.$user->id) }}">View
-                                                                        Bookings</a>
+                                                                        Bookings</a> -->
 
 
                                                                     @if($user->type == 2)
@@ -457,12 +457,12 @@
                                                                     @endif
 
                                                                     @if($user->type == 2)
-                                                                        <a href="{{ url('/agent/percent/' .$user->id) }}"
+                                                                        <!-- <a href="{{ url('/agent/percent/' .$user->id) }}"
                                                                            class="dropdown-item">Change Percentage</a>
                                                                         <a href="javascript:;" data-toggle="modal"
                                                                            data-target="#changeReferral{{ $user->id }}"
                                                                            class="dropdown-item">Change Referral
-                                                                            Code</a>
+                                                                            Code</a> -->
 
                                                                         @if($user->status == 0)
 

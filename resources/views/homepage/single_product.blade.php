@@ -255,7 +255,7 @@
                     <p class="text-white">Call us on <strong>02036334452</strong> </p>
                 </div>
                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                    <a href="faq.html" class="btn btn-secondary pull-right">Frequently Asked Questions</a>
+                    <a href="/faq" class="btn btn-secondary pull-right">Frequently Asked Questions</a>
                 </div>
             </div>
         </div>

@@ -1187,6 +1187,18 @@ class HomeController extends Controller
         return view('homepage.about');
     }
 
+    public function contact()
+    {
+
+        return view('homepage.contact');
+    }
+    
+    public function faq()
+    {
+
+        return view('homepage.faq');
+    }
+
     public function terms()
     {
 

@@ -49,7 +49,7 @@
                                                 <table width="100%" cellspacing="0" cellpadding="0">
                                                     <tr>
                                                         <td class="header header--left" style="padding: 20px 10px;" align="left">
-                                                            <a href="/" ><img class="header__logo" src="{{ env('APP_URL', "https://uktraveltest.prodevs.io/") }}img/logo-dark.png" alt="TravelTestGlobal" style="display: block; border: 0;" width="158" height="59"></a>
+                                                            <a href="/" ><img class="header__logo" src="{{ env('APP_URL', "https://uktraveltest.prodevs.io/") }}image/logo1.png" alt="TheTestingLounge" style="display: block; border: 0;" width="158" height="59"></a>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -75,7 +75,7 @@
                                                                                     <table cellspacing="0" cellpadding="0">
                                                                                         <tr>
                                                                                             <td style="font-family: Geneva, Tahoma, Verdana, sans-serif; font-size: 22px; color: #464646;" width="400" align="left">
-                                                                                                <a href="/"  style="text-decoration: none; color: #464646;">TravelTestGlobal</a>
+                                                                                                <a href="/"  style="text-decoration: none; color: #464646;">TheTestingLounge</a>
                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>

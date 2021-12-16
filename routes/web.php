@@ -46,6 +46,8 @@ Route::get('/stripe/process/{id}/{type}', [\App\Http\Controllers\HomeController:
 Route::get('/pick', [\App\Http\Controllers\HomeController::class,"pick"])->name('pick');
 Route::get('/pricing', [\App\Http\Controllers\HomeController::class,"pricing"])->name('pricing');
 Route::get('/about', [\App\Http\Controllers\HomeController::class,"about"])->name('about');
+Route::get('/contact', [\App\Http\Controllers\HomeController::class,"contact"])->name('contact');
+Route::get('/faq', [\App\Http\Controllers\HomeController::class,"faq"])->name('faq');
 Route::get('/terms', [\App\Http\Controllers\HomeController::class, "terms"])->name('terms');
 Route::get('/product/{type}', [\App\Http\Controllers\HomeController::class,"viewProducts"]);
 Route::get('/product/country/{country}', [\App\Http\Controllers\HomeController::class,"viewCountryProducts"]);

@@ -114,7 +114,7 @@
                 <h2 class="text-center">
 
                     <a href="/">
-                        <img src="/img/logo-dark.png" srcset="/img/logo-dark.png" style="height: 80px;"
+                        <img src="/images/logo2.png" srcset="/images/logo2.png" style="height: 80px;"
                              alt="Uk Travel test">
                     </a>
                 </h2>
@@ -222,7 +222,7 @@
                         </div>
 
 
-                        <p>Already have an account? <a href="/login"> Login</a></p>
+                        <!-- <p>Already have an account? <a href="/login"> Login</a></p> -->
 
                         <div class="col-lg-12 form-group clearfix">
                             <button type="submit" class="btn btn-purple btn-pill pull-right">Register</button>

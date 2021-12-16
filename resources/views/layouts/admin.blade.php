@@ -7,10 +7,10 @@
     <meta name="author" content="ProDevs">
 
     <!--favicon icon-->
-    <link rel="icon" type="image/png" href="assets/img/fav.PNG">
+    <link rel="icon" type="image/png" href="/images/logo1.png">
 
-    <title>Traveltestsltd | Admin</title>
-    <link rel="icon" type="image/png" href="/img/fav.PNG">
+    <title>TheTestingLounge| Admin</title>
+    <link rel="icon" type="image/png" href="/images/logo1.png">
 
     <!--web fonts-->
     <link href="//fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet">
@@ -63,7 +63,7 @@
         <!--brand start-->
         <div class="navbar-brand pos-fixed" style="padding-left:0px; padding-top:5px;">
             <a class="" href="{{ url('/dashboard') }}">
-                <img src="/img/logo-dark.png" style="height: 55px;" srcset="/img/logo-dark.png 2x" alt="Traveltestsltd">
+                <img src="/images/logo1.png" style="height: 55px;" srcset="/images/logo1.png 2x" alt="TheTestingLounge">
             </a>
         </div>
        
@@ -224,12 +224,12 @@
                     </li>
                    
                     @endif
-                    <li>
+                    <!-- <li>
                       <a href="{{ url('/view/transactions') }}">
                             <i class="icon-calculator"></i>
                             <span>Agent Commission</span>
                         </a>
-                    </li>
+                    </li> -->
                     @if(auth()->user()->type == 2)
                     <!-- <li>
                       <a href="{{ url('/view/guidelines/1') }}">
@@ -240,15 +240,15 @@
                     @endif
                     @if(auth()->user()->main_agent_id == null && auth()->user()->type == 2)
                         @if(auth()->user()->subagent->count() > 0)
-                        <li>
+                        <!-- <li>
                             <a href="{{ url('/view/subagent/report') }}">
                                 <i class="ti-receipt"></i>
                                 <span>Sub Agent Report</span>
                             </a>
-                        </li>
+                        </li> -->
                         @endif
                     @endif
-                        <li class="sub-menu">
+                        <!-- <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class=" icon-book-open"></i>
                                 <span>Vouchers</span>
@@ -270,11 +270,9 @@
                                 <li><a href="{{ url('/view/discounts') }}">Discount Transaction</a></li>
                             
                             
-                                <!-- <li><a href="{{ url('/view/agent/booking') }}">Agent Bookings</a></li>
-                                <li><a href="{{ url('/view/individual/booking') }}">Individual Bookings</a></li> -->
-                        
+                                
                             </ul>
-                        </li>
+                        </li> -->
                   
 
                     @if(auth()->user()->type == "2")
@@ -287,7 +285,7 @@
 
                     @endif
                     @if(auth()->user()->type == "1")
-                    <li>
+                    <!-- <li>
                       <a href="{{ url('/colors') }}">
                             <i class=" icon-grid"></i>
                             <span>Color zones</span>
@@ -304,7 +302,7 @@
                             <i class="icon-globe"></i>
                             <span>Supported Countries</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="{{ url('/vendors') }}">
                             <i class=" icon-grid"></i>
