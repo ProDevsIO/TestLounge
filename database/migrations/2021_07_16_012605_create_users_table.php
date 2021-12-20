@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('account_no', 45)->nullable();
             $table->string('account_bank', 45)->nullable();
             $table->string('flutterwave_key', 45)->nullable();
+            $table->string('flutterwave_id', 45)->nullable();
             $table->timestamps();
         });
         }catch (Exception $e){

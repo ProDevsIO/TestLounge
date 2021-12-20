@@ -15,7 +15,7 @@ class AddWalletFieldToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->decimal('total_credit')->nullable()->after('account_bank');
-            $table->decimal('wallet_balance')->nullable()->after('verified');
+    
         });
     }
 
@@ -29,7 +29,7 @@ class AddWalletFieldToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             //
             $table->dropColumn('total_credit');
-            $table->dropColumn('wallet_balance');
+         
         });
     }
 }

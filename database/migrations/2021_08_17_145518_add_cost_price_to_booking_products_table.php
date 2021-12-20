@@ -16,6 +16,7 @@ class AddCostPriceToBookingProductsTable extends Migration
         Schema::table('booking_products', function (Blueprint $table) {
             //
             $table->decimal('vendor_cost_price')->default(0)->after('price');
+            $table->decimal('charged_amount')->default(0)->after('price');
         });
     }
 
@@ -29,6 +30,7 @@ class AddCostPriceToBookingProductsTable extends Migration
         Schema::table('booking_products', function (Blueprint $table) {
             //
             $table->dropColumn('vendor_cost_price');
+            $table->dropColumn('charged_amount');
         });
     }
 }
