@@ -14,8 +14,7 @@
     <input type="number" wire:model="costPrice" class="form-control" placeholder="Input number">
     <label>Alternative price</label>
     <input type="text" wire:model="alternativePrice" class="form-control" placeholder="Please input alternative price">
-    <label>Walkin Product id</label>
-    <input type="text" wire:model="walkProductid" class="form-control" placeholder="Input walkin productid if available" >
+   
     <!-- <label>Price Stripe</label> -->
     <input type="hidden" value="123" wire:model="price_stripe" class="form-control" placeholder="Price_">
     </select>
@@ -49,8 +48,6 @@
                     <input type="text" class="form-control" id="costPrice{{ $vendor_product->id }}">
                     <label>Alternative price</label>
                     <input type="text" value="{{ $vendor_product->alternative_price}}" id="alternativePrice{{ $vendor_product->id }}" class="form-control" >
-                    <label>Walkin Product id</label>
-                    <input type="text" class="form-control" value="{{ $vendor_product->walk_product_id}}" id="walkProductid{{ $vendor_product->id }}">
                     <!-- <label>Price Stripe</label> -->
                     <input type="hidden" value="{{ $vendor_product->price_pounds}}" class="form-control" id="priceStripe{{ $vendor_product->id }}">
 <br/>

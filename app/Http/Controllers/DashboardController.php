@@ -637,7 +637,8 @@ class DashboardController extends Controller
         $this->validate($request, [
             'name' => 'required',
             "description" => "required",
-            'country_id' => "required"
+            'country_id' => "required",
+            "classify" => "required"
         ]);
       
 
@@ -645,7 +646,8 @@ class DashboardController extends Controller
             'name' => $request->name,
             'slug' => $request->name,
             'description' => $request->description,
-            'country_id' => $request->country_id
+            'country_id' => $request->country_id,
+            'classify' => $request->classify
         ]);
 
         session()->flash('alert-success', "Product has been added successfully");

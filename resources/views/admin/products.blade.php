@@ -47,13 +47,31 @@
                             <input type="text" class="form-control"
                                    value="{{ old('description') }}" name="description" required>
 
-                            <label for="">Country</label>
+                                   <label class="mt-2">Test type</label>
+                                                            <select name="classify" class="form-control" id="type" required>
+                                                                <option value="">Kindly select a type </option>
+                                                               
+                                                                    <option value="0">
+                                                                        
+                                                                          Individual Test
+                                                                        
+                                                                    </option>
+                                                                    <option value="1">
+                                                                        
+                                                                            Bundle Test
+                                                                        
+                                                                    </option>
+                                                               
+                                                            </select>
+                            <div style="display:none">
+                               <label for="">Country</label>
                                 <select name="country_id" class="form-control" id="country" required>
-                                    <option value="">Please select a country for this test</option>
-                                    @foreach($countries as $country)
-                                        <option value="{{$country->id}}">{{$country->nicename}}</option>
-                                    @endforeach
+                                   
+                                  
+                                        <option value="255" selected>United Kingdom</option>
+                                  
                                 </select>
+                                </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -81,7 +99,8 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Booking</th>
-                                        <th scope='col'>Country</th>
+                                        <th scope="col">Test Type</th>
+                                        <!-- <th scope='col'>Country</th> -->
                                         <th scope="col">Links</th>
                                         @if(auth()->user()->type == "1")
                                             <th scope="col">Action</th>
@@ -98,9 +117,15 @@
                                                 {!! $product->description !!}
                                             </td>
                                             <td>{{ $product->bookings->count() }}</td>
-                                            <td>{{optional($product->country)->nicename ?? "No country"}}</td>
+                                            <!-- <td>{{optional($product->country)->nicename ?? "No country"}}</td> -->
+                                            <td>    @if($product->classify == 0 )
+                                                        <label class="badge badge-warning text-white">Individual</label>    
+                                                    @elseif($product->classify == 1 )
+                                                        <span class="badge badge-info  text-white"> Bundle</span>
+                                                    @endif
+                                                </td>
                                             <td>@if(optional($product)->slug) 
-                                                   <a href="{{url(env('APP_URL', 'http://127.0.0.1:8000/').'view/product/'.$product->slug)}}">{{env('APP_URL', 'http://127.0.0.1:8000/')}}/view/product/{{optional($product)->slug}}</a>  
+                                                   <a href="view/product/{{$product->slug}}">view/product/{{optional($product)->slug}}</a>  
                                                 @else
                                                     No Links
                                                 @endif
@@ -158,12 +183,21 @@
                                                             <label class="mt-2">Description</label>
                                                             <input type="text" class="form-control"
                                                                    value="{{ $product->description }}" name="description" required>
-                                                            <label class="mt-2">Country</label>
-                                                            <select name="country_id" class="form-control" id="country" required>
-                                                                <option value="">Kindly select a country </option>
-                                                                @foreach($countries as $country)  
-                                                                    <option value="{{$country->id}}"  @if($product->country_id == $country->id ) selected @endif>{{$country->nicename}}</option>
-                                                                @endforeach
+                                                            <label class="mt-2">Test type</label>
+                                                            <select name="Type" class="form-control" id="type" required>
+                                                                <option value="">Kindly select a type </option>
+                                                               
+                                                                    <option value="0" @if($product->classify == 0 ) selected @endif>
+                                                                        @if($product->classify == 0 )
+                                                                          Individual Test
+                                                                        @endif
+                                                                    </option>
+                                                                    <option value="1"  @if($product->classify == 1 ) selected @endif>
+                                                                        @if($product->classify == 1 )
+                                                                            Bundle Test
+                                                                        @endif
+                                                                    </option>
+                                                               
                                                             </select>
                                                         </div>
                                                         <div class="modal-footer">

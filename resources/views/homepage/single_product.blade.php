@@ -84,6 +84,17 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                        <div class="col-md-12" style="margin-top: 20px">
+                                            <label>Re-enter Contact Email: <span class="show_required"> *</span></label>
+                                            <div class="answer">
+
+                                            </div>
+                                            <input type="text" id="verify_email" onkeyUp="veriy()" name="verify_email"
+                                               value="{{ old('verify_email') }}" autocomplete="off" class="form-control input-md" required />
+
+                                        </div>
+                                    </div>
+                                        <div class="form-group">
                                             <div class="col-md-12 " style="margin-top: 20px">
                                                 <label>Phone number<span class="show_required"> *</span></label>
                                                 <br>
@@ -220,7 +231,8 @@
                                            <br>
                                           
                                         </div> 
-
+                                        <input type="checkbox"  name="consent" value="1" id="TCs" required style="display: inline-block;">
+                                    <p style="display: inline-block;">I agree to the <a href="terms.html"><strong>terms and conditions</strong></a></p>
                                         <input type="hidden" value="{{$sproducts->id}}" name="vproduct">
                                         <input type="hidden" value="stripe" name="payment_method">
                                             
@@ -338,6 +350,22 @@
              hiddenInput: "hidden_phone",
             nationalMode: false,
     });
+
+    function veriy() {
+            var email = document.getElementById('email').value;
+            var email2 = document.getElementById('verify_email').value;
+            var answer = $(".answer");
+            console.log(email, email2);
+            if (email == email2) {
+                answer.empty();
+                answer.append($("<small class='text-muted' style='color:green'>CORRECT! THE EMAILS MATCH</small>"));
+                $answer.show();
+            } else {
+                answer.empty();
+                answer.append($("<small class='text-muted' style='color:red'>INCORRECT! THE EMAILS DO NOT MATCH</small>"));
+                answer.show();
+            }
+        }
 </script>
 
 @endsection

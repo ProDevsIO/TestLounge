@@ -33,7 +33,8 @@ class Product extends Model
 		'name',
 		'slug',
 		'description',
-		'country_id'
+		'country_id',
+		'classify'
 	];
 
 	protected static function boot()
