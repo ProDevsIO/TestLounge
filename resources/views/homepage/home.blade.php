@@ -132,7 +132,7 @@
                         <!-- section title start-->
                         <h1>All Tests</h1>
                         @php
-                        $vproducts = App\Models\vendorProduct::all()
+                        $vproducts = App\Models\VendorProduct::all()
                         @endphp
                     </div>
                     <!-- /.section title start-->
