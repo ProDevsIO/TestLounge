@@ -52,12 +52,12 @@
                         <!--navigation-->
                         <ul>
                             <li><a href="/" title="Home page">Home</a></li>
-                            <li><a href="#" title="Test">Covid-19 Testing</a>
-                                <ul>
+                            <li><a href="https://testlounge.prodevs.io/RBS" title="Test">Covid-19 Testing</a>
+                                <!-- <ul>
                                     @foreach($products as $product)
                                     <li><a href="/view/product/{{$product->slug}}" title="{{$product->name}}">{{$product->name}}</a></li>  
                                    @endforeach
-                                </ul>
+                                </ul> -->
                             
                                 
                             

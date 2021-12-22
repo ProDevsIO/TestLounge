@@ -156,8 +156,8 @@
                                     style="background-color: rgb(235, 235, 235); padding: 10px 25px; border-radius: 50px;">
                                     £{{$vproduct->price_pounds}}
                                 </span> <br>
-
-                                <a href="/view/product/{{$vproduct->product->slug}}" class="btn btn-default"
+                                <!-- /view/product/{{$vproduct->product->slug}} -->
+                                <a href="https://testlounge.prodevs.io/RBS" class="btn btn-default"
                                     style="margin-top: 50px;">Book Test</a>
 
                             </div>
@@ -194,7 +194,7 @@
                                     £{{$vproduct->price_pounds}}
                                 </span> <br>
 
-                                <a href="/view/product/{{$vproduct->product->slug}}" class="btn btn-default"
+                                <a href="https://testlounge.prodevs.io/RBS" class="btn btn-default"
                                     style="margin-top: 50px;">Book Test</a>
 
                             </div>
