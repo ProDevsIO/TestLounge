@@ -134,7 +134,7 @@
                 <div class="section-title mb60 text-center">
                     <!-- section title start-->
                     
-                    <h1>All Tests</h1>
+                    <h1>Single Tests</h1>
                     @php
                     $vproducts = App\Models\VendorProduct::all()
                     @endphp
@@ -144,29 +144,67 @@
         </div>
         <div class="row">
             @foreach($vproducts as $vproduct)
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" style="margin-top:10px;">
-                <div class="service-block" style="min-height:300px;max-height:300px;">
-                    <!-- service block -->
-                    <div class="service-content">
-                        <!-- service content -->
-                        <h2><a href="#" class="title">{{$vproduct->product->name}}</a></h2>
+                @if($vproduct->product->classify == 0)
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" style="margin-top:10px;">
+                        <div class="service-block" style="min-height:300px;max-height:300px;">
+                            <!-- service block -->
+                            <div class="service-content">
+                                <!-- service content -->
+                                <h2><a href="#" class="title">{{$vproduct->product->name}}</a></h2>
 
-                        <span class="price"
-                            style="background-color: rgb(235, 235, 235); padding: 10px 25px; border-radius: 50px;">
-                            £{{$vproduct->price_pounds}}
-                        </span> <br>
+                                <span class="price"
+                                    style="background-color: rgb(235, 235, 235); padding: 10px 25px; border-radius: 50px;">
+                                    £{{$vproduct->price_pounds}}
+                                </span> <br>
 
-                        <a href="/view/product/{{$vproduct->product->slug}}" class="btn btn-default"
-                            style="margin-top: 50px;">Book Test</a>
+                                <a href="/view/product/{{$vproduct->product->slug}}" class="btn btn-default"
+                                    style="margin-top: 50px;">Book Test</a>
 
+                            </div>
+                            <!-- service content -->
+                        </div>
+                        <!-- /.service block -->
                     </div>
-                    <!-- service content -->
-                </div>
-                <!-- /.service block -->
-            </div>
+                @endif
             @endforeach
         </div>
+        <div class="row">
+            <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
+                <div class="section-title mb60 text-center">
+                    <!-- section title start-->
+                    
+                    <h1>Bundle Tests</h1>
+                   
+                </div>
+                <!-- /.section title start-->
+            </div>
+        </div>
+        <div class="row">
+            @foreach($vproducts as $vproduct)
+                @if($vproduct->product->classify == 1)
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" style="margin-top:10px;">
+                        <div class="service-block" style="min-height:300px;max-height:300px;">
+                            <!-- service block -->
+                            <div class="service-content">
+                                <!-- service content -->
+                                <h2><a href="#" class="title">{{$vproduct->product->name}}</a></h2>
 
+                                <span class="price"
+                                    style="background-color: rgb(235, 235, 235); padding: 10px 25px; border-radius: 50px;">
+                                    £{{$vproduct->price_pounds}}
+                                </span> <br>
+
+                                <a href="/view/product/{{$vproduct->product->slug}}" class="btn btn-default"
+                                    style="margin-top: 50px;">Book Test</a>
+
+                            </div>
+                            <!-- service content -->
+                        </div>
+                        <!-- /.service block -->
+                    </div>
+                @endif
+            @endforeach
+        </div>
     </div>
 </div>
 

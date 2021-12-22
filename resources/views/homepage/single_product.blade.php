@@ -232,7 +232,7 @@
                                           
                                         </div> 
                                         <input type="checkbox"  name="consent" value="1" id="TCs" required style="display: inline-block;">
-                                    <p style="display: inline-block;">I agree to the <a href="terms.html"><strong>terms and conditions</strong></a></p>
+                                    <p style="display: inline-block;">I agree to the <a href="/terms"><strong>terms and conditions</strong></a></p>
                                         <input type="hidden" value="{{$sproducts->id}}" name="vproduct">
                                         <input type="hidden" value="stripe" name="payment_method">
                                             

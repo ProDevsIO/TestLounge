@@ -60,7 +60,7 @@
                 <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
 
                     <p class="lead">
-                        The Testing Lounge is on the Government List of <a target="_blank" href="https://www.gov.uk/government/publications/list-of-private-providers-of-coronavirus-testing/list-of-private-providers-of-coronavirus-testing#general-testing" style="color: #cda768;">Private Providers</a>  for general COVID-19 testing, Day 2 &8 testing and Test to Release.
+                        The Testing Lounge is on the Government List of <a target="_blank" href="https://www.gov.uk/government/publications/list-of-private-providers-of-coronavirus-testing/list-of-private-providers-of-coronavirus-testing#general-testing" style="color: #cda768;">Private Providers</a>  for general COVID-19 testing, Day 2 &8 testing and Test to Release. We are part of The Scarlet Practice, a UK-based company. Our focus is helping people access affordable private healthcare.   
                         </p>
                 </div>
             </div>
@@ -77,7 +77,15 @@
                         <!--video-content-->
                         
                         <p class="lead">
-                            We are part of The Scarlet Practice, a UK-based company. Our focus is helping people access affordable private healthcare.          </p>
+                            <center>
+                            <img src="images/general.svg" alt="" width="50%" class="img-responsive">
+                            </center>
+                            <br>
+                            <h3>
+                            Private Provider on UK Government List
+                            </h3>
+                            Partners with top UKAS- accredited laboratories to provide a fast and accurate service.
+                        </p>
                         
                     </div>
                     <!--/.video-content-->

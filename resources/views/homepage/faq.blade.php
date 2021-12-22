@@ -116,10 +116,10 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab" id="headingSix">
                                         <h4 class="panel-title"> <a class="collapsed" role="button"
-                                                data-toggle="collapse" data-parent="#accordion" href="#collapseFive"
+                                                data-toggle="collapse" data-parent="#accordion" href="#collapseSix"
                                                 aria-expanded="false" aria-controls="collapseFive">My home test hasn’t arrived yet. What should I do?</a> </h4>
                                     </div>
-                                    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel"
+                                    <div id="collapseSix" class="panel-collapse collapse" role="tabpanel"
                                         aria-labelledby="headingSix">
                                         <div class="panel-body"> If your home test hasn’t arrived and it has been a few days, you should check the dispatch email with the tracking link we sent to you. <br>If the address is incorrect, you can contact the courier to rearrange a delivery. </div>
                                     </div>
