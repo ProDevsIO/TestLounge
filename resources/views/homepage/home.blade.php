@@ -269,14 +269,14 @@
 
                         <p style="font-weight: 700;">PRIOR TO YOUR TRIP</p>
                         <ul>
-                            <li>Take a <a href="test-single6.html" style="color: #cda768;">PCR Fit to Fly</a> or <a
+                            <li>Take a <a href="/view/product/test-to-travel-fit-to-fly-from-the-uk" style="color: #cda768;">PCR Fit to Fly</a> or <a
                                     href="test-single8.html" style="color: #cda768;"> Lateral Flow Antigen Fit to Fly
                                     Test.</a></li>
                         </ul>
 
                         <p style="font-weight: 700;">BEFORE YOUR RETURN TO THE UK</p>
                         <ul>
-                            <li>Book a <a href="test-single.html" style="color: #cda768;">PCR Day 2 Test</a> to be taken
+                            <li>Book a <a href="/view/product/vaccinated-day-2-mandatory-test" style="color: #cda768;">PCR Day 2 Test</a> to be taken
                                 on or before Day 2 of your arrival in the UK</li>
                             <li>Complete a Passenger Locator Form in the 48 hours before your trip.</li>
 
@@ -300,16 +300,16 @@
 
                         <p style="font-weight: 700;">PRIOR TO YOUR TRIP</p>
                         <ul>
-                            <li>Take a <a href="test-single6.html" style="color: #cda768;">PCR Fit to Fly</a> or <a
+                            <li>Take a <a href="/view/product/test-to-travel-fit-to-fly-from-the-uk" style="color: #cda768;">PCR Fit to Fly</a> or <a
                                     href="test-single8.html" style="color: #cda768;">Lateral Flow Antigen Fit to Fly
                                     Test.</a> </li>
                         </ul>
 
                         <p style="font-weight: 700;">BEFORE YOUR RETURN TO THE UK</p>
                         <ul>
-                            <li>Take a <a href="test-single6.html" style="color: #cda768;">PCR Fit to Fly test</a>
+                            <li>Take a <a href="/view/product/test-to-travel-fit-to-fly-from-the-uk" style="color: #cda768;">PCR Fit to Fly test</a>
                                 (72hrs before your trip).</li>
-                            <li>Book a <a href="test-single2.html" style="color: #cda768;">PCR Day 2 and Day 8</a> Test
+                            <li>Book a <a href="/view/product/unvaccinated-day-2-and-day-8-mandatory-test" style="color: #cda768;">PCR Day 2 and Day 8</a> Test
                                 Package to be taken on Day 2 and Day 8 of your arrival.</li>
                             <li>Complete a Passenger Locator Form in the 48 hours before your trip.</li>
                         </ul>
