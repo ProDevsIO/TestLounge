@@ -1825,14 +1825,9 @@ class HomeController extends Controller
 
 
             try {
-
-                if(!$booking->room = null)
-                {
-                    $code = $this->GetDamHealthCode($booking);
-                }else{
-                    $code = $this->sendData($booking);
-                }
-               
+                //generation of ttluk number
+                $code = "TTLUK" . rand(1000000, 9999999);
+            
             } catch (\Exception $e) {
                 dd($e);
                
