@@ -49,7 +49,7 @@
             </div>
         </div>
     </div> -->
-    <div class="leftHalf" style="background-image: url('/img/banner.jpg');">
+    <div class="leftHalf" style="background-image: url('/img/bigben1.jpg');">
            
         <div class="login-promo-txt" style="height:100%; top:0; width:100%">
             <div class="container-fluid" id="backbutton"style="width:100%; margin-left: -20px;
@@ -59,7 +59,7 @@
             </div>
           <div class="container-fluid text-left"  style="width:80%; padding: 5px;">
               <div class="login_information">
-                     <p style="text-align: justify"><b>Are you a Travel Agent, a company Travel Manager or a frequent traveller? You can join our partnership network which gives you access to discounts and value added services. <a href="#">Learn More</a></b></p>
+                     <h1 style="text-align: center"><b>Partner Login</a></b></h1>
               </div>
             
          </div>

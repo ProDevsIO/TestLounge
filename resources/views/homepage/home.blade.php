@@ -34,22 +34,7 @@
                         <div class="slider-captions">
                             <!--slider-captions-->
                             <h2 class="slider-title text-white">Fast and Reliable Testing Services</h2>
-                            <p class="slider-text hidden-xs text-white">We make the testing process easy.</p>
-
-                        </div>
-                        <!--/.slider-captions-->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item"> <img src="images/slider-2.jpg" alt="" class="">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="slider-captions">
-                            <!--slider-captions-->
-                            <h2 class="slider-title text-white">Express Testing</h2>
-                            <p class="slider-text hidden-xs text-white">Trusted Covid-19 tests for travelers</p>
+                            <p class="slider-text hidden-xs text-white">We make the testing process easy, fast and reliable with our seamless booking process. We aim to put your mind at ease as you navigate on our platform.</p>
 
                         </div>
                         <!--/.slider-captions-->
@@ -157,7 +142,7 @@
                                     £{{$vproduct->price_pounds}}
                                 </span> <br>
                                 <!-- /view/product/{{$vproduct->product->slug}} -->
-                                <a href="https://testlounge.prodevs.io/RBS" class="btn btn-default"
+                                <a href="/view/product/{{$vproduct->product->slug}}" class="btn btn-default"
                                     style="margin-top: 50px;">Book Test</a>
 
                             </div>
@@ -168,6 +153,8 @@
                 @endif
             @endforeach
         </div>
+        <br>
+        <br>
         <div class="row">
             <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
                 <div class="section-title mb60 text-center">
@@ -194,7 +181,7 @@
                                     £{{$vproduct->price_pounds}}
                                 </span> <br>
 
-                                <a href="https://testlounge.prodevs.io/RBS" class="btn btn-default"
+                                <a href="/view/product/{{$vproduct->product->slug}}" class="btn btn-default"
                                     style="margin-top: 50px;">Book Test</a>
 
                             </div>
@@ -261,7 +248,7 @@
         </div>
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="service-block" style="box-shadow: -3px 10px 19px -5px rgba(0,0,0,0.64);">
+                <div class="service-block" style="box-shadow: -3px 10px 19px -5px rgba(0,0,0,0.64);height:400px">
                     <!-- service block -->
                     <div class="service-content">
                         <!-- service content -->
@@ -269,9 +256,7 @@
 
                         <p style="font-weight: 700;">PRIOR TO YOUR TRIP</p>
                         <ul>
-                            <li>Take a <a href="/view/product/test-to-travel-fit-to-fly-from-the-uk" style="color: #cda768;">PCR Fit to Fly</a> or <a
-                                    href="test-single8.html" style="color: #cda768;"> Lateral Flow Antigen Fit to Fly
-                                    Test.</a></li>
+                            <li>Take a <a href="/view/product/test-to-travel-fit-to-fly-from-the-uk" style="color: #cda768;">PCR Fit to Fly</a></li>
                         </ul>
 
                         <p style="font-weight: 700;">BEFORE YOUR RETURN TO THE UK</p>
@@ -292,7 +277,7 @@
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="service-block" style="box-shadow: -3px 10px 19px -5px rgba(0,0,0,0.64);">
+                <div class="service-block" style="box-shadow: -3px 10px 19px -5px rgba(0,0,0,0.64);height:400px">
                     <!-- service block -->
                     <div class="service-content">
                         <!-- service content -->
@@ -300,9 +285,7 @@
 
                         <p style="font-weight: 700;">PRIOR TO YOUR TRIP</p>
                         <ul>
-                            <li>Take a <a href="/view/product/test-to-travel-fit-to-fly-from-the-uk" style="color: #cda768;">PCR Fit to Fly</a> or <a
-                                    href="test-single8.html" style="color: #cda768;">Lateral Flow Antigen Fit to Fly
-                                    Test.</a> </li>
+                            <li>Take a <a href="/view/product/test-to-travel-fit-to-fly-from-the-uk" style="color: #cda768;">PCR Fit to Fly</a> </li>
                         </ul>
 
                         <p style="font-weight: 700;">BEFORE YOUR RETURN TO THE UK</p>
@@ -346,7 +329,7 @@
                 <!--/.widget-footer-->
             </div>
 
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="widget-footer">
                     <!--widget-footer-->
                     <h3 class="widget-title">Quick Links</h3>
@@ -361,7 +344,7 @@
                 <!--/.widget-footer-->
             </div>
 
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="widget-footer footer-social">
                     <!--widget-footer-social-->
                     <h3 class="widget-title">Connect With Us</h3>

@@ -69,7 +69,6 @@ class VendorReceipt extends Mailable
         $this->from_ = $vendor->email;
 
         return $this->from($this->from_,$this->subject)
-            ->cc('edima@prodevs.io')
             ->attachData($pdf->output(),'receipt.pdf')
             ->view('email.receipt')
             ->with(compact('booking','booking_product','product','vendor','code'));

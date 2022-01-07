@@ -30,6 +30,6 @@ class NewSubAgent extends Mailable
     {
         return $this->view("email.new_sub_agent", $this->data)
             ->subject("New Sub-Agent Invite")
-            ->from('info@uktraveltests.co.uk');
+            ->from('receipts@thetestinglounge.com');
     }
 }
