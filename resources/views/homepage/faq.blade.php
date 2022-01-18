@@ -34,7 +34,7 @@
     <div class="content">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="st-accordion">
                         <!--st-accordion-->
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -129,81 +129,13 @@
                         <!--/.st-accordion-->
                     </div>
                 </div>
+
             </div>
         </div>
 
-
-        <div class="full-cta">
-            <!--full-cta-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                        <h2 class="cta-title">Ask a Question?</h2>
-                        <p class="text-white">Call us on <strong>02036334452</strong> </p>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                        <a href="/faq" class="btn btn-secondary pull-right">Frequently Asked Questions</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
         <!--/.full-cta-->
-        <div class="footer">
-            <!--footer-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-                        <div class="widget-footer mb60">
-                            <!--widget-footer-->
-                            <a href="index.html"><img src="images/logo.png" alt="" class="img-responsive"></a>
-                        </div>
-                        <!--/.widget-footer-->
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <div class="widget-footer">
-                            <!--widget-footer-->
-
-                        </div>
-                        <!--/.widget-footer-->
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                        <div class="widget-footer">
-                            <!--widget-footer-->
-                            <h3 class="widget-title">Quick Links</h3>
-                            <ul class="listnone circle-style">
-                                <li><a href="index.html">Home </a> </li>
-                                <li><a href="contact-us.html">About Us</a></li>
-                                <li><a href="faq.html">FAQ</a></li>
-                                <!-- <li><a href="contact-us.html">Blog</a></li> -->
-                                <li><a href="contact-us.html">Contact us</a></li>
-                            </ul>
-                        </div>
-                        <!--/.widget-footer-->
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                        <div class="widget-footer footer-social">
-                            <!--widget-footer-social-->
-                            <h3 class="widget-title">Connect With Us</h3>
-                            <ul class="contact listnone">
-                                <li><i class="fa fa-phone"></i><strong> 02036334452</strong></li>
-                                <li><i class="fa fa-envelope-open-o"></i> <strong>info@thetestinglounge.com</strong>
-                                </li>
-                            </ul>
-                            <ul class="listnone">
-                                <li><a href="https://www.instagram.com/thetestingloungeuk/" class="facebook-btn"
-                                        target="_blank"><i class="fa fa-instagram"></i></a> <strong>Instagram</strong>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--/.widget-footer-social-->
-                    </div>
-                </div>
-            </div>
-        </div>
+      @include('includes.home_footer')
  @endsection
 @section('script')
 

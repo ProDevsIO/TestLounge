@@ -4,16 +4,25 @@
 @endsection
 @section('content')
 
-
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Financial Report</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Financial Report</h4>
+            </div>
+        </div>
+    </div>
     <div class="content-wrapper">
         <div class="container-fluid">
-            <div>
-                <h4>Financial Report</h4>
-            </div>
             <!--states start-->
             <div class="row">
                 <div class="col-xl-12 col-sm-12 p-0">
-                    <div class="card mb-4 bg-primary" title="Completed bookings">
+                    <div class="card mb-4 bg-default" title="Completed bookings">
                         <div class="card-body">
 
                             <form class="form">
@@ -28,19 +37,15 @@
                                         <input type="date" name="end" class="form-control"
                                                value="{{ (isset($_GET['end']) ? $_GET['end'] : "")  }}" required/>
                                     </div>
-                                    <div clas="col-md-2">
+                                    <div clas="col-md-12">
                                         <br>
                                     <input type="submit" class="btn btn-danger pull-right mt-2" value="Search">
+                                        <input type="submit" class="btn btn-warning mt-2" name="export"
+                                               style="float: right;" value="Export">
                                     </div>
-                                    <div class="col-md-2">
-                                        <br>
-                                    <input type="submit" class="btn btn-warning pull-left mt-2" name="export"
-                                                   style="margin-left: 20px" value="Export">
-                                    </div>
-                                    <div style="width: 100%">
-                                       
+
                                     @csrf
-                                    </div>
+
                                 </div>
                             </form>
 
@@ -48,23 +53,7 @@
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-sm-3">
-                    <!-- <a href="{{  url('currency/detail/report/naira/'.$start .'/'. $end) }}"> -->
-                        <div class="card mb-4 bg-purple" title="Revenue">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light" title="Total Revenue in naira from bookings">
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($total_ngn, 2) }}</h4>
-                                        <span>Bookings Total Revenue(Naira)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <!-- </a> -->
-                </div>
+
                 <div class="col-xl-3 col-sm-3">
                     <!-- <a href="{{  url('currency/detail/report/pounds/'.$start.'/'.$end) }}"> -->
                         <div class="card mb-4 bg-purple" title="Revenue">
@@ -74,31 +63,15 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Revenue in dollars from bookings">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($total_gbp, 2) }}</h4>
-                                        <span>Bookings Total Revenue(Dollars)</span>
+                                        <h4 class="text-uppercase mb-0 weight500">£{{ number_format($total_gbp, 2) }}</h4>
+                                        <span class="text-black">Bookings Total Revenue(Pounds)</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     <!-- </a> -->
                 </div>
-                <div class="col-xl-3 col-sm-3">
-                    <!-- <a href="{{  url('currency/detail/report/naira/'.$start .'/'. $end) }}"> -->
-                        <div class="card mb-4 bg-purple" title="Revenue">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light" title="Total Revenue in naira from bookings">
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($o_price_n, 2) }}</h4>
-                                        <span>Voucher Total Revenue(Naira)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <!-- </a> -->
-                </div>
+
                 <div class="col-xl-3 col-sm-3">
                     <!-- <a href="{{  url('currency/detail/report/pounds/'.$start.'/'.$end) }}"> -->
                         <div class="card mb-4 bg-purple" title="Revenue">
@@ -108,150 +81,86 @@
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Revenue in dollars from bookings">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($o_price_d, 2) }}</h4>
-                                        <span>Voucher Total Revenue(Dollars)</span>
+                                        <h4 class="text-uppercase mb-0 weight500">£{{ number_format($o_price_d, 2) }}</h4>
+                                        <span class="text-black">Voucher Total Revenue(Pounds)</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     <!-- </a> -->
                 </div>
+
                 <div class="col-xl-3 col-sm-3">
-                   
-                        <div class="card mb-4 bg-dark" title="Total Vendor Cost">
+
+                        <div class="card mb-4 bg-default" title="Total Vendor Cost">
                             <div class="card-body">
                                 <div class="media d-flex align-items-center ">
                                     <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
                                         <i class="vl_book"></i>
                                     </div>
                                     <div class="media-body text-light" title="Total Vendor Cost">
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($vendor_cost_ngn, 2) }}</h4>
-                                        <span>Total Vendor Cost(Naira)</span>
+                                        <h4 class="text-uppercase mb-0 weight500">£{{ number_format($vendor_cost_dollars, 2) }}</h4>
+                                        <span class="text-black">Total Vendor Cost(Pounds)</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    
+
                 </div>
-                <div class="col-xl-3 col-sm-3">
-                   
-                        <div class="card mb-4 bg-dark" title="Total Vendor Cost">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light" title="Total Vendor Cost">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($vendor_cost_dollars, 2) }}</h4>
-                                        <span>Total Vendor Cost(Dollars)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                
-                </div>
-                <div class="col-xl-3 col-sm-3">
-                    <a href="{{  url('view/transactions') }}">
-                        <div class="card mb-4 bg-danger" title="Total Commission">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light" title="Total Commission">
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($commission, 2) }}</h4>
-                                        <span>Total Booking Commission(Naira)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xl-3 col-sm-3">
-                    <a href="{{  url('view/transactions') }}">
-                        <div class="card mb-4 bg-danger" title="Total Commission">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light" title="Total Commission">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($pcommission, 2) }}</h4>
-                                        <span>Total Booking Commission(Dollars)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xl-3 col-sm-3">
-                    <a href="{{ url('view/report/discount/naira/'.$start .'/'. $end) }}">
-                        <div class="card mb-4 bg-danger" title="Total Commission">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light" title="Total Commission">
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($discount_commission_n, 2) }}</h4>
-                                        <span>Total Discount Commission(Naira)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xl-3 col-sm-3">
-                    <a href="{{  url('view/report/discount/dollar/'.$start .'/'. $end) }}">
-                        <div class="card mb-4 bg-danger" title="Total Commission">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light" title="Total Commission">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($discount_commission_us, 2) }}</h4>
-                                        <span>Total Discount Commission(Dollars)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xl-3 col-sm-3">
-                  
-                        <div class="card mb-4 bg-danger" title="Total Commission">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light" title="Total Commission">
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($discount_total_n, 2) }}</h4>
-                                        <span>Total Discount (Naira)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                   
-                </div>
-                <div class="col-xl-3 col-sm-3">
-                   
-                        <div class="card mb-4 bg-danger" title="Total Commission">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light" title="Total Commission">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($discount_total_d, 2) }}</h4>
-                                        <span>Total Discount(Dollars)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                </div>
+
+{{--                <div class="col-xl-3 col-sm-3">--}}
+{{--                    <a href="{{  url('view/transactions') }}">--}}
+{{--                        <div class="card mb-4 bg-danger" title="Total Commission">--}}
+{{--                            <div class="card-body">--}}
+{{--                                <div class="media d-flex align-items-center ">--}}
+{{--                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">--}}
+{{--                                        <i class="vl_book"></i>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="media-body text-light" title="Total Commission">--}}
+{{--                                        <h4 class="text-uppercase mb-0 weight500">£{{ number_format($pcommission, 2) }}</h4>--}}
+{{--                                        <span>Total Booking Commission(Pounds)</span>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--                <div class="col-xl-3 col-sm-3">--}}
+{{--                    <a href="{{ url('view/report/discount/naira/'.$start .'/'. $end) }}">--}}
+{{--                        <div class="card mb-4 bg-danger" title="Total Commission">--}}
+{{--                            <div class="card-body">--}}
+{{--                                <div class="media d-flex align-items-center ">--}}
+{{--                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">--}}
+{{--                                        <i class="vl_book"></i>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="media-body text-light" title="Total Commission">--}}
+{{--                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($discount_commission_n, 2) }}</h4>--}}
+{{--                                        <span>Total Discount Commission(Naira)</span>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--                <div class="col-xl-3 col-sm-3">--}}
+{{--                    <a href="{{  url('view/report/discount/dollar/'.$start .'/'. $end) }}">--}}
+{{--                        <div class="card mb-4 bg-danger" title="Total Commission">--}}
+{{--                            <div class="card-body">--}}
+{{--                                <div class="media d-flex align-items-center ">--}}
+{{--                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">--}}
+{{--                                        <i class="vl_book"></i>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="media-body text-light" title="Total Commission">--}}
+{{--                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($discount_commission_us, 2) }}</h4>--}}
+{{--                                        <span>Total Discount Commission(Dollars)</span>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+
+
                 <!-- <div class="col-xl-3 col-sm-3">
                     <div class="card mb-4 bg-purple" title="Revenue">
                         <div class="card-body">
@@ -267,7 +176,7 @@
                         </div>
                     </div>
                 </div> -->
-                
+
                 <!-- <div class="col-xl-3 col-sm-3">
                     <a href="{{  url('currency/detail/report/cedis/'.$start.'/'.$end) }}">
                         <div class="card mb-4 bg-purple" title="Revenue">
@@ -336,57 +245,41 @@
                         </div>
                     </a>
                 </div> -->
-                <div class="col-xl-3 col-sm-3">
-                
-                    <div class="card mb-4 bg-danger" title="Amount owed to agent via Naira transaction">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Amount owed to agent via Naira transaction">
-                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($due_amount, 2) }}</h4>
-                                    <span>Amount due(Referrals)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{{--                <div class="col-xl-3 col-sm-3">--}}
 
-                </div>
-                <div class="col-xl-3 col-sm-3">
-                
-                    <div class="card mb-4 bg-danger" title="Revenue">
-                        <div class="card-body">
-                            <div class="media d-flex align-items-center ">
-                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                    <i class="vl_book"></i>
-                                </div>
-                                <div class="media-body text-light" title="Amount owed to agent via dollar transaction">
-                                    <h4 class="text-uppercase mb-0 weight500">${{ number_format($p_due_amount, 2) }}</h4>
-                                    <span>Amount due(Referrals)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                
-                </div>
-                <div class="col-xl-3 col-sm-3">
-                    <a href="{{  url('profit/report/naira/'.$start.'/'.$end) }}">
-                        <div class="card mb-4 bg-success"  title="Revenue - Vendors cost - Commission">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light" >
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($profit_naira, 2) }}</h4>
-                                        <span>Profit from Booking </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+{{--                    <div class="card mb-4 bg-danger" title="Amount owed to agent via Naira transaction">--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div class="media d-flex align-items-center ">--}}
+{{--                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">--}}
+{{--                                    <i class="vl_book"></i>--}}
+{{--                                </div>--}}
+{{--                                <div class="media-body text-light" title="Amount owed to agent via Naira transaction">--}}
+{{--                                    <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($due_amount, 2) }}</h4>--}}
+{{--                                    <span>Amount due(Referrals)</span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+{{--                </div>--}}
+{{--                <div class="col-xl-3 col-sm-3">--}}
+
+{{--                    <div class="card mb-4 bg-danger" title="Revenue">--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div class="media d-flex align-items-center ">--}}
+{{--                                <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">--}}
+{{--                                    <i class="vl_book"></i>--}}
+{{--                                </div>--}}
+{{--                                <div class="media-body text-light" title="Amount owed to agent via dollar transaction">--}}
+{{--                                    <h4 class="text-uppercase mb-0 weight500">${{ number_format($p_due_amount, 2) }}</h4>--}}
+{{--                                    <span>Amount due(Referrals)</span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+{{--                </div>--}}
+
                 <div class="col-xl-3 col-sm-3">
                     <a href="{{  url('profit/report/dollars/'.$start.'/'.$end) }}">
                     <div class="card mb-4 bg-success" title="Revenue - Vendors cost - Commission">
@@ -396,7 +289,7 @@
                                     <i class="vl_book"></i>
                                 </div>
                                 <div class="media-body text-light"  title="Revenue - Vendors cost - Commission">
-                                    <h4 class="text-uppercase mb-0 weight500">${{ number_format($profit_dollars, 2) }}</h4>
+                                    <h4 class="text-uppercase mb-0 weight500">£{{ number_format($profit_dollars, 2) }}</h4>
                                     <span>Profit from Booking</span>
                                 </div>
                             </div>
@@ -404,40 +297,7 @@
                     </div>
                     </a>
                 </div>
-                <div class="col-xl-3 col-sm-3">
-                     <a href="{{  url('profit/voucher/naira/'.$start.'/'.$end) }}">
-                        <div class="card mb-4 bg-success"  title="Discounted Price - Vendors cost ">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light" >
-                                        <h4 class="text-uppercase mb-0 weight500">₦{{ number_format($discount_profit_n, 2) }}</h4>
-                                        <span>Profit from Purchased Vouchers</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xl-3 col-sm-3">
-                    <a href="{{  url('profit/voucher/dollars/'.$start.'/'.$end) }}">
-                        <div class="card mb-4 bg-success" title="Discounted Price - Vendors cost ">
-                            <div class="card-body">
-                                <div class="media d-flex align-items-center ">
-                                    <div class="mr-4 rounded-circle bg-white sr-icon-box text-purple">
-                                        <i class="vl_book"></i>
-                                    </div>
-                                    <div class="media-body text-light">
-                                        <h4 class="text-uppercase mb-0 weight500">${{ number_format($discount_profit_d, 2) }}</h4>
-                                        <span>Profit from Purchased Vouchers</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+
             </div>
 
             <!--employee data table-->

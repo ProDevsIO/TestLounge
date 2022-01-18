@@ -4,7 +4,19 @@
 @endsection
 @section('content')
 
-
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Admins</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Admins</h4>
+            </div>
+        </div>
+    </div>
     <div class="content-wrapper">
         <div class="container-fluid">
 
@@ -19,7 +31,7 @@
                                 </div>
                                 <div class="media-body text-light" title="Pending bookings">
                                     <h4 class="text-uppercase mb-0 weight500">{{ $users->count() }}</h4>
-                                    <span>Admins</span>
+                                    <span class="text-black">Admins</span>
                                 </div>
                             </div>
                         </div>
@@ -35,7 +47,7 @@
                                 <div class="card-header border-0">
                                     <div class="custom-title-wrap border-0 position-relative pb-2">
                                         <div class="custom-title pull-left">Admins</div>
-                                        <div class="pull-right"> <a href="{{ url('admin/list/export') }}" class="btn btn-md btn-warning">Export</a></div>
+                                        <div style="float: right;margin-top: -20px;"> <a href="{{ url('admin/list/export') }}" class="btn btn-md btn-warning">Export</a></div>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
@@ -95,7 +107,7 @@
                                                         <div class="btn-group" role="group">
                                                             <button id="btnGroupDrop1" type="button"
                                                                     class="btn btn-secondary dropdown-toggle"
-                                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
                                                                     aria-expanded="false">
                                                                 Action
                                                             </button>
@@ -111,7 +123,7 @@
                                                                     <a href="javascript:;" onclick="makeAdmin('{{ $user->id }}')"
                                                                     class="dropdown-item">Make Admin</a>
 
-                                                                    <!-- deleting an agent -->  
+                                                                    <!-- deleting an agent -->
                                                                     @if(auth()->user()->type == 1)
                                                                         <a href="javascript:;" onclick="confirmation('{{ url('/users/delete/' .$user->id) }}')"
                                                                         class="dropdown-item">Delete</a>
@@ -211,11 +223,11 @@
             });
         });
         function makeAdmin(id) {
-            
+
             var d = confirm("Are you sure, you want to make this user an Admin?");
 
             if (d) {
-                
+
                 window.location = "/admin/make/"+id;
             }
         }

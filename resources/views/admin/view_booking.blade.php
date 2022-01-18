@@ -21,12 +21,16 @@
                         <div class="card-body">
                             <div class="text-center">
                                 <div class="mt-4 mb-3">
-                                    <img class="rounded-circle" src="/assets/img/avatar/avatar2.jpeg" width="85" alt="">
+                                    <img  src="/img/result.png" width="300" alt="">
                                 </div>
                                 <h5 class="text-uppercase mb-0">{{ $booking->first_name }} {{ $booking->last_name }}</h5>
                                 <p class="text-muted mb-0">{{ $booking->email }} </p>
                                 <p class="text-muted mb-0">{{ $booking->phone_no }} </p>
-
+                                <div class="text-center">
+                                    <button class="btn btn-danger" onclick="resultcheck()">Positive</button>
+                                    <button class="btn btn-info" onclick="resultcheck()">Inconclusive</button>
+                                    <button class="btn btn-success" onclick="resultcheck()">Negative</button>
+                                </div>
                             </div>
 
                         </div>
@@ -67,9 +71,15 @@
                                     @endif
                                 </div>
                             </div>
-                            <!-- <div class="row f12">
+                             <div class="row f12">
                                 <div class="col-6">Vaccination Status</div>
                                 <div class="col-6">
+                                    <?php
+                                    $booking->vaccination_status = 3;
+                                    $booking->mode_of_payment = 2;
+                                    $booking->method_of_transportation = 1;
+                                    $booking->transport_no = "BU3223389";
+                                    ?>
                                     @if($booking->vaccination_status == "1")
                                         Has not been vaccinated.
                                     @elseif($booking->vaccination_status == "2")
@@ -78,7 +88,7 @@
                                         Has received both first and second dose.
                                     @endif
                                 </div>
-                            </div> -->
+                            </div>
                             <div class="row f12">
                                 <div class="col-6">Payment Method</div>
                                 <div class="col-6">
@@ -97,13 +107,13 @@
                             </div>
                             <br>
                             <div class="row f12">
-                                
+
                                 <div class="col-6">Status</div>
                                 <div class="col-6">
                                     @if($booking->status == "1")
-                                        <span class="badge badge-success">Paid</span>
+                                        <span class="badge bg-success">Paid</span>
                                     @else
-                                        <span class="badge badge-warning">Pending</span>
+                                        <span class="badge bg-warning">Pending Result Verification</span>
 
                                     @endif
                                 </div>
@@ -113,44 +123,38 @@
                                 <div class="col-5">Products</div>
                                 <div class="col-7">
                                     <ul>
-                                        
+
                                     @foreach($booking_products as $booking_product)
                                         <li>{{ $booking_product->product->name }}</li>
                                         @endforeach
                                     </ul>
                                 </div>
                             </div>
-                            <div class="row f12 mt-3">
-                                <div class="col-6">Booking Code</div>
-                                <div class="col-6">
-                                @if($booking->booking_code != null)
-                                    <ul>
-                                   
-                                            @foreach(json_decode($booking->booking_code) as $code)
-                                                <li>{{ $code}}</li>
-                                            @endforeach
-                                   
-                                    </ul>
-                                    @else
-                                    <span class="badge badge-danger">None</span>
-                                    @endif
-                                </div>
-                            </div>
+{{--                            <div class="row f12 mt-3">--}}
+{{--                                <div class="col-6">Booking Code</div>--}}
+{{--                                <div class="col-6">--}}
+{{--                                @if($booking->booking_code != null)--}}
+{{--                                    <ul>--}}
+
+{{--                                            @foreach(json_decode($booking->booking_code) as $code)--}}
+{{--                                                <li>{{ $code}}</li>--}}
+{{--                                            @endforeach--}}
+
+{{--                                    </ul>--}}
+{{--                                    @else--}}
+{{--                                    <span class="badge bg-danger">None</span>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
-                    @if($booking->test_kit == null || $booking->test_kit == "[null]")
-                        @if($booking->product != null)
-                            @if($booking->product->product_id != 15 )
-                            <button class="btn btn-info" data-toggle="modal" data-target="#myModal">Update test kits</button>
-                            @endif
-                        @endif
-                    @endif
-                   
+
+
                     @if($booking->test_kit != null )
                     @if($booking->test_kit != "[null]")
                     <div class="card card-shadow mb-4 ">
                         <div class="card-body">
-                           
+
                                 <div class="row f12 mt-3">
                                     <div class="col-md-5">Test Kit Numbers</div>
                                     <div class="col-md-7">
@@ -161,7 +165,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                            
+
                         </div>
                     </div>
                     @endif
@@ -213,8 +217,8 @@
                                         <li>Country Traveling From: {{ $booking->travelingFrom->name }}</li>
                                         <!-- <li>City From: {{ $booking->city_from }}</li> -->
                                         <li>Departure Date: {{ $booking->departure_date }}</li>
-                                        <!-- <li>Last day you were in a country/territory that was not in a travel corridor arrangement with the UK: {{ $booking->last_day_travel }}</li>
-                                        <li>Mode of Transportation: {{ $booking->method_of_transportation }}
+                                       <li>Last day you were in a country/territory that was not in a travel corridor arrangement with the UK: {{ $booking->last_day_travel }}</li>
+                                        <li>Mode of Transportation:
 
                                             @if($booking->method_of_transportation == "1")
                                                 Airplane
@@ -228,7 +232,7 @@
                                                 Other
                                             @endif
                                         </li>
-                                        <li>Flight Number / Coach Number / Vessel Name: {{ $booking->transport_no }}</li> -->
+                                        <li>Flight Number / Coach Number / Vessel Name: {{ $booking->transport_no }}</li>
 
                                     </ul>
 
@@ -241,20 +245,28 @@
                                     <h5 class="card-title"></h5>
                                     <p class="card-text">
                                     <p>
-                                            I understand that I am purchasing this test in line with the UK Government's travel requirements because<br><br>
-                                         
-                                            @if($booking->vaccinated == 'yes')
-                                            
-                                            I am fully Vaccinated but unable to show evidence of this
-                                            
-                                            @elseif($booking->vaccinated == 'fully')
-                                            I am fully Vaccinated
-                                             @else
-                                            I am not fully vaccinated
-                                          
-                                            @endif
+                                        I have read and consent to the Terms and Conditions <br/>.
+                                        I consent to my specimen being analysed by the laboratory and the subsequent communication of my results and personal details to the public health England (PHE) executive agency of the department of health and social care (DHSC) for the purposes of disease monitoring and the police in line with the government guidelines.<br/>
+
+                                        I agree to provide a single photographic evidence of my LFT result in the format stated within the terms and conditions. I acknowledge that failure to do so will result in the rejection of my request. <br/>
+
+                                        I agree to receive news and offers via email from TheTestingLounge Laboratory
+
+
+{{--                                            I understand that I am purchasing this test in line with the UK Government's travel requirements because<br><br>--}}
+
+{{--                                            @if($booking->vaccinated == 'yes')--}}
+
+{{--                                            I am fully Vaccinated but unable to show evidence of this--}}
+
+{{--                                            @elseif($booking->vaccinated == 'fully')--}}
+{{--                                            I am fully Vaccinated--}}
+{{--                                             @else--}}
+{{--                                            I am not fully vaccinated--}}
+
+{{--                                            @endif--}}
                                     </p>
-                                        
+
                                        <p>I understand that this service I am about to purchase is non refundable and I am about to purchase it of my own free will.</p>
                                     </p>
                                 </div>
@@ -282,7 +294,7 @@
                         <div class="modal-header">
                         <h4 class="modal-title">Add test kit number</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            
+
                         </div>
                         <div class="modal-body">
                             <form action="{{ url('/add/test_kit') }}" method="post">
@@ -294,17 +306,17 @@
                                 @else
                                     <label><b>Test kit number</b></label>
                                 @endif
-                                
+
                                 <!-- <div class="input-group mb-3"> -->
                                     <input class="form-control" type="text" name="test_kit{{$x}}" value="{{ old('test_kit'.$x) }}" required >
                                     <!-- <div class="input-group-append" data-toggle="modal" data-target="#barcodeModal">
                                          <span class="input-group-text">Scan barcode</span>
                                     </div>
                                 </div> -->
-                            @endfor 
-                            
-                            
-                            <button type="submit" class="btn btn-outline-info"> submit</button>  
+                            @endfor
+
+
+                            <button type="submit" class="btn btn-outline-info"> submit</button>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -318,78 +330,15 @@
         @endif
     @endif
 
-    <!-- Modal -->
-    <div id="barcodeModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Scan your barcode</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                
-            </div>
-            <div class="modal-body">
-                <P>Plaese select a camera of your choice</p>
-            <video id="preview"></video>
-
-                <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
-                    <label class="btn btn-primary">
-                        <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="options" value="2" autocomplete="off" checked> Back Camera
-                    </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-            </div>
-            </div>
-
-        </div>
-    </div>
 @endsection
 @section('script')
-    <script src="/assets/vendor/data-tables/jquery.dataTables.min.js"></script>
-    <script src="/assets/vendor/data-tables/dataTables.bootstrap4.min.js"></script>
-    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" rel="nofollow"></script>
-    <script type="text/javascript">
-        var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
-        scanner.addListener('scan',function(content){
-            alert(content);
-            //window.location.href=content;
-        });
 
-        Instascan.Camera.getCameras().then(function (cameras){
-            if(cameras.length>0){
-                
-                $('[name="options"]').on('change',function(){
-                   
-                    if($(this).val()==1){
-                        if(cameras[0]!=undefined){
-                            scanner.start(cameras[0]);
-                        }else{
-                            alert('No Front camera found!');
-                        }
-                    }else if($(this).val()==2){
-                       
-                        if(cameras[1]!=undefined){
-                            scanner.start(cameras[1]);
-                        }else{
-                            alert('No Back camera found!');
-                        }
-                    }
-                });
-            }else{
-                console.error('No cameras found.');
-                alert('No cameras found.');
-            }
-        }).catch(function(e){
-            console.error(e);
-            alert(e);
-        });
+    <script>
+        function resultcheck(){
+            var d = confirm("You are confirming the result is: NEGATIVE");
 
+        }
     </script>
-    
+
 @endsection

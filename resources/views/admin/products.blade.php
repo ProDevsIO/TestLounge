@@ -1,9 +1,22 @@
 @extends('layouts.admin')
 @section('style')
-    <link href="/assets/vendor/data-tables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 @endsection
 @section('content')
 
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Products</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Products</h4>
+            </div>
+        </div>
+    </div>
 
     <div class="content-wrapper">
         <div class="container-fluid">
@@ -19,7 +32,7 @@
                                 </div>
                                 <div class="media-body text-light" title="Pending bookings">
                                     <h4 class="text-uppercase mb-0 weight500">{{ $products->count() }}</h4>
-                                    <span>All Products</span>
+                                    <span class="text-black">All Products</span>
                                 </div>
                             </div>
                         </div>
@@ -33,7 +46,7 @@
                         <form method="post" action="{{ url('/add/product') }}">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -50,31 +63,31 @@
                                    <label class="mt-2">Test type</label>
                                                             <select name="classify" class="form-control" id="type" required>
                                                                 <option value="">Kindly select a type </option>
-                                                               
+
                                                                     <option value="0">
-                                                                        
+
                                                                           Individual Test
-                                                                        
+
                                                                     </option>
                                                                     <option value="1">
-                                                                        
+
                                                                             Bundle Test
-                                                                        
+
                                                                     </option>
-                                                               
+
                                                             </select>
                             <div style="display:none">
                                <label for="">Country</label>
                                 <select name="country_id" class="form-control" id="country" required>
-                                   
-                                  
+
+
                                         <option value="255" selected>United Kingdom</option>
-                                  
+
                                 </select>
                                 </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Add Product</button>
                         </div>
                         </form>
@@ -88,7 +101,7 @@
                         <div class="card-header border-0">
                             <div class="custom-title-wrap border-0 position-relative pb-2">
                                 <div class="custom-title">Products</div>
-                                <a href="javascript:;" data-toggle="modal" data-target="#addProduct" class="btn btn-danger pull-right">Add Product</a>
+                                <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#addProduct" class="btn btn-danger " style="float: right;margin-top: -20px;">Add Product</a>
                             </div>
                         </div>
                         <div class="card-body p-0">
@@ -119,13 +132,13 @@
                                             <td>{{ $product->bookings->count() }}</td>
                                             <!-- <td>{{optional($product->country)->nicename ?? "No country"}}</td> -->
                                             <td>    @if($product->classify == 0 )
-                                                        <label class="badge badge-warning text-white">Individual</label>    
+                                                        <label class="badge badge-warning text-white">Individual</label>
                                                     @elseif($product->classify == 1 )
                                                         <span class="badge badge-info  text-white"> Bundle</span>
                                                     @endif
                                                 </td>
-                                            <td>@if(optional($product)->slug) 
-                                                   <a href="view/product/{{$product->slug}}">view/product/{{optional($product)->slug}}</a>  
+                                            <td>@if(optional($product)->slug)
+                                                   <a href="view/product/{{$product->slug}}">view/product/{{optional($product)->slug}}</a>
                                                 @else
                                                     No Links
                                                 @endif
@@ -147,7 +160,7 @@
                                             @endif
                                         </tr>
 
-                                        
+
                                     @endforeach
 
                                     </tbody>
@@ -186,7 +199,7 @@
                                                             <label class="mt-2">Test type</label>
                                                             <select name="Type" class="form-control" id="type" required>
                                                                 <option value="">Kindly select a type </option>
-                                                               
+
                                                                     <option value="0" @if($product->classify == 0 ) selected @endif>
                                                                         @if($product->classify == 0 )
                                                                           Individual Test
@@ -197,7 +210,7 @@
                                                                             Bundle Test
                                                                         @endif
                                                                     </option>
-                                                               
+
                                                             </select>
                                                         </div>
                                                         <div class="modal-footer">

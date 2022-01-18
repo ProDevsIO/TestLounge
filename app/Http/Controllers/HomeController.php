@@ -54,14 +54,14 @@ class HomeController extends Controller
 
         $display_countries = SupportedCountries::whereNotNull('image')->inRandomOrder()->limit(1)->get();
 
-      
+
 
         return view('homepage.home')->with(compact('scountries'));
     }
-    
+
     public function booking(Request $request)
     {
-        
+
         $countries = Country::all();
         $products = Product::all();
         $vendors = Vendor::all();
@@ -72,29 +72,29 @@ class HomeController extends Controller
         $cart = Cart::where('ip', session()->get('ip'))->first();
         $vproduct = VendorProduct::where('id', $cart->vendor_product_id)->first();
 
-      
-       
+
+
         if(!is_null($vproduct->walk_product_id))
         {
 
             $bearer = $this->getDamhealthToken();
             $getlocation = $this->getDamHealthLocations($bearer);
             $location = json_decode($getlocation);
-            
+
                     if(!isset($location->errors))
                     {
                         $locations = $location->data->damhealth_locations;
-                        
+
                     }else{
                         $locations = null;
                     }
-              
+
             $walkin = $vproduct->walk_product_id;
         }else{
             $walkin = null;
             $locations = null;
         }
-        
+
         if ($request->ref) {
             $user = User::where('referal_code', $request->ref)->first();
         }
@@ -171,7 +171,7 @@ class HomeController extends Controller
             'ethnicity' => 'required',
             'phone_no' => 'required',
             'email' => 'required',
-           
+
             'isolation_address' => 'required',
             'isolation_town' => 'required',
             'isolation_postal_code' => 'required',
@@ -179,7 +179,7 @@ class HomeController extends Controller
             'arrival_date' => 'required',
             'country_travelling_from_id' => 'required',
             'departure_date' => 'required',
-           
+
         ]);
 
         if($request->test_location)
@@ -197,7 +197,7 @@ class HomeController extends Controller
     //    }
 
         $request_data = $request->all();
-       
+
         if(!$request->hidden_phone){
             $request->hidden_phone = $request_data['phone_no'];
         }
@@ -214,14 +214,14 @@ class HomeController extends Controller
             $request_data['dam_address'] = $dam_data->address;
             $request_data['dam_room'] = $dam_data->room;
         }
-        
 
-        
-       
+
+
+
 
         if($request->voucher != null){
             $voucher = VoucherGenerate::where(['voucher' => $request->voucher, 'status' => 0] )->first();
-           
+
             if($voucher != null)
             {
                 if($voucher->email == null)
@@ -232,7 +232,7 @@ class HomeController extends Controller
 
                 if($voucher->email != $request_data['email'])
                 {
-                    
+
                     session()->flash('alert-danger', "Sorry to inform you, but this voucher has been assigned to somebody else");
                     return back()->withInput();
                 }
@@ -266,22 +266,22 @@ class HomeController extends Controller
                         unset($request_data['test_kit'.$n]);
                     }
                     // encode the Testkit in json format
-                    $test_kit = json_encode($test_kit); 
-                    
+                    $test_kit = json_encode($test_kit);
+
                     $request_data['test_kit'] = $test_kit;
                 }
-                
+
 
                 $request_data['transaction_ref'] = $transaction_ref;
                 $request_data['external_reference'] = $external_ref;
-        
+
                 unset($request_data['payment_method']);
 
                 $redirect_url = $this->voucherProcessing($request_data);
 
                 return redirect()->to($redirect_url);
-                
-                
+
+
             }else{
                 session()->flash('alert-danger', "This voucher code has been used. Kindly reach out to an Agent to provide a new one.");
                 return back()->withInput();
@@ -294,8 +294,8 @@ class HomeController extends Controller
         //     session()->flash('alert-danger', "Kindly select a product and add to your cart");
         //     return back()->withInput();
         // }
-       
-       
+
+
 
         unset($request_data['_token']);
         if($request->payment_method == "vastech"){
@@ -322,7 +322,7 @@ class HomeController extends Controller
         $request_data['transaction_ref'] = $transaction_ref;
         $request_data['external_reference'] = $external_ref;
 
-        $vendor_products = VendorProduct::where('id',  $request_data['vproduct'])->first(); 
+        $vendor_products = VendorProduct::where('id',  $request_data['vproduct'])->first();
 
         $request_data['vendor_id']  = $vendor_products->vendor_id;
 
@@ -330,9 +330,9 @@ class HomeController extends Controller
         unset($request_data['vproduct']);
 
         $price = $price_pounds = 0;
-        
+
         $booking = Booking::create($request_data);
-       
+
             $product_id =  $vendor_products->product_id;
 
             BookingProduct::create([
@@ -378,14 +378,14 @@ class HomeController extends Controller
         if($request->payment_method == "vastech"){
             $data = $this->getVasTechData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
         }elseif($request->payment_method == "paystack"){
-           
+
             $data = $this->getPaystackData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
-           
+
         }else {
             $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
         }
 
-       
+
         //deactivating subaccount
         // if (!empty($sub_accounts = $this->bookingService->sub_accounts)) {
         //     $data['subaccounts'] = $sub_accounts;
@@ -404,16 +404,16 @@ class HomeController extends Controller
 
 
         if ($request->payment_method == "stripe") {
-           
+
             $redirect_url = '/stripe/process/'.$booking->id.'/booking';
-           
+
         } else {
             if($request->payment_method == "vastech"){
                 $redirect_url = $this->processVas($data);
             } elseif($request->payment_method == "paystack"){
 
                 $redirect_url = $this->processPaystack($data);
-             
+
             }else {
                 $redirect_url = $this->processFL($data);
             }
@@ -460,13 +460,13 @@ class HomeController extends Controller
                 $amount = '$'.$product->price_pounds;
             }
         }
-     
+
         // dd($product->currency);
         return view('homepage.stripe_popup')->with(compact('amount','id','type'));
     }
 
     function confirm_paystack($txRef){
-       
+
         $curl = curl_init();
         $url = "https://api.paystack.co/transaction/verify/$txRef";
         curl_setopt_array($curl, array(
@@ -482,12 +482,12 @@ class HomeController extends Controller
             "Cache-Control: application/json",
             ),
         ));
-        
+
         $response = curl_exec($curl);
         $err = curl_error($curl);
         curl_close($curl);
         return $response;
-       
+
         // if ($err) {
         //     echo "cURL Error #:" . $err;
         // } else {
@@ -496,8 +496,8 @@ class HomeController extends Controller
     }
 
     function confirm_vas($url, $txRef){
-       
-   
+
+
         $ch = curl_init();
         $headr = array();
         $headr[] = 'Content-type: application/json';
@@ -519,27 +519,27 @@ class HomeController extends Controller
         $response = curl_exec($ch);
 
         curl_close($ch);
-   
+
         return $response;
 
-        
+
     }
 
-    
+
 
     public function payment_confirmation(Request $request,$type = null)
     {
-        
+
         if (env('APP_ENV', "LIVE") == "LIVE") {
             $url = "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify";
         } else {
             $url = "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/verify";
         }
 
-       
+
         $request_data = $request->all();
-      
-        
+
+
 
         if($type == "vas"){
             $txRef = $request->transactionRef;
@@ -550,26 +550,26 @@ class HomeController extends Controller
         }elseif($type == "paystack")
         {
             $txRef = $request->trxref;
-         
+
             $response = $this->confirm_paystack($txRef);
             $data_response = json_decode($response);
-           
+
         }elseif($type == "stripe"){
 
             $booking = Booking::where('id', $request->id)->first();
             $txRef = $booking->transaction_ref;
             $response = $this->processStripe($request->stripeToken, $request->id);
-            
-          
+
+
         }
         else{
             $txRef = $request->tx_ref;
             $response = $this->confirm_flutterwave($url,$txRef);
-            
+
         }
 
         $data_response = json_decode($response);
-       
+
 
         if (isset($data_response->data->status) && ($data_response->data->status == "successful" || $data_response->data->status == "APPROVED" || $data_response->data->status == "success" ||  $data_response->data->status == "succeeded" )) {
 
@@ -703,7 +703,7 @@ class HomeController extends Controller
                     return redirect()->to('/booking/code/failed?b=' . $txRef);
                 }
 
-             
+
                 foreach ($booking_products as $booking_product) {
                     try {
 
@@ -711,23 +711,23 @@ class HomeController extends Controller
                         {
                             $message = "
                             Dear " . $booking->first_name . ",<br><br>
-                
+
                             Thank you for booking with us.<br><br>
                              If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory Test or The Unvaccinated Day 2 & Day 8 Mandatory Tests.<br/><br/>
-    
+
                             Your purchase would be for one of the following reasons:<br><br>
-    
+
                             1. You are Unvaccinated or Not Fully Vaccinated. Read more <a href='https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19#check-if-you-qualify-as-fully-vaccinated'>here</a><br><br>
                             2. The Vaccination you got is not approved by the UK. Read more <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
-                            3. You are Fully Vaccinated but unable to show an approved COVID-19 proof of vaccination before your travel. 
+                            3. You are Fully Vaccinated but unable to show an approved COVID-19 proof of vaccination before your travel.
                             Read more about the approved proof of vaccination  <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
-    
+
                             If you are fully vaccinated under an approved vaccination programme accepted in the UK (check if your vaccination is approved <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a>). <br><br>
-    
+
                             We have a no-refund policy as indicated before your purchase.<br><br>
 
                             <a href='https://www.surveymonkey.com/r/PQQNWV7'>Kindly click here give us your feedback </a><br><br>
-    
+
                                   <br/><br/>
                                   Thank you.
                                   <br/><br/>
@@ -735,7 +735,7 @@ class HomeController extends Controller
                             ";
                             Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
                         }
-                       
+
                     } catch (\Exception $e) {
                      dd($e);
                     }
@@ -760,14 +760,14 @@ class HomeController extends Controller
                             //referral code doesnt exist
                             $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
                         }
-                        
+
                     } catch (\Exception $e) {
-                     dd($e); 
+                     dd($e);
                     }
 
-                    
+
                 }
-              
+
                 if (!empty($booking->phone_no)) {
 
                     $decode = implode(", ", json_decode($code));
@@ -780,15 +780,15 @@ class HomeController extends Controller
                 //update wiith transaction code
 
                 if($type == "paystack"){
-                    $data_save =[                
+                    $data_save =[
                         'mode_of_payment' => 4,
                         'transaction_ref' => $txRef,
                         'status' => 1,
                         'booking_code' => $code
                     ];
-                
+
                     $booking->update($data_save);
-                  
+
                 } elseif($type == "vas"){
 
                     $booking->update([
@@ -799,7 +799,7 @@ class HomeController extends Controller
                     ]);
                 }elseif($type == "stripe"){
 
-                    $booking->update([ 
+                    $booking->update([
                         'mode_of_payment' => 2,
                         'transaction_ref' => $txRef,
                         'status' => 1,
@@ -822,22 +822,22 @@ class HomeController extends Controller
 
             return redirect()->to('/booking/success?b=' . $txRef);
         }
-        
+
         try {
 
                 $message = "
-              
+
                 Items in your shopping cart are still waiting. Do you need help to complete your order?
                 Click here to see a video on “How to Book a Test”
 
                 If you need further support, Contact us:<br><br>
                 <a href='Info@traveltestltd.com'>Info@traveltestltd.com</a> <br>
-            
+
                 Phone Nos: <br>
                 Nigeria: +2347060466084  <br>
                 UAE: +971544119013, +971563784904  <br>
                 UK: +447436875938  <br>
-                
+
                 <a href='https://www.surveymonkey.com/r/PQQNWV7'>Kindly Click here give us your feedback </a><br><br>
 
                       <br/><br/>
@@ -846,7 +846,7 @@ class HomeController extends Controller
                     TravelTestsltd Team
                 ";
                 Mail::to($booking->email)->send(new BookingCreation($message, "Incomplete Order"));
-           
+
         } catch (\Exception $e) {
          dd($e);
         }
@@ -876,8 +876,8 @@ class HomeController extends Controller
     }
     public function voucher_booking($voucher, $walk = null)
     {
-        
-    
+
+
         $countries = Country::all();
         $products = Product::all();
         $vendors = Vendor::all();
@@ -892,22 +892,22 @@ class HomeController extends Controller
                                      ->where('vendor_id', 4)->first();
             if($vproduct != null){
 
-            
+
                 if(!is_null($vproduct->walk_product_id))
                 {
 
                     $bearer = $this->getDamhealthToken();
-                
+
                     $getlocation = $this->getDamHealthLocations($bearer);
                     $location = json_decode($getlocation);
-                
+
                                 if(!isset($location->errors))
                                 {
                                     $locations = $location->data->damhealth_locations;
                                 }else{
                                     $locations = null;
                                 }
-            
+
                     $walkin = $vproduct->walk_product_id;
                 }else{
                     $walkin = null;
@@ -915,11 +915,11 @@ class HomeController extends Controller
                 }
             } else{
                 $walkin = null;
-                $locations = null;   
+                $locations = null;
             }
         }else{
             $walkin = null;
-            $locations = null;   
+            $locations = null;
         }
 
         return view('homepage.booking')->with(compact('countries', 'products', 'vendors', 'user','carts_count', 'voucher', 'locations','walkin'));
@@ -984,6 +984,13 @@ class HomeController extends Controller
         return view('homepage.register')->with(compact('countries'));
     }
 
+    public function register_test(){
+        if(!isset($_GET['type'])){
+            return redirect()->to('/');
+        }
+        return view('homepage.test');
+    }
+
     public function register(Request $request)
     {
 
@@ -1035,7 +1042,7 @@ class HomeController extends Controller
             ";
             Mail::to($request->email)->send(new BookingCreation($message, "Agent Registration"));
         } catch (\Exception $e) {
-        
+
         }
 
         try {
@@ -1100,7 +1107,7 @@ class HomeController extends Controller
     {
 
         $user = User::where('id', $user)->where('referal_code', $referral_code)->first();
-       
+
         if ($user && $user->verified == 0) {
 
             $user->update([
@@ -1142,7 +1149,7 @@ class HomeController extends Controller
         unset($request_data['user_id']);
         unset($request_data['_token']);
         unset($request_data['file']);
-        
+
         unset($request_data['password']);
 
         $request_data['password'] = bcrypt($request->password);
@@ -1150,7 +1157,7 @@ class HomeController extends Controller
         User::where('id',$request->user_id)->update($request_data);
         $user =  User::where('id',$request->user_id)->first();
 
-        
+
         try {
 
             $message2 = "
@@ -1192,7 +1199,7 @@ class HomeController extends Controller
 
         return view('homepage.contact');
     }
-    
+
     public function faq()
     {
 
@@ -1231,10 +1238,10 @@ class HomeController extends Controller
                         <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "super/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                         Continue Registration
                        </a>
-            
+
                               <br/><br/>
                 Thank you for joining the  TravelTestsltd network!<br><br>
-    
+
                 TravelTestsltd Team
                 ";
             }else{
@@ -1244,22 +1251,22 @@ class HomeController extends Controller
                 You can now log in to your portal to complete your profile and set up your account. <br><br>
                 Kindly find your login details below:<br><br>
                 Email: $user->email<br><br>
-               
+
                 You will find your dedicated customer booking link on your portal <br><br>
                 Kindly click the button below<br/><br/>
                         <a href='" . env('APP_URL', "https://uktraveltest.prodevs.io/") . "sub/continue/registration/" . $referral . "/" . $user->id . "'  style='background: #0c99d5; color: #fff; text-decoration: none; border: 14px solid #0c99d5; border-left-width: 50px; border-right-width: 50px; text-transform: uppercase; display: inline-block;'>
                         Continue Registration
                        </a>
-            
+
                               <br/><br/>
-                
+
                 Thank you for joining the  TravelTestsltd network!<br><br>
-    
+
                 TravelTestsltd Team
                 ";
-                
+
             }
-           
+
             Mail::to($user->email)->send(new BookingCreation($message, 'Agent Activation'));
         } catch (\Exception $e) {
             dd($e);
@@ -1730,16 +1737,16 @@ class HomeController extends Controller
         //     return redirect()->to('/');
         // }
 
-     
+
         $booking = Booking::where('id', $booking_id)->first();
 
         dd($stripe_charge, $product->charged_amount);
 
-       
-        
+
+
         $txRef = $booking->transaction_ref;
 
-     
+
         if ($booking->status != 1) {
 
             $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
@@ -1827,10 +1834,10 @@ class HomeController extends Controller
             try {
                 //generation of ttluk number
                 $code = "TTLUK" . rand(1000000, 9999999);
-            
+
             } catch (\Exception $e) {
                 dd($e);
-               
+
                     $booking->update([
                         'vendor_id' => 3,
                         'mode_of_payment' => 2,
@@ -1848,7 +1855,7 @@ class HomeController extends Controller
                     {
                         $message = "
                         Dear " . $booking->first_name . ",<br><br>
-            
+
                         Thank you for booking with us.<br><br>
                          If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory Test or The Unvaccinated Day 2 & Day 8 Mandatory Tests.<br/><br/>
 
@@ -1856,7 +1863,7 @@ class HomeController extends Controller
 
                         1. You are Unvaccinated or Not Fully Vaccinated. Read more <a href='https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19#check-if-you-qualify-as-fully-vaccinated'>here</a><br><br>
                         2. The Vaccination you got is not approved by the UK. Read more <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
-                        3. You are Fully Vaccinated but unable to show an approved COVID-19 proof of vaccination before your travel. 
+                        3. You are Fully Vaccinated but unable to show an approved COVID-19 proof of vaccination before your travel.
                         Read more about the approved proof of vaccination  <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
 
                         If you are fully vaccinated under an approved vaccination programme accepted in the UK (check if your vaccination is approved <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a>)
@@ -1873,7 +1880,7 @@ class HomeController extends Controller
                         ";
                         Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
                     }
-                   
+
                 } catch (\Exception $e) {
                  dd($e);
                 }
@@ -1898,14 +1905,14 @@ class HomeController extends Controller
                         //referral code doesnt exist
                         $maybe = Mail::to($booking->email)->send(new VendorReceipt($booking_product->id, "Receipt from TravelTestsGlobal", optional($booking_product->vendor)->email, $code));
                     }
-                    
+
                 } catch (\Exception $e) {
-                 dd($e); 
+                 dd($e);
                 }
 
-                
+
             }
-          
+
             if (!empty($booking->phone_no)) {
 
                 $decode = implode(", ", json_decode($code));
@@ -1917,7 +1924,7 @@ class HomeController extends Controller
 
             //update wiith transaction code
 
-            
+
                 $booking->update([
                     'vendor_id' => 3,
                     'mode_of_payment' => 2,
@@ -1925,15 +1932,15 @@ class HomeController extends Controller
                     'status' => 1,
                     'booking_code' => $code
                 ]);
-            
+
 
             //to remove items from cart
             $cart = Cart::where('ip', session()->get('ip'))->delete();
         }
         //to remove items from cart
         $cart = Cart::where('ip', session()->get('ip'))->delete();
-      
-       
+
+
 
         return redirect()->to('/booking/success?b=' . $txRef);
     }
@@ -1961,16 +1968,16 @@ class HomeController extends Controller
 
     public function view_uk($id)
     {
-        
+
         if($id == "united-kingdom-1")
         {
             $countries = Country::all();
-       
+
             return view('homepage.uk_page')->with(compact('countries'));
         }else{
             $countries = Country::where('slug_name', $id)->first();
             $scountry = SupportedCountries::where('country_id', $countries->id)->first();
-          
+
 
             if(!is_null($scountry))
             {
@@ -1978,9 +1985,9 @@ class HomeController extends Controller
             }else{
                 Abort(404);
             }
-        
+
         }
-       
+
     }
 
 
@@ -1990,24 +1997,24 @@ class HomeController extends Controller
             $countries = SupportedCountries::where('country_id', $id)->first();
             $pages = Pages::all();
             return view('homepage.travel_details')->with(compact('countries', 'action','pages'));
-       
+
     }
-    
+
 
     public function voucherProcessing(array $request_data ){
 
         $price = $price_pounds = 0;
-   
+
 
         $voucher =  VoucherGenerate::where(['voucher' => $request_data['external_reference'], 'status' => 0])->first();
         $referer = User::where('id', $voucher->agent)->first();
         $request_data['referral_code'] = $referer->referal_code;
         $request_data['user_id'] = $voucher->agent;
-      
+
 
         $booking = Booking::create($request_data);
-       
-       
+
+
        if($voucher != null){
             $product_id = $voucher->voucherCount->product_id;
 
@@ -2035,21 +2042,21 @@ class HomeController extends Controller
                 $currency = 'USD';
                 $charged = $price_pounds;
             }
-    
+
             BookingProduct::where('booking_id', $booking->id)->update([
                 'charged_amount' => $charged, 'currency' => $currency
             ]);
         }
 
-       
-       
+
+
         $txRef =  $request_data['transaction_ref'];
-         
+
         if ($booking->status != 1) {
 
             $booking_products = BookingProduct::where('booking_id', $booking->id)->get();
 
-           
+
             try {
 
                 if(!$booking->room == null)
@@ -2071,12 +2078,12 @@ class HomeController extends Controller
                     'transaction_ref' => $txRef,
                     'status' => 1
                 ]);
-              
+
                 $redirect = '/booking/code/failed?b=' . $txRef;
                 return $redirect;
             }
 
-            //send receipt 
+            //send receipt
             foreach ($booking_products as $booking_product) {
                 try {
                     //check if a referral code exist
@@ -2107,7 +2114,7 @@ class HomeController extends Controller
                     {
                         $message = "
                         Dear " . $booking->first_name . ",<br><br>
-            
+
                         Thank you for booking with us.<br><br>
                          If you are getting this email, it means you have bought The Unvaccinated Day 8 Mandatory Test or The Unvaccinated Day 2 & Day 8 Mandatory Tests.<br/><br/>
 
@@ -2115,7 +2122,7 @@ class HomeController extends Controller
 
                         1. You are Unvaccinated or Not Fully Vaccinated. Read more <a href='https://www.gov.uk/guidance/travel-to-england-from-another-country-during-coronavirus-covid-19#check-if-you-qualify-as-fully-vaccinated'>here</a><br><br>
                         2. The Vaccination you got is not approved by the UK. Read more <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
-                        3. You are Fully Vaccinated but unable to show an approved COVID-19 proof of vaccination before your travel. 
+                        3. You are Fully Vaccinated but unable to show an approved COVID-19 proof of vaccination before your travel.
                         Read more about the approved proof of vaccination  <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a><br><br>
 
                         If you are fully vaccinated under an approved vaccination programme accepted in the UK (check if your vaccination is approved <a href='https://www.gov.uk/guidance/countries-with-approved-covid-19-vaccination-programmes-and-proof-of-vaccination'>here</a>)
@@ -2124,7 +2131,7 @@ class HomeController extends Controller
                         We have a no-refund policy as indicated before your purchase.<br><br>
 
                         <a href='https://www.surveymonkey.com/r/PQQNWV7'>Kindly click here give us your feedback </a><br><br>
-                         
+
 
                               <br/><br/>
                               Thank you.
@@ -2133,7 +2140,7 @@ class HomeController extends Controller
                         ";
                         Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
                     }
-                   
+
                 } catch (\Exception $e) {
                  dd($e);
                 }
@@ -2148,35 +2155,35 @@ class HomeController extends Controller
                             Thank you for booking your test with Travel Test Global.<br><br>
                             If you ordered a home testing service, have you received your test kits?  <br>
                             <a href='https://docs.google.com/forms/u/1/d/1X2f1Jhd5k6UgnM_dK88pUTXHVW43hT4By_QaLMu4pnM/edit'> Yes</a> or  <a href='https://docs.google.com/forms/u/1/d/1X2f1Jhd5k6UgnM_dK88pUTXHVW43hT4By_QaLMu4pnM/edit'>No </a>  <br><br>
-                            
+
                             If you ordered the in-clinic service, have you received details about the clinic appointment for your test? <br>
                             <a href='https://docs.google.com/forms/u/1/d/1X2f1Jhd5k6UgnM_dK88pUTXHVW43hT4By_QaLMu4pnM/edit'>Yes</a> or  <a href='https://docs.google.com/forms/u/1/d/1X2f1Jhd5k6UgnM_dK88pUTXHVW43hT4By_QaLMu4pnM/edit'>No </a> <br><br>
-                        
+
                             We value your feedback. Please click here to tell us how we are doing.<a href='https://docs.google.com/forms/d/e/1FAIpQLScPxT051YcrGm3AzAM4bb2q5fh4ZL-xNm6QXOfyTzdL5LLf8w/viewform'> Click here </a><br>
-                            
+
                             If you require further support, please contact us using the details shown below. <br><br>
-                            
+
                             Contact Us <br>
                             <a href='Info@traveltestltd.com'>Info@traveltestltd.com</a> <br>
                             <a href='https://www.traveltestsltd.com'> www.traveltestsltd.com</a> <br><br>
-                    
+
                             United Kingdom <br>
                             WhatsApp: +447742999786  <br><br>
-                            
-                            United Arab Emirates <br> 
+
+                            United Arab Emirates <br>
                             Mobile & WhatsApp: +971544119013, +971563784904 <br><br>
-                            
+
                             Nigeria <br>
-                            Mobile & WhatsApp: +2347060466084 
-             
+                            Mobile & WhatsApp: +2347060466084
+
                             <br/><br/>
                             Thank you.
                             <br/><br/>
                             TravelTestsltd Team
                         ";
                         Mail::to($booking->email)->send(new BookingCreation($message, "Guidelines for purchasing a Tests for the Unvaccinated/ Partially Vaccinated "));
-                
-                   
+
+
                 } catch (\Exception $e) {
                  dd($e);
                 }
@@ -2202,12 +2209,12 @@ class HomeController extends Controller
             ]);
             $redirect =  '/booking/success?b=' . $txRef;
             return $redirect;
-            
+
         }
-        
+
         $redirect ='/booking/success?b=' . $txRef;
         return $redirect;
-      
+
     }
 
     public function view_green()
@@ -2236,13 +2243,13 @@ class HomeController extends Controller
 
     public function view_single_product($slug)
     {
-        
+
         $product = Product::where('slug', $slug)->first();
         $products = product::all();
         $vproducts = VendorProduct::where('product_id', optional($product)->id)->orderby('id', 'desc')->take(1)->get();
         $countries = Country::all();
         $sproducts = VendorProduct::where('product_id',  optional($product)->id)->first();
-        
+
         return view('homepage.single_product')->with(compact('vproducts','sproducts','products','product', 'countries'));
 
     }
@@ -2258,17 +2265,17 @@ class HomeController extends Controller
         $time_slots = $this->getDamHealthtime($bearer,$location, $room, $product, $date);
         $slots = json_decode($time_slots);
         $get_slots = $slots->availableSlots;
-        
+
         $time = [];
         foreach ($get_slots as $slot) {
             $seperate_start = explode('T', $slot->starttime);
             $seperate_end = explode('T', $slot->endtime);
-          
+
             $time[] = [
                 'name' => "$seperate_start[1] - $seperate_end[1]",
             ];
         }
-       
+
         return $time;
     }
 
@@ -2277,11 +2284,11 @@ class HomeController extends Controller
         $bearer = $this->getDamhealthToken();
         $getlocation = $this->getDamHealthLocations($bearer);
         $location = json_decode($getlocation);
-        
+
                 if(!isset($location->errors))
                 {
                     $locations = $location->data->damhealth_locations;
-                    
+
                 }else{
                     $locations = null;
                 }
@@ -2307,7 +2314,7 @@ class HomeController extends Controller
     public function test()
     {
       // ---- DAM HEALTH INTEGRATION TEST ON DIFFERENT END POINT COMPILED TOGETHER ---- //
-      
+
 
         ///  ---------------  Get Bearer Token  -----------  ///
         $request = [
@@ -2325,7 +2332,7 @@ class HomeController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_string)));
-        
+
         $result = curl_exec($ch);
         curl_close($ch);
         $response = json_decode($result);
@@ -2336,11 +2343,11 @@ class HomeController extends Controller
         $request2 = [
 
             "query" => "query GetLocations {damhealth_locations {availability isactive locationid name address rooms { name roomid } } }"
-            
+
             ];
 
         $data_string2 = json_encode($request2);
-     
+
         // dump($data_string2);
         // exit();
         $ch2 = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
@@ -2349,7 +2356,7 @@ class HomeController extends Controller
         curl_setopt($ch2, CURLOPT_POSTFIELDS, $data_string2);
         curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch2, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
-       
+
         $result_p = curl_exec($ch2);
         ///    --------------------    end of get product list   -----------------   ///
 
@@ -2361,7 +2368,7 @@ class HomeController extends Controller
         $getArrayProduct = [
 
             "query" => "query GetProducts { damhealth_products { locationids itemcode name price productid priceandavailabilitybylocation type} }"
-          
+
         ];
 
         $encodedArray = json_encode($getArrayProduct);
@@ -2372,43 +2379,43 @@ class HomeController extends Controller
         curl_setopt($ch3, CURLOPT_POSTFIELDS,  $encodedArray);
         curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch3, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
-       
+
         $result_3 = curl_exec($ch3);
         ///   --------------------    end of get product list   -----------------  ///
 
-        
+
         ///  ------------  Create  a new Booking ----------   ///
-    
+
 
         $object = [ "object" => ["locationid"=> 10037,"roomid"=> 10244,"durationstart"=> "2021-10-24T12:00:00","durationend"=> "2021-10-24T12:10:00","bookingdate"=> "2021-10-24","comments"=> "","bookingproducts"=> [ "data"=> [ ["productid"=> 10002 ] ] ],"bookingnotes"=> [ "data"=> [ "note"=> ""] ],"patient"=> ["data"=> ["address"=> [ ["address"=> "57 , Churchdown Lane","city"=> "Gloucester","state"=> "England","postcode"=> "GL3 3QJ","country"=> "United Kingdom"]],"firstname"=> "John","lastname"=> "Snow","dob"=> "1954-10-26","gender"=> "male", "email"=> "dew@thrones.com","mobilenumber"=> "+2547776332546","passportnumber"=> "123456789","ethnicity"=> "asian","religion"=> null,"occupation"=> null,"company"=> null,"comments"=> null,"customattributes"=> null,"receiveemail"=> true, "receivesms"=> true,"promotionalmarketing"=> true] ] ] ];
 
         // $object = json_encode($object);
- 
+
         $getArrayBooking = [
 
             "query" => 'mutation CreateBooking( $object: damhealth_bookings_insert_input!) { insert_damhealth_bookings_one(object: $object) {bookingid} }',
             "variables" => $object
-            
+
         ];
-       
+
         $encoded_booking_data = json_encode($getArrayBooking);
-       
+
         $b = curl_init('https://partner-api-dev.dam-health.com/v1/graphql');
 
         curl_setopt($b, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($b, CURLOPT_POSTFIELDS,   $encoded_booking_data);
         curl_setopt($b, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($b, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
-       
+
         $result_book = curl_exec($b);
 
-     
+
          ///  ------------  End a new Booking Creation ----------   ///
 
         ///  --------------  Availability api  --------------------  ///
-       
+
         $variable =  ["locationid" => 10002, "roomid" => 10009, "productid" => 10278, "bookingdate"=> "2021-09-01"] ;
-       
+
         $x = curl_init();
 
         $headr = array();
@@ -2425,7 +2432,7 @@ class HomeController extends Controller
         // curl_setopt($x, CURLOPT_POSTFIELDS,   $encoded_booking_data);
         // curl_setopt($x, CURLOPT_RETURNTRANSFER, true);
         // curl_setopt($x, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer $bearer"));
-       
+
         $result_x = curl_exec($x);
 
         ///  --------------  End Availability api  --------------------  ///
@@ -2443,7 +2450,7 @@ class HomeController extends Controller
 
     public function viewCountryProducts($country)
     {
-       
+
         $countries = Country::where('slug_name', $country)->first();
         $product = Product::where('country_id', $countries->id)->pluck('id')->toArray();
         $products = VendorProduct::whereIn('product_id',$product)->get();
@@ -2462,7 +2469,7 @@ class HomeController extends Controller
             if ($country->wherenotnull('slug_name')->orwhere('slug_name',$slug)->exists()) {
                 $max = $country->whereName($name)->latest('id')->skip(1)->value('slug_name');
                 if (isset($max[-1]) && is_numeric($max[-1])) {
-                    
+
                     return preg_replace_callback('/(\d+)$/', function($mathces) {
                         return $mathces[1] + 1;
                     }, $max);
@@ -2470,10 +2477,14 @@ class HomeController extends Controller
                 $slug = "{$slug}-1";
             }
             dump($slug);
-            Country::where('id',$country->id)->update(['slug_name' => $slug]);     
+            Country::where('id',$country->id)->update(['slug_name' => $slug]);
         }
     }
-    
-   
+
+    public function submit_test(Request $request){
+        dd($request->all());
+    }
+
+
 
 }

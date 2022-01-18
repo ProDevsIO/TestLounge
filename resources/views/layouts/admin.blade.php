@@ -1,122 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="ProDevs">
+    <meta charset="utf-8"/>
+    <title>TheTestingLounge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Admin for TheTestinglounge" name="description"/>
+    <meta content="Coderthemes" name="author"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
-    <!--favicon icon-->
-    <link rel="icon" type="image/png" href="/images/logo1.png">
+    <!-- App css -->
+    <link href="/assets/css/config/modern/bootstrap.min.css" rel="stylesheet" type="text/css"
+          id="bs-default-stylesheet"/>
+    <link href="/assets/css/config/modern/app.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet"/>
 
-    <title>TheTestingLounge| Admin</title>
-    <link rel="icon" type="image/png" href="/images/logo1.png">
+    <link href="/assets/css/config/modern/bootstrap-dark.min.css" rel="stylesheet" type="text/css"
+          id="bs-dark-stylesheet"/>
+    <link href="/assets/css/config/modern/app-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet"/>
 
-    <!--web fonts-->
-    <link href="//fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet">
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-
-    <!--bootstrap styles-->
-    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!--icon font-->
-    <link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/assets/vendor/dashlab-icon/dashlab-icon.css" rel="stylesheet">
-    <link href="/assets/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
-    <link href="/assets/vendor/themify-icons/css/themify-icons.css" rel="stylesheet">
-    <link href="/assets/vendor/weather-icons/css/weather-icons.min.css" rel="stylesheet">
-
-    <!--jquery ui-->
-    <link href="/assets/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet">
-
-    <!--iCheck-->
-    <link href="/assets/vendor/icheck/skins/all.css" rel="stylesheet">
-
-    <!--jqery steps-->
-    <link href="/assets/vendor/jquery-steps/jquery.steps.css" rel="stylesheet">
-
-    <!--custom styles-->
-    <link href="/assets/css/main.css" rel="stylesheet">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="/assets/vendor/html5shiv.js"></script>
-    <script src="/assets/vendor/respond.min.js"></script>
-    <![endif]-->
-<style>
-   
-</style>
+    <!-- icons -->
+    <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css"/>
     @yield('style')
 </head>
 
-<body class="left-sidebar-fixed">
-<header class="app-header">
-    <div class="branding-wrap">
-        <!--left nav toggler start-->
-        <a class="nav-link mt-2 float-left js_left-nav-toggler pos-fixed" href="javaScript:;">
-        
-            <i class=" ti-align-right"></i>
-        </a>
-        <!--left nav toggler end-->
+<!-- body start -->
+<body class="loading" data-layout-mode="detached"
+      data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": true}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
 
-        <!--brand start-->
-        <div class="navbar-brand pos-fixed" style="padding-left:0px; padding-top:5px;">
-            <a class="" href="{{ url('/dashboard') }}">
-                <img src="/images/logo1.png" style="height: 55px;" srcset="/images/logo1.png 2x" alt="TheTestingLounge">
-            </a>
-        </div>
-       
-        <!--brand end-->
-    </div>
-
-    <!--header rightside links-->
-    <ul class="header-links hide-arrow navbar">
+<div id="wrapper">
+    <div class="navbar-custom">
+        <div class="container-fluid">
+            <ul class="list-unstyled topnav-menu float-end mb-0">
 
 
-        <li class="nav-item dropdown pt-2">
-            <a class="nav-link dropdown-toggle " id="userNav" href="#" data-toggle="dropdown" aria-haspopup="true"
-               aria-expanded="false">
-                <div class="user-thumb">
+                <li class="dropdown d-none d-lg-inline-block">
+                    <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="fullscreen"
+                       href="#">
+                        <i class="fe-maximize noti-icon"></i>
+                    </a>
+                </li>
 
-                 <span class="text-muted"><b>{{ auth()->user()->first_name }}</b> </span>	&nbsp;
-                    <img class="rounded-circle" src="/assets/img/avatar/avatar2.jpeg" alt=""/>
-                </div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userNav">
-                <div class="dropdown-item- px-3 py-2">
-                    <img class="rounded-circle mr-2" src="/assets/img/avatar/avatar2.jpeg" width="35" alt=""/>
-                    <span class="text-muted">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span><br>
-                    @if(auth()->user()->type == 1)
-                        <span class="text-muted" style="padding-left:50px">Role: Admin</span>
-                    @elseif(auth()->user()->vendor_id != 0)
-                    <span class="text-muted " style="padding-left:50px">Role: Vendor</span>
-                        
-                    @elseif(auth()->user()->type == 2)
-                        @if(auth()->user()->main_agent_id == null)
-                            <span class="text-muted " style="padding-left:50px">Role: Super Agent</span>
-                        @else
-                            <span class="text-muted" style="padding-left:50px">Role: Sub Agent</span>
-                        @endif
-                    @endif
-                    <span></span>
-                </div>
-                <div class="dropdown-divider"></div>
-                @if(auth()->user()->type == "2")
 
-                            <a class="dropdown-item" href="{{ url('/profile') }}" >
+                <li class="dropdown notification-list topbar-dropdown">
+                    <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown"
+                       href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <img src="/assets/images/users/user-6.jpeg" alt="user-image" class="rounded-circle">
+                        <span class="pro-user-name ms-1">
+                        {{ auth()->user()->first_name }} <i class="mdi mdi-chevron-down"></i>
+                    </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
+                        <!-- item-->
+                        <div class="dropdown-header noti-title">
+                            <h6 class="text-overflow m-0">
+                                Welcome {{ auth()->user()->first_name }} {{ auth()->user()->last_name }}!</h6>
+                            @if(auth()->user()->type == 1)
+                                <span class="text-muted" style="padding-left:50px">Role: Admin</span>
+                            @elseif(auth()->user()->vendor_id != 0)
+                                <span class="text-muted " style="padding-left:50px">Role: Vendor</span>
+
+                            @elseif(auth()->user()->type == 2)
+                                @if(auth()->user()->main_agent_id == null)
+                                    <span class="text-muted " style="padding-left:50px">Role: Super Agent</span>
+                                @else
+                                    <span class="text-muted" style="padding-left:50px">Role: Sub Agent</span>
+                                @endif
+                            @endif
+                        </div>
+                        @if(auth()->user()->type == "2")
+
+                            <a class="dropdown-item notify-item" href="{{ url('/profile') }}">
                                 <span>Profile</span>
                             </a>
 
 
-                      @endif
-                <a class="dropdown-item" href="javascript:;"  onclick="signOut()">Sign Out</a>
-            </div>
-        </li>
+                        @endif
+                        <a class="dropdown-item notify-item" href="javascript:;" onclick="signOut()">Sign Out</a>
 
-    </ul>
-    <!--/header rightside links-->
-</header>
+                    </div>
+                </li>
+
+
+            </ul>
+
+            <!-- LOGO -->
+            <div class="logo-box">
+                <a href="{{ url('/') }}" class="logo logo-dark text-center">
+                <span class="logo-sm">
+                    <img src="/images/logo1.png" alt="" height="22">
+                    <!-- <span class="logo-lg-text-light">UBold</span> -->
+                </span>
+                    <span class="logo-lg">
+                    <img src="/images/logo.png" alt="" height="20">
+                        <!-- <span class="logo-lg-text-light">U</span> -->
+                </span>
+                </a>
+
+                <a href="{{ url('/') }}" class="logo logo-light text-center">
+                <span class="logo-sm">
+                    <img src="/images/logo1.png" alt="" height="22">
+                </span>
+                    <span class="logo-lg">
+                    <img src="/images/logo.png" alt="" height="20">
+                </span>
+                </a>
+            </div>
+
+            <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                <li>
+                    <button class="button-menu-mobile waves-effect waves-light">
+                        <i class="fe-menu"></i>
+                    </button>
+                </li>
+
+                <li>
+                    <!-- Mobile menu toggle (Horizontal Layout)-->
+                    <a class="navbar-toggle nav-link" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
+                        <div class="lines">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </a>
+                    <!-- End mobile menu toggle-->
+                </li>
+
+                <li class="dropdown d-none d-xl-block">
+                    <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#"
+                       role="button" aria-haspopup="false" aria-expanded="false">
+                        Quick Links
+                        <i class="mdi mdi-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <!-- item-->
+                        <a href="/vendors" class="dropdown-item">
+                            <i class="fe-briefcase me-1"></i>
+                            <span>Vendors</span>
+                        </a>
+
+                        <!-- item-->
+                        <a href="/finance/report" class="dropdown-item">
+                            <i class="fe-user me-1"></i>
+                            <span>Financial Report</span>
+                        </a>
+
+                        <a href="/validate/test" class="dropdown-item">
+                            <i class="fe-radio me-1"></i>
+                            <span>Validate Result</span>
+                        </a>
+
+
+
+
+                    </div>
+                </li>
+
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+
+    <div class="left-side-menu">
+
+        <div class="h-100" data-simplebar>
+            <!--- Sidemenu -->
+            <div id="sidebar-menu">
+
+                <ul id="side-menu">
+
+                    <li class="menu-title">Navigation</li>
+
+                    <li>
+                        <a href="{{ url('/dashboard') }}">
+                            <i class=" ti-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="sub-menu">
+                        <a href="#sidebarExpages" data-bs-toggle="collapse">
+                            <i class=" icon-speech"></i>
+                            <span>Bookings</span>
+                        </a>
+                        <div class="collapse" id="sidebarExpages">
+                            <ul class="nav-second-level">
+
+                                <li><a href="{{ url('/pending/booking') }}">Unpaid Bookings</a></li>
+                                <li><a href="{{ url('complete/booking') }}">Paid Bookings</a></li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+                    @if(auth()->user()->type == "2")
+                        <li>
+                            <a href="{{ url('/user/bank') }}">
+                                <i class="icon-calculator"></i>
+                                <span>Payment Settings</span>
+                            </a>
+                        </li>
+
+                    @endif
+                    @if(auth()->user()->type == "1")
+                        <li>
+                            <a href="{{ url('/vendors') }}">
+                                <i class=" icon-grid"></i>
+                                <span>Vendors</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ url('/validate/test') }}">
+                                <i class="icon-refresh"></i>
+                                <span>Validate test</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ url('/products') }}">
+                                <i class="icon-basket-loaded"></i>
+                                <span>Products</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="{{ url('/admins') }}">
+                                <i class=" ti-pie-chart"></i>
+                                <span>Admins</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/finance/report') }}">
+                                <i class="ti-receipt"></i>
+                                <span>Financial Report</span>
+                            </a>
+                        </li>
+
+                    @endif
+
+                </ul>
+
+            </div>
+            <!-- End Sidebar -->
+
+            <div class="clearfix"></div>
+
+        </div>
+        <!-- Sidebar -left -->
+
+    </div>
+
+    <!--left sidebar end-->
+    <!--main content wrapper-->
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+                @yield('content')
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="referralModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -130,11 +278,13 @@
             </div>
             <div class="modal-body">
                 <div class="form-inline">
-                <input type="text" style="width: 75%" class="form-control" value="{{ url('/?ref='.auth()->user()->referal_code) }}" id="myInput">
-                <button onclick="copyText()" class="btn btn-primary">Copy Link</button></div>
+                    <input type="text" style="width: 75%" class="form-control"
+                           value="{{ url('/?ref='.auth()->user()->referal_code) }}" id="myInput">
+                    <button onclick="copyText()" class="btn btn-primary">Copy Link</button>
+                </div>
 
                 <div class="barcode text-center m-3">
-                    <img src="{{ getMyRefBarcode() }}" alt=""  class="img-fluid" width="200">
+                    <img src="{{ getMyRefBarcode() }}" alt="" class="img-fluid" width="200">
                 </div>
 
                 <p>Share on social media</p>
@@ -142,18 +292,22 @@
 
                     <!-- Email -->
                     <a href="mailto:?Subject=Uk Travel Test&amp;Body=Are%20you%20travelling%20to%20the%20UK,%20Book%20your%20travel%20test%20here,follow%20this%20link: {{ url('/booking?ref='.auth()->user()->referal_code) }}">
-                        <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email"  style="height: 50px; width: 50px;"/>
+                        <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email"
+                             style="height: 50px; width: 50px;"/>
                     </a>
 
                     <!-- Facebook -->
-                    <a href="http://www.facebook.com/sharer.php?u={{ url('/?ref='.auth()->user()->referal_code) }}" target="_blank">
-                        <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook"  style="height: 50px; width: 50px;"/>
+                    <a href="http://www.facebook.com/sharer.php?u={{ url('/?ref='.auth()->user()->referal_code) }}"
+                       target="_blank">
+                        <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook"
+                             style="height: 50px; width: 50px;"/>
                     </a>
 
                     <!-- LinkedIn -->
                     <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ url('/?ref='.auth()->user()->referal_code) }}"
                        target="_blank">
-                        <img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" style="height: 50px; width: 50px;"/>
+                        <img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn"
+                             style="height: 50px; width: 50px;"/>
                     </a>
 
                     <a href="whatsapp://send?text=Are you travelling to the UK, Book your travel test here,follow this link: {{ url('/?ref='.auth()->user()->referal_code) }}"
@@ -166,14 +320,18 @@
                         padding: 5px;"/>
                     </a>
                 </div>
-<br/>
+                <br/>
                 <div class=" alert alert-warning">
                     @if(auth()->user()->agent_show_name == 0)
-                        If you would like company name to show on the booking page through the referral link, Kindly click the button to enable it.
-                        <a  class="btn btn-md btn-success text-white" href="javascript:;"  onclick="enable(' {{auth()->user()->id}}')">Enable</a>
+                        If you would like company name to show on the booking page through the referral link, Kindly
+                        click the button to enable it.
+                        <a class="btn btn-md btn-success text-white" href="javascript:;"
+                           onclick="enable(' {{auth()->user()->id}}')">Enable</a>
                     @else
-                        If you would like company name not to show on the booking page through the referral link, Kindly click the button to disable it.
-                        <a href="javascript:;"  class="btn btn-md btn-warning  text-white"  onclick="disable('{{auth()->user()->id}}')">Disable</a>
+                        If you would like company name not to show on the booking page through the referral link,
+                        Kindly click the button to disable it.
+                        <a href="javascript:;" class="btn btn-md btn-warning  text-white"
+                           onclick="disable('{{auth()->user()->id}}')">Disable</a>
                     @endif
                 </div>
             </div>
@@ -183,203 +341,14 @@
         </div>
     </div>
 </div>
+<div class="rightbar-overlay"></div>
+
+<script src="/assets/js/vendor.min.js"></script>
+
+<!-- App js -->
+<script src="/assets/js/app.min.js"></script>
 
 
-
-<div class="app-body">
-    <!--left sidebar start-->
-    <div class="left-nav-wrap">
-        <div class="left-sidebar">
-            <nav class="sidebar-menu">
-                <ul id="nav-accordion">
-                    <li>
-                        <a href="{{ url('/dashboard') }}">
-                            <i class=" ti-home"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class=" icon-speech"></i>
-                            <span>Bookings</span>
-                        </a>
-                        <ul class="sub">
-
-                            <li><a href="{{ url('/pending/booking') }}">Unpaid Bookings</a></li>
-                            <li><a href="{{ url('complete/booking') }}">Paid Bookings</a></li>
-                            @if(auth()->user()->type == "1")
-                           
-                            <li><a href="{{ url('/view/agent/booking') }}">Agent Bookings</a></li>
-                            <li><a href="{{ url('/view/individual/booking') }}">Individual Bookings</a></li>
-                            @endif
-                        </ul>
-                    </li>
-                    @if(auth()->user()->main_agent_id == null && auth()->user()->type == 2)
-                    <li>
-                      <a href="{{ route("sub-agents.index") }}">
-                            <i class="icon-calculator"></i>
-                            <span>Sub Agents</span> <span class="badge badge-warning text-white">{{auth()->user()->subAgent->count()}} </span>
-                        </a>
-                    </li>
-                   
-                    @endif
-                    <!-- <li>
-                      <a href="{{ url('/view/transactions') }}">
-                            <i class="icon-calculator"></i>
-                            <span>Agent Commission</span>
-                        </a>
-                    </li> -->
-                    @if(auth()->user()->type == 2)
-                    <!-- <li>
-                      <a href="{{ url('/view/guidelines/1') }}">
-                            <i class="icon-book-open"></i>
-                            <span>Guidelines</span>
-                        </a>
-                    </li> -->
-                    @endif
-                    @if(auth()->user()->main_agent_id == null && auth()->user()->type == 2)
-                        @if(auth()->user()->subagent->count() > 0)
-                        <!-- <li>
-                            <a href="{{ url('/view/subagent/report') }}">
-                                <i class="ti-receipt"></i>
-                                <span>Sub Agent Report</span>
-                            </a>
-                        </li> -->
-                        @endif
-                    @endif
-                        <!-- <li class="sub-menu">
-                            <a href="javascript:;">
-                                <i class=" icon-book-open"></i>
-                                <span>Vouchers</span>
-                            </a>
-                            <ul class="sub">
-                                <li><a href="{{ url('/view/vouchers') }}">Vouchers List</a></li>
-                                @if(auth()->user()->type == "2")
-                                 <li><a href="{{ url('/agent/view/products') }}">Purchase Product Vouchers</a></li>
-                                 @endif
-                                <li> <a href="{{ url('/view/vouchers/transaction') }}">Voucher transaction</a> </li>
-                            
-
-                                @if(auth()->user()->type != 1 && auth()->user()->main_agent_id == null)
-                                    <li> <a href="{{ url('/subagent/assigned/vouchers') }}">Assigned Vouchers</a> </li>
-                                @endif
-
-                           
-                              
-                                <li><a href="{{ url('/view/discounts') }}">Discount Transaction</a></li>
-                            
-                            
-                                
-                            </ul>
-                        </li> -->
-                  
-
-                    @if(auth()->user()->type == "2")
-                   <li>
-                      <a href="{{ url('/user/bank') }}">
-                            <i class="icon-calculator"></i>
-                            <span>Payment Settings</span>
-                        </a>
-                    </li>
-
-                    @endif
-                    @if(auth()->user()->type == "1")
-                    <!-- <li>
-                      <a href="{{ url('/colors') }}">
-                            <i class=" icon-grid"></i>
-                            <span>Color zones</span>
-                        </a>
-                    </li>
-                    <li>
-                      <a href="{{ url('/pages') }}">
-                            <i class="ti-receipt"></i>
-                            <span>Pages</span>
-                        </a>
-                    </li>
-                    <li>
-                      <a href="{{ url('/supported/countries') }}">
-                            <i class="icon-globe"></i>
-                            <span>Supported Countries</span>
-                        </a>
-                    </li> -->
-                    <li>
-                        <a href="{{ url('/vendors') }}">
-                            <i class=" icon-grid"></i>
-                            <span>Vendors</span>
-                        </a>
-                    </li>
-
-                        <li>
-                            <a href="{{ url('/products') }}">
-                                <i class="icon-basket-loaded"></i>
-                                <span>Products</span>
-                            </a>
-                        </li>
-
-                    <li>
-                        <a href="{{ url('/users') }}">
-                            <i class=" ti-pie-chart"></i>
-                            <span>Agents/Referrals</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ url('/admins') }}">
-                            <i class=" ti-pie-chart"></i>
-                            <span>Admins</span>
-                        </a>
-                    </li>
-                        <li>
-                            <a href="{{ url('/finance/report') }}">
-                                <i class="ti-receipt"></i>
-                                <span>Financial Report</span>
-                            </a>
-                        </li>
-
-
-                        <li>
-                            <a href="{{ url('/settings') }}">
-                                <i class="icon-settings"></i>
-                                <span>Settings</span>
-                            </a>
-                        </li>
-                        @endif
-
-
-                </ul>
-            </nav>
-        </div>
-    </div>
-    <!--left sidebar end-->
-    <!--main content wrapper-->
-
-    @yield('content')
-</div>
-
-<script src="/assets/vendor/jquery/jquery.min.js"></script>
-<script src="/assets/vendor/jquery-ui/jquery-ui.min.js"></script>
-<script src="/assets/vendor/popper.min.js"></script>
-<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="/assets/vendor/jquery.dcjqaccordion.2.7.js"></script>
-<script src="/assets/vendor/icheck/skins/icheck.min.js"></script>
-<script src="/assets/vendor/jquery.nicescroll.min.js"></script>
-<!--jquery validate-->
-<script src="/assets/vendor/jquery-validation/jquery.validate.min.js"></script>
-
-<!--jquery steps-->
-<script src="/assets/vendor/jquery-steps/jquery.steps.min.js"></script>
-<!--init steps-->
-<script src="/assets/vendor/js-init/init-form-wizard.js"></script>
-
-<!--jquery stepy-->
-<script src="/assets/vendor/jquery-steps/jquery.stepy.js"></script>
-
-<!--[if lt IE 9]>
-<script src="/assets/vendor/modernizr.js"></script>
-<![endif]-->
-
-<!--basic scripts initialization-->
-<script src="/assets/js/scripts.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 @yield('script')
@@ -397,15 +366,16 @@
         /* Alert the copied text */
         toastr.success("Success", 'Link has been copied successfully')
     }
+
     function signOut() {
 
-            var d = confirm("Are you sure you want to sign out?");
+        var d = confirm("Are you sure you want to sign out?");
 
-            if (d) {
+        if (d) {
 
-                window.location = "/logout";
-            }
+            window.location = "/logout";
         }
+    }
 </script>
 </body>
 </html>

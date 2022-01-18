@@ -1,30 +1,93 @@
-<div class="table-responsive">
+<div class="table-responsive" style="min-height: 500px">
                                 @if($bookings->count() > 0)
                                     <table class="table table-hover table-custom" id="data_table">
                                         <thead>
                                         <tr>
+                                            @if(auth()->user()->type == "1")
+                                                <th scope="col">Action</th>
+                                            @endif
+                                                @if(auth()->user()->vendor_id != "0")
+                                                    <th scope="col">Action</th>
+                                                @endif
                                             <th scope="col">Name</th>
                                             <th scope="col">Phone</th>
                                             <th scope="col">Email</th>
                                             <th scope="col">Date/Time</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Mode of Payment</th>
-                                            @if(auth()->user()->referal_code)
-                                                <!-- <th scope="col">Earnings</th> -->
-                                            @endif
-                                            @if(auth()->user()->type == "1")
-                                                <th scope="col">Vendor</th>
-                                                <th scope="col">Referral</th>
-                                                <th scope="col">Action</th>
-                                            @endif
-                                            @if(auth()->user()->vendor_id != "0")
-                                                <th scope="col">Action</th>
-                                            @endif
+
+
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($bookings as $booking)
                                             <tr>
+                                                @if(auth()->user()->type == "1")
+                                                    <td>
+                                                        <div class="btn-group" role="group">
+                                                            <button id="btnGroupDrop1" type="button"
+                                                                    class="btn btn-primary dropdown-toggle"
+                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                    aria-expanded="false">
+                                                                Action
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                                <a href="{{ url('/view/booking/'.$booking->id) }}"
+                                                                   class="dropdown-item">View</a>
+                                                                <a href="{{ url('/booking/delete/'.$booking->id) }}"
+                                                                   class="dropdown-item">Delete</a>
+                                                                @if($booking->status== 1)
+                                                                    <a href="javascript:;" data-toggle="modal"
+                                                                       data-target="#editEmail{{ $booking->id }}"
+                                                                       class="dropdown-item">Edit Email</a>
+                                                                    <a href="javascript:;"
+                                                                       onclick="resendReceipt('{{ $booking->id }}')"
+                                                                       class="dropdown-item">Resend Receipt</a>
+
+                                                                    @if($booking->user_id == null)
+                                                                        <a class="dropdown-item" data-toggle="modal"
+                                                                           href="#refmodal{{$booking->id}}">Add a
+                                                                            referral</a>
+                                                                    @endif
+                                                                @endif
+                                                                @if($booking->status == 1)
+                                                                    <a href="{{ url('/booking/generate/code/'.$booking->id) }}"
+                                                                       class="dropdown-item">Generate booking code</a>
+                                                                @endif
+                                                                @if($booking->status== 0)
+                                                                    <a href="javascript:;" class="dropdown-item" target="_blank" data-toggle="modal" data-target="#bookingModal{{ $booking->id }}">Check for Payment</a>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <div class="modal fade" id="bookingModal{{ $booking->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Verify Payment</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <a href="{{ url('/booking/stripe/success?b='.encrypt_decrypt("encrypt",$booking->id)) }}" target="_blank" class="btn btn-danger">Stripe</a>
+                                                                    <a href="{{ url('/payment/confirmation?tx_ref='.$booking->transaction_ref) }}" target="_blank" class="btn btn-danger">Flutterwave</a>
+                                                                    <a href="{{ url('/payment/paystack/confirmation?trxref='.$booking->transaction_ref) }}" target="_blank" class="btn btn-danger">Paystack</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    </td>
+                                                @endif
+                                                    @if(auth()->user()->vendor_id != "0")
+                                                        <td><a href="{{ url('/view/booking/'.$booking->id) }}"
+                                                               class="btn btn-info">View</a>
+                                                            <a href="{{ url('/send/booking/'.$booking->id) }}"
+                                                               class="btn btn-info">Send to Logistics Company</a>
+                                                        </td>
+                                                    @endif
                                                 <td>
                                                     {{ $booking->first_name }} {{ $booking->last_name }}
                                                 </td>
@@ -34,7 +97,7 @@
                                                         <ul>
                                                             <li>{{ optional(optional($booking->product)->product)->name }}
                                                                 ({{ optional($booking->product)->currency.number_format(optional($booking->product)->charged_amount,2)}}
-                                                                ) 
+                                                                )
                                                             </li>
                                                         </ul>
                                                         <br/>
@@ -46,9 +109,9 @@
 
                                                 <td> {{ $booking->created_at }} </td>
                                                 <td>@if($booking->status == 0)
-                                                        <span class="badge badge-warning">Not Paid</span>
+                                                        <span class="badge btn-primary">Not Paid</span>
                                                     @elseif($booking->status == 1)
-                                                        <span class="badge badge-success">Paid</span>
+                                                        <span class="badge btn-success">Paid</span>
                                                     @endif</td>
                                                 <td>
                                                 @if($booking->mode_of_payment == 1)
@@ -72,79 +135,9 @@
                                                             }
                                                         @endphp</td>
                                                 @endif
-                                                @if(auth()->user()->type == "1")
-                                                    <td>
-                                                        {{ ($booking->vendor) ? $booking->vendor->name : "none" }}
-                                                    </td>
-                                                    <td>
-                                                        {{ ($booking->user) ? $booking->user->first_name." ".$booking->user->last_name : "none" }}
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group" role="group">
-                                                            <button id="btnGroupDrop1" type="button"
-                                                                    class="btn btn-primary dropdown-toggle"
-                                                                    data-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                Action
-                                                            </button>
-                                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                                <a href="{{ url('/view/booking/'.$booking->id) }}"
-                                                                   class="dropdown-item">View</a>
-                                                                <a href="{{ url('/booking/delete/'.$booking->id) }}"
-                                                                   class="dropdown-item">Delete</a>
-                                                                @if($booking->status== 1)
-                                                                    <a href="javascript:;" data-toggle="modal"
-                                                                    data-target="#editEmail{{ $booking->id }}"
-                                                                    class="dropdown-item">Edit Email</a>
-                                                                    <a href="javascript:;"
-                                                                    onclick="resendReceipt('{{ $booking->id }}')"
-                                                                    class="dropdown-item">Resend Receipt</a>
-                                                               
-                                                                    @if($booking->user_id == null)
-                                                                        <a class="dropdown-item" data-toggle="modal"
-                                                                        href="#refmodal{{$booking->id}}">Add a
-                                                                            referral</a>
-                                                                    @endif
-                                                                @endif
-                                                                @if($booking->status == 1)
-                                                                    <a href="{{ url('/booking/generate/code/'.$booking->id) }}"
-                                                                        class="dropdown-item">Generate booking code</a>
-                                                                @endif
-                                                                @if($booking->status== 0)
-                                                                <a href="javascript:;" class="dropdown-item" target="_blank" data-toggle="modal" data-target="#bookingModal{{ $booking->id }}">Check for Payment</a>
-                                                                @endif
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <div class="modal fade" id="bookingModal{{ $booking->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Verify Payment</h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <a href="{{ url('/booking/stripe/success?b='.encrypt_decrypt("encrypt",$booking->id)) }}" target="_blank" class="btn btn-danger">Stripe</a>
-                                                                <a href="{{ url('/payment/confirmation?tx_ref='.$booking->transaction_ref) }}" target="_blank" class="btn btn-danger">Flutterwave</a>
-                                                                <a href="{{ url('/payment/paystack/confirmation?trxref='.$booking->transaction_ref) }}" target="_blank" class="btn btn-danger">Paystack</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
 
 
-                                                    </td>
-                                                @endif
 
-                                                @if(auth()->user()->vendor_id != "0")
-                                                    <td><a href="{{ url('/view/booking/'.$booking->id) }}"
-                                                           class="btn btn-info">View</a>
-                                                        <a href="{{ url('/send/booking/'.$booking->id) }}"
-                                                           class="btn btn-info">Send to Logistics Company</a>
-                                                    </td>
-                                                @endif
                                             </tr>
                                             <!-- Modal -->
                                             <div id="refmodal{{$booking->id}}" class="modal fade" role="dialog">

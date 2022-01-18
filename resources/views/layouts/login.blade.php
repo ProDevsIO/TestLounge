@@ -1,73 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="description" content="Login into UK travel tests">
-    <meta name="author" content="ProDevs Outsourcing Ltd">
-
-    <!--favicon icon-->
-    <link rel="icon" type="image/png" href="/images/logo1.png">
-
+    <meta charset="utf-8"/>
     <title>Traveltestsltd</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="TheTestingLounge | The number one place to get all your test done in the UK" name="description"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
-    <!--web fonts-->
-    <link href="//fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet">
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <!-- App css -->
+    <link href="/assets/css/config/modern/bootstrap.min.css" rel="stylesheet" type="text/css"
+          id="bs-default-stylesheet"/>
+    <link href="/assets/css/config/modern/app.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet"/>
 
-    <!--bootstrap styles-->
-    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/config/modern/bootstrap-dark.min.css" rel="stylesheet" type="text/css"
+          id="bs-dark-stylesheet"/>
+    <link href="/assets/css/config/modern/app-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet"/>
 
-    <!--icon font-->
-    <link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/assets/vendor/dashlab-icon/dashlab-icon.css" rel="stylesheet">
-    <link href="/assets/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
-    <link href="/assets/vendor/themify-icons/css/themify-icons.css" rel="stylesheet">
-    <link href="/assets/vendor/weather-icons/css/weather-icons.min.css" rel="stylesheet">
+    <!-- icons -->
+    <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css"/>
 
-    <!--custom scrollbar-->
-    <link href="/assets/vendor/m-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">
-
-    <!--jquery dropdown-->
-    <link href="/assets/vendor/jquery-dropdown-master/jquery.dropdown.css" rel="stylesheet">
-
-    <!--jquery ui-->
-    <link href="/assets/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet">
-
-    <!--iCheck-->
-    <link href="/assets/vendor/icheck/skins/all.css" rel="stylesheet">
-
-    <!--custom styles-->
-    <link href="/assets/css/main.css" rel="stylesheet">
-
-    <!-- phone styles -->
-    <link rel="stylesheet" href="/js/phone_lib/css/intlTelInput.css">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="/assets/vendor/html5shiv.js"></script>
-    <script src="/assets/vendor/respond.min.js"></script>
-    <![endif]-->
 </head>
 
-<body class="signin-up-bg">
+<body class="loading authentication-bg authentication-bg-pattern">
 
 
 @yield('content')
-<script src="/js/phone_lib/js/intlTelInput.js"></script>
-<script src="/assets/vendor/jquery/jquery.min.js"></script>
-<script src="/assets/vendor/jquery-ui/jquery-ui.min.js"></script>
-<script src="/assets/vendor/popper.min.js"></script>
-<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="/assets/vendor/jquery-dropdown-master/jquery.dropdown.js"></script>
-<script src="/assets/vendor/m-custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="/assets/vendor/icheck/skins/icheck.min.js"></script>
-<script src="/assets/vendor/jquery.nicescroll.min.js"></script>
-<!--[if lt IE 9]>
-<script src="/assets/vendor/modernizr.js"></script>
-<![endif]-->
 
 @yield('script')
+<footer class="footer footer-alt text-white-50">
+   <script>document.write(new Date().getFullYear())</script> &copy; Copyright by <a href="" class="text-white-50">TheTestingLounge</a>
+</footer>
+
+<!-- Vendor js -->
+<script src="/assets/js/vendor.min.js"></script>
+
+<!-- App js -->
+<script src="/assets/js/app.min.js"></script>
+
 </body>
 </html>
 

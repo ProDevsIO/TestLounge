@@ -9,7 +9,7 @@
      <meta name="description" content="TheTestingLounge | The number one place to get all your test done in the UK">
      <meta name="keywords" content="laboratory, TheTestingLounge laboratory, TheTestingLounge website">
     <title>TheTestingLounge | Testing Made Easy</title>
-    <link rel="icon" type="image/png" href="/images/logo1.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <!-- Style css -->
@@ -36,7 +36,7 @@
 <body>
     @php
      $products = App\Models\Product::all()
-    
+
     @endphp
     <div class="header">
         <!--header-->
@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="logo">
-                        <a href="index.html"><img src="/images/logo.png" alt="" class="img-responsive"></a>
+                        <a href="{{ url('/') }}"><img src="/images/logo.png" style="height: 50px;" alt="" class="img-responsive"></a>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
@@ -52,25 +52,31 @@
                         <!--navigation-->
                         <ul>
                             <li><a href="/" title="Home page">Home</a></li>
-                            <li><a title="Test">Covid-19 Testing</a>
+                            <li><a title="Covid Test">Covid-19 Testing</a>
                                 <ul>
                                     @foreach($products as $product)
-                                    <li><a href="/view/product/{{$product->slug}}" title="{{$product->name}}">{{$product->name}}</a></li>  
+                                        @php
+                                            $word_count = strlen($product->name);
+                                        @endphp
+                                    <li
+                                    @if($word_count > 30)
+                                        style="margin-bottom: 10px;"
+                                        @endif
+                                    ><a href="/view/product/{{$product->slug}}" title="{{$product->name}}">{{$product->name}}</a></li>
                                    @endforeach
                                 </ul>
-                            
-                                       
+
+
                             </li>
 
                             <li><a href="/about">ABOUT US</a>
-                            
+
                             <li><a href="/faq">FAQ</a>
-                        
+
                             </li>
-                            
+
                             <li><a href="/contact" title="">Contact us</a></li>
-                            <li><a href="/login" title="">Login</a></li>
-                             <!-- <li><a href="/register/agent" title="">Register</a></li> -->
+                            <a href="javascript:;" data-toggle="modal" data-target="#myModal" class="btn btn-primary text-white" style="color: #fff">Register your Test</a>
                         </ul>
                     </div>
                     <!--/.navigation-->
@@ -78,7 +84,66 @@
             </div>
         </div>
     </div>
-   
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title" id="myModalLabel">
+                        Kindly Select the Test for registration</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6" style="border-right: 1px dotted #C2C2C2;">
+
+                            <!-- Nav tabs -->
+                            <div class="jumbotron jumbotron-fluid" style="padding: 20px">
+                                <div class="row text-center sign-with">
+
+                                    <div class="col-md-12">
+                                        <img src="{{ url('/img/pcr.jpg') }}" height="50px" class="mb20"/>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="btn-group btn-group-justified">
+                                            <a href="{{ url('/register/test?type=pcr') }}" class="btn btn-primary">PCR Test</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt-2">
+                                        <p style="font-size: 15px">Register your PCR test as guided by the Government</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="jumbotron jumbotron-fluid" style="padding: 20px">
+                                <div class="row text-center sign-with">
+                                    <div class="col-md-12">
+                                        <img src="{{ url('/img/lateral_flow.jpeg') }}" height="50px" class="mb20"/>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="btn-group btn-group-justified">
+                                            <a href="#" disabled class="btn btn-primary">Literal Flow <br/> (coming soon)</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt-2">
+                                        <p style="font-size: 15px">Register your Literal Flow test as guided by the Government</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     @yield('content')
     <!--/.footer-->
     <div class="tiny-footer">
@@ -86,7 +151,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <p>TheTestingLounge. All Rights Reserved. 2021</p>
+                    <p>TheTestingLounge. All Rights Reserved. {{ date('Y') }}</p>
                 </div>
             </div>
         </div>
@@ -104,9 +169,7 @@
     <!-- sticky header -->
     <script type="text/javascript" src="/js/jquery.sticky.js"></script>
     <script type="text/javascript" src="/js/sticky-header.js"></script>
-    <!-- location -->
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script type="text/javascript" src="/js/location.js"></script>
+
     <!-- Back to top script -->
     <script src="/js/back-to-top.js" type="text/javascript"></script>
     @yield('script')
