@@ -171,7 +171,6 @@ class HomeController extends Controller
             'ethnicity' => 'required',
             'phone_no' => 'required',
             'email' => 'required',
-
             'isolation_address' => 'required',
             'isolation_town' => 'required',
             'isolation_postal_code' => 'required',
@@ -179,7 +178,7 @@ class HomeController extends Controller
             'arrival_date' => 'required',
             'country_travelling_from_id' => 'required',
             'departure_date' => 'required',
-
+            
         ]);
 
         if($request->test_location)
@@ -330,7 +329,7 @@ class HomeController extends Controller
         unset($request_data['vproduct']);
 
         $price = $price_pounds = 0;
-
+// dd($request_data);
         $booking = Booking::create($request_data);
 
             $product_id =  $vendor_products->product_id;
@@ -375,15 +374,15 @@ class HomeController extends Controller
         // } catch (\Exception $e) {
         // }
 
-        if($request->payment_method == "vastech"){
-            $data = $this->getVasTechData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
-        }elseif($request->payment_method == "paystack"){
+        // if($request->payment_method == "vastech"){
+        //     $data = $this->getVasTechData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
+        // }elseif($request->payment_method == "paystack"){
 
-            $data = $this->getPaystackData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
+        //     $data = $this->getPaystackData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
 
-        }else {
-            $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
-        }
+        // }else {
+        //     $data = $this->getFlutterwaveData($booking, $price, $transaction_ref, $price_pounds, $request['card_type']);
+        // }
 
 
         //deactivating subaccount
@@ -391,16 +390,16 @@ class HomeController extends Controller
         //     $data['subaccounts'] = $sub_accounts;
         // }
 
-        if($request->payment_method == "paystack"){
-            $paystackNerf = $data['amount'] / 100;
-            BookingProduct::where('booking_id', $booking->id)->update([
-                'charged_amount' =>  $paystackNerf, 'currency' => $data['currency']
-            ]);
-        }else{
-            BookingProduct::where('booking_id', $booking->id)->update([
-                'charged_amount' => $data['amount'], 'currency' => $data['currency']
-            ]);
-        }
+        // if($request->payment_method == "paystack"){
+        //     $paystackNerf = $data['amount'] / 100;
+        //     BookingProduct::where('booking_id', $booking->id)->update([
+        //         'charged_amount' =>  $paystackNerf, 'currency' => $data['currency']
+        //     ]);
+        // }else{
+        //     BookingProduct::where('booking_id', $booking->id)->update([
+        //         'charged_amount' => $data['amount'], 'currency' => $data['currency']
+        //     ]);
+        // }
 
 
         if ($request->payment_method == "stripe") {
