@@ -38,7 +38,7 @@ Route::post('/change/password', [\App\Http\Controllers\HomeController::class,"ch
 
 Route::get('/register/agent', [\App\Http\Controllers\HomeController::class,"register_agent"]);
 Route::get('/register/test', [\App\Http\Controllers\HomeController::class,"register_test"]);
-Route::post('/submit/test', [\App\Http\Controllers\HomeController::class,"submit_test"]);
+Route::post('/submit/test', [\App\Http\Controllers\TestController::class,"submit_test"]);
 
 Route::get('/next_steps', [\App\Http\Controllers\HomeController::class,"next_steps"])->name('next_steps');
 
