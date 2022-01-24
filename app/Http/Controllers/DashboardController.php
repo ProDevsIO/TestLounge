@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\BookingConfirmationService;
 use App\Helpers\BookingService;
+use App\Helpers\CsvService;
 use App\Helpers\BarcodeHelper;
 use App\Helpers\VoucherDiscountProcess;
 use App\Helpers\UserShare;
@@ -41,10 +42,12 @@ class DashboardController extends Controller
 {
     public $bookingService;
     public $bookConfirmationService;
+    public $csvService;
 
     public function __construct()
     {
         $this->bookingService = new BookingService;
+        $this->csvService = new CsvService;
         $this->bookConfirmationService = new BookingConfirmationService;
     }
 
@@ -272,8 +275,10 @@ class DashboardController extends Controller
             $start = Carbon::parse($request->start)->startOfDay();
             $end = Carbon::parse($request->end)->endOfDay();
             $bookings = $bookings->wherebetween('created_at', [$start, $end]);
+          
         }
 
+       
 
         $bookings = $bookings->get();
 
@@ -283,77 +288,20 @@ class DashboardController extends Controller
 
 
         if ($request->export) {
-            $fileName = 'exports.csv';
+         
+            if($request->export_id == 2)
+            {
+                $csv = $this->csvService->processRoyalMail($bookings, $request->product_id);
 
-            $headers = array(
-                "Content-type" => "text/csv",
-                "Content-Disposition" => "attachment; filename=$fileName",
-                "Pragma" => "no-cache",
-                "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-                "Expires" => "0"
-            );
-
-            $columns = array('Name', 'Email', 'PhoneNo', 'Sex', 'DOB', 'Ethnicity', 'Products', 'Home Address', "Isolation Address", "Arrival Date", "Country From", "Departure Date", 'Amount');
-
-            $callback = function () use ($bookings, $columns) {
-                $file = fopen('php://output', 'w');
-                fputcsv($file, $columns);
-
-
-                foreach ($bookings as $booking) {
-
-                    if ($booking->ethnicity == "1") {
-                        $row['Ethnicity'] = "White";
-                    } elseif ($booking->ethnicity == "2") {
-                        $row['Ethnicity'] = "Mixed/Multiple Ethnic groups";
-                    } elseif ($booking->ethnicity == "3") {
-                        $row['Ethnicity'] = "Asian / Asian British";
-                    } elseif ($booking->ethnicity == "4") {
-                        $row['Ethnicity'] = "Black / African / Caribbean / Black British";
-                    } elseif ($booking->ethnicity == "5") {
-                        $row['Ethnicity'] = "Other Ethnic Group";
-                    }
-
-                   
-                    $p = [];
-                    foreach ($booking->products as $product) {
-                        $p[] = $product->name;
-                    }
-
-                    $row['Name'] = $booking->first_name . " " . $booking->last_name;
-                    $row['Email'] = $booking->email;
-                    $row['PhoneNo'] = $booking->phone_no;
-                    $row['Sex'] = ($booking->sex == 1) ? "Male" : "Female";
-                    $row['DOB'] = $booking->dob;
-                    $row['Products'] = implode(',', $p);
-                    $row['Home Address'] = "Address1: {$booking->address_1}\n
-                                        Address2: {$booking->address_2}\n
-                                        Home City: {$booking->home_town}\n
-                                        Home PostCode: {$booking->post_code}\n";
-                                       
-
-                    $row['Isolation Address'] = "Address1: {$booking->isolation_address }\n
-                                        Address2: {$booking->isolation_addres2}\n
-                                        Home City: {$booking->isolation_town}\n
-                                        Home PostCode: {$booking->isolation_postal_code }\n";
-                                       
-
-                   
-
-                    $row['Arrival Date'] = $booking->arrival_date;
-
-                    $row['Country From'] = $booking->travelingFrom->name;
-                    $row['Departure Date'] = $booking->departure_date;
-                   $row['Amount'] = optional($booking->product)->currency.number_format(optional($booking->product)->charged_amount,2);
-                    
-
-                    fputcsv($file, array($row['Name'], $row['Email'], $row['PhoneNo'], $row['Sex'], $row['DOB'], $row['Ethnicity'], $row['Products'], $row['Home Address'], $row['Isolation Address'], $row['Arrival Date'], $row['Country From'], $row['Departure Date'],$row['Amount']));
-                }
-
-                fclose($file);
-            };
-
-            return response()->stream($callback, 200, $headers);
+            }elseif($request->export_id == 1)
+            {
+                $csv = $this->csvService-> processLabMail($bookings,  $request->product_id);
+            }else{
+                session()->flash('alert-warning', "Government Csv still in production.");
+                return back()->withInput();
+            }
+          
+            return response()->stream($csv['callback'], 200, $csv['headers']);
         }
 
         return view('admin.complete_booking')->with(compact('bookings', 'products', 'vendors', 'users', 'refs', 'ven', 'vendorsTotalCost'));
