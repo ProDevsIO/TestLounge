@@ -2480,9 +2480,7 @@ class HomeController extends Controller
         }
     }
 
-    public function submit_test(Request $request){
-        dd($request->all());
-    }
+  
 
 
 

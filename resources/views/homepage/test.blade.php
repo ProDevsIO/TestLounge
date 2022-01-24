@@ -122,6 +122,7 @@ echo "Lateral Flow";
                                         </div>
                                     </div>
 
+
                                     <div class="row mb-5">
                                         <div class="col-sm-12">
                                             <br/>
@@ -387,8 +388,8 @@ echo "Lateral Flow";
                                         <div class="col-sm-6">
                                             <div class="form-group mb-2">
                                                 <label class=""
-                                                       for="home_kit_registry_gender">Gender</label><select
-                                                    id="home_kit_registry_gender" name="gender" required
+                                                       for="home_kit_registry_gender">Gender</label>
+                                                <select id="home_kit_registry_gender" name="gender" required
                                                     class="form-control form-select">
                                                     <option value="M"  @if(old('gender') && old('gender') == "M")
                                                     selected

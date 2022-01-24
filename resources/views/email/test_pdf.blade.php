@@ -9,7 +9,11 @@
     <style>
 
         body {margin:0; padding:0; -webkit-text-size-adjust:none; -ms-text-size-adjust:none;} img{line-height:100%; outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;} a img{border: none;} #backgroundTable {margin:0; padding:0; width:100% !important; } a, a:link{color:#2A5DB0; text-decoration: underline;} table td {border-collapse:collapse;} span {color: inherit; border-bottom: none;} span:hover { background-color: transparent; }
-
+        .info{
+            font-size:14px;
+            padding:12px;
+            text-align:center;
+        }
     </style>
 
     <style>
@@ -70,9 +74,11 @@
                                                                         Kemp House, 152-160 City Road<br>
                                                                         London, EC1V 2NX<br>
                                                                         Email : info@thetestinglounge.com<br>
+                                                                    
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
+
                                                                     <td class="featured-story__content-inner" style="padding: 32px 30px 45px;">
                                                                         <table cellspacing="0" cellpadding="0">
                                                                             <tr>
@@ -81,30 +87,65 @@
                                                                                         <tr>
                                                                                             <td style="font-family: Geneva, Tahoma, Verdana, sans-serif; font-size: 22px; color:blue;" width="400" align="left">
                                                                                     
-                                                                                                @if($test->status == 1)
- 
-                                                                                                    Inconceivable test result 
-
-                                                                                                @elseif($test->status == 2)
- 
-                                                                                                    Positive test result 
-                                                                                                @elseif($test->status == 3)
- 
-                                                                                                    Negative test result 
-
-                                                                                                @endif
+                                                                                              
                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td class="featured-story__copy" style="background: #fff;" width="100%" align="left">
+                                                                            <td>
+                                                                            <hr>
+                                                                                    <table style="width:100%">
+                                                                                       <tr style="width:100%">
+                                                                                           <td class="info" style="width:50%">Patient name </td> 
+                                                                                           <td class="info" style="">{{$test->first_name}} {{$test->first_name}}</td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                           <td class="info">Contact Details</td>
+                                                                                           <td class="info">{{$test->address}}
+                                                                                               {{$test->city}}
+                                                                                           </td> 
+                                                                                         
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                           <td class="info">Sample Collection date</td>
+                                                                                           <td class="info">{{$test->created_at}}</td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                           <td class="info"> Sample type</td>
+                                                                                           <td class="info">Nasopharyngeal Swab</td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                           <td class="info">Report Date</td>
+                                                                                           <td class="info">{{$test->created_at}}</td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                           <td class="info">Test Type</td>
+                                                                                           <td class="info">{{$test->type_of_test}}</td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                           <td class="info">Signed by</td>
+                                                                                           <td class="info">  Dr Adebowale Adesanoye</td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                           <td class="info"></td>
+                                                                                           <td class="info"></td>
+                                                                                       </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                
+                                                                                <td class="featured-story__copy" style="background: #fff; font-size:10px" width="100%" align="left">
                                                                                     <table cellspacing="0" cellpadding="0">
                                                                                         <tr>
+                                                                                        
+                                                                                         
+                                                                                        <hr>
                                                                                         @if($test->status == 1)
     
-                                                                                            <h4 style="">Your coronavirus test result is unclear. It is not possible to say if you had the virus when the test was done. </h4><br><br>
+                                                                                            Your coronavirus test result is unclear. It is not possible to say if you had the virus when the test was done.<br><br>
                                                                                             
                                                                                             You must self-isolate for 10 days from the day after your test date. <br><br>
                                                                                             
