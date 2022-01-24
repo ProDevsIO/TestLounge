@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Helpers\TestService;
+use Illuminate\Support\Facades\Storage;
 
 class TestController extends Controller
 {
@@ -48,7 +49,23 @@ class TestController extends Controller
                 "picture" => "file|mimes:jpeg,png,jpg|max:2048",
             ]);
 
-            $this->TestService->register($request->all());
+            $data = $request->all();
+            if(isset($request->picture))
+            {
+                unset($data['picture']);
+                //rename image
+                $imageName = time().'.'.$request->picture->extension();  
+                //move to path 
+                $request->picture->storeAs('/public', $imageName);
+    
+                $url = Storage::url($imageName);
+    
+                $data['picture'] = $url;
+    
+            }
+            
+
+            $this->TestService->register($data);
 
             $user = $request->all();
 
@@ -56,7 +73,7 @@ class TestController extends Controller
 
         } catch (\Exception $e) {
             session()->flash('alert-success', "Error".$e->getMessage());
-            return back();
+            return back()->withInput();
         }
     }
 
