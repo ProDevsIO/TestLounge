@@ -11,7 +11,6 @@
         body {margin:0; padding:0; -webkit-text-size-adjust:none; -ms-text-size-adjust:none;} img{line-height:100%; outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;} a img{border: none;} #backgroundTable {margin:0; padding:0; width:100% !important; } a, a:link{color:#2A5DB0; text-decoration: underline;} table td {border-collapse:collapse;} span {color: inherit; border-bottom: none;} span:hover { background-color: transparent; }
         .info{
             font-size:14px;
-            padding:12px;
             text-align:center;
         }
     </style>
@@ -69,7 +68,8 @@
                                                             <table cellspacing="0" cellpadding="0">
                                                                 <tr>
                                                                     <td class="scalable-image" width="640" style="font-family: Geneva, Tahoma, Verdana, sans-serif; font-size: 14px; line-height: 22px;" align="center">
-                                                                        <a href="/" ><img src="/images/logo.png" alt="" style="display: block; border: 0; max-width: 80%; height: auto; padding-top:20%" width="320"></a>
+                                                                  
+                                                                    <a href="/" ><img src="{{ public_path() }}/images/logo.png" alt="" style="display: block; border: 0; max-width: 80%; height: auto; padding-top:20%" width="320"></a>
                                                                         The Testing Lounge<br>
                                                                         Kemp House, 152-160 City Road<br>
                                                                         London, EC1V 2NX<br>
@@ -99,7 +99,7 @@
                                                                                     <table style="width:100%">
                                                                                        <tr style="width:100%">
                                                                                            <td class="info" style="width:50%">Patient name </td> 
-                                                                                           <td class="info" style="">{{$test->first_name}} {{$test->first_name}}</td>
+                                                                                           <td class="info" style="">{{$test->first_name}} {{$test->last_name}}</td>
                                                                                        </tr>
                                                                                        <tr>
                                                                                            <td class="info">Contact Details</td>

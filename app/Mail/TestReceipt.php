@@ -39,14 +39,17 @@ class TestReceipt extends Mailable
 
     public function build()
     {
+    
         $test = $this->test;
        
         view()->share('test',$test);
       
-        $pdf = PDF::loadView('email.test_pdf', $test);
+        $pdf = PDF::loadView('email.test_pdf', $test,[
+            'format' => 'A4'
+        ]);  
 
         return $this->from($this->from_, $this->subject)
-            // ->attachData($pdf->output(),'test_receipt.pdf')
+            ->attachData($pdf->output(),'test_receipt.pdf')
             ->view('email.message')
             ->with(compact('test'));
 
