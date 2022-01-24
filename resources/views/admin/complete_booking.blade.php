@@ -85,11 +85,11 @@
                                         </div>
                                         <div class="col-md-6 mt-2">
                                             <label>Type of Export</label>
-                                            <select name="export_id" class="form-control">
+                                            <select name="export_id" class="form-control" required>
                                                 <option value="">Select type</option>
-                                                <option value="">Government</option>
-                                                <option value="">Lab</option>
-                                                <option value="">Royal Mail</option>
+                                                <option value="0">Government</option>
+                                                <option value="1">Lab</option>
+                                                <option value="2">Royal Mail</option>
                                             </select>
                                         </div>
                                     @endif
