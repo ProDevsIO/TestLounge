@@ -59,5 +59,39 @@ class TestController extends Controller
             return back();
         }
     }
+
+    public function view_test_list()
+    {
+        $tests = $this->TestService->listTestkits();
+        return view('admin.view_test')->with(compact('tests'));
+    }
+
+    public function set_test_status($id, $status)
+    {
+   
+       try{
+            $test = $this->TestService->getTestById($id);
+            $tests = $this->TestService->setTestStatus($test, $status);
+
+            if($status == 1)
+            {
+                $message = "Test has been confirmed as inconcievable and an email has been sent out";
+            }elseif($status == 2)
+            {
+                $message = "Test has been confirmed as positive and an email has been sent out";
+            }elseif($status == 3)
+            {
+                $message = "Test has been confirmed as negative and an email has been sent out";
+            }
+
+            session()->flash('alert-success', $message);
+            return back();
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            session()->flash('alert-success', "".$e->getMessage());
+            return back();
+        }
+    }
     
 }

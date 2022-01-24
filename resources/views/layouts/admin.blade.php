@@ -353,6 +353,14 @@
 
 @yield('script')
 <script>
+       window.setTimeout("closeAlertDiv();", 7000);
+
+        function closeAlertDiv() {
+            if(document.getElementById("alertdiv")){
+                document.getElementById("alertdiv").style.display = " none";
+            }
+        }
+        
     function copyText() {
         var copyText = document.getElementById("myInput");
 

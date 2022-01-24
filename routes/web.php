@@ -89,7 +89,7 @@ Route::get('/voucher/voucherOption/{code}', [\App\Http\Controllers\HomeControlle
 
 Route::get('/testEmail', [\App\Http\Controllers\HomeController::class,"testEmail"])->name('testEmail');
 Route::get('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"make_payment"])->name('make_payment');
-Route::post('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"p_make_payment"])->name('make_payment');
+Route::post('/make/payment/{booking}', [\App\Http\Controllers\HomeController::class,"p_make_payment"]);
 Route::get('/booking/failed', [\App\Http\Controllers\HomeController::class,"booking_failed"])->name('booking_failed');
 Route::get('/sub/continue/registration/{referral_code}/{id}', [\App\Http\Controllers\HomeController::class,"sub_verify_account"])->name('verify_account');
 Route::get('/super/continue/registration/{referral_code}/{id}', [\App\Http\Controllers\HomeController::class,"super_verify_account"]);
@@ -221,4 +221,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/logout', [\App\Http\Controllers\DashboardController::class,"logout"]);
 
+    Route::get('/validate/test', [\App\Http\Controllers\TestController::class,"view_test_list"]);
+
+    Route::get('/test/status/{id}/{status}', [\App\Http\Controllers\TestController::class,"set_test_status"]);
 });
